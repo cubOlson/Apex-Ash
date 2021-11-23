@@ -295,17 +295,6 @@ l="50-90"
   />
   <meta
   tags="apex,VLC"
-    meter="takingDamage"
-    x=".0932"
-    y=".937"
-    width=".119"
-    h="0-15"
-    s="65-100"
-    l="50-100"
-    type="area"
-  />
-  <meta
-  tags="apex,VLC"
     meter="zoneClosing"
     x=".027"
     y=".296"
@@ -525,39 +514,60 @@ l="50-90"
   var ash_q = new Meter(3, ash_q_bar);
   var ash_z = new Meter(3, ash_z_bar);
 
+  var bangalore_q = new Meter(3, bangalore_q_bar);
+  var bangalore_z = new Meter(3, bangalore_z_bar);
+  var bangalore_q1 = new Meter(3, bangalore_q_bar1);
+
   var bloodhound_q = new Meter(3, bloodhound_q_bar);
   var bloodhound_z = new Meter(3, bloodhound_z_bar);
   var checkmeter = new Meter(3, bloodhound_z_bar);
-
-  var gibraltar_q = new Meter(3, gibraltar_q_bar);
-  var gibraltar_z = new Meter(3, gibraltar_z_bar);
-
-  var wraith_q = new Meter(3, wraith_q_bar);
-  var wraith_z = new Meter(3, wraith_z_bar);
-  var yellowZ = new Meter(3, wraith_z_bar);
-
-  var pathfinder_q = new Meter(3, pathfinder_q_bar);
-  var pathfinder_z = new Meter(3, pathfinder_z_bar);
-
-  var mirage_q = new Meter(3, mirage_q_bar);
-  var mirage_z = new Meter(3, mirage_z_bar);
-
-  var lifeline_q = new Meter(3, lifeline_q_bar);
-  var lifeline_z = new Meter(3, lifeline_z_bar);
 
   var caustic_q = new Meter(3, caustic_q_bar);
   var caustic_q1 = new Meter(3, caustic_q_bar1);
   var caustic_q2 = new Meter(3, caustic_q_bar2);
   var caustic_z = new Meter(3, caustic_z_bar);
 
+  var crypto_z = new Meter(3, crypto_z_bar);
+  var crypto_z2 = new Meter(3, crypto_z_bar2);
+
+  var fuse_q = new Meter(3, fuse_q_bar);
+  var fuse_z = new Meter(3, fuse_z_bar);
+  var fuse_z2 = new Meter(3, fuse_z_bar1);
+
+  var gibraltar_q = new Meter(3, gibraltar_q_bar);
+  var gibraltar_z = new Meter(3, gibraltar_z_bar);
+
+  var horizon_q = new Meter(3, horizon_q_bar);
+  var horizon_z = new Meter(3, horizon_z_bar);
+
+  var lifeline_q = new Meter(3, lifeline_q_bar);
+  var lifeline_z = new Meter(3, lifeline_z_bar);
+
+  var loba_q = new Meter(3, loba_q_bar);
+  var loba_z = new Meter(3, loba_z_bar);
+  var loba_t = new Meter(3, loba_q1_bar);
+
+  var mirage_q = new Meter(3, mirage_q_bar);
+  var mirage_z = new Meter(3, mirage_z_bar);
+
+  var octane_q = new Meter(3, octane_q_bar);
+  var octane_z = new Meter(3, octane_z_bar);
+
+  var pathfinder_q = new Meter(3, pathfinder_q_bar);
+  var pathfinder_z = new Meter(3, pathfinder_z_bar);
+
   var rampart_q = new Meter(3, rampart_q_bar);
   var rampart_q1 = new Meter(3, rampart_q_bar1);
   var rampart_q2 = new Meter(3, rampart_q_bar2);
   var rampart_z = new Meter(3, rampart_z_bar);
 
-  var loba_q = new Meter(3, loba_q_bar);
-  var loba_z = new Meter(3, loba_z_bar);
-  var loba_t = new Meter(3, loba_q1_bar);
+  var revenant_q = new Meter(3, revenant_q_bar);
+  var revenant_z = new Meter(3, revenant_z_bar);
+  var revenant_q1 = new Meter(3, revenant_q_bar1);
+  var revenant_z2 = new Meter(3, revenant_z_bar2);
+
+  var seer_q = new Meter(3, seer_q_bar);
+  var seer_z = new Meter(3, seer_z_bar);
 
   var wattson_q = new Meter(3, wattson_q_bar);
   var wattson_q1 = new Meter(3, wattson_q_bar1);
@@ -565,33 +575,12 @@ l="50-90"
   var wattson_q3 = new Meter(3, wattson_q_bar3);
   var wattson_z = new Meter(3, wattson_z_bar);
 
-  var bangalore_q = new Meter(3, bangalore_q_bar);
-  var bangalore_z = new Meter(3, bangalore_z_bar);
-  var bangalore_q1 = new Meter(3, bangalore_q_bar1);
-
-  var revenant_q = new Meter(3, revenant_q_bar);
-  var revenant_z = new Meter(3, revenant_z_bar);
-  var revenant_q1 = new Meter(3, revenant_q_bar1);
-  var revenant_z2 = new Meter(3, revenant_z_bar2);
-
-  var fuse_q = new Meter(3, fuse_q_bar);
-  var fuse_z = new Meter(3, fuse_z_bar);
-  var fuse_z2 = new Meter(3, fuse_z_bar1);
-
-  var horizon_q = new Meter(3, horizon_q_bar);
-  var horizon_z = new Meter(3, horizon_z_bar);
-
-  var crypto_z = new Meter(3, crypto_z_bar);
-  var crypto_z2 = new Meter(3, crypto_z_bar2);
-
-  var octane_q = new Meter(3, octane_q_bar);
-  var octane_z = new Meter(3, octane_z_bar);
-
+  var wraith_q = new Meter(3, wraith_q_bar);
+  var wraith_z = new Meter(3, wraith_z_bar);
+  var yellowZ = new Meter(3, wraith_z_bar);
+  
   var valk_q = new Meter(3, valk_q_bar);
   var valk_z = new Meter(3, valk_z_bar);
-
-  var seer_q = new Meter(3, seer_q_bar);
-  var seer_z = new Meter(3, seer_z_bar);
 
   // SECTION 3 - METER CALLBACK FUNCTIONS DEFINED --------------------------------------------------------------------------
 
@@ -606,90 +595,6 @@ l="50-90"
     if(legend == "Ash"){
       if(ash_z.decreased && engine.vision.check == 1){
         console.log('ASH Z ACTIVATED');
-      }
-    }
-  }
-
-  function seer_q_bar(){
-    if(legend == "Seer"){
-      if(seer_q.decreased && engine.vision.check == 1){
-        stateMgr.Push(new seerQ());
-      }
-    }
-  }
-
-  function seer_z_bar(){
-    if(legend == "Seer"){
-      if(seer_z.decreased && engine.vision.check == 1 ){
-        stateMgr.Push(new seerZ());
-      }
-    }
-  }
-
-  function valk_q_bar(){
-    if(legend == "Valkyrie"){
-      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased){
-        stateMgr.Push( new valkQ());
-      }
-    }
-  }
-
-  function valk_z_bar(){
-    if(legend == "Valkyrie"){
-      if(valk_z.value==1 && valk_z.increased ){
-        stateMgr.Push(new valkZ(100));
-      }
-    }
-  }
-
- function crypto_z_bar(){
-    if(legend == "Crypto"){
-      if(crypto_z.decreased && engine.vision.check == 1 && !crypto_z2.increased){
-        stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
-      }
-    }
-  }
-
-  function crypto_z_bar2(){
-    if(legend == "Crypto"){
-      if(crypto_z2.decreased){
-        stateMgr.Push(new BurstRippleState("#4c9c48", "#fcfcfc", "#4c9c48"));
-      }
-    }
-  }
-  function horizon_q_bar(){
-    if(legend == "Horizon"){
-      if(horizon_q.decreased && engine.vision.check == 1){
-        stateMgr.Push( new horizonQ());
-      }
-    }
-  }
-  function horizon_z_bar(){
-    if(legend == "Horizon"){
-      if(horizon_z.decreased && engine.vision.check == 1 ){
-        stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
-      }
-    }
-  }
-  
-  function fuse_q_bar(){
-    if(legend == "Fuse"){
-      if(fuse_q.decreased && engine.vision.check == 1){
-        stateMgr.Push(new fuseQ());
-      }
-    }
-  }
-  function fuse_z_bar(){
-    if(legend == "Fuse"){
-      if(fuse_z.decreased && engine.vision.check == 1 ){
-        stateMgr.Push(new fuseZ());
-      }
-    }
-  }
-  function fuse_z_bar1(){
-    if(legend == "Fuse"){
-      if(fuse_z2.value == 1 && engine.vision.check == 1){
-        stateMgr.Push(new fuseZ2());
       }
     }
   }
@@ -716,6 +621,240 @@ l="50-90"
     }
   }
 
+  function bloodhound_z_bar(){
+    if(legend  == "Bloodhound"){
+      if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+      stateMgr.Push(new hueControl("#ff7300", true));
+      }
+    }
+  }
+  function bloodhound_q_bar(){
+    if(legend == "Bloodhound"){
+      if(bloodhound_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new PulseRippleState("#ff7300", true, 700));
+      }
+    }
+  }
+
+  function caustic_q_bar(){
+    if(legend == "Caustic"){
+      if((caustic_q.decreased && engine.vision.check == 1)){
+      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_q_bar1(){
+    if(legend == "Caustic"){
+      if((caustic_q1.decreased && engine.vision.check == 1)){
+      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_q_bar2(){
+    if(legend == "Caustic"){
+      if((caustic_q2.decreased && engine.vision.check == 1)){
+      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_z_bar(){
+    if(legend  == "Caustic"){
+      if(caustic_z.increased && engine.vision.check == 1){
+        stateMgr.Push(new causticZ());
+      }
+    }
+  }
+
+  function crypto_z_bar(){
+    if(legend == "Crypto"){
+      if(crypto_z.decreased && engine.vision.check == 1 && !crypto_z2.increased){
+        stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
+      }
+    }
+  }
+  function crypto_z_bar2(){
+    if(legend == "Crypto"){
+      if(crypto_z2.decreased){
+        stateMgr.Push(new BurstRippleState("#4c9c48", "#fcfcfc", "#4c9c48"));
+      }
+    }
+  }
+
+  function fuse_q_bar(){
+    if(legend == "Fuse"){
+      if(fuse_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new fuseQ());
+      }
+    }
+  }
+  function fuse_z_bar(){
+    if(legend == "Fuse"){
+      if(fuse_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new fuseZ());
+      }
+    }
+  }
+  function fuse_z_bar1(){
+    if(legend == "Fuse"){
+      if(fuse_z2.value == 1 && engine.vision.check == 1){
+        stateMgr.Push(new fuseZ2());
+      }
+    }
+  }
+
+  function gibraltar_q_bar(){
+    if(legend == "Gibraltar"){
+      if(gibraltar_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new PulseRippleState("#004cff", false, 850));
+      }
+    }
+  }
+  function gibraltar_z_bar(){
+    if(legend  == "Gibraltar"){
+      if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+        stateMgr.Push(new gibraltarZ());
+        
+      }
+    }
+  }
+
+  function horizon_q_bar(){
+    if(legend == "Horizon"){
+      if(horizon_q.decreased && engine.vision.check == 1){
+        stateMgr.Push( new horizonQ());
+      }
+    }
+  }
+  function horizon_z_bar(){
+    if(legend == "Horizon"){
+      if(horizon_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
+      }
+    }
+  }
+
+  function lifeline_q_bar(){
+    if(legend == "Lifeline"){
+      if(lifeline_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new BurstRippleState("#09ff00", "#63ffef", "#63ffef"));
+      }
+    }
+  }
+  function lifeline_z_bar(){
+    if(legend  == "Lifeline"){
+      if(lifeline_z.increased && engine.vision.check == 1){
+        stateMgr.Push(new lifelineZ());
+      }
+    }
+  }
+
+  function loba_q_bar(){
+    if(legend == "Loba"){
+      if(loba_q.decreased && engine.vision.check == 1 && !loba_t.decreased){
+        stateMgr.Push(new reverseBurstRippleState("#ffffff", "#8400ff", "#ffffff"));
+      }
+    }
+  }
+  function loba_q1_bar(){
+    if(legend == "Loba"){
+      if(loba_t.decreased && engine.vision.check == 1 && loba_t.diff >=1){
+        stateMgr.Push(new BurstRippleState("#ffffff", "#8400ff", "#ffffff"));
+      }
+    }
+  }
+  function loba_z_bar(){
+    if(legend == "Loba"){
+      if(loba_z.decreased && engine.vision.check == 1 && engine.vision.loba != 1){
+        stateMgr.Push(new lobaZ());
+      }
+    }
+  }
+
+  function mirage_q_bar(){
+    if(legend == "Mirage"){
+      if(mirage_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new BurstRippleState("#0004ff", "#63ffef", "#0004ff"));
+      }
+    }
+  }
+  function mirage_z_bar(){
+    if(legend  == "Mirage"){
+      if(mirage_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
+      }
+    }
+  }
+
+  function octane_q_bar(){
+    if(legend == "Octane"){
+      if(octane_q.decreased && engine.vision.check == 1){
+        for (let i = 0; i < 20; i++) {
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(-50, random(0, 200), 100, 20, 15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
+            );
+          }, random(0, 800));
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(360, random(0, 200), 100, 20, -15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
+            );
+          }, random(0, 800));
+        }
+      }
+    }
+  }
+  function octane_z_bar(){
+    if(legend  == "Octane"){
+      if(octane_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new octaneZ());
+      }
+    }
+  }
+
+  function pathfinder_q_bar(){
+    if(legend == "Pathfinder"){
+      if(pathfinder_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new pathfinderQ());
+      }
+    }
+  }
+  function pathfinder_z_bar(){
+    if(legend  == "Pathfinder"){
+      if(pathfinder_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new pathfinderZ());
+      }
+    }
+  }
+
+  function rampart_q_bar(){
+    if(legend == "Rampart"){
+      if(rampart_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_q_bar1(){
+    if(legend == "Rampart"){
+      if(rampart_q1.decreased && engine.vision.check == 1){
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_q_bar2(){
+    if(legend == "Rampart"){
+      if(rampart_q2.decreased && engine.vision.check == 1){
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_z_bar(){
+    if(legend  == "Rampart"){
+      if(rampart_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new rampartZ());
+      }
+    }
+  }
+
   function revenant_q_bar(){
     if(legend == "Revenant"){
       if(revenant_q.decreased && engine.vision.check == 1){
@@ -737,7 +876,6 @@ l="50-90"
       }
     }
   }
-
   function revenant_z_bar(){
     if(legend == "Revenant"){
       if(revenant_z.decreased && engine.vision.check == 1){
@@ -745,6 +883,22 @@ l="50-90"
       }
     }
   }
+
+  function seer_q_bar(){
+    if(legend == "Seer"){
+      if(seer_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new seerQ());
+      }
+    }
+  }
+  function seer_z_bar(){
+    if(legend == "Seer"){
+      if(seer_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new seerZ());
+      }
+    }
+  }
+
   function wattson_q_bar(){
     if(legend == "Wattson"){
       if(wattson_q.decreased && engine.vision.check == 1){
@@ -782,157 +936,6 @@ l="50-90"
     }
   }
 
-  function loba_q_bar(){
-    if(legend == "Loba"){
-      if(loba_q.decreased && engine.vision.check == 1 && !loba_t.decreased){
-        stateMgr.Push(new reverseBurstRippleState("#ffffff", "#8400ff", "#ffffff"));
-      }
-    }
-  }
-  function loba_q1_bar(){
-    if(legend == "Loba"){
-      if(loba_t.decreased && engine.vision.check == 1 && loba_t.diff >=1){
-        stateMgr.Push(new BurstRippleState("#ffffff", "#8400ff", "#ffffff"));
-      }
-    }
-  }
-  function loba_z_bar(){
-    if(legend == "Loba"){
-      if(loba_z.decreased && engine.vision.check == 1 && engine.vision.loba != 1){
-        stateMgr.Push(new lobaZ());
-      }
-    }
-  }
-
-  function rampart_q_bar(){
-    if(legend == "Rampart"){
-      if(rampart_q.decreased && engine.vision.check == 1){
-        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
-      }
-    }
-  }
-  function rampart_q_bar1(){
-    if(legend == "Rampart"){
-      if(rampart_q1.decreased && engine.vision.check == 1){
-        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
-      }
-    }
-  }
-  function rampart_q_bar2(){
-    if(legend == "Rampart"){
-      if(rampart_q2.decreased && engine.vision.check == 1){
-        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
-      }
-    }
-  }
-  function rampart_z_bar(){
-    if(legend  == "Rampart"){
-      if(rampart_z.decreased && engine.vision.check == 1){
-        stateMgr.Push(new rampartZ());
-      }
-    }
-  }
-
-  function caustic_q_bar(){
-    if(legend == "Caustic"){
-      if((caustic_q.decreased && engine.vision.check == 1)){
-      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
-      }
-    }
-  }
-  function caustic_q_bar1(){
-    if(legend == "Caustic"){
-      if((caustic_q1.decreased && engine.vision.check == 1)){
-      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
-      }
-    }
-  }
-  function caustic_q_bar2(){
-    if(legend == "Caustic"){
-      if((caustic_q2.decreased && engine.vision.check == 1)){
-      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
-      }
-    }
-  }
-  function caustic_z_bar(){
-    if(legend  == "Caustic"){
-      if(caustic_z.increased && engine.vision.check == 1){
-        stateMgr.Push(new causticZ());
-      }
-    }
-  }
-
-  function lifeline_q_bar(){
-    if(legend == "Lifeline"){
-      if(lifeline_q.decreased && engine.vision.check == 1){
-      stateMgr.Push(new BurstRippleState("#09ff00", "#63ffef", "#63ffef"));
-      }
-    }
-  }
-  function lifeline_z_bar(){
-    if(legend  == "Lifeline"){
-      if(lifeline_z.increased && engine.vision.check == 1){
-        stateMgr.Push(new lifelineZ());
-      }
-    }
-  }
-
-  function octane_q_bar(){
-    if(legend == "Octane"){
-      if(octane_q.decreased && engine.vision.check == 1){
-        for (let i = 0; i < 20; i++) {
-          setTimeout(function () {
-            effects.push(
-              new moveableBar(-50, random(0, 200), 100, 20, 15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
-            );
-          }, random(0, 800));
-          setTimeout(function () {
-            effects.push(
-              new moveableBar(360, random(0, 200), 100, 20, -15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
-            );
-          }, random(0, 800));
-        }
-      }
-    }
-  }
-  function octane_z_bar(){
-    if(legend  == "Octane"){
-      if(octane_z.decreased && engine.vision.check == 1){
-        stateMgr.Push(new octaneZ());
-      }
-    }
-  }
-
-  function mirage_q_bar(){
-    if(legend == "Mirage"){
-      if(mirage_q.decreased && engine.vision.check == 1){
-      stateMgr.Push(new BurstRippleState("#0004ff", "#63ffef", "#0004ff"));
-      }
-    }
-  }
-  function mirage_z_bar(){
-    if(legend  == "Mirage"){
-      if(mirage_z.decreased && engine.vision.check == 1){
-        stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
-      }
-    }
-  }
-
-  function pathfinder_q_bar(){
-    if(legend == "Pathfinder"){
-      if(pathfinder_q.decreased && engine.vision.check == 1){
-      stateMgr.Push(new pathfinderQ());
-      }
-    }
-  }
-  function pathfinder_z_bar(){
-    if(legend  == "Pathfinder"){
-      if(pathfinder_z.decreased && engine.vision.check == 1){
-        stateMgr.Push(new pathfinderZ());
-      }
-    }
-  }
-
   function wraith_q_bar(){
     if(legend == "Wraith"){
       if(wraith_q.decreased ){
@@ -952,33 +955,18 @@ l="50-90"
     }
   }
 
-  function gibraltar_q_bar(){
-    if(legend == "Gibraltar"){
-      if(gibraltar_q.decreased && engine.vision.check == 1){
-      stateMgr.Push(new PulseRippleState("#004cff", false, 850));
-      }
-    }
-  }
-  function gibraltar_z_bar(){
-    if(legend  == "Gibraltar"){
-      if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeter.increased){
-        stateMgr.Push(new gibraltarZ());
-        
+  function valk_q_bar(){
+    if(legend == "Valkyrie"){
+      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased){
+        stateMgr.Push( new valkQ());
       }
     }
   }
 
-  function bloodhound_z_bar(){
-    if(legend  == "Bloodhound"){
-      if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeter.increased){
-      stateMgr.Push(new hueControl("#ff7300", true));
-      }
-    }
-  }
-  function bloodhound_q_bar(){
-    if(legend == "Bloodhound"){
-      if(bloodhound_q.decreased && engine.vision.check == 1){
-      stateMgr.Push(new PulseRippleState("#ff7300", true, 700));
+  function valk_z_bar(){
+    if(legend == "Valkyrie"){
+      if(valk_z.value==1 && valk_z.increased ){
+        stateMgr.Push(new valkZ(100));
       }
     }
   }
