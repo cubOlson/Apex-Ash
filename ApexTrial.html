@@ -1,0 +1,3452 @@
+<head>
+  <title>Apex Legends Cub</title>
+  <meta description="Meters and ambiance for Apex Legends." />
+  <meta publisher="Whirlwind FX" />
+  <meta
+    property="keyScrenBrightness"
+    label="Brightness"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+  />
+  <meta property="enableSelect" label="Manual Select" type="boolean" default="1" />
+  <meta property="character" label="Legends" type="combobox" values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,Octane,Pathfinder,Rampart,Revenant,Wattson,Wraith,Valkyrie,Seer" default="Bloodhound">
+
+  <meta property="effectHex" label="Legends Select Color" type="color" min="0" max="360" default="#efff00" />
+  <meta property="enableShield" label="Shield effects" type="boolean" default="1" />
+  <meta property="enableSyringe" label="Syringe effects" type="boolean" default="1" />
+  <meta property="enableShieldR" label="Shield Recharge effects" type="boolean" default="1" />
+  <meta property="enablePhoneix" label="Phoneix Kit effects" type="boolean" default="1" />
+  <meta property="enableHealth" label="Health effects" type="boolean" default="1" />
+  <meta property="enableRevive" label="Revive effects" type="boolean" default="1" />
+  <meta
+	meter="cyrp2"
+	tags="apex,VLC"
+	type="area"
+	x= "0.4948"
+	y= "0.8648"
+	height= "0.00037"
+	width= "0.00016"
+	h="130-140"
+	s="45-50"
+	l="77-80"
+/>
+  <meta
+	meter="valkz"
+  tags="apex,VLC"
+	type="area"
+	x= "0.6885"
+	y= "0.3944"
+	height= "0.012"
+	width= "0.0026"
+	h="145-155"
+	s="70-100"
+	l="87-100"
+/>
+  <meta
+	meter="cyrp"
+	tags="apex,VLC"
+	type="area"
+	x= "0.4932"
+	y= "0.9065"
+	height= "0.0028"
+	width= "0.0036"
+	h="135-140"
+	s="40-50"
+	l="89-95"
+/>
+  <meta
+	meter="t"
+	tags="apex,VLC"
+	type="ocr_textmatch"
+  x="0.8146"
+	y="0.5324"
+	width="0.0141"
+	height="0.0167"
+	string="TO"
+	confidence="70"
+	/>
+  <meta
+	meter="dprotection"
+	tags="apex,VLC"
+	type="area"
+	x= "0.626"
+	y= "0.875"
+	height= "0.0009"
+	width= "0.0005"
+	h="0-10"
+	s="96-100"
+	l="95-100"
+/>
+  <meta
+	meter="loba2"
+	tags="apex,VLC"
+	type="area"
+	x= "0.6068"
+	y= "0.6556"
+	height= "0.0019"
+	width= "0.0005"
+	h="25-30"
+	s="85-95"
+	l="95-100"
+/>
+  <meta
+	meter="mini"
+	tags="apex,VLC"
+	type="area"
+	x= "0.8755"
+	y= "0.9667"
+	height= "0.00037"
+	width= "0.00031"
+	h="295-300"
+	s="57-100"
+	l="60-65"
+/>
+  <meta
+	meter="q1"
+	tags="apex,VLC"
+	type="area"
+	x= "0.3276"
+	y= "0.8991"
+	height= "0.00056"
+	width= "0.00021"
+	h="20-60"
+	s="50-100"
+	l="70-100"
+/>
+<meta
+	meter="q2"
+	tags="apex,VLC"
+	type="area"
+	x= "0.3349"
+	y= "0.9204"
+	height= "0.0019"
+	width= "0.001"
+  h="30-60"
+	s="70-100"
+	l="70-100"
+/>
+<meta
+	meter="q3"
+	tags="apex,VLC"
+	type="area"
+	x= "0.3312"
+	y= "0.9111"
+	height= "0.00037"
+	width= "0.00021"
+  h="30-60"
+	s="70-100"
+	l="70-100"
+/>
+  <meta
+	meter="yellowz2"
+	tags="apex,VLC"
+	type="area"
+	x= "0.507"
+	y= "0.8833"
+	height= "0.000056"
+	width= "0.000042"
+	h="50-60"
+	s="41-95"
+	l="60-100"
+/>
+  <meta
+	meter="check2"
+	tags="apex,VLC"
+	type="area"
+	x= "0.499"
+	y= "0.9222"
+	height= "0.0056"
+	width= "0.0021"
+  h="54-56"
+	s="59-100"
+	l="50-100"
+/>
+  <meta
+	meter="wz"
+	tags="apex,VLC"
+	type="area"
+	x= "0.4958"
+	y= "0.9593"
+	height= "0.0000046"
+	width= "0.000001"
+  h="0-360"
+	s="0-15"
+	l="70-100"
+/>
+<meta
+meter="z"
+tags="apex,VLC"
+type="area"
+x= "0.4958"
+y= "0.9593"
+height= "0.0000046"
+width= "0.000001"
+h="0-160"
+s="0-1"
+l="70-90"
+/>
+<meta
+meter="rz"
+tags="apex,VLC"
+type="area"
+x= "0.4962"
+y= "0.9593"
+height= "0.0000046"
+width= "0.000001"
+h="0-360"
+s="0-15"
+l="85-95"
+/>
+<meta
+meter="wattz"
+tags="apex,VLC"
+type="area"
+x= "0.4962"
+y= "0.9593"
+height= "0.0000046"
+width= "0.000001"
+h="0-360"
+s="0-15"
+l="70-95"
+/>
+<meta
+meter="hz"
+tags="apex,VLC"
+type="area"
+x= "0.4958"
+y= "0.9593"
+height= "0.0000046"
+width= "0.000001"
+h="345-360"
+s="0-15"
+l="70-100"
+/>
+<meta
+meter="yellowz"
+tags="apex,VLC"
+type="area"
+x= "0.4958"
+y= "0.9593"
+height= "0.0000046"
+width= "0.000001"
+h="50-56"
+s="50-90"
+l="50-90"
+/>
+  <meta
+	meter="check"
+	tags="apex,VLC"
+	type="area"
+	x= "0.2641"
+	y= "0.9602"
+	height= "0.0028"
+	width= "0.0005"
+  h="0-360"
+	s="0-15"
+	l="70-100"
+/>
+  <meta
+	meter="q"
+	tags="apex,VLC"
+	type="area"
+  x= "0.3208"
+	y= "0.9593"
+	height= "0.00009"
+	width= "0.00026"
+	h="0-180"
+	s="0-1"
+	l="70-100"
+/>
+  <meta
+  tags="apex,VLC"
+    meter="deathBox1"
+    x=".075"
+    y=".1083333"
+    width=".0046875"
+    h="270-310"
+    s="32-63"
+    l="80-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="deathBox2"
+    x=".275"
+    y=".8944444"
+    width=".0197916"
+    height=".0037037037"
+    h="0-360"
+    s="0-13"
+    l="67-100"
+    type="area"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="health"
+    x=".0932"
+    y=".937"
+    width=".119"
+    h="0-360"
+    s="0-40"
+    l="90-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="takingDamage"
+    x=".0932"
+    y=".937"
+    width=".119"
+    h="0-15"
+    s="65-100"
+    l="50-100"
+    type="area"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="zoneClosing"
+    x=".027"
+    y=".296"
+    width=".12"
+    h="0-30"
+    s="0-100"
+    l="30-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="phoneixKit"
+    x=".6989"
+    y=".6925"
+    width=".13"
+    h="270-280"
+    s="40-90"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="shieldCharge"
+    x=".6989"
+    y=".6925"
+    width=".13"
+    h="200-220"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="revive"
+    x=".6989"
+    y=".6925"
+    width=".13"
+    h="60-95"
+    s="50-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="syringeCharge"
+    x=".6989"
+    y=".6925"
+    width=".13"
+    h="0-10"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="goldShield"
+    x=".4489"
+    y=".8888"
+    width=".13"
+    h="40-50"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="blueShield"
+    x=".4489"
+    y=".8888"
+    width=".13"
+    h="200-220"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="purpleShield"
+    x=".4489"
+    y=".8888"
+    width=".13"
+    h="270-290"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+  tags="apex,VLC"
+    meter="blueShieldBar"
+    x=".0932"
+    y=".925"
+    width=".09"
+    h="200-220"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="purpleShieldBar"
+    x=".0932"
+    y=".925"
+    width=".09"
+    h="270-290"
+    s="70-100"
+    l="0-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="goldShieldBar"
+    x=".0933"
+    y=".925"
+    width=".09"
+    h="40-50"
+    s="70-100"
+    l="50-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="redShieldBar"
+    x=".0933"
+    y=".925"
+    width=".09"
+    h="0-15"
+    s="65-100"
+    l="50-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="osdEsc"
+    x=".0354"
+    y=".960"
+    width=".02"
+    h="0-360"
+    s="0-10"
+    l="80-100"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="hitEscape"
+    x=".04270"
+    y=".92314"
+    width=".012"
+    h="0-360"
+    s="0-10"
+    l="80-100"
+    type="linear"
+  />
+  <!-- EDIT ULTREADY FUNCTION, NOT IN WORKING STATE-->
+  <meta
+	tags="apex,VLC"
+    meter="ultReady"
+    x=".49482"
+    y=".85185"
+    width=".008"
+    h="130-160"
+    s="190-220"
+    l="130-160"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="tabOut"
+    x=".5"
+    y=".5"
+    width=".4"
+    h="0-360"
+    s="0-10"
+    l="0-10"
+    type="linear"
+  />
+  <meta
+	tags="apex,VLC"
+    meter="confirm"
+    x=".875"
+    y=".6759"
+    width=".0001"
+    h="0-100"
+    s="0-10"
+    l="100-240"
+    type="linear"
+  />
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //tags="apex, apex legends"
+  // SECTION 2 - VARIABLE DECLARATIONS, HERO METER SETUP -----------------------------------------------------------------------------------
+
+  var canvas, ctx;
+  let health, blueShield, purpleShield, goldShield, shieldBar;
+  let characterChanged = false;
+  let healthHistory = [];
+  let shieldHistory = [];
+
+  let blueShieldHistory = [];
+  let purpleShieldHistory = [];
+  let goldShieldHistory = [];
+  let redShieldHistory = [];
+
+  let healAnimLength = 1000;
+  var effects = [];
+
+  var orbs = [];
+  var drops = [];
+  var bursts = [];
+  var shieldAnims = [];
+  var stateMgr = new StateHandler();
+
+  var ash_q = new Meter(3, ash_q_bar);
+  var ash_z = new Meter(3, ash_z_bar);
+
+  var bloodhound_q = new Meter(3, bloodhound_q_bar);
+  var bloodhound_z = new Meter(3, bloodhound_z_bar);
+  var checkmeter = new Meter(3, bloodhound_z_bar);
+
+  var gibraltar_q = new Meter(3, gibraltar_q_bar);
+  var gibraltar_z = new Meter(3, gibraltar_z_bar);
+
+  var wraith_q = new Meter(3, wraith_q_bar);
+  var wraith_z = new Meter(3, wraith_z_bar);
+  var yellowZ = new Meter(3, wraith_z_bar);
+
+  var pathfinder_q = new Meter(3, pathfinder_q_bar);
+  var pathfinder_z = new Meter(3, pathfinder_z_bar);
+
+  var mirage_q = new Meter(3, mirage_q_bar);
+  var mirage_z = new Meter(3, mirage_z_bar);
+
+  var lifeline_q = new Meter(3, lifeline_q_bar);
+  var lifeline_z = new Meter(3, lifeline_z_bar);
+
+  var caustic_q = new Meter(3, caustic_q_bar);
+  var caustic_q1 = new Meter(3, caustic_q_bar1);
+  var caustic_q2 = new Meter(3, caustic_q_bar2);
+  var caustic_z = new Meter(3, caustic_z_bar);
+
+  var rampart_q = new Meter(3, rampart_q_bar);
+  var rampart_q1 = new Meter(3, rampart_q_bar1);
+  var rampart_q2 = new Meter(3, rampart_q_bar2);
+  var rampart_z = new Meter(3, rampart_z_bar);
+
+  var loba_q = new Meter(3, loba_q_bar);
+  var loba_z = new Meter(3, loba_z_bar);
+  var loba_t = new Meter(3, loba_q1_bar);
+
+  var wattson_q = new Meter(3, wattson_q_bar);
+  var wattson_q1 = new Meter(3, wattson_q_bar1);
+  var wattson_q2 = new Meter(3, wattson_q_bar2);
+  var wattson_q3 = new Meter(3, wattson_q_bar3);
+  var wattson_z = new Meter(3, wattson_z_bar);
+
+  var bangalore_q = new Meter(3, bangalore_q_bar);
+  var bangalore_z = new Meter(3, bangalore_z_bar);
+  var bangalore_q1 = new Meter(3, bangalore_q_bar1);
+
+  var revenant_q = new Meter(3, revenant_q_bar);
+  var revenant_z = new Meter(3, revenant_z_bar);
+  var revenant_q1 = new Meter(3, revenant_q_bar1);
+  var revenant_z2 = new Meter(3, revenant_z_bar2);
+
+  var fuse_q = new Meter(3, fuse_q_bar);
+  var fuse_z = new Meter(3, fuse_z_bar);
+  var fuse_z2 = new Meter(3, fuse_z_bar1);
+
+  var horizon_q = new Meter(3, horizon_q_bar);
+  var horizon_z = new Meter(3, horizon_z_bar);
+
+  var crypto_z = new Meter(3, crypto_z_bar);
+  var crypto_z2 = new Meter(3, crypto_z_bar2);
+
+  var octane_q = new Meter(3, octane_q_bar);
+  var octane_z = new Meter(3, octane_z_bar);
+
+  var valk_q = new Meter(3, valk_q_bar);
+  var valk_z = new Meter(3, valk_z_bar);
+
+  var seer_q = new Meter(3, seer_q_bar);
+  var seer_z = new Meter(3, seer_z_bar);
+
+  // SECTION 3 - METER CALLBACK FUNCTIONS DEFINED --------------------------------------------------------------------------
+
+  function ash_q_bar(){
+    if(legend == "Ash"){
+      if(ash_q.decreased && engine.vision.check == 1){
+        console.log('ASH Q ACTIVATED');
+      }
+    }
+  }
+  function ash_z_bar(){
+    if(legend == "Ash"){
+      if(ash_z.decreased && engine.vision.check == 1){
+        console.log('ASH Z ACTIVATED');
+      }
+    }
+  }
+
+  function seer_q_bar(){
+    if(legend == "Seer"){
+      if(seer_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new seerQ());
+      }
+    }
+  }
+
+  function seer_z_bar(){
+    if(legend == "Seer"){
+      if(seer_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new seerZ());
+      }
+    }
+  }
+
+  function valk_q_bar(){
+    if(legend == "Valkyrie"){
+      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased){
+        stateMgr.Push( new valkQ());
+      }
+    }
+  }
+
+  function valk_z_bar(){
+    if(legend == "Valkyrie"){
+      if(valk_z.value==1 && valk_z.increased ){
+        stateMgr.Push(new valkZ(100));
+      }
+    }
+  }
+
+ function crypto_z_bar(){
+    if(legend == "Crypto"){
+      if(crypto_z.decreased && engine.vision.check == 1 && !crypto_z2.increased){
+        stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
+      }
+    }
+  }
+
+  function crypto_z_bar2(){
+    if(legend == "Crypto"){
+      if(crypto_z2.decreased){
+        stateMgr.Push(new BurstRippleState("#4c9c48", "#fcfcfc", "#4c9c48"));
+      }
+    }
+  }
+  function horizon_q_bar(){
+    if(legend == "Horizon"){
+      if(horizon_q.decreased && engine.vision.check == 1){
+        stateMgr.Push( new horizonQ());
+      }
+    }
+  }
+  function horizon_z_bar(){
+    if(legend == "Horizon"){
+      if(horizon_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
+      }
+    }
+  }
+  
+  function fuse_q_bar(){
+    if(legend == "Fuse"){
+      if(fuse_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new fuseQ());
+      }
+    }
+  }
+  function fuse_z_bar(){
+    if(legend == "Fuse"){
+      if(fuse_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new fuseZ());
+      }
+    }
+  }
+  function fuse_z_bar1(){
+    if(legend == "Fuse"){
+      if(fuse_z2.value == 1 && engine.vision.check == 1){
+        stateMgr.Push(new fuseZ2());
+      }
+    }
+  }
+
+  function bangalore_q_bar(){
+    if(legend == "Bangalore"){
+      if(bangalore_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new bangaloreQ("#fac123", "#ededed", "#fac123"));
+      }
+    }
+  }
+  function bangalore_q_bar1(){
+    if(legend == "Bangalore"){
+      if(bangalore_q1.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new bangaloreQ("#fac123", "#ededed", "#fac123"));
+      }
+    }
+  }
+  function bangalore_z_bar(){
+    if(legend == "Bangalore"){
+      if(bangalore_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new bangaloreZ());
+      }
+    }
+  }
+
+  function revenant_q_bar(){
+    if(legend == "Revenant"){
+      if(revenant_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
+      }
+    }
+  }
+  function revenant_q_bar1(){
+    if(legend == "Revenant"){
+      if(revenant_q1.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
+      }
+    }
+  }
+  function revenant_z_bar2(){
+    if(legend == "Revenant"){
+      if(revenant_z2.decreased && engine.vision.check == 1){
+        effects.push(new BoostWave(0));
+      }
+    }
+  }
+
+  function revenant_z_bar(){
+    if(legend == "Revenant"){
+      if(revenant_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new revenantZ());
+      }
+    }
+  }
+  function wattson_q_bar(){
+    if(legend == "Wattson"){
+      if(wattson_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+  function wattson_q_bar1(){
+    if(legend == "Wattson"){
+      if(wattson_q1.decreased && engine.vision.check == 1 && wattson_q.value == 1){
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+  function wattson_q_bar2(){
+    if(legend == "Wattson"){
+      if(wattson_q2.decreased && engine.vision.check == 1 && wattson_q.value == 1){
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+  function wattson_q_bar3(){
+    if(legend  == "Wattson"){
+      if(wattson_q3.decreased && engine.vision.check == 1 && wattson_q.value == 1 ){
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+
+  function wattson_z_bar(){
+    if(legend == "Wattson"){
+      if(wattson_z.decreased && engine.vision.check == 1 ){
+        stateMgr.Push(new wattsonZ());
+      }
+    }
+  }
+
+  function loba_q_bar(){
+    if(legend == "Loba"){
+      if(loba_q.decreased && engine.vision.check == 1 && !loba_t.decreased){
+        stateMgr.Push(new reverseBurstRippleState("#ffffff", "#8400ff", "#ffffff"));
+      }
+    }
+  }
+  function loba_q1_bar(){
+    if(legend == "Loba"){
+      if(loba_t.decreased && engine.vision.check == 1 && loba_t.diff >=1){
+        stateMgr.Push(new BurstRippleState("#ffffff", "#8400ff", "#ffffff"));
+      }
+    }
+  }
+  function loba_z_bar(){
+    if(legend == "Loba"){
+      if(loba_z.decreased && engine.vision.check == 1 && engine.vision.loba != 1){
+        stateMgr.Push(new lobaZ());
+      }
+    }
+  }
+
+  function rampart_q_bar(){
+    if(legend == "Rampart"){
+      if(rampart_q.decreased && engine.vision.check == 1){
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_q_bar1(){
+    if(legend == "Rampart"){
+      if(rampart_q1.decreased && engine.vision.check == 1){
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_q_bar2(){
+    if(legend == "Rampart"){
+      if(rampart_q2.decreased && engine.vision.check == 1){
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_z_bar(){
+    if(legend  == "Rampart"){
+      if(rampart_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new rampartZ());
+      }
+    }
+  }
+
+  function caustic_q_bar(){
+    if(legend == "Caustic"){
+      if((caustic_q.decreased && engine.vision.check == 1)){
+      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_q_bar1(){
+    if(legend == "Caustic"){
+      if((caustic_q1.decreased && engine.vision.check == 1)){
+      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_q_bar2(){
+    if(legend == "Caustic"){
+      if((caustic_q2.decreased && engine.vision.check == 1)){
+      stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_z_bar(){
+    if(legend  == "Caustic"){
+      if(caustic_z.increased && engine.vision.check == 1){
+        stateMgr.Push(new causticZ());
+      }
+    }
+  }
+
+  function lifeline_q_bar(){
+    if(legend == "Lifeline"){
+      if(lifeline_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new BurstRippleState("#09ff00", "#63ffef", "#63ffef"));
+      }
+    }
+  }
+  function lifeline_z_bar(){
+    if(legend  == "Lifeline"){
+      if(lifeline_z.increased && engine.vision.check == 1){
+        stateMgr.Push(new lifelineZ());
+      }
+    }
+  }
+
+  function octane_q_bar(){
+    if(legend == "Octane"){
+      if(octane_q.decreased && engine.vision.check == 1){
+        for (let i = 0; i < 20; i++) {
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(-50, random(0, 200), 100, 20, 15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
+            );
+          }, random(0, 800));
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(360, random(0, 200), 100, 20, -15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
+            );
+          }, random(0, 800));
+        }
+      }
+    }
+  }
+  function octane_z_bar(){
+    if(legend  == "Octane"){
+      if(octane_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new octaneZ());
+      }
+    }
+  }
+
+  function mirage_q_bar(){
+    if(legend == "Mirage"){
+      if(mirage_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new BurstRippleState("#0004ff", "#63ffef", "#0004ff"));
+      }
+    }
+  }
+  function mirage_z_bar(){
+    if(legend  == "Mirage"){
+      if(mirage_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
+      }
+    }
+  }
+
+  function pathfinder_q_bar(){
+    if(legend == "Pathfinder"){
+      if(pathfinder_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new pathfinderQ());
+      }
+    }
+  }
+  function pathfinder_z_bar(){
+    if(legend  == "Pathfinder"){
+      if(pathfinder_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new pathfinderZ());
+      }
+    }
+  }
+
+  function wraith_q_bar(){
+    if(legend == "Wraith"){
+      if(wraith_q.decreased ){
+      stateMgr.Push(new wraithQ());
+      }
+    }
+  }
+  function wraith_z_bar(){
+    if(legend  == "Wraith"){
+      if(wraith_z.decreased && engine.vision.check == 1){
+        stateMgr.Push(new reversePulseRippleState("#8c00ff", true, 750));
+
+      }
+      if(yellowZ.decreased && engine.vision.check == 1){
+        stateMgr.Push(new PulseRippleState("#8c00ff", true, 700));
+      }
+    }
+  }
+
+  function gibraltar_q_bar(){
+    if(legend == "Gibraltar"){
+      if(gibraltar_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new PulseRippleState("#004cff", false, 850));
+      }
+    }
+  }
+  function gibraltar_z_bar(){
+    if(legend  == "Gibraltar"){
+      if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+        stateMgr.Push(new gibraltarZ());
+        
+      }
+    }
+  }
+
+  function bloodhound_z_bar(){
+    if(legend  == "Bloodhound"){
+      if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+      stateMgr.Push(new hueControl("#ff7300", true));
+      }
+    }
+  }
+  function bloodhound_q_bar(){
+    if(legend == "Bloodhound"){
+      if(bloodhound_q.decreased && engine.vision.check == 1){
+      stateMgr.Push(new PulseRippleState("#ff7300", true, 700));
+      }
+    }
+  }
+
+  // ENGINE READY FUNCTION ---------------------------------------------------------------------------------------------
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+ 
+
+  // used to record the last time that a revive or tower was performed.  Right now it is used to
+  // avoid false triggers of the shield effects, but it could have more uses in the
+  function recentRev() {
+    this.status = true;
+    this.lifetime = 500;
+
+    this.run = function () {
+      if (this.lifetime > 0) {
+        this.lifetime--;
+      }
+      if (this.lifetime <= 0) {
+        this.lifetime = 0;
+        this.status = false;
+      }
+    };
+    this.getStatus = function () {
+      return status;
+    };
+    this.getLifetime = function () {
+      return this.lifetime;
+    };
+    this.setLifetime = function (life) {
+      this.lifetime = life;
+    };
+  }
+  
+  
+  var legend;
+  var recentRevive = new recentRev();
+  recentRevive.setLifetime(0);
+
+  // SECTION 4 - UPDATE FUNCTION --------------------------------------------------------------------------------------------------
+  function update() {
+    drawScreenOnKeyboard();
+    checkmeter.setValue(engine.vision.check2);
+    var colors = hexToHSL(effectHex);
+
+    //MANUAL SELECT BUTTON -----------------------------------------------------------------------------
+      if(enableSelect){
+        if (legend !== character){
+          characterChanged = true;
+        }
+        legend = character;
+      }
+
+    // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
+      if(legend == "Ash"){
+        ash_q.setValue(engine.vision.q);
+        ash_z.setValue(engine.vision.z);
+      }
+      if(legend == "Fuse"){
+        fuse_q.setValue(engine.vision.q);
+        fuse_z.setValue(engine.vision.z);
+        fuse_z2.setValue(engine.vision.t);
+      }
+      if(legend == "Valkyrie"){
+        valk_q.setValue(engine.vision.q);
+        valk_z.setValue(engine.vision.valkz);
+      }
+      if(legend == "Horizon"){
+        horizon_q.setValue(engine.vision.q);
+        horizon_z.setValue(engine.vision.hz);
+      }
+      if(legend == "Rampart"){
+        rampart_q.setValue(engine.vision.q);
+        rampart_q1.setValue(engine.vision.q1);
+        rampart_q2.setValue(engine.vision.q2);
+        rampart_z.setValue(engine.vision.z);
+      }
+      if(legend == "Loba"){
+        loba_q.setValue(engine.vision.q);
+        loba_z.setValue(engine.vision.z);
+        loba_t.setValue(engine.vision.loba2);
+      }
+      if(legend == "Revenant"){
+        revenant_q.setValue(engine.vision.q);
+        revenant_q1.setValue(engine.vision.q1);
+        revenant_z.setValue(engine.vision.rz);
+        revenant_z2.setValue(engine.vision.dprotection);
+      }
+      if(legend == "Crypto"){
+        crypto_z.setValue(engine.vision.z);
+        crypto_z2.setValue(engine.vision.cyrp2);
+      }
+      if(legend == "Wattson"){
+        wattson_q.setValue(engine.vision.q);
+        wattson_q1.setValue(engine.vision.q1);
+        wattson_q2.setValue(engine.vision.q2);
+        wattson_q3.setValue(engine.vision.q3);
+        wattson_z.setValue(engine.vision.wattz);
+      }
+      if(legend == "Octane"){
+        octane_q.setValue(engine.vision.q);
+        octane_z.setValue(engine.vision.z);
+      }
+      if(legend == "Mirage"){
+        mirage_q.setValue(engine.vision.q);
+        mirage_z.setValue(engine.vision.z);
+      }
+      if(legend == "Caustic"){
+        caustic_q.setValue(engine.vision.q);
+        caustic_q1.setValue(engine.vision.q1);
+        caustic_q2.setValue(engine.vision.q2);
+        caustic_z.setValue(engine.vision.yellowz2);
+      }
+      if(legend == "Bangalore"){
+        bangalore_q.setValue(engine.vision.q);
+        bangalore_q1.setValue(engine.vision.q1);
+        bangalore_z.setValue(engine.vision.z);
+      }
+      if(legend == "Wraith"){
+        wraith_q.setValue(engine.vision.q);
+        wraith_z.setValue(engine.vision.wz);
+        yellowZ.setValue(engine.vision.yellowz);
+      }
+      if(legend == "Gibraltar"){
+        gibraltar_q.setValue(engine.vision.q);
+        gibraltar_z.setValue(engine.vision.z);
+      }
+      if(legend == "Lifeline"){
+        lifeline_q.setValue(engine.vision.q);
+        lifeline_z.setValue(engine.vision.yellowz2);
+      }
+      if(legend == "Bloodhound"){
+        bloodhound_q.setValue(engine.vision.q);
+        bloodhound_z.setValue(engine.vision.z);
+      }
+      if(legend == "Pathfinder"){
+        pathfinder_q.setValue(engine.vision.q);
+        pathfinder_z.setValue(engine.vision.yellowz2);
+      }
+      if(legend == "Seer"){
+        seer_q.setValue(engine.vision.q);
+        seer_z.setValue(engine.vision.z);
+      }
+    if (characterChanged){
+      for (let i = 0; i < 20; i++) {
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(-50, random(0, 200), 100, 20, 15, 0, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.7)
+            );
+          }, random(0, 800));
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(360, random(0, 200), 100, 20, -15, 0, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.7)
+            );
+          }, random(0, 800));
+        }
+        characterChanged = false;
+    }
+    if(enableHealth){
+    health = engine.vision.health;
+    }
+    zone = engine.vision.zoneClosing;
+    if(enableShield){
+    goldShield = engine.vision.goldShield;
+    blueShield = engine.vision.blueShield;
+    purpleShield = engine.vision.purpleShield;
+    }
+    // TODO: fix trigger for engine.vision.ultReady, make ult ready animation, make it play only once
+    // why does half of the canvas get lit up with a certain color?
+
+    // var ultReady1 = (engine.vision.hitEscape > 0.7) ? true : false;
+
+    // if (ultReady1) {
+    //   ctx.fillStyle = "blue";
+    //   ctx.fillRect(100, 100, 50, 50);
+    //   ultReadyAnimaiton();
+
+    // }
+
+    var bs1 =
+      engine.vision.blueShield > 0 ? 0 : engine.vision.blueShield - 0.01;
+    var ps1 = engine.vision.purpleShield > 0 ? 0 : engine.vision.purpleShield;
+    var gs1 =
+      engine.vision.goldShield > 0 ? 0 : engine.vision.blueShield + 0.03;
+
+    // may need to revert this...?
+    shieldBar = bs1 + ps1 + gs1;
+
+    // //console.log("Health is: " + health);
+    // //console.log("Zone is: " + zone);
+    // //console.log("damage is: " + damage);
+    // console.log("--------------------------" );
+
+    // console.log("Shield is: " + shieldBar);
+    // console.log("blue: " + engine.vision.blueShieldBar);
+    // console.log("purple: " + engine.vision.purpleShieldBar);
+    // console.log("gold: " + engine.vision.goldShieldBar);
+
+    healthHistory.push(health);
+    if (healthHistory.length > 20) {
+      healthHistory.splice(0, 1);
+      var iPrevFrameDiff = healthHistory[19] - healthHistory[18];
+      var iPrevFrameAbsDiff = Math.abs(iPrevFrameDiff);
+      var bScreenTransition = iPrevFrameAbsDiff == 1;
+
+      if (healthHistory[18] != 0 && healthHistory[19] != 0) {
+        if (!bScreenTransition && iPrevFrameDiff > 0.3) {
+          drawHealing(iPrevFrameDiff);
+          console.log("Triggering heal, diff: " + iPrevFrameDiff);
+        }
+      }
+      if (engine.vision.osdEsc < 0.9) {
+        if (
+          healthHistory[19] - healthHistory[18] < 0 &&
+          healthHistory[18] != 0 &&
+          healthHistory[19] != 0
+        ) {
+          var damage = iPrevFrameDiff;
+          console.log("damage: " + iPrevFrameDiff);
+          var numDrops = Math.floor(50);
+          for (i = 0; i < 50; i++) {
+            drops.push(
+              new DamageDrop(Math.random() * 320, Math.random() * 200)
+            );
+          }
+        }
+      }
+    }
+
+    if (engine.vision.revive > 0.1) {
+      recentRevive.setLifetime(500);
+    }
+    recentRevive.run();
+
+    if (
+      engine.vision.deathBox1 > 0.7 ||
+      engine.vision.deathBox2 > 0.7 ||
+      engine.vision.osdEsc > 0.9 ||
+      engine.vision.hitEscape > 0.7 ||
+      recentRevive.getLifetime() > 300 ||
+      engine.vision.tabOut > 0.95
+    ) {
+      shieldHistory.push(0.3);
+      blueShieldHistory.push(0.3);
+      purpleShieldHistory.push(0.3);
+      goldShieldHistory.push(0.3);
+      redShieldHistory.push(0.3);
+    } else {
+      shieldHistory.push(shieldBar);
+      blueShieldHistory.push(engine.vision.blueShieldBar);
+      purpleShieldHistory.push(engine.vision.purpleShieldBar);
+      goldShieldHistory.push(engine.vision.goldShieldBar);
+      redShieldHistory.push(engine.vision.redShieldBar);
+    }
+    if (shieldHistory.length > 20) {
+      shieldHistory.splice(0, 1);
+    }
+    if (blueShieldHistory.length > 20) {
+      blueShieldHistory.splice(0, 1);
+    }
+    if (purpleShieldHistory.length > 20) {
+      purpleShieldHistory.splice(0, 1);
+    }
+    if (goldShieldHistory.length > 20) {
+      goldShieldHistory.splice(0, 1);
+    }
+    if (redShieldHistory.length > 20) {
+      redShieldHistory.splice(0, 1);
+    }
+    if (
+      engine.vision.osdEsc < 0.9 &&
+      engine.vision.hitEscape < 0.7 &&
+      engine.vision.deathBox2 < 0.7
+    ) {
+      if (blueShieldHistory[18] < blueShieldHistory[19]) {
+        if (engine.vision.blueShieldBar > 0.1) {
+          shieldAnims.push(new ShieldAnimation("rgba(19, 101, 183, 0.6"));
+        }
+      }
+      if (purpleShieldHistory[18] < purpleShieldHistory[19]) {
+        if (engine.vision.purpleShieldBar > 0.1) {
+          shieldAnims.push(new ShieldAnimation("rgba(139, 35, 224, 0.6"));
+        }
+      }
+      if (goldShieldHistory[18] < goldShieldHistory[19]) {
+        if (engine.vision.goldShieldBar > 0.1) {
+          shieldAnims.push(new ShieldAnimation("rgba(204, 157, 4, 0.8"));
+        }
+      }
+      if (redShieldHistory[18] < redShieldHistory[19]) {
+        if (engine.vision.redShieldBar > 0.2) {
+          shieldAnims.push(new ShieldAnimation("rgba(255, 0, 0, 0.8"));
+        }
+      }
+    }
+    for (i = 0; i < orbs.length; i++) {
+      orbs[i].draw();
+      orbs[i].update();
+    }
+
+    for (i = 0; i < orbs.length; i++) {
+      if (orbs[i].lifetime <= 0) {
+        orbs.splice(i, 1);
+      }
+    }
+
+    for (i = 0; i < drops.length; i++) {
+      drops[i].draw();
+      drops[i].update();
+    }
+
+    for (i = 0; i < drops.length; i++) {
+      if (drops[i].lifetime <= 0) {
+        drops.splice(i, 1);
+      }
+    }
+
+    for (i = 0; i < bursts.length; i++) {
+      bursts[i].draw();
+      bursts[i].update();
+    }
+
+    for (i = 0; i < bursts.length; i++) {
+      if (bursts[i].lifetime <= 0) {
+        bursts.splice(i, 1);
+      }
+    }
+
+    for (i = 0; i < shieldAnims.length; i++) {
+      shieldAnims[i].draw();
+      shieldAnims[i].update();
+    }
+
+    for (i = 0; i < shieldAnims.length; i++) {
+      if (shieldAnims[i].lifetime <= 0) {
+        shieldAnims.splice(i, 1);
+      }
+    }
+
+    // TODO add ocr for these to prevent false triggers
+    // var timer1 = engine.vision.timerOCR1;
+    // var timer2 = engine.vision.timerOCR2;
+    // var timer3 = engine.vision.timerOCR3;
+    // && ((timer1 > 0 && timer1 <= 100 || timer2 > 0 && timer2 <= 100 || timer3 > 0 && timer3 <= 100))
+
+    var confirmCharge = engine.vision.confirm;
+    if(enablePhoneix){ 
+    if (engine.vision.phoneixKit > 0.1 && confirmCharge > 0.8) {
+      drawSweep(engine.vision.phoneixKit, "rgba(139, 35, 224, 0.9)");
+    }
+
+    if (engine.vision.phoneixKit > 0.95 && confirmCharge > 0.8) {
+      bursts.push(new ColorBurst(160, 100, "rgb(139, 35, 224"));
+      }
+    }
+    if(enableShieldR){
+    if (engine.vision.shieldCharge > 0.1 && confirmCharge > 0.8) {
+      drawSweep(engine.vision.shieldCharge, "rgba(19, 101, 183, 0.9");
+    }
+    
+    if (engine.vision.shieldCharge > 0.95 && confirmCharge > 0.8) {
+      bursts.push(new ColorBurst(160, 100, "rgb(19, 101, 183"));
+      }
+    }
+    if(enableSyringe){
+    if (engine.vision.syringeCharge > 0.1 && confirmCharge > 0.8) {
+      drawSweep(engine.vision.syringeCharge, "rgba(255, 0, 0, 0.9");
+    }
+  
+    if (engine.vision.syringeCharge > 0.95 && confirmCharge > 0.8) {
+      bursts.push(new ColorBurst(160, 100, "rgb(255, 0, 0"));
+    }
+    }
+    if(enableRevive){
+    if (engine.vision.revive > 0.1) {
+      drawSweepUp(engine.vision.revive, "rgba(123, 174, 0, 0.9");
+    }
+
+    if (engine.vision.revive > 0.95) {
+      bursts.push(new ColorBurst(160, 100, "rgb(123, 174, 0"));
+      }
+    }
+    stateMgr.Process();
+    
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0){
+        effects.splice(i, 1);
+      }
+    }
+    
+    window.requestAnimationFrame(update);
+  }
+  //END UPDATE FUNCTION -----------------------------------------------------------------------
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+  function seerZ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 5000;
+        this.count = 2000;
+        this.color = "#ff8c00";
+        this.color2 = "#ff8c00";
+        this.isHollow = false;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        if(this.elapsed < 2000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        effects.push(
+              new moveableBar(
+                random(0, 360),
+                random(0, 200),
+                20,
+                20,
+                random(-5, 5),
+                random(-5, 5),
+                186 + random(-20, 20),
+                100 + random(-20, 20),
+                50,
+                0.9
+              )
+            );
+            var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+        this.count -= 50;      
+        }
+        };
+    }
+
+    function seerQ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 5000;
+        this.count = 2000;
+        this.color = "#00f2ff";
+        this.color2 = "#00f2ff";
+        this.isHollow = true;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        if(this.elapsed < 2000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        effects.push(
+              new moveableBar(
+                random(0, 360),
+                random(0, 200),
+                20,
+                20,
+                random(-5, 5),
+                random(-5, 5),
+                0 + random(-20, 20),
+                100 + random(-20, 20),
+                100,
+                0.9
+              )
+            );
+            var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+        }
+        };
+    }
+
+  function BurstRippleState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.size = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.size+=5;
+    };
+  }
+
+  function reverseBurstRippleState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.size = 320;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration || this.size == 0) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.size-=5;
+    };
+  }
+  function hexToHSL(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    var r = parseInt(result[1], 16);
+    var g = parseInt(result[2], 16);
+    var b = parseInt(result[3], 16);
+
+    (r /= 255), (g /= 255), (b /= 255);
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h,
+      s,
+      l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+      }
+      h /= 6;
+    }
+
+    s = s * 100;
+    s = Math.round(s);
+    l = l * 100;
+    l = Math.round(l);
+    h = Math.round(360 * h);
+
+    var colors = [];
+    colors['h'] = h;
+    colors['s'] = s;
+    colors['l'] = l;
+
+    return colors;
+  }
+  function SparkleEffect(hue, saturation, lightness, size) {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.lifetime = 40;
+    this.size = size;
+    this.draw = function () {
+      ctx.fillStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + this.lightness + '%)';
+      ctx.fillRect(this.x, this.y, this.size, this.size);
+      this.lifetime--;
+    };
+  }
+  function pathfinderQ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 2000;
+        var split = -300;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#0320fc";
+        ctx.fillRect(split, 80, 350, 60);
+        ctx.fillStyle = "#0320fc";
+        ctx.fillRect(250+split, 60, 100, 60);
+        ctx.fillStyle = "#0320fc";
+        ctx.fillRect(250+split, 100, 100, 60);
+        split+=11;
+        };
+    }
+    function rampartZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        var width = 320;
+        var height = 200;
+         var deg = 1;
+         var radians = 1;
+        this.start = new Date().getTime();
+        this.duration = 2000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        ctx.fillStyle = "#fa8cd3";
+    ctx.fillRect(0, 0, 320, 200);
+
+    ctx.strokeStyle = "#ff6200";
+    ctx.fillStyle = "#ff6200";
+
+    ctx.lineWidth = 30;
+    ctx.beginPath();
+    ctx.arc(160, 100, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(160, 100);
+    radians = degrees_to_radians(deg);
+    ctx.lineTo(
+      getPointX(160, 100, 200, radians),
+      getPointY(160, 100, 200, radians)
+    );
+
+    ctx.stroke();
+
+    if (deg < 360) {
+      deg += 7;
+    } else {
+      deg = 0;
+    }
+        };
+    }
+    function getPointX(c1, c2, radius, angle) {
+    return c1 + Math.cos(angle) * radius;
+  }
+
+  function getPointY(c1, c2, radius, angle) {
+    return c2 + Math.sin(angle) * radius;
+  }
+
+  function degrees_to_radians(degrees) {
+    var pi = Math.PI;
+    return degrees * (pi / 180);
+  }
+
+  function radians_to_degrees(radians) {
+    var pi = Math.PI;
+    return radians * (180 / pi);
+  }
+
+  function horizonQ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 200;
+        var move =0;
+        var move2= 0;
+       
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          262 +
+          "," +
+          50 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }   
+          ctx.fillStyle = "blue";
+          ctx.fillRect(0, split, 320, 60);
+          split-=4;
+      
+        };
+    }
+
+    function octaneZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if(this.elapsed <= 1000 && !(this.elapsed > 1000)){
+        ctx.fillStyle = "#57ff4f";
+        ctx.beginPath();
+        ctx.arc(- 100+ split, 90 + move,30, 0, 2 * Math.PI);
+        ctx.fill();
+        split+=7;
+        move +=3;
+      }
+      if(this.elapsed >= 1000){
+        ctx.fillStyle = "#57ff4f";
+        ctx.beginPath();
+        ctx.arc( 160, 200 - move2 ,60, 0, 2 * Math.PI);
+        ctx.fill();
+        move2+=6;
+      }
+        };
+    }
+
+    function causticZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if(this.elapsed <= 1500){
+        ctx.fillStyle = "yellow";
+        ctx.beginPath();
+        ctx.arc(- 100+ split, 100,45, 0, 2 * Math.PI);
+        ctx.fill();
+        split+=8;
+      }
+      if(this.elapsed > 1500){
+      ctx.fillStyle = "#ebae34";
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = "yellow";
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = "#ebae34";
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+      this.size+=3;
+      }
+        };
+    }
+
+    function fuseZ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 8000;
+        var split = 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        if(this.elapsed < 3000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+            var fallpath = 1;
+                fallpath = 40;
+            this.y += 5; 
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-20, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-10, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-150, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-140, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-50, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-40, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-100, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-90, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-20, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-10, 20, 20);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-40, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-30, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-300, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-290, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-160, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-150, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-100, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-90, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-400, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-390, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-160, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-150, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-40, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-30, 20, 20);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-600, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-590, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-320, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-310, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-400, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-390, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-800, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-790, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-320, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-310, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-70, 20, 20);
+        }
+        if(this.elapsed >= 3000){
+          ctx.fillStyle = "#fc5a03";
+          ctx.fillRect(0, 15, split, 60);
+          ctx.fillRect(0, 0, 40, split);
+          ctx.fillRect(0, 90, split, 40);
+          ctx.fillRect(0, 180, split, 40);
+          ctx.fillRect(290, 0, 60,split);
+          split+=5;
+        }
+        };
+    }
+
+    function fuseZ2() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 2000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 15, 320, 40);
+      ctx.fillRect(0, 0, 40, 200);
+      ctx.fillRect(0, 90, 320, 40);
+      ctx.fillRect(0, 180, 320, 40);
+      ctx.fillRect(290, 0, 40,200);
+        };
+    }
+
+    function revenantZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "#ff8400";
+      ctx.beginPath();
+      ctx.moveTo(160, 200 - split);
+      ctx.lineTo(35, 300- split);
+      ctx.lineTo(285, 300- split);
+      ctx.fillRect(35, 300 - split, 250, 200);
+      ctx.moveTo(160, 600 - split);
+      ctx.lineTo(35, 500- split);
+      ctx.lineTo(285, 500- split);
+      ctx.fill();
+      split+=7;
+        };
+    }
+
+    function wattsonQ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 2000;
+        var speed = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if(this.elapsed <= 1000){
+      ctx.fillStyle = "#03fce3";    
+      ctx.fillRect(0, 0 + speed, 320, 17);
+      ctx.fillStyle = "#03fce3";    
+      ctx.fillRect(0, 30 + speed , 320, 17);
+      ctx.fillStyle = "#03fce3";    
+      ctx.fillRect(0, 60 + speed, 320, 17);
+      }
+      if(this.elapsed > 1000){
+        ctx.fillStyle = "#03fce3";    
+        ctx.fillRect(0, 290 - speed, 320, 17);
+        ctx.fillStyle = "#03fce3";    
+        ctx.fillRect(0, 320 - speed , 320, 17);
+        ctx.fillStyle = "#03fce3";    
+        ctx.fillRect(0, 350 - speed, 320, 17);
+      }
+      speed+=5;
+        };
+    }
+    function valkQ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 2000;
+        var speed = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "red";    
+      ctx.fillRect(0, 200 - speed, 40, 40);
+      ctx.fillRect(60, 200 - speed , 40, 40);
+      ctx.fillRect(120, 200 - speed, 40, 40);
+      ctx.fillRect(180, 200 - speed, 40, 40);
+      ctx.fillRect(240, 200 - speed, 40, 40);
+      ctx.fillRect(300, 200 - speed, 40, 40);
+      ctx.fillStyle = "white";    
+      ctx.fillRect(0, 240 - speed, 40, 200);
+      ctx.fillRect(60, 240 - speed , 40, 200);
+      ctx.fillRect(120, 240 - speed, 40, 200);
+      ctx.fillRect(180, 240 - speed, 40, 200);
+      ctx.fillRect(240, 240 - speed, 40, 200);
+      ctx.fillRect(300, 240 - speed, 40, 200);
+      speed+=7;
+        };
+    }
+
+    function valkZ(hue) {
+    this.h = 100;
+    this.lifetime = 50;
+    this.size = 20;
+    this.y=200;
+    this.start = new Date().getTime();
+    var split = 0;
+    this.duration = 8000;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+    this.Draw = function () {
+      console.log("hi"+this.duration);
+      var lightness = new Int8Array(engine.zone.lightness);
+      var sat = new Int8Array(engine.zone.saturation);
+      var hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var satBoost = sat[iZone] + 20;
+        ctx.fillStyle =
+          "hsla(" +
+          100 +
+          "," +
+          satBoost +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+
+      ctx.fillStyle = "hsl(" + 100 + ",100%,50%)";
+
+      ctx.fillRect(0, this.y -split, 320, 60);
+      split += 7;
+      if(split > 250){
+        split=0;
+        ctx.fillRect(0, this.y -split, 320, 60);
+      }
+    };
+  }
+    function BoostWave(hue) {
+    this.h = 35;
+    this.lifetime = 50;
+    this.size = 20;
+    var split = 0;
+    this.draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var satBoost = sat[iZone] + 20;
+        ctx.fillStyle =
+          "hsla(" +
+          35 +
+          "," +
+          satBoost +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+
+      ctx.fillStyle = "hsl(" + 0 + ",100%,50%)";
+      ctx.fillRect(320 - split, 0, 60, 200);
+      split += 7;
+      this.lifetime--;
+    };
+  }
+    function wattsonZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+        this.xRect = 0;
+        this.yRect = 0;
+        this.width = 320;
+        this.height = 200;
+        this.complete = false;
+        this.colors = ["#00b0ff", "black", "white"];
+        this.color = this.colors[Math.floor(Math.random() * 3)];
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if(this.elapsed <= 2000){
+        ctx.fillStyle = "white";
+        ctx.fillRect(-320 + split, 90, 320, 60);
+        split+=5;
+      }
+      if(this.elapsed > 2000){
+          if(this.elapsed % 2 == 0){
+            ctx.fillStyle = "#0703fc";
+            ctx.fillRect(Math.random()*320, 0, 20, 200);
+          }
+          this.xRect += 8;
+          this.yRect += 4;
+          this.width -= 16;
+          this.height -= 8;
+          ctx.fillStyle = "#03e3fc";
+          ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+          if (this.xRect > 400) this.complete = true;
+      }
+        };
+    }
+
+    function lobaZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+        this.xRect = 160;
+        this.yRect = 100;
+        this.width = 0;
+        this.height = 0;
+        this.complete = false;
+        this.colors = ["#00b0ff", "black", "white"];
+        this.color = this.colors[Math.floor(Math.random() * 3)];
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if(this.elapsed <= 2000){
+        ctx.fillStyle = "white";
+        ctx.fillRect(-320 + split, 90, 320, 60);
+        split+=5;
+      }
+      if(this.elapsed > 2000){
+          this.xRect -= 8;
+          this.yRect -= 4;
+          this.width += 16;
+          this.height += 8;
+          ctx.fillStyle = "#00b0ff";
+          ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+          if (this.xRect > 400) this.complete = true;
+      }
+        };
+    }
+
+
+      function GrowRectangle() {
+        this.xRect = 160;
+        this.yRect = 100;
+        this.width = 0;
+        this.height = 0;
+        this.complete = false;
+
+        this.colors = ["#00b0ff", "black", "white"];
+        this.color = this.colors[Math.floor(Math.random() * 3)];
+
+        this.Draw = function () {
+          this.xRect -= 8;
+          this.yRect -= 4;
+          this.width += 16;
+          this.height += 8;
+          ctx.fillStyle = this.color;
+          ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+
+          if (this.xRect > 400) this.complete = true;
+        };
+      }
+    function lifelineZ() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if(this.elapsed <= 1500){
+        ctx.fillStyle = "#0320fc";
+        ctx.fillRect(120, 200-split, 120, 2000);
+        split+=7;
+      }
+      if(this.elapsed > 1500){
+      ctx.fillStyle = "blue";
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = "#c2fffc";
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = "blue";
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+      this.size+=5;
+      }
+        };
+    }
+    function pathfinderZ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 4500;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        if(this.elapsed < 1000){
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 0, 320, split);
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 200-split, 320, split);
+        split+=7;
+
+        }
+        if(this.elapsed > 1000 && move <=100){
+          ctx.fillStyle = "yellow";
+          ctx.fillRect(0, 0+move, 320, 100-move);
+          ctx.fillStyle = "yellow";
+          ctx.fillRect(0, 100, 320, 100-move);
+          move+=7;
+        }
+        if(this.elapsed > 1000 && move > 100 ){
+          ctx.fillStyle = "yellow";
+          ctx.fillRect(move2, 80, 320, 60);
+          move2+=9;
+        }
+        };
+    }
+  function wraithQ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 1225;
+        var split = 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#78f6ff";
+        ctx.fillRect(split, 0, 30, 200);
+        ctx.fillStyle = "#78f6ff";
+        ctx.fillRect(30+split, 0, 30, 200);
+        ctx.fillStyle = "#78f6ff";
+        ctx.fillRect(320-split, 0, 30, 200);
+        ctx.fillStyle = "#78f6ff";
+        ctx.fillRect(290-split, 0, 30, 200);
+        split+=15;
+        };
+    }
+
+    function fuseQ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 5000;
+        var split = 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        if(this.elapsed < 2000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#fc5a03";
+        ctx.fillRect(0+split, 90, 60, 60);
+        split+=5;
+        }
+        
+        if(this.elapsed >= 2000){
+          effects.push(
+              new moveableBar(
+                random(0, 360),
+                random(0, 200),
+                20,
+                20,
+                random(-5, 5),
+                random(-5, 5),
+                20 + random(-20, 20),
+                100 + random(-20, 20),
+                50,
+                0.9
+              )
+            );
+
+        }
+        };
+    }
+    function moveableBar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
+    this.x = x;
+    this.y = y;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 50;
+    this.size = 0;
+    this.ydirection = yDirection;
+    this.xdirection = xDirection;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + this.alpha + ' )';
+      ctx.fillRect(this.x, this.y, this.height, this.width);
+      this.lifetime--;
+      this.y -= this.ydirection;
+      this.x += this.xdirection;
+    };
+  }
+
+    function bangaloreZ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 14000;
+        var split = 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        if(this.elapsed < 4000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#ff3beb";
+        ctx.fillRect(0+split, 90, 60, 60);
+
+        split+=5;
+        }
+        if(this.elapsed >= 4000){
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200);
+            var fallpath = 1;
+                fallpath = 40;
+            this.y += 5; 
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-20, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-10, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-150, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-140, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-50, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-40, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-100, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-90, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-20, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-10, 20, 20);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-40, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-30, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-300, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-290, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-160, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-150, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-100, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-90, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-400, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-390, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-160, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-150, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-40, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-30, 20, 20);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-600, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-590, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-320, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-310, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-400, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-390, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-800, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-790, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-320, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-310, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-70, 20, 20);
+        }
+        if(this.elapsed >= 10000){
+          effects.push(new SparkleEffect(42 + random(-10, 10), 60, 50, 30));
+          effects.push(new SparkleEffect(42 + random(-10, 10), 60, 50, 30));
+
+        }
+        };
+    }
+
+  function gibraltarZ() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 8000;
+        var split = 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        console.log(this.elapsed);
+        if(this.elapsed < 4000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "red";
+        ctx.fillRect(160+split, 0, 40, 200);
+        ctx.fillStyle = "red";
+        ctx.fillRect(160-split, 0, 40, 200);
+        split+=2;
+        }
+        if(this.elapsed >= 4000){
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200);
+            var fallpath = 1;
+                fallpath = 40;
+            this.y += 5; 
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-20, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-10, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-150, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-140, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-50, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-40, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-100, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-90, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-20, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-10, 20, 20);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-40, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-30, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-300, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-290, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-160, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-150, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-100, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-90, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-400, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-390, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-160, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-150, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-40, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-30, 20, 20);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x, this.y-70, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+50, this.y-600, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+50, this.y-590, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+100, this.y-320, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+100, this.y-310, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+150, this.y-200, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+150, this.y-190, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+200, this.y-400, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+200, this.y-390, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+250, this.y-800, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+250, this.y-790, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+300, this.y-320, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+300, this.y-310, 20, 20);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(this.x+320, this.y-80, 20, 30);
+            ctx.fillStyle = "#ff0000";
+            ctx.fillRect(this.x+320, this.y-70, 20, 20);
+        }
+        };
+    }
+    
+  function random(min, max) {
+    // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+  function WallUpState(hue, sat, lit, alpha = 1) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 80;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.draw();
+    };
+
+    this.draw = function () {
+      var pctUp = 1 - this.count / 2000;
+      ctx.fillStyle =
+        'hsla(' +
+        (this.hue + random(-15, 15)) +
+        ',' +
+        (this.sat + random(-15, 15)) +
+        '%,' +
+        (this.lit + random(-15, 15)) +
+        '%,' +
+        this.alpha +
+        ')';
+      ctx.fillRect(0, 200 - 200 * pctUp, 320, 300);
+      this.count -= 28;
+      ctx.fillStyle =
+        'hsla(' +
+        (this.hue + random(-15, 15)) +
+        ',' +
+        (this.sat + random(-15, 15)) +
+        '%,' +
+        (this.lit + random(-15, 15)) +
+        '%,' +
+        this.alpha +
+        ')';
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillStyle =
+        'hsla(' +
+        (this.hue + random(-15, 15)) +
+        ',' +
+        (this.sat + random(-15, 15)) +
+        '%,' +
+        (this.lit + random(-15, 15)) +
+        '%,' +
+        this.alpha +
+        ')';
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+
+      this.lifetime--;
+    };
+  }
+    function ExpandingCircle(outward, x, y, hue, saturation, lightness) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.lifetime = 50;
+    this.size = 0;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.x = x;
+    this.y = y;
+    this.outward = outward;
+    if (!this.outward) {
+      this.size = 200;
+    }
+
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + this.lightness + '%)';
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      if (this.outward) {
+        this.size += 3;
+      } else {
+        this.size -= 3;
+      }
+
+      this.lifetime--;
+    };
+  }
+  function hueControl(color, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 7500;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          262 +
+          "," +
+          50 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+      var pctUp = this.count / 2000;
+     
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function bangaloreQ(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+        draw3ColorSpiral(
+          50,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+        draw3ColorSpiral(
+          270,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+
+      this.count -= 20;
+    };
+  } 
+
+  function ExplodingOrbState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+
+      this.count -= 20;
+    };
+  } 
+   function draw3ColorSpiral(spX, spY, cl1, cl2, cl3, radius, phase) {
+    var currentColor;
+    for (var i = 0; i < 360; i += 1) {
+      var radphase = i / 360;
+
+      var start = 2 * Math.PI * (i / 360);
+      var end = 2 * Math.PI * ((i + 1) / 360);
+      var offset = 2 * Math.PI * (phase / 360);
+
+      if (i < 60 || (i > 180 && i < 240)) {
+        currentColor = cl1;
+      }
+
+      if ((i > 60 && i < 120) || (i > 240 && i < 300)) {
+        currentColor = cl2;
+      }
+
+      if ((i > 120 && i < 180) || (i > 300 && i < 360)) {
+        currentColor = cl3;
+      }
+
+      ctx.fillStyle = currentColor;
+      ctx.beginPath();
+      try {
+        ctx.arc(spX, spY, radius, start + offset, end + offset);
+      } catch (err) {
+        ctx.arc(160, 100, 50, Math.PI, 2 * Math.PI);
+        // console.log("Error! ");
+        // console.log(err);
+      }
+      ctx.lineTo(spX, spY);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  function reversePulseRippleState(color, hollow, duration) {
+    this.start = new Date().getTime();
+    this.duration = duration;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+    
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200  * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200  * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+  function PulseRippleState(color, hollow, duration) {
+    this.start = new Date().getTime();
+    this.duration = duration;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+  function drawScreenOnKeyboard() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      if (health < 0.35 && health > 0) {
+        ctx.fillStyle =
+          "hsla(" +
+          0 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else if (blueShield > 0.4) {
+        ctx.fillStyle =
+          "hsla(" +
+          210 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else if (purpleShield > 0.4) {
+        ctx.fillStyle =
+          "hsla(" +
+          270 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else if (goldShield > 0.4) {
+        ctx.fillStyle =
+          "hsla(" +
+          44 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else if (engine.vision.mini > 0.7 || engine.vision.dprotection > .7) {
+        ctx.fillStyle =
+          "hsla(" +
+          30 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } 
+      else if (engine.vision.cyrp >= .8) {
+        ctx.fillStyle =
+          "hsla(" +
+          115 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      }
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+  function drawSweep(nWidth, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, nWidth * 320, 200);
+  }
+
+  function drawSweepUp(nWidth, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 200 - nWidth * 200, 320, 200);
+  }
+
+  function drawHealing(width) {
+    var orb = new HealWave(160, 100, width * 320);
+    orbs.push(orb);
+  }
+
+  function HealWave(x, y, width) {
+    this.x = x;
+    this.y = y;
+    this.size = 3;
+    this.width = width;
+    this.vel = 4;
+    this.lifetime = 45; // Frames.
+  }
+
+  HealWave.prototype.draw = function () {
+    ctx.beginPath();
+
+    ctx.lineWidth = this.width;
+    var brightness = this.lifetime + 10;
+    var opacity = this.lifetime / 45;
+    //var hue = (iHue + 30) % 360;
+    ctx.strokeStyle = "white";
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.stroke();
+  };
+
+  HealWave.prototype.update = function () {
+    this.size += 5;
+    this.lifetime--;
+  };
+
+  function ColorBurst(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.size = 0;
+    this.width = 30;
+    this.vel = 4;
+    this.lifetime = 45; // Frames.
+  }
+
+  ColorBurst.prototype.draw = function () {
+    ctx.beginPath();
+
+    var brightness = this.lifetime + 10;
+    var opacity = this.lifetime / 45;
+    //var hue = (iHue + 30) % 360;
+    //main wave
+    ctx.beginPath();
+    ctx.lineWidth = this.width;
+    ctx.strokeStyle = this.color;
+    ctx.arc(this.x, this.y, this.size + 5, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    //front wave
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "white";
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, this.size + 35, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+  };
+
+  ColorBurst.prototype.update = function () {
+    this.size += 5;
+    this.lifetime--;
+  };
+
+  function DamageDrop(x, y) {
+    this.x = x;
+    this.y = y;
+    this.lifetime = Math.random() * 100 + 45; // Frames.
+  }
+
+  DamageDrop.prototype.draw = function () {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, 20, 20);
+  };
+
+  DamageDrop.prototype.update = function () {
+    this.lifetime--;
+  };
+
+  function ShieldAnimation(color) {
+    this.x = 0;
+    this.y = 0;
+    this.color = color;
+    this.lifetime = 45; // Frames.
+  }
+
+  ShieldAnimation.prototype.draw = function () {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, 320, 200);
+    ctx.fillStyle = "white";
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+  };
+
+  ShieldAnimation.prototype.update = function () {
+    this.lifetime--;
+  };
+
+  function getNow() {
+    let d = new Date();
+    return d.getTime();
+  }
+</script>
