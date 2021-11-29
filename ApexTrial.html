@@ -1285,48 +1285,43 @@ l="35-85"
         }
       }
     }
-    for (i = 0; i < orbs.length; i++) {
-      orbs[i].draw();
-      orbs[i].update();
-    }
 
-    for (i = 0; i < orbs.length; i++) {
-      if (orbs[i].lifetime <= 0) {
-        orbs.splice(i, 1);
+    let aIndex = 0;
+    while( aIndex < orbs.length || aIndex < drops.length || aIndex < bursts.length || aIndex < shieldAnims.length){
+
+      if (orbs[aIndex]){
+        orbs[aIndex].draw();
+        orbs[aIndex].update();
+        if (orbs[aIndex].lifetime <= 0) {
+          orbs.splice(aIndex, 1);
+        }  
       }
-    }
 
-    for (i = 0; i < drops.length; i++) {
-      drops[i].draw();
-      drops[i].update();
-    }
-
-    for (i = 0; i < drops.length; i++) {
-      if (drops[i].lifetime <= 0) {
-        drops.splice(i, 1);
+      if(drops[aIndex]){
+        drops[aIndex].draw();
+        drops[aIndex].update();
+        if (drops[aIndex].lifetime <= 0) {
+          drops.splice(aIndex, 1);
+        }
       }
-    }
 
-    for (i = 0; i < bursts.length; i++) {
-      bursts[i].draw();
-      bursts[i].update();
-    }
-
-    for (i = 0; i < bursts.length; i++) {
-      if (bursts[i].lifetime <= 0) {
-        bursts.splice(i, 1);
+      if(bursts[aIndex]){
+        bursts[aIndex].draw();
+        bursts[aIndex].update();
+        if (bursts[aIndex].lifetime <= 0) {
+          bursts.splice(aIndex, 1);
+        }
       }
-    }
 
-    for (i = 0; i < shieldAnims.length; i++) {
-      shieldAnims[i].draw();
-      shieldAnims[i].update();
-    }
-
-    for (i = 0; i < shieldAnims.length; i++) {
-      if (shieldAnims[i].lifetime <= 0) {
-        shieldAnims.splice(i, 1);
+      if(shieldAnims[aIndex]){
+        shieldAnims[aIndex].draw();
+        shieldAnims[aIndex].update();
+        if (shieldAnims[aIndex].lifetime <= 0) {
+          shieldAnims.splice(aIndex, 1);
+        }
       }
+
+      aIndex++;
     }
 
     // TODO add ocr for these to prevent false triggers
@@ -2622,7 +2617,7 @@ l="35-85"
           Math.random() > .5 ? this.x += 1 : this.x -= 1;
         }
     }
-//Refactor ------------------------------------------------------------------------------------------------------------------------
+
     function bangaloreZ() {
         this.x = 100;
         this.y = 0;
@@ -2670,7 +2665,6 @@ l="35-85"
         };
     }
 
-  //Refactor -----------------------------------------------------------------------------------------------
   function gibraltarZ() {
         this.x = 0;
         this.y = -10;
@@ -3123,7 +3117,6 @@ l="35-85"
     };
   }
   function drawScreenOnKeyboard() {
-    console.log('IN DRAW FUNTION')
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let hue = new Int16Array(engine.zone.hue);
