@@ -187,6 +187,28 @@ l="60-100"
 	s="57-100"
 	l="60-65"
 />
+<meta
+meter="mainZ"
+tags="apex,VLC"
+type="linear"
+x= "0.4938"
+y= "0.8444"
+width= "0.0119"
+h="0-360"
+s="55-100"
+l="50-100"
+/>
+<meta
+meter="greyZ"
+tags="apex,VLC"
+type="linear"
+x= "0.4938"
+y= "0.8444"
+width= "0.0119"
+h="0-360"
+s="0-50"
+l="35-85"
+/>
   <meta
 	meter="q1"
 	tags="apex,VLC"
@@ -231,7 +253,7 @@ l="60-100"
 	y= "0.9222"
 	height= "0.0056"
 	width= "0.0021"
-  h="54-56"
+  h="45-70"
 	s="59-100"
 	l="50-100"
 />
@@ -447,19 +469,6 @@ l="60-100"
     l="80-100"
     type="linear"
   />
-  <meta tags="apex,VLC" meter="zCountdown" type="ocr_numeric" x=".4908" y=".9348" width=".0245" height=".0652" confidence="70">
-  <!-- EDIT ULTREADY FUNCTION, NOT IN WORKING STATE-->
-  <meta
-	tags="apex,VLC"
-    meter="ultReady"
-    x=".49482"
-    y=".85185"
-    width=".008"
-    h="130-160"
-    s="190-220"
-    l="130-160"
-    type="linear"
-  />
   <meta
 	tags="apex,VLC"
     meter="tabOut"
@@ -511,6 +520,9 @@ l="60-100"
   var bursts = [];
   var shieldAnims = [];
   var stateMgr = new StateHandler();
+//MAIN/GREY STUFF ------------------------------------------------------------------------
+  var main_Z = new Meter(3, fuse_z_bar);
+  var grey_Z = new Meter(3, fuse_z_bar);
 
   var ash_q = new Meter(3, ash_q_bar);
   var ash_z = new Meter(3, ash_z_bar);
@@ -604,6 +616,7 @@ l="60-100"
 
   function bangalore_q_bar(){
     if(legend == "Bangalore"){
+      console.log('IN Q FUNCTION')
       if(bangalore_q.decreased && engine.vision.check == 1){
         stateMgr.Push(new bangaloreQ("#fac123", "#ededed", "#fac123"));
       }
@@ -628,6 +641,8 @@ l="60-100"
     if(legend  == "Bloodhound"){
       if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeter.increased){
       stateMgr.Push(new hueControl("#ff7300", true));
+      console.log('ACTIVATED ' + engine.vision.mainZ)
+      console.log('GREY ' + engine.vision.greyZ)
       }
     }
   }
@@ -1021,7 +1036,7 @@ l="60-100"
     drawScreenOnKeyboard();
     checkmeter.setValue(engine.vision.check2);
     var colors = hexToHSL(effectHex);
-    console.log(engine.vision.z);
+
 
     //MANUAL SELECT BUTTON -----------------------------------------------------------------------------
       if(enableSelect){
@@ -1032,95 +1047,101 @@ l="60-100"
       }
 
     // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
-      if(legend == "Ash"){
+      // main_Z.setValue(engine.vision.mainZ);
+      // grey_Z.setValue(engine.vision.greyZ);
+
+    switch(legend){
+      case "Ash":
         ash_q.setValue(engine.vision.q);
         ash_z.setValue(engine.vision.z);
-      }
-      if(legend == "Fuse"){
+        break;
+      case "Bangalore":
+        bangalore_q.setValue(engine.vision.q);
+        bangalore_q1.setValue(engine.vision.q1);
+        bangalore_z.setValue(engine.vision.z);
+        break;
+      case "Bloodhound":
+        bloodhound_q.setValue(engine.vision.q);
+        bloodhound_z.setValue(engine.vision.z);
+        break;
+      case "Caustic": 
+        caustic_q.setValue(engine.vision.q);
+        caustic_q1.setValue(engine.vision.q1);
+        caustic_q2.setValue(engine.vision.q2);
+        caustic_z.setValue(engine.vision.yellowz2);
+        break;
+      case "Crypto": 
+        crypto_z.setValue(engine.vision.z);
+        crypto_z2.setValue(engine.vision.cyrp2);
+        break;
+      case "Fuse": 
         fuse_q.setValue(engine.vision.q);
         fuse_z.setValue(engine.vision.z);
         fuse_z2.setValue(engine.vision.t);
-      }
-      if(legend == "Valkyrie"){
-        valk_q.setValue(engine.vision.q);
-        valk_z.setValue(engine.vision.valkz);
-      }
-      if(legend == "Horizon"){
+        break;
+      case "Gibraltar":
+        gibraltar_q.setValue(engine.vision.q);
+        gibraltar_z.setValue(engine.vision.z);
+        break;
+      case "Horizon":
         horizon_q.setValue(engine.vision.q);
         horizon_z.setValue(engine.vision.hz);
-      }
-      if(legend == "Rampart"){
+        break;
+      case "Lifeline":
+        lifeline_q.setValue(engine.vision.q);
+        lifeline_z.setValue(engine.vision.yellowz2);
+        break;
+      case "Loba":
+        loba_q.setValue(engine.vision.q);
+        loba_z.setValue(engine.vision.z);
+        loba_t.setValue(engine.vision.loba2);
+        break;
+      case "Mirage":
+        mirage_q.setValue(engine.vision.q);
+        mirage_z.setValue(engine.vision.z);
+        break;
+      case "Octane":
+        octane_q.setValue(engine.vision.q);
+        octane_z.setValue(engine.vision.z);
+        break;
+      case "Pathfinder":
+        pathfinder_q.setValue(engine.vision.q);
+        pathfinder_z.setValue(engine.vision.yellowz2);
+        break;
+      case "Rampart":
         rampart_q.setValue(engine.vision.q);
         rampart_q1.setValue(engine.vision.q1);
         rampart_q2.setValue(engine.vision.q2);
         rampart_z.setValue(engine.vision.z);
-      }
-      if(legend == "Loba"){
-        loba_q.setValue(engine.vision.q);
-        loba_z.setValue(engine.vision.z);
-        loba_t.setValue(engine.vision.loba2);
-      }
-      if(legend == "Revenant"){
+        break;
+      case "Revenant":
         revenant_q.setValue(engine.vision.q);
         revenant_q1.setValue(engine.vision.q1);
         revenant_z.setValue(engine.vision.rz);
         revenant_z2.setValue(engine.vision.dprotection);
-      }
-      if(legend == "Crypto"){
-        crypto_z.setValue(engine.vision.z);
-        crypto_z2.setValue(engine.vision.cyrp2);
-      }
-      if(legend == "Wattson"){
+        break;
+      case "Seer":
+        seer_q.setValue(engine.vision.q);
+        seer_z.setValue(engine.vision.z);
+        break;
+      case "Wattson":
         wattson_q.setValue(engine.vision.q);
         wattson_q1.setValue(engine.vision.q1);
         wattson_q2.setValue(engine.vision.q2);
         wattson_q3.setValue(engine.vision.q3);
         wattson_z.setValue(engine.vision.wattz);
-      }
-      if(legend == "Octane"){
-        octane_q.setValue(engine.vision.q);
-        octane_z.setValue(engine.vision.z);
-      }
-      if(legend == "Mirage"){
-        mirage_q.setValue(engine.vision.q);
-        mirage_z.setValue(engine.vision.z);
-      }
-      if(legend == "Caustic"){
-        caustic_q.setValue(engine.vision.q);
-        caustic_q1.setValue(engine.vision.q1);
-        caustic_q2.setValue(engine.vision.q2);
-        caustic_z.setValue(engine.vision.yellowz2);
-      }
-      if(legend == "Bangalore"){
-        bangalore_q.setValue(engine.vision.q);
-        bangalore_q1.setValue(engine.vision.q1);
-        bangalore_z.setValue(engine.vision.z);
-      }
-      if(legend == "Wraith"){
+        break;
+      case "Wraith":
         wraith_q.setValue(engine.vision.q);
         wraith_z.setValue(engine.vision.wz);
         yellowZ.setValue(engine.vision.yellowz);
-      }
-      if(legend == "Gibraltar"){
-        gibraltar_q.setValue(engine.vision.q);
-        gibraltar_z.setValue(engine.vision.z);
-      }
-      if(legend == "Lifeline"){
-        lifeline_q.setValue(engine.vision.q);
-        lifeline_z.setValue(engine.vision.yellowz2);
-      }
-      if(legend == "Bloodhound"){
-        bloodhound_q.setValue(engine.vision.q);
-        bloodhound_z.setValue(engine.vision.z);
-      }
-      if(legend == "Pathfinder"){
-        pathfinder_q.setValue(engine.vision.q);
-        pathfinder_z.setValue(engine.vision.yellowz2);
-      }
-      if(legend == "Seer"){
-        seer_q.setValue(engine.vision.q);
-        seer_z.setValue(engine.vision.z);
-      }
+        break;
+      case "Valkyrie":
+        valk_q.setValue(engine.vision.q);
+        valk_z.setValue(engine.vision.valkz);
+        break;
+    }
+
     if (characterChanged){
       for (let i = 0; i < 20; i++) {
           setTimeout(function () {
@@ -1136,6 +1157,8 @@ l="60-100"
         }
         characterChanged = false;
     }
+
+  // HEALTH AND SHIELDS ?? ------------------------------------------------------
     if(enableHealth){
     health = engine.vision.health;
     }
@@ -1145,17 +1168,6 @@ l="60-100"
     blueShield = engine.vision.blueShield;
     purpleShield = engine.vision.purpleShield;
     }
-    // TODO: fix trigger for engine.vision.ultReady, make ult ready animation, make it play only once
-    // why does half of the canvas get lit up with a certain color?
-
-    // var ultReady1 = (engine.vision.hitEscape > 0.7) ? true : false;
-
-    // if (ultReady1) {
-    //   ctx.fillStyle = "blue";
-    //   ctx.fillRect(100, 100, 50, 50);
-    //   ultReadyAnimaiton();
-
-    // }
 
     var bs1 =
       engine.vision.blueShield > 0 ? 0 : engine.vision.blueShield - 0.01;
@@ -1933,7 +1945,7 @@ l="60-100"
       }
         };
     }
-
+//Refactor -----------------------------------------------------------------------------------------
     function fuseZ() {
         this.x = 0;
         this.y = -10;
@@ -2590,15 +2602,16 @@ l="60-100"
       this.x += this.xdirection;
     };
   }
-
+//Square --------------------------------------------------------------------------------------------------------------------------
+//Refactor ------------------------------------------------------------------------------------------------------------------------
     function bangaloreZ() {
         this.x = 0;
         this.y = -10;
-        this.start = new Date().getTime();
+        this.start = getNow();
         this.duration = 14000;
         var split = 0;
       this.Process = function () {
-      this.elapsed = new Date().getTime() - this.start;
+      this.elapsed = getNow() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
       }
@@ -2727,6 +2740,7 @@ l="60-100"
         };
     }
 
+  //Refactor -----------------------------------------------------------------------------------------------
   function gibraltarZ() {
         this.x = 0;
         this.y = -10;
@@ -3269,6 +3283,7 @@ l="60-100"
     };
   }
   function drawScreenOnKeyboard() {
+    console.log('IN DRAW FUNTION')
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let hue = new Int16Array(engine.zone.hue);
