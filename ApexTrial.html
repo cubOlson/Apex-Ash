@@ -652,7 +652,7 @@ confidence="70"
   }
   function bangalore_z_bar(){
     if(legend == "Bangalore"){
-      if(bangalore_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+      if(bangalore_z.decreased && checkmeter.increased){
         stateMgr.Push(new bangaloreZ());
       }
     }
@@ -2643,6 +2643,8 @@ confidence="70"
      this.done = false;
      
     this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0,0,320,200);
       ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
       ctx.globalAlpha = this.transparency;
       ctx.fillStyle = `rgb(255,255,255)`;
