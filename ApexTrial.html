@@ -209,6 +209,17 @@ h="0-360"
 s="0-50"
 l="35-85"
 />
+<meta 
+meter="getZLetter" 
+tags="apex,VLC"
+type="ocr_textmatch" 
+x="0.4948" 
+y="0.9574" 
+width="0.01" 
+height="0.0204" 
+string="Z" 
+confidence="70"
+/>
   <meta
 	meter="q1"
 	tags="apex,VLC"
@@ -523,6 +534,8 @@ l="35-85"
 //MAIN/GREY STUFF ------------------------------------------------------------------------
   var main_Z = new Meter(3, fuse_z_bar);
   var grey_Z = new Meter(3, fuse_z_bar);
+  var get_Z = new Meter(3, ash_z_bar);
+  var get_Per = new Meter(3, ash_z_bar);
 
   var ash_q = new Meter(3, ash_q_bar);
   var ash_z = new Meter(3, ash_z_bar);
@@ -607,10 +620,17 @@ l="35-85"
   }
   function ash_z_bar(){
     if(legend == "Ash"){
-      if(ash_z.decreased && engine.vision.check == 1){
-        console.log('ASH Z ACTIVATED');
-        stateMgr.Push(new PulseRippleState("#FFFF00", true, 16000));
+      if(get_Z.increased){
+        console.log('INCREASE ' + engine.vision.getZLetter)
+      } else if(get_Z.decreased){
+        console.log('DECREASE ' + engine.vision.getZLetter)
+      } else {
+        console.log('Z IS SAME ' + engine.vision.getZLetter)
       }
+      // if(ash_z.decreased && engine.vision.check == 1){
+      //   console.log('ASH Z ACTIVATED');
+      //   stateMgr.Push(new PulseRippleState("#FFFF00", true, 16000));
+      // }
     }
   }
 
@@ -618,14 +638,15 @@ l="35-85"
     if(legend == "Bangalore"){
       console.log('IN Q FUNCTION')
       if(bangalore_q.decreased && engine.vision.check == 1){
-        stateMgr.Push(new bangaloreQ("#fac123", "#ededed", "#fac123"));
+        stateMgr.Push(new bangaloreQ());
       }
     }
   }
   function bangalore_q_bar1(){
     if(legend == "Bangalore"){
+      console.log('IN Q FUNCTION')
       if(bangalore_q1.decreased && engine.vision.check == 1 ){
-        stateMgr.Push(new bangaloreQ("#fac123", "#ededed", "#fac123"));
+        stateMgr.Push(new bangaloreQ());
       }
     }
   }
@@ -1049,6 +1070,7 @@ l="35-85"
     // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
       // main_Z.setValue(engine.vision.mainZ);
       // grey_Z.setValue(engine.vision.greyZ);
+      get_Z.setValue(engine.vision.getZLetter);
 
     switch(legend){
       case "Ash":
@@ -1323,12 +1345,6 @@ l="35-85"
 
       aIndex++;
     }
-
-    // TODO add ocr for these to prevent false triggers
-    // var timer1 = engine.vision.timerOCR1;
-    // var timer2 = engine.vision.timerOCR2;
-    // var timer3 = engine.vision.timerOCR3;
-    // && ((timer1 > 0 && timer1 <= 100 || timer2 > 0 && timer2 <= 100 || timer3 > 0 && timer3 <= 100))
 
     var confirmCharge = engine.vision.confirm;
     if(enablePhoneix){ 
@@ -2618,6 +2634,96 @@ l="35-85"
         }
     }
 
+//CIRCLES CLASS -------------------------------------------------------------------
+   function fadingCircles(){
+     this.x = Math.random() * 320;
+     this.y = Math.random() * 200;
+     this.radius = Math.random() * 50;
+     this.transparency = 1;
+     this.done = false;
+     
+    this.Draw = function () {
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.globalAlpha = this.transparency;
+      ctx.fillStyle = `rgb(255,255,255)`;
+      ctx.fill();
+      this.transparency -= .1;
+
+      console.log(this.transparency);
+
+      if(this.transparency <= 0){
+        this.done = true;
+      }
+     }
+   }
+
+function bangaloreQ() {
+  this.start = getNow();
+  this.duration = 10000;
+  this.circles = [];
+  this.doneSmoke = false;
+
+  this.Process = function () {
+    this.elapsed = getNow() - this.start;
+    if (this.elapsed > this.duration) {
+      stateMgr.Pop();
+    }
+    this.Draw();
+  };
+
+  this.Draw = function () {
+      let index = 0;
+      while(index <= 20 && this.doneSmoke === false){
+        this.circles.push(new fadingCircles());
+        index++;
+      };
+      this.doneSmoke = true;
+      this.circles.forEach((e, i) => {
+        e.Draw();
+        if (e.done) {
+          this.circles.splice(i, 1);
+        }
+      })
+    //   draw3ColorSpiral(
+    //     160,
+    //     100,
+    //     this.color1,
+    //     this.color2,
+    //     this.color3,
+    //     50,
+    //     -this.count
+    //   );
+    //   draw3ColorSpiral(
+    //     50,
+    //     100,
+    //     this.color1,
+    //     this.color2,
+    //     this.color3,
+    //     50,
+    //     -this.count
+    //   );
+    //   draw3ColorSpiral(
+    //     270,
+    //     100,
+    //     this.color1,
+    //     this.color2,
+    //     this.color3,
+    //     50,
+    //     -this.count
+    //   );
+    // } else {
+    //   draw3ColorSpiral(
+    //     160,
+    //     100,
+    //     this.color1,
+    //     this.color2,
+    //     this.color3,
+    //     1000 - this.count,
+    //     this.count
+    //   );
+  };
+} 
+
     function bangaloreZ() {
         this.x = 100;
         this.y = 0;
@@ -2853,67 +2959,6 @@ l="35-85"
       }
     };
   }
-
-  function bangaloreQ(color1, color2, color3) {
-    this.start = new Date().getTime();
-    this.duration = 2000;
-    this.count = 2000;
-    this.color1 = color1;
-    this.color2 = color2;
-    this.color3 = color3;
-
-    this.Process = function () {
-      this.elapsed = new Date().getTime() - this.start;
-      if (this.elapsed > this.duration) {
-        stateMgr.Pop();
-      }
-      this.Draw();
-    };
-
-    this.Draw = function () {
-      if (this.count > 1000) {
-        draw3ColorSpiral(
-          160,
-          100,
-          this.color1,
-          this.color2,
-          this.color3,
-          50,
-          -this.count
-        );
-        draw3ColorSpiral(
-          50,
-          100,
-          this.color1,
-          this.color2,
-          this.color3,
-          50,
-          -this.count
-        );
-        draw3ColorSpiral(
-          270,
-          100,
-          this.color1,
-          this.color2,
-          this.color3,
-          50,
-          -this.count
-        );
-      } else {
-        draw3ColorSpiral(
-          160,
-          100,
-          this.color1,
-          this.color2,
-          this.color3,
-          1000 - this.count,
-          this.count
-        );
-      }
-
-      this.count -= 20;
-    };
-  } 
 
   function ExplodingOrbState(color1, color2, color3) {
     this.start = new Date().getTime();
