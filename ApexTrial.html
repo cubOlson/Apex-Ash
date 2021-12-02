@@ -2,6 +2,13 @@
   <title>Apex Legends Cub</title>
   <meta description="Meters and ambiance for Apex Legends." />
   <meta publisher="Whirlwind FX" />
+  <meta 
+  property="character" 
+  label="Legends" 
+  type="combobox" 
+  values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,Octane,Pathfinder,Rampart,Revenant,Wattson,Wraith,Valkyrie,Seer" 
+  default="Bloodhound"
+  />
   <meta
     property="keyScrenBrightness"
     label="Brightness"
@@ -10,9 +17,6 @@
     max="100"
     default="100"
   />
-  <meta property="enableSelect" label="Manual Select" type="boolean" default="1" />
-  <meta property="character" label="Legends" type="combobox" values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,Octane,Pathfinder,Rampart,Revenant,Wattson,Wraith,Valkyrie,Seer" default="Bloodhound">
-
   <meta property="effectHex" label="Legends Select Color" type="color" min="0" max="360" default="#efff00" />
   <meta property="enableShield" label="Shield effects" type="boolean" default="1" />
   <meta property="enableSyringe" label="Syringe effects" type="boolean" default="1" />
@@ -206,8 +210,8 @@ x= "0.4938"
 y= "0.8444"
 width= "0.0119"
 h="0-360"
-s="0-50"
-l="35-85"
+s="0-15"
+l="70-100"
 />
 <meta 
 meter="getZLetter" 
@@ -515,6 +519,7 @@ confidence="70"
   var canvas, ctx;
   let health, blueShield, purpleShield, goldShield, shieldBar;
   let characterChanged = false;
+  let ultCharged = false;
   let healthHistory = [];
   let shieldHistory = [];
 
@@ -535,7 +540,6 @@ confidence="70"
   var main_Z = new Meter(3, fuse_z_bar);
   var grey_Z = new Meter(3, fuse_z_bar);
   var get_Z = new Meter(3, ash_z_bar);
-  var get_Per = new Meter(3, ash_z_bar);
 
   var ash_q = new Meter(3, ash_q_bar);
   var ash_z = new Meter(3, ash_z_bar);
@@ -613,30 +617,23 @@ confidence="70"
   function ash_q_bar(){
     if(legend == "Ash"){
       if(ash_q.decreased && engine.vision.check == 1){
-        console.log('ASH Q ACTIVATED');
         stateMgr.Push(new Ash_Q(89 ,203 ,232 , 5750));
       }
     }
   }
   function ash_z_bar(){
     if(legend == "Ash"){
-      if(get_Z.increased){
-        console.log('INCREASE ' + engine.vision.getZLetter)
-      } else if(get_Z.decreased){
-        console.log('DECREASE ' + engine.vision.getZLetter)
-      } else {
-        console.log('Z IS SAME ' + engine.vision.getZLetter)
+      console.log('ultCharged ' + ultCharged)
+      if(ultCharged && grey_Z.increased){
+        console.log('IN Z FUNCTION')
+        ultCharged = false;
+        stateMgr.Push(new PulseRippleState("#FFFF00", true, 5000));
       }
-      // if(ash_z.decreased && engine.vision.check == 1){
-      //   console.log('ASH Z ACTIVATED');
-      //   stateMgr.Push(new PulseRippleState("#FFFF00", true, 16000));
-      // }
     }
   }
 
   function bangalore_q_bar(){
     if(legend == "Bangalore"){
-      console.log('IN Q FUNCTION')
       if(bangalore_q.decreased && engine.vision.check == 1){
         stateMgr.Push(new bangaloreQ());
       }
@@ -644,7 +641,6 @@ confidence="70"
   }
   function bangalore_q_bar1(){
     if(legend == "Bangalore"){
-      console.log('IN Q FUNCTION')
       if(bangalore_q1.decreased && engine.vision.check == 1 ){
         stateMgr.Push(new bangaloreQ());
       }
@@ -662,8 +658,6 @@ confidence="70"
     if(legend  == "Bloodhound"){
       if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeter.increased){
       stateMgr.Push(new hueControl("#ff7300", true));
-      console.log('ACTIVATED ' + engine.vision.mainZ)
-      console.log('GREY ' + engine.vision.greyZ)
       }
     }
   }
@@ -1060,17 +1054,19 @@ confidence="70"
 
 
     //MANUAL SELECT BUTTON -----------------------------------------------------------------------------
-      if(enableSelect){
-        if (legend !== character){
+      if (legend !== character){
           characterChanged = true;
-        }
-        legend = character;
       }
+      
+      legend = character;
 
     // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
-      // main_Z.setValue(engine.vision.mainZ);
-      // grey_Z.setValue(engine.vision.greyZ);
+      main_Z.setValue(engine.vision.mainZ);
+      grey_Z.setValue(engine.vision.greyZ);
       get_Z.setValue(engine.vision.getZLetter);
+      if (get_Z.value === 1){
+        ultCharged = true;
+      }
 
     switch(legend){
       case "Ash":
@@ -1200,16 +1196,6 @@ confidence="70"
     // may need to revert this...?
     shieldBar = bs1 + ps1 + gs1;
 
-    // //console.log("Health is: " + health);
-    // //console.log("Zone is: " + zone);
-    // //console.log("damage is: " + damage);
-    // console.log("--------------------------" );
-
-    // console.log("Shield is: " + shieldBar);
-    // console.log("blue: " + engine.vision.blueShieldBar);
-    // console.log("purple: " + engine.vision.purpleShieldBar);
-    // console.log("gold: " + engine.vision.goldShieldBar);
-
     healthHistory.push(health);
     if (healthHistory.length > 20) {
       healthHistory.splice(0, 1);
@@ -1220,7 +1206,6 @@ confidence="70"
       if (healthHistory[18] != 0 && healthHistory[19] != 0) {
         if (!bScreenTransition && iPrevFrameDiff > 0.3) {
           drawHealing(iPrevFrameDiff);
-          console.log("Triggering heal, diff: " + iPrevFrameDiff);
         }
       }
       if (engine.vision.osdEsc < 0.9) {
@@ -1230,7 +1215,6 @@ confidence="70"
           healthHistory[19] != 0
         ) {
           var damage = iPrevFrameDiff;
-          console.log("damage: " + iPrevFrameDiff);
           var numDrops = Math.floor(50);
           for (i = 0; i < 50; i++) {
             drops.push(
@@ -1474,7 +1458,6 @@ confidence="70"
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         if(this.elapsed < 2000){
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
@@ -1528,7 +1511,6 @@ confidence="70"
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         if(this.elapsed < 2000){
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
@@ -2245,7 +2227,6 @@ confidence="70"
         this.Draw();
       };
     this.Draw = function () {
-      console.log("hi"+this.duration);
       var lightness = new Int8Array(engine.zone.lightness);
       var sat = new Int8Array(engine.zone.saturation);
       var hue = new Int16Array(engine.zone.hue);
@@ -2495,7 +2476,6 @@ confidence="70"
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
         if(this.elapsed < 1000){
@@ -2534,7 +2514,6 @@ confidence="70"
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
         ctx.fillStyle = "#78f6ff";
@@ -2563,7 +2542,6 @@ confidence="70"
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         if(this.elapsed < 2000){
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
@@ -2651,8 +2629,6 @@ confidence="70"
       ctx.fill();
       this.transparency -= .1;
 
-      console.log(this.transparency);
-
       if(this.transparency <= 0){
         this.done = true;
       }
@@ -2686,43 +2662,6 @@ function bangaloreQ() {
           this.circles.splice(i, 1);
         }
       })
-    //   draw3ColorSpiral(
-    //     160,
-    //     100,
-    //     this.color1,
-    //     this.color2,
-    //     this.color3,
-    //     50,
-    //     -this.count
-    //   );
-    //   draw3ColorSpiral(
-    //     50,
-    //     100,
-    //     this.color1,
-    //     this.color2,
-    //     this.color3,
-    //     50,
-    //     -this.count
-    //   );
-    //   draw3ColorSpiral(
-    //     270,
-    //     100,
-    //     this.color1,
-    //     this.color2,
-    //     this.color3,
-    //     50,
-    //     -this.count
-    //   );
-    // } else {
-    //   draw3ColorSpiral(
-    //     160,
-    //     100,
-    //     this.color1,
-    //     this.color2,
-    //     this.color3,
-    //     1000 - this.count,
-    //     this.count
-    //   );
   };
 } 
 
@@ -2742,7 +2681,6 @@ function bangaloreQ() {
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         if(this.elapsed < 3000){
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
@@ -2788,7 +2726,6 @@ function bangaloreQ() {
         this.Draw();
       };
       this.Draw = function () {
-        console.log(this.elapsed);
         if(this.elapsed < 4000){
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 320, 200);
@@ -3031,8 +2968,6 @@ function bangaloreQ() {
         ctx.arc(spX, spY, radius, start + offset, end + offset);
       } catch (err) {
         ctx.arc(160, 100, 50, Math.PI, 2 * Math.PI);
-        // console.log("Error! ");
-        // console.log(err);
       }
       ctx.lineTo(spX, spY);
       ctx.closePath();
