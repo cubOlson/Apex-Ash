@@ -210,7 +210,7 @@ x= "0.4938"
 y= "0.8444"
 width= "0.0119"
 h="0-360"
-s="0-15"
+s="0-20"
 l="70-100"
 />
 <meta 
@@ -617,7 +617,7 @@ confidence="70"
   function ash_q_bar(){
     if(legend == "Ash"){
       if(ash_q.decreased && engine.vision.check == 1){
-        stateMgr.Push(new Ash_Q(89 ,203 ,232 , 5750));
+        stateMgr.Push(new Ash_Q(89 ,203 ,232 , 6000));
       }
     }
   }
@@ -2594,16 +2594,22 @@ confidence="70"
   }
 //Ellipse ---------------------------------------------------------------------------------------------------------------
     function ellipseFade(radiusX, radiusY){
-        this.x = 160;
-        this.y = 100;
+        this.x = 0;
+        this.y = 0;
         this.radiusX = radiusX;
         this.radiusY = radiusY;
+        this.done = false;
 
         this.Draw = function () {
+          ctx.setTransform(.5, 1, -1, .5, 160, 100);
           ctx.beginPath();
           ctx.ellipse(this.x, this.y, this.radiusX, this.radiusY, Math.PI, 0, 2 * Math.PI, false);
-          ctx.fillStyle = `hsl(215, 100%, ${100/this.radiusX}%)`;
+          ctx.fillStyle = `hsl(215, 100%, ${1500/this.radiusX}%)`;
           ctx.fill();
+          this.radiusX -= 0.155;
+          if(this.radiusX <= 1){
+            this.done = true;
+          }
         }
 
       
@@ -2672,17 +2678,20 @@ function Ash_Z (){
       if (!this.doneCircles){
         let index = 0;
         while(index < 6){
-          this.circles.push(new ellipseFade(50/(index + 1), 200))
+          this.circles.push(new ellipseFade(100/(index + 1), 200))
           index++;
         }
+      
         this.doneCircles = true;
       }
       this.circles.forEach((e, i) => {
-        e.Draw();
         if (e.done) {
           this.circles.splice(i, 1);
+        } else {
+          e.Draw();
         }
       })
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 }
 
