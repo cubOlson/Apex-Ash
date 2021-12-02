@@ -560,7 +560,8 @@ confidence="70"
   var crypto_z = new Meter(3, crypto_z_bar);
   var crypto_z2 = new Meter(3, crypto_z_bar2);
 
-  var fuse_q = new Meter(3, fuse_q_bar);
+  var fuse_q1 = new Meter(3, fuse_q_bar);
+  var fuse_q2 = new Meter(3, fuse_q_bar);
   var fuse_z = new Meter(3, fuse_z_bar);
   var fuse_z2 = new Meter(3, fuse_z_bar1);
 
@@ -623,9 +624,7 @@ confidence="70"
   }
   function ash_z_bar(){
     if(legend == "Ash"){
-      console.log('ultCharged ' + ultCharged)
       if(ultCharged && grey_Z.increased){
-        console.log('IN Z FUNCTION')
         ultCharged = false;
         stateMgr.Push(new Ash_Z());
       }
@@ -715,14 +714,15 @@ confidence="70"
 
   function fuse_q_bar(){
     if(legend == "Fuse"){
-      if(fuse_q.decreased && engine.vision.check == 1){
+      if(fuse_q1.decreased || fuse_q2.decreased){
         stateMgr.Push(new fuseQ());
       }
     }
   }
   function fuse_z_bar(){
     if(legend == "Fuse"){
-      if(fuse_z.decreased && engine.vision.check == 1 ){
+      if(main_Z.decreased && grey_Z.increased && ultCharged){
+        ultCharged = false;
         stateMgr.Push(new fuseZ());
       }
     }
@@ -1093,7 +1093,8 @@ confidence="70"
         crypto_z2.setValue(engine.vision.cyrp2);
         break;
       case "Fuse": 
-        fuse_q.setValue(engine.vision.q);
+        fuse_q1.setValue(engine.vision.q1);
+        fuse_q2.setValue(engine.vision.q2);
         fuse_z.setValue(engine.vision.z);
         fuse_z2.setValue(engine.vision.t);
         break;
