@@ -627,7 +627,7 @@ confidence="70"
       if(ultCharged && grey_Z.increased){
         console.log('IN Z FUNCTION')
         ultCharged = false;
-        stateMgr.Push(new PulseRippleState("#FFFF00", true, 5000));
+        stateMgr.Push(new Ash_Z());
       }
     }
   }
@@ -1938,6 +1938,7 @@ confidence="70"
       }
         };
     }
+
 //Refactor -----------------------------------------------------------------------------------------
     function fuseZ() {
         this.x = 0;
@@ -2591,6 +2592,22 @@ confidence="70"
       this.x += this.xdirection;
     };
   }
+//Ellipse ---------------------------------------------------------------------------------------------------------------
+    function ellipseFade(radiusX, radiusY){
+        this.x = 160;
+        this.y = 100;
+        this.radiusX = radiusX;
+        this.radiusY = radiusY;
+
+        this.Draw = function () {
+          ctx.beginPath();
+          ctx.ellipse(this.x, this.y, this.radiusX, this.radiusY, Math.PI, 0, 2 * Math.PI, false);
+          ctx.fillStyle = `hsl(215, 100%, ${100/this.radiusX}%)`;
+          ctx.fill();
+        }
+
+      
+    }
 //Square --------------------------------------------------------------------------------------------------------------------------
     function fallingSquare(x, y, h){
         this.x = x;
@@ -2634,6 +2651,40 @@ confidence="70"
       }
      }
    }
+
+function Ash_Z (){
+  this.start = getNow();
+  this.duration = 15500;
+  this.circles = [];
+  this.doneCircles = false;
+
+  this.Process = function () {
+    this.elapsed = getNow() - this.start;
+    if (this.elapsed > this.duration) {
+      stateMgr.Pop();
+    }
+    this.Draw();
+  };
+
+  this.Draw = function () {
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0,0,320,200);
+      if (!this.doneCircles){
+        let index = 0;
+        while(index < 6){
+          this.circles.push(new ellipseFade(50/(index + 1), 200))
+          index++;
+        }
+        this.doneCircles = true;
+      }
+      this.circles.forEach((e, i) => {
+        e.Draw();
+        if (e.done) {
+          this.circles.splice(i, 1);
+        }
+      })
+  }
+}
 
 function bangaloreQ() {
   this.start = getNow();
