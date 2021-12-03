@@ -948,7 +948,8 @@ l="50-100"
   }
   function seer_z_bar(){
     if(legend == "Seer"){
-      if(seer_z.decreased && engine.vision.check == 1 ){
+      if(ultCharged && checkmeterBlue.value == 1 && engine.vision.check == 1 ){
+        ultCharged = false;
         stateMgr.Push(new seerZ());
       }
     }
@@ -1165,7 +1166,7 @@ l="50-100"
         break;
       case "Seer":
         seer_q.setValue(engine.vision.q);
-        seer_z.setValue(engine.vision.z);
+        seer_z.setValue(engine.vision.checkBlue);
         break;
       case "Wattson":
         wattson_q.setValue(engine.vision.q);
