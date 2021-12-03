@@ -278,8 +278,8 @@ l="50-100"
 	x= "0.4818"
 	y= "0.9415"
 	width= "0.0359"
-  h="45-70"
-	s="59-100"
+  h="45-120"
+	s="50-100"
 	l="50-100"
 />
   <meta
@@ -833,7 +833,7 @@ l="50-100"
   }
   function mirage_z_bar(){
     if(legend  == "Mirage"){
-      if(mirage_z.decreased && engine.vision.check == 1){
+      if(ultCharged && grey_Z.increased && engine.vision.check == 1){
         stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
       }
     }
@@ -859,7 +859,7 @@ l="50-100"
   }
   function octane_z_bar(){
     if(legend  == "Octane"){
-      if(octane_z.decreased && engine.vision.check == 1){
+      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1){
         stateMgr.Push(new octaneZ());
       }
     }
@@ -903,7 +903,7 @@ l="50-100"
   }
   function rampart_z_bar(){
     if(legend  == "Rampart"){
-      if(rampart_z.decreased && engine.vision.check == 1){
+      if(grey_Z.increased && ultCharged && engine.vision.check == 1){
         stateMgr.Push(new rampartZ());
       }
     }
@@ -1139,7 +1139,7 @@ l="50-100"
         break;
       case "Mirage":
         mirage_q.setValue(engine.vision.q);
-        mirage_z.setValue(engine.vision.z);
+        mirage_z.setValue(engine.vision.greyZ);
         break;
       case "Octane":
         octane_q.setValue(engine.vision.q);
@@ -1153,7 +1153,7 @@ l="50-100"
         rampart_q.setValue(engine.vision.q);
         rampart_q1.setValue(engine.vision.q1);
         rampart_q2.setValue(engine.vision.q2);
-        rampart_z.setValue(engine.vision.z);
+        rampart_z.setValue(engine.vision.greyZ);
         break;
       case "Revenant":
         revenant_q.setValue(engine.vision.q);
