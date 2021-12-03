@@ -574,7 +574,7 @@ l="50-100"
   var fuse_q1 = new Meter(3, fuse_q_bar);
   var fuse_q2 = new Meter(3, fuse_q_bar);
   var fuse_z = new Meter(3, fuse_z_bar);
-  var fuse_z2 = new Meter(3, fuse_z_bar1);
+  // var fuse_z2 = new Meter(3, fuse_z_bar1);
 
   var gibraltar_q = new Meter(3, gibraltar_q_bar);
   var gibraltar_z = new Meter(3, gibraltar_z_bar);
@@ -635,7 +635,7 @@ l="50-100"
   }
   function ash_z_bar(){
     if(legend == "Ash"){
-      if(ultCharged && grey_Z.increased){
+      if(ultCharged && ash_z.increased && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new Ash_Z());
       }
@@ -658,7 +658,7 @@ l="50-100"
   }
   function bangalore_z_bar(){
     if(legend == "Bangalore"){
-      if(bangalore_z.decreased && checkmeterYellow.increased){
+      if(ultCharged && checkmeterYellow.increased){
         ultCharged = false;
         stateMgr.Push(new bangaloreZ());
       }
@@ -667,9 +667,9 @@ l="50-100"
 
   function bloodhound_z_bar(){
     if(legend  == "Bloodhound"){
-      if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeterYellow.increased){
+      if(ultCharged && engine.vision.check == 1 && bloodhound_z.increased){
       ultCharged = false;
-      stateMgr.Push(new hueControl("#ff7300", true));
+      stateMgr.Push(new hueControl(1, true));
       }
     }
   }
@@ -704,7 +704,7 @@ l="50-100"
   }
   function caustic_z_bar(){
     if(legend  == "Caustic"){
-      if(caustic_z.increased && engine.vision.check == 1){
+      if(ultCharged && caustic_z.increased && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new causticZ());
       }
@@ -736,19 +736,19 @@ l="50-100"
   }
   function fuse_z_bar(){
     if(legend == "Fuse"){
-      if(main_Z.decreased && grey_Z.increased && ultCharged && engine.vision.check == 1){
+      if(fuse_z.decreased && grey_Z.increased && ultCharged && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new fuseZ());
       }
     }
   }
-  function fuse_z_bar1(){
-    if(legend == "Fuse"){
-      if(fuse_z2.value == 1 && engine.vision.check == 1){
-        stateMgr.Push(new fuseZ2());
-      }
-    }
-  }
+  // function fuse_z_bar1(){
+  //   if(legend == "Fuse"){
+  //     if(fuse_z2.value == 1 && engine.vision.check == 1){
+  //       stateMgr.Push(new fuseZ2());
+  //     }
+  //   }
+  // }
 
   function gibraltar_q_bar(){
     if(legend == "Gibraltar"){
@@ -1096,22 +1096,22 @@ l="50-100"
     switch(legend){
       case "Ash":
         ash_q.setValue(engine.vision.q);
-        ash_z.setValue(engine.vision.z);
+        ash_z.setValue(engine.vision.greyZ);
         break;
       case "Bangalore":
         bangalore_q.setValue(engine.vision.q);
         bangalore_q1.setValue(engine.vision.q1);
-        bangalore_z.setValue(engine.vision.z);
+        bangalore_z.setValue(engine.vision.checkYellow);
         break;
       case "Bloodhound":
         bloodhound_q.setValue(engine.vision.q);
-        bloodhound_z.setValue(engine.vision.z);
+        bloodhound_z.setValue(engine.vision.checkYellow);
         break;
       case "Caustic": 
         caustic_q.setValue(engine.vision.q);
         caustic_q1.setValue(engine.vision.q1);
         caustic_q2.setValue(engine.vision.q2);
-        caustic_z.setValue(engine.vision.yellowz2);
+        caustic_z.setValue(engine.vision.checkYellow);
         break;
       case "Crypto": 
         crypto_z.setValue(engine.vision.z);
@@ -1120,8 +1120,8 @@ l="50-100"
       case "Fuse": 
         fuse_q1.setValue(engine.vision.q1);
         fuse_q2.setValue(engine.vision.q2);
-        fuse_z.setValue(engine.vision.z);
-        fuse_z2.setValue(engine.vision.t);
+        fuse_z.setValue(engine.vision.mainZ);
+        // fuse_z2.setValue(engine.vision.t);
         break;
       case "Gibraltar":
         gibraltar_q.setValue(engine.vision.q);
@@ -1977,6 +1977,7 @@ l="50-100"
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        stateMgr.Push(new fuseZ2());
       }
         this.Draw();
       };
@@ -2847,7 +2848,7 @@ function bangaloreQ() {
   }
   function hueControl(color, hollow) {
     this.start = new Date().getTime();
-    this.duration = 7500;
+    this.duration = 25000;
     this.count = 2000;
     this.color = color;
     this.isHollow = hollow;
@@ -2868,9 +2869,9 @@ function bangaloreQ() {
       for (var iZone = 0; iZone < 560; iZone++) {
         ctx.fillStyle =
           "hsla(" +
-          262 +
+          this.color +
           "," +
-          50 +
+          75 +
           "%," +
           lightness[iZone] +
           "%, " +
