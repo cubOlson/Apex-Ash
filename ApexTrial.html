@@ -659,6 +659,7 @@ l="50-100"
   function bangalore_z_bar(){
     if(legend == "Bangalore"){
       if(bangalore_z.decreased && checkmeterYellow.increased){
+        ultCharged = false;
         stateMgr.Push(new bangaloreZ());
       }
     }
@@ -667,6 +668,7 @@ l="50-100"
   function bloodhound_z_bar(){
     if(legend  == "Bloodhound"){
       if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeterYellow.increased){
+      ultCharged = false;
       stateMgr.Push(new hueControl("#ff7300", true));
       }
     }
@@ -703,6 +705,7 @@ l="50-100"
   function caustic_z_bar(){
     if(legend  == "Caustic"){
       if(caustic_z.increased && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new causticZ());
       }
     }
@@ -711,6 +714,7 @@ l="50-100"
   function crypto_z_bar(){
     if(legend == "Crypto"){
       if(crypto_z.decreased && engine.vision.check == 1 && !crypto_z2.increased){
+        ultCharged = false;
         stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
       }
     }
@@ -756,6 +760,7 @@ l="50-100"
   function gibraltar_z_bar(){
     if(legend  == "Gibraltar"){
       if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeterYellow.value == 1){
+        ultCharged = false;
         stateMgr.Push(new gibraltarZ());
         
       }
@@ -772,6 +777,7 @@ l="50-100"
   function horizon_z_bar(){
     if(legend == "Horizon"){
       if(ultCharged && engine.vision.check == 1 && checkmeterBlue.increased){
+        ultCharged = false;
         stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
       }
     }
@@ -787,6 +793,7 @@ l="50-100"
   function lifeline_z_bar(){
     if(legend  == "Lifeline"){
       if(lifeline_z.increased && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new lifelineZ());
       }
     }
@@ -810,7 +817,7 @@ l="50-100"
     if(legend == "Loba"){
       console.log('MAIN ' + main_Z.decreased)
       console.log('ULT ' + ultCharged)
-      if(ultCharged && main_Z.decreased){
+      if(ultCharged && grey_Z.increased){
         ultCharged = false;
         stateMgr.Push(new lobaZ());
       }
@@ -1127,7 +1134,7 @@ l="50-100"
         break;
       case "Loba":
         loba_q.setValue(engine.vision.q);
-        loba_z.setValue(engine.vision.z);
+        loba_z.setValue(engine.vision.mainZ);
         loba_t.setValue(engine.vision.loba2);
         break;
       case "Mirage":
