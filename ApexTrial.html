@@ -619,7 +619,7 @@ l="50-100"
 
   var wraith_q = new Meter(3, wraith_q_bar);
   var wraith_z = new Meter(3, wraith_z_bar);
-  var yellowZ = new Meter(3, wraith_z_bar);
+  // var yellowZ = new Meter(3, wraith_z_bar);
   
   var valk_q = new Meter(3, valk_q_bar);
   var valk_z = new Meter(3, valk_z_bar);
@@ -994,18 +994,18 @@ l="50-100"
 
   function wraith_q_bar(){
     if(legend == "Wraith"){
-      if(wraith_q.decreased ){
+      if(wraith_q.decreased && engine.vision.check == 1){
       stateMgr.Push(new wraithQ());
       }
     }
   }
   function wraith_z_bar(){
     if(legend  == "Wraith"){
-      if(wraith_z.decreased && engine.vision.check == 1){
+      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1){
         stateMgr.Push(new reversePulseRippleState("#8c00ff", true, 750));
 
       }
-      if(yellowZ.decreased && engine.vision.check == 1){
+      if(checkmeterYellow.decreased && engine.vision.check == 1){
         stateMgr.Push(new PulseRippleState("#8c00ff", true, 700));
       }
     }
@@ -1176,8 +1176,8 @@ l="50-100"
         break;
       case "Wraith":
         wraith_q.setValue(engine.vision.q);
-        wraith_z.setValue(engine.vision.wz);
-        yellowZ.setValue(engine.vision.yellowz);
+        wraith_z.setValue(engine.vision.checkYellow);
+        // yellowZ.setValue(engine.vision.yellowz);
         break;
       case "Valkyrie":
         valk_q.setValue(engine.vision.q);
