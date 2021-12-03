@@ -278,9 +278,9 @@ l="50-100"
 	x= "0.4818"
 	y= "0.9415"
 	width= "0.0359"
-  h="45-120"
-	s="50-100"
-	l="50-100"
+  h="20-120"
+	s="40-100"
+	l="40-100"
 />
   <meta
 	meter="check"
@@ -932,7 +932,8 @@ l="50-100"
   }
   function revenant_z_bar(){
     if(legend == "Revenant"){
-      if(revenant_z.decreased && engine.vision.check == 1){
+      if(ultCharged && checkmeterYellow.value == 1 && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new revenantZ());
       }
     }
@@ -984,7 +985,8 @@ l="50-100"
 
   function wattson_z_bar(){
     if(legend == "Wattson"){
-      if(wattson_z.decreased && engine.vision.check == 1 ){
+      if(ultCharged && checkmeterYellow.value == 1 && engine.vision.check == 1 ){
+        ultCharged = false;
         stateMgr.Push(new wattsonZ());
       }
     }
@@ -1158,7 +1160,7 @@ l="50-100"
       case "Revenant":
         revenant_q.setValue(engine.vision.q);
         revenant_q1.setValue(engine.vision.q1);
-        revenant_z.setValue(engine.vision.rz);
+        revenant_z.setValue(engine.vision.checkYellow);
         revenant_z2.setValue(engine.vision.dprotection);
         break;
       case "Seer":
@@ -1170,7 +1172,7 @@ l="50-100"
         wattson_q1.setValue(engine.vision.q1);
         wattson_q2.setValue(engine.vision.q2);
         wattson_q3.setValue(engine.vision.q3);
-        wattson_z.setValue(engine.vision.wattz);
+        wattson_z.setValue(engine.vision.checkYellow);
         break;
       case "Wraith":
         wraith_q.setValue(engine.vision.q);
