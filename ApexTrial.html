@@ -217,10 +217,10 @@ l="70-100"
 meter="getZLetter" 
 tags="apex,VLC"
 type="ocr_textmatch" 
-x="0.4948" 
-y="0.9574" 
-width="0.01" 
-height="0.0204" 
+x="0.497" 
+y="0.957" 
+width="0.0065" 
+height="0.021" 
 string="Z" 
 confidence="70"
 />
@@ -260,14 +260,24 @@ confidence="70"
 	s="70-100"
 	l="70-100"
 />
+<meta
+meter="checkBlue"
+tags="apex,VLC"
+type="linear"
+x= "0.4818"
+y= "0.9415"
+width= "0.0359"
+h="170-250"
+s="20-100"
+l="50-100"
+/>
   <meta
-	meter="check2"
+	meter="checkYellow"
 	tags="apex,VLC"
-	type="area"
-	x= "0.499"
-	y= "0.9222"
-	height= "0.0056"
-	width= "0.0021"
+	type="linear"
+	x= "0.4818"
+	y= "0.9415"
+	width= "0.0359"
   h="45-70"
 	s="59-100"
 	l="50-100"
@@ -550,7 +560,8 @@ confidence="70"
 
   var bloodhound_q = new Meter(3, bloodhound_q_bar);
   var bloodhound_z = new Meter(3, bloodhound_z_bar);
-  var checkmeter = new Meter(3, bloodhound_z_bar);
+  var checkmeterYellow = new Meter(3, bloodhound_z_bar);
+  var checkmeterBlue = new Meter(3, horizon_z_bar);
 
   var caustic_q = new Meter(3, caustic_q_bar);
   var caustic_q1 = new Meter(3, caustic_q_bar1);
@@ -647,7 +658,7 @@ confidence="70"
   }
   function bangalore_z_bar(){
     if(legend == "Bangalore"){
-      if(bangalore_z.decreased && checkmeter.increased){
+      if(bangalore_z.decreased && checkmeterYellow.increased){
         stateMgr.Push(new bangaloreZ());
       }
     }
@@ -655,7 +666,7 @@ confidence="70"
 
   function bloodhound_z_bar(){
     if(legend  == "Bloodhound"){
-      if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+      if(bloodhound_z.decreased && engine.vision.check == 1 && checkmeterYellow.increased){
       stateMgr.Push(new hueControl("#ff7300", true));
       }
     }
@@ -744,7 +755,7 @@ confidence="70"
   }
   function gibraltar_z_bar(){
     if(legend  == "Gibraltar"){
-      if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeter.increased){
+      if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeterYellow.value == 1){
         stateMgr.Push(new gibraltarZ());
         
       }
@@ -760,7 +771,7 @@ confidence="70"
   }
   function horizon_z_bar(){
     if(legend == "Horizon"){
-      if(horizon_z.decreased && engine.vision.check == 1 ){
+      if(ultCharged && engine.vision.check == 1 && checkmeterBlue.increased){
         stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
       }
     }
@@ -1052,7 +1063,8 @@ confidence="70"
   // SECTION 4 - UPDATE FUNCTION --------------------------------------------------------------------------------------------------
   function update() {
     drawScreenOnKeyboard();
-    checkmeter.setValue(engine.vision.check2);
+    checkmeterYellow.setValue(engine.vision.checkYellow);
+    checkmeterBlue.setValue(engine.vision.checkBlue);
     var colors = hexToHSL(effectHex);
 
 
