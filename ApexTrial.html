@@ -714,14 +714,14 @@ confidence="70"
 
   function fuse_q_bar(){
     if(legend == "Fuse"){
-      if(fuse_q1.decreased || fuse_q2.decreased){
+      if(fuse_q1.decreased && engine.vision.check == 1 && !fuse_q2.increased){
         stateMgr.Push(new fuseQ());
       }
     }
   }
   function fuse_z_bar(){
     if(legend == "Fuse"){
-      if(main_Z.decreased && grey_Z.increased && ultCharged){
+      if(main_Z.decreased && grey_Z.increased && ultCharged && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new fuseZ());
       }
@@ -797,7 +797,10 @@ confidence="70"
   }
   function loba_z_bar(){
     if(legend == "Loba"){
-      if(loba_z.decreased && engine.vision.check == 1 && engine.vision.loba != 1){
+      console.log('MAIN ' + main_Z.decreased)
+      console.log('ULT ' + ultCharged)
+      if(ultCharged && main_Z.decreased){
+        ultCharged = false;
         stateMgr.Push(new lobaZ());
       }
     }
@@ -1940,13 +1943,14 @@ confidence="70"
         };
     }
 
-//Refactor -----------------------------------------------------------------------------------------
     function fuseZ() {
-        this.x = 0;
-        this.y = -10;
-        this.start = new Date().getTime();
+        this.x = 100;
+        this.y = 0;
+        this.start = getNow();
         this.duration = 8000;
         var split = 0;
+        this.squares = [];
+
       this.Process = function () {
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
@@ -1955,111 +1959,22 @@ confidence="70"
         this.Draw();
       };
       this.Draw = function () {
+//Helper function refactor? ----------------------------------------------------------------------------------------------------
         if(this.elapsed < 3000){
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, 320, 200);
-            var fallpath = 1;
-                fallpath = 40;
-            this.y += 5; 
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x, this.y-20, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x, this.y-10, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+50, this.y-150, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+50, this.y-140, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+100, this.y-80, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+100, this.y-70, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+150, this.y-50, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+150, this.y-40, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+200, this.y-100, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+200, this.y-90, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+250, this.y-200, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+250, this.y-190, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+300, this.y-80, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+300, this.y-70, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+320, this.y-20, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+320, this.y-10, 20, 20);
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200);
 
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x, this.y-40, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x, this.y-30, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+50, this.y-300, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+50, this.y-290, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+100, this.y-160, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+100, this.y-150, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+150, this.y-100, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+150, this.y-90, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+200, this.y-200, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+200, this.y-190, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+250, this.y-400, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+250, this.y-390, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+300, this.y-160, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+300, this.y-150, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+320, this.y-40, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+320, this.y-30, 20, 20);
-
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x, this.y-80, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x, this.y-70, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+50, this.y-600, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+50, this.y-590, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+100, this.y-320, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+100, this.y-310, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+150, this.y-200, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+150, this.y-190, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+200, this.y-400, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+200, this.y-390, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+250, this.y-800, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+250, this.y-790, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+300, this.y-320, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+300, this.y-310, 20, 20);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(this.x+320, this.y-80, 20, 30);
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x+320, this.y-70, 20, 20);
+            if (this.squares.length < 5){
+              this.squares.push(new fallingSquare(Math.random() * 320, this.y, 0));
+            }
+            this.squares.forEach((e, i) => {
+              e.Draw();
+              if (e.done) {
+                this.squares.splice(i, 1);
+              }
+            })
         }
+
         if(this.elapsed >= 3000){
           ctx.fillStyle = "#fc5a03";
           ctx.fillRect(0, 15, split, 60);
