@@ -6,7 +6,7 @@
   property="character" 
   label="Legends" 
   type="combobox" 
-  values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,Octane,Pathfinder,Rampart,Revenant,Wattson,Wraith,Valkyrie,Seer" 
+  values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,Octane,Pathfinder,Rampart,Revenant,Seer,Valkyrie,Wattson,Wraith" 
   default="Bloodhound"
   />
   <meta
@@ -21,7 +21,7 @@
   <meta property="enableShield" label="Shield effects" type="boolean" default="1" />
   <meta property="enableSyringe" label="Syringe effects" type="boolean" default="1" />
   <meta property="enableShieldR" label="Shield Recharge effects" type="boolean" default="1" />
-  <meta property="enablePhoneix" label="Phoneix Kit effects" type="boolean" default="1" />
+  <meta property="enablePhoenix" label="Phoenix Kit effects" type="boolean" default="1" />
   <meta property="enableHealth" label="Health effects" type="boolean" default="1" />
   <meta property="enableRevive" label="Revive effects" type="boolean" default="1" />
   <meta
@@ -48,90 +48,6 @@
 	s="70-100"
 	l="87-100"
 />
-<meta
-meter="wz"
-tags="apex,VLC"
-type="area"
-x= "0.4958"
-y= "0.9593"
-height= "0.0000046"
-width= "0.000001"
-h="0-360"
-s="0-15"
-l="70-100"
-/>
-<meta
-meter="z"
-tags="apex,VLC"
-type="area"
-x= "0.4958"
-y= "0.9593"
-height= "0.0000046"
-width= "0.000001"
-h="0-160"
-s="0-1"
-l="70-90"
-/>
-<meta
-meter="rz"
-tags="apex,VLC"
-type="area"
-x= "0.4962"
-y= "0.9593"
-height= "0.0000046"
-width= "0.000001"
-h="0-360"
-s="0-15"
-l="85-95"
-/>
-<meta
-meter="wattz"
-tags="apex,VLC"
-type="area"
-x= "0.4962"
-y= "0.9593"
-height= "0.0000046"
-width= "0.000001"
-h="0-360"
-s="0-15"
-l="70-95"
-/>
-<meta
-meter="hz"
-tags="apex,VLC"
-type="area"
-x= "0.4958"
-y= "0.9593"
-height= "0.0000046"
-width= "0.000001"
-h="345-360"
-s="0-15"
-l="70-100"
-/>
-<meta
-meter="yellowz"
-tags="apex,VLC"
-type="area"
-x= "0.4958"
-y= "0.9593"
-height= "0.0000046"
-width= "0.000001"
-h="50-56"
-s="50-90"
-l="50-90"
-/>
-<meta
-meter="yellowz2"
-tags="apex,VLC"
-type="area"
-x= "0.507"
-y= "0.8833"
-height= "0.000056"
-width= "0.000042"
-h="50-60"
-s="41-95"
-l="60-100"
-/>
   <meta
 	meter="cyrp"
 	tags="apex,VLC"
@@ -144,17 +60,6 @@ l="60-100"
 	s="40-50"
 	l="89-95"
 />
-  <meta
-	meter="t"
-	tags="apex,VLC"
-	type="ocr_textmatch"
-  x="0.8146"
-	y="0.5324"
-	width="0.0141"
-	height="0.0167"
-	string="TO"
-	confidence="70"
-	/>
   <meta
 	meter="dprotection"
 	tags="apex,VLC"
@@ -223,6 +128,18 @@ width="0.0065"
 height="0.021" 
 string="Z" 
 confidence="70"
+/>
+<meta
+meter="q"
+tags="apex,VLC"
+type="area"
+x= "0.3208"
+y= "0.9593"
+height= "0.00009"
+width= "0.00026"
+h="0-180"
+s="0-1"
+l="70-100"
 />
   <meta
 	meter="q1"
@@ -295,18 +212,6 @@ l="50-100"
 	l="70-100"
 />
   <meta
-	meter="q"
-	tags="apex,VLC"
-	type="area"
-  x= "0.3208"
-	y= "0.9593"
-	height= "0.00009"
-	width= "0.00026"
-	h="0-180"
-	s="0-1"
-	l="70-100"
-/>
-  <meta
   tags="apex,VLC"
     meter="deathBox1"
     x=".075"
@@ -353,7 +258,7 @@ l="50-100"
   />
   <meta
   tags="apex,VLC"
-    meter="phoneixKit"
+    meter="phoenixKit"
     x=".6989"
     y=".6925"
     width=".13"
@@ -547,9 +452,8 @@ l="50-100"
   var shieldAnims = [];
   var stateMgr = new StateHandler();
 //MAIN/GREY STUFF ------------------------------------------------------------------------
-  var main_Z = new Meter(3, fuse_z_bar);
-  var grey_Z = new Meter(3, fuse_z_bar);
   var get_Z = new Meter(3, ash_z_bar);
+  var grey_Z = new Meter(3, fuse_z_bar);
 
   var ash_q = new Meter(3, ash_q_bar);
   var ash_z = new Meter(3, ash_z_bar);
@@ -574,7 +478,6 @@ l="50-100"
   var fuse_q1 = new Meter(3, fuse_q_bar);
   var fuse_q2 = new Meter(3, fuse_q_bar);
   var fuse_z = new Meter(3, fuse_z_bar);
-  // var fuse_z2 = new Meter(3, fuse_z_bar1);
 
   var gibraltar_q = new Meter(3, gibraltar_q_bar);
   var gibraltar_z = new Meter(3, gibraltar_z_bar);
@@ -619,7 +522,6 @@ l="50-100"
 
   var wraith_q = new Meter(3, wraith_q_bar);
   var wraith_z = new Meter(3, wraith_z_bar);
-  // var yellowZ = new Meter(3, wraith_z_bar);
   
   var valk_q = new Meter(3, valk_q_bar);
   var valk_z = new Meter(3, valk_z_bar);
@@ -731,10 +633,18 @@ l="50-100"
     }
   }
 
+  let qCharged = false;
   function fuse_q_bar(){
     if(legend == "Fuse"){
-      if(fuse_q1.decreased && engine.vision.check == 1 && !fuse_q2.increased){
+      if(fuse_q1.decreased && engine.vision.check == 1 && qCharged){
+        qCharged = false;
         stateMgr.Push(new fuseQ());
+      }
+      if(fuse_q2.decreased && engine.vision.check == 1){
+        stateMgr.Push(new fuseQ());
+      }
+      if(fuse_q2.value == 1){
+        qCharged = true;
       }
     }
   }
@@ -746,13 +656,6 @@ l="50-100"
       }
     }
   }
-  // function fuse_z_bar1(){
-  //   if(legend == "Fuse"){
-  //     if(fuse_z2.value == 1 && engine.vision.check == 1){
-  //       stateMgr.Push(new fuseZ2());
-  //     }
-  //   }
-  // }
 
   function gibraltar_q_bar(){
     if(legend == "Gibraltar"){
@@ -763,7 +666,7 @@ l="50-100"
   }
   function gibraltar_z_bar(){
     if(legend  == "Gibraltar"){
-      if(gibraltar_z.decreased && engine.vision.check == 1 && checkmeterYellow.value == 1){
+      if(gibraltar_z.value == 1 && engine.vision.check == 1 && ultCharged){
         ultCharged = false;
         stateMgr.Push(new gibraltarZ());
         
@@ -796,7 +699,7 @@ l="50-100"
   }
   function lifeline_z_bar(){
     if(legend  == "Lifeline"){
-      if(lifeline_z.increased && engine.vision.check == 1){
+      if(ultCharged && lifeline_z.increased && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new lifelineZ());
       }
@@ -819,9 +722,7 @@ l="50-100"
   }
   function loba_z_bar(){
     if(legend == "Loba"){
-      console.log('MAIN ' + main_Z.decreased)
-      console.log('ULT ' + ultCharged)
-      if(ultCharged && grey_Z.increased){
+      if(ultCharged && loba_z.increased){
         ultCharged = false;
         stateMgr.Push(new lobaZ());
       }
@@ -837,7 +738,8 @@ l="50-100"
   }
   function mirage_z_bar(){
     if(legend  == "Mirage"){
-      if(ultCharged && grey_Z.increased && engine.vision.check == 1){
+      if(ultCharged && mirage_z.increased && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
       }
     }
@@ -863,7 +765,8 @@ l="50-100"
   }
   function octane_z_bar(){
     if(legend  == "Octane"){
-      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1){
+      if(ultCharged && octane_z.increased && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new octaneZ());
       }
     }
@@ -878,7 +781,8 @@ l="50-100"
   }
   function pathfinder_z_bar(){
     if(legend  == "Pathfinder"){
-      if(pathfinder_z.decreased && engine.vision.check == 1){
+      if(ultCharged && pathfinder_z.increased && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new pathfinderZ());
       }
     }
@@ -907,7 +811,8 @@ l="50-100"
   }
   function rampart_z_bar(){
     if(legend  == "Rampart"){
-      if(grey_Z.increased && ultCharged && engine.vision.check == 1){
+      if(rampart_z.increased && ultCharged && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new rampartZ());
       }
     }
@@ -936,7 +841,7 @@ l="50-100"
   }
   function revenant_z_bar(){
     if(legend == "Revenant"){
-      if(ultCharged && checkmeterYellow.value == 1 && engine.vision.check == 1){
+      if(ultCharged && revenant_z.value == 1 && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new revenantZ());
       }
@@ -952,7 +857,7 @@ l="50-100"
   }
   function seer_z_bar(){
     if(legend == "Seer"){
-      if(ultCharged && checkmeterBlue.value == 1 && engine.vision.check == 1 ){
+      if(ultCharged && seer_z.value == 1 && engine.vision.check == 1 ){
         ultCharged = false;
         stateMgr.Push(new seerZ());
       }
@@ -990,7 +895,7 @@ l="50-100"
 
   function wattson_z_bar(){
     if(legend == "Wattson"){
-      if(ultCharged && checkmeterYellow.value == 1 && engine.vision.check == 1 ){
+      if(ultCharged && wattson_z.value == 1 && engine.vision.check == 1 ){
         ultCharged = false;
         stateMgr.Push(new wattsonZ());
       }
@@ -1006,7 +911,8 @@ l="50-100"
   }
   function wraith_z_bar(){
     if(legend  == "Wraith"){
-      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1){
+      if(ultCharged && wraith_z.increased && engine.vision.check == 1){
+        ultCharged = false;
         stateMgr.Push(new reversePulseRippleState("#8c00ff", true, 750));
 
       }
@@ -1090,7 +996,6 @@ l="50-100"
       legend = character;
 
     // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
-      main_Z.setValue(engine.vision.mainZ);
       grey_Z.setValue(engine.vision.greyZ);
       get_Z.setValue(engine.vision.getZLetter);
       if (get_Z.value === 1){
@@ -1118,30 +1023,29 @@ l="50-100"
         caustic_z.setValue(engine.vision.checkYellow);
         break;
       case "Crypto": 
-        crypto_z.setValue(engine.vision.z);
+        crypto_z.setValue(engine.vision.mainZ);
         crypto_z2.setValue(engine.vision.cyrp2);
         break;
       case "Fuse": 
         fuse_q1.setValue(engine.vision.q1);
         fuse_q2.setValue(engine.vision.q2);
         fuse_z.setValue(engine.vision.mainZ);
-        // fuse_z2.setValue(engine.vision.t);
         break;
       case "Gibraltar":
         gibraltar_q.setValue(engine.vision.q);
-        gibraltar_z.setValue(engine.vision.z);
+        gibraltar_z.setValue(engine.vision.checkYellow);
         break;
       case "Horizon":
         horizon_q.setValue(engine.vision.q);
-        horizon_z.setValue(engine.vision.hz);
+        horizon_z.setValue(engine.vision.checkBlue);
         break;
       case "Lifeline":
         lifeline_q.setValue(engine.vision.q);
-        lifeline_z.setValue(engine.vision.yellowz2);
+        lifeline_z.setValue(engine.vision.checkYellow);
         break;
       case "Loba":
         loba_q.setValue(engine.vision.q);
-        loba_z.setValue(engine.vision.mainZ);
+        loba_z.setValue(engine.vision.greyZ);
         loba_t.setValue(engine.vision.loba2);
         break;
       case "Mirage":
@@ -1150,11 +1054,11 @@ l="50-100"
         break;
       case "Octane":
         octane_q.setValue(engine.vision.q);
-        octane_z.setValue(engine.vision.z);
+        octane_z.setValue(engine.vision.checkYellow);
         break;
       case "Pathfinder":
         pathfinder_q.setValue(engine.vision.q);
-        pathfinder_z.setValue(engine.vision.yellowz2);
+        pathfinder_z.setValue(engine.vision.checkYellow);
         break;
       case "Rampart":
         rampart_q.setValue(engine.vision.q);
@@ -1182,7 +1086,6 @@ l="50-100"
       case "Wraith":
         wraith_q.setValue(engine.vision.q);
         wraith_z.setValue(engine.vision.checkYellow);
-        // yellowZ.setValue(engine.vision.yellowz);
         break;
       case "Valkyrie":
         valk_q.setValue(engine.vision.q);
@@ -1361,12 +1264,12 @@ l="50-100"
     }
 
     var confirmCharge = engine.vision.confirm;
-    if(enablePhoneix){ 
-    if (engine.vision.phoneixKit > 0.1 && confirmCharge > 0.8) {
-      drawSweep(engine.vision.phoneixKit, "rgba(139, 35, 224, 0.9)");
+    if(enablePhoenix){ 
+    if (engine.vision.phoenixKit > 0.1 && confirmCharge > 0.8) {
+      drawSweep(engine.vision.phoenixKit, "rgba(139, 35, 224, 0.9)");
     }
 
-    if (engine.vision.phoneixKit > 0.95 && confirmCharge > 0.8) {
+    if (engine.vision.phoenixKit > 0.95 && confirmCharge > 0.8) {
       bursts.push(new ColorBurst(160, 100, "rgb(139, 35, 224"));
       }
     }
