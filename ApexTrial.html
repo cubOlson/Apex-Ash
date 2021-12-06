@@ -637,7 +637,11 @@ l="50-100"
     if(legend == "Ash"){
       if(ultCharged && ash_z.increased && engine.vision.check == 1){
         ultCharged = false;
-        stateMgr.Push(new Ash_Z());
+        let index = 0;
+        while(index < 6){
+          effects.push(new ellipseFade(100/(index + 1), 200));
+          index++;
+        }
       }
     }
   }
@@ -2537,9 +2541,9 @@ l="50-100"
         this.y = 0;
         this.radiusX = radiusX;
         this.radiusY = radiusY;
-        this.done = false;
+        this.lifetime = 10;
 
-        this.Draw = function () {
+        this.draw = function () {
           ctx.setTransform(.5, 1, -1, .5, 160, 100);
           ctx.beginPath();
           ctx.ellipse(this.x, this.y, this.radiusX, this.radiusY, Math.PI, 0, 2 * Math.PI, false);
@@ -2547,7 +2551,7 @@ l="50-100"
           ctx.fill();
           this.radiusX -= 0.155;
           if(this.radiusX <= 1){
-            this.done = true;
+            this.lifetime = 0;
           }
         }
 
@@ -2596,43 +2600,6 @@ l="50-100"
       }
      }
    }
-
-function Ash_Z (){
-  this.start = getNow();
-  this.duration = 15500;
-  this.circles = [];
-  this.doneCircles = false;
-
-  this.Process = function () {
-    this.elapsed = getNow() - this.start;
-    if (this.elapsed > this.duration) {
-      stateMgr.Pop();
-    }
-    this.Draw();
-  };
-
-  this.Draw = function () {
-      ctx.fillStyle = 'black';
-      ctx.fillRect(0,0,320,200);
-      if (!this.doneCircles){
-        let index = 0;
-        while(index < 6){
-          this.circles.push(new ellipseFade(100/(index + 1), 200))
-          index++;
-        }
-      
-        this.doneCircles = true;
-      }
-      this.circles.forEach((e, i) => {
-        if (e.done) {
-          this.circles.splice(i, 1);
-        } else {
-          e.Draw();
-        }
-      })
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-  }
-}
 
 function bangaloreQ() {
   this.start = getNow();
