@@ -435,6 +435,7 @@ l="50-100"
   let health, blueShield, purpleShield, goldShield, shieldBar;
   let characterChanged = false;
   let ultCharged = false;
+  let ultAnimPlayed = false;
   let healthHistory = [];
   let shieldHistory = [];
 
@@ -985,6 +986,8 @@ l="50-100"
     drawScreenOnKeyboard();
     checkmeterYellow.setValue(engine.vision.checkYellow);
     checkmeterBlue.setValue(engine.vision.checkBlue);
+    grey_Z.setValue(engine.vision.greyZ);
+    get_Z.setValue(engine.vision.getZLetter);
     var colors = hexToHSL(effectHex);
 
 
@@ -995,11 +998,19 @@ l="50-100"
       
       legend = character;
 
+      
+
     // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
-      grey_Z.setValue(engine.vision.greyZ);
-      get_Z.setValue(engine.vision.getZLetter);
       if (get_Z.value === 1){
         ultCharged = true;
+      }
+      if (ultCharged && !ultAnimPlayed){
+        console.log('In anim function')
+        stateMgr.Push(new BurstRippleState("#ffffff", "#000000", "#ffffc8"))
+        ultAnimPlayed = true;
+      }
+      if (!ultCharged){
+        ultAnimPlayed = false;
       }
 
     switch(legend){
@@ -1308,6 +1319,10 @@ l="50-100"
       if (effects[i].lifetime <= 0){
         effects.splice(i, 1);
       }
+    }
+
+    if (effects.length === 0){
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
     
     window.requestAnimationFrame(update);
@@ -2453,7 +2468,7 @@ l="50-100"
           ctx.fillStyle = `hsl(215, 100%, ${1500/this.radiusX}%)`;
           ctx.fill();
           this.radiusX -= 0.155;
-          if(this.radiusX <= 1){
+          if(this.radiusX <= 5){
             this.lifetime = 0;
           }
         }
