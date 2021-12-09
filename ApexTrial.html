@@ -723,7 +723,7 @@ l="50-100"
   }
   function loba_z_bar(){
     if(legend == "Loba"){
-      if(ultCharged && loba_z.increased){
+      if(ultCharged && loba_z.increased && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new lobaZ());
       }
