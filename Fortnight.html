@@ -89,6 +89,50 @@ height=".028"
 type="ocr_textmatch"
 confidence="70"
 />
+<meta
+meter="build1"
+tags="vlc,fortnite"
+x=".7896"
+y=".7796"
+width=".01"
+h="0-360"
+s="0-20"
+l="90-100"
+type="linear"
+/>
+<meta
+meter="build2"
+tags="vlc,fortnite"
+x=".8307"
+y=".7796"
+width=".01"
+h="0-360"
+s="0-20"
+l="90-100"
+type="linear"
+/>
+<meta
+meter="build3"
+tags="vlc,fortnite"
+x=".8719"
+y=".7796"
+width=".01"
+h="0-360"
+s="0-20"
+l="90-100"
+type="linear"
+/>
+<meta
+meter="build4"
+tags="vlc,fortnite"
+x=".9120"
+y=".7796"
+width=".01"
+h="0-360"
+s="0-20"
+l="90-100"
+type="linear"
+/>
   <meta
     meter="ammo2"
     tags="vlc,fortnite"
@@ -325,29 +369,6 @@ confidence="70"
     this.lifetime++;
   };
 
-  var particles = [];
-  function renderFire() {
-    /*
-    if (engine.vision.fire.surfacearea > 0)
-    {
-      for (var iEmit = 0; iEmit < emissionrate; iEmit++)
-      {
-        particles.push(new Particle(160, 100, 1000));
-      }              
-    } 
-
-    for (i = 0; i < particles.length; i++) {          
-      particles[i].draw();
-      particles[i].update();                  
-    }
-
-    for (i = 0; i < particles.length; i++) {          
-      if (particles[i].offscreen) {
-        particles.splice(i,1);          
-      }                  
-    }*/
-  }
-
   var vShield = [];
   var vHealth = [];
   var vXp = [];
@@ -362,6 +383,8 @@ confidence="70"
   var vehiclePhase = 0;
   var shieldValue = 0;
   var healthValue = 0;
+  var notBuildingAnim = false;
+  var BuildingAnim = false;
   
   var move = 0;
   var lazerMove =0;
@@ -369,6 +392,8 @@ confidence="70"
   var lazerx1 = 160;
   var lazery1 = 200;
   var circleMeter = new Meter(3, circleChange);
+  var BuildingMeter = new Meter(4, checkBuild);
+  var notBuildingMeter = new Meter(4, checkBuild);
 
   function circleChange(){
       if(circleMeter.increased){
@@ -616,6 +641,7 @@ confidence="70"
       }
     };
   }
+
   function onEngineReady() {
     // Grab canvas and rendering context.
     canvas = document.getElementById("exCanvas");
@@ -623,7 +649,9 @@ confidence="70"
 
     window.requestAnimationFrame(update);
   }
+
   var duration = 15;
+
   function Meter(count, callback) {
     this.size = count;
     this.value = 0;
@@ -656,10 +684,64 @@ confidence="70"
       }
     };
   }
-  function update() {
 
-    console.log('Not Building' + engine.vision.notBuilding)
-    console.log('Building' + engine.vision.Building)
+  function buildStepUp(x, y){
+    this.x = x;
+    this.y = y;
+    this.lifetime = 50;
+
+    this.draw = function(){
+      
+      let index = 0;
+      while(index < 5){
+        ctx.beginPath();
+        ctx.fillStyle = 'blue';
+        ctx.globalAlpha = .6;
+        ctx.fillRect(this.x + (100 * index),this.y,100,50);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 15;
+        ctx.strokeRect(this.x + (100 * index),this.y,100,50);
+        index++;
+      }
+
+      this.lifetime--;
+    }
+  }
+
+  function checkBuildMeters(){
+    if(engine.vision.build1 || engine.vision.build2 || engine.vision.build3 || engine.vision.build4){
+      return true
+    }
+      return false
+  };
+
+  function checkBuild(){
+    if(BuildingMeter.value == 1 && checkBuildMeters() && !BuildingAnim){
+
+      let index = 0;
+      var intr = setInterval(function() {
+        effects.push(new buildStepUp(0 - (index % 2 * 50), 200 - (50 * index)));
+        if (++index == 6) clearInterval(intr);
+      }, 150);
+
+      BuildingAnim = true;
+      notBuildingAnim = false;
+
+    } else if (notBuildingMeter.value == 1 && !checkBuildMeters() && !notBuildingAnim){
+
+      stateMgr.Push(new PulseRippleState('red', true, 1000));
+      BuildingAnim = false;
+      notBuildingAnim = true;
+
+    }
+  }
+
+  function update() {
+    BuildingMeter.setValue(engine.vision.Building);
+    notBuildingMeter.setValue(engine.vision.notBuilding);
+
+
 
     if (engine.vision.battlebus || engine.vision.exit)
     {
@@ -727,13 +809,11 @@ confidence="70"
 
       ctx.fillRect(zx, zy, iWidth, iHeight);
     }
-    renderFire();
 
     renderExtensions();
     if(enableCircle){
     circleMeter.setValue(engine.vision.circle);
     }
-    stateMgr.Process();
 
     currentBrightness -= 0.01;
     if(enableKill){
@@ -787,6 +867,7 @@ confidence="70"
         effects.splice(i, 1);
       }
     }
+    stateMgr.Process();
     window.requestAnimationFrame(update);
   }
  
