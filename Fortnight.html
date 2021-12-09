@@ -483,37 +483,33 @@ type="linear"
   function renderExtensions() {
     
     if(enableShield){
-    vShield.push(engine.vision.shields);
-    if (vShield.length > 15) {
-      //console.log( "VShield = " + vShield);
-      vShield.shift();
-    }
+      vShield.push(engine.vision.shields);
+      if (vShield.length > 15) {
+        vShield.shift();
+      }
     }
     if(enableHP){
-    vHealth.push(engine.vision.health);
-    if (vHealth.length > 15) {
-      //console.log( "VHealth = " + vHealth);
-      vHealth.shift();
-    }
+      vHealth.push(engine.vision.health);
+      if (vHealth.length > 15) {
+        vHealth.shift();
+      }
     }
     if(enableXP){
-    vXp.push(engine.vision.xp);
-    if (vXp.length > 15) {
-      vXp.shift();
-      //console.log(vXp);
-    }
+      vXp.push(engine.vision.xp);
+      if (vXp.length > 15) {
+        vXp.shift();
+      }
     }
     if (arrayEqual(vShield)) {
       shieldValue = vShield[0];
-      //console.log( "Shield = " + shieldValue);
     }
     if (arrayEqual(vHealth)) {
       healthValue = vHealth[0];
-      //console.log( "health = " + healthValue);
     }
 
     var bNoHealth = healthValue === 0;
     var bKnocked = engine.vision.knock > 0;
+
     if (bNoHealth && bKnocked) {
       ctx.fillStyle = "hsl(" + 0 + "," + 100 + "%," + random(30, 50) + "%)";
       ctx.fillRect(0, 0, 320, 200);
@@ -547,29 +543,29 @@ type="linear"
       healthPrev = healthValue;
     }
     if(enableHP){
-    if (healthValue > 0 && healthValue < 0.5) {
-      for (var iIdx = 0; iIdx < 100; iIdx++) {
-        ctx.fillStyle = "hsl(" + 345 + "," + 100 + "%," + random(20, 50) + "%)";
-        ctx.fillRect(
-          random(0, 300),
-          random(0, 180),
-          random(20, 50),
-          random(50, 50)
-        );
+      if (healthValue > 0 && healthValue < 0.5) {
+        for (var iIdx = 0; iIdx < 100; iIdx++) {
+          ctx.fillStyle = "hsl(" + 345 + "," + 100 + "%," + random(20, 50) + "%)";
+          ctx.fillRect(
+            random(0, 300),
+            random(0, 180),
+            random(20, 50),
+            random(50, 50)
+          );
+        }
       }
     }
-  }
     if (enableVehicle){
-    if (healthValue > 0 && engine.vision.vehicle > 0.4) {
-      var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
-      ctx.fillStyle = "hsl(" + myHuePicker3 + "," + 100 + "%," + (vBr + 20) + "%)";
-      ctx.fillRect(0, 0, 320, 200);
+      if (healthValue > 0 && engine.vision.vehicle > 0.4) {
+        var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
+        ctx.fillStyle = "hsl(" + myHuePicker3 + "," + 100 + "%," + (vBr + 20) + "%)";
+        ctx.fillRect(0, 0, 320, 200);
 
-      vehiclePhase++;
-      if (vehiclePhase > 100) {
-        vehiclePhase = 0;
+        vehiclePhase++;
+        if (vehiclePhase > 100) {
+          vehiclePhase = 0;
+        }
       }
-    }
     }
     if (shieldBrightness > 0) {
       var nShWid = 1 - Math.pow(shieldBrightness / 50, 3);
@@ -613,6 +609,7 @@ type="linear"
       waves.push(new Wave(vXp[14] * 320, "#fbd100"));
     }
   }
+
   function StateHandler() {
     var stack = [];
     var state = null;
@@ -674,8 +671,6 @@ type="linear"
 
       // We got here, so we've got a matching value collection.
       if (this.value !== values[0]) {
-        //var fromZero = this.value === 0;
-        //var toZero = values[0] === 0;
         this.diff = Math.abs(this.value - values[0]);
         this.increased = this.value < values[0];
         this.decreased = this.value > values[0];
@@ -741,8 +736,6 @@ type="linear"
     BuildingMeter.setValue(engine.vision.Building);
     notBuildingMeter.setValue(engine.vision.notBuilding);
 
-
-
     if (engine.vision.battlebus || engine.vision.exit)
     {
 
@@ -753,7 +746,6 @@ type="linear"
       enableVehicle = false;
      
     }
-    //console.log(engine.vision.xp);
     
     var brightness = (engine.audio.level + 20) / 20;
 
@@ -782,8 +774,6 @@ type="linear"
     }
 
     var lit = average * 40;
-
-    //console.log("Light [0]: " + engine.zone.lightness.byteLength);
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let zhue = new Int16Array(engine.zone.hue);
@@ -810,15 +800,29 @@ type="linear"
       ctx.fillRect(zx, zy, iWidth, iHeight);
     }
 
+    //Fill build-item-specific zone
+    if(checkBuildMeters()){
+      ctx.beginPath();
+      ctx.fillStyle = 'white';
+      if(engine.vision.build1) {
+        ctx.fillRect(0,0,80,200);
+      } else if(engine.vision.build2) {
+        ctx.fillRect(80,0,80,200);
+      } else if(engine.vision.build3) {
+        ctx.fillRect(160,0,80,200);
+      } else if(engine.vision.build4) {
+        ctx.fillRect(240,0,80,200);
+      }
+    }
+
     renderExtensions();
+
     if(enableCircle){
     circleMeter.setValue(engine.vision.circle);
     }
 
     currentBrightness -= 0.01;
     if(enableKill){
-     //console.log(engine.vision.kill);
-     //console.log("killprev" + killPrev);
       if(engine.vision.kill >= 0){
         if (killPrev <= engine.vision.kill && duration <= 200 && duration > 0 && engine.vision.kill != -1){
           for (var iIdx = 0; iIdx < 300; iIdx++) {
@@ -830,7 +834,6 @@ type="linear"
           random(50, 50)
         );
       }
-       //console.log("cc" + duration);
         duration -= 1;
       }
       if(killPrev + 1 === engine.vision.kill)
