@@ -76,11 +76,15 @@
   <resolution size="3440x1440" x="0.2483" y="0.9188" width="0.0015" height="0.00009"/>
   <resolution size="2560x1080" x="0.2483" y="0.9188" width="0.0015" height="0.00009"/>
 </meta>
-<meta meter="checkBlue" tags="apex,VLC" type="linear" x= "0.4818" y= "0.9415" width= "0.0359" h="170-250" s="20-100" l="50-100">
+<meta meter="checkBlue" tags="apex,VLC" type="linear" x= "0.4818" y= "0.9415" width= "0.0359" h="200-225" s="20-40" l="75-100">
   <resolution size="3440x1440" x="0.4959" y="0.848" width="0.0015" height="0.00009"/>
   <resolution size="2560x1080" x="0.4959" y="0.848" width="0.0015" height="0.00009"/>
 </meta>
-<meta meter="checkYellow" tags="apex,VLC" type="linear" x= "0.4818" y= "0.9415" width= "0.0359" h="20-120" s="40-100" l="40-100">
+<meta meter="checkYellow" tags="apex,VLC" type="linear" x= "0.4818" y= "0.9415" width= "0.0359" h="45-80" s="60-80" l="75-100">
+  <resolution size="3440x1440" x="0.4959" y="0.848" width="0.0015" height="0.00009"/>
+  <resolution size="2560x1080" x="0.4959" y="0.848" width="0.0015" height="0.00009"/>
+</meta>
+<meta meter="checkGreen" tags="apex,VLC" type="linear" x= "0.4818" y= "0.9415" width= "0.0359" h="35-80" s="20-60" l="80-100">
   <resolution size="3440x1440" x="0.4959" y="0.848" width="0.0015" height="0.00009"/>
   <resolution size="2560x1080" x="0.4959" y="0.848" width="0.0015" height="0.00009"/>
 </meta>
@@ -156,6 +160,7 @@
   <resolution size="3440x1440" x=".5" y=".5" width=".4"/>
   <resolution size="2560x1080" x=".5" y=".5" width=".4"/>
 </meta>
+
   <meta
 	tags="apex,VLC"
     meter="hitEscape"
@@ -224,6 +229,7 @@
   var bloodhound_z = new Meter(3, bloodhound_z_bar);
   var checkmeterYellow = new Meter(3, bloodhound_z_bar);
   var checkmeterBlue = new Meter(3, horizon_z_bar);
+  var checkmeterGreen = new Meter(3, octane_z_bar);
 
   var caustic_q = new Meter(3, caustic_q_bar);
   var caustic_q1 = new Meter(3, caustic_q_bar1);
@@ -322,7 +328,7 @@
   }
   function bangalore_z_bar(){
     if(legend == "Bangalore"){
-      if(ultCharged && checkmeterYellow.increased){
+      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1){
         ultCharged = false;
         stateMgr.Push(new bangaloreZ());
       }
@@ -331,7 +337,7 @@
 
   function bloodhound_z_bar(){
     if(legend  == "Bloodhound"){
-      if(ultCharged && engine.vision.check == 1 && bloodhound_z.increased){
+      if(ultCharged && engine.vision.check == 1 && bloodhound_z.increased && engine.vision.getZLetter != 1){
       ultCharged = false;
       stateMgr.Push(new hueControl(1, true));
       }
@@ -368,7 +374,7 @@
   }
   function caustic_z_bar(){
     if(legend  == "Caustic"){
-      if(ultCharged && caustic_z.increased && engine.vision.check == 1){
+      if(ultCharged && caustic_z.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1){
         ultCharged = false;
         stateMgr.Push(new causticZ());
       }
@@ -377,7 +383,7 @@
 
   function crypto_z_bar(){
     if(legend == "Crypto"){
-      if(crypto_z.decreased && engine.vision.check == 1 && !crypto_z2.increased){
+      if(crypto_z.decreased && engine.vision.check != 1 && crypto_z2.decreased){
         ultCharged = false;
         stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
       }
@@ -408,7 +414,7 @@
   }
   function fuse_z_bar(){
     if(legend == "Fuse"){
-      if(fuse_z.decreased && grey_Z.increased && ultCharged && engine.vision.check == 1){
+      if(fuse_z.decreased && grey_Z.value == 1 && ultCharged && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new fuseZ());
       }
@@ -622,6 +628,22 @@
     }
   }
 
+  function valk_q_bar(){
+    if(legend == "Valkyrie"){
+      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased){
+        stateMgr.Push( new valkQ());
+      }
+    }
+  }
+
+  function valk_z_bar(){
+    if(legend == "Valkyrie"){
+      if(ultCharged && valk_z.value == 1 && valk_z.increased ){
+        stateMgr.Push(new valkZ(100));
+      }
+    }
+  }
+
   function wattson_q_bar(){
     if(legend == "Wattson"){
       if(wattson_q.decreased && engine.vision.check == 1){
@@ -680,22 +702,6 @@
     }
   }
 
-  function valk_q_bar(){
-    if(legend == "Valkyrie"){
-      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased){
-        stateMgr.Push( new valkQ());
-      }
-    }
-  }
-
-  function valk_z_bar(){
-    if(legend == "Valkyrie"){
-      if(valk_z.value==1 && valk_z.increased ){
-        stateMgr.Push(new valkZ(100));
-      }
-    }
-  }
-
   // ENGINE READY FUNCTION ---------------------------------------------------------------------------------------------
   function onEngineReady() {
     // Grab canvas and rendering context.
@@ -744,6 +750,7 @@
 
     checkmeterYellow.setValue(engine.vision.checkYellow);
     checkmeterBlue.setValue(engine.vision.checkBlue);
+    checkmeterGreen.setValue(engine.vision.checkGreen);
     grey_Z.setValue(engine.vision.greyZ);
     get_Z.setValue(engine.vision.getZLetter);
 
@@ -764,7 +771,7 @@
         ultCharged = true;
       }
       if (ultCharged && !ultAnimPlayed){
-        stateMgr.Push(new BurstRippleState("#ffffff", "#000000", "#ffffc8"))
+        stateMgr.Push(new BurstRippleState(effectHex, '#ffffff', effectHex))
         ultAnimPlayed = true;
       }
       if (!ultCharged){
@@ -792,7 +799,7 @@
         caustic_z.setValue(engine.vision.checkYellow);
         break;
       case "Crypto": 
-        crypto_z.setValue(engine.vision.mainZ);
+        crypto_z.setValue(engine.vision.cyrp);
         crypto_z2.setValue(engine.vision.cyrp2);
         break;
       case "Fuse": 
@@ -823,7 +830,7 @@
         break;
       case "Octane":
         octane_q.setValue(engine.vision.q);
-        octane_z.setValue(engine.vision.checkYellow);
+        octane_z.setValue(engine.vision.checkGreen);
         break;
       case "Pathfinder":
         pathfinder_q.setValue(engine.vision.q);
@@ -838,27 +845,27 @@
       case "Revenant":
         revenant_q.setValue(engine.vision.q);
         revenant_q1.setValue(engine.vision.q1);
-        revenant_z.setValue(engine.vision.checkYellow);
+        revenant_z.setValue(engine.vision.checkGreen);
         revenant_z2.setValue(engine.vision.dprotection);
         break;
       case "Seer":
         seer_q.setValue(engine.vision.q);
         seer_z.setValue(engine.vision.checkBlue);
         break;
+      case "Valkyrie":
+        valk_q.setValue(engine.vision.q);
+        valk_z.setValue(engine.vision.valkz);
+        break;
       case "Wattson":
         wattson_q.setValue(engine.vision.q);
         wattson_q1.setValue(engine.vision.q1);
         wattson_q2.setValue(engine.vision.q2);
         wattson_q3.setValue(engine.vision.q3);
-        wattson_z.setValue(engine.vision.checkYellow);
+        wattson_z.setValue(engine.vision.checkGreen);
         break;
       case "Wraith":
         wraith_q.setValue(engine.vision.q);
         wraith_z.setValue(engine.vision.checkYellow);
-        break;
-      case "Valkyrie":
-        valk_q.setValue(engine.vision.q);
-        valk_z.setValue(engine.vision.valkz);
         break;
     }
 
