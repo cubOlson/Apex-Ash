@@ -7,7 +7,7 @@
   label="Legends" 
   type="combobox" 
   values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,Octane,Pathfinder,Rampart,Revenant,Seer,Valkyrie,Wattson,Wraith" 
-  default="Bloodhound"
+  default="Ash"
   />
   <meta
     property="keyScrenBrightness"
@@ -191,6 +191,7 @@
 
 <script>
   //tags="apex, apex legends"
+  //Meter note - last 2 are difficult to identify, probably going to dump
   // SECTION 2 - VARIABLE DECLARATIONS, HERO METER SETUP -----------------------------------------------------------------------------------
 
   var canvas, ctx;
@@ -2901,7 +2902,6 @@ function bangaloreQ() {
 
     var brightness = this.lifetime + 10;
     var opacity = this.lifetime / 45;
-    //var hue = (iHue + 30) % 360;
     //main wave
     ctx.beginPath();
     ctx.lineWidth = this.width;
