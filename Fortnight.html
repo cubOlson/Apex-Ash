@@ -3,13 +3,6 @@
   <meta description="Ambience and metering for Fortnite Season 7" />
   <meta publisher="WhirlwindFX" />
   <meta
-    property="enableAmmo"
-    label="Ammo low effect"
-    type="boolean"
-    default="1"
-  />
-  <meta property="myHuePicker1" label="Ammo low effect Hue Control" type="hue" default="0" min="0" max="360">
-  <meta
     property="enableKill"
     label="Kill effect"
     type="boolean"
@@ -59,16 +52,30 @@ h="298-300"
 s="72-73"
 l="99-100"
 />
-  <meta
-    meter="ammo"
-    tags="vlc,fortnite"
-    x=".676"
-    y=".8674"
-    width=".025"
-    height=".0335"
-    type="ocr_numeric"
-    confidence="40"
-  />
+<meta
+meter="matchLobby"
+tags="vlc,fortnite"
+type="area"
+x= "0.0224"
+y= "0.0231"
+height= "0.001"
+width= "0.01"
+h="200-220"
+s="75-100"
+l="50-100"
+/>
+<meta
+meter="playButton"
+tags="vlc,fortnite"
+type="area"
+x= "0.7802"
+y= "0.6537"
+height= "0.05"
+width= "0.05"
+h="50-70"
+s="75-100"
+l="70-100"
+/>
   <meta
   meter="notBuilding"
   tags="vlc,fortnite"
@@ -133,16 +140,6 @@ s="0-20"
 l="90-100"
 type="linear"
 />
-  <meta
-    meter="ammo2"
-    tags="vlc,fortnite"
-    x=".685"
-    y=".8674"
-    width=".0230"
-    height=".0335"
-    type="ocr_numeric"
-    confidence="50"
-  />
   <meta
     meter="kill"
     tags="vlc,fortnite"
@@ -210,7 +207,7 @@ type="linear"
     height=".010"
     h="180-212"
     s="70-100"
-    l="60-100"
+    l="60-95"
     type="area"
   />
   <meta
@@ -309,7 +306,7 @@ type="linear"
     if (this.velY == 0) this.velY = 1;
 
     this.brightness = random(30, 50);
-    this.color = "hsl(" + firecolor + ",100%," + this.brightness + "%)";
+    this.color = `hsl(${firecolor}, 100%, ${this.brightness}%)`;
     this.size = random(5, 10);
 
     this.offscreen = false;
@@ -320,7 +317,7 @@ type="linear"
 
   Particle.prototype.draw = function () {
     ctx.beginPath();
-    ctx.fillStyle = "hsl(" + firecolor + ",100%," + this.brightness + "%)";
+    ctx.fillStyle = `hsl(${firecolor}, 100%, ${this.brightness}%)`;
     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
     ctx.fill();
   };
@@ -385,6 +382,7 @@ type="linear"
   var healthValue = 0;
   var notBuildingAnim = false;
   var BuildingAnim = false;
+  var lobbyAnim = false;
   
   var move = 0;
   var lazerMove =0;
@@ -394,12 +392,68 @@ type="linear"
   var circleMeter = new Meter(3, circleChange);
   var BuildingMeter = new Meter(4, checkBuild);
   var notBuildingMeter = new Meter(4, checkBuild);
+  var inLobby = new Meter(4, ()=>"");
+  var yellowPlayButton = new Meter(4, ()=>"");
 
   function circleChange(){
       if(circleMeter.increased){
         console.log(circleMeter.value);
         stateMgr.Push(new reversePulseRippleState("#8000ff", true));
       }
+    }
+
+    function lobbyHelper(x, y, radius){
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.draw = function(){
+        ctx.globalAlpha = 1 - this.radius/360;
+        ctx.beginPath();
+        ctx.strokeStyle = `hsl(${myHuePicker2}, 100%, ${50 + (this.radius/7)}%)`;
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        this.radius++;
+      }
+    }
+
+    function lobbyAnimation(){
+      this.start = new Date().getTime();
+      this.elapsed = 0;
+      this.effects = [];
+      this.radius = 0;
+      this.searching = 1000;
+
+      this.Process = function () {
+        if (inLobby.decreased) {
+          stateMgr.Pop();
+          lobbyAnim = false;
+        }
+        yellowPlayButton.value == 1 ? this.searching = 1000 : this.searching = 100;
+      this.Draw();
+      };
+
+      this.Draw = function(){
+        this.elapsed = new Date().getTime() - this.start;
+        this.radius = 50 + (Math.sin(this.elapsed/this.searching)*10);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.beginPath();
+        ctx.strokeStyle = `hsl(${myHuePicker2}, 100%, 50%)`;
+        ctx.lineWidth = 20;
+        ctx.arc(160, 100, this.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+        if(this.radius > 59 && this.elapsed % 2 == 0){
+          this.effects.push(new lobbyHelper(160, 100, 69));
+        }
+        this.effects.forEach((e, i) => {
+          ctx.lineWidth = 1;
+          e.draw();
+          if (e.radius > 360) this.effects.splice(i, 1);
+        });
+      }
+
     }
 
     function reversePulseRippleState(color, hollow) {
@@ -511,7 +565,7 @@ type="linear"
     var bKnocked = engine.vision.knock > 0;
 
     if (bNoHealth && bKnocked) {
-      ctx.fillStyle = "hsl(" + 0 + "," + 100 + "%," + random(30, 50) + "%)";
+      ctx.fillStyle = `hsl(0, 100%, ${random(30, 50)}%)`;
       ctx.fillRect(0, 0, 320, 200);
     }
 
@@ -545,7 +599,7 @@ type="linear"
     if(enableHP){
       if (healthValue > 0 && healthValue < 0.5) {
         for (var iIdx = 0; iIdx < 100; iIdx++) {
-          ctx.fillStyle = "hsl(" + 345 + "," + 100 + "%," + random(20, 50) + "%)";
+          ctx.fillStyle = `hsl(345, 100%, ${random(20, 50)}%)`;
           ctx.fillRect(
             random(0, 300),
             random(0, 180),
@@ -558,7 +612,7 @@ type="linear"
     if (enableVehicle){
       if (healthValue > 0 && engine.vision.vehicle > 0.4) {
         var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
-        ctx.fillStyle = "hsl(" + myHuePicker3 + "," + 100 + "%," + (vBr + 20) + "%)";
+        ctx.fillStyle = `hsl(${myHuePicker3}, 100%, ${vBr + 20}%)`;
         ctx.fillRect(0, 0, 320, 200);
 
         vehiclePhase++;
@@ -569,27 +623,26 @@ type="linear"
     }
     if (shieldBrightness > 0) {
       var nShWid = 1 - Math.pow(shieldBrightness / 50, 3);
-      ctx.fillStyle = "hsl(" + 190 + "," + 100 + "%," + nShWid * 50 + "%)";
+      ctx.fillStyle = `hsl(190, 100%, ${nShWid * 50}%)`;
       ctx.fillRect(0, 0, nShWid * 320, 200);
       shieldBrightness -= 1;
     }
 
     if (shieldDamageBrightness > 0) {
       var nShWid = shieldDamageBrightness / 50;
-      ctx.fillStyle =
-        "hsl(" + 345 + "," + 100 + "%," + shieldDamageBrightness + "%)";
+      ctx.fillStyle = `hsl(345, 100%, ${shieldDamageBrightness}%)`;
       ctx.fillRect(0, 0, nShWid * 320, 200);
       shieldDamageBrightness -= 1;
     }
 
     if (healthBrightness > 0) {
-      ctx.fillStyle = "hsl(" + 120 + "," + 100 + "%," + healthBrightness + "%)";
+      ctx.fillStyle = `hsl(120, 100%, ${healthBrightness}%)`;
       ctx.fillRect(0, 0, 320, 200);
       healthBrightness -= 1;
     }
 
     if (damageBrightness > 0) {
-      ctx.fillStyle = "hsl(" + 345 + "," + 100 + "%," + damageBrightness + "%)";
+      ctx.fillStyle = `hsl(345, 100%, ${damageBrightness}%)`;
       ctx.fillRect(0, 0, 320, 200);
       damageBrightness -= 1;
     }
@@ -735,11 +788,19 @@ type="linear"
   function update() {
     BuildingMeter.setValue(engine.vision.Building);
     notBuildingMeter.setValue(engine.vision.notBuilding);
+    inLobby.setValue(engine.vision.matchLobby);
+    yellowPlayButton.setValue(engine.vision.playButton);
+
+    console.log(engine.vision.playButton);
+
+    if(inLobby.value == 1 && yellowPlayButton.value == 1 && !lobbyAnim){
+      stateMgr.Push(new lobbyAnimation());
+      lobbyAnim = true;
+    }
 
     if (engine.vision.battlebus || engine.vision.exit)
     {
 
-      enableAmmo = false;
       enableHP = false;
       enableKill = false;
       enableShield = false;
@@ -759,7 +820,6 @@ type="linear"
       audio.shift();
     }
 
-    // Is there a faster way to handle averaging?
     var average = 0;
     for (var iIdx = 0; iIdx < audio.length; iIdx++) {
       average += audio[iIdx];
@@ -783,7 +843,7 @@ type="linear"
       var hue = zhue[iZone] + boost;
       if(engine.vision.exit != 1){
       ctx.fillStyle =
-        "hsl(" + hue + "," + sat[iZone] + "%," + xZoneBrightness + "%)";
+        `hsl(${hue},${sat[iZone]}%,${xZoneBrightness}%)`;
       }
       
       if(engine.vision.exit == 1){
@@ -848,19 +908,6 @@ type="linear"
     }
     }
 
-    if (enableAmmo) {
-      if (engine.vision.ammo < 2 && engine.vision.ammo > 1 || engine.vision.ammo2 < 5 && engine.vision.ammo2 > 1) {
-        ctx.fillStyle = "hsl(" + myHuePicker1 + "," + 100 + "%," + 30 + "%)";
-        ctx.fillRect(0, 0, 320, 200);
-        ctx.fillStyle = "hsl(" + myHuePicker1 + "," + 50 + "%," + 30 + "%)";
-        ctx.fillRect(0, 0+move, 320, 50);
-        move += 10;
-        if(move === 200)
-        {
-          move = 0;
-        }
-      }
-    }
   for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
     }
