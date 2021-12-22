@@ -16,12 +16,6 @@
     default="1"
   />
   <meta
-    property="enableShield"
-    label="Shield effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
     property="enableVehicle"
     label="Vehicle effect"
     type="boolean"
@@ -199,6 +193,18 @@ type="linear"
     type="area"
   />
   <meta
+  meter="healthRed"
+  tags="vlc,fortnite"
+  x= ".0480" 
+  y=".9"
+  width=".2"
+  height=".020"
+  h="330-360"
+  s="40-100"
+  l="40-100"
+  type="area"
+/>
+  <meta
     meter="shields"
     tags="vlc,fortnite"
     x=".05"
@@ -210,6 +216,18 @@ type="linear"
     l="60-95"
     type="area"
   />
+  <meta
+  meter="shieldsWhite"
+  tags="vlc,fortnite"
+  x=".05"
+  y=".8770"
+  width=".2"
+  height=".010"
+  h="1-360"
+  s="0-20"
+  l="90-100"
+  type="area"
+/>
   <meta
     meter="battlebus"
     tags="vlc,fortnite"
@@ -366,19 +384,14 @@ type="linear"
     this.lifetime++;
   };
 
-  var vShield = [];
   var vHealth = [];
   var vXp = [];
   var vKill = [];
-  var shieldPrev = 0;
   var healthPrev = 0;
   var killPrev = 0;
   var damageBrightness = 0;
   var healthBrightness = 0;
-  var shieldBrightness = 0;
-  var shieldDamageBrightness = 0;
   var vehiclePhase = 0;
-  var shieldValue = 0;
   var healthValue = 0;
   var notBuildingAnim = false;
   var BuildingAnim = false;
@@ -394,10 +407,13 @@ type="linear"
   var notBuildingMeter = new Meter(4, checkBuild);
   var inLobby = new Meter(4, ()=>"");
   var yellowPlayButton = new Meter(4, ()=>"");
+  var healthM = new Meter(3, ()=>"");
+  var healthDamageM = new Meter(3, ()=>"");
+  var shieldsM = new Meter(3, ()=>"");
+  var shieldDamageM = new Meter(3, ()=>"");
 
   function circleChange(){
       if(circleMeter.increased){
-        console.log(circleMeter.value);
         stateMgr.Push(new reversePulseRippleState("#8000ff", true));
       }
     }
@@ -495,6 +511,21 @@ type="linear"
       }
     };
   }
+
+  function tookHit(){
+    this.lifetime = 30;
+
+    this.draw = function(){
+      if (this.lifetime % 10 == 0){
+          ctx.fillStyle = 'red';
+          ctx.beginPath();
+          ctx.fillRect(0, 0, 320, 200);
+          ctx.stroke();
+        };
+        this.lifetime--;
+    }
+  };
+
   function PulseRippleState(color, hollow, duration) {
     this.start = new Date().getTime();
     this.duration = duration;
@@ -535,13 +566,11 @@ type="linear"
     };
   }
   function renderExtensions() {
+
+    if (shieldsM.decreased && shieldDamageM.increased){
+      effects.push(new tookHit());
+    };
     
-    if(enableShield){
-      vShield.push(engine.vision.shields);
-      if (vShield.length > 15) {
-        vShield.shift();
-      }
-    }
     if(enableHP){
       vHealth.push(engine.vision.health);
       if (vHealth.length > 15) {
@@ -554,9 +583,7 @@ type="linear"
         vXp.shift();
       }
     }
-    if (arrayEqual(vShield)) {
-      shieldValue = vShield[0];
-    }
+
     if (arrayEqual(vHealth)) {
       healthValue = vHealth[0];
     }
@@ -567,21 +594,6 @@ type="linear"
     if (bNoHealth && bKnocked) {
       ctx.fillStyle = `hsl(0, 100%, ${random(30, 50)}%)`;
       ctx.fillRect(0, 0, 320, 200);
-    }
-
-    if (shieldPrev != shieldValue) { // if it changes
-      var bFromZero = shieldPrev === 0 && healthPrev === 0; // if the old value isnt 0
-      var bToZero = shieldValue === 0 && healthValue === 0; // if the player isnt dead
-
-      if (!bFromZero && !bToZero) { // if both above are false
-        if (shieldPrev > shieldValue) {
-          shieldDamageBrightness = 50;
-        } else {
-          shieldBrightness = 50;
-        }
-      }
-
-      shieldPrev = shieldValue;
     }
 
     if (healthPrev != healthValue) {
@@ -596,8 +608,9 @@ type="linear"
       }
       healthPrev = healthValue;
     }
+    
     if(enableHP){
-      if (healthValue > 0 && healthValue < 0.5) {
+      if (healthValue > 0 && healthValue < 0.33) {
         for (var iIdx = 0; iIdx < 100; iIdx++) {
           ctx.fillStyle = `hsl(345, 100%, ${random(20, 50)}%)`;
           ctx.fillRect(
@@ -620,19 +633,6 @@ type="linear"
           vehiclePhase = 0;
         }
       }
-    }
-    if (shieldBrightness > 0) {
-      var nShWid = 1 - Math.pow(shieldBrightness / 50, 3);
-      ctx.fillStyle = `hsl(190, 100%, ${nShWid * 50}%)`;
-      ctx.fillRect(0, 0, nShWid * 320, 200);
-      shieldBrightness -= 1;
-    }
-
-    if (shieldDamageBrightness > 0) {
-      var nShWid = shieldDamageBrightness / 50;
-      ctx.fillStyle = `hsl(345, 100%, ${shieldDamageBrightness}%)`;
-      ctx.fillRect(0, 0, nShWid * 320, 200);
-      shieldDamageBrightness -= 1;
     }
 
     if (healthBrightness > 0) {
@@ -790,8 +790,9 @@ type="linear"
     notBuildingMeter.setValue(engine.vision.notBuilding);
     inLobby.setValue(engine.vision.matchLobby);
     yellowPlayButton.setValue(engine.vision.playButton);
-
-    console.log(engine.vision.playButton);
+    healthM.setValue(engine.vision.health);
+    shieldsM.setValue(engine.vision.shields);
+    shieldDamageM.setValue(engine.vision.shieldsWhite);
 
     if(inLobby.value == 1 && yellowPlayButton.value == 1 && !lobbyAnim){
       stateMgr.Push(new lobbyAnimation());
@@ -803,7 +804,6 @@ type="linear"
 
       enableHP = false;
       enableKill = false;
-      enableShield = false;
       enableVehicle = false;
      
     }
@@ -910,13 +910,11 @@ type="linear"
 
   for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
-    }
-
-    for (let i = 0; i < effects.length; i++) {
       if (effects[i].lifetime <= 0) {
         effects.splice(i, 1);
       }
     }
+
     stateMgr.Process();
     window.requestAnimationFrame(update);
   }
