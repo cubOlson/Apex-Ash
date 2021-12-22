@@ -128,22 +128,6 @@ type="linear"
     max="20"
     default="0"
   />
-  <meta
-    property="firecolor"
-    label="Fire Color"
-    type="hue"
-    min="0"
-    max="40"
-    default="30"
-  />
-  <meta
-    property="emissionrate"
-    label="Emission Rate"
-    type="number"
-    min="1"
-    max="5"
-    default="5"
-  />
 <meta
 	meter="exit"
 	tags="vlc,fortnite"
@@ -284,7 +268,7 @@ type="linear"
     // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
     return num;
   }
-  
+
   function Wave(stop, color) {
     this.color = color;
     this.stopVal = stop;
@@ -318,7 +302,7 @@ type="linear"
   var healthM = new Meter(3, ()=>"");
   var healthDamageM = new Meter(3, ()=>"");
   var shieldsM = new Meter(3, ()=>"");
-  var shieldDamageM = new Meter(3, ()=>"");
+  var shieldDamageM = new Meter(2, ()=>"");
 
     function lobbyHelper(x, y, radius){
       this.x = x;
@@ -415,16 +399,17 @@ type="linear"
   }
 
   function tookHit(){
-    this.lifetime = 30;
+    this.lifetime = 25;
+    this.start = new Date().getTime();
+    this.elapsed = 0;
 
     this.draw = function(){
-      if (this.lifetime % 10 == 0){
-          ctx.fillStyle = 'red';
-          ctx.beginPath();
-          ctx.fillRect(0, 0, 320, 200);
-          ctx.stroke();
-        };
-        this.lifetime--;
+      this.elapsed = new Date().getTime() - this.start;
+      ctx.fillStyle = `hsl(1, 100%, ${Math.sin(this.elapsed/10) * 25 + 50}%`;
+      ctx.beginPath();
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.stroke();
+      this.lifetime--;
     }
   };
 
@@ -472,6 +457,25 @@ type="linear"
     if (shieldsM.decreased && shieldDamageM.increased && !engine.vision.battlebus){
       effects.push(new tookHit());
     };
+
+    if (healthM.decreased && healthDamageM.increased && !engine.vision.battlebus){
+      effects.push(new tookHit());
+    }
+
+    if (healthM.value > 0 && healthM.value < .33 && !engine.vision.battlebus){
+      for (let i = 0; i < 10; i++){
+        ctx.fillStyle = 'red';
+        ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
+      }
+    } else if (healthM.value < .01 && healthDamageM.value > .25 && !engine.vision.battlebus){
+        ctx.fillStyle = 'pink';
+        ctx.fillRect(0, 0, 320, 200);
+    }
+
+    if (healthDamageM.value == 1){
+      ctx.fillStyle = 'red';
+      ctx.fillRect(0, 0, 320, 200);
+    }
     
     if(enableXP){
       vXp.push(engine.vision.xp);
@@ -489,25 +493,22 @@ type="linear"
         vehiclePhase++;
         if (vehiclePhase > 100) {
           vehiclePhase = 0;
-        }
-      }
-    }
+        };
+      };
+    };
 
     for (i = 0; i < waves.length; i++) {
       waves[i].draw();
       waves[i].update();
-    }
-
-    for (i = 0; i < waves.length; i++) {
       if (waves[i].lifetime > 75) {
         waves.splice(i, 1);
-      }
-    }
+      };
+    };
 
     if (vXp[13] < vXp[14]) {
       waves.push(new Wave(vXp[14] * 320, "#fbd100"));
-    }
-  }
+    };
+  };
 
   function StateHandler() {
     var stack = [];
@@ -637,6 +638,7 @@ type="linear"
     inLobby.setValue(engine.vision.matchLobby);
     yellowPlayButton.setValue(engine.vision.playButton);
     healthM.setValue(engine.vision.health);
+    healthDamageM.setValue(engine.vision.healthRed);
     shieldsM.setValue(engine.vision.shields);
     shieldDamageM.setValue(engine.vision.shieldsWhite);
 
@@ -647,16 +649,13 @@ type="linear"
 
     if (engine.vision.battlebus || engine.vision.exit)
     {
-
       enableHP = false;
       enableKill = false;
       enableVehicle = false;
-     
     }
     
     var brightness = (engine.audio.level + 20) / 20;
 
-    
     if (brightness > currentBrightness + 0.25) {
       currentBrightness = brightness;
     }
@@ -691,10 +690,6 @@ type="linear"
       ctx.fillStyle =
         `hsl(${hue},${sat[iZone]}%,${xZoneBrightness}%)`;
       }
-      
-      if(engine.vision.exit == 1){
-        ctx.fillStyle = "hsl(" + 280 + "," + 100 + "%," + xZoneBrightness + "%)";
-      }
      
       var iRow = Math.floor(iZone / 28);
       var iCol = iZone % 28;
@@ -707,7 +702,7 @@ type="linear"
     }
 
     //Fill build-item-specific zone
-    if(checkBuildMeters()){
+    if(checkBuildMeters() && BuildingMeter.value == 1){
       ctx.beginPath();
       ctx.fillStyle = 'white';
       if(engine.vision.build1) {
