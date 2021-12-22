@@ -22,30 +22,6 @@
     default="1"
   />
   <meta property="myHuePicker3" label="Vehicle Hue Control" type="hue" default="30" min="0" max="360">
-  <meta
-    property="enableHP"
-    label="Health effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
-  property="enableCircle"
-  label="Storm enclosing effect"
-  type="boolean"
-  default="1"
-/>
-<meta
-meter="circle"
-tags="vlc,fortnite"
-type="area"
-x= "0.4292"
-y= "0.1991"
-height= "0.00056"
-width= "0.00042"
-h="298-300"
-s="72-73"
-l="99-100"
-/>
 <meta
 meter="matchLobby"
 tags="vlc,fortnite"
@@ -308,66 +284,7 @@ type="linear"
     // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
     return num;
   }
-
-  var speed = 10;
-  var width = 320;
-  var height = 200;
-  var gravity = true;
-  function Particle(x, y, lifetime) {
-    this.x = x;
-    this.y = y;
-
-    this.velX = random(-speed, speed);
-    if (this.velX == 0) this.velX = 1;
-
-    this.velY = random(-speed, speed);
-    if (this.velY == 0) this.velY = 1;
-
-    this.brightness = random(30, 50);
-    this.color = `hsl(${firecolor}, 100%, ${this.brightness}%)`;
-    this.size = random(5, 10);
-
-    this.offscreen = false;
-    this.lifetime = lifetime;
-    this.date = new Date();
-    this.birth = this.date.getTime();
-  }
-
-  Particle.prototype.draw = function () {
-    ctx.beginPath();
-    ctx.fillStyle = `hsl(${firecolor}, 100%, ${this.brightness}%)`;
-    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    ctx.fill();
-  };
-
-  Particle.prototype.update = function () {
-    this.x += this.velX;
-    this.y += this.velY;
-
-    if (gravity) {
-      this.velY += 0.9;
-      if (this.velY > 9.1) {
-        this.velY = 9.1;
-      }
-    }
-
-    if (this.x < 0) {
-      this.offscreen = true;
-    }
-
-    if (this.x > width + this.size || this.x < -this.size) {
-      this.offscreen = true;
-    }
-
-    if (this.y > height + this.size) {
-      this.offscreen = true;
-    }
-
-    if (this.y < 0) {
-      this.offscreen = true;
-    }
-  };
-
+  
   function Wave(stop, color) {
     this.color = color;
     this.stopVal = stop;
@@ -384,25 +301,16 @@ type="linear"
     this.lifetime++;
   };
 
-  var vHealth = [];
   var vXp = [];
   var vKill = [];
-  var healthPrev = 0;
   var killPrev = 0;
   var damageBrightness = 0;
-  var healthBrightness = 0;
   var vehiclePhase = 0;
-  var healthValue = 0;
   var notBuildingAnim = false;
   var BuildingAnim = false;
   var lobbyAnim = false;
   
   var move = 0;
-  var lazerMove =0;
-  var lazerMove2 =0;
-  var lazerx1 = 160;
-  var lazery1 = 200;
-  var circleMeter = new Meter(3, circleChange);
   var BuildingMeter = new Meter(4, checkBuild);
   var notBuildingMeter = new Meter(4, checkBuild);
   var inLobby = new Meter(4, ()=>"");
@@ -411,12 +319,6 @@ type="linear"
   var healthDamageM = new Meter(3, ()=>"");
   var shieldsM = new Meter(3, ()=>"");
   var shieldDamageM = new Meter(3, ()=>"");
-
-  function circleChange(){
-      if(circleMeter.increased){
-        stateMgr.Push(new reversePulseRippleState("#8000ff", true));
-      }
-    }
 
     function lobbyHelper(x, y, radius){
       this.x = x;
@@ -567,63 +469,19 @@ type="linear"
   }
   function renderExtensions() {
 
-    if (shieldsM.decreased && shieldDamageM.increased){
+    if (shieldsM.decreased && shieldDamageM.increased && !engine.vision.battlebus){
       effects.push(new tookHit());
     };
     
-    if(enableHP){
-      vHealth.push(engine.vision.health);
-      if (vHealth.length > 15) {
-        vHealth.shift();
-      }
-    }
     if(enableXP){
       vXp.push(engine.vision.xp);
       if (vXp.length > 15) {
         vXp.shift();
       }
     }
-
-    if (arrayEqual(vHealth)) {
-      healthValue = vHealth[0];
-    }
-
-    var bNoHealth = healthValue === 0;
-    var bKnocked = engine.vision.knock > 0;
-
-    if (bNoHealth && bKnocked) {
-      ctx.fillStyle = `hsl(0, 100%, ${random(30, 50)}%)`;
-      ctx.fillRect(0, 0, 320, 200);
-    }
-
-    if (healthPrev != healthValue) {
-      var bFromZero = healthPrev === 0;
-      var bToZero = healthValue === 0;
-      if (!bFromZero && !bToZero) {
-        if (healthPrev > healthValue) {
-          damageBrightness = 50;
-        } else {
-          healthBrightness = 50;
-        }
-      }
-      healthPrev = healthValue;
-    }
     
-    if(enableHP){
-      if (healthValue > 0 && healthValue < 0.33) {
-        for (var iIdx = 0; iIdx < 100; iIdx++) {
-          ctx.fillStyle = `hsl(345, 100%, ${random(20, 50)}%)`;
-          ctx.fillRect(
-            random(0, 300),
-            random(0, 180),
-            random(20, 50),
-            random(50, 50)
-          );
-        }
-      }
-    }
     if (enableVehicle){
-      if (healthValue > 0 && engine.vision.vehicle > 0.4) {
+      if (healthM.value > 0 && engine.vision.vehicle > 0.4) {
         var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
         ctx.fillStyle = `hsl(${myHuePicker3}, 100%, ${vBr + 20}%)`;
         ctx.fillRect(0, 0, 320, 200);
@@ -633,18 +491,6 @@ type="linear"
           vehiclePhase = 0;
         }
       }
-    }
-
-    if (healthBrightness > 0) {
-      ctx.fillStyle = `hsl(120, 100%, ${healthBrightness}%)`;
-      ctx.fillRect(0, 0, 320, 200);
-      healthBrightness -= 1;
-    }
-
-    if (damageBrightness > 0) {
-      ctx.fillStyle = `hsl(345, 100%, ${damageBrightness}%)`;
-      ctx.fillRect(0, 0, 320, 200);
-      damageBrightness -= 1;
     }
 
     for (i = 0; i < waves.length; i++) {
@@ -876,10 +722,6 @@ type="linear"
     }
 
     renderExtensions();
-
-    if(enableCircle){
-    circleMeter.setValue(engine.vision.circle);
-    }
 
     currentBrightness -= 0.01;
     if(enableKill){
