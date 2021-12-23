@@ -1,0 +1,123 @@
+<head>
+    <title>Game of Life</title>
+    <meta description="Metering and ambiance for Template" />
+    <meta publisher="WhirlwindFX" />
+  </head>
+  
+  <body style="margin: 0; padding: 0; background: #000">
+    <canvas height="200" id="exCanvas" width="320"></canvas>
+  </body>
+  
+  <script>
+    var canvas, ctx;
+    var WIDTH = 16;
+	var HEIGHT = 10;
+	var state = new Array(WIDTH);
+  
+    function random(min, max) {
+      // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+  
+    function update() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+        var n_neighbors;
+		for(let i = 0; i < WIDTH; i++) {
+			for(let j = 0; j < HEIGHT; j++) {
+				n_neighbors = num_neighbors(i,j);
+                if (!state[i][j]){
+                    if (n_neighbors == 3){
+                        state[i][j] = 3;
+                    }
+                } else {
+                    if (n_neighbors == 5){
+                        state[i][j] = 0;
+                    } else {
+                        state[i][j]--;
+                    }
+                }
+			}
+		}
+	    draw();
+    }
+
+    function num_neighbors(x, y) {
+		var total = 0;
+		// Check top
+		if(y > 0) {
+			total += state[x][y - 1] ? 1 : 0;
+		}
+		// Check bottom
+		if(y < HEIGHT - 1) {
+			total += state[x][y + 1] ? 1 : 0;
+		}
+		// Check left
+		if(x > 0) {
+			total += state[x - 1][y] ? 1 : 0;
+		}
+		// Check right
+		if(x < WIDTH - 1) {
+			total += state[x + 1][y] ? 1 : 0;
+		}
+		// Check top-left
+		if(y > 0 && x > 0) {
+			total += state[x - 1][y -1] ? 1 : 0;
+		}
+		// Check top-right
+		if(y > 0 && x < WIDTH - 1) {
+			total += state[x + 1][y - 1] ? 1 : 0;
+		}
+		// Check bottom-left
+		if(y < HEIGHT - 1 && x > 0) {
+			total += state[x - 1][y + 1] ? 1 : 0;
+		}
+		// Check bottom-right
+		if(y < HEIGHT - 1 && x < WIDTH - 1) {
+			total += state[x + 1][y + 1] ? 1 : 0;
+		}
+		return total;
+	}
+
+    function draw() {
+		for(let i = 0; i < WIDTH; i++) {
+			for(let j = 0; j < HEIGHT; j++) {
+                switch(state[i][j]){
+                    case 3:
+                        ctx.fillStyle = 'green';
+                        break;
+                    case 2:
+                        ctx.fillStyle = 'yellow';
+                        break;
+                    case 1:
+                        ctx.fillStyle = 'red';
+                        break;
+                    case 0:
+                        break;
+                }
+				if(state[i][j]) {
+                    ctx.fillRect(i * 20, j * 20, 20, 20);
+                }
+			}
+		}
+	}
+
+    function onEngineReady() {
+      // Grab canvas and rendering context.
+        canvas = document.getElementById("exCanvas");
+        ctx = canvas.getContext("2d");
+
+        for (let i = 0; i < WIDTH; i++) {
+	        state[i] = new Array(HEIGHT);
+		    for (let j = 0; j < HEIGHT; j++) {
+			    state[i][j] = random(0, 3); 
+		    }
+	    }
+
+        setInterval(update, 500);
+    }
+
+    onEngineReady()
+
+  </script>
