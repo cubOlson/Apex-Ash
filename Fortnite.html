@@ -33,42 +33,52 @@
 <meta meter="notBuilding" tags="vlc,fortnite" x=".8244" y=".7935" width=".008" height=".028" type="ocr_textmatch" confidence="70">
   <resolution size="3440x1440" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
   <resolution size="2560x1080" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
+  <resolution size="1920x1080" x=".8244" y=".7935" width=".008" height=".028"/>
 </meta>
-<meta meter="Building" tags="vlc,fortnite" x=".7598" y=".805" width=".008" height=".028" type="ocr_textmatch" confidence="70">
+<meta meter="Building" tags="vlc,fortnite" x=".7598" y=".805" width=".0082" height=".028" type="ocr_textmatch" confidence="70">
   <resolution size="3440x1440" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
   <resolution size="2560x1080" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
+  <resolution size="1280x720" x="0.7595" y="0.807" width="0.0088" height="0.0088"/>
 </meta>
 <meta meter="build1" tags="vlc,fortnite" x=".79" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.8435" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.8435" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.7896" y="0.7796" width="0.0058"/>
 </meta>
 <meta meter="build2" tags="vlc,fortnite" x=".8306" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.8738" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.8738" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.8307" y="0.7796" width="0.0388"/>
 </meta>
 <meta meter="build3" tags="vlc,fortnite" x=".8713" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.9041" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.9041" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.8714" y="0.7796" width="0.0388"/>
 </meta>
 <meta meter="build4" tags="vlc,fortnite" x=".9119" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.9346" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.912" y="0.7796" width="0.0388"/>
 </meta>
 <meta meter="build5" tags="vlc,fortnite" x=".79" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.8435" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.8435" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.7896" y="0.85" width="0.0388"/>
 </meta>
 <meta meter="build6" tags="vlc,fortnite" x=".8307" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.8738" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.8738" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.8307" y="0.85" width="0.0388"/>
 </meta>
 <meta meter="build7" tags="vlc,fortnite" x=".8719" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.9041" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.9041" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.8714" y="0.85" width="0.0058"/>
 </meta>
 <meta meter="build8" tags="vlc,fortnite" x=".9120" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
   <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058"/>
   <resolution size="2560x1080" x="0.9346" y="0.7813" width="0.0058"/>
+  <resolution size="1920x1080" x="0.912" y="0.85" width="0.0388"/>
 </meta>
   <meta
     meter="kill"
@@ -203,8 +213,16 @@
   var lobbyAnim = false;
   
   var move = 0;
-  var BuildingMeter = new Meter(10, checkBuild);
-  var notBuildingMeter = new Meter(10, checkBuild);
+  var BuildingMeter = new Meter(8, checkBuild);
+  var notBuildingMeter = new Meter(8, checkBuild);
+  var B1M = new Meter(3, checkBuild);
+  var B2M = new Meter(3, checkBuild);
+  var B3M = new Meter(3, checkBuild);
+  var B4M = new Meter(3, checkBuild);
+  var B5M = new Meter(3, checkBuild);
+  var B6M = new Meter(3, checkBuild);
+  var B7M = new Meter(3, checkBuild);
+  var B8M = new Meter(3, checkBuild);
   var inLobby = new Meter(4, ()=>"");
   var yellowPlayButton = new Meter(4, ()=>"");
   var healthM = new Meter(3, ()=>"");
@@ -320,6 +338,20 @@
       this.lifetime--;
     }
   };
+
+  function effectPulse(hue){
+      this.lifetime = 500;
+      this.hue = hue;
+
+      this.draw = function(){
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        ctx.lineWidth = 50;
+        ctx.beginPath();
+        ctx.arc(160, 100, 550 - this.lifetime, 0, Math.PI * 2);
+        ctx.stroke();
+        this.lifetime-=10;
+      }
+  }
 
   function PulseRippleState(color, hollow, duration) {
     this.start = new Date().getTime();
@@ -508,7 +540,23 @@
   }
 
   function checkBuildMeters(){
-    if(engine.vision.build1 == 1 || engine.vision.build2 == 1 || engine.vision.build3 == 1 || engine.vision.build4 == 1){
+    let count = 0;
+
+    B1M.value == 1 ? count++ : null;
+    B2M.value == 1 ? count++ : null;
+    B3M.value == 1 ? count++ : null;
+    B4M.value == 1 ? count++ : null;
+    B5M.value == 1 ? count++ : null;
+    B6M.value == 1 ? count++ : null;
+    B7M.value == 1 ? count++ : null;
+    B8M.value == 1 ? count++ : null;
+
+    if (count > 2) return false;
+
+    if((B1M.value && B5M.value) ||
+       (B2M.value && B6M.value) ||
+       (B3M.value && B7M.value) ||
+       (B4M.value && B8M.value)){
       return true
     }
       return false
@@ -528,7 +576,7 @@
 
     } else if (notBuildingMeter.value == 1 && !checkBuildMeters() && !notBuildingAnim){
 
-      stateMgr.Push(new PulseRippleState('red', true, 1000));
+      effects.push(new effectPulse(160));
       BuildingAnim = false;
       notBuildingAnim = true;
 
@@ -538,12 +586,22 @@
   function update() {
     BuildingMeter.setValue(engine.vision.Building);
     notBuildingMeter.setValue(engine.vision.notBuilding);
+    B1M.setValue(engine.vision.build1);
+    B2M.setValue(engine.vision.build2);
+    B3M.setValue(engine.vision.build3);
+    B4M.setValue(engine.vision.build4);
+    B5M.setValue(engine.vision.build5);
+    B6M.setValue(engine.vision.build6);
+    B7M.setValue(engine.vision.build7);
+    B8M.setValue(engine.vision.build8);
     inLobby.setValue(engine.vision.matchLobby);
     yellowPlayButton.setValue(engine.vision.playButton);
     healthM.setValue(engine.vision.health);
     healthDamageM.setValue(engine.vision.healthRed);
     shieldsM.setValue(engine.vision.shields);
     shieldDamageM.setValue(engine.vision.shieldsWhite);
+
+    console.log(`Building ${BuildingMeter.value == 1}`)
 
     if(inLobby.value == 1 && yellowPlayButton.value == 1 && !lobbyAnim){
       stateMgr.Push(new lobbyAnimation());
