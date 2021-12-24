@@ -2,6 +2,10 @@
     <title>Game of Life</title>
     <meta description="Metering and ambiance for Template" />
     <meta publisher="WhirlwindFX" />
+    <meta property="birth" label="Hue 1" type="hue" default="143" min="0" max="360">
+    <meta property="young" label="Hue 2" type="hue" default="106" min="0" max="360">
+    <meta property="middle" label="Hue 3" type="hue" default="64" min="0" max="360">
+    <meta property="old" label="Hue 4" type="hue" default="49" min="0" max="360">
   </head>
   
   <body style="margin: 0; padding: 0; background: #000">
@@ -28,12 +32,14 @@
 			for(let j = 0; j < HEIGHT; j++) {
 				n_neighbors = num_neighbors(i,j);
                 if (!state[i][j]){
-                    if (n_neighbors == 3){
-                        state[i][j] = 3;
+                    if (n_neighbors == 2){
+                        state[i][j] = 4;
                     }
                 } else {
-                    if (n_neighbors == 5){
+                    if (n_neighbors >= 4){
                         state[i][j] = 0;
+                    } else if (n_neighbors == 2){
+                        state[i][j] = 3
                     } else {
                         state[i][j]--;
                     }
@@ -84,20 +90,25 @@
 		for(let i = 0; i < WIDTH; i++) {
 			for(let j = 0; j < HEIGHT; j++) {
                 switch(state[i][j]){
+                    case 4:
+                        ctx.fillStyle = `hsl(${birth}, 100%, 50%)`;
+                        break;
                     case 3:
-                        ctx.fillStyle = 'green';
+                        ctx.fillStyle = `hsl(${young}, 80%, 40%)`;
                         break;
                     case 2:
-                        ctx.fillStyle = 'yellow';
+                        ctx.fillStyle = `hsl(${middle}, 60%, 30%)`;
                         break;
                     case 1:
-                        ctx.fillStyle = 'red';
+                        ctx.fillStyle = `hsl(${old}, 40%, 20%)`;
                         break;
                     case 0:
                         break;
                 }
 				if(state[i][j]) {
-                    ctx.fillRect(i * 20, j * 20, 20, 20);
+                    ctx.beginPath();
+                    ctx.arc(i * 20 + 10, j * 20 + 10, 10, 0, 2 * Math.PI);
+                    ctx.fill();
                 }
 			}
 		}
@@ -115,7 +126,7 @@
 		    }
 	    }
 
-        setInterval(update, 500);
+        setInterval(update, 150);
     }
 
     onEngineReady()

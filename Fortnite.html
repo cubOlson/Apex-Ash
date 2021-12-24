@@ -30,11 +30,11 @@
   <resolution size="3440x1440" x="0.8401" y="0.6563" width="0.01" height="0.01"/>
   <resolution size="2560x1080" x="0.8401" y="0.6563" width="0.04" height="0.04"/>
 </meta>
-<meta meter="notBuilding" tags="vlc,fortnite" x=".8235" y=".7935" width=".01" height=".028" type="ocr_textmatch" confidence="70">
+<meta meter="notBuilding" tags="vlc,fortnite" x=".8244" y=".7935" width=".008" height=".028" type="ocr_textmatch" confidence="70">
   <resolution size="3440x1440" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
   <resolution size="2560x1080" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
 </meta>
-<meta meter="Building" tags="vlc,fortnite" x=".7584" y=".805" width=".01" height=".028" type="ocr_textmatch" confidence="70">
+<meta meter="Building" tags="vlc,fortnite" x=".7598" y=".805" width=".008" height=".028" type="ocr_textmatch" confidence="70">
   <resolution size="3440x1440" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
   <resolution size="2560x1080" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
 </meta>
@@ -84,23 +84,23 @@
 	s="20-100"
 	l="20-100"
 />
-<meta meter="health" tags="vlc,fortnite" x= ".0480"  y=".9" width=".2" height=".020" h="70-140" s="40-100" l="40-100" type="area">
+<meta meter="health" tags="vlc,fortnite" x= ".049"  y=".9" width=".19" height=".020" h="70-140" s="40-100" l="40-100" type="area">
   <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541" height=".0167"/>
   <resolution size="2560x1080" x="0.1666" y="0.8993" width="0.1541" height=".0167"/>
 </meta>
-<meta meter="healthRed" tags="vlc,fortnite" x= ".0480"  y=".9" width=".2" height=".020" h="330-360" s="40-100" l="40-100" type="area">
+<meta meter="healthRed" tags="vlc,fortnite" x= ".049"  y=".9" width=".19" height=".020" h="330-360" s="40-100" l="40-100" type="area">
   <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541" height=".0167"/>
   <resolution size="2560x1080" x="0.1666" y="0.8993" width="0.1541" height=".0167"/>
 </meta>
-<meta meter="shields" tags="vlc,fortnite" x=".05" y=".8770" width=".2" height=".010" h="180-212" s="70-100" l="60-95" type="area">
+<meta meter="shields" tags="vlc,fortnite" x=".055" y=".8770" width=".2" height=".010" h="180-212" s="70-100" l="60-100" type="area">
   <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555" height=".0134"/>
   <resolution size="2560x1080" x="0.17" y="0.8743" width="0.1555" height=".0134"/>
 </meta>
-<meta meter="shieldsWhite" tags="vlc,fortnite" x=".05" y=".8770" width=".2" height=".010" h="1-360" s="0-20" l="90-100" type="area">
+<meta meter="shieldsWhite" tags="vlc,fortnite" x=".055" y=".8770" width=".2" height=".010" h="1-360" s="0-20" l="90-100" type="area">
   <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555" height=".0134"/>
   <resolution size="2560x1080" x="0.17" y="0.8743" width="0.1555" height=".0134"/>
 </meta>
-<meta meter="battlebus" tags="vlc,fortnite" x=".50266" y=".0926" width=".08" height=".0050" h="220-225" s="80-100" l="50-100" type="area">
+<meta meter="battlebus" tags="vlc,fortnite" x=".5" y=".0926" width=".045" height=".0050" h="220-225" s="80-100" l="50-100" type="area">
   <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08" height=".0050"/>
   <resolution size="2560x1080" x="0.4971" y="0.1042" width=".08" height=".0050"/>
 </meta>
@@ -187,8 +187,8 @@
   var lobbyAnim = false;
   
   var move = 0;
-  var BuildingMeter = new Meter(4, checkBuild);
-  var notBuildingMeter = new Meter(4, checkBuild);
+  var BuildingMeter = new Meter(10, checkBuild);
+  var notBuildingMeter = new Meter(10, checkBuild);
   var inLobby = new Meter(4, ()=>"");
   var yellowPlayButton = new Meter(4, ()=>"");
   var healthM = new Meter(3, ()=>"");
@@ -219,7 +219,7 @@
       this.searching = 1000;
 
       this.Process = function () {
-        if (inLobby.decreased) {
+        if (inLobby.decreased && yellowPlayButton.decreased) {
           stateMgr.Pop();
           lobbyAnim = false;
         }
@@ -354,7 +354,7 @@
       effects.push(new tookHit());
     }
 
-    if (healthM.value > 0 && healthM.value < .33 && !engine.vision.battlebus){
+    if (healthM.value > 0 && healthM.value < .4 && !engine.vision.battlebus){
       for (let i = 0; i < 10; i++){
         ctx.fillStyle = 'red';
         ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
@@ -364,11 +364,6 @@
         ctx.fillRect(0, 0, 320, 200);
     }
 
-    if (healthDamageM.value == 1){
-      ctx.fillStyle = 'red';
-      ctx.fillRect(0, 0, 320, 200);
-    }
-    
     if(enableXP){
       vXp.push(engine.vision.xp);
       if (vXp.length > 15) {
@@ -483,7 +478,7 @@
       while(index < 5){
         ctx.beginPath();
         ctx.fillStyle = 'blue';
-        ctx.globalAlpha = .6;
+        ctx.globalAlpha = .8;
         ctx.fillRect(this.x + (100 * index),this.y,100,50);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = 'white';
@@ -497,7 +492,7 @@
   }
 
   function checkBuildMeters(){
-    if(engine.vision.build1 || engine.vision.build2 || engine.vision.build3 || engine.vision.build4){
+    if(engine.vision.build1 == 1 || engine.vision.build2 == 1 || engine.vision.build3 == 1 || engine.vision.build4 == 1){
       return true
     }
       return false
@@ -596,15 +591,21 @@
     //Fill build-item-specific zone
     if(checkBuildMeters() && BuildingMeter.value == 1){
       ctx.beginPath();
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = 'blue';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 20;
       if(engine.vision.build1) {
         ctx.fillRect(0,0,80,200);
+        ctx.strokeRect(0,0,80,200);
       } else if(engine.vision.build2) {
         ctx.fillRect(80,0,80,200);
+        ctx.strokeRect(80,0,80,200);
       } else if(engine.vision.build3) {
         ctx.fillRect(160,0,80,200);
+        ctx.strokeRect(160,0,80,200);
       } else if(engine.vision.build4) {
         ctx.fillRect(240,0,80,200);
+        ctx.strokeRect(240,0,80,200);
       }
     }
 
