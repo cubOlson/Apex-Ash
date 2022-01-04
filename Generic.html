@@ -1,0 +1,39 @@
+<head>
+    <title>Generic</title>
+    <meta description="Template"/>
+    <meta publisher="WhirlwindFX" />
+</head>
+    
+<body style="margin: 0; padding: 0;">
+  	<canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+    
+<script>
+    // Get the canvas element from the DOM
+    var c = document.getElementById("exCanvas");
+    var ctx = c.getContext("2d");  
+  
+    var width = 320;
+    var height = 200;
+    var hue = 0;
+
+    function update() {
+        // Basic Square
+        ctx.beginPath();
+        ctx.rect(30, 30, 75, 60);
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+
+        // Filled Rectangle
+        ctx.beginPath();
+        ctx.rect(125, 30, 100, 75);
+        ctx.fillStyle = "red";
+        ctx.strokeStyle = "blue";
+        ctx.fill();
+        ctx.stroke();
+
+      window.requestAnimationFrame(update);
+    }
+
+		window.requestAnimationFrame(update);
+</script>

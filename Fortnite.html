@@ -2,13 +2,7 @@
   <title>Fortnite Chapter 3.1</title>
   <meta description="Ambience and metering for Fortnite Chapter 3.1" />
   <meta publisher="WhirlwindFX" />
-  <meta
-    property="enableKill"
-    label="Kill effect"
-    type="boolean"
-    default="1"
-  />
-  <meta property="myHuePicker2" label="Kill Hue Control" type="hue" default="167" min="0" max="360">
+  <meta property="myHuePicker2" label="Theme Color" type="hue" default="167" min="0" max="360">
   <meta
     property="enableVehicle"
     label="Vehicle effect"
@@ -16,78 +10,85 @@
     default="1"
   />
   <meta property="myHuePicker3" label="Vehicle Hue Control" type="hue" default="30" min="0" max="360">
-<meta meter="matchLobby" tags="vlc,fortnite" type="area" x= "0.0224" y= "0.0231" height= "0.001" width= "0.01" h="200-220" s="75-100" l="50-100">
-  <resolution size="3440x1440" x="0.0169" y="0.0229" width="0.01" height="0.001"/>
-  <resolution size="2560x1080" x="0.0169" y="0.0229" width="0.01" height="0.001"/>
-</meta>
-<meta meter="playButton" tags="vlc,fortnite" type="area" x= "0.7805" y= "0.7122" height= "0.01" width= "0.05" h="50-70" s="75-100" l="70-100">
-  <resolution size="3440x1440" x="0.8401" y="0.6563" width="0.01" height="0.01"/>
-  <resolution size="2560x1080" x="0.8401" y="0.6563" width="0.04" height="0.04"/>
-</meta>
-<meta meter="notBuilding" tags="vlc,fortnite" x=".82495" y=".7939" width=".008" height=".028" type="ocr_textmatch" confidence="70">
-  <resolution size="3440x1440" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
-  <resolution size="2560x1080" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
-  <resolution size="1920x1080" x=".8244" y=".7935" width=".008" height=".028"/>
-</meta>
-<meta meter="Building" tags="vlc,fortnite" x=".7598" y=".805" width=".0082" height=".028" type="ocr_textmatch" confidence="70">
-  <resolution size="3440x1440" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
-  <resolution size="2560x1080" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
-  <resolution size="1280x720" x="0.7595" y="0.807" width="0.0088" height="0.0088"/>
-</meta>
-<meta meter="build1" tags="vlc,fortnite" x=".79" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.8435" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.8435" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.7896" y="0.7796" width="0.0058"/>
-  <resolution size="1280x720" x="0.7899" y="0.7777" width="0.0388"/>
-</meta>
-<meta meter="build2" tags="vlc,fortnite" x=".8306" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.8738" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.8738" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.8307" y="0.7796" width="0.0388"/>
-  <resolution size="1280x720" x="0.8313" y="0.7777" width="0.0388"/>
-</meta>
-<meta meter="build3" tags="vlc,fortnite" x=".8713" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.9041" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.9041" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.8714" y="0.7796" width="0.0388"/>
-  <resolution size="1280x720" x="0.8719" y="0.7777" width="0.0388"/>
-</meta>
-<meta meter="build4" tags="vlc,fortnite" x=".9119" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.9346" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.912" y="0.7796" width="0.0388"/>
-  <resolution size="1280x720" x="0.9125" y="0.7777" width="0.0388"/>
-</meta>
-<meta meter="build5" tags="vlc,fortnite" x=".79" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.8435" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.8435" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.7896" y="0.85" width="0.0388"/>
-  <resolution size="1280x720" x="0.7899" y="0.8473" width="0.0388"/>
-</meta>
-<meta meter="build6" tags="vlc,fortnite" x=".8307" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.8738" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.8738" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.8307" y="0.85" width="0.0388"/>
-  <resolution size="1280x720" x="0.8313" y="0.8473" width="0.0388"/>
-</meta>
-<meta meter="build7" tags="vlc,fortnite" x=".8719" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.9041" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.9041" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.8714" y="0.85" width="0.0058"/>
-  <resolution size="1280x720" x="0.8719" y="0.8473" width="0.0388"/>
-</meta>
-<meta meter="build8" tags="vlc,fortnite" x=".9120" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
-  <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058"/>
-  <resolution size="2560x1080" x="0.9346" y="0.7813" width="0.0058"/>
-  <resolution size="1920x1080" x="0.912" y="0.85" width="0.0388"/>
-  <resolution size="1280x720" x="0.9125" y="0.8473" width="0.0388"/>
-</meta>
-<meta meter="kill" tags="vlc,fortnite" x=".943" y=".2943" width=".0149" height=".029" type="ocr_numeric" confidence="60">
-  <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058" height=".029"/>
-  <resolution size="2560x1080" x="0.9346" y="0.7813" width="0.0058" height=".029"/>
-  <resolution size="1920x1080" x="0.9395" y="0.2943" width=".0149" height=".029"/>
-  <resolution size="1280x720" x="0.942" y="0.2943" width=".0149" height=".029"/>
-</meta>
+  <meta meter="matchLobby" tags="vlc,fortnite" type="area" x= "0.0224" y= "0.0231" height= "0.001" width= "0.01" h="200-220" s="75-100" l="50-100">
+    <resolution size="3440x1440" x="0.0169" y="0.0229" width="0.01" height="0.001"/>
+  </meta>
+  <meta meter="playButton" tags="vlc,fortnite" type="area" x= "0.7805" y= "0.7122" height= "0.01" width= "0.05" h="50-70" s="75-100" l="70-100">
+    <resolution size="3440x1440" x="0.8401" y="0.6563" width="0.01" height="0.01"/>
+  </meta>
+  <meta meter="notBuilding" tags="vlc,fortnite" x=".82495" y=".7939" width=".008" height=".028" type="ocr_textmatch" string="Q" confidence="70">
+    <resolution size="3840x2160" x=".82495" y=".7949" width=".008" height=".028"/>
+    <resolution size="3440x1440" x="0.8695" y="0.7986" width="0.0055" height="0.009"/>
+    <resolution size="2560x1440" x=".82465" y=".7989" width=".008" height=".028"/>
+    <resolution size="1920x1080" x=".8244" y=".7935" width=".008" height=".028"/>
+  </meta>
+  <meta meter="Building" tags="vlc,fortnite" x=".7598" y=".805" width=".0082" height=".028" type="ocr_textmatch" string="Q" confidence="70">
+    <resolution size="3840x2160" x=".7598" y=".806" width=".0082" height=".028"/>
+    <resolution size="3440x1440" x="0.82125" y="0.81" width="0.0058" height="0.009"/>
+    <resolution size="2560x1440" x=".7595" y=".81" width=".0082" height=".028"/>
+    <resolution size="1280x720" x="0.7595" y="0.807" width="0.0088" height="0.0088"/>
+  </meta>
+  <meta meter="build1" tags="vlc,fortnite" x=".79" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".79" y=".7831" width=".0388"/>
+    <resolution size="3440x1440" x="0.8435" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.7898" y="0.7813" width="0.0058"/>
+    <resolution size="1920x1080" x="0.7896" y="0.7796" width="0.0058"/>
+    <resolution size="1280x720" x="0.7899" y="0.7777" width="0.0388"/>
+  </meta>
+  <meta meter="build2" tags="vlc,fortnite" x=".8306" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".8306" y=".7831" width=".0388"/>
+    <resolution size="3440x1440" x="0.8738" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.8305" y="0.7813" width="0.0058"/>
+    <resolution size="1920x1080" x="0.8307" y="0.7796" width="0.0388"/>
+    <resolution size="1280x720" x="0.8313" y="0.7777" width="0.0388"/>
+  </meta>
+  <meta meter="build3" tags="vlc,fortnite" x=".8713" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".8713" y=".7831" width=".0388"/>
+    <resolution size="3440x1440" x="0.9041" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.8711" y="0.7813" width="0.0058"/>
+    <resolution size="1920x1080" x="0.8714" y="0.7796" width="0.0388"/>
+    <resolution size="1280x720" x="0.8719" y="0.7777" width="0.0388"/>
+  </meta>
+  <meta meter="build4" tags="vlc,fortnite" x=".9119" y=".7785" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".9119" y=".7831" width=".0388"/>
+    <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.9117" y="0.7813" width="0.0058"/>
+    <resolution size="1920x1080" x="0.912" y="0.7796" width="0.0388"/>
+    <resolution size="1280x720" x="0.9125" y="0.7777" width="0.0388"/>
+  </meta>
+  <meta meter="build5" tags="vlc,fortnite" x=".79" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".79" y=".8535" width=".0388"/>
+    <resolution size="3440x1440" x="0.8435" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.7898" y="0.8521" width="0.0058"/>
+    <resolution size="1920x1080" x="0.7896" y="0.85" width="0.0388"/>
+    <resolution size="1280x720" x="0.7899" y="0.8473" width="0.0388"/>
+  </meta>
+  <meta meter="build6" tags="vlc,fortnite" x=".8307" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".8307" y=".8535" width=".0388"/>
+    <resolution size="3440x1440" x="0.8738" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.8305" y="0.8521" width="0.0058"/>
+    <resolution size="1920x1080" x="0.8307" y="0.85" width="0.0388"/>
+    <resolution size="1280x720" x="0.8313" y="0.8473" width="0.0388"/>
+  </meta>
+  <meta meter="build7" tags="vlc,fortnite" x=".8719" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".8719" y=".8535" width=".0388"/>
+    <resolution size="3440x1440" x="0.9041" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.8711" y="0.8521" width="0.0058"/>
+    <resolution size="1920x1080" x="0.8714" y="0.85" width="0.0058"/>
+    <resolution size="1280x720" x="0.8719" y="0.8473" width="0.0388"/>
+  </meta>
+  <meta meter="build8" tags="vlc,fortnite" x=".9120" y=".8489" width=".0388" h="0-360" s="0-10" l="95-100" type="linear">
+    <resolution size="3840x2160" x=".9120" y=".8535" width=".0388"/>
+    <resolution size="3440x1440" x="0.9346" y="0.7813" width="0.0058"/>
+    <resolution size="2560x1440" x="0.9117" y="0.8521" width="0.0058"/>
+    <resolution size="1920x1080" x="0.912" y="0.85" width="0.0388"/>
+    <resolution size="1280x720" x="0.9125" y="0.8473" width="0.0388"/>
+  </meta>
+  <meta meter="cloudClose" tags="vlc,fortnite" x=".847" y=".297" width=".009" h="290-350" s="60-100" l="50-90" type="linear">
+    <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
+    <resolution size="1920x1080" x=".855" y=".297" width=".009"/>
+    <resolution size="1280x720" x=".847" y=".297" width=".009"/>
+  </meta>
   <meta
     property="boost"
     label="Color Boost"
@@ -96,39 +97,34 @@
     max="20"
     default="0"
   />
-<meta
-	meter="exit"
-	tags="vlc,fortnite"
-  type="area"
-	x= "0.0536"
-	y= "0.7981"
-	height= "0.0019"
-	width= "0.0005"
-	h="280-340"
-	s="20-100"
-	l="20-100"
-/>
-<meta meter="health" tags="vlc,fortnite" x= ".05"  y=".9" width=".189" h="70-140" s="40-100" l="40-100" type="linear">
-  <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541"/>
-  <resolution size="2560x1080" x="0.1666" y="0.8993" width="0.1541"/>
-  <resolution size="1920x1080" x="0.0557" y="0.9083" width="0.199"/>
-</meta>
-<meta meter="healthRed" tags="vlc,fortnite" x= ".05"  y=".9" width=".189" h="330-360" s="40-100" l="40-100" type="linear">
-  <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541"/>
-  <resolution size="2560x1080" x="0.1666" y="0.8993" width="0.1541"/>
-</meta>
-<meta meter="shields" tags="vlc,fortnite" x=".055" y=".8770" width=".2" h="180-212" s="70-100" l="60-100" type="linear">
-  <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
-  <resolution size="2560x1080" x="0.17" y="0.8743" width="0.1555"/>
-</meta>
-<meta meter="shieldsWhite" tags="vlc,fortnite" x=".055" y=".8770" width=".2" h="1-360" s="0-20" l="90-100" type="linear">
-  <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
-  <resolution size="2560x1080" x="0.17" y="0.8743" width="0.1555"/>
-</meta>
-<meta meter="battlebus" tags="vlc,fortnite" x=".5" y=".0926" width=".045" height=".0050" h="220-225" s="80-100" l="50-100" type="area">
-  <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08" height=".0050"/>
-  <resolution size="2560x1080" x="0.4971" y="0.1042" width=".08" height=".0050"/>
-</meta>
+  <meta
+  	meter="exit"
+  	tags="vlc,fortnite"
+    type="area"
+  	x= "0.0536"
+  	y= "0.7981"
+  	height= "0.0019"
+  	width= "0.0005"
+  	h="280-340"
+  	s="20-100"
+  	l="20-100"
+  />
+  <meta meter="health" tags="vlc,fortnite" x= ".05"  y=".9" width=".189" h="70-140" s="40-100" l="40-100" type="linear">
+    <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541"/>
+    <resolution size="1920x1080" x="0.0557" y="0.9083" width="0.199"/>
+  </meta>
+  <meta meter="healthRed" tags="vlc,fortnite" x= ".05"  y=".9" width=".189" h="330-360" s="40-100" l="40-100" type="linear">
+    <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541"/>
+  </meta>
+  <meta meter="shields" tags="vlc,fortnite" x=".055" y=".8770" width=".2" h="180-212" s="70-100" l="60-100" type="linear">
+    <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
+  </meta>
+  <meta meter="shieldsWhite" tags="vlc,fortnite" x=".055" y=".8770" width=".2" h="1-360" s="0-20" l="90-100" type="linear">
+    <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
+  </meta>
+  <meta meter="battlebus" tags="vlc,fortnite" x=".5" y=".0926" width=".045" height=".0050" h="220-225" s="80-100" l="50-100" type="area">
+    <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08" height=".0050"/>
+  </meta>
   <meta
     meter="vehicle"
     tags="vlc,fortnite"
@@ -141,13 +137,8 @@
     l="75-100"
     type="area"
   />
-  <meta meter="xp" tags="vlc,fortnite" x=".0953" y=".4935" width=".074" height=".004" h="210-300" s="20-50" l="0-40" type="area">
+  <meta meter="xp" tags="vlc,fortnite" x=".0953" y=".4935" width=".035" height=".004" h="210-290" s="50-100" l="0-35" type="area">
     <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08" height=".0050"/>
-    <resolution size="2560x1080" x="0.4971" y="0.1042" width=".08" height=".0050"/>
-  </meta>
-  <meta meter="xp2" tags="vlc,fortnite" x=".0573" y=".5139" width=".161" h="0-360" s="0-50" l="90-100" type="linear">
-    <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08"/>
-    <resolution size="2560x1080" x="0.4971" y="0.1042" width=".08"/>
   </meta>
 </head>
 
@@ -168,39 +159,19 @@
   var currentBrightness = 0;
   var litPrev = 0;
 
-  function arrayEqual(array) {
-    for (var i = 0; i < array.length - 1; i++) {
-      if (array[i] !== array[i + 1]) return false;
-    }
-    return true;
-  }
-
-  function random(min, max) {
-    var num = Math.floor(Math.random() * (max - min)) + min;
-    // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
-    return num;
-  }
-
-  function Wave(color) {
-    this.color = color;
-    this.lifetime = 200;
-
-    this.draw = function () {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(0, this.lifetime, 320, 50);
-    this.lifetime-=10;
-    };
-  }
-
-  var vKill = [];
-  var killPrev = 0;
   var damageBrightness = 0;
   var vehiclePhase = 0;
   var notBuildingAnim = false;
   var BuildingAnim = false;
   var lobbyAnim = false;
-  
+  var cloudTimer = 0;
+  var xpAnim = false;
   var move = 0;
+  var cloudTimer = 0;
+  var cloudDiff = 0;
+  var healthPrev = 0;
+  var shieldPrev = 0;
+
   var BuildingMeter = new Meter(8, checkBuild);
   var notBuildingMeter = new Meter(8, checkBuild);
   var B1M = new Meter(3, checkBuild);
@@ -211,14 +182,89 @@
   var B6M = new Meter(3, checkBuild);
   var B7M = new Meter(3, checkBuild);
   var B8M = new Meter(3, checkBuild);
-  var inLobby = new Meter(4, ()=>"");
-  var yellowPlayButton = new Meter(4, ()=>"");
-  var healthM = new Meter(3, ()=>"");
-  var healthDamageM = new Meter(3, ()=>"");
-  var shieldsM = new Meter(3, ()=>"");
-  var shieldDamageM = new Meter(2, ()=>"");
-  var xpM1 = new Meter(3, ()=>"");
-  var xpM2 = new Meter(3, ()=>"");
+  var inLobby = new Meter(4, lobbyAnimationPlay);
+  var yellowPlayButton = new Meter(4, lobbyAnimationPlay);
+  var healthM = new Meter(25, healthHelper);
+  var healthDamageM = new Meter(3, healthHelper);
+  var shieldsM = new Meter(25, shieldHelper);
+  var shieldDamageM = new Meter(3, shieldHelper);
+  var xpM1 = new Meter(25, xpHelper);
+  var cloudCloseM = new Meter(3, cloudHelper);
+
+    function shieldHelper(){
+      if (shieldsM.decreased && shieldsM.value != shieldPrev && !engine.vision.battlebus){
+        effects.push(new tookHit(1));
+        shieldPrev = shieldsM.value;
+      } else if (shieldsM.increased && shieldsM.value != shieldPrev && !engine.vision.battlebus){
+        effects.push(new Wave('#00ff00'));
+        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 300);
+        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 600);
+        shieldPrev = shieldsM.value;
+      };
+    };
+
+    function healthHelper(){
+      if (healthM.decreased && healthM.value != healthPrev && !engine.vision.battlebus){
+        effects.push(new tookHit(1));
+        healthPrev = healthM.value;
+      } else if (healthM.increased && healthM.value != healthPrev && !engine.vision.battlebus){
+        effects.push(new Wave('#00ff00'));
+        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 300);
+        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 600);
+        healthPrev = healthM.value;
+      };
+    };
+
+    function lobbyAnimationPlay(){
+      console.log('IN LOBBY')
+      if(inLobby.value == 1 && yellowPlayButton.value == 1 && !lobbyAnim){
+        stateMgr.Push(new lobbyAnimation());
+        lobbyAnim = true;
+      }
+    };
+
+    function xpHelper(){
+      if (xpM1.value == 1 && xpAnim == false) {
+        effects.push(new Wave("#fbd100"))
+        setTimeout(() => {effects.push(new Wave("#fbd100"));}, 300);
+        setTimeout(() => {effects.push(new Wave("#fbd100"));}, 600);
+        xpAnim = true;
+      } else if (xpM1.value == 0){
+        xpAnim = false;
+      };
+    };
+
+    function cloudHelper(){
+      cloudDiff = Date.now() - cloudTimer;
+      if(cloudCloseM.value > .75 && cloudDiff > 5000){
+        cloudTimer = Date.now();
+        effects.push(new effectPulse(310));
+      };
+    };
+
+    function arrayEqual(array) {
+      for (var i = 0; i < array.length - 1; i++) {
+        if (array[i] !== array[i + 1]) return false;
+      }
+      return true;
+    };
+
+    function random(min, max) {
+      var num = Math.floor(Math.random() * (max - min)) + min;
+      // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
+      return num;
+    };
+
+    function Wave(color) {
+      this.color = color;
+      this.lifetime = 200;
+
+      this.draw = function () {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(0, this.lifetime, 320, 50);
+        this.lifetime-=10;
+      };
+    };
 
     function lobbyHelper(x, y, radius){
       this.x = x;
@@ -314,14 +360,14 @@
     };
   }
 
-  function tookHit(){
+  function tookHit(hue){
     this.lifetime = 25;
     this.start = new Date().getTime();
     this.elapsed = 0;
 
     this.draw = function(){
       this.elapsed = new Date().getTime() - this.start;
-      ctx.fillStyle = `hsl(1, 100%, ${Math.sin(this.elapsed/10) * 25 + 50}%`;
+      ctx.fillStyle = `hsl(${hue}, 100%, ${Math.sin(this.elapsed/10) * 25 + 50}%`;
       ctx.beginPath();
       ctx.fillRect(0, 0, 320, 200);
       ctx.stroke();
@@ -384,24 +430,6 @@
   }
   function renderExtensions() {
 
-    if (shieldsM.decreased && shieldDamageM.increased && !engine.vision.battlebus){
-      effects.push(new tookHit());
-    };
-
-    if (healthM.decreased && healthDamageM.increased && !engine.vision.battlebus){
-      effects.push(new tookHit());
-    }
-
-    if (healthM.value > 0 && healthM.value < .4 && !engine.vision.battlebus){
-      for (let i = 0; i < 10; i++){
-        ctx.fillStyle = 'red';
-        ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
-      }
-    } else if (healthM.value < .01 && healthDamageM.value > .25 && !engine.vision.battlebus){
-        ctx.fillStyle = 'pink';
-        ctx.fillRect(0, 0, 320, 200);
-    }
-
     if (enableVehicle){
       if (healthM.value > 0 && engine.vision.vehicle > 0.4) {
         var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
@@ -415,8 +443,16 @@
       };
     };
 
-    if (xpM1.value == 1 && xpM2.increased) {
-      effects.push(new Wave("#fbd100"));
+    if (healthM.value > 0 && healthM.value < .4 && !engine.vision.battlebus){
+        for (let i = 0; i < 10; i++){
+          ctx.fillStyle = 'red';
+          ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
+        }
+    } else if (healthM.value < .01 && healthDamageM.decreased && !engine.vision.battlebus){
+      for (let i = 0; i < 10; i++){
+        ctx.fillStyle = 'pink';
+        ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
+      }
     };
   };
 
@@ -456,8 +492,6 @@
 
     window.requestAnimationFrame(update);
   }
-
-  var duration = 15;
 
   function Meter(count, callback) {
     this.size = count;
@@ -576,17 +610,10 @@
     shieldsM.setValue(engine.vision.shields);
     shieldDamageM.setValue(engine.vision.shieldsWhite);
     xpM1.setValue(engine.vision.xp);
-    xpM2.setValue(engine.vision.xp2);
-
-    if(inLobby.value == 1 && yellowPlayButton.value == 1 && !lobbyAnim){
-      stateMgr.Push(new lobbyAnimation());
-      lobbyAnim = true;
-    }
+    cloudCloseM.setValue(engine.vision.cloudClose);
 
     if (engine.vision.battlebus || engine.vision.exit)
     {
-      enableHP = false;
-      enableKill = false;
       enableVehicle = false;
     }
     
@@ -661,31 +688,6 @@
     renderExtensions();
 
     currentBrightness -= 0.01;
-    if(enableKill){
-      if(engine.vision.kill >= 0){
-        if (killPrev <= engine.vision.kill && duration <= 200 && duration > 0 && engine.vision.kill != -1){
-          for (var iIdx = 0; iIdx < 300; iIdx++) {
-          ctx.fillStyle = "hsl(" + myHuePicker2 + "," + 100 + "%," + random(20, 50) + "%)";
-          ctx.fillRect(
-          random(0, 300),
-          random(0, 180),
-          random(20, 50),
-          random(50, 50)
-        );
-      }
-        duration -= 1;
-      }
-      if(killPrev + 1 === engine.vision.kill)
-      {
-        killPrev = engine.vision.kill;
-        duration=200;
-      }
-      if(0 == engine.vision.kill)
-      {
-        killPrev = engine.vision.kill;
-      }
-    }
-    }
 
   for (let i = 0; i < effects.length; i++) {
       effects[i].draw();

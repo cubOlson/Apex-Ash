@@ -6,7 +6,7 @@
     <meta property="young" label="Hue 2" type="hue" default="106" min="0" max="360">
     <meta property="middle" label="Hue 3" type="hue" default="64" min="0" max="360">
     <meta property="old" label="Hue 4" type="hue" default="49" min="0" max="360">
-  </head>
+</head>
   
   <body style="margin: 0; padding: 0; background: #000">
     <canvas height="200" id="exCanvas" width="320"></canvas>
@@ -14,8 +14,8 @@
   
   <script>
     var canvas, ctx;
-    var WIDTH = 16;
-	var HEIGHT = 10;
+    var WIDTH = 32;
+	var HEIGHT = 20;
 	var state = new Array(WIDTH);
   
     function random(min, max) {
@@ -24,7 +24,7 @@
     }
   
     function update() {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "rgb(80,80,80)";
         ctx.fillRect(0, 0, 320, 200);
 
         var n_neighbors;
@@ -32,11 +32,11 @@
 			for(let j = 0; j < HEIGHT; j++) {
 				n_neighbors = num_neighbors(i,j);
                 if (!state[i][j]){
-                    if (n_neighbors == 2){
+                    if (n_neighbors == 3){
                         state[i][j] = 4;
                     }
                 } else {
-                    if (n_neighbors >= 4){
+                    if (n_neighbors >= 3){
                         state[i][j] = 0;
                     } else if (n_neighbors == 2){
                         state[i][j] = 3
@@ -94,20 +94,20 @@
                         ctx.fillStyle = `hsl(${birth}, 100%, 50%)`;
                         break;
                     case 3:
-                        ctx.fillStyle = `hsl(${young}, 80%, 40%)`;
+                        ctx.fillStyle = `hsl(${young}, 100%, 40%)`;
                         break;
                     case 2:
-                        ctx.fillStyle = `hsl(${middle}, 60%, 30%)`;
+                        ctx.fillStyle = `hsl(${middle}, 100%, 30%)`;
                         break;
                     case 1:
-                        ctx.fillStyle = `hsl(${old}, 40%, 20%)`;
+                        ctx.fillStyle = `hsl(${old}, 100%, 20%)`;
                         break;
                     case 0:
                         break;
                 }
 				if(state[i][j]) {
                     ctx.beginPath();
-                    ctx.arc(i * 20 + 10, j * 20 + 10, 10, 0, 2 * Math.PI);
+                    ctx.arc(i * 10 + 5, j * 10 + 5, 5, 0, 2 * Math.PI);
                     ctx.fill();
                 }
 			}
@@ -126,7 +126,7 @@
 		    }
 	    }
 
-        setInterval(update, 150);
+        setInterval(update, 200);
     }
 
     onEngineReady()
