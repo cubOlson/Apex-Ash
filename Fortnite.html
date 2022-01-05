@@ -116,7 +116,10 @@
   <meta meter="healthRed" tags="vlc,fortnite" x= ".05"  y=".9" width=".189" h="330-360" s="40-100" l="40-100" type="linear">
     <resolution size="3440x1440" x="0.1666" y="0.8993" width="0.1541"/>
   </meta>
-  <meta meter="shields" tags="vlc,fortnite" x=".055" y=".8770" width=".2" h="180-212" s="70-100" l="60-100" type="linear">
+  <meta meter="shields" tags="vlc,fortnite" x=".055" y=".879" width=".2" h="180-212" s="70-100" l="60-100" type="linear">
+    <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
+  </meta>
+  <meta meter="shields2" tags="vlc,fortnite" x=".055" y=".875" width=".2" h="180-212" s="70-100" l="60-100" type="linear">
     <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
   </meta>
   <meta meter="shieldsWhite" tags="vlc,fortnite" x=".055" y=".8770" width=".2" h="1-360" s="0-20" l="90-100" type="linear">
@@ -139,6 +142,9 @@
   />
   <meta meter="xp" tags="vlc,fortnite" x=".0953" y=".4935" width=".035" height=".004" h="210-290" s="50-100" l="0-35" type="area">
     <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08" height=".0050"/>
+  </meta>
+  <meta meter="xp2" tags="vlc,fortnite" x=".0547" y=".5139" width=".035" h="1-360" s="60-100" l="50-100" type="linear">
+    <resolution size="3440x1440" x="0.4971" y="0.1042" width=".08"/>
   </meta>
 </head>
 
@@ -186,31 +192,41 @@
   var yellowPlayButton = new Meter(4, lobbyAnimationPlay);
   var healthM = new Meter(25, healthHelper);
   var healthDamageM = new Meter(3, healthHelper);
-  var shieldsM = new Meter(25, shieldHelper);
+  var shieldsM = new Meter(20, shieldHelper);
+  var shields2M = new Meter(20, shieldHelper);
   var shieldDamageM = new Meter(3, shieldHelper);
   var xpM1 = new Meter(25, xpHelper);
   var cloudCloseM = new Meter(3, cloudHelper);
+  var vehicleM = new Meter(3, ()=>"");
 
     function shieldHelper(){
-      if (shieldsM.decreased && shieldsM.value != shieldPrev && !engine.vision.battlebus){
-        effects.push(new tookHit(1));
+      if (shieldsM.decreased && 
+          shieldsM.value != shieldPrev && 
+          healthM.value && 
+          Math.abs(shieldsM.value - shields2M.value) < .05 && 
+          !engine.vision.battlebus){
+        effects.push(new Wave('#ffffff', "down"));
+        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
+        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
         shieldPrev = shieldsM.value;
-      } else if (shieldsM.increased && shieldsM.value != shieldPrev && !engine.vision.battlebus){
-        effects.push(new Wave('#00ff00'));
-        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 300);
-        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 600);
+      } else if (shieldsM.increased && shieldsM.value != shieldPrev && healthM.value && !engine.vision.battlebus){
+        effects.push(new Wave('#ffffff', "up"));
+        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
+        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
         shieldPrev = shieldsM.value;
       };
     };
 
     function healthHelper(){
-      if (healthM.decreased && healthM.value != healthPrev && !engine.vision.battlebus){
-        effects.push(new tookHit(1));
+      if (healthM.decreased && healthM.value != healthPrev && healthM.value && !engine.vision.battlebus){
+        effects.push(new Wave('#ffffff', "down"));
+        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
+        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
         healthPrev = healthM.value;
-      } else if (healthM.increased && healthM.value != healthPrev && !engine.vision.battlebus){
-        effects.push(new Wave('#00ff00'));
-        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 300);
-        setTimeout(() => {effects.push(new Wave('#00ff00'));}, 600);
+      } else if (healthM.increased && healthM.value != healthPrev && healthM.value && !engine.vision.battlebus){
+        effects.push(new Wave('#ffffff', "up"));
+        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
+        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
         healthPrev = healthM.value;
       };
     };
@@ -224,11 +240,12 @@
     };
 
     function xpHelper(){
-      if (xpM1.value == 1 && xpAnim == false) {
-        effects.push(new Wave("#fbd100"))
-        setTimeout(() => {effects.push(new Wave("#fbd100"));}, 300);
-        setTimeout(() => {effects.push(new Wave("#fbd100"));}, 600);
-        xpAnim = true;
+      if (xpM1.value == 1 && engine.vision.xp2 && xpAnim == false) {
+        for(let i = 0; i < 5; i++){
+        setTimeout(() => {effects.push(new Wave("#fbd100", "down"));}, i * 100);
+        setTimeout(() => {effects.push(new Wave("#ffffff", "up"));}, i * 100);
+        }
+      xpAnim = true;
       } else if (xpM1.value == 0){
         xpAnim = false;
       };
@@ -236,9 +253,10 @@
 
     function cloudHelper(){
       cloudDiff = Date.now() - cloudTimer;
-      if(cloudCloseM.value > .75 && cloudDiff > 5000){
+      if(cloudCloseM.value > .75 && cloudDiff > 4000){
         cloudTimer = Date.now();
         effects.push(new effectPulse(310));
+        setTimeout(() => {effects.push(new effectPulse(310))}, 300);
       };
     };
 
@@ -255,14 +273,36 @@
       return num;
     };
 
-    function Wave(color) {
+    function Wave(color, direction) {
       this.color = color;
-      this.lifetime = 200;
+      this.direction = direction;
+      this.lifetime = 300;
 
       this.draw = function () {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(0, this.lifetime, 320, 50);
-        this.lifetime-=10;
+        if (this.direction == "up"){
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.moveTo(160, this.lifetime - 100);
+          ctx.lineTo(320, this.lifetime);
+          ctx.lineTo(320, this.lifetime + 50);
+          ctx.lineTo(160, this.lifetime - 50);
+          ctx.lineTo(0, this.lifetime + 50);
+          ctx.lineTo(0, this.lifetime);
+          ctx.lineTo(160, this.lifetime - 100);
+          ctx.fill();
+        } else if (this.direction = "down"){
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.moveTo(160, 300 - this.lifetime);
+          ctx.lineTo(320, 200 - this.lifetime);
+          ctx.lineTo(320, 100 - this.lifetime);
+          ctx.lineTo(160, 200 - this.lifetime);
+          ctx.lineTo(0, 100 - this.lifetime);
+          ctx.lineTo(0, 200 - this.lifetime);
+          ctx.lineTo(160, 300 - this.lifetime);
+          ctx.fill();
+        }
+        this.lifetime-=15;
       };
     };
 
@@ -431,10 +471,12 @@
   function renderExtensions() {
 
     if (enableVehicle){
-      if (healthM.value > 0 && engine.vision.vehicle > 0.4) {
+      if (healthM.value > 0.1 && vehicleM.value > 0.3) {
         var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
+        ctx.globalAlpha = .5;
         ctx.fillStyle = `hsl(${myHuePicker3}, 100%, ${vBr + 20}%)`;
         ctx.fillRect(0, 0, 320, 200);
+        ctx.globalAlpha = 1;
 
         vehiclePhase++;
         if (vehiclePhase > 100) {
@@ -443,15 +485,38 @@
       };
     };
 
-    if (healthM.value > 0 && healthM.value < .4 && !engine.vision.battlebus){
+    if (healthM.value > .01 && healthM.value < .4 && !engine.vision.battlebus){
         for (let i = 0; i < 10; i++){
           ctx.fillStyle = 'red';
           ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
         }
-    } else if (healthM.value < .01 && healthDamageM.decreased && !engine.vision.battlebus){
+    } else if (healthM.value < .01 && healthDamageM.value > .1 && !engine.vision.battlebus){
       for (let i = 0; i < 10; i++){
-        ctx.fillStyle = 'pink';
-        ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
+        ctx.fillStyle = 'red';
+        ctx.fillRect(Math.random() * 270, Math.random() * 150, 100, 50);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(Math.random() * 270, Math.random() * 150, 100, 50);
+      }
+    };
+
+    //Fill build-item-specific zone
+    if(checkBuildMeters()){
+      ctx.beginPath();
+      ctx.fillStyle = 'blue';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 20;
+      if(B1M.value == 1 && B5M.value == 1) {
+        ctx.fillRect(0,0,80,200);
+        ctx.strokeRect(0,0,80,200);
+      } else if(B2M.value == 1 && B6M.value == 1) {
+        ctx.fillRect(80,0,80,200);
+        ctx.strokeRect(80,0,80,200);
+      } else if(B3M.value == 1 && B7M.value == 1) {
+        ctx.fillRect(160,0,80,200);
+        ctx.strokeRect(160,0,80,200);
+      } else if(B4M.value == 1 && B8M.value == 1) {
+        ctx.fillRect(240,0,80,200);
+        ctx.strokeRect(240,0,80,200);
       }
     };
   };
@@ -562,10 +627,10 @@
 
     if (count > 2) return false;
 
-    if((B1M.value && B5M.value) ||
-       (B2M.value && B6M.value) ||
-       (B3M.value && B7M.value) ||
-       (B4M.value && B8M.value)){
+    if((B1M.value == 1 && B5M.value == 1) ||
+       (B2M.value == 1 && B6M.value == 1) ||
+       (B3M.value == 1 && B7M.value == 1) ||
+       (B4M.value == 1 && B8M.value == 1)){
       return true
     }
       return false
@@ -608,9 +673,11 @@
     healthM.setValue(engine.vision.health);
     healthDamageM.setValue(engine.vision.healthRed);
     shieldsM.setValue(engine.vision.shields);
+    shields2M.setValue(engine.vision.shields2);
     shieldDamageM.setValue(engine.vision.shieldsWhite);
     xpM1.setValue(engine.vision.xp);
     cloudCloseM.setValue(engine.vision.cloudClose);
+    vehicleM.setValue(engine.vision.vehicle);
 
     if (engine.vision.battlebus || engine.vision.exit)
     {
@@ -649,10 +716,9 @@
     for (var iZone = 0; iZone < 560; iZone++) {
       var xZoneBrightness = lightness[iZone];
       var hue = zhue[iZone] + boost;
-      if(engine.vision.exit != 1){
+      //Removed if !exit conditional for big pixel bug. Probably not a bad idea.
       ctx.fillStyle =
         `hsl(${hue},${sat[iZone]}%,${xZoneBrightness}%)`;
-      }
      
       var iRow = Math.floor(iZone / 28);
       var iCol = iZone % 28;
@@ -662,27 +728,6 @@
       var zy = iRow * iHeight;
 
       ctx.fillRect(zx, zy, iWidth, iHeight);
-    }
-
-    //Fill build-item-specific zone
-    if(checkBuildMeters()){
-      ctx.beginPath();
-      ctx.fillStyle = 'blue';
-      ctx.strokeStyle = 'white';
-      ctx.lineWidth = 20;
-      if(engine.vision.build1) {
-        ctx.fillRect(0,0,80,200);
-        ctx.strokeRect(0,0,80,200);
-      } else if(engine.vision.build2) {
-        ctx.fillRect(80,0,80,200);
-        ctx.strokeRect(80,0,80,200);
-      } else if(engine.vision.build3) {
-        ctx.fillRect(160,0,80,200);
-        ctx.strokeRect(160,0,80,200);
-      } else if(engine.vision.build4) {
-        ctx.fillRect(240,0,80,200);
-        ctx.strokeRect(240,0,80,200);
-      }
     }
 
     renderExtensions();
