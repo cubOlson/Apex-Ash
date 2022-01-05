@@ -17,89 +17,25 @@
     var height = 200;
     var hue = 0;
 
-    let xpAnim = false;
-    let healAnim = false;
-    let damageAnim = false;
-    let xpM1 = 0;
-    let start = Date.now();
     let effects = [];
-
-    function Wave(color, direction) {
-      this.color = color;
-      this.direction = direction;
-      this.lifetime = 300;
-
-      this.draw = function () {
-        if (this.direction == "up"){
-          ctx.fillStyle = this.color;
-          ctx.beginPath();
-          ctx.moveTo(160, this.lifetime - 100);
-          ctx.lineTo(320, this.lifetime);
-          ctx.lineTo(320, this.lifetime + 50);
-          ctx.lineTo(160, this.lifetime - 50);
-          ctx.lineTo(0, this.lifetime + 50);
-          ctx.lineTo(0, this.lifetime);
-          ctx.lineTo(160, this.lifetime - 100);
-          ctx.fill();
-        } else if (this.direction = "down"){
-          ctx.fillStyle = this.color;
-          ctx.beginPath();
-          ctx.moveTo(160, 300 - this.lifetime);
-          ctx.lineTo(320, 200 - this.lifetime);
-          ctx.lineTo(320, 100 - this.lifetime);
-          ctx.lineTo(160, 200 - this.lifetime);
-          ctx.lineTo(0, 100 - this.lifetime);
-          ctx.lineTo(0, 200 - this.lifetime);
-          ctx.lineTo(160, 300 - this.lifetime);
-          ctx.fill();
-        }
-        this.lifetime-=15;
-      };
-    };
 
     function update() {
 
-      let diff = Date.now() - start;
-      if (diff > 3000){
-        xpM1 = 0;
-        start = Date.now();
-      } else if (diff > 2000){
-        xpM1 = 1;
-      };
+      let time = Date.now() / 100;
 
-      if (xpM1 == 1 && !xpAnim) {
-        // for(let i = 0; i < 5; i++){
-        // setTimeout(() => {effects.push(new Wave("#fbd100", "down"));}, i * 100);
-        // setTimeout(() => {effects.push(new Wave("#ffffff", "up"));}, i * 100);
-        // }
-        xpAnim = true;
-      } else if (xpM1 == 0){
-        xpAnim = false;
-        healAnim = false;
-        damageAnim = false;
-      };
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, 320,200);
 
-      if (xpM1 == 1 && !healAnim){
-        // effects.push(new Wave('#ffffff', "down"));
-        // setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
-        // setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
-        healAnim = true;
-      } else if (xpM1 == 1 && !damageAnim){
-        effects.push(new Wave('#ffffff', "up"));
-        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
-        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
-        damageAnim = true;
-      };
+      ctx.beginPath();
+      ctx.arc(160, 15 * Math.sin(time) + 100, 30 + 15 * Math.sin(time), 0, Math.PI * 2);
+      ctx.arc(15 * Math.cos(time) + 160, 100, 30 + 15 * Math.sin(time), 0, Math.PI * 2);
+      ctx.arc(15 * Math.cos(time) + 160, 15 * Math.sin(time) + 100, 30 + 15 * Math.sin(time), 0, Math.PI * 2);
 
-      ctx.fillStyle = 'black';
-      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = `hsl(${180 + 180 * Math.cos(time)}, 100%, 50%)`;
+      ctx.fill();
 
-      for (let i = 0; i < effects.length; i++) {
-        effects[i].draw();
-        if (effects[i].lifetime <= 0) {
-          effects.splice(i, 1);
-        }
-      }
+      ctx.strokeStyle = `hsl(${180 + 180 * Math.sin(time)}, 100%, 50%)`;
+      ctx.stroke();
 
       window.requestAnimationFrame(update);
     }
