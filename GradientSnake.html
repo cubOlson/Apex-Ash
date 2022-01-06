@@ -1,0 +1,64 @@
+<head>
+    <title>Gradient Snake</title>
+    <meta description="Snake-like climbing gradient effect"/>
+    <meta publisher="WhirlwindFX" />
+    <meta property="speed" label="Cycle Speed" type="number" min="1" max="10" default="2">
+    <meta property="distance" label="Color Distance" type="number" min="1" max="10" default="2">
+    <meta property="density" label="Pixel Density" type="number" min="-1" max="2" default="1">
+</head>
+    
+<body style="margin: 0; padding: 0;">
+  	<canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+    
+<script>
+    // Get the canvas element from the DOM
+    var c = document.getElementById("exCanvas");
+    var ctx = c.getContext("2d");  
+    var width = 320;
+    var height = 200;
+    var hue = 0;
+
+    function update() {
+
+      ctx.fillStyle = "white"
+      ctx.fillRect(0, 0, 320, 200)
+
+      hue += (speed/4);
+      if(hue > 360) {
+        hue = hue % 360;
+      }
+
+      var radius = 10 * Math.pow(2, density);
+      var goal = 64000 / (radius * radius);
+      var i = 0;
+
+      while(i < goal){
+  
+        var iRow = Math.floor(i / (320 / radius));
+        var iCol = i % (320 / radius);
+        var ix = iCol * radius;
+        var iy = iRow * radius;
+        var iHue = hue + (i * distance);
+        if(iHue > 360){
+          iHue = iHue % 360;
+        }
+
+        if(iRow % 2 != 0){
+          ix = (320 - radius) - iCol * radius;
+        }
+  
+        ctx.beginPath();
+        ctx.rect(ix, iy, radius, radius);
+  
+        ctx.fillStyle = `hsl(${iHue}, 100%, 50%)`;
+        ctx.fill();
+        i++;
+      }
+
+      window.requestAnimationFrame(update);
+    }
+
+    window.requestAnimationFrame(update);
+
+</script>
