@@ -3,13 +3,57 @@
   <meta description="Ambience and metering for Fortnite Chapter 3.1" />
   <meta publisher="WhirlwindFX" />
   <meta property="myHuePicker2" label="Theme Color" type="hue" default="167" min="0" max="360">
-  <meta
-    property="enableVehicle"
-    label="Vehicle effect"
-    type="boolean"
-    default="1"
-  />
   <meta property="myHuePicker3" label="Vehicle Hue Control" type="hue" default="30" min="0" max="360">
+  <meta
+  property="boost"
+  label="Color Boost"
+  type="number"
+  min="0"
+  max="20"
+  default="0"
+/>
+  <meta
+  property="enableHealing"
+  label="Healing effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableDamage"
+  label="Damage effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableVehicle"
+  label="Vehicle effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableBuild"
+  label="Building effects"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableCloud"
+  label="Storm closing effect"
+  type="boolean"
+  default="1"
+/>
+<meta
+property="enableXP"
+label="XP effect"
+type="boolean"
+default="1"
+/>
+<meta
+property="enableKnock"
+label="Knocked-down effect"
+type="boolean"
+default="1"
+/>
   <meta meter="matchLobby" tags="vlc,fortnite" type="area" x= "0.0224" y= "0.0231" height= "0.001" width= "0.01" h="200-220" s="75-100" l="50-100">
     <resolution size="3440x1440" x="0.0169" y="0.0229" width="0.01" height="0.001"/>
   </meta>
@@ -89,14 +133,6 @@
     <resolution size="1920x1080" x=".851" y=".297" width=".009"/>
     <resolution size="1280x720" x=".847" y=".297" width=".009"/>
   </meta>
-  <meta
-    property="boost"
-    label="Color Boost"
-    type="number"
-    min="0"
-    max="20"
-    default="0"
-  />
   <meta
   	meter="exit"
   	tags="vlc,fortnite"
@@ -205,29 +241,37 @@
           healthM.value > .1 && 
           Math.abs(shieldsM.value - shields2M.value) < .05 && 
           !engine.vision.battlebus){
-        effects.push(new Wave('#ffffff', "down"));
-        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
-        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
-        shieldPrev = shieldsM.value;
+        if (enableDamage){
+          effects.push(new Wave('#ffffff', "down"));
+          setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
+          setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
+          shieldPrev = shieldsM.value;
+        }
       } else if (shieldsM.increased && shieldsM.value != shieldPrev && healthM.value > .1 && !engine.vision.battlebus){
-        effects.push(new Wave('#ffffff', "up"));
-        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
-        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
-        shieldPrev = shieldsM.value;
+        if (enableHealing){
+          effects.push(new Wave('#ffffff', "up"));
+          setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
+          setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
+          shieldPrev = shieldsM.value;
+        }
       };
     };
 
     function healthHelper(){
       if (healthM.decreased && healthM.value != healthPrev && healthM.value > .1 && !engine.vision.battlebus){
-        effects.push(new Wave('#ffffff', "down"));
-        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
-        setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
-        healthPrev = healthM.value;
+        if (enableDamage){
+          effects.push(new Wave('#ffffff', "down"));
+          setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 150);
+          setTimeout(() => {effects.push(new Wave('#ff0000', "down"));}, 300);
+          healthPrev = healthM.value;
+        }
       } else if (healthM.increased && healthM.value != healthPrev && healthM.value > .1 && !engine.vision.battlebus){
-        effects.push(new Wave('#ffffff', "up"));
-        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
-        setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
-        healthPrev = healthM.value;
+        if (enableHealing){
+          effects.push(new Wave('#ffffff', "up"));
+          setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 150);
+          setTimeout(() => {effects.push(new Wave('#00ff00', "up"));}, 300);
+          healthPrev = healthM.value;
+        }
       };
     };
 
@@ -241,9 +285,11 @@
 
     function xpHelper(){
       if (xpM1.value > .9 && engine.vision.xp2 && xpAnim == false) {
-        for(let i = 0; i < 5; i++){
-        setTimeout(() => {effects.push(new Wave("#fbd100", "down"));}, i * 100);
-        setTimeout(() => {effects.push(new Wave("#ffffff", "up"));}, i * 100);
+        if (enableXP){
+          for(let i = 0; i < 5; i++){
+            setTimeout(() => {effects.push(new Wave("#fbd100", "down"));}, i * 100);
+            setTimeout(() => {effects.push(new Wave("#ffffff", "up"));}, i * 100);
+          }
         }
       xpAnim = true;
       } else if (xpM1.value == 0){
@@ -252,12 +298,14 @@
     };
 
     function cloudHelper(){
-      cloudDiff = Date.now() - cloudTimer;
-      if(cloudCloseM.value > .75 && cloudDiff > 4000){
-        cloudTimer = Date.now();
-        effects.push(new effectPulse(310));
-        setTimeout(() => {effects.push(new effectPulse(310))}, 300);
-      };
+      if (enableCloud){
+        cloudDiff = Date.now() - cloudTimer;
+        if(cloudCloseM.value > .75 && cloudDiff > 4000){
+          cloudTimer = Date.now();
+          effects.push(new effectPulse(310));
+          setTimeout(() => {effects.push(new effectPulse(310))}, 300);
+        };
+      }
     };
 
     function arrayEqual(array) {
@@ -491,34 +539,38 @@
           ctx.fillRect(Math.random() * 270, Math.random() * 150, 50, 50);
         }
     } else if (healthM.value < .1 && healthDamageM.value > .1 && !engine.vision.battlebus){
-      for (let i = 0; i < 10; i++){
-        ctx.fillStyle = 'red';
-        ctx.fillRect(Math.random() * 270, Math.random() * 150, 100, 50);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(Math.random() * 270, Math.random() * 150, 100, 50);
+      if (enableKnock){
+        for (let i = 0; i < 10; i++){
+          ctx.fillStyle = 'red';
+          ctx.fillRect(Math.random() * 270, Math.random() * 150, 100, 50);
+          ctx.fillStyle = 'black';
+          ctx.fillRect(Math.random() * 270, Math.random() * 150, 100, 50);
+        }
       }
     };
 
     //Fill build-item-specific zone
-    if(checkBuildMeters()){
-      ctx.beginPath();
-      ctx.fillStyle = 'blue';
-      ctx.strokeStyle = 'white';
-      ctx.lineWidth = 20;
-      if(B1M.value == 1 && B5M.value == 1) {
-        ctx.fillRect(0,0,80,200);
-        ctx.strokeRect(0,0,80,200);
-      } else if(B2M.value == 1 && B6M.value == 1) {
-        ctx.fillRect(80,0,80,200);
-        ctx.strokeRect(80,0,80,200);
-      } else if(B3M.value == 1 && B7M.value == 1) {
-        ctx.fillRect(160,0,80,200);
-        ctx.strokeRect(160,0,80,200);
-      } else if(B4M.value == 1 && B8M.value == 1) {
-        ctx.fillRect(240,0,80,200);
-        ctx.strokeRect(240,0,80,200);
-      }
-    };
+    if (enableBuild){
+      if(checkBuildMeters()){
+        ctx.beginPath();
+        ctx.fillStyle = 'blue';
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 20;
+        if(B1M.value == 1 && B5M.value == 1) {
+          ctx.fillRect(0,0,80,200);
+          ctx.strokeRect(0,0,80,200);
+        } else if(B2M.value == 1 && B6M.value == 1) {
+          ctx.fillRect(80,0,80,200);
+          ctx.strokeRect(80,0,80,200);
+        } else if(B3M.value == 1 && B7M.value == 1) {
+          ctx.fillRect(160,0,80,200);
+          ctx.strokeRect(160,0,80,200);
+        } else if(B4M.value == 1 && B8M.value == 1) {
+          ctx.fillRect(240,0,80,200);
+          ctx.strokeRect(240,0,80,200);
+        }
+      };
+    }
   };
 
   function StateHandler() {
@@ -637,23 +689,25 @@
   };
 
   function checkBuild(){
-    if(BuildingMeter.value == 1 && checkBuildMeters() && !BuildingAnim){
+    if (enableBuild){
+      if(BuildingMeter.value == 1 && checkBuildMeters() && !BuildingAnim){
 
-      let index = 0;
-      var intr = setInterval(function() {
-        effects.push(new buildStepUp(0 - (index % 2 * 50), 200 - (50 * index)));
-        if (++index == 6) clearInterval(intr);
-      }, 150);
+        let index = 0;
+        var intr = setInterval(function() {
+          effects.push(new buildStepUp(0 - (index % 2 * 50), 200 - (50 * index)));
+          if (++index == 6) clearInterval(intr);
+        }, 150);
 
-      BuildingAnim = true;
-      notBuildingAnim = false;
+        BuildingAnim = true;
+        notBuildingAnim = false;
 
-    } else if (notBuildingMeter.value == 1 && !checkBuildMeters() && !notBuildingAnim){
+      } else if (notBuildingMeter.value == 1 && !checkBuildMeters() && !notBuildingAnim){
 
-      effects.push(new effectPulse(160));
-      BuildingAnim = false;
-      notBuildingAnim = true;
+        effects.push(new effectPulse(160));
+        BuildingAnim = false;
+        notBuildingAnim = true;
 
+      }
     }
   }
 
