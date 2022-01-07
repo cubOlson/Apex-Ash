@@ -1,0 +1,307 @@
+<head>
+  <title>Impossible Game</title>
+  <meta description="Effect description goes here." />
+  <meta publisher="Jack Pendleton" />
+  <meta property="playerColor" label="Player Color" type="color" default="#ffa500" min="0" max="360" />
+  <meta property="spikeColor" label="Spike Color" type="color" default="#ff0000" min="0" max="360" />
+  <meta property="skyColor" label="Sky Color" type="color" default="#00ffff" min="0" max="360" />
+  <meta property="groundColor" label="Ground Color" type="color" default="#008000" min="0" max="360" />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script type="text/javascript">
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var spikeColor = "#ff0000";
+  var playerColor = "#ffa500";
+  var skyColor = "#00ffff";
+  var groundColor = "#008000";
+
+  var player = [40, 110];
+  var oldscore = 0;
+  var score = 0;
+  var triangles = [];
+  var lockMovement = false;
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+
+    stateMgr.Push(new GameState());
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+
+  function update() {
+    stateMgr.Process();
+    window.requestAnimationFrame(update);
+  }
+
+  function GameState() {
+    this.Process = function () {
+      ctx.fillStyle = skyColor;
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = groundColor;
+      ctx.fillRect(0, 150, 320, 100);
+
+      if (!lockMovement) {
+        if (score == 69) {
+          ctx.font = "30px Arial";
+          ctx.fillStyle = "black";
+          ctx.fillText(score + " nice", 10, 25);
+        } else {
+          ctx.font = "30px Arial";
+          ctx.fillStyle = "black";
+          ctx.fillText(score, 10, 25);
+        }
+      }
+
+      if (triangles.length < 1) {
+        triangles.push(new Triangle());
+      }
+
+      for (i = 0; i < triangles.length; i++) {
+        triangles[i].Draw();
+        if (triangles[i].x < 100 && triangles[i].replaced == false) {
+          triangles.push(new Triangle());
+          triangles[i].replaced = true;
+          score++;
+        }
+      }
+
+      ctx.fillStyle = playerColor;
+      ctx.fillRect(player[0], player[1], 40, 40);
+
+      for (j = 0; j < triangles.length; j++) {
+        if (triangles[j].IsFinished()) {
+          triangles.splice(j, 1);
+        }
+      }
+
+      for (k = 0; k < triangles.length; k++) {
+        if (
+          triangles[k].x - player[0] > -20 &&
+          triangles[k].x - player[0] < 20
+        ) {
+          if (
+            triangles[k].y - player[1] > 38 &&
+            triangles[k].y - player[1] < 78
+          ) {
+            lockMovement = true;
+            oldscore = score - 1;
+            setTimeout(() => {
+              stateMgr.Push(new GameFailState());
+              triangles.length = 0;
+              score = 0;
+            }, 750);
+          } else {
+          }
+        } else if (
+          triangles[k].x - player[0] > -40 &&
+          triangles[k].x - player[0] < 40
+        ) {
+          console.log(triangles[k].y - player[1]);
+          console.log(Math.random());
+          if (
+            triangles[k].y - player[1] > 38 &&
+            triangles[k].y - player[1] < 60
+          ) {
+            lockMovement = true;
+            oldscore = score - 1;
+            setTimeout(() => {
+              stateMgr.Push(new GameFailState());
+              triangles.length = 0;
+              score = 0;
+            }, 750);
+          } else {
+          }
+        }
+      }
+    };
+  }
+
+  function Triangle() {
+    this.x = 320 + Math.random() * 50;
+    this.y = 150;
+    this.speed = Math.random() * 4 + 2;
+    this.replaced = false;
+
+    this.Draw = function () {
+      ctx.fillStyle = spikeColor;
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x + 40, this.y);
+      ctx.lineTo(this.x + 20, this.y - 40);
+      ctx.lineTo(this.x, this.y);
+      ctx.fill();
+      if (!lockMovement) {
+        this.x -= this.speed;
+      }
+    };
+
+    this.IsFinished = function () {
+      if (this.x < -30) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function onCanvasTapped(x, y) {
+    if (!lockMovement) {
+      if (player[1] > 100) {
+        raisePlayer();
+        setTimeout(() => {
+          lowerPlayer();
+        }, 750);
+      }
+    }
+  }
+
+  function raisePlayer() {
+    if (player[1] > 40) {
+      setTimeout(() => {
+        raisePlayer();
+      }, 1);
+      player[1] -= 2;
+    }
+  }
+
+  function lowerPlayer() {
+    if (player[1] < 110) {
+      setTimeout(() => {
+        lowerPlayer();
+      }, 1);
+      player[1] += 2;
+    }
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Clear = function () {
+      stack = [];
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function GameFailState() {
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    this.timing = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Push(new GameState());
+        lockMovement = false;
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      this.timing++;
+
+      if (this.timing > 0 && this.timing < 20) {
+        ctx.fillStyle = "red";
+      } else if (this.timing > 40 && this.timing < 60) {
+        ctx.fillStyle = "red";
+      } else if (this.timing > 80 && this.timing < 100) {
+        ctx.fillStyle = "red";
+      } else {
+        ctx.fillStyle = "black";
+      }
+      ctx.fillRect(0, 0, 320, 200);
+      // ctx.font = "30px Arial";
+      // ctx.fillStyle = "white";
+      // ctx.fillText("Score", 120, 60);
+      // ctx.font = "60px Arial";
+      // ctx.fillText(oldscore, 140, 110);
+    };
+  }
+
+  function IdleState() {
+    this.Process = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      if (idleEffect == "Screen Ambience") {
+        let lightness = new Int8Array(engine.zone.lightness);
+        let sat = new Int8Array(engine.zone.saturation);
+        let hue = new Int16Array(engine.zone.hue);
+
+        for (var iZone = 0; iZone < 560; iZone++) {
+          ctx.fillStyle =
+            "hsla(" +
+            hue[iZone] +
+            "," +
+            sat[iZone] +
+            "%," +
+            lightness[iZone] +
+            "%, " +
+            keyScrenBrightness / 100 +
+            ")";
+
+          var iRow = Math.floor(iZone / 28);
+          var iCol = iZone % 28;
+          var iWidth = 320 / 28;
+          var iHeight = 200 / 20;
+          var iZx = iCol * iWidth;
+          var iZy = iRow * iHeight;
+
+          ctx.fillRect(iZx, iZy, iWidth, iHeight);
+        }
+      } else if (idleEffect == "Static Color") {
+        ctx.fillStyle = idleEffect_color;
+        ctx.fillRect(0, 0, 320, 200);
+      } else if (idleEffect == "Color Cycle") {
+        if (iHue < 360) {
+          iHue++;
+        } else {
+          iHue = 0;
+        }
+        ctx.fillStyle = "hsl(" + iHue + ",100%,50%)";
+        ctx.fillRect(0, 0, 320, 200);
+      } else if (idleEffect == "Rainbow Wave") {
+        if (iHue < 360) {
+          iHue++;
+        } else {
+          iHue = 0;
+        }
+        for (var iIdx = 0; iIdx < 320; iIdx++) {
+          ctx.fillStyle = "hsl(" + ((iIdx - iHue) % 360) + ", 100%, 50%)";
+          ctx.fillRect(iIdx, 0, 1, 200);
+        }
+      }
+    };
+  }
+</script>
