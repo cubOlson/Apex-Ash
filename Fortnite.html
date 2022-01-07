@@ -1,6 +1,6 @@
 <head>
-  <title>Fortnite Chapter 3.1</title>
-  <meta description="Ambience and metering for Fortnite Chapter 3.1" />
+  <title>Fortnite</title>
+  <meta description="Ambience and metering for Fortnite Chapter 3 Season 1" />
   <meta publisher="WhirlwindFX" />
   <meta property="myHuePicker2" label="Theme Color" type="hue" default="167" min="0" max="360">
   <meta property="myHuePicker3" label="Vehicle Hue Control" type="hue" default="30" min="0" max="360">
@@ -130,7 +130,7 @@ default="1"
   </meta>
   <meta meter="cloudClose" tags="vlc,fortnite" x=".847" y=".297" width=".009" h="290-350" s="60-100" l="50-90" type="linear">
     <resolution size="3440x1440" x="0.17" y="0.8743" width="0.1555"/>
-    <resolution size="1920x1080" x=".851" y=".297" width=".009"/>
+    <resolution size="1920x1080" x=".849" y=".297" width=".008"/>
     <resolution size="1280x720" x=".847" y=".297" width=".009"/>
   </meta>
   <meta
@@ -276,7 +276,6 @@ default="1"
     };
 
     function lobbyAnimationPlay(){
-      console.log('IN LOBBY')
       if(inLobby.value == 1 && yellowPlayButton.value == 1 && !lobbyAnim){
         stateMgr.Push(new lobbyAnimation());
         lobbyAnim = true;
@@ -300,7 +299,7 @@ default="1"
     function cloudHelper(){
       if (enableCloud){
         cloudDiff = Date.now() - cloudTimer;
-        if(cloudCloseM.value > .75 && cloudDiff > 4000){
+        if(cloudCloseM.value > .6 && cloudDiff > 3500){
           cloudTimer = Date.now();
           effects.push(new effectPulse(310));
           setTimeout(() => {effects.push(new effectPulse(310))}, 300);
@@ -471,7 +470,7 @@ default="1"
         ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
         ctx.lineWidth = 50;
         ctx.beginPath();
-        ctx.arc(160, 100, 550 - this.lifetime, 0, Math.PI * 2);
+        ctx.arc(160, 100, this.lifetime, 0, Math.PI * 2);
         ctx.stroke();
         this.lifetime-=10;
       }
@@ -520,16 +519,12 @@ default="1"
 
     if (enableVehicle){
       if (healthM.value > 0.1 && vehicleM.value > 0.3) {
-        var vBr = Math.sin((vehiclePhase / 100) * Math.PI) * 30;
-        ctx.globalAlpha = .66;
-        ctx.fillStyle = `hsl(${myHuePicker3}, 100%, ${vBr + 20}%)`;
+        let lightness = 50 + Math.sin(Date.now()/100) * 20;
+        ctx.globalAlpha = .6;
+        ctx.fillStyle = `hsl(${myHuePicker3}, 100%, ${lightness}%)`;
         ctx.fillRect(0, 0, 320, 200);
         ctx.globalAlpha = 1;
 
-        vehiclePhase++;
-        if (vehiclePhase > 100) {
-          vehiclePhase = 0;
-        };
       };
     };
 
@@ -689,27 +684,29 @@ default="1"
   };
 
   function checkBuild(){
-    if (enableBuild){
       if(BuildingMeter.value == 1 && checkBuildMeters() && !BuildingAnim){
 
-        let index = 0;
-        var intr = setInterval(function() {
-          effects.push(new buildStepUp(0 - (index % 2 * 50), 200 - (50 * index)));
-          if (++index == 6) clearInterval(intr);
-        }, 150);
+        if(enableBuild){
+          let index = 0;
+          var intr = setInterval(function() {
+            effects.push(new buildStepUp(0 - (index % 2 * 50), 200 - (50 * index)));
+            if (++index == 6) clearInterval(intr);
+          }, 150);
+        }
 
         BuildingAnim = true;
         notBuildingAnim = false;
 
       } else if (notBuildingMeter.value == 1 && !checkBuildMeters() && !notBuildingAnim){
 
-        effects.push(new effectPulse(160));
+        if(enableBuild){
+          effects.push(new effectPulse(160));
+        }
         BuildingAnim = false;
         notBuildingAnim = true;
 
       }
     }
-  }
 
   function update() {
     BuildingMeter.setValue(engine.vision.Building);

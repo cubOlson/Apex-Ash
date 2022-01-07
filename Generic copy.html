@@ -27,7 +27,7 @@
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, 320,200);
 
-      if (effects.length < 5){
+      if (effects.length < 2){
         effects.push(new Ball());
       }
 
@@ -46,39 +46,45 @@
       this.by = 100;
       this.vy = 0;
       this.ay = 2;
+      this.id = Math.random();
 
       this.draw = function(){
         if (this.by + 25 > 200){
-          this.by = this.radius;
-          this.vy = -20;
+          this.vy = -15;
+          while (this.by + 25 > 200){
+            this.by += this.vy;
+          }
         } else if (this.by -25 < 0){
-          this.by = 200 - this.radius;
           this.vy = 5;
+          while (this.by -25 < 0){
+            this.by += this.vy;
+          }
         }
         this.vy += ay;
         
-        this.vx += Math.random() * 2 * Math.sin(Date.now()/100);
+        this.vx += Math.random();
         if (this.bx + 25 > 320){
           this.bx = 320 - this.radius;
           this.vx *= -.9
         } else if (this.bx - 25 < 0){
           this.bx = this.radius;
-          this.vx *= -1;
+          this.vx *= -.9;
         }
         
-        effects.forEach(ele => {
+        for (let i = 0; i < effects.length; i++){
+          let ele = effects[i];
+          if (this.id == ele.id){
+            continue;
+          }
           if (Math.abs(this.bx - ele.bx) < 50 && Math.abs(this.by - ele.by) < 50){
-            if (ele.bx > this.bx){
-              this.bx -= this.radius;
-              ele.bx += ele.radius;
-            } else {
-              this.bx += this.radius;
-              ele.bx -= ele.radius;
-            }
             this.vx *= -1;
             this.vy *= -1;
+            while (Math.abs(this.bx - ele.bx) < 50 && Math.abs(this.by - ele.by) < 50){
+              this.bx += this.vx
+              this.by += this.vy
+            }
           }
-        })
+        }
         this.bx += this.vx;
         this.by += this.vy;
 
