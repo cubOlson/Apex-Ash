@@ -22,11 +22,11 @@
     var width = 320;
     var height = 200;
     var hue = 0;
-    let cx = 160;
-    let vx = 0;
-    let cy = 100;
-    let vy = 0;
-    let ay = 1;
+    let ballX = 160;
+    let velocityX = 0;
+    let ballY = 100;
+    let velocityY = 0;
+    let accelerationY = 1;
     let effects = [];
 
     function update() {
@@ -36,11 +36,13 @@
       ctx.fillRect(0, 0, 320,200);
       ctx.globalAlpha = 1;
 
-      if (effects.length < amount){
+      if (effects.length < 1){
         effects.push(new Ball());
-      } else if (effects.length > amount){
-        effects.pop();
-      }
+      } 
+      
+      // else if (effects.length > amount){
+      //   effects.pop();
+      // }
 
       effects.forEach(ele => {
         ele.draw();
@@ -50,74 +52,106 @@
       window.requestAnimationFrame(update);
     }
 
+    //LLLASSST change
     function Ball(){
-      this.radius = radius;
-      this.bx = Math.random() * width;
-      this.vx = 10 * Math.sin(Date.now());
-      this.by = Math.random() * height;
-      this.vy = 0;
-      this.ay = 2;
-      this.id = Math.random();
-      this.lightness = 0;
+      this.bx = ballX;
+      this.by = ballY;
+      this.vy = velocityY;
+      this.ay = accelerationY;
+      this.radius = 15;
+      this.impact = false;
 
       this.draw = function(){
-        this.radius = radius;
-        this.vy += ay;
-        this.vx += Math.sin(Date.now());
-        
+        this.vy += this.ay;
+
+        if (this.impact){
+          this.vy = -10;
+          this.impact = false;
+        } 
         if (this.by + this.radius + this.vy > 200){
-          this.vy = floor * -1;
-          this.lightness = 60;
-        } else if (this.by - this.radius + this.vy < 0){
-          this.vy = 1;
-          this.lightness = 60;
-        }
-        if (this.bx + this.radius + this.vx > 320){
-          this.vx *= -1
-          this.lightness = 60;
-        } else if (this.bx - this.radius + this.vx < 0){
-          this.vx *= -1;
-          this.lightness = 60;
-        }
-        
-        for (let i = 0; i < effects.length; i++){
-          let ele = effects[i];
-          if (this.id == ele.id){
-            continue;
-          }
-          if (Math.abs(this.bx - ele.bx) < this.radius && Math.abs(this.by - ele.by) < this.radius){
-            effects.splice(i, 1);
-          }
-          if (Math.abs(this.bx + this.vx - ele.bx) < (this.radius * 2) && Math.abs(this.by + this.vy - ele.by) < (this.radius * 2)){
-            this.lightness = 60;
-            this.vx *= -.9;
-            this.vy *= -.9;
+          this.vy = 0;
+          this.impact = true;
+          while (this.by + this.radius < 200){
+            this.by++;
           }
         }
-        this.bx += this.vx;
         this.by += this.vy;
 
-        
-        while (this.bx - this.radius < 0){
-          this.bx++
-        }
-        while (this.bx + this.radius > 320){
-          this.bx--
-        }
-        while (this.by - this.radius < 0){
-          this.by++
-        }
-        while (this.by + this.radius > 200){
-          this.by--
-        }
-
         ctx.beginPath();
-  		  ctx.arc(this.bx, this.by, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(${impact}, 50%, ${this.lightness}%)`
+        ctx.arc(this.bx, this.by, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "black"
         ctx.fill();
-        this.lightness -= fade;
       }
     }
+
+    // function Ball(){
+    //   this.radius = radius;
+    //   this.bx = Math.random() * width;
+    //   this.vx = 10 * Math.sin(Date.now());
+    //   this.by = Math.random() * height;
+    //   this.vy = 0;
+    //   this.ay = 2;
+    //   this.id = Math.random();
+    //   this.lightness = 0;
+
+    //   this.draw = function(){
+    //     this.radius = radius;
+    //     this.vy += ay;
+    //     this.vx += Math.sin(Date.now());
+        
+    //     if (this.by + this.radius + this.vy > 200){
+    //       this.vy = floor * -1;
+    //       this.lightness = 60;
+    //     } else if (this.by - this.radius + this.vy < 0){
+    //       this.vy = 1;
+    //       this.lightness = 60;
+    //     }
+    //     if (this.bx + this.radius + this.vx > 320){
+    //       this.vx *= -1
+    //       this.lightness = 60;
+    //     } else if (this.bx - this.radius + this.vx < 0){
+    //       this.vx *= -1;
+    //       this.lightness = 60;
+    //     }
+        
+    //     for (let i = 0; i < effects.length; i++){
+    //       let ele = effects[i];
+    //       if (this.id == ele.id){
+    //         continue;
+    //       }
+    //       if (Math.abs(this.bx - ele.bx) < this.radius && Math.abs(this.by - ele.by) < this.radius){
+    //         effects.splice(i, 1);
+    //       }
+    //       if (Math.abs(this.bx + this.vx - ele.bx) < (this.radius * 2) && Math.abs(this.by + this.vy - ele.by) < (this.radius * 2)){
+    //         this.lightness = 60;
+    //         this.vx *= -.9;
+    //         this.vy *= -.9;
+    //       }
+    //     }
+    //     this.bx += this.vx;
+    //     this.by += this.vy;
+
+        
+    //     while (this.bx - this.radius < 0){
+    //       this.bx++
+    //     }
+    //     while (this.bx + this.radius > 320){
+    //       this.bx--
+    //     }
+    //     while (this.by - this.radius < 0){
+    //       this.by++
+    //     }
+    //     while (this.by + this.radius > 200){
+    //       this.by--
+    //     }
+
+    //     ctx.beginPath();
+  	// 	  ctx.arc(this.bx, this.by, this.radius, 0, Math.PI * 2);
+    //     ctx.fillStyle = `hsl(${impact}, 50%, ${this.lightness}%)`
+    //     ctx.fill();
+    //     this.lightness -= fade;
+    //   }
+    // }
 
     window.requestAnimationFrame(update);
 
