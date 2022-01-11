@@ -196,7 +196,6 @@
     l="40-100"
     type="area"
   />
- 
   <meta
     meter="qMeter"
     tags="vlc,VALORANT"
@@ -1014,13 +1013,11 @@ function DiagonalLine() {
     }
   }
   function onAstra_c() {
-    // Yoru - Fakeout
     if (Astra_c_meter.decreased && Astra_c_meter.diff > 0.1) {
       stateMgr.Push(new reversePulseRippleState("#9d00ff", true));
     }
   }
   function onAstra_q() {
-    //Yoru - Blindside
     if (Astra_q_meter.decreased && Astra_q_meter.diff > 0.1) {
       var colors = hexToHSL("#db44fc");
       for (let i = 0; i < 15 * 3; i++) {
@@ -2700,6 +2697,7 @@ function random(min, max) {
 
     return colors;
   }
+
   function PulseRippleState3ColorAlt(color1, color2, color3, hollow) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -3657,123 +3655,122 @@ function random(min, max) {
       }
       console.log(healthMeter.value);
 
-      if (champId == "Phoenix") {
-        //Phoneix
-        console.log("Phoneix selected.");
-        Phoneix_c_meter.setValue(engine.vision.cMeter);
-        Phoneix_q_meter.setValue(engine.vision.qMeter);
-        Phoneix_e_meter.setValue(engine.vision.eMeter);
-        Phoneix_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Raze") {
-        //Raze
-        console.log("Raze selected.");
-        Raze_c_meter.setValue(engine.vision.cMeter);
-        Raze_q_meter.setValue(engine.vision.qMeter);
-        Raze_e_meter.setValue(engine.vision.eMeter);
-        Raze_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Kayo") {
-        //Kayo
-        console.log("Kayo selected.");
-        Kayo_c_meter.setValue(engine.vision.cMeter);
-        Kayo_q_meter.setValue(engine.vision.qMeter);
-        Kayo_e_meter.setValue(engine.vision.eMeter);
-        Kayo_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Brimstone") {
-        //Brimstone
-        console.log("Brimstone selected.");
-        Brimstone_c_meter.setValue(engine.vision.cMeter);
-        Brimstone_q_meter.setValue(engine.vision.qMeter);
-        Brimstone_e_meter.setValue(engine.vision.eMeter);
-        Brimstone_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Jett") {
-        //Jett
-        console.log("Jett selected.");
-        Jett_c_meter.setValue(engine.vision.cMeter);
-        Jett_q_meter.setValue(engine.vision.qMeter);
-        Jett_e_meter.setValue(engine.vision.eMeter);
-        Jett_x_meter.setValue(engine.vision.jettx);
-        Jett_x2_meter.setValue(engine.vision.jettx2);
-      } else if (champId == "Sage") {
-        //Sage
-        console.log("Sage selected.");
-        Sage_c_meter.setValue(engine.vision.cMeter);
-        Sage_q_meter.setValue(engine.vision.qMeter);
-        Sage_e_meter.setValue(engine.vision.eMeter);
-        Sage_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Viper") {
-        //Viper
-        console.log("Viper selected.");
-        Viper_c_meter.setValue(engine.vision.cMeter);
-        Viper_q_meter.setValue(engine.vision.qMeter);
-        Viper_e_meter.setValue(engine.vision.eMeter);
-        Viper_x_meter.setValue(engine.vision.viperX);
-      } else if (champId == "Breach") {
-        //Breach
-        console.log("Breach selected.");
-        Breach_c_meter.setValue(engine.vision.cMeter);
-        Breach_q_meter.setValue(engine.vision.qMeter);
-        Breach_e_meter.setValue(engine.vision.eMeter);
-        Breach_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Cypher") {
-        //Cypher
-        console.log("Cypher selected.");
-        Cypher_c_meter.setValue(engine.vision.cMeter);
-        Cypher_q_meter.setValue(engine.vision.qMeter);
-        Cypher_e_meter.setValue(engine.vision.eMeter);
-        Cypher_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Sova") {
-        //Sova
-        console.log("Sova selected.");
-        Sova_c_meter.setValue(engine.vision.cMeter);
-        Sova_q_meter.setValue(engine.vision.qMeter);
-        Sova_e_meter.setValue(engine.vision.eMeter);
-        Sova_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Omen") {
-        //Omen
-        console.log("Omen selected.");
-        Omen_c_meter.setValue(engine.vision.cMeter);
-        Omen_q_meter.setValue(engine.vision.qMeter);
-        Omen_e_meter.setValue(engine.vision.eMeter);
-        Omen_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Reyna") {
-        //Reyna
-        console.log("Reyna selected.");
-        Reyna_c_meter.setValue(engine.vision.cMeter);
-        Reyna_q_meter.setValue(engine.vision.qMeter);
-        Reyna_e_meter.setValue(engine.vision.eMeter);
-        Reyna_x_meter.setValue(engine.vision.xMeter);
-        Reyna_x2_meter.setValue(engine.vision.a);
-        Reyna_x3_meter.setValue(engine.vision.a2);
-
-
-      } else if (champId == "Killjoy") {
-        //Killjoy
-        console.log("Killjoy selected.");
-        Killjoy_c_meter.setValue(engine.vision.cMeter);
-        Killjoy_q_meter.setValue(engine.vision.qMeter);
-        Killjoy_e_meter.setValue(engine.vision.eMeter);
-        Killjoy_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Skye") {
-        //Killjoy
-        console.log("Skye selected.");
-        Skye_c_meter.setValue(engine.vision.cMeter);
-        Skye_q_meter.setValue(engine.vision.qMeter);
-        Skye_e_meter.setValue(engine.vision.eMeter);
-        Skye_x_meter.setValue(engine.vision.xMeter);
-      } else if (champId == "Yoru") {
-        //Killjoy
-        console.log("Yoru selected.");
-        Yoru_c_meter.setValue(engine.vision.cMeter);
-        Yoru_q_meter.setValue(engine.vision.qMeter);
-        Yoru_e_meter.setValue(engine.vision.eMeter);
-        Yoru_x_meter.setValue(engine.vision.xMeter);
-      }
-      else if (champId == "Astra"){
-        console.log("Astra selected.");
-        Astra_c_meter.setValue(engine.vision.cMeter);
-        Astra_q_meter.setValue(engine.vision.qMeter);
-        Astra_e_meter.setValue(engine.vision.eMeter);
-        Astra_x_meter.setValue(engine.vision.xMeter);
+      switch (champId){
+        case "Phoenix":
+          console.log("Phoenix selected.");
+          Phoneix_c_meter.setValue(engine.vision.cMeter);
+          Phoneix_q_meter.setValue(engine.vision.qMeter);
+          Phoneix_e_meter.setValue(engine.vision.eMeter);
+          Phoneix_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Raze":
+          console.log("Raze selected.");
+          Raze_c_meter.setValue(engine.vision.cMeter);
+          Raze_q_meter.setValue(engine.vision.qMeter);
+          Raze_e_meter.setValue(engine.vision.eMeter);
+          Raze_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Kayo":
+          console.log("Kayo selected.");
+          Kayo_c_meter.setValue(engine.vision.cMeter);
+          Kayo_q_meter.setValue(engine.vision.qMeter);
+          Kayo_e_meter.setValue(engine.vision.eMeter);
+          Kayo_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Brimstone":
+          console.log("Brimstone selected.");
+          Brimstone_c_meter.setValue(engine.vision.cMeter);
+          Brimstone_q_meter.setValue(engine.vision.qMeter);
+          Brimstone_e_meter.setValue(engine.vision.eMeter);
+          Brimstone_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Jett":
+          console.log("Jett selected.");
+          Jett_c_meter.setValue(engine.vision.cMeter);
+          Jett_q_meter.setValue(engine.vision.qMeter);
+          Jett_e_meter.setValue(engine.vision.eMeter);
+          Jett_x_meter.setValue(engine.vision.jettx);
+          Jett_x2_meter.setValue(engine.vision.jettx2);
+          break;
+        case "Sage":
+          console.log("Sage selected.");
+          Sage_c_meter.setValue(engine.vision.cMeter);
+          Sage_q_meter.setValue(engine.vision.qMeter);
+          Sage_e_meter.setValue(engine.vision.eMeter);
+          Sage_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Viper":
+          console.log("Viper selected.");
+          Viper_c_meter.setValue(engine.vision.cMeter);
+          Viper_q_meter.setValue(engine.vision.qMeter);
+          Viper_e_meter.setValue(engine.vision.eMeter);
+          Viper_x_meter.setValue(engine.vision.viperX);
+          break;
+        case "Breach":
+          console.log("Breach selected.");
+          Breach_c_meter.setValue(engine.vision.cMeter);
+          Breach_q_meter.setValue(engine.vision.qMeter);
+          Breach_e_meter.setValue(engine.vision.eMeter);
+          Breach_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Cypher":
+          console.log("Cypher selected.");
+          Cypher_c_meter.setValue(engine.vision.cMeter);
+          Cypher_q_meter.setValue(engine.vision.qMeter);
+          Cypher_e_meter.setValue(engine.vision.eMeter);
+          Cypher_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Sova":
+          console.log("Sova selected.");
+          Sova_c_meter.setValue(engine.vision.cMeter);
+          Sova_q_meter.setValue(engine.vision.qMeter);
+          Sova_e_meter.setValue(engine.vision.eMeter);
+          Sova_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Omen":
+          console.log("Omen selected.");
+          Omen_c_meter.setValue(engine.vision.cMeter);
+          Omen_q_meter.setValue(engine.vision.qMeter);
+          Omen_e_meter.setValue(engine.vision.eMeter);
+          Omen_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Reyna":
+          console.log("Reyna selected.");
+          Reyna_c_meter.setValue(engine.vision.cMeter);
+          Reyna_q_meter.setValue(engine.vision.qMeter);
+          Reyna_e_meter.setValue(engine.vision.eMeter);
+          Reyna_x_meter.setValue(engine.vision.xMeter);
+          Reyna_x2_meter.setValue(engine.vision.a);
+          Reyna_x3_meter.setValue(engine.vision.a2);
+          break;
+        case "Killjoy":
+          console.log("Killjoy selected.");
+          Killjoy_c_meter.setValue(engine.vision.cMeter);
+          Killjoy_q_meter.setValue(engine.vision.qMeter);
+          Killjoy_e_meter.setValue(engine.vision.eMeter);
+          Killjoy_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Skye":
+          console.log("Skye selected.");
+          Skye_c_meter.setValue(engine.vision.cMeter);
+          Skye_q_meter.setValue(engine.vision.qMeter);
+          Skye_e_meter.setValue(engine.vision.eMeter);
+          Skye_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Yoru":
+          console.log("Yoru selected.");
+          Yoru_c_meter.setValue(engine.vision.cMeter);
+          Yoru_q_meter.setValue(engine.vision.qMeter);
+          Yoru_e_meter.setValue(engine.vision.eMeter);
+          Yoru_x_meter.setValue(engine.vision.xMeter);
+          break;
+        case "Astra":
+          console.log("Astra selected.");
+          Astra_c_meter.setValue(engine.vision.cMeter);
+          Astra_q_meter.setValue(engine.vision.qMeter);
+          Astra_e_meter.setValue(engine.vision.eMeter);
+          Astra_x_meter.setValue(engine.vision.xMeter);
+          break;
       }
     } 
 
