@@ -1,7 +1,7 @@
 <head>
-  <title>Valorant</title>
+  <title>Valorant Copy</title>
   <meta
-    description="Agent abilities and ambience for Valorant. Automatic selection for Agents. Use Manual Selector when SignalRGB crashes or auto selection is not working"
+    description="Agent abilities and ambience for Valorant. Use select box to choose agent."
   />
   <meta publisher="WhirlwindFX" />
   <meta property="selectedChamp" 
@@ -294,23 +294,21 @@
   var stateMgr = new StateHandler();
   var effects = [];
   var oldShield = 0;
+  var oldHealth = 0;
 
   //Generic meters
   var val = 0;
   var healthMeter = new Meter(10, onHealthMeterChanged);
-
   var shieldMeter = new Meter(10, onShieldMeterChanged);
-
   var bombMeter = new Meter(20, onBombMeterChanged);
 
-  function onWChange() {}
-
   function onHealthMeterChanged() {
-    if (healthMeter.decreased && healthMeter.diff >= 10) {
+    if (healthMeter.decreased && healthMeter.value != oldHealth) {
       var colors = hexToHSL("#ff1100");
+      oldHealth = healthMeter.value;
       for (let i = 0; i < 20 * 2; i++) {
           effects.push(new SparkleEffect(colors.h + random(-10, 10), colors.s, colors.l, 30));
-        }    } else {
+      }} else {
       stateMgr.Push(new IdleState());
     }
   }
@@ -446,14 +444,14 @@
   function onRaze_e() {
     if (Raze_e_meter.decreased && Raze_e_meter.diff > 0.1) {
       //Raze-PaintShells
-      stateMgr.Push(new fuseQ());
+      stateMgr.Push(new RazeE());
     }
   }
   function onRaze_c() {
     if (Raze_c_meter.decreased && Raze_c_meter.diff > 0.1) {
       //Raze-BoomBot
       stateMgr.Push(
-        new rampartZ()
+        new RazeC()
       );
     }
   }
@@ -805,7 +803,7 @@ function DiagonalLine() {
   function onSova_c() {
     if (Sova_c_meter.decreased && Sova_c_meter.diff > 0.05) {
       stateMgr.Push(
-        new rampartZ2()
+        new SovaC()
       );    }
   }
   function onSova_q() {
@@ -1045,7 +1043,7 @@ function DiagonalLine() {
   }
 
   // end Yoru
-  function rampartZ2() {
+  function SovaC() {
         this.x = 0;
         this.y = -10;
         this.count = 2000;
@@ -1139,7 +1137,8 @@ function DiagonalLine() {
     };
     this.lifetime--;
   }
-  function rampartZ() {
+
+  function RazeC() {
         this.x = 0;
         this.y = -10;
         this.count = 2000;
@@ -1187,8 +1186,9 @@ function DiagonalLine() {
       deg = 0;
     }
         };
-    }  
-    function getPointX(c1, c2, radius, angle) {
+    }
+
+  function getPointX(c1, c2, radius, angle) {
     return c1 + Math.cos(angle) * radius;
   }
 
@@ -1200,11 +1200,13 @@ function DiagonalLine() {
     var pi = Math.PI;
     return degrees * (pi / 180);
   }
-    function radians_to_degrees(radians) {
+
+  function radians_to_degrees(radians) {
     var pi = Math.PI;
     return radians * (180 / pi);
   }
-  function fuseQ() {
+
+  function RazeE() {
         this.x = 0;
         this.y = -10;
         this.start = new Date().getTime();
@@ -1245,10 +1247,12 @@ function DiagonalLine() {
         }
         };
     }
-function random(min, max) {
+
+  function random(min, max) {
     // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
     return Math.floor(Math.random() * (max - min)) + min;
   }
+
   function moveableBar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
     this.x = x;
     this.y = y;
@@ -1271,6 +1275,7 @@ function random(min, max) {
       this.x += this.xdirection;
     };
   }
+
   function breachq() {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1336,6 +1341,7 @@ function random(min, max) {
         return this.complete;
     }
   }
+
   function OrbState(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1453,6 +1459,7 @@ function random(min, max) {
       this.count -= 20;
     };
   }
+
   function ExplodingOrbStatebrime(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 750;
@@ -1492,6 +1499,7 @@ function random(min, max) {
       this.count -= 30;
     };
   }
+
   function ExplodingOrbStatebrime2(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 750;
@@ -1531,6 +1539,7 @@ function random(min, max) {
       this.count -= 30;
     };
   }
+
   function ExplodingOrbStaterey() {
     this.start = new Date().getTime();
     this.duration = 750;
@@ -1570,6 +1579,7 @@ function random(min, max) {
       this.count -= 30;
     };
   }
+
   function ExplodingOrbStatebreach(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1608,6 +1618,7 @@ function random(min, max) {
       this.count -= 20;
     };
   }
+
   function ExplodingOrbStatecypher(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 1250;
@@ -1647,6 +1658,7 @@ function random(min, max) {
       this.count -= 20;
     };
   }
+
   function ExplodingWobbleOrbState(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1692,6 +1704,7 @@ function random(min, max) {
       this.count -= 30;
     };
   }
+
   function ExplodingWobbleOrbState2(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1737,6 +1750,7 @@ function random(min, max) {
       this.count -= 60;
     };
   }
+
   function WobbleOrbStateAlt(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1853,6 +1867,7 @@ function random(min, max) {
       this.count -= 50;
     };
   }
+
   function omenSweepState(color1, color2) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1897,6 +1912,7 @@ function random(min, max) {
       this.count -= 50;
     };
   }
+
   function yoruSweepState(color1, color2) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1927,6 +1943,7 @@ function random(min, max) {
       this.count -= 50;
     };
   }
+
   function reversePulseRippleState(color, hollow) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -1966,6 +1983,7 @@ function random(min, max) {
       }
     };
   }
+
   function PulseRippleState(color, hollow) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -2005,6 +2023,7 @@ function random(min, max) {
       }
     };
   }
+
   function PulseRippleState2(color, hollow) {
     this.start = new Date().getTime();
     this.duration = 1000;
@@ -2044,6 +2063,7 @@ function random(min, max) {
       }
     };
   }
+
   function PulseRippleStateKill(color, color2, hollow) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -2083,6 +2103,7 @@ function random(min, max) {
       
     };
   }
+
   function PulseRippleStateKayo(color, color2, hollow) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -2125,6 +2146,7 @@ function random(min, max) {
       }
     };
   }
+
   function jettxx(val) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -2153,6 +2175,7 @@ function random(min, max) {
       this.speed+=7;
     };
   }
+
   function kayoZ(color, color2) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -2192,6 +2215,7 @@ function random(min, max) {
       }
     };
   }
+
   function EffectCloudState(color1, color2, color3) {
     this.start = new Date().getTime();
     this.duration = 2000;
@@ -2612,45 +2636,25 @@ function random(min, max) {
         }
       } else {
         ctx.fillStyle = color1;
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        for (let i = 0; i < 10; i++){
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        }
 
         ctx.fillStyle = color2;
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        for (let i = 0; i < 10; i++){
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        }
 
         ctx.fillStyle = color3;
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
-        ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        for (let i = 0; i < 10; i++){
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        }
       }
 
       this.count -= 50;
     };
   }
+
   function hexToHSL(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
@@ -3778,13 +3782,11 @@ function random(min, max) {
 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
-    }
-
-    for (let i = 0; i < effects.length; i++) {
       if (effects[i].lifetime <= 0) {
         effects.splice(i, 1);
       }
     }
+    
     window.requestAnimationFrame(update);
   }
 
