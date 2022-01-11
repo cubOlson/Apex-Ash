@@ -1,5 +1,5 @@
 <head>
-  <title>Apex Legends</title>
+  <title>Apex Legends WorkCopy</title>
   <meta description="Meters and ambiance for Apex Legends." />
   <meta publisher="Whirlwind FX" />
   <meta 
@@ -59,6 +59,8 @@
 <meta meter="getZLetter" tags="apex,VLC" type="ocr_textmatch" x="0.497" y="0.957" width="0.0065" height="0.021" string="Z" confidence="70">
   <resolution size="3440x1440" x="0.497" y="0.945" width="0.0065" height="0.021"/>
   <resolution size="2560x1080" x="0.497" y="0.945" width="0.0065" height="0.021"/>
+  <resolution size="1366x768" x="0.4977" y="0.957" width="0.0065" height="0.021"/>
+  <resolution size="1360x768" x="0.4975" y="0.957" width="0.0065" height="0.021"/>
 </meta>
 <meta meter="q" tags="apex,VLC" type="area" x= "0.3208" y= "0.9593" height= "0.00009" width= "0.00026" h="0-180" s="0-1" l="70-100">
   <resolution size="3440x1440" x="0.24" y="0.958" width="0.0025" height="0.00009"/>
@@ -230,7 +232,7 @@
   var bloodhound_z = new Meter(3, bloodhound_z_bar);
   var checkmeterYellow = new Meter(3, bloodhound_z_bar);
   var checkmeterBlue = new Meter(3, horizon_z_bar);
-  var checkmeterGreen = new Meter(3, octane_z_bar);
+  var checkmeterGreen = new Meter(2, octane_z_bar);
 
   var caustic_q = new Meter(3, caustic_q_bar);
   var caustic_q1 = new Meter(3, caustic_q_bar1);
@@ -405,7 +407,7 @@
         qCharged = false;
         stateMgr.Push(new fuseQ());
       }
-      if(fuse_q2.decreased && engine.vision.check == 1){
+      if(fuse_q2.decreased && engine.vision.check == 1 && !qCharged){
         stateMgr.Push(new fuseQ());
       }
       if(fuse_q2.value == 1){
@@ -487,7 +489,11 @@
   }
   function loba_z_bar(){
     if(legend == "Loba"){
-      if(ultCharged && loba_z.increased && engine.vision.check == 1){
+      if(ultCharged && 
+        engine.vision.mainZ == 1 && 
+        loba_z.value == 1 && 
+        engine.vision.check == 1){
+        console.log("IN LOBA Z")
         ultCharged = false;
         stateMgr.Push(new lobaZ());
       }
@@ -546,7 +552,7 @@
   }
   function pathfinder_z_bar(){
     if(legend  == "Pathfinder"){
-      if(ultCharged && pathfinder_z.increased && engine.vision.check == 1){
+      if(ultCharged && pathfinder_z.value == 1 && engine.vision.check == 1){
         ultCharged = false;
         stateMgr.Push(new pathfinderZ());
       }
@@ -615,7 +621,7 @@
 
   function seer_q_bar(){
     if(legend == "Seer"){
-      if(seer_q.decreased && engine.vision.check == 1){
+      if(seer_q.decreased && engine.vision.check == 1 && seer_q.value != 1){
         stateMgr.Push(new seerQ());
       }
     }
@@ -631,7 +637,7 @@
 
   function valk_q_bar(){
     if(legend == "Valkyrie"){
-      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased){
+      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased && valk_q.value != 1){
         stateMgr.Push( new valkQ());
       }
     }
@@ -822,7 +828,7 @@
         break;
       case "Loba":
         loba_q.setValue(engine.vision.q);
-        loba_z.setValue(engine.vision.greyZ);
+        loba_z.setValue(engine.vision.checkGreen);
         loba_t.setValue(engine.vision.loba2);
         break;
       case "Mirage":
