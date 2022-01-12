@@ -303,7 +303,7 @@
   var bombMeter = new Meter(20, onBombMeterChanged);
 
   function onHealthMeterChanged() {
-    if (healthMeter.decreased && healthMeter.value != oldHealth) {
+    if (healthMeter.decreased && healthMeter.value != oldHealth && healthMeter.value != -1) {
       var colors = hexToHSL("#ff1100");
       oldHealth = healthMeter.value;
       for (let i = 0; i < 20 * 2; i++) {
@@ -314,7 +314,7 @@
   }
 
   function onShieldMeterChanged() {
-     if (shieldMeter.increased && shieldMeter.value != oldShield) {
+     if (shieldMeter.increased && shieldMeter.value != oldShield && shieldMeter.value != -1) {
       stateMgr.Push(new ShieldIncreaseState());
       oldShield = shieldMeter.value;
     }
