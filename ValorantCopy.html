@@ -274,21 +274,6 @@
   //var idleEffect = new IdleState();
   var idleEffect =  new IdleState();
 
-  // ChampID Mappings
-  // 1 = Phoneix
-  // 2 = Raze
-  // 3 = Brimstone
-  // 4 = Jett
-  // 5 = Sage
-  // 6 = Viper
-  // 7 = Breach
-  // 8 = Cypher
-  // 9 = Sova
-  // 10 = Omen
-  // 11 = Reyna
-  // 12 = Killjoy
-  // 13 = Skye
-  // 14 = Yoru
   var canvas, ctx;
   var bursts = [];
   var stateMgr = new StateHandler();
@@ -314,7 +299,7 @@
   }
 
   function onShieldMeterChanged() {
-     if (shieldMeter.increased && shieldMeter.value != oldShield && shieldMeter.value != -1) {
+     if (shieldMeter.increased && shieldMeter.value != oldShield && shieldMeter.value > 0) {
       stateMgr.Push(new ShieldIncreaseState());
       oldShield = shieldMeter.value;
     }
@@ -1638,7 +1623,6 @@ function DiagonalLine() {
 
     this.Draw = function () {
       if (this.count > 1000) {
-        console.log(this.count);
         draw3ColorSpiral(
           160,
           y,
@@ -2811,7 +2795,6 @@ function DiagonalLine() {
 
       this.count -= 50;
       this.duration--;
-      console.log(this.duration);
       if(this.duration == 1975){
       stateMgr.Push(new EffectCloudState("#0048ff", "#0091ff", "#ffffff"));
       }
@@ -3246,7 +3229,6 @@ function DiagonalLine() {
       ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
       ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
       this.duration--;
-      console.log(this.duration);
       if(this.duration==1930){
         stateMgr.Push(new PulseRippleState2(this.color1, true));
 
@@ -3308,7 +3290,6 @@ function DiagonalLine() {
     };
 
     this.Draw = function () {
-      console.log(this.elapsed);
       ctx.fillStyle = "black";
       ctx.fillRect(0, 0, 320, 200);
 
@@ -3583,8 +3564,6 @@ function DiagonalLine() {
         ctx.arc(spX, spY, radius, start + offset, end + offset);
       } catch (err) {
         ctx.arc(160, 100, 50, Math.PI, 2 * Math.PI);
-        // console.log("Error! ");
-        // console.log(err);
       }
       ctx.lineTo(spX, spY);
       ctx.closePath();
@@ -3637,16 +3616,8 @@ function DiagonalLine() {
     bombMeter.setValue(engine.vision.bomb);
     }
     }
-    //console.log("textmatch: " + engine.vision.areaMouseGreen);
     
-    if (
-      engine.vision.buyMenuOpen == 1 ||
-      engine.vision.areaMouseGreen > 0.6 ||
-      engine.vision.blackSquare > 0.6 ||
-      engine.vision.teammateName > 0.1 || engine.vision.deathState > .001
-    ) {
-      console.log("Triggering disabled.");
-    } else if (engine.vision.bottomUIVisible > 0.5) {
+    if (engine.vision.bottomUIVisible > 0.5) {
       if(enableHealth){
       if (engine.vision.health > 0) {
         healthMeter.setValue(engine.vision.health);
@@ -3657,39 +3628,33 @@ function DiagonalLine() {
         shieldMeter.setValue(engine.vision.shield);
    
       }
-      console.log(healthMeter.value);
 
       switch (champId){
         case "Phoenix":
-          console.log("Phoenix selected.");
           Phoneix_c_meter.setValue(engine.vision.cMeter);
           Phoneix_q_meter.setValue(engine.vision.qMeter);
           Phoneix_e_meter.setValue(engine.vision.eMeter);
           Phoneix_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Raze":
-          console.log("Raze selected.");
           Raze_c_meter.setValue(engine.vision.cMeter);
           Raze_q_meter.setValue(engine.vision.qMeter);
           Raze_e_meter.setValue(engine.vision.eMeter);
           Raze_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Kayo":
-          console.log("Kayo selected.");
           Kayo_c_meter.setValue(engine.vision.cMeter);
           Kayo_q_meter.setValue(engine.vision.qMeter);
           Kayo_e_meter.setValue(engine.vision.eMeter);
           Kayo_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Brimstone":
-          console.log("Brimstone selected.");
           Brimstone_c_meter.setValue(engine.vision.cMeter);
           Brimstone_q_meter.setValue(engine.vision.qMeter);
           Brimstone_e_meter.setValue(engine.vision.eMeter);
           Brimstone_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Jett":
-          console.log("Jett selected.");
           Jett_c_meter.setValue(engine.vision.cMeter);
           Jett_q_meter.setValue(engine.vision.qMeter);
           Jett_e_meter.setValue(engine.vision.eMeter);
@@ -3697,49 +3662,42 @@ function DiagonalLine() {
           Jett_x2_meter.setValue(engine.vision.jettx2);
           break;
         case "Sage":
-          console.log("Sage selected.");
           Sage_c_meter.setValue(engine.vision.cMeter);
           Sage_q_meter.setValue(engine.vision.qMeter);
           Sage_e_meter.setValue(engine.vision.eMeter);
           Sage_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Viper":
-          console.log("Viper selected.");
           Viper_c_meter.setValue(engine.vision.cMeter);
           Viper_q_meter.setValue(engine.vision.qMeter);
           Viper_e_meter.setValue(engine.vision.eMeter);
           Viper_x_meter.setValue(engine.vision.viperX);
           break;
         case "Breach":
-          console.log("Breach selected.");
           Breach_c_meter.setValue(engine.vision.cMeter);
           Breach_q_meter.setValue(engine.vision.qMeter);
           Breach_e_meter.setValue(engine.vision.eMeter);
           Breach_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Cypher":
-          console.log("Cypher selected.");
           Cypher_c_meter.setValue(engine.vision.cMeter);
           Cypher_q_meter.setValue(engine.vision.qMeter);
           Cypher_e_meter.setValue(engine.vision.eMeter);
           Cypher_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Sova":
-          console.log("Sova selected.");
           Sova_c_meter.setValue(engine.vision.cMeter);
           Sova_q_meter.setValue(engine.vision.qMeter);
           Sova_e_meter.setValue(engine.vision.eMeter);
           Sova_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Omen":
-          console.log("Omen selected.");
           Omen_c_meter.setValue(engine.vision.cMeter);
           Omen_q_meter.setValue(engine.vision.qMeter);
           Omen_e_meter.setValue(engine.vision.eMeter);
           Omen_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Reyna":
-          console.log("Reyna selected.");
           Reyna_c_meter.setValue(engine.vision.cMeter);
           Reyna_q_meter.setValue(engine.vision.qMeter);
           Reyna_e_meter.setValue(engine.vision.eMeter);
@@ -3748,28 +3706,24 @@ function DiagonalLine() {
           Reyna_x3_meter.setValue(engine.vision.a2);
           break;
         case "Killjoy":
-          console.log("Killjoy selected.");
           Killjoy_c_meter.setValue(engine.vision.cMeter);
           Killjoy_q_meter.setValue(engine.vision.qMeter);
           Killjoy_e_meter.setValue(engine.vision.eMeter);
           Killjoy_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Skye":
-          console.log("Skye selected.");
           Skye_c_meter.setValue(engine.vision.cMeter);
           Skye_q_meter.setValue(engine.vision.qMeter);
           Skye_e_meter.setValue(engine.vision.eMeter);
           Skye_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Yoru":
-          console.log("Yoru selected.");
           Yoru_c_meter.setValue(engine.vision.cMeter);
           Yoru_q_meter.setValue(engine.vision.qMeter);
           Yoru_e_meter.setValue(engine.vision.eMeter);
           Yoru_x_meter.setValue(engine.vision.xMeter);
           break;
         case "Astra":
-          console.log("Astra selected.");
           Astra_c_meter.setValue(engine.vision.cMeter);
           Astra_q_meter.setValue(engine.vision.qMeter);
           Astra_e_meter.setValue(engine.vision.eMeter);
