@@ -1,9 +1,17 @@
 <head>
   <title>Fortnite</title>
   <meta description="Ambience and metering for Fortnite Chapter 3 Season 1" />
-  <meta publisher="WhirlwindFX" />
+  <meta publisher="SignalRGB" />
   <meta property="myHuePicker2" label="Theme Color" type="hue" default="167" min="0" max="360">
   <meta property="myHuePicker3" label="Vehicle Hue Control" type="hue" default="30" min="0" max="360">
+  <meta
+  property="ambientBrightness"
+  label="Ambience Brightness"
+  type="number"
+  min="0"
+  max="100"
+  default="100"
+  />
   <meta
   property="boost"
   label="Color Boost"
@@ -11,7 +19,7 @@
   min="0"
   max="20"
   default="0"
-/>
+  />
   <meta
   property="enableHealing"
   label="Healing effect"
@@ -764,22 +772,28 @@ default="1"
     let sat = new Int8Array(engine.zone.saturation);
     let zhue = new Int16Array(engine.zone.hue);
 
-    for (var iZone = 0; iZone < 560; iZone++) {
-      var xZoneBrightness = lightness[iZone];
-      var hue = zhue[iZone] + boost;
-      //Removed if !exit conditional for big pixel bug. Probably not a bad idea.
-      ctx.fillStyle =
-        `hsl(${hue},${sat[iZone]}%,${xZoneBrightness}%)`;
-     
-      var iRow = Math.floor(iZone / 28);
-      var iCol = iZone % 28;
-      var iWidth = 320 / 28;
-      var iHeight = 200 / 20;
-      var zx = iCol * iWidth;
-      var zy = iRow * iHeight;
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 320, 200);
+    ctx.globalAlpha = ambientBrightness / 100;
+    if (ctx.globalAlpha > .05){
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var xZoneBrightness = lightness[iZone];
+        var hue = zhue[iZone] + boost;
+        //Removed if !exit conditional for big pixel bug. Probably not a bad idea.
+        ctx.fillStyle =
+          `hsl(${hue},${sat[iZone]}%,${xZoneBrightness}%)`;
+      
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var zx = iCol * iWidth;
+        var zy = iRow * iHeight;
 
-      ctx.fillRect(zx, zy, iWidth, iHeight);
+        ctx.fillRect(zx, zy, iWidth, iHeight);
+      }
     }
+    ctx.globalAlpha = 1;
 
     renderExtensions();
 

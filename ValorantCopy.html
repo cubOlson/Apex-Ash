@@ -3612,16 +3612,16 @@ function DiagonalLine() {
     champId = selectedChamp;
 
     if(champId != "Astra"){
-    if(enableBomb){
-    bombMeter.setValue(engine.vision.bomb);
-    }
+      if(enableBomb){
+        bombMeter.setValue(engine.vision.bomb);
+      }
     }
     
     if (engine.vision.bottomUIVisible > 0.5) {
       if(enableHealth){
-      if (engine.vision.health > 0) {
-        healthMeter.setValue(engine.vision.health);
-      }
+        if (engine.vision.health > 0) {
+          healthMeter.setValue(engine.vision.health);
+        }
       }
       if(enableShield){
    
