@@ -1,14 +1,7 @@
 <head>
     <title>Generic</title>
     <meta description="Snake-like climbing gradient effect"/>
-    <meta publisher="WhirlwindFX" />
-    <meta property="radius" label="Size" type="number" min="5" max="100" default="20">
-    <meta property="amount" label="Amount" type="number" min="1" max="50" default="2">
-    <!-- <meta property="floor" label="Floor Bounce" type="number" min="0" max="50" default="10">
-    <meta property="impact" label="impact color" type="hue" default="1" min="0" max="360">
-    <meta property="fade" label="color fade" type="number" min="1" max="20" default="5">
-    <meta property="trail" label="trail fade" type="number" min="1" max="20" default="4">
-    <meta property="background" label="background color" type="color" default="#000000" min="0" max="360"/> -->
+    <meta publisher="WhirlwindFX"/>
 </head>
     
 <body style="margin: 0; padding: 0;">
@@ -22,163 +15,62 @@
     var width = 320;
     var height = 200;
     var hue = 0;
-    let ballX = 160;
-    let velocityX = 0;
-    let ballY = 100;
-    let velocityY = 0;
-    let accelerationY = 1;
     let effects = [];
 
     function update() {
-			
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, 320,200);
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
 
-      if (effects.length < amount){
-        effects.push(new Ball());
-      } else if (effects.length > amount){
-        effects.pop();
+      if (effects.length < 1){
+        effects.push(new neonWall());
       }
 
-      effects.forEach(ele => {
+      effects.forEach((ele, i) => {
         ele.draw();
+        if (ele.lifetime == 0){
+          effects.splice(i, 1);
+        }
       })
-
 
       window.requestAnimationFrame(update);
     }
 
-    //LLLASSST change
-    function Ball(){
-      this.bx = Math.random() * width;
-      this.vx = 100 * Math.sin(Date.now());
-      this.by = Math.random() * height;
-      this.vy = velocityY;
-      this.ay = accelerationY;
-      this.radius = 15;
-      this.id = Math.random();
+    function neonWall(){
+      this.start = Date.now();
+      this.elapsed = 0;
+      this.lifetime = 100;
+      this.i = 0;
+      this.goal = 0;
 
       this.draw = function(){
-        this.radius = radius;
-        this.vy += this.ay;
-        this.vx += Math.sin(Date.now());
-
-        if (this.by + this.radius + this.vy > height){
-          this.vy = -10;
-        } else if (this.by - this.radius + this.vy < 0){
-          this.vy = 1;
-        }
-        if (this.bx + this.radius + this.vx > width){
-          this.vx = -.9;
-        } else if (this.bx - this.radius + this.vx < 0){
-          this.vx = -.9;
-        }
-
-        for (let i = 0; i < effects.length; i++){
-          let ele = effects[i];
-          if (this.id == ele.id){
-            continue;
+        this.elapsed = Date.now() - this.start;
+        if (this.elapsed > 0 && this.goal < 100){
+          if(this.elapsed % 3 == 0){
+            this.goal += 20;
           }
-          if (Math.abs(this.bx - ele.bx) < this.radius && Math.abs(this.by - ele.by) < this.radius){
-            effects.splice(i, 1);
-          }
-          if (Math.abs(this.bx + this.vx - ele.bx) < (this.radius * 2) && Math.abs(this.by + this.vy - ele.by) < (this.radius * 2)){
-            this.vx *= -.9;
-            this.vy *= -.9;
-          }
+        } else if (this.elapsed > 2000 && this.i < 120){
+          this.i += 20;
+        } else if (this.elapsed > 3000){
+          this.lifetime = 0;
         }
 
-        this.by += this.vy;
-        this.bx += this.vx;
+        let loopI = this.i;
 
-        while (this.bx - this.radius < 0){
-          this.bx++
+        while (loopI <= this.goal){
+          ctx.beginPath();
+          let squareX = loopI;
+          let squareY = 225 - .7 * loopI;
+          var grd = ctx.createLinearGradient(0, 0, 0, squareY);
+          grd.addColorStop(1, `hsl(${60}, 100%, 50%)`);
+          grd.addColorStop(.75 + Math.sin(this.elapsed/100)/10, `hsl(${95}, 35%, 72%)`);
+          grd.addColorStop(0, `hsl(${218}, 100%, 50%)`);
+          ctx.fillStyle = grd;
+          ctx.fillRect(squareX, squareY, 20, -1 * (225 - 1.6 * loopI) - 15 * Math.random() * Math.sin(this.elapsed/150))
+          ctx.fillRect(width - squareX, squareY, -20, -1 * (225 - 1.6 * loopI) - 15 * Math.random() * Math.sin(this.elapsed/150))
+          loopI += 20;
         }
-        while (this.bx + this.radius > width){
-          this.bx--
-        }
-        while (this.by - this.radius < 0){
-          this.by++
-        }
-        while (this.by + this.radius > height){
-          this.by--
-        }
-
-        ctx.beginPath();
-        ctx.arc(this.bx, this.by, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "black"
-        ctx.fill();
       }
     }
-
-    // function Ball(){
-    //   this.radius = radius;
-    //   this.bx = Math.random() * width;
-    //   this.vx = 10 * Math.sin(Date.now());
-    //   this.by = Math.random() * height;
-    //   this.vy = 0;
-    //   this.ay = 2;
-    //   this.id = Math.random();
-    //   this.lightness = 0;
-
-    //   this.draw = function(){
-    //     this.radius = radius;
-    //     this.vy += ay;
-    //     this.vx += Math.sin(Date.now());
-        
-    //     if (this.by + this.radius + this.vy > 200){
-    //       this.vy = floor * -1;
-    //       this.lightness = 60;
-    //     } else if (this.by - this.radius + this.vy < 0){
-    //       this.vy = 1;
-    //       this.lightness = 60;
-    //     }
-    //     if (this.bx + this.radius + this.vx > 320){
-    //       this.vx *= -1
-    //       this.lightness = 60;
-    //     } else if (this.bx - this.radius + this.vx < 0){
-    //       this.vx *= -1;
-    //       this.lightness = 60;
-    //     }
-        
-    //     for (let i = 0; i < effects.length; i++){
-    //       let ele = effects[i];
-    //       if (this.id == ele.id){
-    //         continue;
-    //       }
-    //       if (Math.abs(this.bx - ele.bx) < this.radius && Math.abs(this.by - ele.by) < this.radius){
-    //         effects.splice(i, 1);
-    //       }
-    //       if (Math.abs(this.bx + this.vx - ele.bx) < (this.radius * 2) && Math.abs(this.by + this.vy - ele.by) < (this.radius * 2)){
-    //         this.lightness = 60;
-    //         this.vx *= -.9;
-    //         this.vy *= -.9;
-    //       }
-    //     }
-    //     this.bx += this.vx;
-    //     this.by += this.vy;
-
-        
-    //     while (this.bx - this.radius < 0){
-    //       this.bx++
-    //     }
-    //     while (this.bx + this.radius > 320){
-    //       this.bx--
-    //     }
-    //     while (this.by - this.radius < 0){
-    //       this.by++
-    //     }
-    //     while (this.by + this.radius > 200){
-    //       this.by--
-    //     }
-
-    //     ctx.beginPath();
-  	// 	  ctx.arc(this.bx, this.by, this.radius, 0, Math.PI * 2);
-    //     ctx.fillStyle = `hsl(${impact}, 50%, ${this.lightness}%)`
-    //     ctx.fill();
-    //     this.lightness -= fade;
-    //   }
-    // }
 
     window.requestAnimationFrame(update);
 
