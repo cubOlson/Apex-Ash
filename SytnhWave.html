@@ -1,13 +1,16 @@
 <head>
-    <Title>Forza Horizon 5</Title>
-    <meta description="Speed trough mexico with this integration" />
-    <meta publisher="Jordy Walraven" />
-    <meta meter="SpeedMeter" tags = "forza horizon 5, vlc" type="ocr_numeric" x=".855109375" y=".8638888" width=".090" height=".0951388888888889" confidence="10"/>
-    <meta meter="FastTravelMeter" tags="vlc, forza horizon 5" type="ocr_textmatch" x=".835546875 " y=".882638888" width=".08789" height=".035" string="FAST TRAVELING" confidence="70" />
-    <meta meter="FinishMeter" tags="vlc, forza horizon 5" type="ocr_textmatch" x=".15445 " y=".3744444" width=".4918" height=".2780" string="FINISHED" confidence="70" />
-    <meta meter="GoMeter" tags="vlc, forza horizon 5" type="ocr_textmatch" x=".42417 " y=".255" width=".139" height=".23958" string="GO" confidence="70" />
-    <meta property="HighSpeedColor" label="High speed effect color" type="color" default="#fcba03" min="0" max="360" />
-    <meta property="SpeedInMiles" label="Speed in miles" type="boolean" default="0" />
+    <title>Sine Wave</title>
+    <meta description="Cool wave" />
+    <meta publisher="JordyWal" />
+    <meta property="WaveHeight" label="Wave height" type="number" default="50" min="0" max="100">
+    <meta property="WaveLength" label="Wave length" type="number" default="50" min="0" max="100">
+    <meta property="WaveY" label="Wave Y" type="number" default="50" min="0" max="100">
+    <meta property="Smoothness" label="Smoothness" type="number" default="50" min="0" max="100">
+    <meta property="RainbowSpeed" label="Rainbow Speed" type="number" default="10" min="0" max="100">
+    <meta property="AnimationSpeed" label="AnimationSpeed" type="number" default="50" min="0" max="100">
+    <meta property="BackgroundColor" label="Background color" type="color" default="#00000" min="0" max="360" />
+    <meta property="LineColor" label="Line color" type="color" default="#ffffff" min="0" max="360" />
+    <meta property="Rainbow" label="Rainbow mode" type="boolean" default="0" />
 
 </head>
 
@@ -23,428 +26,49 @@
     var width = 320;
     var height = 200;
     var hue = 0;
-    var speed = 2;
-
-    var effects = []
-    var speedAnim = false;
-    var highSpeed;
-    var highSpeedAnim = false;
-    var prevSpeed = 0;
-    var fastTravelAnim = false;
-    var VictoryAnim = false;
-    var GoAnim = false;
+    let speed = 0;
+    let color = 0;
 
 
+    function hexAToRGBA(h) {
+        let r = 0, g = 0, b = 0, a = 1;
 
-    var stateHdlr = new StateHandler();
+        if (h.length == 5) {
+            r = "0x" + h[1] + h[1];
+            g = "0x" + h[2] + h[2];
+            b = "0x" + h[3] + h[3];
+            a = "0x" + h[4] + h[4];
 
-    function StateHandler() {
-        var stack = [];
-        var state = null;
-
-        // Set current state to the top item in the stack
-        var updateState = function () {
-            if (stack.length > 0) {
-                state = stack[stack.length - 1];
-            } else {
-                state = null;
-            }
+        } else if (h.length == 9) {
+            r = "0x" + h[1] + h[2];
+            g = "0x" + h[3] + h[4];
+            b = "0x" + h[5] + h[6];
+            a = "0x" + h[7] + h[8];
         }
-        // Allows dev to add effect to state handler
-        this.Push = function (newState) {
-            stack.push(newState);
-            updateState();
-        };
-        // Allows dev to remove effect from handler
-        this.Pop = function () {
-            stack.pop();
-            updateState();
-        };
-        // Call the Process function of the current state (effect)
-        this.Process = function () {
-            if (state != null) {
-                state.Process();
-            }
-        };
+        a = +(a / 255).toFixed(3);
+
+        return "rgba(" + +r + "," + +g + "," + +b + "," + (Smoothness-40)/100 + ")";
     }
-   
-
-      class highSpeedStripe {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.speed = (Math.random() + 0.1) * 6
-            }
-            Draw() {
-                ctx.beginPath();
-                ctx.rect(this.x, this.y, 15, 40)
-                ctx.fillStyle = HighSpeedColor
-                ctx.fill();
-                this.y += this.speed;
-            }
-        }
-
-         class VictoryParticle {
-                constructor(x, y, radius, color, fade) {
-                 this.x = x;
-                 this.y = y;
-                 this.radius = radius;
-                 this.color = color;
-                 this.fade = fade;
-                 this.speed = (Math.random() + 0.1) * 4
-             }
-             Draw() {
-                 ctx.beginPath();
-                 ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
-                 ctx.fillStyle = 'yellow'
-                 ctx.fill();
-                 this.y += this.speed * Math.random();
-                 this.x += (Math.random() - 0.5) * 20;
-             }
-
-            }
-
-             function PlayFinishEffect() {
-                    this.start = new Date().getTime();
-                    this.elapsed = 0;
-                    this.VictoryDrip = [];
-                    this.state = 0;
-                    this.cubeX = 0;
-                    this.cubeY = 0;
-
-                    // this.Process = function () {
-                    //     if (this.VictoryDrip.length < 40) {
-                    //         this.VictoryDrip.push(new VictoryParticle(Math.random() * c.width, c.height + 1, 5, 'yellow', 0.01))
-                    //     }
-
-                    //     this.elapsed = new Date().getTime() - this.start;
-
-                    //     if (this.elapsed >= 6000) {
-                    //         stateHdlr.Pop();
-                    //         VictoryAnim = false;
-                    //     }
-
-                    //     this.Draw();
-                    // };
-
-
-
-
-                    // this.Draw = function () {
-                    //     if (this.state == 0) {
-                    //         ctx.beginPath();
-                    //         ctx.fillStyle = 'black'
-                    //         ctx.fillRect(0, 0, this.cubeX, this.cubeY);
-                    //         this.VictoryDrip.length = 0;
-                    //         this.cubeX += 15;
-                    //         this.cubeY += 10;
-                    //         effectTime = Date.now();
-                    //         if (this.cubeX >= c.width + 30) {
-                    //             this.state = 1;
-                    //         }
-                    //     }
-                    //     if (this.state == 1) {
-                    //         this.VictoryDrip.forEach(VictoryParticle => {
-                    //             VictoryParticle.Draw();
-                    //         }
-                    //         );
-                    //     }
-                    // }
-
-                    
-                 this.Process = function () {
-                     if (this.VictoryDrip.length < 140 && this.elapsed<3000) {
-                         this.VictoryDrip.push(new VictoryParticle(Math.random() * c.width, 0, 5, 'yellow', 0.01))
-                     }
-
-                     this.elapsed = new Date().getTime() - this.start;
-
-                     if (this.elapsed >= 6000) {
-                         this.VictoryDrip.pop();
-                         if(this.VictoryDrip.length >0){
-                             this.VictoryDrip.pop();
-                         }
-                         
-                     }
-
-                     if(this.VictoryDrip.length == 0){
-                         stateHdlr.Pop();
-                         VictoryAnim = false;
-                     }
-                     
-
-                     this.Draw();
-                 };
-
-
-
-
-                 this.Draw = function () {
-                     if (this.state == 0) {
-                         ctx.beginPath();
-                         ctx.fillStyle = 'black'
-                         ctx.fillRect(0, 0, this.cubeX, this.cubeY);
-                         this.VictoryDrip.length = 0;
-                         this.cubeX += 15;
-                         this.cubeY += 10;
-                         effectTime = Date.now();
-                         if (this.cubeX >= c.width + 30) {
-                             this.state = 1;
-                         }
-                     }
-                     if (this.state == 1) {
-                          ctx.beginPath();
-                            ctx.fillStyle = 'black'
-                            ctx.fillRect(0, 0, this.cubeX, this.cubeY);
-                         this.VictoryDrip.forEach(VictoryParticle => {
-                             VictoryParticle.Draw();
-                         }
-                         );
-                     }
-                 }
-                }
-
-
-    function copyScreen(alpha) {
-
-        var shine = engine.vision.ShineMeter
-        let lightness = new Int8Array(engine.zone.lightness);
-        let sat = new Int8Array(engine.zone.saturation);
-        let hue = new Int16Array(engine.zone.hue);
-        for (var iZone = 0; iZone < 560; iZone++) {
-            var iRow = Math.floor(iZone / 28);
-            var iCol = iZone % 28;
-            var iWidth = 320 / 28;
-            var iHeight = 200 / 20;
-            var iZx = iCol * iWidth;
-            var iZy = iRow * iHeight;
-            ctx.fillStyle =
-                "hsla(" +
-                hue[iZone] +
-                "," +
-                sat[iZone] +
-                "%," +
-                lightness[iZone] +
-                "%, " +
-                alpha +
-                ")";
-
-            ctx.fillRect(iZx, iZy, iWidth, iHeight);
-        }
-
-    }
-
-    function BarEffect (direction){
-         this.start = new Date().getTime();
-        this.elapsed = 0;
-        this.speed = 8;
-        this.duration = 1000;
-        this.lifetime = this.duration;
-        this.Ymin = 0;
-        this.direction = direction;
-        this.Startpos;
-        this.color;
-        this.draw = function () {
-            if(this.direction == 'up'){
-                this.speed = -8;
-                this.Startpos = c.height+50;
-                this.color = 'hsl(114, 100%, 50%, 0.8)'
-                 ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.moveTo(160, this.lifetime / 1.5 - 150);
-                ctx.lineTo(320, this.lifetime / 1.5);
-                ctx.lineTo(320, this.lifetime / 1.5 + 100);
-                ctx.lineTo(160, this.lifetime / 1.5 - 100);
-                ctx.lineTo(0, this.lifetime / 1.5 + 100);
-                ctx.lineTo(0, this.lifetime / 1.5);
-                ctx.lineTo(160, this.lifetime / 1.5 - 150);
-                ctx.fill();
-            } else {
-                this.speed = 8;
-                this.Startpos = -50;
-                this.color = 'hsl(360, 100%, 50%, 0.8)'
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.moveTo(160, 300 - this.lifetime/1.5);
-                ctx.lineTo(320, 200 - this.lifetime / 1.5);
-                ctx.lineTo(320, 100 - this.lifetime / 1.5);
-                ctx.lineTo(160, 200 - this.lifetime / 1.5);
-                ctx.lineTo(0, 100 - this.lifetime / 1.5);
-                ctx.lineTo(0, 200 - this.lifetime / 1.5);
-                ctx.lineTo(160, 300 - this.lifetime / 1.5);
-                ctx.fill();
-            }
-
-            this.Ymin += this.speed;
-            
-           
-            this.elapsed = new Date().getTime() - this.start;
-            this.lifetime = this.duration - this.elapsed;
-            if (this.lifetime <= 0) {
-                speedAnim = false
-            }
-
-        }
-        
-    }
-    function FastTravelEffect() {
-            this.start = new Date().getTime();
-            this.elapsed = 0;
-            this.speed = 8;
-            this.duration = 3000;
-            this.lifetime = this.duration;
-            this.x = 0;
-            this.draw = function () {
-                ctx.fillStyle = 'blue';
-                ctx.beginPath();
-                ctx.rect(-50 + this.x, 0, 40, c.height); 
-                ctx.fill();
-                ctx.beginPath();
-                ctx.rect(-150 + this.x, 0, 40, c.height);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.rect(-250 + this.x, 0, 40, c.height);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.rect(-350 + this.x, 0, 40, c.height);
-                ctx.fill();
-                this.x += 10;
-                this.elapsed = new Date().getTime() - this.start;
-                this.lifetime = this.duration - this.elapsed;
-                if (this.lifetime <= 0) {
-                    fastTravelAnim = false;
-                }
-            }  
-    }
-
-      function GoEffect() {
-            this.start = new Date().getTime();
-            this.elapsed = 0;
-            this.speed = 8;
-            this.duration = 2000;
-            this.lifetime = this.duration;
-            this.state = 0;
-            this.draw = function () {
-                if(this.state == 0){
-                    ctx.fillStyle = 'green';
-                    ctx.beginPath();
-                    ctx.fillRect(0, 0, c.width, c.height);
-                    this.state =1;
-                } 
-               
-                this.elapsed = new Date().getTime() - this.start;
-                this.lifetime = this.duration - this.elapsed;
-                if (this.lifetime <= 0) {
-                    GoAnim = false;
-                }
-            }
-        }
     
-
-
-
-     function HighSpeedEffect() {
-            this.speed = 8;
-            this.stripes = [];
-            this.start;
-            this.TimeUnderHighspeed;
-
-            this.Process = function () {
-                 if (this.stripes.length < 20) {
-                    this.stripes.push(new highSpeedStripe(Math.random() * c.width,0))
-                }
-
-                 if (prevSpeed < 300 && !SpeedInMiles || SpeedInMiles && prevSpeed < 185) {
-                     if(this.start == null){
-                         this.start = new Date().getTime()
-                     }
-                     this.TimeUnderHighspeed = new Date().getTime() - this.start
-                     if(this.TimeUnderHighspeed >= 3000 && VictoryAnim == false ){
-                         highSpeedAnim = false 
-                         stateHdlr.Pop()
-                     }
-                } 
-                else 
-                {
-                    this.start =  null
-                }
-
-                this.Draw();
-            }
-            this.Draw = function () {
-               for (let index = 0; index < this.stripes.length; index++) {
-                   this.stripes[index].Draw()
-                   if (this.stripes[index].y > c.height) { 
-                    this.stripes.splice(index, 1)
-                   }
-               }
-            }
-        }
-
-        var startTimeBetweenTriggers;
-        
-    
-
     function update() {
-        if(VictoryAnim == false){
-            if(GoAnim == false){
-                copyScreen(1)
-            } else {
-                copyScreen(0.1)
-            }
-            
+        // Code goes here
+        ctx.beginPath();
+        ctx.fillStyle = `${hexAToRGBA(BackgroundColor)}`
+        ctx.fillRect(0,0,c.width,c.height)
+        ctx.moveTo(0, c.height /2);
+        for (let i = 0; i < c.width; i++) {
+            ctx.lineTo(i, c.height/2 + (WaveY -50) + Math.sin(i * (WaveLength/1000) + speed)*(WaveHeight-50)*1.75)
         }
-       
-        let currentSpeed = engine.vision.SpeedMeter;
-        if(currentSpeed > 1){
-                if(currentSpeed - prevSpeed > 5 && speedAnim  == false)
-                {
-                    effects.push(
-                        new BarEffect('up')
-                    )      
-                    prevSpeed = currentSpeed;
-                    speedAnim = true
-                    } else if (currentSpeed - prevSpeed < -5  && speedAnim == false) {
-                        effects.push(new BarEffect('down'))
-                        prevSpeed = currentSpeed;
-                         speedAnim = true
-            }
+        if(!Rainbow){
+            ctx.strokeStyle = `${LineColor}`
+        } else {
+            color += RainbowSpeed/5;
+            ctx.strokeStyle = `hsl(${color},50%,50%)`
         }
-        if(currentSpeed >300 && highSpeedAnim == false || SpeedInMiles == true && currentSpeed > 185 && highSpeedAnim == false ){
-            prevSpeed = currentSpeed;
-            stateHdlr.Push(new HighSpeedEffect())
-            highSpeedAnim = true
-        }
-
-        if(engine.vision.FastTravelMeter == 1 && fastTravelAnim == false ){
-            effects.push(new FastTravelEffect());
-            fastTravelAnim = true;
-        }
-
-        if(engine.vision.FinishMeter == 1 && VictoryAnim == false) {
-            if(highSpeedAnim == true){
-                stateHdlr.Pop();
-                highSpeedAnim = false;
-            }
-            stateHdlr.Push(new PlayFinishEffect())
-            prevSpeed = 0;
-            VictoryAnim = true;
-        }
-
-        if(engine.vision.GoMeter == 1){
-            effects.push(new GoEffect())
-            GoAnim = true;
-        }
-
-        for (let i = 0; i < effects.length; i++) {
-            effects[i].draw();
-            if (effects[i].lifetime <= 0) {
-                effects.splice(i, 1);
-            }
-        }
-
-
-        stateHdlr.Process();
+        
+        ctx.stroke()
+        speed += AnimationSpeed /1000;
+        
         window.requestAnimationFrame(update);
     }
 
