@@ -12,8 +12,13 @@
   <meta property="enableShield" label="Shield effect" type="boolean" default="1" />
   <meta property="enableAgents" label="Agent skill effects" type="boolean" default="1" />
   <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
-  <meta meter="a" tags="vlc,VALORANT" type="area" x= "0.4391" y= "0.6611" height= "0.0056" width= "0.001" h="160-170" s="20-55" l="60-100"
-  />
+  <meta meter="a" tags="vlc,VALORANT" type="area" x= "0.4391" y= "0.6611" height= "0.0056" width= "0.001" h="160-170" s="20-55" l="60-100">
+    <resolution size="2560x1600" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1920x1200" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1680x1050" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1440x900" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1280x800" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+  </meta>
   <meta meter="a2" tags="vlc,VALORANT" type="area" x= "0.2974" y= "0.8991" height= "0.0102" width= "0.001" h="185-200" s="30-100" l="40-95"
   />
   <meta meter="bomb" tags="vlc,VALORANT" x=".4905" y=".0231" width=".025" h="0-10" s="50-100" l="50-100" type="linear"
@@ -60,8 +65,13 @@
     <resolution size="1440x900" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
     <resolution size="1280x800" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
   </meta>
-  <meta meter="jettx" tags="vlc,VALORANT" type="area" x= "0.575" y= "0.8481" height= "0.0083" width= "0.0016" h="150-176" s="20-50" l="70-100"  
-  />
+  <meta meter="jettX" tags="vlc,VALORANT" type="area" x= "0.575" y= "0.8481" height= "0.0083" width= "0.0016" h="150-176" s="20-50" l="70-100">
+    <resolution size="2560x1600" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1920x1200" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1680x1050" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1440x900" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1280x800" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>  
+  </meta>
   <meta meter="neonCharge" tags="vlc,VALORANT" type="ocr_numeric" x="0.4901" y="0.9028" width="0.019" height="0.0167" confidence="70">
     <resolution size="2560x1600" x="0.491" y="0.9046" width="0.019" height="0.018"/>
     <resolution size="1920x1200" x="0.491" y="0.9046" width="0.019" height="0.018"/>
@@ -90,8 +100,13 @@
     <resolution size="1440x900" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
     <resolution size="1280x800" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
   </meta>
-  <meta meter="viperX" tags="vlc,VALORANT" type="area" x= "0.5844" y= "0.8472" height= "0.0093" width= "0.0005" h="174-176" s="22-25" l="91-93"
-  />
+  <meta meter="viperX" tags="vlc,VALORANT" type="area" x= "0.5844" y= "0.8472" height= "0.0093" width= "0.0005" h="150-176" s="20-50" l="70-100">
+    <resolution size="2560x1600" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1920x1200" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1680x1050" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1440x900" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1280x800" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+  </meta>
   <meta meter="xMeter" tags="vlc,VALORANT" x=".5692" y=".9675" width=".034" height=".001" h="140-170" s="40-100" l="40-100" type="area">
     <resolution size="2560x1600" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
     <resolution size="1920x1200" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
@@ -637,7 +652,7 @@ function DiagonalLine() {
     }
   }
   function onPhoenix_x() {
-    if (Phoenix_x_meter.decreased && Phoenix_x_meter.diff > 0.05) {
+    if (Phoenix_x_meter.decreased && Phoenix_x_meter.diff > 0.05 && engine.vision.bottomUIVisible > .5) {
       //Phoenix-RunItBack
       stateMgr.Push(new CollapseState("#ff8c00", "#ff5100", "#ff5e00"));
     }
@@ -3758,44 +3773,53 @@ function DiagonalLine() {
         }
       } 
     }
-
-    stateMgr.Process();
-
-    for (let i = 0; i < effects.length; i++) {
-      effects[i].draw();
-      if (effects[i].lifetime <= 0) {
-        effects.splice(i, 1);
+    
+    if (deadGreenMeter.value == 1 && deadWhiteMeter.value == 1){
+      while(effects.length){
+        effects.pop();
+      }
+      while(stateMgr.stack.length > 1){
+        stateMgr.Pop();
       }
     }
+
+      stateMgr.Process();
+
+      for (let i = 0; i < effects.length; i++) {
+        effects[i].draw();
+        if (effects[i].lifetime <= 0) {
+          effects.splice(i, 1);
+        }
+      }
     
     window.requestAnimationFrame(update);
   }
 
   function StateHandler() {
-    var stack = [];
-    var state = null;
+    this.stack = [];
+    this.state = null;
 
-    var updateState = function () {
-      if (stack.length > 0) {
-        state = stack[stack.length - 1];
+    this.updateState = function () {
+      if (this.stack.length > 0) {
+        this.state = this.stack[this.stack.length - 1];
       } else {
-        state = null;
+        this.state = null;
       }
     };
 
     this.Push = function (newState) {
-      stack.push(newState);
-      updateState();
+      this.stack.push(newState);
+      this.updateState();
     };
 
     this.Pop = function () {
-      stack.pop();
-      updateState();
+      this.stack.pop();
+      this.updateState();
     };
 
     this.Process = function () {
-      if (state != null) {
-        state.Process();
+      if (this.state != null) {
+        this.state.Process();
       }
     };
   }
