@@ -1,0 +1,3935 @@
+<head>
+  <title>Valorant Film Copy</title>
+  <meta
+    description="Agent abilities and ambience for Valorant. Use select box to choose agent."
+  />
+  <meta publisher="SignalRGB"/>
+  <meta property="selectedChamp" 
+  label="Agent selection" type="combobox" values="Astra,Breach,Brimstone,Chamber,Cypher,Jett,Kayo,Killjoy,Neon,Omen,Phoenix,Raze,Reyna,Sage,Skye,Sova,Viper,Yoru" default="Phoenix"
+  />
+  <meta property="enableHealth" label="Health effect" type="boolean" default="1" />  
+  <meta property="enableBomb" label="Bomb effect" type="boolean" default="1" />  
+  <meta property="enableShield" label="Shield effect" type="boolean" default="1" />
+  <meta property="enableAgents" label="Agent skill effects" type="boolean" default="1" />
+  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
+  <meta property="effectAlpha" label="All effects brightness" type="number" min="0" max="100" default="100" />
+  <meta meter="a" tags="vlc,VALORANT" type="area" x= "0.4391" y= "0.6611" height= "0.0056" width= "0.001" h="160-170" s="20-55" l="60-100">
+    <resolution size="3440x1440" x= "0.4549" y= "0.66" height= "0.003" width= "0.001"/>
+    <resolution size="2560x1600" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1920x1200" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1680x1050" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1440x900" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+    <resolution size="1280x800" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
+  </meta>
+  <meta meter="a2" tags="vlc,VALORANT" type="area" x= "0.2974" y= "0.8991" height= "0.0102" width= "0.001" h="185-200" s="30-100" l="40-95">
+    <resolution size="3440x1440" x= "0.355" y= "0.9" height= "0.007" width= "0.001"/>
+  </meta>
+  <meta meter="bomb" tags="vlc,VALORANT" x=".4905" y=".0231" width=".025" h="0-10" s="50-100" l="50-100" type="linear">
+    <resolution size="3440x1440" x= "0.4962" y= "0.0229" width= "0.01"/>
+  </meta>
+  <meta meter="bottomUIVisible" tags="vlc,VALORANT" x=".5875" y=".9865" width=".0005" height=".0009" h="0-360" s="0-10" l="70-100" type="area">
+    <resolution size="3440x1440" x= "0.5203" y= "0.9845" width=".0005" height=".0009"/>
+    <resolution size="2560x1600" x="0.5307" y="0.983" width=".001" height=".0009"/>
+    <resolution size="1920x1200" x="0.5307" y="0.983" width=".001" height=".0009"/>
+    <resolution size="1680x1050" x="0.5307" y="0.983" width=".001" height=".0009"/>
+    <resolution size="1440x900" x="0.5307" y="0.983" width=".001" height=".0009"/>
+    <resolution size="1280x800" x="0.5307" y="0.983" width=".001" height=".0009"/>
+  </meta>
+  <meta meter="chamberUlt" tags="vlc,VALORANT" x=".4771" y=".888" width=".0479" h="50-70" s="50-100" l="60-100" type="linear">
+    <resolution size="2560x1600" x=".4771" y=".888" width=".0479"/>
+    <resolution size="1920x1200" x=".4771" y=".888" width=".0479"/>
+    <resolution size="1680x1050" x=".4771" y=".888" width=".0479"/>
+    <resolution size="1440x900" x=".4771" y=".888" width=".0479"/>
+    <resolution size="1280x800" x=".4771" y=".888" width=".0479"/>
+  </meta>
+  <meta meter="cMeter" tags="vlc,VALORANT" x=".3953" y=".9675" width=".031" height=".001" h="140-170" s="40-100" l="40-100" type="area">
+    <resolution size="3440x1440" x= "0.4224" y= "0.9688" width=".024" height=".001"/>
+    <resolution size="2560x1600" x="0.3833" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1920x1200" x="0.3833" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1680x1050" x="0.3833" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1440x900" x="0.3833" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1280x800" x="0.3833" y="0.9667" width="0.0355" height="0.001"/>
+  </meta>
+  <meta meter="deadGreen" tags="vlc,VALORANT" type="linear" x= "0.0708" y= "0.7917" width= "0.0025" h="150-180" s="0-50" l="40-100">
+    <resolution size="3440x1440" x= "0.181" y= "0.7931" width= "0.0009"/>
+    <resolution size="2560x1600" x= "0.1208" y= "0.7926" width= "0.0025"/>
+    <resolution size="1920x1200" x= "0.1208" y= "0.7926" width= "0.0025"/>
+    <resolution size="1680x1050" x= "0.1208" y= "0.7926" width= "0.0025"/>
+    <resolution size="1440x900" x= "0.1208" y= "0.7926" width= "0.0025"/>
+    <resolution size="1280x800" x= "0.1208" y= "0.7926" width= "0.0025"/>
+  </meta>
+  <meta meter="deadWhite" tags="vlc,VALORANT" type="area" x= "0.0714" y= "0.8038" height= "0.005" width= "0.001" h="0-360" s="0-20" l="65-100">
+    <resolution size="3440x1440" x= "0.1825" y= "0.8046" height= "0.005" width= "0.001"/>
+    <resolution size="2560x1600" x= "0.1208" y= "0.8046" height= "0.005" width= "0.001"/>
+    <resolution size="1920x1200" x= "0.1208" y= "0.8046" height= "0.005" width= "0.001"/>
+    <resolution size="1680x1050" x= "0.1208" y= "0.8046" height= "0.005" width= "0.001"/>
+    <resolution size="1440x900" x= "0.1208" y= "0.8046" height= "0.005" width= "0.001"/>
+    <resolution size="1280x800" x= "0.1208" y= "0.8046" height= "0.005" width= "0.001"/>
+  </meta>
+  <meta meter="eMeter" tags="vlc,VALORANT" x=".5114" y=".9675" width=".034" height=".001" h="140-170" s="40-100" l="40-100" type="area">
+    <resolution size="3440x1440" x= "0.5099" y= "0.9688" width=".024" height=".001"/>
+    <resolution size="2560x1600" x="0.5141" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1920x1200" x="0.5141" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1680x1050" x="0.5141" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1440x900" x="0.5141" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1280x800" x="0.5141" y="0.9667" width="0.0355" height="0.001"/>
+  </meta>
+  <meta meter="health" tags="vlc,VALORANT" x="0.2994" y="0.9259" width="0.0411" height="0.043" type="ocr_numeric" confidence="70">
+    <resolution size="3440x1440" x= "0.3523" y= "0.9319" width="0.03" height="0.043"/>
+    <resolution size="2560x1600" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
+    <resolution size="1920x1200" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
+    <resolution size="1680x1050" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
+    <resolution size="1440x900" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
+    <resolution size="1280x800" x="0.2782" y="0.9328" width="0.0411" height="0.043"/>
+  </meta>
+  <meta meter="jettX" tags="vlc,VALORANT" type="area" x= "0.575" y= "0.8481" height= "0.0083" width= "0.0016" h="150-176" s="20-50" l="70-100">
+    <resolution size="3440x1440" x= "0.5735" y= "0.8479" height= "0.0083" width= "0.0014"/>
+    <resolution size="2560x1600" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1920x1200" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1680x1050" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1440x900" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>
+    <resolution size="1280x800" x= "0.5841" y= "0.8491" height= "0.0083" width= "0.0016"/>  
+  </meta>
+  <meta meter="neonCharge" tags="vlc,VALORANT" type="ocr_numeric" x="0.4901" y="0.9028" width="0.019" height="0.0167" confidence="70">
+    <resolution size="3440x1440" x="0.4941" y="0.9028" width="0.014" height="0.0167"/>
+    <resolution size="2560x1600" x="0.491" y="0.9046" width="0.019" height="0.018"/>
+    <resolution size="1920x1200" x="0.491" y="0.9046" width="0.019" height="0.018"/>
+    <resolution size="1680x1050" x="0.491" y="0.9046" width="0.019" height="0.018"/>
+    <resolution size="1440x900" x="0.491" y="0.9046" width="0.019" height="0.018"/>
+    <resolution size="1280x800" x="0.491" y="0.9046" width="0.019" height="0.018"/>
+  </meta>
+  <meta meter="neonUlt" tags="vlc,VALORANT" x=".704" y=".9435" width=".004" h="0-360" s="0-10" l="90-100" type="linear">
+    <resolution size="3440x1440" x= "0.6512" y= "0.9451" width="0.0033"/>
+    <resolution size="2560x1600" x="0.7267" y="0.9435" width="0.0035"/>
+    <resolution size="1920x1200" x="0.7267" y="0.9435" width="0.0035"/>
+    <resolution size="1680x1050" x="0.7267" y="0.9435" width="0.0035"/>
+    <resolution size="1440x900" x="0.7267" y="0.9435" width="0.0035"/>
+    <resolution size="1280x800" x="0.7267" y="0.9435" width="0.0035"/>
+  </meta>
+  <meta meter="qMeter" tags="vlc,VALORANT" x=".4520" y=".9675" width=".034" height=".001" h="140-170" s="40-100" l="40-100" type="area">
+    <resolution size="3440x1440" x= "0.4657" y= "0.9688" width=".024" height=".001"/>
+    <resolution size="2560x1600" x="0.4487" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1920x1200" x="0.4487" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1680x1050" x="0.4487" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1440x900" x="0.4487" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1280x800" x="0.4487" y="0.9667" width="0.0355" height="0.001"/>
+  </meta>
+  <meta meter="shield" tags="vlc,VALORANT" type="ocr_numeric" x="0.2818" y="0.9398" width="0.0125" height="0.0204" confidence="70">
+    <resolution size="3440x1440" x= "0.3395" y= "0.9417" width="0.008" height="0.0204"/>
+    <resolution size="2560x1600" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
+    <resolution size="1920x1200" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
+    <resolution size="1680x1050" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
+    <resolution size="1440x900" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
+    <resolution size="1280x800" x="0.2823" y="0.9417" width="0.0125" height="0.0204"/>
+  </meta>
+  <meta meter="viperX" tags="vlc,VALORANT" type="area" x= "0.5844" y= "0.8472" height= "0.0093" width= "0.0005" h="150-176" s="20-50" l="70-100">
+    <resolution size="3440x1440" x= "0.5625" y= "0.8493" height= "0.0083" width= "0.0005"/>
+    <resolution size="2560x1600" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1920x1200" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1680x1050" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1440x900" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+    <resolution size="1280x800" x= "0.5945" y= "0.8494" height= "0.0093" width= "0.0005"/>
+  </meta>
+  <meta meter="xMeter" tags="vlc,VALORANT" x=".5692" y=".9675" width=".034" height=".001" h="140-170" s="40-100" l="40-100" type="area">
+    <resolution size="3440x1440" x= "0.5535" y= "0.9688" width=".024" height=".001"/>
+    <resolution size="2560x1600" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1920x1200" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1680x1050" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1440x900" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
+    <resolution size="1280x800" x="0.5797" y="0.9667" width="0.0355" height="0.001"/>
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  // Change this out for any effect to manually trigger
+  //var idleEffect = new IdleState();
+  var idleEffect =  new IdleState();
+
+  var canvas, ctx;
+  var bursts = [];
+  var stateMgr = new StateHandler();
+  var effects = [];
+  var oldShield = 0;
+  var oldHealth = 0;
+
+  //Generic meters --------------------------------------------------------------------------
+  var val = 0;
+  var healthMeter = new Meter(10, onHealthMeterChanged);
+  var shieldMeter = new Meter(10, onShieldMeterChanged);
+  var bombMeter = new Meter(20, onBombMeterChanged);
+  var deadGreenMeter = new Meter(5, ()=>"");
+  var deadWhiteMeter = new Meter(5, ()=>"");
+
+  function onHealthMeterChanged() {
+    if (healthMeter.decreased && healthMeter.value != oldHealth && healthMeter.value != -1) {
+      var colors = hexToHSL("#ff1100");
+      oldHealth = healthMeter.value;
+      for (let i = 0; i < 20 * 2; i++) {
+          effects.push(new SparkleEffect(colors.h + random(-10, 10), colors.s, colors.l, 30));
+      }} else if (healthMeter.increased && healthMeter.value != oldHealth && healthMeter.value != -1 && healthMeter.value != 100){
+        oldHealth = healthMeter.value;
+        stateMgr.Push(new ShieldIncreaseState("#00ff00"));
+      } else {
+      stateMgr.Push(new IdleState());
+    }
+  }
+
+  function onShieldMeterChanged() {
+     if (shieldMeter.increased && shieldMeter.value != oldShield && shieldMeter.value > 0) {
+      stateMgr.Push(new ShieldIncreaseState("#2effab"));
+      oldShield = shieldMeter.value;
+    }
+  }
+
+  function onBombMeterChanged() {
+    if (bombMeter.value > 0.3) {
+      stateMgr.Push(new AlertState("#ff1100"));
+    }
+  }
+  function AlertState(color) {
+    var colors = hexToHSL(color);
+    var y = 0;
+    var y2 = 200;
+    this.start = new Date().getTime();
+    this.duration = 2000;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      var norm_elapsed = this.elapsed / this.duration;
+      var phaseBrightness = norm_elapsed * Math.PI * 3;
+      var bright = 20 + Math.abs(Math.sin(phaseBrightness)) * 30;
+      ctx.fillStyle = "hsl(" + colors.h + "," + 100 + "%," + bright + "%)";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, y, 320, 20);
+      if(y < 200){
+        y += 5;
+      }
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, y2, 320, 20);
+      if(y2 >= -20 && y ==200){
+        y2 -= 5;
+      }
+    };
+  }
+  function SparkleEffect(hue, saturation, lightness, size) {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.lifetime = 40;
+    this.size = size;
+    this.draw = function () {
+      ctx.fillStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + this.lightness + '%)';
+      ctx.fillRect(this.x, this.y, this.size, this.size);
+      this.lifetime--;
+    };
+  }
+  
+  // start Astra meters & callbacks --------------------------------------------------------------
+
+  var Astra_e_meter = new Meter(20, onAstra_e);
+  var Astra_c_meter = new Meter(20, onAstra_c);
+  var Astra_q_meter = new Meter(20, onAstra_q);
+  var Astra_x_meter = new Meter(20, onAstra_x);
+
+  function onAstra_e() {
+    if (Astra_e_meter.decreased && Astra_e_meter.diff > 0.1) {
+
+      stateMgr.Push(
+        new BurstRippleState("#9d00ff", "#fff200", "#9d00ff")
+      );
+    }
+  }
+  function onAstra_c() {
+    if (Astra_c_meter.decreased && Astra_c_meter.diff > 0.1) {
+      stateMgr.Push(new reversePulseRippleState("#9d00ff", true));
+    }
+  }
+  function onAstra_q() {
+    if (Astra_q_meter.decreased && Astra_q_meter.diff > 0.1) {
+      var colors = hexToHSL("#db44fc");
+      for (let i = 0; i < 15 * 3; i++) {
+          effects.push(
+            new moveableBar(
+              160,
+              random(0, 200),
+              40,
+              20,
+              random(-6, 6),
+              0,
+              colors.h + random(-20, 20),
+              colors.s + random(-20, 20),
+              colors.l,
+              0.9
+            )
+          );
+        }    }
+  }
+  function onAstra_x() {
+    //ambience effect
+    if(Astra_x_meter.decreased && Astra_x_meter.diff >0.1){
+      stateMgr.Push(new WallUpState("#c64aff", "#8c00ff", "#ffff66"));
+      }
+  }
+
+  // End Astra
+  // start Breach meters & callbacks --------------------------------------------------------------
+
+  var Breach_e_meter = new Meter(10, onBreach_e);
+  var Breach_c_meter = new Meter(10, onBreach_c);
+  var Breach_q_meter = new Meter(10, onBreach_q);
+  var Breach_x_meter = new Meter(10, onBreach_x);
+
+  function onBreach_e() {
+    if (Breach_e_meter.decreased && Breach_e_meter.diff > 0.05) {
+      stateMgr.Push(new HorizontalExpandState("#fcba03", "#ff5900", "#ffffff"));
+    }
+  }
+  function onBreach_c() {
+    if (Breach_c_meter.decreased && Breach_c_meter.diff > 0.05) {
+      stateMgr.Push(new breachq());
+    }
+  }
+  function onBreach_q() {
+    if (Breach_q_meter.decreased && Breach_q_meter.diff > 0.05) {
+      stateMgr.Push(new ExplodingOrbStatebreach("#fcba03", "#ff5900", "#ffffff"));
+    }
+  }
+  function onBreach_x() {
+    if (Breach_x_meter.decreased && Breach_x_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleState3Color("#ff9500", "#ff5500", "#ff2600"));
+    }
+  }
+
+  // end Breach
+  // start Brimstone meters & callbacks --------------------------------------------------------------
+
+  var Brimstone_e_meter = new Meter(10, onBrimstone_e);
+  var Brimstone_c_meter = new Meter(10, onBrimstone_c);
+  var Brimstone_q_meter = new Meter(10, onBrimstone_q);
+  var Brimstone_x_meter = new Meter(10, onBrimstone_x);
+
+  function onBrimstone_e() {
+    if (Brimstone_e_meter.decreased && Brimstone_e_meter.diff > 0.3) {
+      //Brimstone-SkySmoke
+      stateMgr.Push(
+        new EffectCloudState(
+          "rgba(255,255,255,0.1)",
+          "rgba(0,0,0,0.3)",
+          "rgba(255,255,255,0.4)"
+        )
+      );
+    }
+  }
+  function onBrimstone_c() {
+    if (Brimstone_c_meter.decreased && Brimstone_c_meter.diff > 0.05) {
+      //Brimstone-StimBeacon
+      stateMgr.Push(new PulseRippleStateKayo("#ffa600", "#00ffe5", false));
+    }
+  }
+  function onBrimstone_q() {
+    if (Brimstone_q_meter.decreased && Brimstone_q_meter.diff > 0.05) {
+      //Brimstone-Incendiary
+      stateMgr.Push(new ExplodingOrbStatebrime("#fffef7", "#ff7b00", "#ff3700"));
+    }
+  }
+  function onBrimstone_x() {
+    if (Brimstone_q_meter.decreased && Brimstone_q_meter.diff > 0.05) {
+      //Brimstone-OrbitalStrike
+      stateMgr.Push(new PulseRippleState3Color("#fffef7", "#ff7b00", "#ff3700"));
+    }
+  }
+
+  // end Brimstone 
+  // start Chamber meters & callbacks --------------------------------------------------------------
+
+  var Chamber_e_meter = new Meter(10, onChamber_e);
+  var Chamber_c_meter = new Meter(10, onChamber_c);
+  var Chamber_q_meter = new Meter(10, onChamber_q);
+  var Chamber_x_meter = new Meter(10, onChamber_x);
+  var Chamber_ult_meter = new Meter(10, onChamber_x);
+  var chamberUltAnim = false;
+
+  function onChamber_c() {
+    if (Chamber_c_meter.decreased && Chamber_c_meter.diff > 0.05) {
+      effects.push(new chamberC());
+    }
+  }
+  function onChamber_q() {
+    if (Chamber_q_meter.decreased && Chamber_q_meter.diff > .5 && Cypher_q_meter.value < .5) {
+      stateMgr.Push(new PulseRippleStateKayo("#ffa600", "#00ffe5", true));
+    }
+  }
+  function onChamber_e() {
+    if (Chamber_e_meter.decreased && Chamber_e_meter.diff > 0.3) {
+      var colors = hexToHSL("#ffee00");
+      for (let i = 0; i < 40; i++) {
+          effects.push(
+            new moveableBar(
+              160,
+              random(0, 200),
+              40,
+              20,
+              random(-6, 6),
+              0,
+              colors.h + random(-20, 20),
+              colors.s + random(-20, 20),
+              colors.l,
+              0.9
+            )
+          );
+        } 
+    }
+  }
+  function onChamber_x() {
+    if (Chamber_x_meter.decreased && Chamber_x_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleStateKayo("#ffa600", "#00ffe5", true));
+    }
+    if (Chamber_x_meter.value > .8 && Chamber_ult_meter.value == 1 && !chamberUltAnim) {
+      stateMgr.Push(new chamberUltSights());
+      chamberUltAnim = true;
+    }
+  }
+  // end Chamber
+  // start Cypher meters & callbacks --------------------------------------------------------------
+
+  var Cypher_e_meter = new Meter(10, onCypher_e);
+  var Cypher_c_meter = new Meter(10, onCypher_c);
+  var Cypher_q_meter = new Meter(10, onCypher_q);
+  var Cypher_x_meter = new Meter(10, onCypher_x);
+
+  function onCypher_e() {
+    if (Cypher_e_meter.decreased && Cypher_e_meter.diff > 0.1) {
+      var colors = hexToHSL("#4d94ff");
+      for (let i = 0; i < 20 * 2; i++) {
+          setTimeout(function () {
+            effects.push(new moveableBar(-30, Math.random() * 200, 10, 30, 10, 0, colors.h + random(-10, 10), colors.s, colors.l, 0.9));
+          }, Math.random() * 2000);
+          setTimeout(function () {
+            effects.push(new moveableBar(320, Math.random() * 200, 10, 30, -10, 0, colors.h + random(-10, 10), colors.s, colors.l, 0.9));
+          }, Math.random() * 2000);
+        }
+    }
+  }
+  function onCypher_c() {
+    if (Cypher_c_meter.decreased && Cypher_c_meter.diff > 0.1) {
+      stateMgr.Push(new TripwireState("#004cff"));
+    }
+  }
+  function onCypher_q() {
+    if (Cypher_q_meter.decreased && Cypher_q_meter.diff > 0.1) {
+      stateMgr.Push(new ExplodingOrbStatecypher("#d4d4d4", "white", "#85d1ff"));
+    }
+  }
+  function onCypher_x() {
+    if (Cypher_x_meter.decreased && Cypher_x_meter.diff > 0.1) {
+      stateMgr.Push(
+        new ProjectileState("994300", "#d4d4d4", "yellow", "yellow")
+      );
+    }
+  }
+
+  // end Cypher
+  // start Jett meters & callbacks --------------------------------------------------------------
+
+  var Jett_e_meter = new Meter(10, onJett_e);
+  var Jett_c_meter = new Meter(10, onJett_c);
+  var Jett_q_meter = new Meter(10, onJett_q);
+  var Jett_x_meter = new Meter(10, onJett_x);
+  var Jett_x2_meter = new Meter(10, onJett_x);
+
+  function onJett_e() {
+    if (Jett_e_meter.decreased && Jett_e_meter.diff > 0.05) {
+      stateMgr.Push(new SweepState("#c8d9de", "#00c4ff"));
+    }
+  }
+  function onJett_c() {
+    if (Jett_c_meter.decreased && Jett_c_meter.diff > 0.05) {
+      stateMgr.Push(new ExplodingOrbState("#c8d9de", "#879194", "#8bb7c4"));
+    }
+  }
+  function onJett_q() {
+    if (Jett_q_meter.decreased && Jett_q_meter.diff > 0.05) {
+      var colors = hexToHSL("#9cf8ff");
+      for (let i = 0; i < 20; i++) {
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(i * 20, 160, 100, 20, 0, -5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9)
+            );
+          }, i * 30);
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(i * 20, 160, 100, 20, 0, 5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9)
+            );
+          }, i * 30);
+        }
+    }
+  }
+  
+  function onJett_x() {
+    if (Jett_x_meter.value >= .5 && Jett_x2_meter.increased) {
+      stateMgr.Push(new DiagonalLine());
+    }
+    if(Jett_x_meter.value >= .5 && Jett_x2_meter.decreased){
+      stateMgr.Push(new DiagonalLine());
+    }
+  }
+  function drawRotatedRect(ctx, x, y, width, height, angle) {
+  angle *= Math.PI / 180
+  ctx.lineWidth = height / 2
+  ctx.beginPath()
+  ctx.moveTo(x, y)
+  ctx.lineTo(x + width * Math.cos(angle), y + width * Math.sin(angle))
+  ctx.stroke()
+  
+}
+function DiagonalLine() {
+    this.start = new Date().getTime();
+    this.duration = 1500;
+    this.x = -200;
+    this.y = 200;
+    this.width = 20;
+    var speed =8;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {   
+        ctx.beginPath();
+        ctx.strokeStyle = "#86f4f7";
+        ctx.fillStyle ="#86f4f7";
+        drawRotatedRect(ctx, this.x, this.y, 400, 320, 40)
+        this.x+=speed;
+        this.y-=speed;
+    
+
+    };
+  }
+  // end Jett
+  //start Kayo meters & callbacks --------------------------------------------------------------
+  var Kayo_e_meter = new Meter(10, onKayo_e);
+  var Kayo_c_meter = new Meter(10, onKayo_c);
+  var Kayo_q_meter = new Meter(10, onKayo_q);
+  var Kayo_x_meter = new Meter(10, onKayo_x);
+
+  function onKayo_e() {
+    if (Kayo_e_meter.decreased && Kayo_e_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleStateKayo("#ff00fb", "#001eff", false));
+    }
+  }
+  function onKayo_c() {
+    if (Kayo_c_meter.decreased && Kayo_c_meter.diff > 0.2) {
+      stateMgr.Push(new BurstRippleState("#ff00fb", "#00fbff", "#ffffff"));
+    }
+  }
+  function onKayo_q() {
+    if (Kayo_q_meter.decreased && Kayo_q_meter.diff > 0.05) {
+      stateMgr.Push(new ExplodingWobbleOrbState("#001eff", "#00fbff", "#ffffff"));
+    }
+  }
+  function onKayo_x() {
+    if (Kayo_x_meter.decreased && Kayo_x_meter.diff > 0.05) {
+      stateMgr.Push(new kayoZ("#ff00fb", "#001eff"));
+    }
+  }
+  // end of kayo
+  // start Killjoy meters & callbacks --------------------------------------------------------------
+
+  var Killjoy_e_meter = new Meter(10, onKilljoy_e);
+  var Killjoy_c_meter = new Meter(10, onKilljoy_c);
+  var Killjoy_q_meter = new Meter(10, onKilljoy_q);
+  var Killjoy_x_meter = new Meter(10, onKilljoy_x);
+
+  function onKilljoy_e() {
+    if (Killjoy_e_meter.decreased && Killjoy_e_meter.diff > 0.05) {
+      stateMgr.Push(new TurretState("#4287f5", "#ff00fb", "#fc74fa"));
+    }
+  }
+  function onKilljoy_c() {
+    if (Killjoy_c_meter.decreased && Killjoy_c_meter.diff > 0.05) {
+      stateMgr.Push(new SwarmState("#4287f5", "#ff00fb", "#fc74fa"));
+    }
+  }
+  function onKilljoy_q() {
+    if (Killjoy_q_meter.decreased && Killjoy_q_meter.diff > 0.05) {
+      stateMgr.Push(
+        new PulseRippleStateKill("#ff0000", "#ffffff", false)
+      );
+    }
+  }
+  function onKilljoy_x() {
+    if (Killjoy_x_meter.decreased && Killjoy_x_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleStateKayo("#ff00fb", "#001eff", false));
+     }
+  }
+
+  // end Killjoy
+  // start Neon meters & callbacks --------------------------------------------------------------
+
+  var Neon_c_meter = new Meter(10, onNeon_c);
+  var Neon_q_meter = new Meter(10, onNeon_q);
+  var Neon_ult_meter = new Meter(5, ()=>"");
+  var oldCharge = 100;
+  var neonFill = "#00ffff"
+
+  function onNeon_c() {
+    if (Neon_c_meter.decreased && Neon_c_meter.diff > 0.05) {
+      effects.push(new neonWall());
+    }
+  }
+  function onNeon_q() {
+    if (Neon_q_meter.decreased && Neon_q_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleStateKayo("#00ffe5", "#ffffff", true));
+    }
+  }
+  function onNeon_e() {
+    var charge = engine.vision.neonCharge;
+    if (charge != -1 && charge != oldCharge) {
+      var direction = charge < oldCharge ? true : false;
+      oldCharge = charge;
+      if (charge < 20 && charge != -1){
+        neonFill = "#ff0015";
+      } else if (charge < 40 && charge != -1){
+        neonFill = "#ff00d4";
+      } else if (charge < 60 && charge != -1){
+        neonFill = "#6a00ff";
+      } else if (charge < 80 && charge != -1){
+        neonFill = "#002aff";
+      } else {
+        neonFill = "#00ffff";
+      }
+
+      for(let i = 0; i < 5; i++){
+        effects.push(new neonRun(neonFill, direction));
+        setTimeout(()=>{effects.push(new neonRun(neonFill, direction))}, 100)
+        setTimeout(()=>{effects.push(new neonRun(neonFill, direction))}, 200)
+      }
+    }
+  }
+
+  // end Neon
+  // start Omen meters & callbacks --------------------------------------------------------------
+
+  var Omen_e_meter = new Meter(10, onOmen_e);
+  var Omen_c_meter = new Meter(10, onOmen_c);
+  var Omen_q_meter = new Meter(10, onOmen_q);
+  var Omen_x_meter = new Meter(10, onOmen_x);
+
+  function onOmen_e() {
+    if (Omen_e_meter.decreased && Omen_e_meter.diff > 0.05) {
+      stateMgr.Push(new OrbState("#34007d", "#080052", "#1f3145"));
+    }
+  }
+  function onOmen_c() {
+    if(Omen_c_meter.decreased && Omen_c_meter.diff >.05){
+    stateMgr.Push(new omenq());
+    }
+  }
+  function onOmen_q() {
+    if (Omen_q_meter.decreased && Omen_q_meter.diff > 0.05) {
+      stateMgr.Push(new EffectCloudState("#0048ff", "#0091ff", "#ffffff"));
+    }
+  }
+  function onOmen_x() {
+    if(Omen_x_meter.decreased && Omen_x_meter.diff >.05){
+    stateMgr.Push(new omenSweepState("#c8d9de", "#00c4ff"));
+    }
+  }
+
+  // end Omen
+  // start Phoenix meters & callbacks --------------------------------------------------------------
+
+  var Phoenix_e_meter = new Meter(10, onPhoenix_e);
+  var Phoenix_c_meter = new Meter(10, onPhoenix_c);
+  var Phoenix_q_meter = new Meter(10, onPhoenix_q);
+  var Phoenix_x_meter = new Meter(10, onPhoenix_x);
+
+  function onPhoenix_e() {
+    if (Phoenix_e_meter.decreased && Phoenix_e_meter.diff > 0.05) {
+      //Phoenix-HotHands
+      stateMgr.Push(new ExplodingOrbStatebrime2("#ff8c00", "#fc8c03", "#ff5e00"));
+    }
+  }
+  function onPhoenix_c() {
+    if (Phoenix_c_meter.decreased && Phoenix_c_meter.diff > 0.2) {
+      //Phoenix-Blaze
+      stateMgr.Push(new WallUpState("#ff8c00", "#fc8c03", "#ff5e00"));
+    }
+  }
+  function onPhoenix_q() {
+    if (Phoenix_q_meter.decreased && Phoenix_q_meter.diff > 0.05) {
+      stateMgr.Push(
+        //Phoenix-Curveball
+        new ExplodingWobbleOrbState2("#ff8c00", "#fc8c03", "#ff5e00")
+      );
+    }
+  }
+  function onPhoenix_x() {
+    if (Phoenix_x_meter.decreased && Phoenix_x_meter.diff > 0.05 && engine.vision.bottomUIVisible > .5) {
+      //Phoenix-RunItBack
+      stateMgr.Push(new CollapseState("#ff8c00", "#ff5100", "#ff5e00"));
+    }
+  }
+
+  // end Phoenix
+  // start Raze meters & callbacks --------------------------------------------------------------
+
+  var Raze_e_meter = new Meter(10, onRaze_e);
+  var Raze_c_meter = new Meter(10, onRaze_c);
+  var Raze_q_meter = new Meter(10, onRaze_q);
+  var Raze_x_meter = new Meter(10, onRaze_x);
+
+  function onRaze_e() {
+    if (Raze_e_meter.decreased && Raze_e_meter.diff > 0.1) {
+      //Raze-PaintShells
+      stateMgr.Push(new RazeE());
+    }
+  }
+  function onRaze_c() {
+    if (Raze_c_meter.decreased && Raze_c_meter.diff > 0.1) {
+      //Raze-BoomBot
+      stateMgr.Push(
+        new RazeC()
+      );
+    }
+  }
+  function onRaze_q() {
+    if (Raze_q_meter.decreased && Raze_q_meter.diff > 0.1) {
+      //Raze-BlastPack
+      stateMgr.Push(new ExplodingOrbState("#9e004f", "#00ff73", "#ff8800"));
+    }
+  }
+  function onRaze_x() {
+    if (Raze_x_meter.decreased && Raze_x_meter.diff > 0.1) {
+      //Raze-ShowStopper
+      stateMgr.Push(new RocketState("#9e004f", "#00ff73", "#ff8800"));
+    }
+  }
+
+  // end Raze
+  // start Reyna meters & callbacks --------------------------------------------------------------
+
+  var Reyna_e_meter = new Meter(10, onReyna_e);
+  var Reyna_c_meter = new Meter(10, onReyna_c);
+  var Reyna_q_meter = new Meter(10, onReyna_q);
+  var Reyna_x_meter = new Meter(10, onReyna_x);
+  var Reyna_x2_meter = new Meter(10, onReyna_e);
+  var Reyna_x3_meter = new Meter(10, onReyna_e);
+
+
+  function onReyna_e() {
+    if (Reyna_e_meter.decreased && Reyna_e_meter.diff > 0.05 && Reyna_x2_meter.increased) {
+      stateMgr.Push(new EffectCloudState("#ee00ff", "#400066", "#220066"));
+    }
+    if (Reyna_e_meter.decreased && Reyna_e_meter.diff > 0.5 && Reyna_x2_meter.value ==0 && Reyna_x3_meter.increased ) {
+      stateMgr.Push(new WallUpState2("#ee00ff", "#400066", "#220066"));
+    }
+   
+  }
+  function onReyna_c() {
+    if (Reyna_c_meter.decreased && Reyna_c_meter.diff > 0.05) {
+      stateMgr.Push(new ExplodingOrbStaterey());
+    }
+  }
+  function onReyna_q() {
+    if (Reyna_q_meter.decreased && Reyna_q_meter.diff > 0.05) {
+      stateMgr.Push(new WallUpState2("#ee00ff", "#400066", "#220066"));
+    }
+  }
+  function onReyna_x() {
+    if (Reyna_e_meter.decreased && Reyna_e_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleState3Color("#ee00ff", "#400066", "#220066"));
+    }
+  }
+
+  // end Reyna
+  // start Sage meters & callbacks --------------------------------------------------------------
+
+  var Sage_e_meter = new Meter(10, onSage_e);
+  var Sage_c_meter = new Meter(10, onSage_c);
+  var Sage_q_meter = new Meter(10, onSage_q);
+  var Sage_x_meter = new Meter(10, onSage_x);
+
+  function onSage_e() {
+    if (Sage_e_meter.decreased && Sage_e_meter.diff > 0.05) {
+      var colors = hexToHSL("#00f7ff")
+      for (let i = 0; i < 20 * 3; i++) {
+          effects.push(
+            new moveableBar(
+              360,
+              random(0, 200),
+              40,
+              20,
+              random(-7, -1),
+              0,
+              colors.h + random(-30, 30),
+              colors.s + random(-20, 20),
+              colors.l,
+              0.9
+            )
+          );
+          effects.push(
+            new moveableBar(
+              0,
+              random(0, 200),
+              40,
+              20,
+              random(1, 7),
+              0,
+              colors.h + random(-20, 20),
+              colors.s + random(-20, 20),
+              colors.l,
+              0.9
+            )
+          );
+        }
+    }
+  }
+  function onSage_c() {
+    if (Sage_c_meter.decreased && Sage_c_meter.diff > 0.05) {
+      stateMgr.Push(new WallUpState("#00fff7", "#40ffe2", "#40ffe2"));
+    }
+  }
+  function onSage_q() {
+    if (Sage_q_meter.decreased && Sage_q_meter.diff > 0.05) {
+      stateMgr.Push(new EffectCloudState("#00fff7", "#00fff7", "#00fff7"));
+    }
+  }
+  function onSage_x() {
+    if(Sage_x_meter.decreased && Sage_x_meter.diff > .05){
+      var colors = hexToHSL("#00f7ff");
+    stateMgr.Push(new CenterWave(colors.h, colors.s, colors.l, 1));
+    }
+  }
+
+  // end Sage
+  // start Skye meters & callbacks --------------------------------------------------------------
+
+  var Skye_e_meter = new Meter(20, onSkye_e);
+  var Skye_c_meter = new Meter(20, onSkye_c);
+  var Skye_q_meter = new Meter(20, onSkye_q);
+  var Skye_x_meter = new Meter(20, onSkye_x);
+
+  function onSkye_e() {
+    if (Skye_e_meter.decreased && Skye_e_meter.diff > 0.1) {
+      stateMgr.Push(
+        new SmallRocketState(
+          "rgba(3, 252, 123, 0.7)",
+          "rgba(50, 255, 0, 0.5)",
+          "rgba(0, 255, 217, 0.5)"
+        )
+      );
+    }
+  }
+  function onSkye_c() {
+    if (Skye_c_meter.decreased && Skye_c_meter.diff > 0.1) {
+      stateMgr.Push(new PulseRippleState2("#31873b", true));
+    }
+  }
+  function onSkye_q() {
+    if (Skye_q_meter.decreased) {
+      stateMgr.Push(new SkyeDogEffect());
+    }
+  }
+  function onSkye_x() {
+    if (Skye_x_meter.decreased && Skye_x_meter.diff > 0.1) {
+      stateMgr.Push(
+        new RocketState2(
+          "rgba(3, 252, 123, 1)",
+          "rgba(50, 255, 0, 1)",
+          "rgba(217, 255, 0, 1)"
+        )
+      );
+    }
+  }
+
+  // end Skye
+  // start Sova meters & callbacks --------------------------------------------------------------
+
+  var Sova_e_meter = new Meter(10, onSova_e);
+  var Sova_c_meter = new Meter(10, onSova_c);
+  var Sova_q_meter = new Meter(10, onSova_q);
+  var Sova_x_meter = new Meter(10, onSova_x);
+
+  function onSova_e() {
+    if (Sova_e_meter.decreased && Sova_e_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleState("#0048ff", true));
+    }
+  }
+  function onSova_c() {
+    if (Sova_c_meter.decreased && Sova_c_meter.diff > 0.05) {
+      stateMgr.Push(
+        new SovaC()
+      );    }
+  }
+  function onSova_q() {
+    if (Sova_q_meter.decreased && Sova_q_meter.diff > 0.05) {
+      stateMgr.Push(new ProjectileState("#0048ff", "#0091ff", "#ffffff"));
+    }
+  }
+  function onSova_x() {
+    if (Sova_x_meter.decreased && Sova_x_meter.diff > 0.05) {
+      stateMgr.Push(new PulseRippleState3Color("#0048ff", "#0091ff", "#ffffff"));
+    }
+  }
+
+  // end Sova
+  // start Viper meters & callbacks --------------------------------------------------------------
+
+  var Viper_e_meter = new Meter(10, onViper_e);
+  var Viper_c_meter = new Meter(10, onViper_c);
+  var Viper_q_meter = new Meter(10, onViper_q);
+  var Viper_x_meter = new Meter(10, onViper_x);
+
+  function onViper_e() {
+    if (Viper_e_meter.decreased && Viper_e_meter.diff > 0.05) {
+      stateMgr.Push(new WallUpState("#48ff00", "#00b31e", "#00db5f"));
+    }
+  }
+  function onViper_c() {
+    if (Viper_c_meter.decreased && Viper_c_meter.diff > 0.05) {
+      stateMgr.Push(new ExplodingOrbState("#48ff00", "#00b31e", "#00db5f"));
+    }
+  }
+  function onViper_q() {
+    if (Viper_q_meter.decreased && Viper_q_meter.diff > 0.05) {
+      stateMgr.Push(new LightEffectCloudState("#48ff00", "#00b31e", "#00db5f"));
+    }
+  }
+  function onViper_x() {
+    var colors = hexToHSL("#00fa32");
+    if (Viper_x_meter.decreased && Viper_x_meter.diff > 0.05) {
+      for (let i = 100; i < 200; i = i + 10) {
+          for (let j = 0; j < 10; j++) {
+            setTimeout(function () {
+              effects.push(
+                new moveableBar(
+                  random(0, 360),
+                  i - 50,
+                  50,
+                  20,
+                  0,
+                  -3,
+                  colors.h + random(-20, 20),
+                  colors.s + random(-20, 20),
+                  colors.l,
+                  0.9
+                )
+              );
+            }, Math.random() * 1500);
+            setTimeout(function () {
+              effects.push(
+                new moveableBar(
+                  random(0, 360),
+                  200 - i + 50,
+                  50,
+                  20,
+                  0,
+                  3,
+                  colors.h + random(-20, 20),
+                  colors.s + random(-20, 20),
+                  colors.l,
+                  0.9
+                )
+              );
+            }, Math.random() * 1500);
+          }
+        }
+    }
+  }
+
+  // end Viper
+  // start Yoru meters & callbacks --------------------------------------------------------------
+
+  var Yoru_e_meter = new Meter(20, onYoru_e);
+  var Yoru_c_meter = new Meter(20, onYoru_c);
+  var Yoru_q_meter = new Meter(20, onYoru_q);
+  var Yoru_x_meter = new Meter(20, onYoru_x);
+
+  function onYoru_e() {
+    if (Yoru_e_meter.decreased && Yoru_e_meter.diff > 0.1) {
+      stateMgr.Push(
+        new BurstRippleState("#0800ff", "#ff5500cc", "#0066ff")
+      );
+    }
+  }
+  function onYoru_c() {
+    // Yoru - Fakeout
+    if (Yoru_c_meter.decreased && Yoru_c_meter.diff > 0.1) {
+      stateMgr.Push(new FootstepState("#0040ff", "#00c3ff", "#2974ff"));
+    }
+  }
+  function onYoru_q() {
+    //Yoru - Blindside
+    if (Yoru_q_meter.decreased && Yoru_q_meter.diff > 0.1) {
+      stateMgr.Push(new ExplodingWobbleOrbState("#0040ff", "#00c3ff", "#2974ff"));
+    }
+  }
+  function onYoru_x() {
+    if(Yoru_x_meter.decreased && Yoru_x_meter.diff > .1){
+      stateMgr.Push(new yoruSweepState("#0004fa","#595bf0"));
+    }
+  }
+
+  // end Yoru
+
+  function chamberUltSights(){
+    this.radius = 0;
+    this.Process = function () {
+      if (Chamber_x_meter.value < .1 || Chamber_ult_meter.value < .1) {
+        stateMgr.Pop();
+        chamberUltAnim = false;
+      }
+        this.Draw();
+      };
+      this.Draw = function(){
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = "red";
+      ctx.strokeStyle = "yellow";
+      ctx.beginPath();
+      ctx.arc(160, 100, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(160, 100, this.radius + 50, 0, Math.PI * 2);
+      ctx.arc(160, 100, this.radius, 0, Math.PI * 2);
+      ctx.lineWidth = 20;
+      ctx.stroke();
+      this.radius += 2;
+      if (this.radius > 200){
+        this.radius = 0;
+      }
+    }
+  }
+
+  function neonRun(color, direction){
+    this.offset = direction ? -75 : 75;
+    this.lifetime = 50;
+    this.direction = direction
+    this.hue = Math.floor(Math.random() * 360);
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200 + this.offset;
+    this.draw = function(){
+      if (Neon_ult_meter.value > .75){
+        ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
+        ctx.globalAlpha = .2;
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.globalAlpha = 1;
+      }
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.rect(this.x, this.y, 15, 50);
+      ctx.fill();
+      if(this.direction){
+        this.y += 10;
+      } else {
+        this.y -= 10;
+      }
+      this.lifetime--;
+    }
+  }
+  function neonWall(){
+      this.start = Date.now();
+      this.elapsed = 0;
+      this.lifetime = 100;
+      this.i = 0;
+      this.goal = 0;
+
+      this.draw = function(){
+        this.elapsed = Date.now() - this.start;
+        if (this.elapsed > 0 && this.goal < 100){
+          if(this.elapsed % 3 == 0){
+            this.goal += 20;
+          }
+        } else if (this.elapsed > 2000 && this.i < 120){
+          this.i += 20;
+        } else if (this.elapsed > 3000){
+          this.lifetime = 0;
+        }
+        let loopI = this.i;
+
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+        while (loopI <= this.goal){
+          ctx.beginPath();
+          let squareX = loopI;
+          let squareY = 225 - .85 * loopI;
+          var grd = ctx.createLinearGradient(0, 0, 0, squareY);
+          grd.addColorStop(1, `hsl(${60}, 100%, 50%)`);
+          grd.addColorStop(.75 + Math.sin(this.elapsed/100)/10, `hsl(${95}, 35%, 72%)`);
+          grd.addColorStop(0, `hsl(${218}, 100%, 50%)`);
+          ctx.fillStyle = grd;
+          ctx.fillRect(squareX, squareY, 20, -1 * (225 - 1.6 * loopI) - 15 * Math.random() * Math.sin(this.elapsed/150))
+          ctx.fillRect(320 - squareX, squareY, -20, -1 * (225 - 1.6 * loopI) - 15 * Math.random() * Math.sin(this.elapsed/150))
+          loopI += 20;
+        }
+      }
+    }
+
+    function chamberC(){
+      this.lifetime = 200;
+      this.pupil = 25
+
+      this.draw = function(){
+
+        ctx.fillStyle = "ffee00";
+        ctx.strokeStyle = "ffee00";
+        ctx.beginPath();
+        ctx.arc(160, 100, 3*(200 - this.lifetime), 0, Math.PI * 2);
+        ctx.lineWidth = 20;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(160, 100, this.lifetime > 150 ? 2*(200 - this.lifetime) : 100, 0, Math.PI * 2);
+        ctx.lineWidth = 15;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(160 + 30 * Math.sin(this.lifetime/20), 100, this.pupil, 0, Math.PI * 2);
+        ctx.fill();
+        this.pupil+=.25;
+        this.lifetime-=2;
+      }
+    }
+
+  function SovaC() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        var width = 320;
+        var height = 200;
+         var deg = 1;
+         var radians = 1;
+        this.start = new Date().getTime();
+        this.duration = 3000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        ctx.fillStyle = "#1900ff";
+    ctx.fillRect(0, 0, 320, 200);
+
+    ctx.strokeStyle = "#dfdee3";
+    ctx.fillStyle = "#dfdee3";
+
+    ctx.lineWidth = 30;
+    ctx.beginPath();
+    ctx.arc(160, 100, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(160, 100);
+    radians = degrees_to_radians(deg);
+    ctx.lineTo(
+      getPointX(160, 100, 200, radians),
+      getPointY(160, 100, 200, radians)
+    );
+
+    ctx.stroke();
+
+    if (deg < 360) {
+      deg += 7;
+    } else {
+      deg = 0;
+    }
+        };
+    }  
+    function CenterWave(hue, saturation, lightness, value) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.lifetime = 50;
+    this.size = 0;
+    this.value = value;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.flashing;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle = 'hsla(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] + '%, ' + keyScreenBrightness * 0.01 + ')';
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+
+      ctx.fillStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + random(this.lightness - 10, this.lightness + 10) + '%)';
+
+      ctx.fillRect(0, 0, this.size * 160, 200);
+      ctx.fillRect(320, 0, -this.size * 160, 200);
+      if (this.size < this.value) {
+        this.size += 0.03;
+      }
+    };
+    this.lifetime--;
+  }
+
+  function RazeC() {
+        this.x = 0;
+        this.y = -10;
+        this.count = 2000;
+        this.size = 0;
+        var width = 320;
+        var height = 200;
+         var deg = 1;
+         var radians = 1;
+        this.start = new Date().getTime();
+        this.duration = 2000;
+        var split = 0;
+        var move =0;
+        var move2= 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        ctx.fillStyle = "#ffb121";
+    ctx.fillRect(0, 0, 320, 200);
+
+    ctx.strokeStyle = "#1fffe9";
+    ctx.fillStyle = "#1fffe9";
+
+    ctx.lineWidth = 30;
+    ctx.beginPath();
+    ctx.arc(160, 100, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(160, 100);
+    radians = degrees_to_radians(deg);
+    ctx.lineTo(
+      getPointX(160, 100, 200, radians),
+      getPointY(160, 100, 200, radians)
+    );
+
+    ctx.stroke();
+
+    if (deg < 360) {
+      deg += 7;
+    } else {
+      deg = 0;
+    }
+        };
+    }
+
+  function getPointX(c1, c2, radius, angle) {
+    return c1 + Math.cos(angle) * radius;
+  }
+
+  function getPointY(c1, c2, radius, angle) {
+    return c2 + Math.sin(angle) * radius;
+  }
+
+  function degrees_to_radians(degrees) {
+    var pi = Math.PI;
+    return degrees * (pi / 180);
+  }
+
+  function radians_to_degrees(radians) {
+    var pi = Math.PI;
+    return radians * (180 / pi);
+  }
+
+  function RazeE() {
+        this.x = 0;
+        this.y = -10;
+        this.start = new Date().getTime();
+        this.duration = 5000;
+        var split = 0;
+      this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+        this.Draw();
+      };
+      this.Draw = function () {
+        if(this.elapsed < 2000){
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#fc5a03";
+        ctx.fillRect(0+split, 90, 60, 60);
+        split+=5;
+        }
+        
+        if(this.elapsed >= 2000){
+          effects.push(
+              new moveableBar(
+                random(0, 360),
+                random(0, 200),
+                20,
+                20,
+                random(-5, 5),
+                random(-5, 5),
+                20 + random(-20, 20),
+                100 + random(-20, 20),
+                50,
+                0.9
+              )
+            );
+
+        }
+        };
+    }
+
+  function random(min, max) {
+    // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function moveableBar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
+    this.x = x;
+    this.y = y;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 50;
+    this.size = 0;
+    this.ydirection = yDirection;
+    this.xdirection = xDirection;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + this.alpha + ' )';
+      ctx.fillRect(this.x, this.y, this.height, this.width);
+      this.lifetime--;
+      this.y -= this.ydirection;
+      this.x += this.xdirection;
+    };
+  }
+
+  function breachq() {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = "#ffb300";
+    this.color2 = "#f6ff00";
+    this.color3 = "#bf6913";
+    this.size = 0;
+
+    this.posOrNeg = Math.round(Math.random()) * 2 - 1;
+    this.complete = false;
+    this.frames = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if(this.duration>1935){
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.size+=3;
+        this.duration--;
+        }
+        else{
+        stateMgr.Push(new LightEffectCloudState("#ff9500", "#9e5e05", "#de8f21"));        
+        }
+
+    };
+
+    this.IsFinished = function () {
+        return this.complete;
+    }
+  }
+
+  function OrbState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      draw3ColorSpiral(
+        160,
+        100,
+        this.color1,
+        this.color2,
+        this.color3,
+        50,
+        this.count * 20
+      );
+      this.count -= 20;
+    };
+  }
+
+  function ExplodingOrbState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+
+      this.count -= 20;
+    };
+  }
+  function ExplodingOrbStatePhone(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    var y = 200;
+    var speed =3;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+      if(y>=100){
+        y-=speed;
+      }
+      this.count -= 20;
+    };
+  }
+
+  function ExplodingOrbStatebrime(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 750;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    var y = 200;
+    var speed =3;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count >= 1200) {
+        draw3ColorSpiral(
+          160,
+          y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else{
+        stateMgr.Push(
+        new BurstRippleState2("#ff9400", "#ff0000", "#b300ff")
+      );
+      }
+      if(y>=100){
+        y-=speed;
+      }
+      this.count -= 30;
+    };
+  }
+
+  function ExplodingOrbStatebrime2(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 750;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    var y = 200;
+    var speed =3;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count >= 1200) {
+        draw3ColorSpiral(
+          160,
+          y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else{
+        stateMgr.Push(
+        new BurstRippleState2("#ff9400", "#ff0000", "#ffc812")
+      );
+      }
+      if(y>=100){
+        y-=speed;
+      }
+      this.count -= 30;
+    };
+  }
+
+  function ExplodingOrbStaterey() {
+    this.start = new Date().getTime();
+    this.duration = 750;
+    this.count = 2000;
+    this.color1 = "#f34dff";
+    this.color2 = "#7700ff";
+    this.color3 = "#3c057a";
+    var y = 200;
+    var speed =3;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count >= 1200) {
+        draw3ColorSpiral(
+          160,
+          y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else{
+        stateMgr.Push(
+        new BurstRippleState2("#7700ff", "#f34dff", "#3c057a")
+      );
+      }
+      if(y>=100){
+        y-=speed;
+      }
+      this.count -= 30;
+    };
+  }
+
+  function ExplodingOrbStatebreach(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    var y = 200;
+    var speed =3;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, 320, 200);
+      }
+      if(y>=100){
+        y-=speed;
+      }
+      this.count -= 20;
+    };
+  }
+
+  function ExplodingOrbStatecypher(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 1250;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    var y = 200;
+    var speed =5;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } 
+      if(this.count <= 1120){
+        stateMgr.Push(new PulseRippleState2("#69dcff", true));
+      }
+      if(y>=100){
+        y-=speed;
+      }
+      this.count -= 20;
+    };
+  }
+
+  function ExplodingWobbleOrbState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.wobble = 0;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.y = 200;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          this.y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+      this.y-=2.5;
+      this.count -= 30;
+    };
+  }
+
+  function ExplodingWobbleOrbState2(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.wobble = 0;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.y = 200;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          this.y,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+      this.y-=4.5;
+      this.count -= 60;
+    };
+  }
+
+  function WobbleOrbStateAlt(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.wobble = 0;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (Math.round(Math.random() * 2) == 1) {
+        this.wobble -= 10;
+      } else {
+        this.wobble += 10;
+      }
+      draw3ColorSpiral(
+        160 + this.wobble,
+        100,
+        this.color1,
+        this.color2,
+        this.color3,
+        50,
+        -this.count
+      );
+    };
+
+    this.count -= 20;
+  }
+
+  function CollapseState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = this.count / 2000;
+      ctx.beginPath();
+      draw3ColorSpiral(
+        160,
+        100,
+        this.color1,
+        this.color2,
+        this.color3,
+        200 * pctUp,
+        -this.count
+      );
+      ctx.fill();
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(160, 100, 20, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.count -= 25;
+    };
+  }
+
+  function SweepState(color1, color2) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.count == 0) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      if (this.count > 1000) {
+        var pct = (this.count - 1000) / 1000;
+        ctx.fillStyle = color1;
+        ctx.fillRect(320 * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(320 * pct + 25, 0, 25, 200);
+      } else {
+        var pct = 1 - this.count / 1000;
+        ctx.fillStyle = color1;
+        ctx.fillRect(320 * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(320 * pct + 25, 0, 25, 200);
+      }
+
+      this.count -= 50;
+    };
+  }
+
+  function omenSweepState(color1, color2) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.x = 320
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.count == 0) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      if (this.count > 1000) {
+        var pct = (this.count - 1000) / 1000;
+        ctx.fillStyle = color1;
+        ctx.fillRect(this.x * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(this.x * pct + 25, 0, 25, 200);
+        ctx.fillStyle = color1;
+        ctx.fillRect(320-this.x * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(320-this.x * pct + 25, 0, 25, 200);
+      } else {
+        var pct = 1 - this.count / 1000;
+        ctx.fillStyle = color1;
+        ctx.fillRect(320 * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(320 * pct + 25, 0, 25, 200);
+        ctx.fillStyle = color1;
+        ctx.fillRect(320 - this.x * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(320 -this.x * pct + 25, 0, 25, 200);
+      }
+
+      this.count -= 50;
+    };
+  }
+
+  function yoruSweepState(color1, color2) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.x = 120;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.count < 700) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        var pct = (this.count - 1000) / 1000;
+        ctx.fillStyle = color1;
+        ctx.fillRect(this.x * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(this.x * pct + 25, 0, 25, 200);
+        ctx.fillStyle = color1;
+        ctx.fillRect(320-this.x * pct, 0, 25, 200);
+        ctx.fillStyle = color2;
+        ctx.fillRect(320-this.x * pct + 25, 0, 25, 200);
+      } 
+      this.count -= 50;
+    };
+  }
+
+  function reversePulseRippleState(color, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+    
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200  * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200  * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function PulseRippleState(color, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function PulseRippleState2(color, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 1000;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 0;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function PulseRippleStateKill(color, color2, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color = color;
+    this.color2 = color2;
+    this.isHollow = hollow;
+    this.speed = 0;
+    var time = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+     
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "white"
+        ctx.fillRect(0,0+this.speed,320,50);
+        if(time<=200){
+          this.speed+=7
+          time+= 7
+        }
+        else if(time>200){
+          this.speed-=7;
+        }
+        this.count -= 75;
+      
+    };
+  }
+
+  function PulseRippleStateKayo(color, color2, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color = color;
+    this.color2 = color2;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+        this.isHollow = !hollow;
+        this.color = color2;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function jettxx(val) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.val = val;
+    this.speed = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle="white"
+      if(this.val= 0){
+        ctx.fillRect(280,200-this.speed, 40,200);
+      }
+      if(this.val = 1){
+        ctx.fillRect(0,200-this.speed, 40,200);
+      }
+      if(this.val = 2){
+
+      }
+      this.speed+=7;
+    };
+  }
+
+  function kayoZ(color, color2) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color = color;
+    this.color2 = color2;
+    var speed = 0;
+    var speed2 =0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if(speed <= 160){
+      ctx.fillStyle = this.color;
+      ctx.fillRect(0+speed,0,50,200);
+      ctx.fillRect(270-speed,0,50,200);
+      speed+=8;
+      }
+      else{
+          ctx.fillStyle = this.color2;
+          ctx.fillRect(0+speed-speed2,0,50,200);
+          ctx.fillRect(270-speed+speed2,0,50,200);
+          speed2+=5;
+      }
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function EffectCloudState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.particles = [];
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "rgba(0,0,0,0.5)";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.particles.length < 200) {
+        this.particles.push(new SmokeParticle(this.color1));
+        this.particles.push(new SmokeParticle(this.color2));
+        this.particles.push(new SmokeParticle(this.color3));
+        this.particles.push(new SmokeParticle(this.color1));
+      }
+      for (i = 0; i < this.particles.length; i++) {
+        this.particles[i].Draw();
+      }
+
+      for (j = 0; j < this.particles.length; j++) {
+        if (this.particles[j].IsFinished()) {
+          this.particles.splice(j, 1);
+        }
+      }
+    };
+  }
+
+  function KnifeState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.particles = [];
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "rgba(0,0,0,0.5)";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.particles.length < 200) {
+        this.particles.push(new KnifeParticle(this.color1));
+        this.particles.push(new KnifeParticle(this.color2));
+        this.particles.push(new KnifeParticle(this.color3));
+        this.particles.push(new KnifeParticle(this.color1));
+      }
+      for (i = 0; i < this.particles.length; i++) {
+        this.particles[i].Draw();
+      }
+
+      for (j = 0; j < this.particles.length; j++) {
+        if (this.particles[j].IsFinished()) {
+          this.particles.splice(j, 1);
+        }
+      }
+    };
+  }
+
+  function LightEffectCloudState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.particles = [];
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.particles.length < 20) {
+        this.particles.push(new SmokeParticle(this.color1));
+        this.particles.push(new SmokeParticle(this.color2));
+        this.particles.push(new SmokeParticle(this.color3));
+      }
+      for (i = 0; i < this.particles.length; i++) {
+        this.particles[i].Draw();
+      }
+
+      for (j = 0; j < this.particles.length; j++) {
+        if (this.particles[j].IsFinished()) {
+          this.particles.splice(j, 1);
+        }
+      }
+    };
+  }
+
+  
+
+  function SkyeDogEffect() {
+    this.start = new Date().getTime();
+    this.duration = 1000;
+    this.speed=0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var satBoost = sat[iZone] + 35;
+        ctx.fillStyle =
+          "hsla(" +
+          0 +
+          "," +
+          satBoost +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScreenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+      var norm_elapsed = this.elapsed / this.duration;
+      ctx.fillStyle = "hsl(" + norm_elapsed * 100 + ",100%,50%)";
+      ctx.fillRect(0, 100+this.speed, 320, 50);
+      ctx.fillRect(0, 100-this.speed, 320, 50);
+      this.speed += 4;
+    };
+  }
+
+  function TripwireState(color) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color = color;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 360, 200);
+      var pct = this.count / 2000;
+      var negPct = 1 - this.count / 2000;
+      var xPos = 160 * pct;
+      ctx.fillStyle = this.color;
+      ctx.fillRect(xPos, 100, negPct * 360, 10);
+
+      this.count -= 50;
+    };
+  }
+
+  function HealState() {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.bursts = [];
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      if (this.bursts.length < 50) {
+        this.bursts.push(new HealOrb());
+      }
+
+      for (i = 0; i < this.bursts.length; i++) {
+        this.bursts[i].draw();
+        this.bursts[i].update();
+      }
+
+      for (i = 0; i < this.bursts.length; i++) {
+        if (this.bursts[i].lifetime <= 0) {
+          this.bursts.splice(i, 1);
+        }
+      }
+    };
+  }
+
+  function HealOrb() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hueArray = ["110", "115", "120", "125"];
+    this.hue = this.hueArray[Math.floor(Math.random() * this.hueArray.length)];
+    this.hue2 = this.hueArray[Math.floor(Math.random() * this.hueArray.length)];
+    this.opacity = 1.0;
+    this.size = 20;
+    this.vel = 4;
+    this.lifetime = 90; // Frames.
+  }
+
+  HealOrb.prototype.draw = function () {
+    ctx.fillStyle = "hsla(" + this.hue + ",100%,50%," + this.opacity + ")";
+    ctx.beginPath();
+
+    ctx.font = "70px Arial";
+    ctx.fillText("+", this.x, this.y);
+  };
+
+  HealOrb.prototype.update = function () {
+    this.y -= 1;
+    this.lifetime--;
+  };
+
+  function Bullet(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.lifetime = 90; // Frames.
+  }
+
+  Bullet.prototype.draw = function () {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, 10, 10);
+  };
+
+  Bullet.prototype.update = function () {
+    this.x += 10;
+    this.lifetime--;
+  };
+
+  function Footstep(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.lifetime = 90; // Frames.
+  }
+
+  Footstep.prototype.draw = function () {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, 20, 20);
+  };
+
+  Footstep.prototype.update = function () {
+    //this.lifetime--;
+  };
+
+  function EyeballState(color1) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 360, 200);
+      var pct = this.count / 2000;
+      var Npct = 1 - this.count / 2000;
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, 50, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (this.count > 1000) {
+        ctx.fillStyle = "rgba(255,255,255," + Npct + ")";
+      } else {
+        ctx.fillStyle = "rgba(255,255,255," + pct + ")";
+      }
+
+      ctx.beginPath();
+      ctx.ellipse(160, 100, 20, 40, Math.PI / 4, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.count -= 50;
+    };
+  }
+
+  function SmokeParticle(color) {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.frames = 0;
+    this.color = color;
+    this.complete = false;
+
+    this.Draw = function () {
+      if (this.frames > 10) {
+        this.complete = true;
+      }
+
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, 50, 50);
+
+      this.frames += 1;
+    };
+
+    this.IsFinished = function () {
+      return this.complete;
+    };
+  }
+
+  function KnifeParticle(color) {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.frames = 0;
+    this.color = color;
+    this.complete = false;
+
+    this.Draw = function () {
+      if (this.frames > 10) {
+        this.complete = true;
+      }
+
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, 10, 10);
+
+      this.frames += 1;
+      this.x += 5;
+    };
+
+    this.IsFinished = function () {
+      return this.complete;
+    };
+  }
+
+  function PulseRippleState3Color(color1, color2, color3, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.count > 500) {
+        if (this.isHollow) {
+          ctx.strokeStyle = this.color1;
+          ctx.lineWidth = 20;
+          ctx.beginPath();
+          ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.stroke();
+
+          ctx.strokeStyle = this.color2;
+          ctx.beginPath();
+          ctx.arc(160, 100, 150 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = this.color1;
+          ctx.beginPath();
+          ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.fill();
+
+          ctx.fillStyle = this.color2;
+          ctx.beginPath();
+          ctx.arc(160, 100, 125 - 125 * pctUp, 0, 2 * Math.PI);
+          ctx.fill();
+
+          ctx.fillStyle = this.color3;
+          ctx.beginPath();
+          ctx.arc(160, 100, 75 - 75 * pctUp, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = color1;
+        for (let i = 0; i < 10; i++){
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        }
+
+        ctx.fillStyle = color2;
+        for (let i = 0; i < 10; i++){
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        }
+
+        ctx.fillStyle = color3;
+        for (let i = 0; i < 10; i++){
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 50, 50);
+        }
+      }
+
+      this.count -= 50;
+    };
+  }
+
+  function hexToHSL(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    var r = parseInt(result[1], 16);
+    var g = parseInt(result[2], 16);
+    var b = parseInt(result[3], 16);
+
+    (r /= 255), (g /= 255), (b /= 255);
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h,
+      s,
+      l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+      }
+      h /= 6;
+    }
+
+    s = s * 100;
+    s = Math.round(s);
+    l = l * 100;
+    l = Math.round(l);
+    h = Math.round(360 * h);
+
+    var colors = [];
+    colors['h'] = h;
+    colors['s'] = s;
+    colors['l'] = l;
+
+    return colors;
+  }
+
+  function PulseRippleState3ColorAlt(color1, color2, color3, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count < 500) {
+        this.count = 2000;
+      }
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color1;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.strokeStyle = this.color2;
+        ctx.beginPath();
+        ctx.arc(160, 100, 150 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color1;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = this.color2;
+        ctx.beginPath();
+        ctx.arc(160, 100, 125 - 125 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = this.color3;
+        ctx.beginPath();
+        ctx.arc(160, 100, 75 - 75 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      this.count -= 50;
+    };
+  }
+  function omenq() {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = "#0048ff";
+    this.color2 = "#0091ff";
+    this.color3 = "#ffffff";
+    this.isHollow = false;
+    
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count < 500) {
+        this.count = 2000;
+      }
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color1;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.strokeStyle = this.color2;
+        ctx.beginPath();
+        ctx.arc(160, 100, 150 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color1;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = this.color2;
+        ctx.beginPath();
+        ctx.arc(160, 100, 125 - 125 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = this.color3;
+        ctx.beginPath();
+        ctx.arc(160, 100, 75 - 75 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      this.count -= 50;
+      this.duration--;
+      if(this.duration == 1975){
+      stateMgr.Push(new EffectCloudState("#0048ff", "#0091ff", "#ffffff"));
+      }
+    };
+  }
+  function RocketState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = this.count / 2000;
+      if (pctUp > 0.3) {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          450 * (1 - pctUp),
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          20,
+          -this.count
+        );
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          320,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          500,
+          this.count
+        );
+        ctx.fill();
+      }
+
+      this.count -= 25;
+    };
+  }
+  function RocketState2(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.x=0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = this.count / 2000;
+      if (this.x <= 300) {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          this.x,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          20,
+          -this.count
+        );
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          320,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          500,
+          this.count
+        );
+        ctx.fill();
+      }
+      this.x+=3;
+      this.count -= 25;
+    };
+  }
+  function SmallRocketState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = this.count / 2000;
+      if (pctUp > 0.3) {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          450 * (1 - pctUp),
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          20,
+          -this.count
+        );
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          320,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          150,
+          this.count
+        );
+        ctx.fill();
+      }
+
+      this.count -= 25;
+    };
+  }
+
+  function ProjectileState(color1, color2, color3, color4) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.color4 = color4;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = this.count / 2000;
+      if (pctUp > 0.3) {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          450 * (1 - pctUp),
+          100,
+          this.color1,
+          this.color1,
+          this.color1,
+          20,
+          -this.count
+        );
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        draw3ColorSpiral(
+          320,
+          100,
+          this.color2,
+          this.color3,
+          this.color4,
+          500,
+          this.count
+        );
+        ctx.fill();
+      }
+
+      this.count -= 25;
+    };
+  }
+
+  function HorizontalExpandState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "rgba(0,0,0,0.5)";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color2;
+      var pctUp = this.count / 2000;
+      var pctUpN = 1 - this.count / 2000;
+      var xPos = pctUp * 160;
+      var width = pctUpN * 320;
+      ctx.fillRect(xPos, 0, width, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.fillRect(Math.random() * width + xPos, 0, 20, 200);
+      ctx.fillRect(Math.random() * width + xPos, 0, 20, 200);
+      ctx.fillStyle = this.color3;
+      ctx.fillRect(Math.random() * width + xPos, 0, 20, 200);
+      ctx.fillRect(Math.random() * width + xPos, 0, 20, 200);
+
+      this.count -= 25;
+    };
+  }
+
+  function TurretState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.bullets = [];
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = "white";
+      ctx.fillRect(30, 80, 40, 40);
+
+      ctx.fillStyle = "gray";
+      ctx.fillRect(40, 120, 10, 80);
+
+      var colorRng = Math.random() * 10;
+      if (colorRng < 1) {
+        this.bullets.push(new Bullet(60, 100, this.color1));
+      } else if (colorRng > 9) {
+        this.bullets.push(new Bullet(60, 100, this.color2));
+      }
+
+      for (i = 0; i < this.bullets.length; i++) {
+        this.bullets[i].draw();
+        this.bullets[i].update();
+      }
+
+      for (i = 0; i < this.bullets.length; i++) {
+        if (this.bullets[i].lifetime <= 0) {
+          this.bullets.splice(i, 1);
+        }
+      }
+    };
+  }
+
+  function FootstepState(color1, color2) {
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.steps = [];
+    this.x = 0;
+    this.timing = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+
+      if (this.timing == 4) {
+        this.steps.push(new Footstep(this.x, Math.random() * 25 + 75, this.color1));
+      } else if (this.timing == 9) {
+        this.steps.push(new Footstep(this.x, Math.random() * 25 + 75, this.color2));
+      }
+
+      this.x+= 5;
+
+      if(this.timing > 10){
+        this.timing = 0;
+      } else {
+        this.timing++;
+      }
+
+      for (i = 0; i < this.steps.length; i++) {
+        this.steps[i].draw();
+        this.steps[i].update();
+      }
+
+      for (i = 0; i < this.steps.length; i++) {
+        if (this.steps[i].lifetime <= 0) {
+          this.steps.splice(i, 1);
+        }
+      }
+    };
+  }
+
+  function WallUpState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = 1 - this.count / 2000;
+      ctx.fillRect(0, 200 - 200 * pctUp, 320, 300);
+      this.count -= 28;
+
+      ctx.fillStyle = this.color2;
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillStyle = this.color3;
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+    };
+  }
+  function WallUpState2(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = 1 - this.count / 2000;
+      ctx.fillRect(0, 0 + 200 * pctUp, 320, 300);
+      this.count -= 28;
+
+      ctx.fillStyle = this.color2;
+      ctx.fillRect(Math.random() * 320, 0 + 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 0 + 200 * pctUp, 20, 300);
+      ctx.fillStyle = this.color3;
+      ctx.fillRect(Math.random() * 320, 0 + 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 0 + 200 * pctUp, 20, 300);
+    };
+  }
+  function sageWallUpState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color1;
+      var pctUp = 1 - this.count / 2000;
+      ctx.fillRect(0, 200 - 200 * pctUp, 320, 300);
+      this.count -= 28;
+
+      ctx.fillStyle = this.color2;
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillStyle = this.color3;
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      this.duration--;
+      if(this.duration==1930){
+        stateMgr.Push(new PulseRippleState2(this.color1, true));
+
+      }
+    };
+  }
+  function SwarmState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.strokeStyle = this.color1;
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.arc(160, 100, 75, 0, 2 * Math.PI);
+      ctx.stroke();
+      draw3ColorSpiral(
+        160,
+        100,
+        this.color1,
+        this.color2,
+        this.color3,
+        75,
+        this.count * 5
+      );
+      this.count--;
+    };
+  }
+  function BurstRippleState2(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 1000;
+    this.count = 1000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.size = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color3;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+      this.duration--;
+      this.size+=5;
+    };
+  }
+  function BurstRippleState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.size = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100,(this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.size+=5;
+    };
+  }
+
+  function SmallSwarmState(color1, color2) {
+    this.start = new Date().getTime();
+    this.duration = 1000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      var orbColor = 90 * (this.elapsed / this.duration) + 50;
+
+      ctx.strokeStyle = this.color1;
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.arc(160, 100, 75, 0, 2 * Math.PI);
+      ctx.stroke();
+      draw3ColorSpiral(
+        160,
+        100,
+        "hsl(" + orbColor + ",100%, 50%)",
+        "000000",
+        "#000000",
+        75,
+        this.count * 10
+      );
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(160, 100, 50, 0, 2 * Math.PI);
+      ctx.fill();
+      this.count -= 40;
+    };
+  }
+
+  function IdleState() {
+    this.Process = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScreenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+    };
+  }
+
+  function LowHealthState() {
+    this.start = new Date().getTime();
+    this.duration = 4000;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var satBoost = sat[iZone] + 35;
+        ctx.fillStyle =
+          "hsla(" +
+          0 +
+          "," +
+          satBoost +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScreenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+    };
+  }
+
+  function ShieldIncreaseState(color) {
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    this.count = 0;
+    this.color = color;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = this.color;
+      var effectHeight = 200 - 200 * (this.count / 2000);
+      ctx.fillRect(0, effectHeight, 320, 200);
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, effectHeight, 320, 40);
+      this.count += 43;
+    };
+  }
+
+  function ShieldDecreaseState() {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 200;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = "#2effab";
+      var effectHeight = 200 * (this.count / 2000);
+      ctx.fillRect(0, effectHeight, 320, 200);
+      this.count += 20;
+    };
+  }
+
+  function draw3ColorSpiral(spX, spY, cl1, cl2, cl3, radius, phase) {
+    var currentColor;
+    for (var i = 0; i < 360; i += 1) {
+      var radphase = i / 360;
+
+      var start = 2 * Math.PI * (i / 360);
+      var end = 2 * Math.PI * ((i + 1) / 360);
+      var offset = 2 * Math.PI * (phase / 360);
+
+      if (i < 60 || (i > 180 && i < 240)) {
+        currentColor = cl1;
+      }
+
+      if ((i > 60 && i < 120) || (i > 240 && i < 300)) {
+        currentColor = cl2;
+      }
+
+      if ((i > 120 && i < 180) || (i > 300 && i < 360)) {
+        currentColor = cl3;
+      }
+
+      ctx.fillStyle = currentColor;
+      ctx.beginPath();
+      try {
+        ctx.arc(spX, spY, radius, start + offset, end + offset);
+      } catch (err) {
+        ctx.arc(160, 100, 50, Math.PI, 2 * Math.PI);
+      }
+      ctx.lineTo(spX, spY);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  function BombState() {
+    this.start = new Date().getTime();
+    this.duration = 500;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      var alpha = Math.round(this.duration / 500);
+      ctx.fillStyle = "rgba(255, 0, 0, " + alpha + ")";
+      ctx.fillRect(0, 0, 320, 200);
+    };
+  }
+  var champId;
+
+// START UPDATE FUNCTION ------------------------------------------------------------------------
+
+  function update() {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,0,320,200);
+
+    deadGreenMeter.setValue(engine.vision.deadGreen);
+    deadWhiteMeter.setValue(engine.vision.deadWhite);
+
+    if (champId != selectedChamp){
+      var colors = hexToHSL("#ffff00");
+      for (let i = 0; i < 7; i++) {
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(-50, random(0, 200), 100, 20, 15, 0, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.7)
+            );
+          }, random(0, 800));
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(360, random(0, 200), 100, 20, -15, 0, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.7)
+            );
+          }, random(0, 800));
+      }
+    }
+    champId = selectedChamp;
+
+    if(champId != "Astra"){
+      if(enableBomb){
+        bombMeter.setValue(engine.vision.bomb);
+      }
+    }
+    
+    if (engine.vision.bottomUIVisible > 0.5 && (deadGreenMeter.value != 1 || deadWhiteMeter.value != 1)) {
+      if(enableHealth){
+        if (engine.vision.health > 0) {
+          healthMeter.setValue(engine.vision.health);
+        }
+      }
+      if(enableShield){
+   
+        shieldMeter.setValue(engine.vision.shield);
+   
+      }
+      if(enableAgents){
+        switch (champId){
+          case "Astra":
+            Astra_c_meter.setValue(engine.vision.cMeter);
+            Astra_q_meter.setValue(engine.vision.qMeter);
+            Astra_e_meter.setValue(engine.vision.eMeter);
+            Astra_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Breach":
+            Breach_c_meter.setValue(engine.vision.cMeter);
+            Breach_q_meter.setValue(engine.vision.qMeter);
+            Breach_e_meter.setValue(engine.vision.eMeter);
+            Breach_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Brimstone":
+            Brimstone_c_meter.setValue(engine.vision.cMeter);
+            Brimstone_q_meter.setValue(engine.vision.qMeter);
+            Brimstone_e_meter.setValue(engine.vision.eMeter);
+            Brimstone_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Chamber":
+            Chamber_c_meter.setValue(engine.vision.cMeter);
+            Chamber_q_meter.setValue(engine.vision.qMeter);
+            Chamber_e_meter.setValue(engine.vision.eMeter);
+            Chamber_x_meter.setValue(engine.vision.xMeter);
+            Chamber_ult_meter.setValue(engine.vision.chamberUlt);
+            break;
+          case "Cypher":
+            Cypher_c_meter.setValue(engine.vision.cMeter);
+            Cypher_q_meter.setValue(engine.vision.qMeter);
+            Cypher_e_meter.setValue(engine.vision.eMeter);
+            Cypher_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Jett":
+            Jett_c_meter.setValue(engine.vision.cMeter);
+            Jett_q_meter.setValue(engine.vision.qMeter);
+            Jett_e_meter.setValue(engine.vision.eMeter);
+            Jett_x_meter.setValue(engine.vision.xMeter);
+            Jett_x2_meter.setValue(engine.vision.jettx);
+            break;
+          case "Kayo":
+            Kayo_c_meter.setValue(engine.vision.cMeter);
+            Kayo_q_meter.setValue(engine.vision.qMeter);
+            Kayo_e_meter.setValue(engine.vision.eMeter);
+            Kayo_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Killjoy":
+            Killjoy_c_meter.setValue(engine.vision.cMeter);
+            Killjoy_q_meter.setValue(engine.vision.qMeter);
+            Killjoy_e_meter.setValue(engine.vision.eMeter);
+            Killjoy_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Neon":
+            Neon_c_meter.setValue(engine.vision.cMeter);
+            Neon_q_meter.setValue(engine.vision.qMeter);
+            Neon_ult_meter.setValue(engine.vision.neonUlt);
+            onNeon_e()
+            break;
+          case "Omen":
+            Omen_c_meter.setValue(engine.vision.cMeter);
+            Omen_q_meter.setValue(engine.vision.qMeter);
+            Omen_e_meter.setValue(engine.vision.eMeter);
+            Omen_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Phoenix":
+            Phoenix_c_meter.setValue(engine.vision.cMeter);
+            Phoenix_q_meter.setValue(engine.vision.qMeter);
+            Phoenix_e_meter.setValue(engine.vision.eMeter);
+            Phoenix_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Raze":
+            Raze_c_meter.setValue(engine.vision.cMeter);
+            Raze_q_meter.setValue(engine.vision.qMeter);
+            Raze_e_meter.setValue(engine.vision.eMeter);
+            Raze_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Reyna":
+            Reyna_c_meter.setValue(engine.vision.cMeter);
+            Reyna_q_meter.setValue(engine.vision.qMeter);
+            Reyna_e_meter.setValue(engine.vision.eMeter);
+            Reyna_x_meter.setValue(engine.vision.xMeter);
+            Reyna_x2_meter.setValue(engine.vision.a);
+            Reyna_x3_meter.setValue(engine.vision.a2);
+            break;
+          case "Sage":
+            Sage_c_meter.setValue(engine.vision.cMeter);
+            Sage_q_meter.setValue(engine.vision.qMeter);
+            Sage_e_meter.setValue(engine.vision.eMeter);
+            Sage_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Skye":
+            Skye_c_meter.setValue(engine.vision.cMeter);
+            Skye_q_meter.setValue(engine.vision.qMeter);
+            Skye_e_meter.setValue(engine.vision.eMeter);
+            Skye_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Sova":
+            Sova_c_meter.setValue(engine.vision.cMeter);
+            Sova_q_meter.setValue(engine.vision.qMeter);
+            Sova_e_meter.setValue(engine.vision.eMeter);
+            Sova_x_meter.setValue(engine.vision.xMeter);
+            break;
+          case "Viper":
+            Viper_c_meter.setValue(engine.vision.cMeter);
+            Viper_q_meter.setValue(engine.vision.qMeter);
+            Viper_e_meter.setValue(engine.vision.eMeter);
+            Viper_x_meter.setValue(engine.vision.viperX);
+            break;
+          case "Yoru":
+            Yoru_c_meter.setValue(engine.vision.cMeter);
+            Yoru_q_meter.setValue(engine.vision.qMeter);
+            Yoru_e_meter.setValue(engine.vision.eMeter);
+            Yoru_x_meter.setValue(engine.vision.xMeter);
+            break;
+        }
+      } 
+    }
+    
+    if (deadGreenMeter.value == 1 && deadWhiteMeter.value == 1){
+      while(effects.length){
+        effects.pop();
+      }
+      while(stateMgr.stack.length > 1){
+        stateMgr.Pop();
+      }
+    }
+
+    ctx.globalAlpha = effectAlpha/100;
+
+    stateMgr.Process();
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+
+      ctx.globalAlpha = 1;
+    
+    window.requestAnimationFrame(update);
+  }
+
+  function StateHandler() {
+    this.stack = [];
+    this.state = null;
+
+    this.updateState = function () {
+      if (this.stack.length > 0) {
+        this.state = this.stack[this.stack.length - 1];
+      } else {
+        this.state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      this.stack.push(newState);
+      this.updateState();
+    };
+
+    this.Pop = function () {
+      this.stack.pop();
+      this.updateState();
+    };
+
+    this.Process = function () {
+      if (this.state != null) {
+        this.state.Process();
+      }
+    };
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+
+    stateMgr.Push(idleEffect);
+
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+</script>
