@@ -243,6 +243,7 @@
   let characterChanged = false;
   let ultCharged = false;
   let ultAnimPlayed = false;
+  let zGoing = false;
   let healthHistory = [];
 
   let blueShieldHistory = [];
@@ -338,15 +339,16 @@
 
   function ash_q_bar(){
     if(legend == "Ash"){
-      if(ash_q.decreased && engine.vision.check == 1){
+      if(ash_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new Ash_Q(89 ,203 ,232 , 6000));
       }
     }
   }
   function ash_z_bar(){
     if(legend == "Ash"){
-      if(ultCharged && ash_z.increased && checkmeterGreen.decreased && engine.vision.check == 1){
+      if(ultCharged && ash_z.increased && checkmeterGreen.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         let index = 0;
         while(index < 6){
           effects.push(new ellipseFade(100/(index + 1), 200));
@@ -358,22 +360,23 @@
 
   function bangalore_q_bar(){
     if(legend == "Bangalore"){
-      if(bangalore_q.decreased && engine.vision.check == 1){
+      if(bangalore_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new bangaloreQ());
       }
     }
   }
   function bangalore_q_bar1(){
     if(legend == "Bangalore"){
-      if(bangalore_q1.decreased && engine.vision.check == 1 ){
+      if(bangalore_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new bangaloreQ());
       }
     }
   }
   function bangalore_z_bar(){
     if(legend == "Bangalore"){
-      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1){
+      if(ultCharged && checkmeterYellow.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new bangaloreZ());
       }
     }
@@ -381,15 +384,16 @@
 
   function bloodhound_z_bar(){
     if(legend  == "Bloodhound"){
-      if(ultCharged && engine.vision.check == 1 && bloodhound_z.increased && engine.vision.getZLetter != 1){
+      if(ultCharged && engine.vision.check == 1 && bloodhound_z.increased && engine.vision.getZLetter != 1 && engine.vision.osdEsc != 1 && !zGoing){
       ultCharged = false;
+      zGoing = true;
       stateMgr.Push(new hueControl(1, true));
       }
     }
   }
   function bloodhound_q_bar(){
     if(legend == "Bloodhound"){
-      if(bloodhound_q.decreased && engine.vision.check == 1){
+      if(bloodhound_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
       stateMgr.Push(new PulseRippleState("#ff7300", true, 700));
       }
     }
@@ -397,29 +401,30 @@
 
   function caustic_q_bar(){
     if(legend == "Caustic"){
-      if((caustic_q.decreased && engine.vision.check == 1)){
+      if((caustic_q.decreased && engine.vision.check == 1) && engine.vision.osdEsc != 1){
       stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
       }
     }
   }
   function caustic_q_bar1(){
     if(legend == "Caustic"){
-      if((caustic_q1.decreased && engine.vision.check == 1)){
+      if((caustic_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1)){
       stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
       }
     }
   }
   function caustic_q_bar2(){
     if(legend == "Caustic"){
-      if((caustic_q2.decreased && engine.vision.check == 1)){
+      if((caustic_q2.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1)){
       stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
       }
     }
   }
   function caustic_z_bar(){
     if(legend  == "Caustic"){
-      if(ultCharged && caustic_z.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1){
+      if(ultCharged && caustic_z.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new causticZ());
       }
     }
@@ -427,15 +432,16 @@
 
   function crypto_z_bar(){
     if(legend == "Crypto"){
-      if(crypto_z.decreased && engine.vision.check != 1 && crypto_z2.decreased){
+      if(crypto_z.decreased && engine.vision.check != 1 && crypto_z2.decreased && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
       }
     }
   }
   function crypto_z_bar2(){
     if(legend == "Crypto"){
-      if(crypto_z2.decreased){
+      if(crypto_z2.decreased && engine.vision.osdEsc != 1){
         stateMgr.Push(new BurstRippleState("#4c9c48", "#fcfcfc", "#4c9c48"));
       }
     }
@@ -444,11 +450,11 @@
   let qCharged = false;
   function fuse_q_bar(){
     if(legend == "Fuse"){
-      if(fuse_q1.decreased && engine.vision.check == 1 && qCharged){
+      if(fuse_q1.decreased && engine.vision.check == 1 && qCharged && engine.vision.osdEsc != 1){
         qCharged = false;
         stateMgr.Push(new fuseQ());
       }
-      if(fuse_q2.decreased && engine.vision.check == 1 && !qCharged){
+      if(fuse_q2.decreased && engine.vision.check == 1 && !qCharged && engine.vision.osdEsc != 1){
         stateMgr.Push(new fuseQ());
       }
       if(fuse_q2.value == 1){
@@ -458,8 +464,9 @@
   }
   function fuse_z_bar(){
     if(legend == "Fuse"){
-      if(fuse_z.decreased && grey_Z.value == 1 && ultCharged && engine.vision.check == 1){
+      if(fuse_z.decreased && grey_Z.value == 1 && ultCharged && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new fuseZ());
       }
     }
@@ -467,15 +474,16 @@
 
   function gibraltar_q_bar(){
     if(legend == "Gibraltar"){
-      if(gibraltar_q.decreased && engine.vision.check == 1){
+      if(gibraltar_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
       stateMgr.Push(new PulseRippleState("#004cff", false, 850));
       }
     }
   }
   function gibraltar_z_bar(){
     if(legend  == "Gibraltar"){
-      if(gibraltar_z.value == 1 && engine.vision.check == 1 && ultCharged){
+      if(gibraltar_z.value == 1 && engine.vision.check == 1 && ultCharged && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new gibraltarZ());
         
       }
@@ -484,15 +492,16 @@
 
   function horizon_q_bar(){
     if(legend == "Horizon"){
-      if(horizon_q.decreased && engine.vision.check == 1){
+      if(horizon_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push( new horizonQ());
       }
     }
   }
   function horizon_z_bar(){
     if(legend == "Horizon"){
-      if(ultCharged && engine.vision.check == 1 && checkmeterBlue.increased){
+      if(ultCharged && engine.vision.check == 1 && checkmeterBlue.increased && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
       }
     }
@@ -500,15 +509,16 @@
 
   function lifeline_q_bar(){
     if(legend == "Lifeline"){
-      if(lifeline_q.decreased && engine.vision.check == 1){
+      if(lifeline_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
       stateMgr.Push(new BurstRippleState("#09ff00", "#63ffef", "#63ffef"));
       }
     }
   }
   function lifeline_z_bar(){
     if(legend  == "Lifeline"){
-      if(ultCharged && lifeline_z.increased && engine.vision.check == 1){
+      if(ultCharged && lifeline_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new lifelineZ());
       }
     }
@@ -516,14 +526,14 @@
 
   function loba_q_bar(){
     if(legend == "Loba"){
-      if(loba_q.decreased && engine.vision.check == 1 && !loba_t.decreased){
+      if(loba_q.decreased && engine.vision.check == 1 && !loba_t.decreased && engine.vision.osdEsc != 1){
         stateMgr.Push(new reverseBurstRippleState("#ffffff", "#8400ff", "#ffffff"));
       }
     }
   }
   function loba_q1_bar(){
     if(legend == "Loba"){
-      if(loba_t.decreased && engine.vision.check == 1 && loba_t.diff >=1){
+      if(loba_t.decreased && engine.vision.check == 1 && loba_t.diff >=1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new BurstRippleState("#ffffff", "#8400ff", "#ffffff"));
       }
     }
@@ -533,8 +543,11 @@
       if(ultCharged && 
         engine.vision.mainZ == 1 && 
         loba_z.value == 1 && 
-        engine.vision.check == 1){
-        console.log("IN LOBA Z")
+        engine.vision.check == 1 && 
+        engine.vision.osdEsc != 1 && 
+        !zGoing){
+
+        zGoing = true;
         ultCharged = false;
         stateMgr.Push(new lobaZ());
       }
@@ -543,15 +556,16 @@
 
   function mirage_q_bar(){
     if(legend == "Mirage"){
-      if(mirage_q.decreased && engine.vision.check == 1){
+      if(mirage_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
       stateMgr.Push(new BurstRippleState("#0004ff", "#63ffef", "#0004ff"));
       }
     }
   }
   function mirage_z_bar(){
     if(legend  == "Mirage"){
-      if(ultCharged && mirage_z.increased && engine.vision.check == 1){
+      if(ultCharged && mirage_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
       }
     }
@@ -559,7 +573,7 @@
 
   function octane_q_bar(){
     if(legend == "Octane"){
-      if(octane_q.decreased && engine.vision.check == 1){
+      if(octane_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         for (let i = 0; i < 20; i++) {
           setTimeout(function () {
             effects.push(
@@ -577,8 +591,9 @@
   }
   function octane_z_bar(){
     if(legend  == "Octane"){
-      if(ultCharged && octane_z.increased && engine.vision.check == 1){
+      if(ultCharged && octane_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new octaneZ());
       }
     }
@@ -586,15 +601,16 @@
 
   function pathfinder_q_bar(){
     if(legend == "Pathfinder"){
-      if(pathfinder_q.decreased && engine.vision.check == 1){
+      if(pathfinder_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
       stateMgr.Push(new pathfinderQ());
       }
     }
   }
   function pathfinder_z_bar(){
     if(legend  == "Pathfinder"){
-      if(ultCharged && pathfinder_z.value == 1 && engine.vision.check == 1){
+      if(ultCharged && pathfinder_z.value == 1 && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new pathfinderZ());
       }
     }
@@ -602,29 +618,30 @@
 
   function rampart_q_bar(){
     if(legend == "Rampart"){
-      if(rampart_q.decreased && engine.vision.check == 1){
+      if(rampart_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
       }
     }
   }
   function rampart_q_bar1(){
     if(legend == "Rampart"){
-      if(rampart_q1.decreased && engine.vision.check == 1){
+      if(rampart_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
       }
     }
   }
   function rampart_q_bar2(){
     if(legend == "Rampart"){
-      if(rampart_q2.decreased && engine.vision.check == 1){
+      if(rampart_q2.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
       }
     }
   }
   function rampart_z_bar(){
     if(legend  == "Rampart"){
-      if(rampart_z.increased && ultCharged && engine.vision.check == 1){
+      if(rampart_z.increased && ultCharged && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new rampartZ());
       }
     }
@@ -632,29 +649,30 @@
 
   function revenant_q_bar(){
     if(legend == "Revenant"){
-      if(revenant_q.decreased && engine.vision.check == 1){
+      if(revenant_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
       }
     }
   }
   function revenant_q_bar1(){
     if(legend == "Revenant"){
-      if(revenant_q1.decreased && engine.vision.check == 1 ){
+      if(revenant_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
       }
     }
   }
   function revenant_z_bar2(){
     if(legend == "Revenant"){
-      if(revenant_z2.decreased && engine.vision.check == 1){
+      if(revenant_z2.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         effects.push(new BoostWave(0));
       }
     }
   }
   function revenant_z_bar(){
     if(legend == "Revenant"){
-      if(ultCharged && revenant_z.value == 1 && engine.vision.check == 1){
+      if(ultCharged && revenant_z.value == 1 && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new revenantZ());
       }
     }
@@ -662,15 +680,16 @@
 
   function seer_q_bar(){
     if(legend == "Seer"){
-      if(seer_q.decreased && engine.vision.check == 1 && seer_q.value != 1){
+      if(seer_q.decreased && engine.vision.check == 1 && seer_q.value != 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new seerQ());
       }
     }
   }
   function seer_z_bar(){
     if(legend == "Seer"){
-      if(ultCharged && seer_z.value == 1 && engine.vision.check == 1 ){
+      if(ultCharged && seer_z.value == 1 && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new seerZ());
       }
     }
@@ -678,7 +697,7 @@
 
   function valk_q_bar(){
     if(legend == "Valkyrie"){
-      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased && valk_q.value != 1){
+      if(valk_q.decreased && engine.vision.check == 1 && !valk_z.increased && valk_q.value != 1 && engine.vision.osdEsc != 1){
         stateMgr.Push( new valkQ());
       }
     }
@@ -686,7 +705,9 @@
 
   function valk_z_bar(){
     if(legend == "Valkyrie"){
-      if(ultCharged && valk_z.value == 1 && valk_z.increased ){
+      if(ultCharged && valk_z.value == 1 && valk_z.increased && engine.vision.osdEsc != 1 && !zGoing){
+        ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new valkZ(100));
       }
     }
@@ -694,28 +715,28 @@
 
   function wattson_q_bar(){
     if(legend == "Wattson"){
-      if(wattson_q.decreased && engine.vision.check == 1){
+      if(wattson_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new wattsonQ());
       }
     }
   }
   function wattson_q_bar1(){
     if(legend == "Wattson"){
-      if(wattson_q1.decreased && engine.vision.check == 1 && wattson_q.value == 1){
+      if(wattson_q1.decreased && engine.vision.check == 1 && wattson_q.value == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new wattsonQ());
       }
     }
   }
   function wattson_q_bar2(){
     if(legend == "Wattson"){
-      if(wattson_q2.decreased && engine.vision.check == 1 && wattson_q.value == 1){
+      if(wattson_q2.decreased && engine.vision.check == 1 && wattson_q.value == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new wattsonQ());
       }
     }
   }
   function wattson_q_bar3(){
     if(legend  == "Wattson"){
-      if(wattson_q3.decreased && engine.vision.check == 1 && wattson_q.value == 1 ){
+      if(wattson_q3.decreased && engine.vision.check == 1 && wattson_q.value == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new wattsonQ());
       }
     }
@@ -723,8 +744,9 @@
 
   function wattson_z_bar(){
     if(legend == "Wattson"){
-      if(ultCharged && wattson_z.decreased && grey_Z.increased && engine.vision.check == 1 ){
+      if(ultCharged && wattson_z.decreased && grey_Z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new wattsonZ());
       }
     }
@@ -732,19 +754,20 @@
 
   function wraith_q_bar(){
     if(legend == "Wraith"){
-      if(wraith_q.decreased && engine.vision.check == 1){
+      if(wraith_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
       stateMgr.Push(new wraithQ());
       }
     }
   }
   function wraith_z_bar(){
     if(legend  == "Wraith"){
-      if(ultCharged && wraith_z.increased && engine.vision.check == 1){
+      if(ultCharged && wraith_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing){
         ultCharged = false;
+        zGoing = true;
         stateMgr.Push(new reversePulseRippleState("#8c00ff", true, 750));
 
       }
-      if(checkmeterYellow.decreased && engine.vision.check == 1){
+      if(checkmeterYellow.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1){
         stateMgr.Push(new PulseRippleState("#8c00ff", true, 700));
       }
     }
@@ -1113,7 +1136,7 @@
     stateMgr.Process();
     
     if (enableShield){
-        ctx.globalAlpha = .25;
+        ctx.globalAlpha = .2;
         if (goldShield > 0.15){
           ctx.fillStyle = `hsl(44, 100%, 50%)`;
           ctx.fillRect(0, 0, 320, 200);
@@ -1219,6 +1242,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -1329,6 +1353,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
       this.Draw();
     };
@@ -1520,6 +1545,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -1634,6 +1660,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -1672,6 +1699,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -1716,6 +1744,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
         stateMgr.Push(new fuseZ2());
       }
         this.Draw();
@@ -1792,6 +1821,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -1902,6 +1932,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2003,6 +2034,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2051,6 +2083,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2110,6 +2143,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2151,6 +2185,7 @@
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2287,6 +2322,7 @@
           this.radiusX -= 0.25;
           if(this.radiusX <= 5){
             this.lifetime = 0;
+            zGoing = false;
           }
         }
 
@@ -2378,6 +2414,7 @@ function bangaloreQ() {
       this.elapsed = getNow() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2423,6 +2460,7 @@ function bangaloreQ() {
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
         this.Draw();
       };
@@ -2559,6 +2597,7 @@ function bangaloreQ() {
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
       this.Draw();
     };
@@ -2612,6 +2651,7 @@ function bangaloreQ() {
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
       this.Draw();
     };
@@ -2686,6 +2726,7 @@ function bangaloreQ() {
       this.elapsed = new Date().getTime() - this.start;
       if (this.elapsed > this.duration) {
         stateMgr.Pop();
+        zGoing = false;
       }
       this.Draw();
     };
