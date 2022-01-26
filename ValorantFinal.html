@@ -12,7 +12,6 @@
   <meta property="enableShield" label="Shield effect" type="boolean" default="1" />
   <meta property="enableAgents" label="Agent skill effects" type="boolean" default="1" />
   <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
-  <meta property="effectAlpha" label="All effects brightness" type="number" min="0" max="100" default="100" />
   <meta meter="a" tags="vlc,VALORANT" type="area" x= "0.4391" y= "0.6611" height= "0.0056" width= "0.001" h="160-170" s="20-55" l="60-100">
     <resolution size="3440x1440" x= "0.4549" y= "0.66" height= "0.003" width= "0.001"/>
     <resolution size="2560x1600" x= "0.4328" y= "0.6602" height= "0.0056" width= "0.001"/>
@@ -3844,8 +3843,6 @@ function DiagonalLine() {
       }
     }
 
-    ctx.globalAlpha = effectAlpha/100;
-
     stateMgr.Process();
 
     for (let i = 0; i < effects.length; i++) {
@@ -3854,8 +3851,6 @@ function DiagonalLine() {
         effects.splice(i, 1);
       }
     }
-
-      ctx.globalAlpha = 1;
     
     window.requestAnimationFrame(update);
   }

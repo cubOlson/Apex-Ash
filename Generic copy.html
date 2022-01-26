@@ -1,22 +1,17 @@
 <head>
-    <Title>Forza Horizon 5</Title>
-    <meta description="Speed trough mexico with this integration" />
+    <Title>Rainbow Six Extraction</Title>
+    <meta description="Get all the intel on the archeans with this integration" />
     <meta publisher="Jordy Walraven" />
-    <meta meter="SpeedMeter" tags = "forza horizon 5, vlc" type="ocr_numeric" x=".855109375" y=".8688888" width=".090" height=".0951388888888889" confidence="10"/>
-    <meta meter="FastTravelMeter" tags="vlc, forza horizon 5" type="ocr_textmatch" x=".835546875 " y=".882638888" width=".08789" height=".035" string="FAST TRAVELING" confidence="70" />
-    <meta meter="GoMeter" tags="vlc, forza horizon 5" type="ocr_textmatch" x=".42417 " y=".255" width=".139" height=".23958" string="GO" confidence="70" />
-    <meta meter="Finish1" tags="vlc,forza horizon 5" type="linear" x=".581" y=".63888" width=".07812" h="310-350" s="60-100" l="70-100"> </meta>
-    <meta meter="Wheelspin" tags="vlc,forza horizon 5" type="linear" x=".79" y=".153" width=".105" h="320-350" s="60-100" l="30-90"> </meta>
-    <meta meter="Wheelspin2" tags="vlc,forza horizon 5" type="linear" x=".2" y=".153" width=".105" h="320-350" s="60-100" l="30-90"></meta>
-    <meta property="HighSpeedColor" label="High speed effect color" type="color" default="#fcba03" min="0" max="360" />
-    <meta property="Brightness" label="Screen ambiance brightness" type="number" default="100" min="0" max="100">
-    <meta property="SpeedInMiles" label="Speed in miles" type="boolean" default="1" />
-    <meta property="EnableSpeed" label="Enable speed effects" type="boolean" default="1" />
-    <meta property="EnableFastTravel" label="Enable fast travel effect" type="boolean" default="1" />
-    <meta property="EnableGoEffect" label="Enable Go effect" type="boolean" default="0" />
-    <meta property="EnableFinishEffect" label="Enable finish effect" type="boolean" default="1" />
-    <meta property="EnableWheelspinEffect" label="Enable wheelspin effects" type="boolean" default="1" />
 
+    <meta meter="Failed" tags="vlc, Rainbow Six" type="area" x=".1027" y=".615" width=".078" height=".14" h="0-30" s="80-100" l="70-100"></meta>
+    <meta meter="Won" tags="vlc, Rainbow Six" type="area" x=".1027" y=".615" width=".078" height=".14" h="20-70" s="80-100" l="70-100"></meta>
+    <meta meter="StartingMatch" tags="Rainbow Six, vlc" type="linear" x=".063" y=".120" width=".8" h="20-70" s="50-100" l="70-100"></meta>
+    <meta meter="Hp" tags="vlc, Rainbow Six" type="area" x=".0964" y=".952" width=".128" height=".001" h="130-160" s="40-100" l="70-100"></meta>
+    <meta meter="Damage" tags="vlc, Rainbow Six" type="area" x=".0964" y=".952" width=".128" height=".001" h="0-30" s="80-100" l="70-100"></meta>
+    <meta meter="SubZoneStateFail" tags="Rainbow Six, vlc" type="linear" x=".425" y=".285" width=".13" h="0-30" s="80-100" l="70-100"></meta>
+    <meta meter="SubZoneStateSucces" tags="Rainbow Six, vlc" type="linear" x=".425" y=".285" width=".13" h="130-160" s="70-100" l="70-100"></meta>
+    
+    <meta property="Brightness" label="Screen ambiance brightness" type="number" default="100" min="0" max="100"/>
 </head>
 
 <body style="margin: 0; padding: 0;">
@@ -31,9 +26,19 @@
     var width = 320;
     var height = 200;
     var hue = 0;
-    var did = false;
+    var effects = [];
+    var HomeAnim = false;
+    var hpAnim = false;
+    var failAnim = false;
 
-    var effects = []
+    //Meters
+    var matchmakingMeter = new Meter(20, matchmakingEffect);
+    var hpMeter = new Meter(5, hpEffect);
+    var damageMeter = new Meter(1, damageEffect)
+    var failMeter = new Meter(10, failEffect)
+    var winMeter = new Meter(10, winEffect)
+    var subzoneFailMeter = new Meter(10, subzoneFailEffect);
+    var subzoneWinMeter = new Meter(10, subzoneWinEffect);
 
 
 
@@ -69,53 +74,594 @@
         };
     }
 
+       function matchmakingEffect() {
+            if (matchmakingMeter.value >= 0.9) {
+                stateHdlr.Push(new MatchMakingEffect());
+                HomeAnim = true;
+            }
+        }
+
+        function hpEffect(){
+            if(hpMeter.value >= 0){
+                effects.push(new HpEffect("up", "green", c.height));
+            }
+        }
+
+        function damageEffect() {
+                    if(damageMeter.value >0){
+                        effects.push(new HpEffect("down", "red", 0));
+                    }
+            }
+
+            function failEffect() {
+                if(failMeter.value >0.6){
+                    stateHdlr.Push(new PlayKillEffect("red", 5));
+                    failAnim = true;
+                }
+            }
+
+             function winEffect() {
+                    if (winMeter.value > 0.65) {
+                        stateHdlr.Push(new PlayFinishEffect());
+                    }
+                }
+
+                  function subzoneFailEffect() {
+                        if (subzoneFailMeter.value > 0.9) {
+                            stateHdlr.Push(new SubzoneFailEffect());
+                            failAnim = true;
+                        }
+                    }
+
+                    function subzoneWinEffect() {
+                        if (subzoneWinMeter.value > 0.9) {
+                            stateHdlr.Push(new SubzoneWinEffect());
+                            failAnim = true;
+                        }
+                    }
+
+
+
+    function Meter(size, callback) {
+            this.size = size;
+            this.value = 0;
+            this.diff = 0;
+            this.increased = false;
+            this.decreased = false;
+            var values = [];
+
+            this.setValue = function (updatedValue) {
+                values.push(updatedValue);
+                if (values.length > this.size) {
+                    values.shift();
+                }
+
+                for (var i = 0; i < values.length - 1; i++) {
+                    if (values[i] !== values[i + 1]) return;
+                }
+                if (this.value !== values[0]) {
+                    this.diff = Math.abs(this.value - values[0]);
+                    this.increased = this.value < values[0];
+                    this.decreased = this.value > values[0];
+                    this.value = values[0];
+                    callback();
+                }
+            };
+        }
+   
+
     
-  function chamberUltSights(){
-    this.radius = 0;
-    this.Process = function () {
-      if (!did) {
-        stateMgr.Pop();
-      }
-        this.Draw();
-      };
-    this.Draw = function(){
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, 320, 200);
 
-      ctx.fillStyle = "red";
-      ctx.strokeStyle = "yellow";
-      ctx.beginPath();
-      ctx.arc(160, 100, 10, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(160, 100, this.radius + 50, 0, Math.PI * 2);
-      ctx.arc(160, 100, this.radius, 0, Math.PI * 2);
-      ctx.lineWidth = 20;
-      ctx.stroke();
-      this.radius += 2;
-      if (this.radius > 200){
-        this.radius = 0;
-      }
+    function copyScreen() {
+
+        var shine = engine.vision.ShineMeter
+        let lightness = new Int8Array(engine.zone.lightness);
+        let sat = new Int8Array(engine.zone.saturation);
+        let hue = new Int16Array(engine.zone.hue);
+        for (var iZone = 0; iZone < 560; iZone++) {
+            var iRow = Math.floor(iZone / 28);
+            var iCol = iZone % 28;
+            var iWidth = 320 / 28;
+            var iHeight = 200 / 20;
+            var iZx = iCol * iWidth;
+            var iZy = iRow * iHeight;
+            ctx.fillStyle =
+                "hsla(" +
+                hue[iZone] +
+                "," +
+                sat[iZone] +
+                "%," +
+                lightness[iZone]* (Brightness/100) +
+                "%, " +
+                "1" +
+                ")";
+
+            ctx.fillRect(iZx, iZy, iWidth, iHeight);
+        }
+
     }
-  }
 
+ 
+
+    //Effects
+    class blood {
+            constructor(x, y, radius, color, fade) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.fade = fade;
+                this.speed = (Math.random() + 0.1) * 4
+            }
+            Draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+                ctx.strokeStyle = this.color;
+                ctx.stroke();
+                this.y += this.speed * Math.random();
+                this.x += (Math.random() - 0.5) * 8;
+            }
+
+        }
+
+         class gas {
+                constructor(x, y, radius, color, fade) {
+                    this.x = x;
+                    this.spawn = x;
+                    this.y = y;
+                    this.radius = radius;
+                    this.color = color;
+                    this.fade = fade;
+                    this.speed = (Math.random() + 0.1) * 2 
+                }
+                Draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+                    ctx.strokeStyle = `hsl(133, ${(Math.random() * 70) + 30}%,${(Math.random() * 70)}%)`;
+                    ctx.stroke();
+                    this.y += 0.1;
+                    if(this.spawn == 0){
+                        this.x += (Math.random()) * 3 * (this.y / 160);
+                    } else {
+                        this.x += (-Math.random()) * 3 * (this.y / 160);
+                    }
+                    
+                }
+
+            }
+
+
+         function PlayKillEffect(color, radius) {
+                this.start = new Date().getTime();
+                this.elapsed = 0;
+                this.bloodDrip = [];
+                this.state = 0;
+                this.cubeX = 1;
+                this.cubeY = 1;
+                this.color = color;
+                this.radius = radius;
+
+                this.Process = function () {
+                    if (this.bloodDrip.length < 20) {
+                        this.bloodDrip.push(new blood(Math.random() * c.width, 0, this.radius, this.color , 0.01))
+                    }
+
+                    this.elapsed = new Date().getTime() - this.start;
+
+                    if (this.elapsed >= 6000) {
+                        stateHdlr.Pop();
+                        killAnim = false;
+                        failAnim = false;
+                    }
+
+                    this.Draw();
+                };
+
+
+
+
+                this.Draw = function () {
+                    if (this.state == 0) {
+                        ctx.beginPath();
+                        ctx.fillStyle = 'black'
+                        ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+                        this.bloodDrip.length = 0;
+                        this.cubeX += 15;
+                        this.cubeY += 10;
+                        effectTime = Date.now();
+                        if (this.cubeX >= c.width + 30) {
+                            this.state = 1;
+                        }
+                    }
+                    if (this.state == 1) {
+                        this.bloodDrip.forEach(blood => {
+                            blood.Draw();
+                        }
+                        );
+                    }
+                }
+            }
+
+            function SubzoneFailEffect() {
+                    this.start = new Date().getTime();
+                    this.elapsed = 0;
+                    this.bloodDrip = [];
+                    this.state = 0;
+                    this.cubeX = 1;
+                    this.cubeY = 1;
+                    this.state = 0;
+                    this.moveX =0;
+                    this.moveY = 0;
+                    this.speed =6;
+                    this.fadeY = 100;
+                    this.fadeX = 160;
+
+                    this.Process = function () {
+
+
+                        if (this.elapsed >= 5000) {
+                            failAnim = false;
+                            stateHdlr.Pop();
+                        }
+
+                        this.Draw();
+                    };
+
+                    this.Draw = function () {
+                        if (this.state == 0) {
+                            ctx.beginPath();
+                            ctx.fillStyle = 'black'
+                            ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+                            this.bloodDrip.length = 0;
+                            this.cubeX += 15;
+                            this.cubeY += 10;
+                            this.speed;
+                            effectTime = Date.now();
+                            if (this.cubeX >= c.width + 30) {
+                                this.state = 1;
+                            }
+                        }
+                        if (this.state == 1) {
+                            if(this.moveX< c.width){
+                                ctx.fillStyle = "red";
+                                ctx.fillRect(this.moveX, this.moveY, 20,20);
+                                this.moveX += this.speed;
+                                this.moveY += this.speed/1.6;
+                            } else {
+                                this.moveX =c.width-20;
+                                this.moveY = 0;
+                                this.state = 2;
+                            }
+                          
+                        }
+
+                        if(this.state ==2){
+                             ctx.fillStyle = "red";
+                            ctx.fillRect(this.moveX, this.moveY, 20, 20);
+                            this.moveX -= this.speed;
+                            this.moveY += this.speed / 1.6;
+                            if(this.moveX <0){
+                                this.state =3;
+                                this.moveY = 0;
+                                this.moveX = 0;
+                            }
+                        }
+                        if(this.state == 3){
+                            ctx.fillRect(this.fadeX,this.fadeY,this.moveX,this.moveY)
+                            this.moveY += this.speed/2;
+                            this.moveX += this.speed/1.25
+                            this.fadeY -= this.speed/4;
+                            this.fadeX -= this.speed/2.5
+
+                        }
+
+                        this.elapsed = new Date().getTime() - this.start;
+                    }
+                }
+
+                 function SubzoneWinEffect() {
+                        this.start = new Date().getTime();
+                        this.elapsed = 0;
+                        this.bloodDrip = [];
+                        this.state = 0;
+                        this.cubeX = 1;
+                        this.cubeY = 1;
+                        this.state = 0;
+                        this.moveX = 0;
+                        this.moveY = 0;
+                        this.speed = 6;
+                        this.gas = [];
+
+                        this.Process = function () {
+
+                            if(this.gas.length < 80){
+                                let spawnX;
+                                if(Math.random() >0.5){
+                                    spawnX = 0;
+                                } else {
+                                    spawnX = c.width;
+                                }
+                                this.gas.push(new gas (spawnX, Math.random()*c.height,Math.random()*20, "green", "1"))
+                            }
+                            if (this.elapsed >= 7000) {
+                                failAnim = false;
+                                stateHdlr.Pop();
+                            }
+
+                            if(this.elapsed >= 6000){
+                                this.state = 2;
+                            }
+                            this.Draw();
+                        };
+
+                        this.Draw = function () {
+                            if (this.state == 0) {
+                                ctx.beginPath();
+                                ctx.fillStyle = 'black'
+                                ctx.fillRect(0, 0, this.cubeX, c.height);
+                                ctx.fillRect(c.width, 0, -this.cubeX, c.height);
+                                this.bloodDrip.length = 0;
+                                this.cubeX += 5;
+                                this.speed;
+                                effectTime = Date.now();
+                                if (this.cubeX >= c.width + 30) {
+                                    this.state = 1;
+                                }
+                            }
+                            if (this.state == 1) {
+                                this.gas.forEach(gas => {
+                                    gas.Draw();
+                                });
+
+                            }
+
+   
+                            if (this.state == 2) {
+                                ctx.fillStyle = "green";
+                                ctx.fillRect(0, 0, c.width, this.moveY)
+                                this.moveY += this.speed / 2;
+                            }
+
+                            this.elapsed = new Date().getTime() - this.start;
+                        }
+                    }
+            
+    class hpBar{
+        constructor(x,y,width, color, direction){
+            this.x = x;
+            this.y = y,
+            this.width = width;
+            this.color = color
+            this.amount;
+            this.directionChange = false;
+            if(direction == "up"){
+                this.direction = 0;
+                this.speed = -8;
+                this.amount = 20;
+            } else {
+                this.direction = c.height;
+                this.speed = 8;
+                this.amount = -20;
+                this.y -= 80;
+            }
+        }
+        
+        draw(){      
+          ctx.fillStyle = this.color;
+          ctx.fillRect(this.x, this.y, 20, 100)
+            this.y+=this.speed
+        }
+    }
+
+
+    function HpEffect(direction, color, y){
+        this.duration = 4000;
+        this.direction = direction;
+        this.startTime = new Date().getTime();
+        this.elapsedTime;
+        this.lifetime = 4000;
+        this.speed = 10;
+        this.hpRects = [];
+        this.x = 0;
+        this.y = y;
+        this.color = color;
+
+        this.draw = function (){
+           while (this.x <= c.width) {
+               this.hpRects.push(new hpBar(this.x, this.y, 20, this.color, this.direction))
+               this.x +=20;
+               this.y +=5;
+           }
+           this.hpRects.forEach(hpBar => {
+            hpBar.draw();
+           });
+           this.elapsedTime = new Date().getTime() - this.startTime;
+           this.lifetime = this.duration - this.elapsedTime;
+        }
+    }
+
+
+
+     function MatchMakingEffect() {
+          this.speed = 0;
+
+            this.Process = function () {
+
+                if (matchmakingMeter.value < 0.5) {
+                    stateHdlr.Pop();
+                    effects.push(new BarEffect("yellow"));
+                }
+                this.draw();
+            }
+
+
+            this.draw = function () {
+                ctx.beginPath();
+                ctx.globalAlpha = 0.2;
+                ctx.fillStyle = "black"
+                ctx.fillRect(0, 0, c.width, c.height)
+                ctx.globalAlpha = 1;
+                ctx.moveTo(0, c.height / 2);
+                for (let i = 0; i < c.width; i++) {
+                    ctx.lineTo(i, c.height / 2  + Math.sin(i * (5 / 1000) + this.speed) * (20 - 50) * 1.75)
+                }
+                ctx.strokeStyle = "yellow"
+                ctx.stroke()
+                this.speed += (20) / 1000;
+
+                 ctx.beginPath();
+                ctx.globalAlpha = 1;
+                ctx.moveTo(0, c.height / 2);
+                for (let i = 0; i < c.width; i++) {
+                    ctx.lineTo(i, c.height / 2 + Math.sin(i * (5 / 1000) + (this.speed+2000)) * (20 - 50) * 1.75)
+                }
+                ctx.strokeStyle = "green"
+                ctx.stroke()
+                this.speed += (20)/ 1000;
+            }
+
+        }
+
+        function BarEffect(color){
+            this.duration = 1000;
+            this.startTime = new Date().getTime();
+            this.elapsedTime;
+            this.lifetime = 2000;
+            this.speed = 10;
+            this.color = color
+
+            this.draw = function (){
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-320 + this.speed, 0, c.width, c.height)
+                this.speed += 10;
+
+                this.elapsedTime = new Date().getTime() - this.startTime;
+                this.lifetime = this.duration - this.elapsedTime;
+                if (this.lifetime <= 0) {
+                    HomeAnim = false;
+                }
+            }
+
+           
+        }
+
+
+
+         class VictoryParticle {
+                constructor(x, y, radius, color, fade) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = radius;
+                    this.color = color;
+                    this.fade = fade;
+                    this.speed = (Math.random() + 0.1) * 4
+                }
+                Draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+                    ctx.fillStyle = this.color
+                    ctx.fill();
+                    this.y += this.speed * Math.random();
+                    this.x += (Math.random() - 0.5) * 20;
+                }
+
+            }
+
+
+         function PlayFinishEffect() {
+                this.start = new Date().getTime();
+                this.elapsed = 0;
+                this.VictoryDrip = [];
+                this.state = 0;
+                this.cubeX = 0;
+                this.cubeY = 0;
+
+
+                this.Process = function () {
+                    if (this.VictoryDrip.length < 140 && this.elapsed < 3000) {
+                        if(Math.random() >0.5){
+                            this.VictoryDrip.push(new VictoryParticle(Math.random() * c.width, 0, 5, 'yellow', 0.01))
+                        } else {
+                            this.VictoryDrip.push(new VictoryParticle(Math.random() * c.width, 0, 5, 'green', 0.01))
+                        }
+                        
+                    }
+
+                    this.elapsed = new Date().getTime() - this.start;
+
+                    if (this.elapsed >= 6000) {
+                        this.VictoryDrip.pop();
+                        if (this.VictoryDrip.length > 0) {
+                            this.VictoryDrip.pop();
+                        }
+
+                    }
+
+                    if (this.VictoryDrip.length == 0) {
+                        stateHdlr.Pop();
+                        VictoryAnim = false;
+                    }
+
+
+                    this.Draw();
+                };
+
+
+
+
+                this.Draw = function () {
+                    if (this.state == 0) {
+                        ctx.beginPath();
+                        ctx.fillStyle = 'black'
+                        ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+                        this.VictoryDrip.length = 0;
+                        this.cubeX += 15;
+                        this.cubeY += 10;
+                        effectTime = Date.now();
+                        if (this.cubeX >= c.width + 30) {
+                            this.state = 1;
+                        }
+                    }
+                    if (this.state == 1) {
+                        ctx.beginPath();
+                        ctx.fillStyle = 'black'
+                        ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+                        this.VictoryDrip.forEach(VictoryParticle => {
+                            VictoryParticle.Draw();
+                        }
+                        );
+                    }
+                }
+            }
+
+    
+
+    
+    
 
     function update() {
 
-
-        if (!did){
-            stateHdlr.Push(new chamberUltSights());
-            did = true;
+        if(!HomeAnim && !failAnim){
+            copyScreen();
         }
+        matchmakingMeter.setValue(engine.vision.StartingMatch);
+        hpMeter.setValue(engine.vision.Hp);
+        damageMeter.setValue(engine.vision.Damage);
+        failMeter.setValue(engine.vision.Failed);
+        winMeter.setValue(engine.vision.Won);
+        subzoneFailMeter.setValue(engine.vision.SubZoneStateFail);
+        subzoneWinMeter.setValue(engine.vision.SubZoneStateSucces);
 
+       
+     
         for (let i = 0; i < effects.length; i++) {
             effects[i].draw();
             if (effects[i].lifetime <= 0) {
                 effects.splice(i, 1);
             }
         }
-
-
+       
         stateHdlr.Process();
         window.requestAnimationFrame(update);
     }
