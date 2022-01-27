@@ -1,0 +1,175 @@
+<head>
+  <title>League of Legends WorkCopy</title>
+  <meta description="Metering and ambiance for League of Legends." />
+  <meta publisher="WhirlwindFX" />
+  <meta
+    property="keyScreenBrightness"
+    label="Ambiance brightness"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+  />
+  <meta
+    property="enableHealth"
+    label="Health effect"
+    type="boolean"
+    default="1"
+  />
+  <meta meter="lowHealth" tags="league" x=".3557" y=".9593" width=".0526" h="0-10" s="50-100" l="50-100" type="linear">
+  </meta>
+  <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" h="0-10" s="50-100" l="50-100" type="linear">
+  </meta>
+  <meta meter="lowMana" tags="league" x=".3557" y=".9778" width=".0526" h="0-10" s="50-100" l="50-100" type="linear">
+  </meta>
+  <meta meter="loadBar" tags="league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
+  </meta>
+  <meta meter="checkLoadBar" tags="league" x=".3953" y=".7389" width=".001" h="170-200" s="50-75" l="30-50" type="linear">
+  </meta>
+  <meta meter="allyDeath1" tags="league" x=".8682" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="allyDeath2" tags="league" x=".9021" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="allyDeath3" tags="league" x=".9359" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="Q" tags="league" x=".3807" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="W" tags="league" x=".4156" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="E" tags="league" x=".45" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="R" tags="league" x=".4849" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="D" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="F" tags="league" x=".55" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="70">
+  </meta>
+  <meta meter="levelUp" tags="league" x=".3228" y=".9657" width=".012" height=".0139" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="70">
+  </meta>
+  <meta meter="alliedTurret" tags="league" x=".5984" y=".1352" width=".0073" height=".0056" h="190-210" s="65-100" l="75-100" type="area">
+  </meta>
+  <meta meter="enemyTurret" tags="league" x=".6516" y=".1352" width=".0073" height=".0056" h="0-10" s="50-100" l="50-100" type="area">
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+
+  function update() {
+
+    stateMgr.Process();
+    window.requestAnimationFrame(update);
+  }
+
+  function IdleState() {
+    this.Process = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScreenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+    };
+  }
+
+  
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+        stack.push(newState);
+        updateState();
+      }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      if (updatedValue == -1) return;
+      values.push(updatedValue);
+
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+    stateMgr.Push(new IdleState());
+
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+</script>

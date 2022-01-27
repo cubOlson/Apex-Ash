@@ -3,13 +3,14 @@
     <meta description="Get all the intel on the archeans with this integration" />
     <meta publisher="Jordy Walraven" />
 
-    <meta meter="Failed" tags="vlc, Rainbow Six" type="area" x=".1027" y=".615" width=".078" height=".14" h="0-30" s="80-100" l="70-100"></meta>
+    <meta meter="Failed" tags="vlc, Rainbow Six" type="area" x=".1027" y=".615" width=".078" height=".14" h="5-10" s="85-100" l="80-100"></meta>
     <meta meter="Won" tags="vlc, Rainbow Six" type="area" x=".1027" y=".615" width=".078" height=".14" h="20-70" s="80-100" l="70-100"></meta>
     <meta meter="StartingMatch" tags="Rainbow Six, vlc" type="linear" x=".063" y=".120" width=".8" h="20-70" s="50-100" l="70-100"></meta>
-    <meta meter="Hp" tags="vlc, Rainbow Six" type="area" x=".0964" y=".952" width=".128" height=".001" h="130-160" s="40-100" l="70-100"></meta>
-    <meta meter="Damage" tags="vlc, Rainbow Six" type="area" x=".0964" y=".952" width=".128" height=".001" h="0-30" s="80-100" l="70-100"></meta>
-    <meta meter="SubZoneStateFail" tags="Rainbow Six, vlc" type="linear" x=".425" y=".285" width=".13" h="0-30" s="80-100" l="70-100"></meta>
-    <meta meter="SubZoneStateSucces" tags="Rainbow Six, vlc" type="linear" x=".425" y=".285" width=".13" h="130-160" s="70-100" l="70-100"></meta>
+    <meta meter="Confirmation" tags="Rainbow Six, vlc" type="linear" x=".0.26" y=".65625" width=".0316" h="0-300" s="0-100" l="0-20"></meta>
+    <meta meter="Hp" tags="vlc, Rainbow Six" type="area" x=".0964" y=".952" width=".13" height=".001" h="130-160" s="40-100" l="70-100"></meta>
+    <meta meter="Damage" tags="vlc, Rainbow Six" type="area" x=".0964" y=".952" width=".13" height=".001" h="0-30" s="80-100" l="70-100"></meta>
+    <meta meter="SubZoneStateFail" tags="Rainbow Six, vlc" type="linear" x=".425" y=".285" width=".13" h="5-10" s="85-100" l="80-100"></meta>
+    <meta meter="SubZoneStateSucces" tags="Rainbow Six, vlc" type="linear" x=".455" y=".285" width=".12" h="130-160" s="70-100" l="70-100"></meta>
     
     <meta property="Brightness" label="Screen ambiance brightness" type="number" default="100" min="0" max="100"/>
 </head>
@@ -30,6 +31,7 @@
     var HomeAnim = false;
     var hpAnim = false;
     var failAnim = false;
+    var confirmationEffect;
 
     //Meters
     var matchmakingMeter = new Meter(20, matchmakingEffect);
@@ -94,14 +96,14 @@
             }
 
             function failEffect() {
-                if(failMeter.value >0.6){
+                if(failMeter.value >0.6 && confirmationEffect > 0.4){
                     stateHdlr.Push(new PlayKillEffect("red", 5));
                     failAnim = true;
                 }
             }
 
              function winEffect() {
-                    if (winMeter.value > 0.65) {
+                    if (winMeter.value > 0.65 && confirmationEffect>0.4) {
                         stateHdlr.Push(new PlayFinishEffect());
                     }
                 }
@@ -217,7 +219,7 @@
                 Draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
-                    ctx.strokeStyle = `hsl(133, ${(Math.random() * 70) + 30}%,${(Math.random() * 70)}%)`;
+                    ctx.strokeStyle = `hsl(80, ${(Math.random() * 70) + 30}%,${(Math.random() * 70)}%)`;
                     ctx.stroke();
                     this.y += 0.1;
                     if(this.spawn == 0){
@@ -383,7 +385,7 @@
                                 }
                                 this.gas.push(new gas (spawnX, Math.random()*c.height,Math.random()*20, "green", "1"))
                             }
-                            if (this.elapsed >= 7000) {
+                            if (this.elapsed >= 10000) {
                                 failAnim = false;
                                 stateHdlr.Pop();
                             }
@@ -391,6 +393,11 @@
                             if(this.elapsed >= 6000){
                                 this.state = 2;
                             }
+                              if (this.elapsed >= 6500) {
+                                this.state = 3;
+                            }
+                            
+
                             this.Draw();
                         };
 
@@ -400,10 +407,7 @@
                                 ctx.fillStyle = 'black'
                                 ctx.fillRect(0, 0, this.cubeX, c.height);
                                 ctx.fillRect(c.width, 0, -this.cubeX, c.height);
-                                this.bloodDrip.length = 0;
                                 this.cubeX += 5;
-                                this.speed;
-                                effectTime = Date.now();
                                 if (this.cubeX >= c.width + 30) {
                                     this.state = 1;
                                 }
@@ -417,9 +421,17 @@
 
    
                             if (this.state == 2) {
-                                ctx.fillStyle = "green";
-                                ctx.fillRect(0, 0, c.width, this.moveY)
-                                this.moveY += this.speed / 2;
+                                ctx.fillStyle = "hsla(0, 0%, 0%, 0.3)"
+                                ctx.fillRect(0,0,c.width,c.height)
+                            }
+
+                            if(this.state == 3){
+                                copyScreen();
+                                ctx.beginPath();
+                                ctx.fillStyle = 'black'
+                                ctx.fillRect(0, 0, this.cubeX, c.height);
+                                ctx.fillRect(c.width, 0, -this.cubeX, c.height);
+                                this.cubeX -= 5;
                             }
 
                             this.elapsed = new Date().getTime() - this.start;
@@ -645,6 +657,7 @@
         if(!HomeAnim && !failAnim){
             copyScreen();
         }
+        confirmationEffect = engine.vision.Confirmation;
         matchmakingMeter.setValue(engine.vision.StartingMatch);
         hpMeter.setValue(engine.vision.Hp);
         damageMeter.setValue(engine.vision.Damage);
