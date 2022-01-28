@@ -1,0 +1,367 @@
+<head>
+  <title>League of Legends WorkCopy</title>
+  <meta description="Metering and ambiance for League of Legends." />
+  <meta publisher="WhirlwindFX" />
+  <meta 
+  property="character" 
+  label="Champions" 
+  type="combobox" 
+  values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
+  default="Ahri"
+  />
+  <meta
+    property="keyScreenBrightness"
+    label="Ambiance brightness"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+  />
+  <meta
+    property="enableHealth"
+    label="Health effect"
+    type="boolean"
+    default="1"
+  />
+  <meta meter="lowHealth" tags="league" x=".3557" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
+  </meta>
+  <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" h="0-15" s="50-100" l="30-70" type="linear">
+  </meta>
+  <meta meter="lowMana" tags="league" x=".3557" y=".9778" width=".0526" h="200-230" s="50-100" l="40-70" type="linear">
+  </meta>
+  <meta meter="loadBar" tags="league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
+  </meta>
+  <meta meter="checkLoadBar" tags="league" x=".3953" y=".7389" width=".001" h="170-200" s="50-75" l="30-50" type="linear">
+  </meta>
+  <meta meter="allyDeath1" tags="league" x=".8682" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="allyDeath2" tags="league" x=".9021" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="allyDeath3" tags="league" x=".9359" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-100" l="0-100" type="linear">
+  </meta>
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="DoubleqButton" tags="league" x=".3807" y=".8787" width=".001" h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="DoublewButton" tags="league" x=".4156" y=".8787" width=".001" h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="DoubleeButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-60" l="90-100" type="linear">
+  </meta>
+  <meta meter="DoublerButton" tags="league" x=".4849" y=".8787" width=".001" h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  </meta>
+  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="70">
+  </meta>
+  <meta meter="levelUp" tags="league" x=".3228" y=".9657" width=".012" height=".0139" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="70">
+  </meta>
+  <meta meter="alliedTurret" tags="league" x=".5984" y=".1352" width=".0073" height=".0056" h="190-210" s="65-100" l="75-100" type="area">
+  </meta>
+  <meta meter="enemyTurret" tags="league" x=".6516" y=".1352" width=".0073" height=".0056" h="0-10" s="50-100" l="50-100" type="area">
+  </meta>
+  <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area">
+  </meta>
+  <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="40-100" l="0-25" type="area">
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx, champion;
+  var stateMgr = new StateHandler();
+
+  var checkLoadMeter = new Meter(5, loadGoing);
+  var allyMeter1 = new Meter(5, allyEffects);
+  var allyMeter2 = new Meter(5, allyEffects);
+  var allyMeter3 = new Meter(5, allyEffects);
+  var allyMeter4 = new Meter(5, allyEffects);
+  var q_Meter = new Meter(5, Q_Effects);
+  var w_Meter = new Meter(5, W_Effects);
+  var e_Meter = new Meter(5, E_Effects);
+  var r_Meter = new Meter(5, R_Effects);
+  var doubleq_Meter = new Meter(5, DoubleQ_Effects);
+  var doublew_Meter = new Meter(5, DoubleW_Effects);
+  var doublee_Meter = new Meter(5, DoubleE_Effects);
+  var doubler_Meter = new Meter(5, DoubleR_Effects);
+  var d_Meter = new Meter(5, D_Effects);
+  var f_Meter = new Meter(5, F_Effects);
+  var goldMeter = new Meter(5, goldEffect);
+  var levelUpMeter = new Meter(5, levelUpEffect);
+  var alliedTurretMeter = new Meter(5, turretEffects);
+  var enemyTurretMeter = new Meter(5, turretEffects);
+  var playingMeter1 = new Meter(5, ()=>"");
+  var playingMeter2 = new Meter(5, ()=>"");
+
+  function update() {
+    checkLoadMeter.setValue(engine.vision.checkLoadBar);
+    allyMeter1.setValue(engine.vision.allyDeath1);
+    allyMeter2.setValue(engine.vision.allyDeath2);
+    allyMeter3.setValue(engine.vision.allyDeath3);
+    allyMeter4.setValue(engine.vision.allyDeath4);
+    q_Meter.setValue(engine.vision.qButton);
+    w_Meter.setValue(engine.vision.wButton);
+    e_Meter.setValue(engine.vision.eButton);
+    r_Meter.setValue(engine.vision.rButton);
+    doubleq_Meter.setValue(engine.vision.DoubleqButton);
+    doublew_Meter.setValue(engine.vision.DoublewButton);
+    doublee_Meter.setValue(engine.vision.DoubleeButton);
+    doubler_Meter.setValue(engine.vision.DoublerButton);
+    d_Meter.setValue(engine.vision.fButton);
+    f_Meter.setValue(engine.vision.dButton);
+    goldMeter.setValue(engine.vision.gold);
+    levelUpMeter.setValue(engine.vision.levelUp);
+    alliedTurretMeter.setValue(engine.vision.alliedTurret);
+    enemyTurretMeter.setValue(engine.vision.enemyTurret);
+    playingMeter1.setValue(engine.vision.inGame1);
+    playingMeter2.setValue(engine.vision.inGame2);
+
+    champion = character;
+    
+
+
+    stateMgr.Process();
+    window.requestAnimationFrame(update);
+  }
+
+  function allyEffects(){
+    return 1;
+  };
+
+  function Q_Effects(){
+    switch(champion){
+      case "Ahri":
+        break;
+      case "Ashe":
+        break;  
+      case "Aurelion Sol":
+        break;
+      case "Caitlyn":
+        break;  
+      case "Cassiopeia":
+        break; 
+      case "Diana":
+        break;
+      case "Ezreal":
+        break; 
+      case "Garen":
+        break;
+      case "Irelia":
+        break;
+      case "Janna":
+        break; 
+      case "Jax":
+        break;
+      case "Jhin":
+        break;
+      case "Jinx":
+        break; 
+      case "Kai'sa":
+        break;
+      case "Lee Sin":
+        break;
+      case "Leona":
+        break;
+      case "Lucian":
+        break;
+      case "Lulu":
+        break;
+      case "Lux":
+        break; 
+      case "Miss Fortune":
+        break;
+      case "Rek'sai":
+        break; 
+      case "Ryze":
+        break;   
+      case "Sona":
+        break;
+      case "Soraka":
+        break;
+      case "Senna":
+        break;
+      case "Teemo":
+        break;
+      case "Thresh":
+        break;
+      case "Vayne":
+        break;
+      case "Viktor":
+        break;
+      case "Yasuo":
+        break;
+      case "Yone":
+        break;
+      case "Zeri":
+        break;
+    }
+  };
+
+  function W_Effects(){
+
+  };
+
+  function E_Effects(){
+
+  };
+
+  function R_Effects(){
+
+  };
+
+  function DoubleQ_Effects() {
+
+  };
+
+  function DoubleW_Effects() {
+
+  };
+
+  function DoubleE_Effects() {
+
+  };
+
+  function DoubleR_Effects() {
+
+  };
+
+  function D_Effects(){
+    return 1;
+  };
+  
+
+  function F_Effects(){
+    return 1;
+  };
+
+  function goldEffect(){
+    return 1;
+  };
+
+  function levelUpEffect(){
+    return 1;
+  };
+
+  function turretEffects(){
+    return 1;
+  };
+
+  function loadGoing(){
+    return 1;
+  };
+
+  function IdleState() {
+    this.Process = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScreenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+    };
+  }
+
+  
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+        stack.push(newState);
+        updateState();
+      }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      if (updatedValue == -1) return;
+      values.push(updatedValue);
+
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+    stateMgr.Push(new IdleState());
+
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+</script>
