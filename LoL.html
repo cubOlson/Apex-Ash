@@ -2,6 +2,13 @@
   <title>League of Legends WorkCopy</title>
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="WhirlwindFX" />
+  <meta 
+  property="character" 
+  label="Champions" 
+  type="combobox" 
+  values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
+  default="Ahri"
+  />
   <meta
     property="keyScreenBrightness"
     label="Ambiance brightness"
@@ -16,11 +23,11 @@
     type="boolean"
     default="1"
   />
-  <meta meter="lowHealth" tags="league" x=".3557" y=".9593" width=".0526" h="0-10" s="50-100" l="50-100" type="linear">
+  <meta meter="lowHealth" tags="league" x=".3557" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
   </meta>
-  <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" h="0-10" s="50-100" l="50-100" type="linear">
+  <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" h="0-15" s="50-100" l="30-70" type="linear">
   </meta>
-  <meta meter="lowMana" tags="league" x=".3557" y=".9778" width=".0526" h="0-10" s="50-100" l="50-100" type="linear">
+  <meta meter="lowMana" tags="league" x=".3557" y=".9778" width=".0526" h="200-230" s="50-100" l="40-70" type="linear">
   </meta>
   <meta meter="loadBar" tags="league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
   </meta>
@@ -34,17 +41,17 @@
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="Q" tags="league" x=".3807" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="W" tags="league" x=".4156" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="E" tags="league" x=".45" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="R" tags="league" x=".4849" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="D" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="F" tags="league" x=".55" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
   <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="70">
   </meta>
@@ -54,6 +61,10 @@
   </meta>
   <meta meter="enemyTurret" tags="league" x=".6516" y=".1352" width=".0073" height=".0056" h="0-10" s="50-100" l="50-100" type="area">
   </meta>
+  <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area">
+  </meta>
+  <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="40-100" l="0-25" type="area">
+  </meta>
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -61,14 +72,162 @@
 </body>
 
 <script>
-  var canvas, ctx;
+  var canvas, ctx, champion;
   var stateMgr = new StateHandler();
 
+  var checkLoadMeter = new Meter(5, loadGoing);
+  var allyMeter1 = new Meter(5, allyEffects);
+  var allyMeter2 = new Meter(5, allyEffects);
+  var allyMeter3 = new Meter(5, allyEffects);
+  var allyMeter4 = new Meter(5, allyEffects);
+  var q_Meter = new Meter(5, Q_Effects);
+  var w_Meter = new Meter(5, W_Effects);
+  var e_Meter = new Meter(5, E_Effects);
+  var r_Meter = new Meter(5, R_Effects);
+  var d_Meter = new Meter(5, D_Effects);
+  var f_Meter = new Meter(5, F_Effects);
+  var goldMeter = new Meter(5, goldEffect);
+  var levelUpMeter = new Meter(5, levelUpEffect);
+  var alliedTurretMeter = new Meter(5, turretEffects);
+  var enemyTurretMeter = new Meter(5, turretEffects);
+  var playingMeter1 = new Meter(5, ()=>"");
+  var playingMeter2 = new Meter(5, ()=>"");
+
   function update() {
+    checkLoadMeter.setValue(engine.vision.checkLoadBar);
+    allyMeter1.setValue(engine.vision.allyDeath1);
+    allyMeter2.setValue(engine.vision.allyDeath2);
+    allyMeter3.setValue(engine.vision.allyDeath3);
+    allyMeter4.setValue(engine.vision.allyDeath4);
+    q_Meter.setValue(engine.vision.qButton);
+    w_Meter.setValue(engine.vision.wButton);
+    e_Meter.setValue(engine.vision.eButton);
+    r_Meter.setValue(engine.vision.rButton);
+    d_Meter.setValue(engine.vision.fButton);
+    f_Meter.setValue(engine.vision.dButton);
+    goldMeter.setValue(engine.vision.gold);
+    levelUpMeter.setValue(engine.vision.levelUp);
+    alliedTurretMeter.setValue(engine.vision.alliedTurret);
+    enemyTurretMeter.setValue(engine.vision.enemyTurret);
+    playingMeter1.setValue(engine.vision.inGame1);
+    playingMeter2.setValue(engine.vision.inGame2);
+
+    champion = character;
+    
+
 
     stateMgr.Process();
     window.requestAnimationFrame(update);
   }
+
+  function allyEffects(){
+    return 1;
+  };
+
+  function Q_Effects(){
+    switch(champion){
+      case "Ahri":
+        break;
+      case "Ashe":
+        break;  
+      case "Aurelion Sol":
+        break;
+      case "Caitlyn":
+        break;  
+      case "Cassiopeia":
+        break; 
+      case "Diana":
+        break;
+      case "Ezreal":
+        break; 
+      case "Garen":
+        break;
+      case "Irelia":
+        break;
+      case "Janna":
+        break; 
+      case "Jax":
+        break;
+      case "Jhin":
+        break;
+      case "Jinx":
+        break; 
+      case "Kai'sa":
+        break;
+      case "Lee Sin":
+        break;
+      case "Leona":
+        break;
+      case "Lucian":
+        break;
+      case "Lulu":
+        break;
+      case "Lux":
+        break; 
+      case "Miss Fortune":
+        break;
+      case "Rek'sai":
+        break; 
+      case "Ryze":
+        break;   
+      case "Sona":
+        break;
+      case "Soraka":
+        break;
+      case "Senna":
+        break;
+      case "Teemo":
+        break;
+      case "Thresh":
+        break;
+      case "Vayne":
+        break;
+      case "Viktor":
+        break;
+      case "Yasuo":
+        break;
+      case "Yone":
+        break;
+      case "Zeri":
+        break;
+    }
+  };
+
+  function W_Effects(){
+
+  };
+
+  function E_Effects(){
+
+  };
+
+  function R_Effects(){
+
+  };
+
+  function D_Effects(){
+    return 1;
+  };
+
+  function F_Effects(){
+    return 1;
+  };
+
+  function goldEffect(){
+    return 1;
+  };
+
+  function levelUpEffect(){
+    return 1;
+  };
+
+  function turretEffects(){
+    return 1;
+  };
+
+  function loadGoing(){
+    return 1;
+  };
 
   function IdleState() {
     this.Process = function () {

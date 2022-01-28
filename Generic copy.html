@@ -32,6 +32,8 @@
     var hpAnim = false;
     var failAnim = false;
     var confirmationEffect;
+    var PlayDamage = false;
+    var damageIsPlaying = false;
 
     //Meters
     var matchmakingMeter = new Meter(20, matchmakingEffect);
@@ -41,6 +43,7 @@
     var winMeter = new Meter(10, winEffect)
     var subzoneFailMeter = new Meter(10, subzoneFailEffect);
     var subzoneWinMeter = new Meter(10, subzoneWinEffect);
+    
 
 
 
@@ -91,7 +94,9 @@
 
         function damageEffect() {
                     if(damageMeter.value >0){
-                        effects.push(new HpEffect("down", "red", 0));
+                        PlayDamage = true;
+                    } else {
+                        PlayDamage = false;
                     }
             }
 
@@ -467,7 +472,7 @@
 
 
     function HpEffect(direction, color, y){
-        this.duration = 4000;
+        this.duration = 1000;
         this.direction = direction;
         this.startTime = new Date().getTime();
         this.elapsedTime;
@@ -489,6 +494,10 @@
            });
            this.elapsedTime = new Date().getTime() - this.startTime;
            this.lifetime = this.duration - this.elapsedTime;
+
+           if(this.lifetime <= 0){
+               damageIsPlaying = false;
+           }
         }
     }
 
@@ -665,6 +674,11 @@
         winMeter.setValue(engine.vision.Won);
         subzoneFailMeter.setValue(engine.vision.SubZoneStateFail);
         subzoneWinMeter.setValue(engine.vision.SubZoneStateSucces);
+        
+        if(PlayDamage && !damageIsPlaying){
+            damageIsPlaying =true;
+            effects.push(new HpEffect("Down", "red",0))
+        }
 
        
      
