@@ -49,13 +49,13 @@
   </meta>
   <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
   </meta>
-  <meta meter="DoubleqButton" tags="league" x=".3807" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
   </meta>
-  <meta meter="DoublewButton" tags="league" x=".4156" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
   </meta>
-  <meta meter="DoubleeButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-60" l="90-100" type="linear">
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-60" l="90-100" type="linear">
   </meta>
-  <meta meter="DoublerButton" tags="league" x=".4849" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
   </meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
@@ -80,8 +80,10 @@
 </body>
 
 <script>
-  var canvas, ctx, champion;
+  var c, ctx, champion;
   var stateMgr = new StateHandler();
+  var ActiveExtendedE = false;
+  var effects = [];
 
   var checkLoadMeter = new Meter(5, loadGoing);
   var allyMeter1 = new Meter(5, allyEffects);
@@ -92,10 +94,10 @@
   var w_Meter = new Meter(5, W_Effects);
   var e_Meter = new Meter(5, E_Effects);
   var r_Meter = new Meter(5, R_Effects);
-  var doubleq_Meter = new Meter(5, DoubleQ_Effects);
-  var doublew_Meter = new Meter(5, DoubleW_Effects);
-  var doublee_Meter = new Meter(5, DoubleE_Effects);
-  var doubler_Meter = new Meter(5, DoubleR_Effects);
+  var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
+  var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
+  var Extendede_Meter = new Meter(1, ExtendedE_Effects);
+  var Extendedr_Meter = new Meter(5, ExtendedR_Effects);
   var d_Meter = new Meter(5, D_Effects);
   var f_Meter = new Meter(5, F_Effects);
   var goldMeter = new Meter(5, goldEffect);
@@ -106,6 +108,7 @@
   var playingMeter2 = new Meter(5, ()=>"");
 
   function update() {
+    copyScreen();
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     allyMeter1.setValue(engine.vision.allyDeath1);
     allyMeter2.setValue(engine.vision.allyDeath2);
@@ -115,10 +118,6 @@
     w_Meter.setValue(engine.vision.wButton);
     e_Meter.setValue(engine.vision.eButton);
     r_Meter.setValue(engine.vision.rButton);
-    doubleq_Meter.setValue(engine.vision.DoubleqButton);
-    doublew_Meter.setValue(engine.vision.DoublewButton);
-    doublee_Meter.setValue(engine.vision.DoubleeButton);
-    doubler_Meter.setValue(engine.vision.DoublerButton);
     d_Meter.setValue(engine.vision.fButton);
     f_Meter.setValue(engine.vision.dButton);
     goldMeter.setValue(engine.vision.gold);
@@ -128,10 +127,22 @@
     playingMeter1.setValue(engine.vision.inGame1);
     playingMeter2.setValue(engine.vision.inGame2);
 
+    if(!ActiveExtendedE){
+      Extendedq_Meter.setValue(engine.vision.ExtendedqButton);
+      Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+      Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+      Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
+    }
+
     champion = character;
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
     
-
-
     stateMgr.Process();
     window.requestAnimationFrame(update);
   }
@@ -214,26 +225,170 @@
   };
 
   function E_Effects(){
-
+    switch (champion) {
+      case "Ahri":
+        break;
+      case "Ashe":
+        break;
+      case "Aurelion Sol":
+        break;
+      case "Caitlyn":
+        break;
+      case "Cassiopeia":
+        break;
+      case "Diana":
+        break;
+      case "Ezreal":
+        break;
+      case "Garen":
+        break;
+      case "Irelia":
+        break;
+      case "Janna":
+        break;
+      case "Jax":
+        break;
+      case "Jhin":
+        break;
+      case "Jinx":
+        break;
+      case "Kai'sa":
+        break;
+      case "Lee Sin":
+        break;
+      case "Leona":
+        break;
+      case "Lucian":
+        break;
+      case "Lulu":
+        break;
+      case "Lux":
+        break;
+      case "Miss Fortune":
+        break;
+      case "Rek'sai":
+        break;
+      case "Ryze":
+        break;
+      case "Sona":
+        break;
+      case "Soraka":
+        break;
+      case "Senna":
+        break;
+      case "Teemo":
+        break;
+      case "Thresh":
+        break;
+      case "Vayne":
+        break;
+      case "Viktor":
+        break;
+      case "Yasuo":
+        break;
+      case "Yone":
+        ActiveExtendedE = false;
+        break;
+      case "Zeri":
+        break;
+    }
+      
+    
+   
   };
 
   function R_Effects(){
+    ActiveExtended = true;
 
   };
 
-  function DoubleQ_Effects() {
+  function ExtendedQ_Effects() {
+    ActiveExtended = true;
 
   };
 
-  function DoubleW_Effects() {
+  function ExtendedW_Effects() {
+    ActiveExtended = true;
 
   };
 
-  function DoubleE_Effects() {
+  function ExtendedE_Effects() {
+    if(Extendede_Meter.value ==1){
+      
+        switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+           effects.push(new ExtendedEYoneEffect());
+            ActiveExtendedE = true;
+          break;
+        case "Zeri":
+          break;
+      }    
+      }
+    }
 
-  };
+  
 
-  function DoubleR_Effects() {
+  function ExtendedR_Effects() {
 
   };
 
@@ -262,35 +417,94 @@
     return 1;
   };
 
-  function IdleState() {
-    this.Process = function () {
-      let lightness = new Int8Array(engine.zone.lightness);
-      let sat = new Int8Array(engine.zone.saturation);
-      let hue = new Int16Array(engine.zone.hue);
 
-      for (var iZone = 0; iZone < 560; iZone++) {
-        ctx.fillStyle =
-          "hsla(" +
-          hue[iZone] +
-          "," +
-          sat[iZone] +
-          "%," +
-          lightness[iZone] +
-          "%, " +
-          keyScreenBrightness * 0.01 +
-          ")";
+  //Effects
 
-        var iRow = Math.floor(iZone / 28);
-        var iCol = iZone % 28;
-        var iWidth = 320 / 28;
-        var iHeight = 200 / 20;
-        var iZx = iCol * iWidth;
-        var iZy = iRow * iHeight;
+   function DrawBackground(color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, c.width, c.height)
+    }
 
-        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    function ExtendedEYoneEffect(){
+      this.lifetime = 1000;
+      this.draw = function (){
+        DrawBackground("hsla(238, 100%, 5%, 0.8)");
+        if(!ActiveExtendedE){
+          this.lifetime = 0;
+          effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+        }
       }
-    };
+    }
+     function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
+        this.col = color;
+        this.speed = speed;
+        this.dur = duration;
+        this.width = rippleWidth;
+        this.start = GetTime();
+        this.lifetime;
+        this.x = x;
+        this.y = y;
+        this.fill = fillOrStroke;
+        this.radius = 0;
+        this.amount = amountOfRipples;
+        if (inOrOut == "in") {
+          this.radius = 200 + (this.width * (this.amount * 2));
+          this.speed = -this.speed
+        }
+        this.draw = function () {
+          ctx.strokeStyle = this.col;
+          ctx.fillStyle = this.col;
+          ctx.lineWidth = this.width;
+          ctx.beginPath();
+          for (let i = 0; i < this.amount; i++) {
+            if (this.radius - i * (this.width * 2) > 0) {
+              ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+            }
+          }
+          if (this.fill == "fill") {
+            ctx.fill();
+          } else {
+            ctx.stroke();
+          }
+          this.radius += this.speed;
+          this.lifetime = this.dur - (GetTime() - this.start);
+        }
+      }
+
+
+
+  function copyScreen() {
+
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] +
+        "%, " +
+        "1" +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
   }
+
+   function GetTime() {
+      return new Date().now;
+    }
+  
 
   
   function StateHandler() {
@@ -357,9 +571,8 @@
 
   function onEngineReady() {
     // Grab canvas and rendering context.
-    canvas = document.getElementById("exCanvas");
-    ctx = canvas.getContext("2d");
-    stateMgr.Push(new IdleState());
+    c = document.getElementById("exCanvas");
+    ctx = c.getContext("2d");
 
     // Start updates *after* our engine is accessible and ready.
     window.requestAnimationFrame(update);
