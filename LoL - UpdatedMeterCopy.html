@@ -49,13 +49,13 @@
   </meta>
   <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
   </meta>
-  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="90-100" type="area">
   </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="90-100" type="area">
   </meta>
-  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-60" l="90-100" type="linear">
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="90-100" type="area">
   </meta>
-  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="90-100" type="area">
   </meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
@@ -292,9 +292,6 @@
       case "Zeri":
         break;
     }
-      
-    
-   
   };
 
   function R_Effects(){
@@ -313,80 +310,17 @@
   };
 
   function ExtendedE_Effects() {
-    if(Extendede_Meter.value ==1){
-      
+    if(Extendede_Meter.value > 0){
         switch (champion) {
-        case "Ahri":
-          break;
-        case "Ashe":
-          break;
-        case "Aurelion Sol":
-          break;
-        case "Caitlyn":
-          break;
-        case "Cassiopeia":
-          break;
-        case "Diana":
-          break;
-        case "Ezreal":
-          break;
-        case "Garen":
-          break;
-        case "Irelia":
-          break;
-        case "Janna":
-          break;
-        case "Jax":
-          break;
-        case "Jhin":
-          break;
-        case "Jinx":
-          break;
-        case "Kai'sa":
-          break;
-        case "Lee Sin":
-          break;
-        case "Leona":
-          break;
-        case "Lucian":
-          break;
-        case "Lulu":
-          break;
         case "Lux":
-          break;
-        case "Miss Fortune":
-          break;
-        case "Rek'sai":
-          break;
-        case "Ryze":
-          break;
-        case "Sona":
-          break;
-        case "Soraka":
-          break;
-        case "Senna":
-          break;
-        case "Teemo":
-          break;
-        case "Thresh":
-          break;
-        case "Vayne":
-          break;
-        case "Viktor":
-          break;
-        case "Yasuo":
           break;
         case "Yone":
            effects.push(new ExtendedEYoneEffect());
             ActiveExtendedE = true;
           break;
-        case "Zeri":
-          break;
       }    
       }
     }
-
-  
 
   function ExtendedR_Effects() {
 
