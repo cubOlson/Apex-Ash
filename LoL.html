@@ -49,13 +49,21 @@
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-100" l="0-100" type="linear">
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  </meta>
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  </meta>
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-60" l="90-100" type="linear">
+  </meta>
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
   </meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
@@ -87,6 +95,7 @@
   var effects = [];
   var height = 200;
   var width = 320;
+  var ActiveExtendedE = false;
   var goldAnimPushed = false;
   var oldLevel = 1;
 
@@ -100,6 +109,10 @@
   var w_Meter = new Meter(5, W_Effects);
   var e_Meter = new Meter(5, E_Effects);
   var r_Meter = new Meter(5, R_Effects);
+  var Extendedq_Meter = new Meter(5, Q_Effects);
+  var Extendedw_Meter = new Meter(5, W_Effects);
+  var Extendede_Meter = new Meter(1, E_Effects);
+  var Extendedr_Meter = new Meter(5, R_Effects);
   var d_Meter = new Meter(5, D_Effects);
   var f_Meter = new Meter(5, F_Effects);
   var levelUpMeter = new Meter(1, levelUpEffect);
@@ -122,8 +135,8 @@
     w_Meter.setValue(engine.vision.wButton);
     e_Meter.setValue(engine.vision.eButton);
     r_Meter.setValue(engine.vision.rButton);
-    d_Meter.setValue(engine.vision.fButton);
-    f_Meter.setValue(engine.vision.dButton);
+    d_Meter.setValue(engine.vision.dButton);
+    f_Meter.setValue(engine.vision.fButton);
     levelUpMeter.setValue(engine.vision.levelUp);
     alliedTurretMeter.setValue(engine.vision.alliedTurret);
     enemyTurretMeter.setValue(engine.vision.enemyTurret);
@@ -131,6 +144,13 @@
     playingMeter2.setValue(engine.vision.inGame2);
     damageMeter.setValue(engine.vision.tookDamage);
     lowHealthMeter.setValue(engine.vision.lowHealth);
+
+    if(!ActiveExtendedE){
+      Extendedq_Meter.setValue(engine.vision.ExtendedqButton);
+      Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+      Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+      Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
+    }
 
     champion = character;
 
@@ -154,7 +174,6 @@
     }
 
     //LevelUp effect
-    console.log(engine.vision.levelUp)
     if(engine.vision.levelUp != oldLevel && engine.vision.levelUp != -1){
       oldLevel = engine.vision.levelUp;
       console.log('LEVEL UP')
@@ -367,6 +386,11 @@
       case "Yasuo":
         break;
       case "Yone":
+        ActiveExtendedE = false;
+        if(Extendede_Meter.value ==1){
+          effects.push(new ExtendedEYoneEffect());
+          ActiveExtendedE = true;
+        }
         break;
       case "Zeri":
         break;
@@ -514,6 +538,22 @@
       ctx.beginPath();
       ctx.fillstyle = "white";
       ctx.arc
+    }
+  }
+
+  function DrawBackground(color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, c.width, c.height)
+  }
+
+  function ExtendedEYoneEffect(){
+    this.lifetime = 1000;
+    this.draw = function (){
+      DrawBackground("hsla(238, 100%, 5%, 0.8)");
+      if(!ActiveExtendedE){
+        this.lifetime = 0;
+        effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+      }
     }
   }
 
