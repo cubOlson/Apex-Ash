@@ -83,6 +83,8 @@
   var c, ctx, champion;
   var stateMgr = new StateHandler();
   var ActiveExtendedE = false;
+  var ActiveExtendedQ = false;
+  var freezeBackground =false;
   var effects = [];
 
   var checkLoadMeter = new Meter(5, loadGoing);
@@ -108,7 +110,10 @@
   var playingMeter2 = new Meter(5, ()=>"");
 
   function update() {
-    copyScreen();
+    if(!freezeBackground){
+      copyScreen();
+    }
+    
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     allyMeter1.setValue(engine.vision.allyDeath1);
     allyMeter2.setValue(engine.vision.allyDeath2);
@@ -128,11 +133,15 @@
     playingMeter2.setValue(engine.vision.inGame2);
 
     if(!ActiveExtendedE){
-      Extendedq_Meter.setValue(engine.vision.ExtendedqButton);
-      Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
       Extendede_Meter.setValue(engine.vision.ExtendedeButton);
-      Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
     }
+    if(!ActiveExtendedQ){
+      Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
+    }
+  
+      Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+      
+      Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
 
     champion = character;
 
@@ -152,76 +161,149 @@
   };
 
   function Q_Effects(){
-    switch(champion){
-      case "Ahri":
-        break;
-      case "Ashe":
-        break;  
-      case "Aurelion Sol":
-        break;
-      case "Caitlyn":
-        break;  
-      case "Cassiopeia":
-        break; 
-      case "Diana":
-        break;
-      case "Ezreal":
-        break; 
-      case "Garen":
-        break;
-      case "Irelia":
-        break;
-      case "Janna":
-        break; 
-      case "Jax":
-        break;
-      case "Jhin":
-        break;
-      case "Jinx":
-        break; 
-      case "Kai'sa":
-        break;
-      case "Lee Sin":
-        break;
-      case "Leona":
-        break;
-      case "Lucian":
-        break;
-      case "Lulu":
-        break;
-      case "Lux":
-        break; 
-      case "Miss Fortune":
-        break;
-      case "Rek'sai":
-        break; 
-      case "Ryze":
-        break;   
-      case "Sona":
-        break;
-      case "Soraka":
-        break;
-      case "Senna":
-        break;
-      case "Teemo":
-        break;
-      case "Thresh":
-        break;
-      case "Vayne":
-        break;
-      case "Viktor":
-        break;
-      case "Yasuo":
-        break;
-      case "Yone":
-        break;
-      case "Zeri":
-        break;
+    if(q_Meter.value == 0){
+      switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          effects.push(new YoneQeffect())
+          break;
+        case "Zeri":
+          break;
+      }
     }
+   
+    ActiveExtendedQ = false;
   };
 
   function W_Effects(){
-
+    if(w_Meter.value == 0){
+      switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          effects.push(new YoneWeffect());
+          break;
+        case "Zeri":
+          break;
+      }
+    }
   };
 
   function E_Effects(){
@@ -300,7 +382,18 @@
   };
 
   function ExtendedQ_Effects() {
-    ActiveExtended = true;
+     if (Extendedq_Meter.value > 0) {
+     switch (champion) {
+      case "Lux":
+        break;
+      case "Yone":
+        effects.push(new  ExtendedQYoneEffect());
+        ActiveExtendedQ = true;
+        break;
+     }
+    }    
+
+   
 
   };
 
@@ -369,6 +462,76 @@
         }
       }
     }
+
+    function YoneWeffect() {
+        this.start = GetTime();
+        this.lifetime;
+        freezeBackground = true;
+        this.draw = function () {
+          this.lifetime = 1000 - (GetTime() - this.start)
+        
+          if (this.lifetime > 900) {
+            effects.push(new BarEffect("right","red", 10, 1500, 10,1));
+          } else if (this.lifetime >0){
+            effects.push(new BarEffect("right", "black", 10, 1500, 10, 1));
+          } else {
+            freezeBackground = false;
+          }
+        }
+      }
+
+    function YoneQeffect () {
+      this.start = GetTime();
+      this.lifetime;
+      this.x = -320;
+      this.y = 200;
+      this.col = "grey";
+      this.sat = 0;
+      this.draw = function(){
+        this.lifetime = 3000 - (GetTime() -this.start)
+        ctx.beginPath();
+        ctx.moveTo(0 + this.x, 180 + this.y);
+        ctx.lineTo(160 + this.x, 80 + this.y)
+        ctx.lineTo(320 + this.x,0 + this.y)
+        ctx.lineTo(180 + this.x,120 + this.y)
+        ctx.lineTo(40 + this.x,220 + this.y)
+        ctx.fillStyle = this.col;
+        ctx.fill();
+        if(this.x <0){
+          this.x += 15;
+          this.y -= 9.375
+          this.state = 1;
+        } else if(this.state == 1) {
+          
+          // effects.push(new RippleEffect(320,0,7,1500,30, "red", "out", "stroke", 3))
+          this.state =2;
+        } else if(this.state == 2){
+          this.col =  `hsla(0, ${this.sat}%, 50%)`
+          this.sat++;
+        }
+      } 
+    }
+
+     function ExtendedQYoneEffect() {
+        this.lifetime = 1000;
+        this.bars = [];
+        this.draw = function () {
+          while (this.bars.length < 20){
+            this.bars.push(new RandomCube(30, 20, "blue", "xAxis", 3))
+          }
+
+          this.bars.forEach(bar => {
+            bar.draw();
+          });
+          this.bars.shift();
+        
+          if (!ActiveExtendedQ) {
+            this.lifetime = 0;
+            effects.push(new YoneQeffect())
+          }
+        }
+      }
+
      function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
         this.col = color;
         this.speed = speed;
@@ -405,6 +568,48 @@
         }
       }
 
+      function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
+          this.dir = direction;
+          this.col = color;
+          this.dur = duration;
+          this.start = GetTime();
+          this.lifetime;
+          this.x = 0;
+          this.y = 0;
+          this.bW = barWidth;
+          this.speed = speed;
+          this.amount = amountOfBars;
+          switch (this.dir) {
+            case "up":
+              this.y = c.height;
+              this.speed = -this.speed;
+              break;
+            case "right":
+              this.x -= this.bW;
+              break;
+            case "down":
+              this.y -= this.bW;
+              break;
+            case "left":
+              this.x = c.width + this.bW + (this.amount * this.bW);
+              this.speed = -this.speed;
+              break;
+          }
+          this.draw = function () {
+            ctx.fillStyle = this.col;
+            for (let i = 0; i < this.amount; i++) {
+              if (this.dir == "up" || this.dir == "down") {
+                ctx.fillRect(this.x, this.y - ((this.bW * 2) * i), c.width, this.bW);
+                this.y += this.speed / this.amount;
+              } else {
+                ctx.fillRect(this.x - ((this.bW * 2) * i), this.y, this.bW, c.height);
+                this.x += this.speed / this.amount;
+              }
+            }
+            this.lifetime = this.dur - (GetTime() - this.start);
+          }
+        }
+
 
 
   function copyScreen() {
@@ -432,11 +637,46 @@
 
       ctx.fillRect(iZx, iZy, iWidth, iHeight);
     }
+  }
 
+  class RandomCube{
+    constructor(width, height, color,moveDir, speed){
+      this.width = width
+      this.height = height;
+      this.col = color;
+      this.moveDir = moveDir;
+      this.speed = speed*(Math.random()*2) + speed;
+      if(this.moveDir == "xAxis"){
+        this.y = Math.random() * 200;
+        if(Math.random() >0.5){
+          this.speed = -this.speed;
+          this.x = 320;
+        } else {
+          this.x = 0;
+        }
+      } else {
+        this.x = Math.random() * 320;
+        if (Math.random() > 0.5) {
+          this.speed = -this.speed;
+          this.y = 200;
+        } else {
+          this.y = 0;
+        }
+      }
+    }
+    draw(){
+      ctx.fillStyle = this.col; 
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      if(this.moveDir = "xAxis"){
+        this.x += this.speed;
+      } else {
+        this.y += this.speed;
+      }
+    }
   }
 
    function GetTime() {
-      return new Date().now;
+      return new Date().getTime()
     }
   
 
