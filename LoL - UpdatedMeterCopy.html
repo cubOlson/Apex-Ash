@@ -73,6 +73,8 @@
   </meta>
   <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="40-100" l="0-25" type="area">
   </meta>
+  <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -87,6 +89,7 @@
   var freezeBackground =false;
   var activeR = false;
   var effects = [];
+  var inShop;
 
   var checkLoadMeter = new Meter(5, loadGoing);
   var allyMeter1 = new Meter(5, allyEffects);
@@ -107,6 +110,7 @@
   var levelUpMeter = new Meter(5, levelUpEffect);
   var alliedTurretMeter = new Meter(5, turretEffects);
   var enemyTurretMeter = new Meter(5, turretEffects);
+  var shopMenuMeter = new Meter (2, shopMenu)
   var playingMeter1 = new Meter(5, ()=>"");
   var playingMeter2 = new Meter(5, ()=>"");
 
@@ -114,9 +118,7 @@
     if(!freezeBackground){
       copyScreen();
     }
-
-    
-    
+    shopMenuMeter.setValue(engine.vision.ShopMenu)
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     allyMeter1.setValue(engine.vision.allyDeath1);
     allyMeter2.setValue(engine.vision.allyDeath2);
@@ -141,18 +143,19 @@
       Extendede_Meter.setValue(engine.vision.ExtendedeButton);
     }
       Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-    
       Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
       Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
 
     champion = character;
-
-    for (let i = 0; i < effects.length; i++) {
-      effects[i].draw();
-      if (effects[i].lifetime <= 0) {
-        effects.splice(i, 1);
-      }
+if(!inShop){
+  for (let i = 0; i < effects.length; i++) {
+    effects[i].draw();
+    if (effects[i].lifetime <= 0) {
+      effects.splice(i, 1);
     }
+  }
+}
+   
     
     stateMgr.Process();
     window.requestAnimationFrame(update);
@@ -515,6 +518,15 @@
   function loadGoing(){
     return 1;
   };
+
+  function shopMenu(){
+    if(shopMenuMeter.value ==1){
+      inShop = true;
+    } else {
+      inShop = false
+      effects.length = 0;
+    }
+  }
 
 
   //Effects
