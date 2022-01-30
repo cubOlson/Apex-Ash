@@ -49,13 +49,13 @@
   </meta>
   <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
   </meta>
-  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="90-100" type="area">
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="90-100" type="area">
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="90-100" type="area">
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="90-100" type="area">
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
@@ -135,12 +135,9 @@
     if(!ActiveExtendedE){
       Extendede_Meter.setValue(engine.vision.ExtendedeButton);
     }
-    if(!ActiveExtendedQ){
       Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-    }
-  
+    
       Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
-      
       Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
 
     champion = character;
@@ -231,7 +228,7 @@
       }
     }
    
-    ActiveExtendedQ = false;
+  
   };
 
   function W_Effects(){
@@ -298,7 +295,7 @@
         case "Yasuo":
           break;
         case "Yone":
-          effects.push(new YoneWeffect());
+          stateMgr.Push(new YoneWeffect());
           break;
         case "Zeri":
           break;
@@ -382,21 +379,24 @@
   };
 
   function ExtendedQ_Effects() {
-     if (Extendedq_Meter.value > 0) {
-     switch (champion) {
-      case "Lux":
-        break;
-      case "Yone":
-        effects.push(new  ExtendedQYoneEffect());
-        ActiveExtendedQ = true;
-        break;
-     }
-    }    
-
-   
+    if(!ActiveExtendedQ){
+      if (Extendedq_Meter.value > 0) {
+        switch (champion) {
+          case "Lux":
+            break;
+          case "Yone":
+            effects.push(new ExtendedQYoneEffect());
+            ActiveExtendedQ = true;
+            break;
+        }
+      } 
+    } else {
+      if(Extendedq_Meter.value == 0){
+        ActiveExtendedQ = false;
+      }
+    }
 
   };
-
   function ExtendedW_Effects() {
     ActiveExtended = true;
 
@@ -408,8 +408,8 @@
         case "Lux":
           break;
         case "Yone":
-           effects.push(new ExtendedEYoneEffect());
-            ActiveExtendedE = true;
+           effects.push(new ExtendedEYoneEffect("grey"));
+          ActiveExtendedE = true;
           break;
       }    
       }
@@ -467,25 +467,32 @@
         this.start = GetTime();
         this.lifetime;
         freezeBackground = true;
+        var bar1 = new BarEffect("right", "red", 10, 1500, 1000, 1);
+        var bar2 = new BarEffect("right", "black", 10, 1500, 1000, 1);
+        this.Process = function(){
+          if(this.lifetime <= 0){
+            freezeBackground = false;
+            stateMgr.Pop();
+          }
+          this.draw()
+        }
         this.draw = function () {
           this.lifetime = 1000 - (GetTime() - this.start)
-        
           if (this.lifetime > 900) {
-            effects.push(new BarEffect("right","red", 10, 1500, 10,1));
+            bar1.draw();
           } else if (this.lifetime >0){
-            effects.push(new BarEffect("right", "black", 10, 1500, 10, 1));
-          } else {
-            freezeBackground = false;
+            bar1.draw();
+            bar2.draw();
           }
         }
       }
 
-    function YoneQeffect () {
+    function YoneQeffect (color) {
       this.start = GetTime();
       this.lifetime;
       this.x = -320;
       this.y = 200;
-      this.col = "grey";
+      this.col = color;
       this.sat = 0;
       this.draw = function(){
         this.lifetime = 3000 - (GetTime() -this.start)
@@ -527,7 +534,7 @@
         
           if (!ActiveExtendedQ) {
             this.lifetime = 0;
-            effects.push(new YoneQeffect())
+            effects.push(new YoneQeffect("blue"))
           }
         }
       }
