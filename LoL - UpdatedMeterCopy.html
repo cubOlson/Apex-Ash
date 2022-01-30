@@ -85,6 +85,7 @@
   var ActiveExtendedE = false;
   var ActiveExtendedQ = false;
   var freezeBackground =false;
+  var activeR = false;
   var effects = [];
 
   var checkLoadMeter = new Meter(5, loadGoing);
@@ -95,7 +96,7 @@
   var q_Meter = new Meter(10, Q_Effects);
   var w_Meter = new Meter(10, W_Effects);
   var e_Meter = new Meter(10, E_Effects);
-  var r_Meter = new Meter(10, R_Effects);
+  var r_Meter = new Meter(7, R_Effects);
   var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
   var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
   var Extendede_Meter = new Meter(1, ExtendedE_Effects);
@@ -113,22 +114,26 @@
     if(!freezeBackground){
       copyScreen();
     }
+
+    
     
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     allyMeter1.setValue(engine.vision.allyDeath1);
     allyMeter2.setValue(engine.vision.allyDeath2);
     allyMeter3.setValue(engine.vision.allyDeath3);
     allyMeter4.setValue(engine.vision.allyDeath4);
-    q_Meter.setValue(engine.vision.qButton);
-    w_Meter.setValue(engine.vision.wButton);
-    e_Meter.setValue(engine.vision.eButton);
-    r_Meter.setValue(engine.vision.rButton);
-    d_Meter.setValue(engine.vision.fButton);
-    f_Meter.setValue(engine.vision.dButton);
-    goldMeter.setValue(engine.vision.gold);
-    levelUpMeter.setValue(engine.vision.levelUp);
-    alliedTurretMeter.setValue(engine.vision.alliedTurret);
-    enemyTurretMeter.setValue(engine.vision.enemyTurret);
+    if(!activeR){
+      q_Meter.setValue(engine.vision.qButton);
+      w_Meter.setValue(engine.vision.wButton);
+      e_Meter.setValue(engine.vision.eButton);
+      r_Meter.setValue(engine.vision.rButton);
+      d_Meter.setValue(engine.vision.fButton);
+      f_Meter.setValue(engine.vision.dButton);
+      goldMeter.setValue(engine.vision.gold);
+      levelUpMeter.setValue(engine.vision.levelUp);
+      alliedTurretMeter.setValue(engine.vision.alliedTurret);
+      enemyTurretMeter.setValue(engine.vision.enemyTurret);
+    }
     playingMeter1.setValue(engine.vision.inGame1);
     playingMeter2.setValue(engine.vision.inGame2);
 
@@ -374,7 +379,75 @@
   };
 
   function R_Effects(){
-
+    if(r_Meter.value == 0){
+        switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          stateMgr.Push(new RYoneEffect());
+          break;
+        case "Zeri":
+          break;
+      }
+    }
   };
 
   function ExtendedQ_Effects() {
@@ -466,8 +539,8 @@
         this.start = GetTime();
         this.lifetime;
         freezeBackground = true;
-        var bar1 = new BarEffect("left", "red", 10, 1000, 1500, 1);
-        var bar2 = new BarEffect("left", "black", 10, 1000, 1500, 1);
+        var bar1 = new BarEffect("left", "red", 15, 1000, 1500, 1);
+        var bar2 = new BarEffect("left", "black", 15, 1000, 1500, 1);
         this.Process = function(){
           if(this.lifetime <= 0){
             freezeBackground = false;
@@ -495,7 +568,7 @@
       this.col = color;
       this.sat = 0;
       this.draw = function(){
-        this.lifetime = 3000 - (GetTime() -this.start)
+        this.lifetime = 2000 - (GetTime() -this.start)
         ctx.beginPath();
         ctx.moveTo(0 + this.x, 180 + this.y);
         ctx.lineTo(160 + this.x, 80 + this.y)
@@ -514,7 +587,7 @@
           this.state =2;
         } else if(this.state == 2){
           this.col =  `hsla(0, ${this.sat}%, 50%)`
-          this.sat++;
+          this.sat+=3;
         }
       } 
     }
@@ -538,6 +611,76 @@
           }
         }
       }
+
+      function RYoneEffect(){
+        this.start = GetTime();
+        this.lifetime = 1000;
+        this.BloodRainActive = false;
+        this.x = -120;
+        activeR = true;
+        freezeBackground = true;
+        this.Process = function(){
+          if(this.lifetime <=0){
+            stateMgr.Pop();
+            stateMgr.Push(new BloodRain("red", 5));
+          }
+          this.draw()
+        }
+
+        this.draw = function(){
+          if(this.lifetime > 200){
+           DrawArrow("red", this.x);
+           DrawArrow("black", this.x-30);
+           this.x += 10;
+          }
+          this.lifetime = 1200 - (GetTime() - this.start);
+        }
+
+      }
+
+      function DrawArrow(color, x){
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0 + x, 0);
+        ctx.lineTo(60 + x, 0);
+        ctx.lineTo(120 + x, 100);
+        ctx.lineTo(60 + x, 200);
+        ctx.lineTo(0 + x, 200);
+        ctx.lineTo(60 + x, 100)
+        ctx.lineTo(0 + x, 0)
+        ctx.fill();
+      }
+      function BloodRain (color, radius){
+        this.start = GetTime();
+        this.elapsed = 0;
+        this.bloodDrip = [];
+        this.state = 0;
+        this.cubeX = 1;
+        this.cubeY = 1;
+        this.color = color;
+        this.radius = radius;
+
+        this.Process = function () {
+          if (this.bloodDrip.length < 20) {
+            this.bloodDrip.push(new blood(Math.random() * c.width, 0, this.radius, this.color, 0.01))
+          }
+          this.elapsed = GetTime() - this.start;
+          if (this.elapsed >= 4000) {
+            stateMgr.Pop();
+            effects.length = 0;
+            freezeBackground = false;
+            activeR = false;
+          }
+          this.Draw();
+        };
+        this.Draw = function () {
+            this.bloodDrip.forEach(blood => {
+            blood.Draw();
+            }
+          );
+        }
+      }
+      
 
      function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
         this.col = color;
@@ -681,6 +824,26 @@
       }
     }
   }
+
+   class blood {
+      constructor(x, y, radius, color, fade) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.fade = fade;
+        this.speed = (Math.random() + 0.1) * 4
+      }
+      Draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
+        this.y += this.speed * Math.random();
+        this.x += (Math.random() - 0.5) * 8;
+      }
+
+    }
 
    function GetTime() {
       return new Date().getTime()
