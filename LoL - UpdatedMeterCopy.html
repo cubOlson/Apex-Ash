@@ -694,6 +694,39 @@ if(!inShop){
       }
       
 
+
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    while (this.particles.length < this.amount) {
+      this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+        {
+          x: ((Math.random() - 0.5) * this.speed),
+          y: ((Math.random() - 0.5) * this.speed)
+        }))
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+
+
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  }
+
+
+
      function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
         this.col = color;
         this.speed = speed;
@@ -836,6 +869,27 @@ if(!inShop){
       }
     }
   }
+
+    class ExplosionParticle {
+      constructor(x, y, radius, color, fadeSpeed, velocity) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = radius;
+        this.velocity = velocity;
+        this.alpha = 1 * fadeSpeed;
+      }
+      draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        ctx.fillStyle = this.color
+        ctx.fill()
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+        this.alpha -= 0.01
+      }
+    }
 
    class blood {
       constructor(x, y, radius, color, fade) {
