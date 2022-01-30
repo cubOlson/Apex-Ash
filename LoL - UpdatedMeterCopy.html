@@ -92,10 +92,10 @@
   var allyMeter2 = new Meter(5, allyEffects);
   var allyMeter3 = new Meter(5, allyEffects);
   var allyMeter4 = new Meter(5, allyEffects);
-  var q_Meter = new Meter(5, Q_Effects);
-  var w_Meter = new Meter(5, W_Effects);
-  var e_Meter = new Meter(5, E_Effects);
-  var r_Meter = new Meter(5, R_Effects);
+  var q_Meter = new Meter(10, Q_Effects);
+  var w_Meter = new Meter(10, W_Effects);
+  var e_Meter = new Meter(10, E_Effects);
+  var r_Meter = new Meter(10, R_Effects);
   var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
   var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
   var Extendede_Meter = new Meter(1, ExtendedE_Effects);
@@ -374,7 +374,6 @@
   };
 
   function R_Effects(){
-    ActiveExtended = true;
 
   };
 
@@ -467,8 +466,8 @@
         this.start = GetTime();
         this.lifetime;
         freezeBackground = true;
-        var bar1 = new BarEffect("right", "red", 10, 1500, 1000, 1);
-        var bar2 = new BarEffect("right", "black", 10, 1500, 1000, 1);
+        var bar1 = new BarEffect("left", "red", 10, 1000, 1500, 1);
+        var bar2 = new BarEffect("left", "black", 10, 1000, 1500, 1);
         this.Process = function(){
           if(this.lifetime <= 0){
             freezeBackground = false;
@@ -477,6 +476,7 @@
           this.draw()
         }
         this.draw = function () {
+          copyScreen();
           this.lifetime = 1000 - (GetTime() - this.start)
           if (this.lifetime > 900) {
             bar1.draw();
@@ -598,7 +598,7 @@
               this.y -= this.bW;
               break;
             case "left":
-              this.x = c.width + this.bW + (this.amount * this.bW);
+              this.x = c.width + (this.bW*this.amount) - this.bW;
               this.speed = -this.speed;
               break;
           }
