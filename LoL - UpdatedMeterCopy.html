@@ -51,12 +51,16 @@
   </meta>
   <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
   <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="95-100" type="area">
   </meta>
   <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
+  <meta meter="ManaR" tags="league" x=".4849" y=".88" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="ManaQ" tags="league" x=".3807" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="ManaW" tags="league" x=".4156" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="ManaE" tags="league" x=".45" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
   <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
@@ -86,10 +90,15 @@
   var stateMgr = new StateHandler();
   var ActiveExtendedE = false;
   var ActiveExtendedQ = false;
+  var ActiveExtendedW = false;
   var freezeBackground =false;
   var activeR = false;
   var effects = [];
   var inShop;
+  var noR = false;
+  var noW = false;
+  var noE = false;
+  var noQ = false;
 
   var checkLoadMeter = new Meter(5, loadGoing);
   var allyMeter1 = new Meter(5, allyEffects);
@@ -111,6 +120,10 @@
   var alliedTurretMeter = new Meter(5, turretEffects);
   var enemyTurretMeter = new Meter(5, turretEffects);
   var shopMenuMeter = new Meter (2, shopMenu)
+  var manaRMeter = new Meter(3,manaR)
+  var manaQMeter = new Meter(3, manaQ)
+  var manaEMeter = new Meter(3, manaE)
+  var manaWMeter = new Meter(3, manaW)
   var playingMeter1 = new Meter(5, ()=>"");
   var playingMeter2 = new Meter(5, ()=>"");
 
@@ -118,6 +131,13 @@
     if(!freezeBackground){
       copyScreen();
     }
+    
+
+    manaWMeter.setValue(engine.vision.ManaW);
+    manaQMeter.setValue(engine.vision.ManaQ);
+    manaEMeter.setValue(engine.vision.ManaE);
+    manaRMeter.setValue(engine.vision.ManaR);
+
     shopMenuMeter.setValue(engine.vision.ShopMenu)
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     allyMeter1.setValue(engine.vision.allyDeath1);
@@ -125,10 +145,19 @@
     allyMeter3.setValue(engine.vision.allyDeath3);
     allyMeter4.setValue(engine.vision.allyDeath4);
     if(!activeR){
-      q_Meter.setValue(engine.vision.qButton);
-      w_Meter.setValue(engine.vision.wButton);
-      e_Meter.setValue(engine.vision.eButton);
-      r_Meter.setValue(engine.vision.rButton);
+      if(!noQ){
+        q_Meter.setValue(engine.vision.qButton);
+      }
+      if(!noW){
+        w_Meter.setValue(engine.vision.wButton);
+      }
+      if(!noE){
+        e_Meter.setValue(engine.vision.eButton);
+      }
+      if(!noR){
+        r_Meter.setValue(engine.vision.rButton);
+      }
+      
       d_Meter.setValue(engine.vision.fButton);
       f_Meter.setValue(engine.vision.dButton);
       goldMeter.setValue(engine.vision.gold);
@@ -143,7 +172,9 @@
       Extendede_Meter.setValue(engine.vision.ExtendedeButton);
     }
       Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-      Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+      if(!ActiveExtendedW){
+        Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+      }
       Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
 
     champion = character;
@@ -165,8 +196,37 @@ if(!inShop){
     return 1;
   };
 
+  function manaR(){
+    if(manaRMeter.value > 0.6){
+      noR = true;
+    } else {
+      noR = false
+    }
+  }
+   function manaQ() {
+      if (manaQMeter.value > 0.6) {
+        noQ = true;
+      } else {
+        noQ = false
+      }
+    }
+     function manaE() {
+        if (manaEMeter.value > 0.6) {
+          noE = true;
+        } else {
+          noE = false
+        }
+      }
+       function manaW() {
+          if (manaWMeter.value > 0.6) {
+            noW = true;
+          } else {
+            noW = false
+          }
+        }
+
   function Q_Effects(){
-    if(q_Meter.value == 0){
+    if(q_Meter.value == 0 && !activeR){
       switch (champion) {
         case "Ahri":
           break;
@@ -219,6 +279,7 @@ if(!inShop){
         case "Senna":
           break;
         case "Teemo":
+          stateMgr.Push(new TeemoQ())
           break;
         case "Thresh":
           break;
@@ -293,6 +354,7 @@ if(!inShop){
         case "Senna":
           break;
         case "Teemo":
+          ActiveExtendedW = false;
           break;
         case "Thresh":
           break;
@@ -435,6 +497,7 @@ if(!inShop){
         case "Senna":
           break;
         case "Teemo":
+          stateMgr.Push(new TeemoR);
           break;
         case "Thresh":
           break;
@@ -473,18 +536,26 @@ if(!inShop){
 
   };
   function ExtendedW_Effects() {
-    ActiveExtended = true;
+   
+    if(Extendedw_Meter.value > 0 && !activeR){
+       ActiveExtendedW = true;
+      switch (champion) {
+        case "Teemo":
+          effects.push(new TeemoW());
+          break;
+    }
+    }
 
   };
 
   function ExtendedE_Effects() {
     if(Extendede_Meter.value > 0){
+      ActiveExtendedE = true;
         switch (champion) {
         case "Lux":
           break;
         case "Yone":
            effects.push(new ExtendedEYoneEffect("grey"));
-          ActiveExtendedE = true;
           break;
       }    
       }
@@ -609,7 +680,8 @@ if(!inShop){
         this.bars = [];
         this.draw = function () {
           while (this.bars.length < 20){
-            this.bars.push(new RandomCube(30, 20, "blue", "xAxis", 3))
+            this.bars.push(new RandomCube(30, 20, "blue", "left", 3))
+            this.bars.push(new RandomCube(30, 20, "blue", "right", 3))
           }
 
           this.bars.forEach(bar => {
@@ -627,7 +699,6 @@ if(!inShop){
       function RYoneEffect(){
         this.start = GetTime();
         this.lifetime = 1000;
-        this.BloodRainActive = false;
         this.x = -120;
         activeR = true;
         freezeBackground = true;
@@ -638,7 +709,6 @@ if(!inShop){
           }
           this.draw()
         }
-
         this.draw = function(){
           if(this.lifetime > 200){
            DrawArrow("red", this.x);
@@ -647,7 +717,122 @@ if(!inShop){
           }
           this.lifetime = 1200 - (GetTime() - this.start);
         }
+      }
 
+      function TeemoQ(){
+        this.state = 0;
+        this.background = new SmoothBackgroundToBlack();
+        this.cube = new RandomCube(40,20,"purple", "right", 3, 100)
+        this.ripple = new RippleEffect(320, 100, 8, 1500, 30, "purple", "out", "stroke", 3, true)
+        this.start = GetTime();
+       
+        freezeBackground = true;
+        activeR = true;
+        this.Process = function () {
+          this.Draw();
+        };
+        this.Draw = function () {
+          if(this.state ==0){
+            this.background.draw();
+             if (this.background.y >= 0) {
+              this.state = 1;
+            }
+          } else if (this.state == 1){
+            DrawBackground("black");
+            this.cube.draw()
+            if(this.cube.x >= 280){
+              this.state = 2;
+            }
+          } else {
+            DrawBackground("black");
+            this.ripple.draw()
+            if(this.ripple.radius >=600){
+              activeR = false
+              freezeBackground = false;
+              stateMgr.Pop();
+            }
+          }
+
+      }
+    }
+
+    function TeemoR() {
+      this.state = 0;
+      this.background = new SmoothBackgroundToBlack();
+      this.y = -50;
+      this.explosion = new ParticleExplosion(160, 100, "purple", 5, 2000, 150, 20, 3);
+
+      freezeBackground = true;
+      activeR = true;
+       this.Process = function () {
+        this.Draw();
+      };
+
+      this.Draw = function () {
+        if (this.state == 0) {
+          this.background.draw();
+          if (this.background.y >= 0) {
+            this.state = 1;
+          }
+        } else if (this.state == 1) {
+          DrawBackground("black");
+          puffcap(this.y);
+          if(this.y <= 100){
+            this.y += 5;
+          } else {
+            this.state = 2;
+          }
+        } else if(this.state ==2) {
+          DrawBackground("black");
+          this.explosion.draw();
+           if (this.start == null) {
+            this.start = GetTime();
+            activeR = false
+          }
+          if (GetTime() - this.start > 3000) {
+            stateMgr.Pop();
+            freezeBackground = false;
+            effects.length = 0;
+          }
+        }
+      }
+    }
+    
+    function TeemoW(){
+      this.lifetime = 1000;
+      this.bars = [];
+      this.draw = function () {
+        while (this.bars.length < 10) {
+          this.bars.push(new RandomCube(20, 40, "blue", "down", 2))
+        }
+        this.bars.forEach(bar => {
+          bar.draw();
+          if(bar.y >200){
+            this.bars.shift();
+          }
+        });
+        
+
+        if (!ActiveExtendedW) {
+          this.lifetime = 0;
+        }
+      }
+    }
+
+      function puffcap(y) {
+        DrawCircle(160,y,40,"green");
+        DrawCircle(175, y-20, 10, "purple");
+        DrawCircle(175, y +10, 8, "purple");
+        DrawCircle(145, y +20, 15, "purple");
+        
+      }
+
+      function DrawCircle(x,y,radius,color){
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
       }
 
       function DrawArrow(color, x){
@@ -674,7 +859,7 @@ if(!inShop){
 
         this.Process = function () {
           if (this.bloodDrip.length < 20) {
-            this.bloodDrip.push(new blood(Math.random() * c.width, 0, this.radius, this.color, 0.01))
+            this.bloodDrip.push(new blood(Math.random() * c.width, 0, this.radius, this.color))
           }
           this.elapsed = GetTime() - this.start;
           if (this.elapsed >= 4000) {
@@ -727,7 +912,7 @@ if(!inShop){
 
 
 
-     function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
+     function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
         this.col = color;
         this.speed = speed;
         this.dur = duration;
@@ -739,13 +924,17 @@ if(!inShop){
         this.fill = fillOrStroke;
         this.radius = 0;
         this.amount = amountOfRipples;
+        this.background = background;
         if (inOrOut == "in") {
           this.radius = 200 + (this.width * (this.amount * 2));
           this.speed = -this.speed
         }
         this.draw = function () {
-          ctx.strokeStyle = this.col;
-          ctx.fillStyle = this.col;
+          if(this.background){
+            DrawBackground("black");
+          }
+          
+          
           ctx.lineWidth = this.width;
           ctx.beginPath();
           for (let i = 0; i < this.amount; i++) {
@@ -754,8 +943,10 @@ if(!inShop){
             }
           }
           if (this.fill == "fill") {
+            ctx.fillStyle = this.col;
             ctx.fill();
           } else {
+            ctx.strokeStyle = this.col;
             ctx.stroke();
           }
           this.radius += this.speed;
@@ -835,26 +1026,29 @@ if(!inShop){
   }
 
   class RandomCube{
-    constructor(width, height, color,moveDir, speed){
+    constructor(width, height, color, moveDir, speed, y){
       this.width = width
       this.height = height;
       this.col = color;
       this.moveDir = moveDir;
+      this.y = y;
       this.speed = speed*(Math.random()*2) + speed;
-      if(this.moveDir == "xAxis"){
-        this.y = Math.random() * 200;
-        if(Math.random() >0.5){
+      if(this.moveDir == "left" || this.moveDir == "right"){
+        if(this.y == null){
+          this.y = Math.random() * 200;
+        }
+        if(this.moveDir == "left"){
           this.speed = -this.speed;
           this.x = 320;
-        } else {
+        } else if (this.moveDir == "right") {
           this.x = 0;
         }
       } else {
         this.x = Math.random() * 320;
-        if (Math.random() > 0.5) {
+        if (this.moveDir == "up") {
           this.speed = -this.speed;
           this.y = 200;
-        } else {
+        } else if(this.moveDir == "down") {
           this.y = 0;
         }
       }
@@ -862,11 +1056,22 @@ if(!inShop){
     draw(){
       ctx.fillStyle = this.col; 
       ctx.fillRect(this.x, this.y, this.width, this.height);
-      if(this.moveDir = "xAxis"){
+      if(this.moveDir == "left" || this.moveDir == "right"){
         this.x += this.speed;
       } else {
         this.y += this.speed;
       }
+    }
+  }
+
+  function SmoothBackgroundToBlack(){
+    this.y = -200;
+
+    this.draw = function(){
+      ctx.beginPath();
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, this.y, 320, 200)
+      this.y += 5;
     }
   }
 
@@ -892,12 +1097,11 @@ if(!inShop){
     }
 
    class blood {
-      constructor(x, y, radius, color, fade) {
+      constructor(x, y, radius, color) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.fade = fade;
         this.speed = (Math.random() + 0.1) * 4
       }
       Draw() {
