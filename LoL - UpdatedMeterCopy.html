@@ -41,13 +41,13 @@
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001"  h="20-170" s="0-100" l="0-100" type="linear">
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="10-100" type="area">
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001"  h="20-170" s="0-100" l="0-100" type="linear">
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="10-100" type="area">
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-100" l="0-100" type="linear">
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height = "0.001" h="20-180" s="10-100" l="10-100" type="area">
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="0-100" type="linear">
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height = "0.001"  h="20-170" s="20-100" l="20-100" type="area">
   </meta>
   <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
@@ -99,6 +99,8 @@
   var noW = false;
   var noE = false;
   var noQ = false;
+  var play1 = false;
+  var play2 = false;
 
   var checkLoadMeter = new Meter(5, loadGoing);
   var allyMeter1 = new Meter(5, allyEffects);
@@ -108,10 +110,10 @@
   var q_Meter = new Meter(10, Q_Effects);
   var w_Meter = new Meter(10, W_Effects);
   var e_Meter = new Meter(10, E_Effects);
-  var r_Meter = new Meter(6, R_Effects);
+  var r_Meter = new Meter(4, R_Effects);
   var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
   var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
-  var Extendede_Meter = new Meter(1, ExtendedE_Effects);
+  var Extendede_Meter = new Meter(2, ExtendedE_Effects);
   var Extendedr_Meter = new Meter(5, ExtendedR_Effects);
   var d_Meter = new Meter(5, D_Effects);
   var f_Meter = new Meter(5, F_Effects);
@@ -124,57 +126,61 @@
   var manaQMeter = new Meter(3, manaQ)
   var manaEMeter = new Meter(3, manaE)
   var manaWMeter = new Meter(3, manaW)
-  var playingMeter1 = new Meter(5, ()=>"");
-  var playingMeter2 = new Meter(5, ()=>"");
+  var playingMeter1 = new Meter(5, playingGame1);
+  var playingMeter2 = new Meter(5, playingGame2);
 
   function update() {
     if(!freezeBackground){
       copyScreen();
     }
-    
-    manaWMeter.setValue(engine.vision.ManaW);
-    manaQMeter.setValue(engine.vision.ManaQ);
-    manaEMeter.setValue(engine.vision.ManaE);
-    manaRMeter.setValue(engine.vision.ManaR);
+     checkLoadMeter.setValue(engine.vision.checkLoadBar);
+    if(play1 && play2){
+      manaWMeter.setValue(engine.vision.ManaW);
+      manaQMeter.setValue(engine.vision.ManaQ);
+      manaEMeter.setValue(engine.vision.ManaE);
+      manaRMeter.setValue(engine.vision.ManaR);
+      shopMenuMeter.setValue(engine.vision.ShopMenu)
+      allyMeter1.setValue(engine.vision.allyDeath1);
+      allyMeter2.setValue(engine.vision.allyDeath2);
+      allyMeter3.setValue(engine.vision.allyDeath3);
+      allyMeter4.setValue(engine.vision.allyDeath4);
+      if (!StopEffects) {
+        if (!noQ) {
+          q_Meter.setValue(engine.vision.qButton);
+        }
+        if (!noW) {
+          w_Meter.setValue(engine.vision.wButton);
+        }
+        if (!noE) {
+          e_Meter.setValue(engine.vision.eButton);
+        }
+        if (!noR) {
+          r_Meter.setValue(engine.vision.rButton);
+        }
 
-    shopMenuMeter.setValue(engine.vision.ShopMenu)
-    checkLoadMeter.setValue(engine.vision.checkLoadBar);
-    allyMeter1.setValue(engine.vision.allyDeath1);
-    allyMeter2.setValue(engine.vision.allyDeath2);
-    allyMeter3.setValue(engine.vision.allyDeath3);
-    allyMeter4.setValue(engine.vision.allyDeath4);
-    if(!StopEffects){
-      if(!noQ){
-        q_Meter.setValue(engine.vision.qButton);
+        d_Meter.setValue(engine.vision.fButton);
+        f_Meter.setValue(engine.vision.dButton);
+        goldMeter.setValue(engine.vision.gold);
+        levelUpMeter.setValue(engine.vision.levelUp);
+        alliedTurretMeter.setValue(engine.vision.alliedTurret);
+        enemyTurretMeter.setValue(engine.vision.enemyTurret);
       }
-      if(!noW){
-        w_Meter.setValue(engine.vision.wButton);
-      }
-      if(!noE){
-        e_Meter.setValue(engine.vision.eButton);
-      }
-      if(!noR){
-        r_Meter.setValue(engine.vision.rButton);
-      }
-      
-      d_Meter.setValue(engine.vision.fButton);
-      f_Meter.setValue(engine.vision.dButton);
-      goldMeter.setValue(engine.vision.gold);
-      levelUpMeter.setValue(engine.vision.levelUp);
-      alliedTurretMeter.setValue(engine.vision.alliedTurret);
-      enemyTurretMeter.setValue(engine.vision.enemyTurret);
-    }
-    playingMeter1.setValue(engine.vision.inGame1);
-    playingMeter2.setValue(engine.vision.inGame2);
 
-    if(!ActiveExtendedE){
-      Extendede_Meter.setValue(engine.vision.ExtendedeButton);
-    }
+
+      if (!ActiveExtendedE) {
+        Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+      }
       Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-      if(!ActiveExtendedW){
+      if (!ActiveExtendedW) {
         Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
       }
       Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
+
+    }
+   
+      playingMeter1.setValue(engine.vision.inGame1);
+      playingMeter2.setValue(engine.vision.inGame2);
+
 
     champion = character;
 if(!inShop){
@@ -264,6 +270,7 @@ if(!inShop){
         case "Lux":
           break;
         case "Miss Fortune":
+          effects.push(new FortuneQ());
           break;
         case "Rek'sai":
           break;
@@ -339,6 +346,7 @@ if(!inShop){
         case "Lux":
           break;
         case "Miss Fortune":
+          effects.push(new BarEffect("up", "orange", 5, 1500, 30, 2))
           break;
         case "Rek'sai":
           break;
@@ -371,73 +379,77 @@ if(!inShop){
   };
 
   function E_Effects(){
-    switch (champion) {
-      case "Ahri":
-        break;
-      case "Ashe":
-        break;
-      case "Aurelion Sol":
-        break;
-      case "Caitlyn":
-        break;
-      case "Cassiopeia":
-        break;
-      case "Diana":
-        break;
-      case "Ezreal":
-        break;
-      case "Garen":
-        break;
-      case "Irelia":
-        break;
-      case "Janna":
-        break;
-      case "Jax":
-        break;
-      case "Jhin":
-        break;
-      case "Jinx":
-        break;
-      case "Kai'sa":
-        break;
-      case "Lee Sin":
-        break;
-      case "Leona":
-        break;
-      case "Lucian":
-        break;
-      case "Lulu":
-        break;
-      case "Lux":
-        break;
-      case "Miss Fortune":
-        break;
-      case "Rek'sai":
-        break;
-      case "Ryze":
-        break;
-      case "Sona":
-        break;
-      case "Soraka":
-        break;
-      case "Senna":
-        break;
-      case "Teemo":
-        break;
-      case "Thresh":
-        break;
-      case "Vayne":
-        break;
-      case "Viktor":
-        break;
-      case "Yasuo":
-        break;
-      case "Yone":
-        ActiveExtendedE = false;
-        break;
-      case "Zeri":
-        break;
+    if(e_Meter.value == 0){
+      switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          effects.push(new FortuneE())
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          ActiveExtendedE = false;
+          break;
+        case "Zeri":
+          break;
+      }
     }
+   
   };
 
   function R_Effects(){
@@ -597,6 +609,21 @@ if(!inShop){
       StopEffects = false;
     }
   }
+
+  function playingGame1(){
+    if(playingMeter1.value >0.8){
+      play1 = true
+    } else {
+      play1 = false;
+    }
+  }
+   function playingGame2() {
+      if (playingMeter2.value > 0.8) {
+        play2 = true
+      } else {
+        play2 = false;
+      }
+    }
 
 
   //Effects
@@ -810,24 +837,19 @@ if(!inShop){
             this.bars.shift();
           }
         });
-        
-
         if (!ActiveExtendedW) {
           this.lifetime = 0;
         }
       }
     }
-
       function puffcap(y) {
         DrawCircle(160,y,40,"green");
         DrawCircle(175, y-20, 10, "purple");
         DrawCircle(175, y +10, 8, "purple");
         DrawCircle(145, y +20, 15, "purple");
-        
       }
 
       function DrawCircle(x,y,radius,color){
-
         ctx.beginPath();
         ctx.fillStyle = color;
         ctx.arc(x,y,radius, 0, 2* Math.PI)
@@ -870,14 +892,61 @@ if(!inShop){
           this.Draw();
         };
         this.Draw = function () {
+          ctx.lineWidth = 1;
             this.bloodDrip.forEach(blood => {
             blood.Draw();
             }
           );
         }
       }
+
+      function FortuneQ(){
+        this.start = GetTime();
+        this.lifetime = 2000;
+        this.state = 0;
+        this.cube = new RandomCube(30,30, "orange", "right", 5, 100)
+        this.explosion = new ParticleExplosion(160,100, "orange", 10,1000,200, 7, 1.5);
+
+        this.draw = function () {
+          this.lifetime = 3000 -(GetTime() - this.start)
+          if(this.state == 0){
+            this.cube.draw();
+            if(this.cube.x >= 160){
+              this.state =1
+            }
+          } else if(this.state == 1){
+            this.explosion.draw()
+            
+            this.explosion.particles.forEach((particle, index) => {
+              if(particle.x <= 160){
+                this.explosion.particles.splice(index,1)
+              }
+            });
+          }
+        }
+      }
+
+       function FortuneE() {
+          this.start = GetTime();
+          this.lifetime = 3000;
+          this.state = 0;
+          this.cubes = [];
+          
+          this.draw = function () {
+          this.lifetime = 3000 - (GetTime() - this.start)
+          for (let index = 0; index < 40; index++) {
+            DrawCube(Math.random() * 320, Math.random() *160, Math.random() * 20 + 5, Math.random() * 20 + 5, `hsl(10,${Math.random() * 70 + 30}%, ${Math.random() * 70 + 30}%)`)
+          }
+          }
+        }
+        
       
 
+  function DrawCube(x,y,width, height, color){
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x,y,width,height)
+  }
 
   function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed) {
     this.start = GetTime();
@@ -897,11 +966,8 @@ if(!inShop){
           x: ((Math.random() - 0.5) * this.speed),
           y: ((Math.random() - 0.5) * this.speed)
         }))
-
       this.draw = function () {
         this.lifetime = this.duration - (GetTime() - this.start)
-
-
         this.particles.forEach((Particle, index) => {
           Particle.draw()
         })
