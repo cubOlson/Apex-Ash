@@ -49,21 +49,27 @@
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="10-100" type="area">
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="10-100" type="area">
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-100" l="0-100" type="linear">
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height = "0.001" h="20-180" s="10-100" l="10-100" type="area">
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height = "0.001"  h="20-170" s="20-100" l="20-100" type="area">
   </meta>
-  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-60" l="90-100" type="linear">
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="95-100" type="area">
   </meta>
-  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".001" h="20-170" s="0-100" l="90-100" type="linear">
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+  </meta>
+  <meta meter="ManaR" tags="league" x=".4849" y=".88" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="ManaQ" tags="league" x=".3807" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="ManaW" tags="league" x=".4156" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="ManaE" tags="league" x=".45" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
+  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
@@ -83,6 +89,8 @@
   </meta>
   <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="40-100" l="0-25" type="area">
   </meta>
+  <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="40-100" type="linear">
+  </meta>
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -95,9 +103,24 @@
   var effects = [];
   var height = 200;
   var width = 320;
+
+  var ActiveExtendedE = false;
+  var ActiveExtendedQ = false;
+  var ActiveExtendedW = false;
+  var freezeBackground =false;
+  var StopEffects = false;
+  var inShop;
+  var noR = false;
+  var noW = false;
+  var noE = false;
+  var noQ = false;
+  var play1 = false;
+  var play2 = false;
   var ActiveExtendedE = false;
   var goldAnimPushed = false;
+  var utilityPlayed = false;
   var oldLevel = 1;
+  var deadAllies = 0;
 
   // All meter definitions
   var checkLoadMeter = new Meter(5, loadGoing);
@@ -105,21 +128,26 @@
   var allyMeter2 = new Meter(5, allyEffects);
   var allyMeter3 = new Meter(5, allyEffects);
   var allyMeter4 = new Meter(5, allyEffects);
-  var q_Meter = new Meter(5, Q_Effects);
-  var w_Meter = new Meter(5, W_Effects);
-  var e_Meter = new Meter(5, E_Effects);
-  var r_Meter = new Meter(5, R_Effects);
-  var Extendedq_Meter = new Meter(5, Q_Effects);
-  var Extendedw_Meter = new Meter(5, W_Effects);
-  var Extendede_Meter = new Meter(1, E_Effects);
-  var Extendedr_Meter = new Meter(5, R_Effects);
-  var d_Meter = new Meter(5, D_Effects);
-  var f_Meter = new Meter(5, F_Effects);
+  var q_Meter = new Meter(10, Q_Effects);
+  var w_Meter = new Meter(10, W_Effects);
+  var e_Meter = new Meter(10, E_Effects);
+  var r_Meter = new Meter(4, R_Effects);
+  var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
+  var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
+  var Extendede_Meter = new Meter(2, ExtendedE_Effects);
+  var Extendedr_Meter = new Meter(5, ExtendedE_Effects);
+  var d_Meter = new Meter(5, Utility_Effects);
+  var f_Meter = new Meter(5, Utility_Effects);
   var levelUpMeter = new Meter(1, levelUpEffect);
   var alliedTurretMeter = new Meter(5, turretEffects);
   var enemyTurretMeter = new Meter(5, turretEffects);
-  var playingMeter1 = new Meter(5, ()=>"");
-  var playingMeter2 = new Meter(5, ()=>"");
+  var shopMenuMeter = new Meter (2, shopMenu);
+  var manaRMeter = new Meter(3, manaR);
+  var manaQMeter = new Meter(3, manaQ);
+  var manaEMeter = new Meter(3, manaE);
+  var manaWMeter = new Meter(3, manaW);
+  var playingMeter1 = new Meter(5, playingGame1);
+  var playingMeter2 = new Meter(5, playingGame2);
   var damageMeter = new Meter(1, damageEffects);
   var lowHealthMeter = new Meter(1, damageEffects);
 
@@ -127,35 +155,60 @@
   function update() {
     //Set all meter values each update
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
-    allyMeter1.setValue(engine.vision.allyDeath1);
-    allyMeter2.setValue(engine.vision.allyDeath2);
-    allyMeter3.setValue(engine.vision.allyDeath3);
-    allyMeter4.setValue(engine.vision.allyDeath4);
-    q_Meter.setValue(engine.vision.qButton);
-    w_Meter.setValue(engine.vision.wButton);
-    e_Meter.setValue(engine.vision.eButton);
-    r_Meter.setValue(engine.vision.rButton);
-    d_Meter.setValue(engine.vision.dButton);
-    f_Meter.setValue(engine.vision.fButton);
-    levelUpMeter.setValue(engine.vision.levelUp);
-    alliedTurretMeter.setValue(engine.vision.alliedTurret);
-    enemyTurretMeter.setValue(engine.vision.enemyTurret);
-    playingMeter1.setValue(engine.vision.inGame1);
-    playingMeter2.setValue(engine.vision.inGame2);
-    damageMeter.setValue(engine.vision.tookDamage);
-    lowHealthMeter.setValue(engine.vision.lowHealth);
+    if(play1 && play2){
+      manaWMeter.setValue(engine.vision.ManaW);
+      manaQMeter.setValue(engine.vision.ManaQ);
+      manaEMeter.setValue(engine.vision.ManaE);
+      manaRMeter.setValue(engine.vision.ManaR);
+      shopMenuMeter.setValue(engine.vision.ShopMenu)
+      allyMeter1.setValue(engine.vision.allyDeath1);
+      allyMeter2.setValue(engine.vision.allyDeath2);
+      allyMeter3.setValue(engine.vision.allyDeath3);
+      allyMeter4.setValue(engine.vision.allyDeath4);
+      damageMeter.setValue(engine.vision.tookDamage);
+      lowHealthMeter.setValue(engine.vision.lowHealth);
+      if (!StopEffects) {
+        if (!noQ) {
+          q_Meter.setValue(engine.vision.qButton);
+        }
+        if (!noW) {
+          w_Meter.setValue(engine.vision.wButton);
+        }
+        if (!noE) {
+          e_Meter.setValue(engine.vision.eButton);
+        }
+        if (!noR) {
+          r_Meter.setValue(engine.vision.rButton);
+        }
 
-    if(!ActiveExtendedE){
-      Extendedq_Meter.setValue(engine.vision.ExtendedqButton);
-      Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
-      Extendede_Meter.setValue(engine.vision.ExtendedeButton);
-      Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
+        d_Meter.setValue(engine.vision.fButton);
+        f_Meter.setValue(engine.vision.dButton);
+        levelUpMeter.setValue(engine.vision.levelUp);
+        alliedTurretMeter.setValue(engine.vision.alliedTurret);
+        enemyTurretMeter.setValue(engine.vision.enemyTurret);
+      }
+
+
+      if (!ActiveExtendedE) {
+        Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+      }
+      Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
+      if (!ActiveExtendedW) {
+        Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+      }
+      Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
+
     }
+   
+      playingMeter1.setValue(engine.vision.inGame1);
+      playingMeter2.setValue(engine.vision.inGame2);
 
     champion = character;
 
     //Screen ambience play
-    drawScreenOnKeyboard();
+    if(!freezeBackground){
+      drawScreenOnKeyboard();
+    }
     
     //Effects animation play
     if(effects.length){
@@ -168,16 +221,9 @@
     }
 
     //Gold effect
-    if(engine.vision.gold > goldLimit && !goldAnimPushed){
+    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2){
       goldAnimPushed = true;
       effects.push(new goldEffect());
-    }
-
-    //LevelUp effect
-    if(engine.vision.levelUp != oldLevel && engine.vision.levelUp != -1){
-      oldLevel = engine.vision.levelUp;
-      console.log('LEVEL UP')
-      effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3));
     }
 
     //State Manager animation play
@@ -186,305 +232,408 @@
   }
 
   function Q_Effects(){
-    switch(champion){
-      case "Ahri":
-        break;
-      case "Ashe":
-        break;  
-      case "Aurelion Sol":
-        break;
-      case "Caitlyn":
-        break;  
-      case "Cassiopeia":
-        break; 
-      case "Diana":
-        break;
-      case "Ezreal":
-        break; 
-      case "Garen":
-        break;
-      case "Irelia":
-        break;
-      case "Janna":
-        break; 
-      case "Jax":
-        break;
-      case "Jhin":
-        break;
-      case "Jinx":
-        break; 
-      case "Kai'sa":
-        break;
-      case "Lee Sin":
-        break;
-      case "Leona":
-        break;
-      case "Lucian":
-        break;
-      case "Lulu":
-        break;
-      case "Lux":
-        break; 
-      case "Miss Fortune":
-        break;
-      case "Rek'sai":
-        break; 
-      case "Ryze":
-        break;   
-      case "Sona":
-        break;
-      case "Soraka":
-        break;
-      case "Senna":
-        break;
-      case "Teemo":
-        break;
-      case "Thresh":
-        break;
-      case "Vayne":
-        break;
-      case "Viktor":
-        break;
-      case "Yasuo":
-        break;
-      case "Yone":
-        break;
-      case "Zeri":
-        break;
+    console.log('in Q')
+    if(q_Meter.value == 0 && !StopEffects){
+      switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          effects.push(new FortuneQ());
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          stateMgr.Push(new TeemoQ())
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          effects.push(new YoneQeffect())
+          break;
+        case "Zeri":
+          break;
+      }
+    }
+  };
+
+  function ExtendedQ_Effects() {
+    if(!ActiveExtendedQ){
+      if (Extendedq_Meter.value > 0) {
+        switch (champion) {
+          case "Lux":
+            break;
+          case "Yone":
+            effects.push(new ExtendedQYoneEffect());
+            ActiveExtendedQ = true;
+            break;
+        }
+      } 
+    } else {
+      if(Extendedq_Meter.value == 0){
+        ActiveExtendedQ = false;
+      }
     }
   };
 
   function W_Effects(){
-    switch(champion){
-      case "Ahri":
-        break;
-      case "Ashe":
-        break;  
-      case "Aurelion Sol":
-        break;
-      case "Caitlyn":
-        break;  
-      case "Cassiopeia":
-        break; 
-      case "Diana":
-        break;
-      case "Ezreal":
-        break; 
-      case "Garen":
-        break;
-      case "Irelia":
-        break;
-      case "Janna":
-        break; 
-      case "Jax":
-        break;
-      case "Jhin":
-        break;
-      case "Jinx":
-        break; 
-      case "Kai'sa":
-        break;
-      case "Lee Sin":
-        break;
-      case "Leona":
-        break;
-      case "Lucian":
-        break;
-      case "Lulu":
-        break;
-      case "Lux":
-        break; 
-      case "Miss Fortune":
-        break;
-      case "Rek'sai":
-        break; 
-      case "Ryze":
-        break;   
-      case "Sona":
-        break;
-      case "Soraka":
-        break;
-      case "Senna":
-        break;
-      case "Teemo":
-        break;
-      case "Thresh":
-        break;
-      case "Vayne":
-        break;
-      case "Viktor":
-        break;
-      case "Yasuo":
-        break;
-      case "Yone":
-        break;
-      case "Zeri":
-        break;
+    if(w_Meter.value == 0){
+      switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          effects.push(new BarEffect("up", "orange", 5, 1500, 30, 2))
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          ActiveExtendedW = false;
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          stateMgr.Push(new YoneWeffect());
+          break;
+        case "Zeri":
+          break;
+      }
     }
   };
 
+  function ExtendedW_Effects() {
+    if(Extendedw_Meter.value > 0 && !StopEffects){
+      ActiveExtendedW = true;
+      switch (champion) {
+        case "Teemo":
+          effects.push(new TeemoW());
+          break;
+      }
+    }
+ };
+
   function E_Effects(){
-    switch(champion){
-      case "Ahri":
-        break;
-      case "Ashe":
-        break;  
-      case "Aurelion Sol":
-        break;
-      case "Caitlyn":
-        break;  
-      case "Cassiopeia":
-        break; 
-      case "Diana":
-        break;
-      case "Ezreal":
-        break; 
-      case "Garen":
-        break;
-      case "Irelia":
-        break;
-      case "Janna":
-        break; 
-      case "Jax":
-        break;
-      case "Jhin":
-        break;
-      case "Jinx":
-        break; 
-      case "Kai'sa":
-        break;
-      case "Lee Sin":
-        break;
-      case "Leona":
-        break;
-      case "Lucian":
-        break;
-      case "Lulu":
-        break;
-      case "Lux":
-        break; 
-      case "Miss Fortune":
-        break;
-      case "Rek'sai":
-        break; 
-      case "Ryze":
-        break;   
-      case "Sona":
-        break;
-      case "Soraka":
-        break;
-      case "Senna":
-        break;
-      case "Teemo":
-        break;
-      case "Thresh":
-        break;
-      case "Vayne":
-        break;
-      case "Viktor":
-        break;
-      case "Yasuo":
-        break;
-      case "Yone":
-        ActiveExtendedE = false;
-        if(Extendede_Meter.value ==1){
-          effects.push(new ExtendedEYoneEffect());
-          ActiveExtendedE = true;
-        }
-        break;
-      case "Zeri":
-        break;
+    if(e_Meter.value == 0){
+      switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          effects.push(new FortuneE())
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          ActiveExtendedE = false;
+          break;
+        case "Zeri":
+          break;
+      }
+    }
+  };
+
+  function ExtendedE_Effects() {
+    if(Extendede_Meter.value > 0){
+      ActiveExtendedE = true;
+      switch (champion) {
+        case "Lux":
+          break;
+        case "Yone":
+          effects.push(new ExtendedEYoneEffect("grey"));
+          break;
+      }    
     }
   };
 
   function R_Effects(){
-    switch(champion){
-      case "Ahri":
-        break;
-      case "Ashe":
-        break;  
-      case "Aurelion Sol":
-        break;
-      case "Caitlyn":
-        break;  
-      case "Cassiopeia":
-        break; 
-      case "Diana":
-        break;
-      case "Ezreal":
-        break; 
-      case "Garen":
-        break;
-      case "Irelia":
-        break;
-      case "Janna":
-        break; 
-      case "Jax":
-        break;
-      case "Jhin":
-        break;
-      case "Jinx":
-        break; 
-      case "Kai'sa":
-        break;
-      case "Lee Sin":
-        break;
-      case "Leona":
-        break;
-      case "Lucian":
-        break;
-      case "Lulu":
-        break;
-      case "Lux":
-        break; 
-      case "Miss Fortune":
-        break;
-      case "Rek'sai":
-        break; 
-      case "Ryze":
-        break;   
-      case "Sona":
-        break;
-      case "Soraka":
-        break;
-      case "Senna":
-        break;
-      case "Teemo":
-        break;
-      case "Thresh":
-        break;
-      case "Vayne":
-        break;
-      case "Viktor":
-        break;
-      case "Yasuo":
-        break;
-      case "Yone":
-        break;
-      case "Zeri":
-        break;
+    if(r_Meter.value == 0){
+        switch (champion) {
+        case "Ahri":
+          break;
+        case "Ashe":
+          break;
+        case "Aurelion Sol":
+          break;
+        case "Caitlyn":
+          break;
+        case "Cassiopeia":
+          break;
+        case "Diana":
+          break;
+        case "Ezreal":
+          break;
+        case "Garen":
+          break;
+        case "Irelia":
+          break;
+        case "Janna":
+          break;
+        case "Jax":
+          break;
+        case "Jhin":
+          break;
+        case "Jinx":
+          break;
+        case "Kai'sa":
+          break;
+        case "Lee Sin":
+          break;
+        case "Leona":
+          break;
+        case "Lucian":
+          break;
+        case "Lulu":
+          break;
+        case "Lux":
+          break;
+        case "Miss Fortune":
+          break;
+        case "Rek'sai":
+          break;
+        case "Ryze":
+          break;
+        case "Sona":
+          break;
+        case "Soraka":
+          break;
+        case "Senna":
+          break;
+        case "Teemo":
+          stateMgr.Push(new TeemoR);
+          break;
+        case "Thresh":
+          break;
+        case "Vayne":
+          break;
+        case "Viktor":
+          break;
+        case "Yasuo":
+          break;
+        case "Yone":
+          stateMgr.Push(new RYoneEffect());
+          break;
+        case "Zeri":
+          break;
+      } 
     }
   };
 
-  function D_Effects(){
-    return 1;
-  };
-
-  function F_Effects(){
-    return 1;
+  function Utility_Effects(){
+    if (d_Meter.decreased && d_Meter.value == 0 && play1 && play2 && !utilityPlayed){
+      utilityPlayed = true;
+      effects.push(new RippleEffect(160, 200, 10, 2000, 10, "yellow", "in", "stroke", 5, false))
+    }
+    if (f_Meter.decreased && f_Meter.value == 0 && play1 && play2 && !utilityPlayed){
+      utilityPlayed = true;
+      effects.push(new RippleEffect(160, 200, 10, 2000, 10, "yellow", "in", "stroke", 5, false))
+    }
   };
 
   function allyEffects(){
-    return 1;
+
+    console.log('IN ALLY EFFECTS')
+    let count = 0;
+    allyMeter1.value == 0 ? count++ : null;
+    allyMeter2.value == 0 ? count++ : null;
+    allyMeter3.value == 0 ? count++ : null;
+    allyMeter4.value == 0 ? count++ : null;
+
+    if (count > deadAllies){
+      effects.push(new deathEffect());
+    };
+    
+    deadAllies = count;
   };
+
+  function manaR(){
+    if(manaRMeter.value > 0.6){
+      noR = true;
+    } else {
+      noR = false
+    }
+  }
+   function manaQ() {
+      if (manaQMeter.value > 0.6) {
+        noQ = true;
+      } else {
+        noQ = false
+      }
+    }
+     function manaE() {
+        if (manaEMeter.value > 0.6) {
+          noE = true;
+        } else {
+          noE = false
+        }
+      }
+       function manaW() {
+          if (manaWMeter.value > 0.6) {
+            noW = true;
+          } else {
+            noW = false
+          }
+        }
 
   function damageEffects(){
     if (damageMeter.value > .01){
+      console.log('TOOK DAMAGE')
       for(let i = 0; i < 10; i++){
         setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 20);
       }
     }
     if (lowHealthMeter.value < 1){
+      console.log('Low HEalth')
       for(let i = 0; i < 4; i++){
         setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 50);
       }
@@ -492,11 +641,42 @@
   }
 
   function levelUpEffect(){
-    if(engine.vision.levelUp != oldLevel && engine.vision.levelUp != -1){
-      oldLevel++;
-      console.log('LEVEL UP')
+    if(engine.vision.levelUp != oldLevel && engine.vision.levelUp != -1 && play1 && play2){
+      oldLevel = levelUpMeter.value;
       effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3));
     }
+  };
+
+  function shopMenu(){
+    if(shopMenuMeter.value == 1){
+      inShop = true;
+      StopEffects = true
+    } else {
+      inShop = false
+      effects.length = 0;
+      StopEffects = false;
+    }
+  };
+
+  function playingGame1(){
+    if(playingMeter1.value >0.8){
+      play1 = true
+    } else {
+      play1 = false;
+    }
+  };
+  
+  function playingGame2() {
+    if (playingMeter2.value > 0.8) {
+      play2 = true
+    } else {
+      play2 = false;
+    }
+  };
+
+  function DrawBackground(color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, c.width, c.height)
   };
 
   function turretEffects(){
@@ -507,6 +687,296 @@
     return 1;
   };
 
+  // MISS FORTUNE -------------------------------------------------------------
+  function FortuneQ(){
+        this.start = GetTime();
+        this.lifetime = 2000;
+        this.state = 0;
+        this.cube = new RandomCube(30,30, "orange", "right", 5, 100)
+        this.explosion = new ParticleExplosion(160,100, "orange", 10,1000,200, 7, 1.5);
+
+        this.draw = function () {
+          this.lifetime = 3000 -(GetTime() - this.start)
+          if(this.state == 0){
+            this.cube.draw();
+            if(this.cube.x >= 160){
+              this.state =1
+            }
+          } else if(this.state == 1){
+            this.explosion.draw()
+            
+            this.explosion.particles.forEach((particle, index) => {
+              if(particle.x <= 160){
+                this.explosion.particles.splice(index,1)
+              }
+            });
+          }
+        }
+      }
+
+      function FortuneE() {
+          this.start = GetTime();
+          this.lifetime = 3000;
+          this.state = 0;
+          this.cubes = [];
+          
+          this.draw = function () {
+          this.lifetime = 3000 - (GetTime() - this.start)
+          for (let index = 0; index < 40; index++) {
+            DrawCube(Math.random() * 320, Math.random() *160, Math.random() * 20 + 5, Math.random() * 20 + 5, `hsl(10,${Math.random() * 70 + 30}%, ${Math.random() * 70 + 30}%)`)
+          }
+          }
+        }
+  // END MISS FORTUNE ---------------------------------------------------------
+  // TEEMO --------------------------------------------------------------------
+  function TeemoQ(){
+        this.state = 0;
+        this.background = new SmoothBackgroundToBlack();
+        this.cube = new RandomCube(40,20,"purple", "right", 4, 100)
+        this.ripple = new RippleEffect(320, 100, 8, 1500, 30, "purple", "out", "stroke", 3, true)
+        this.start = GetTime();
+       
+        freezeBackground = true;
+        StopEffects = true;
+        this.Process = function () {
+          this.Draw();
+        };
+        this.Draw = function () {
+          if(this.state ==0){
+            this.background.draw();
+             if (this.background.y >= 0) {
+              this.state = 1;
+            }
+          } else if (this.state == 1){
+            DrawBackground("black");
+            this.cube.draw()
+            if(this.cube.x >= 280){
+              this.state = 2;
+            }
+          } else {
+            DrawBackground("black");
+            this.ripple.draw()
+            if(this.ripple.radius >=600){
+              StopEffects = false
+              freezeBackground = false;
+              stateMgr.Pop();
+            }
+          }
+      }
+    }
+
+    function TeemoR() {
+      this.state = 0;
+      this.background = new SmoothBackgroundToBlack();
+      this.y = -50;
+      this.explosion = new ParticleExplosion(160, 100, "purple", 5, 2000, 150, 20, 3);
+
+      freezeBackground = true;
+      StopEffects = true;
+       this.Process = function () {
+        this.Draw();
+      };
+
+      this.Draw = function () {
+        if (this.state == 0) {
+          this.background.draw();
+          if (this.background.y >= 0) {
+            this.state = 1;
+          }
+        } else if (this.state == 1) {
+          DrawBackground("black");
+          puffcap(this.y);
+          if(this.y <= 100){
+            this.y += 5;
+          } else {
+            this.state = 2;
+          }
+        } else if(this.state ==2) {
+          DrawBackground("black");
+          this.explosion.draw();
+           if (this.start == null) {
+            this.start = GetTime();
+            StopEffects = false
+          }
+          if (GetTime() - this.start > 3000) {
+            stateMgr.Pop();
+            freezeBackground = false;
+            effects.length = 0;
+          }
+        }
+      }
+    }
+
+    function TeemoW(){
+      this.lifetime = 1000;
+      this.bars = [];
+      this.draw = function () {
+        while (this.bars.length < 10) {
+          this.bars.push(new RandomCube(20, 40, "blue", "down", 2))
+        }
+        this.bars.forEach(bar => {
+          bar.draw();
+          if(bar.y >200){
+            this.bars.shift();
+          }
+        });
+        if (!ActiveExtendedW) {
+          this.lifetime = 0;
+        }
+      }
+    }
+
+    function puffcap(y) {
+        DrawCircle(160,y,40,"green");
+        DrawCircle(175, y-20, 10, "purple");
+        DrawCircle(175, y +10, 8, "purple");
+        DrawCircle(145, y +20, 15, "purple");
+      }
+  // END TEEMO ---------------------------------------------------------------
+  // YONE --------------------------------------------------------------------
+  function ExtendedEYoneEffect(){
+    this.lifetime = 1000;
+    this.draw = function (){
+      DrawBackground("hsla(238, 100%, 5%, 0.8)");
+      if(!ActiveExtendedE){
+        this.lifetime = 0;
+        effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+      }
+    }
+  };
+
+  function YoneWeffect() {
+    this.start = GetTime();
+    this.lifetime;
+    freezeBackground = true;
+    var bar1 = new BarEffect("left", "red", 15, 1000, 1500, 1);
+    var bar2 = new BarEffect("left", "black", 15, 1000, 1500, 1);
+
+    this.Process = function(){
+      if(this.lifetime <= 0){
+        freezeBackground = false;
+        stateMgr.Pop();
+      }
+      this.draw()
+    }
+
+    this.draw = function () {
+      drawScreenOnKeyboard();
+      this.lifetime = 1000 - (GetTime() - this.start)
+      if (this.lifetime > 900) {
+        bar1.draw();
+      } else if (this.lifetime >0){
+        bar1.draw();
+        bar2.draw();
+      }
+    }
+  };
+
+  function YoneQeffect (color) {
+      this.start = GetTime();
+      this.lifetime;
+      this.x = -320;
+      this.y = 200;
+      this.col = color;
+      this.sat = 0;
+      this.draw = function(){
+        this.lifetime = 2000 - (GetTime() -this.start)
+        ctx.beginPath();
+        ctx.moveTo(0 + this.x, 180 + this.y);
+        ctx.lineTo(160 + this.x, 80 + this.y)
+        ctx.lineTo(320 + this.x,0 + this.y)
+        ctx.lineTo(180 + this.x,120 + this.y)
+        ctx.lineTo(40 + this.x,220 + this.y)
+        ctx.fillStyle = this.col;
+        ctx.fill();
+        if(this.x <0){
+          this.x += 15;
+          this.y -= 9.375
+          this.state = 1;
+        } else if(this.state == 1) {
+          
+          // effects.push(new RippleEffect(320,0,7,1500,30, "red", "out", "stroke", 3))
+          this.state =2;
+        } else if(this.state == 2){
+          this.col =  `hsla(0, ${this.sat}%, 50%)`
+          this.sat+=3;
+        }
+      } 
+    }
+
+    function ExtendedQYoneEffect() {
+        this.lifetime = 1000;
+        this.bars = [];
+        this.draw = function () {
+          while (this.bars.length < 20){
+            this.bars.push(new RandomCube(30, 20, "blue", "left", 3))
+            this.bars.push(new RandomCube(30, 20, "blue", "right", 3))
+          }
+
+          this.bars.forEach(bar => {
+            bar.draw();
+          });
+          this.bars.shift();
+        
+          if (!ActiveExtendedQ) {
+            this.lifetime = 0;
+            effects.push(new YoneQeffect("blue"))
+          }
+        }
+      }
+
+      function RYoneEffect(){
+        this.start = GetTime();
+        this.lifetime = 1000;
+        this.x = -120;
+        StopEffects = true;
+        freezeBackground = true;
+        this.Process = function(){
+          if(this.lifetime <=0){
+            stateMgr.Pop();
+            stateMgr.Push(new BloodRain("red", 5));
+          }
+          this.draw()
+        }
+        this.draw = function(){
+          if(this.lifetime > 200){
+           DrawArrow("red", this.x);
+           DrawArrow("black", this.x-30);
+           this.x += 10;
+          }
+          this.lifetime = 1200 - (GetTime() - this.start);
+        }
+      }
+
+    //END YONE -----------------------------------------------------------------------------
+  
+    function DrawCube(x,y,width, height, color){
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x,y,width,height)
+    };
+
+    function DrawCircle(x,y,radius,color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+      };
+
+      function DrawArrow(color, x){
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0 + x, 0);
+        ctx.lineTo(60 + x, 0);
+        ctx.lineTo(120 + x, 100);
+        ctx.lineTo(60 + x, 200);
+        ctx.lineTo(0 + x, 200);
+        ctx.lineTo(60 + x, 100)
+        ctx.lineTo(0 + x, 0)
+        ctx.fill();
+      };
+
+      
   function ballPhysics(x, y, radius, color){
     this.radius = radius;
     this.color = color;
@@ -531,31 +1001,127 @@
   }
 
   function deathEffect(){
-    this.x = 160;
-    this.y = 100;
-
-    this.draw = function(){
-      ctx.beginPath();
-      ctx.fillstyle = "white";
-      ctx.arc
+    this.y = 350;
+    this.lifetime = 10;
+    for (let i = 0; i < 10; i++){
+      effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"))
+      setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 150);
+      setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 300);
+      setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 450);
     }
-  }
+    
+    this.draw = function(){
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = "white";
+      ctx.fillRect(60, this.y, 200, 150);
+
+      DrawCircle(160, this.y, 100, "white");
+      DrawCircle(120, this.y - 10, 25, "black");
+      DrawCircle(200, this.y - 10, 25, "black");
+      DrawCircle(160, this.y + 80, 50, "black");
+      DrawCircle(160, this.y + 110, 55, "white");
+
+      this.y -= 6;
+      if (this.y <= -200){
+        this.lifetime = 0;
+      }
+    }
+  };
 
   function DrawBackground(color) {
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, c.width, c.height)
   }
 
-  function ExtendedEYoneEffect(){
-    this.lifetime = 1000;
-    this.draw = function (){
-      DrawBackground("hsla(238, 100%, 5%, 0.8)");
-      if(!ActiveExtendedE){
-        this.lifetime = 0;
-        effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+
+    function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    while (this.particles.length < this.amount) {
+      this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+        {
+          x: ((Math.random() - 0.5) * this.speed),
+          y: ((Math.random() - 0.5) * this.speed)
+        }))
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+  class RandomCube{
+    constructor(width, height, color, moveDir, speed, y){
+      this.width = width
+      this.height = height;
+      this.col = color;
+      this.moveDir = moveDir;
+      this.y = y;
+      this.speed = speed*(Math.random()*2) + speed;
+      if(this.moveDir == "left" || this.moveDir == "right"){
+        if(this.y == null){
+          this.y = Math.random() * 200;
+        }
+        if(this.moveDir == "left"){
+          this.speed = -this.speed;
+          this.x = 320;
+        } else if (this.moveDir == "right") {
+          this.x = 0;
+        }
+      } else {
+        this.x = Math.random() * 320;
+        if (this.moveDir == "up") {
+          this.speed = -this.speed;
+          this.y = 200;
+        } else if(this.moveDir == "down") {
+          this.y = 0;
+        }
+      }
+    }
+    draw(){
+      ctx.fillStyle = this.col; 
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      if(this.moveDir == "left" || this.moveDir == "right"){
+        this.x += this.speed;
+      } else {
+        this.y += this.speed;
       }
     }
   }
+
+  class ExplosionParticle {
+      constructor(x, y, radius, color, fadeSpeed, velocity) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = radius;
+        this.velocity = velocity;
+        this.alpha = 1 * fadeSpeed;
+      }
+      draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        ctx.fillStyle = this.color
+        ctx.fill()
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+        this.alpha -= 0.01
+      }
+    }
 
   function goldEffect(){
     this.x = 160;
@@ -579,6 +1145,49 @@
       }
     }
   }
+
+  function SmoothBackgroundToBlack(){
+    this.y = -200;
+
+    this.draw = function(){
+      ctx.beginPath();
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, this.y, 320, 200)
+      this.y += 5;
+    }
+  }
+
+  function BloodRain (color, radius){
+        this.start = GetTime();
+        this.elapsed = 0;
+        this.bloodDrip = [];
+        this.state = 0;
+        this.cubeX = 1;
+        this.cubeY = 1;
+        this.color = color;
+        this.radius = radius;
+
+        this.Process = function () {
+          if (this.bloodDrip.length < 20) {
+            this.bloodDrip.push(new blood(Math.random() * c.width, 0, this.radius, this.color))
+          }
+          this.elapsed = GetTime() - this.start;
+          if (this.elapsed >= 4000) {
+            stateMgr.Pop();
+            effects.length = 0;
+            freezeBackground = false;
+            StopEffects = false;
+          }
+          this.Draw();
+        };
+        this.Draw = function () {
+          ctx.lineWidth = 1;
+            this.bloodDrip.forEach(blood => {
+            blood.Draw();
+            }
+          );
+        }
+      }
 
   function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
         this.dir = direction;
@@ -622,41 +1231,72 @@
         }
     }
 
-  function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
-      this.col = color;
-      this.speed = speed;
-      this.dur = duration;
-      this.width = rippleWidth;
-      this.start = GetTime();
-      this.lifetime;
-      this.x = x;
-      this.y = y;
-      this.fill = fillOrStroke;
-      this.radius = 0;
-      this.amount = amountOfRipples;
-      if (inOrOut == "in") {
-          this.radius = 200 + (this.width*(this.amount*2));
+    function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
+        this.col = color;
+        this.speed = speed;
+        this.dur = duration;
+        this.width = rippleWidth;
+        this.start = GetTime();
+        this.lifetime;
+        this.x = x;
+        this.y = y;
+        this.fill = fillOrStroke;
+        this.radius = 0;
+        this.amount = amountOfRipples;
+        this.background = background;
+        if (inOrOut == "in") {
+          this.radius = 200 + (this.width * (this.amount * 2));
           this.speed = -this.speed
-      }
-      this.draw = function () {
-          ctx.strokeStyle = this.col;
-          ctx.fillStyle = this.col;
+        }
+        this.draw = function () {
+          if(this.background){
+            DrawBackground("black");
+          }
+          
+          
           ctx.lineWidth = this.width;
           ctx.beginPath();
           for (let i = 0; i < this.amount; i++) {
-              if (this.radius- i* (this.width * 2) > 0) {
-                  ctx.arc(this.x, this.y, this.radius-i*(this.width*2), 0, 2 * Math.PI);
-              }
+            if (this.radius - i * (this.width * 2) > 0) {
+              ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+            }
           }
           if (this.fill == "fill") {
-              ctx.fill();
+            ctx.fillStyle = this.col;
+            ctx.fill();
           } else {
-              ctx.stroke();
+            ctx.strokeStyle = this.col;
+            ctx.stroke();
           }
           this.radius += this.speed;
           this.lifetime = this.dur - (GetTime() - this.start);
+          if (this.lifetime <= 0){
+            utilityPlayed = false;
+          }
+        }
       }
-  }
+
+      class blood {
+      constructor(x, y, radius, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.speed = (Math.random() + 0.1) * 4
+      }
+      Draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
+        this.y += this.speed * Math.random();
+        this.x += (Math.random() - 0.5) * 8;
+      }
+    }
+
+    function GetTime() {
+      return new Date().getTime()
+    }
 
   function drawScreenOnKeyboard() {
     let lightness = new Int8Array(engine.zone.lightness);
