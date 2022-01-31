@@ -41,13 +41,13 @@
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001"  h="20-170" s="0-100" l="0-100" type="linear">
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001"  h="20-170" s="0-100" l="0-100" type="linear">
   </meta>
   <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" h="20-170" s="0-100" l="0-100" type="linear">
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001"  h="20-170" s="0-100" l="0-100" type="linear">
   </meta>
   <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
@@ -92,7 +92,7 @@
   var ActiveExtendedQ = false;
   var ActiveExtendedW = false;
   var freezeBackground =false;
-  var activeR = false;
+  var StopEffects = false;
   var effects = [];
   var inShop;
   var noR = false;
@@ -108,7 +108,7 @@
   var q_Meter = new Meter(10, Q_Effects);
   var w_Meter = new Meter(10, W_Effects);
   var e_Meter = new Meter(10, E_Effects);
-  var r_Meter = new Meter(7, R_Effects);
+  var r_Meter = new Meter(6, R_Effects);
   var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
   var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
   var Extendede_Meter = new Meter(1, ExtendedE_Effects);
@@ -132,7 +132,6 @@
       copyScreen();
     }
     
-
     manaWMeter.setValue(engine.vision.ManaW);
     manaQMeter.setValue(engine.vision.ManaQ);
     manaEMeter.setValue(engine.vision.ManaE);
@@ -144,7 +143,7 @@
     allyMeter2.setValue(engine.vision.allyDeath2);
     allyMeter3.setValue(engine.vision.allyDeath3);
     allyMeter4.setValue(engine.vision.allyDeath4);
-    if(!activeR){
+    if(!StopEffects){
       if(!noQ){
         q_Meter.setValue(engine.vision.qButton);
       }
@@ -185,10 +184,8 @@ if(!inShop){
       effects.splice(i, 1);
     }
   }
+  stateMgr.Process();
 }
-   
-    
-    stateMgr.Process();
     window.requestAnimationFrame(update);
   }
 
@@ -226,7 +223,7 @@ if(!inShop){
         }
 
   function Q_Effects(){
-    if(q_Meter.value == 0 && !activeR){
+    if(q_Meter.value == 0 && !StopEffects){
       switch (champion) {
         case "Ahri":
           break;
@@ -537,7 +534,7 @@ if(!inShop){
   };
   function ExtendedW_Effects() {
    
-    if(Extendedw_Meter.value > 0 && !activeR){
+    if(Extendedw_Meter.value > 0 && !StopEffects){
        ActiveExtendedW = true;
       switch (champion) {
         case "Teemo":
@@ -593,9 +590,11 @@ if(!inShop){
   function shopMenu(){
     if(shopMenuMeter.value ==1){
       inShop = true;
+      StopEffects = true
     } else {
       inShop = false
       effects.length = 0;
+      StopEffects = false;
     }
   }
 
@@ -700,7 +699,7 @@ if(!inShop){
         this.start = GetTime();
         this.lifetime = 1000;
         this.x = -120;
-        activeR = true;
+        StopEffects = true;
         freezeBackground = true;
         this.Process = function(){
           if(this.lifetime <=0){
@@ -722,12 +721,12 @@ if(!inShop){
       function TeemoQ(){
         this.state = 0;
         this.background = new SmoothBackgroundToBlack();
-        this.cube = new RandomCube(40,20,"purple", "right", 3, 100)
+        this.cube = new RandomCube(40,20,"purple", "right", 4, 100)
         this.ripple = new RippleEffect(320, 100, 8, 1500, 30, "purple", "out", "stroke", 3, true)
         this.start = GetTime();
        
         freezeBackground = true;
-        activeR = true;
+        StopEffects = true;
         this.Process = function () {
           this.Draw();
         };
@@ -747,7 +746,7 @@ if(!inShop){
             DrawBackground("black");
             this.ripple.draw()
             if(this.ripple.radius >=600){
-              activeR = false
+              StopEffects = false
               freezeBackground = false;
               stateMgr.Pop();
             }
@@ -763,7 +762,7 @@ if(!inShop){
       this.explosion = new ParticleExplosion(160, 100, "purple", 5, 2000, 150, 20, 3);
 
       freezeBackground = true;
-      activeR = true;
+      StopEffects = true;
        this.Process = function () {
         this.Draw();
       };
@@ -787,7 +786,7 @@ if(!inShop){
           this.explosion.draw();
            if (this.start == null) {
             this.start = GetTime();
-            activeR = false
+            StopEffects = false
           }
           if (GetTime() - this.start > 3000) {
             stateMgr.Pop();
@@ -866,7 +865,7 @@ if(!inShop){
             stateMgr.Pop();
             effects.length = 0;
             freezeBackground = false;
-            activeR = false;
+            StopEffects = false;
           }
           this.Draw();
         };
