@@ -7,8 +7,8 @@
   label="Champions" 
   type="combobox" 
   values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,
-  Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,
-  Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
+Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,
+Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
   default="Ahri"
   />
   <meta
@@ -49,13 +49,13 @@
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="10-100" type="area">
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="10-100" type="area">
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height = "0.001" h="20-180" s="10-100" l="10-100" type="area">
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height = "0.001" h="20-170" s="30-100" l="20-100" type="area">
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height = "0.001"  h="20-170" s="20-100" l="20-100" type="area">
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
   </meta>
   <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
   </meta>
@@ -69,8 +69,6 @@
   <meta meter="ManaQ" tags="league" x=".3807" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
   <meta meter="ManaW" tags="league" x=".4156" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
   <meta meter="ManaE" tags="league" x=".45" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
-  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
-  </meta>
   <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
   </meta>
   <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="40-70" s="20-60" l="70-90" type="linear">
@@ -207,7 +205,13 @@
 
     //Screen ambience play
     if(!freezeBackground){
-      drawScreenOnKeyboard();
+      copyScreen();
+    }
+
+    //Level Up Effect
+    if(engine.vision.levelUp != oldLevel && engine.vision.levelUp != -1 && checkAll()){
+      oldLevel = levelUpMeter.value;
+      effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3));
     }
     
     //Effects animation play
@@ -221,7 +225,7 @@
     }
 
     //Gold effect
-    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2){
+    if(engine.vision.gold > goldLimit && !goldAnimPushed && checkAll()){
       goldAnimPushed = true;
       effects.push(new goldEffect());
     }
@@ -240,6 +244,7 @@
         case "Ahri":
           break;
         case "Ashe":
+          effects.push(new asheQ())
           break;
         case "Aurelion Sol":
           break;
@@ -333,6 +338,7 @@
         case "Ahri":
           break;
         case "Ashe":
+          stateMgr.Push(new asheW())
           break;
         case "Aurelion Sol":
           break;
@@ -369,7 +375,7 @@
         case "Lux":
           break;
         case "Miss Fortune":
-          effects.push(new BarEffect("up", "orange", 5, 1500, 30, 2))
+          effects.push(new ArrowEffect("up", "orange", 2, 7, 1000));
           break;
         case "Rek'sai":
           break;
@@ -380,9 +386,6 @@
         case "Soraka":
           break;
         case "Senna":
-          break;
-        case "Teemo":
-          ActiveExtendedW = false;
           break;
         case "Thresh":
           break;
@@ -402,15 +405,17 @@
   };
 
   function ExtendedW_Effects() {
+   
     if(Extendedw_Meter.value > 0 && !StopEffects){
       ActiveExtendedW = true;
       switch (champion) {
         case "Teemo":
-          effects.push(new TeemoW());
+          effects.push(new ArrowEffect("up", "blue", 2 , 7,1000));
+          ActiveExtendedW = false;
           break;
       }
     }
- };
+  };
 
   function E_Effects(){
     if(e_Meter.value == 0){
@@ -418,6 +423,7 @@
         case "Ahri":
           break;
         case "Ashe":
+          effects.push(new ArrowEffect("up", "hsl(184, 100%, 50%)",1, 7, 1000))
           break;
         case "Aurelion Sol":
           break;
@@ -504,6 +510,7 @@
         case "Ahri":
           break;
         case "Ashe":
+          stateMgr.Push(new asheR())
           break;
         case "Aurelion Sol":
           break;
@@ -650,6 +657,13 @@
     }
   };
 
+  function checkAll(){
+    if (!inShop && !StopEffects && play1 && play2){
+      return true
+    }
+    return false;
+  };
+
   function shopMenu(){
     if(shopMenuMeter.value == 1){
       inShop = true;
@@ -691,6 +705,98 @@
   };
 
   // END CALLBACKS -----------------------------------------------------------------------------------
+  // ASHE --------------------------------------------------------------------------------
+    function asheQ(){
+      this.start = GetTime();
+      this.prevArrows = GetTime();
+      this.lifetime;
+      this.cubes = [];
+
+      effects.push(new RippleEffect(160, 100, 10, 1000, 30, "blue", "in", "Stroke", 1))
+      
+      this.draw = function(){
+        this.lifetime = 3000 -(GetTime() - this.start)
+        if(  GetTime() - this.prevArrows > 800){
+          for (let index = 0; index < 4; index++) {
+            this.cubes.push(new RandomCube(20, 60, "hsl(184, 100%, 50%)", "up", 5,true ,200 + (index *50), 100 +(30*index)))
+          }
+          this.prevArrows = GetTime();
+        }
+        this.cubes.forEach(cube => {
+          cube.draw();
+        });
+      }
+    };
+
+    function asheW (){
+      this.start = GetTime();
+      this.state = 0;
+      this.lifetime = 2000;
+      this.background = new SmoothBackgroundToBlack(12);
+      this.explosion = new ParticleExplosion(160, 200, "hsl(184, 100%, 50%)", 6, 1000, 8, 7, 1.5, true);
+      
+      freezeBackground = true;
+          
+      this.Process = function () {
+        if (this.lifetime <= 0) {
+          stateMgr.Pop();
+          freezeBackground = false;
+        }
+        this.draw();
+      }
+          
+      this.draw = function () {
+        this.lifetime = 2500 - (GetTime() - this.start)
+        if (this.state == 0) {
+          this.background.draw();
+          if (this.background.y >= 0) {
+            this.state = 1;
+          }
+        } else {
+          DrawBackground("hsla(0,0%,0%, 0.07)")
+          this.explosion.draw()
+        }
+      }
+    };
+
+    function asheR(){
+      this.start = GetTime();
+      this.state = 0;
+      this.lifetime = 3500;
+      this.background = new SmoothBackgroundToBlack(20);
+      this.cube = new RandomCube(100, 30, "hsl(184, 100%, 50%)", "right", 5.5,false ,85);
+      this.bloodRain =  new BloodRain("hsl(184, 100%, 50%)", 8)
+      freezeBackground = true;
+            
+      this.Process = function (){
+        if(this.lifetime <= 0){
+          stateMgr.Pop();
+        }
+        this.draw()
+      }
+
+      this.draw = function (){
+        this.lifetime = 4500 - (GetTime() - this.start);
+        if(this.state == 0){
+          this.background.draw();
+          if (this.background.y >= 0) {
+            this.state = 1;
+          }
+        } else if (this.state == 1){
+          DrawBackground("black");
+          this.cube.draw();
+          this.cubex = this.cube.x + this.cube.width;
+          DrawTriangle(this.cubex, 60, this.cubex+ 80, 100, this.cubex, 140, "hsl(184, 100%, 50%)")
+          if(this.cubex -100> 320){
+            this.state =2;
+          }
+        } else if (this.state ==2){
+          DrawBackground("hsla(0,0%,0%, 0.1)");
+          this.bloodRain.Process()
+        }
+      }
+    };
+  // END ASHE ------------------------------------------------------------------------
   // MISS FORTUNE -------------------------------------------------------------
   function FortuneQ(){
         this.start = GetTime();
@@ -904,7 +1010,7 @@
           this.draw()
         }
         this.draw = function () {
-          drawScreenOnKeyboard();
+          copyScreen();
           this.lifetime = 1000 - (GetTime() - this.start)
           if (this.lifetime > 900) {
             bar1.draw();
@@ -1006,22 +1112,77 @@
         ctx.fillStyle = color;
         ctx.arc(x,y,radius, 0, 2* Math.PI)
         ctx.fill();
-      };
+    };
 
-      function DrawArrow(color, x){
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.moveTo(0 + x, 0);
-        ctx.lineTo(60 + x, 0);
-        ctx.lineTo(120 + x, 100);
-        ctx.lineTo(60 + x, 200);
-        ctx.lineTo(0 + x, 200);
-        ctx.lineTo(60 + x, 100)
-        ctx.lineTo(0 + x, 0)
-        ctx.fill();
-      };
+    function DrawTriangle(cord1X,cord1Y,cord2X,cord2Y,cord3X,cord3Y, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.moveTo(cord1X, cord1Y);
+      ctx.lineTo(cord2X,cord2Y);
+      ctx.lineTo(cord3X,cord3Y);
+      ctx.lineTo(cord1X,cord1Y);
+      ctx.fill();
+    };
 
-      
+    function DrawArrow(color, x){
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(0 + x, 0);
+      ctx.lineTo(60 + x, 0);
+      ctx.lineTo(120 + x, 100);
+      ctx.lineTo(60 + x, 200);
+      ctx.lineTo(0 + x, 200);
+      ctx.lineTo(60 + x, 100)
+      ctx.lineTo(0 + x, 0)
+      ctx.fill();
+    };
+
+    function ArrowEffect(direction, color, amount, speed, duration) {
+            this.start = GetTime();
+            this.speed = speed;
+            this.duration = duration;
+            this.lifetime = this.duration;
+            this.direction = direction;
+            this.color = color;
+            this.amount = amount;
+            this.draw = function () {
+              if (this.direction == 'up') {
+                this.speed = -this.speed;
+                ctx.fillStyle = this.color;
+                for (let i = 0; i < this.amount; i++) {
+                  ctx.beginPath();
+                  ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
+                  ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+                  ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+                  ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
+                  ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+                  ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+                  ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+                  ctx.fill();
+                }
+              } else {
+                ctx.fillStyle = this.color;
+                for (let i = 0; i < this.amount; i++) {
+                  ctx.beginPath();
+                  ctx.moveTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(320, 240 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(320, 180 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(160, 240 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(0, 180 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(0, 240 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                  ctx.fill();
+                }
+              }
+              this.Ymin += this.speed;
+              this.elapsed = new Date().getTime() - this.start;
+              this.lifetime = this.duration - this.elapsed;
+              if (this.lifetime <= 0) {
+                speedAnim = false
+              }
+            }
+          }
+
   function ballPhysics(x, y, radius, color){
     this.radius = radius;
     this.color = color;
@@ -1043,7 +1204,7 @@
         this.lifetime = 0;
       }
     }
-  }
+  };
 
   function deathEffect(){
     this.y = 350;
@@ -1078,7 +1239,7 @@
   function DrawBackground(color) {
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, c.width, c.height)
-  }
+  };
 
 
   function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY) {
@@ -1112,28 +1273,37 @@
         })
       }
     }
-  }
+  };
 
   class RandomCube{
-    constructor(width, height, color, moveDir, speed, y){
+    constructor(width, height, color, moveDir, speed,randomSpeed, startY, startX){
       this.width = width
       this.height = height;
       this.col = color;
       this.moveDir = moveDir;
-      this.y = y;
-      this.speed = speed*(Math.random()*2) + speed;
+      this.y = startY;
+      this.x = startX;
+      this.randomSpeed = randomSpeed;
+      this.speed;
+      if(this.randomSpeed == null || this.randomSpeed == true){
+        this.speed =speed * (Math.random() * 2) + speed;
+      } else{
+        this.speed = speed;
+      }
       if(this.moveDir == "left" || this.moveDir == "right"){
         if(this.y == null){
           this.y = Math.random() * 200;
+        }
+        if (this.x == null) {
+          this.x = Math.random() * 200;
         }
         if(this.moveDir == "left"){
           this.speed = -this.speed;
           this.x = 320;
         } else if (this.moveDir == "right") {
-          this.x = 0;
+          this.x = 0 - this.width;
         }
       } else {
-        this.x = Math.random() * 320;
         if (this.moveDir == "up") {
           this.speed = -this.speed;
           this.y = 200;
@@ -1151,7 +1321,7 @@
         this.y += this.speed;
       }
     }
-  }
+  };
 
   class ExplosionParticle {
       constructor(x, y, radius, color, fadeSpeed, velocity) {
@@ -1195,7 +1365,7 @@
         goldAnimPushed = false;
       }
     }
-  }
+  };
 
   function SmoothBackgroundToBlack(){
     this.y = -200;
@@ -1206,7 +1376,7 @@
       ctx.fillRect(0, this.y, 320, 200)
       this.y += 5;
     }
-  }
+  };
 
   function BloodRain (color, radius){
         this.start = GetTime();
@@ -1349,7 +1519,7 @@
       return new Date().getTime()
     }
 
-  function drawScreenOnKeyboard() {
+  function copyScreen() {
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let hue = new Int16Array(engine.zone.hue);
