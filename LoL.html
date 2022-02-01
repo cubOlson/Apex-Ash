@@ -1,5 +1,5 @@
 <head>
-  <title>League of Legends WorkCopy</title>
+  <title>League of Legends Cub Copy</title>
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="WhirlwindFX" />
   <meta 
@@ -230,6 +230,8 @@
     stateMgr.Process();
     window.requestAnimationFrame(update);
   }
+
+  // START CALLBACK FUNCTIONS ----------------------------------------------------------------
 
   function Q_Effects(){
     console.log('in Q')
@@ -538,6 +540,7 @@
         case "Lux":
           break;
         case "Miss Fortune":
+          stateMgr.Push(new FortuneR())
           break;
         case "Rek'sai":
           break;
@@ -687,13 +690,14 @@
     return 1;
   };
 
+  // END CALLBACKS -----------------------------------------------------------------------------------
   // MISS FORTUNE -------------------------------------------------------------
   function FortuneQ(){
         this.start = GetTime();
         this.lifetime = 2000;
         this.state = 0;
         this.cube = new RandomCube(30,30, "orange", "right", 5, 100)
-        this.explosion = new ParticleExplosion(160,100, "orange", 10,1000,200, 7, 1.5);
+        this.explosion = new ParticleExplosion(160,100, "orange", 10,1000,200, 7, 1.5, false);
 
         this.draw = function () {
           this.lifetime = 3000 -(GetTime() - this.start)
@@ -727,12 +731,46 @@
           }
           }
         }
+
+        function FortuneR() {
+            this.start = GetTime();
+            this.state = 0;
+            this.lifetime = 3000;
+            this.background = new SmoothBackgroundToBlack();
+            this.explosion = new ParticleExplosion(160, 200, "orange", 10, 1000, 150, 7, 1.5, true);
+            this.col = 25;
+            freezeBackground = true;
+
+            this.Process = function(){
+            if(this.lifetime <= 0){
+              stateMgr.Pop();
+              freezeBackground = false;
+            } 
+            this.draw();
+            }
+            this.draw = function () {
+               this.lifetime = 3500 - (GetTime() - this.start)
+              if(this.state == 0){
+                this.background.draw();
+                if(this.background.y >= 0){
+                  this.state = 1;
+                }
+              } else {
+                DrawBackground("hsla(0,0%,0%, 0.1)")
+                this.explosion.draw()
+               if( this.explosion.particles[0].y <= 0){
+                this.explosion = new ParticleExplosion(160, 200, `hsl(${this.col},100%, 50%)`, 10, 1000, 150, 7, 1.5, true);
+                this.col -=10;
+                }
+              }
+            }
+          }
   // END MISS FORTUNE ---------------------------------------------------------
   // TEEMO --------------------------------------------------------------------
   function TeemoQ(){
         this.state = 0;
         this.background = new SmoothBackgroundToBlack();
-        this.cube = new RandomCube(40,20,"purple", "right", 4, 100)
+        this.cube = new RandomCube(40,20,"purple", "right", 5.3, 100)
         this.ripple = new RippleEffect(320, 100, 8, 1500, 30, "purple", "out", "stroke", 3, true)
         this.start = GetTime();
        
@@ -756,7 +794,7 @@
           } else {
             DrawBackground("black");
             this.ripple.draw()
-            if(this.ripple.radius >=600){
+            if(this.ripple.radius >=500){
               StopEffects = false
               freezeBackground = false;
               stateMgr.Pop();
@@ -769,7 +807,7 @@
       this.state = 0;
       this.background = new SmoothBackgroundToBlack();
       this.y = -50;
-      this.explosion = new ParticleExplosion(160, 100, "purple", 5, 2000, 150, 20, 3);
+      this.explosion = new ParticleExplosion(160, 100, "purple", 7, 1000, 150, 20, 1);
 
       freezeBackground = true;
       StopEffects = true;
@@ -798,7 +836,7 @@
             this.start = GetTime();
             StopEffects = false
           }
-          if (GetTime() - this.start > 3000) {
+          if (GetTime() - this.start > 2000) {
             stateMgr.Pop();
             freezeBackground = false;
             effects.length = 0;
@@ -810,17 +848,24 @@
     function TeemoW(){
       this.lifetime = 1000;
       this.bars = [];
+      this.y = 300;
       this.draw = function () {
-        while (this.bars.length < 10) {
-          this.bars.push(new RandomCube(20, 40, "blue", "down", 2))
+        ctx.fillStyle = "blue"; 
+        for (let i= 0; i < 2; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, this.y + 200 * i - 150);
+          ctx.lineTo(320, this.y + 200 * i);
+          ctx.lineTo(320, this.y + 200 * i + 100);
+          ctx.lineTo(160, this.y + 200 * i - 100);
+          ctx.lineTo(0, this.y + 200 * i + 100);
+          ctx.lineTo(0, this.y + 200 * i);
+          ctx.lineTo(160, this.y + 200 * i - 150);
+          ctx.fill();
+          
         }
-        this.bars.forEach(bar => {
-          bar.draw();
-          if(bar.y >200){
-            this.bars.shift();
-          }
-        });
-        if (!ActiveExtendedW) {
+      
+        this.y -= 10;
+        if(this.y< -200){
           this.lifetime = 0;
         }
       }
@@ -835,44 +880,42 @@
   // END TEEMO ---------------------------------------------------------------
   // YONE --------------------------------------------------------------------
   function ExtendedEYoneEffect(){
-    this.lifetime = 1000;
-    this.draw = function (){
-      DrawBackground("hsla(238, 100%, 5%, 0.8)");
-      if(!ActiveExtendedE){
-        this.lifetime = 0;
-        effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+      this.lifetime = 1000;
+      this.draw = function (){
+        DrawBackground("hsla(238, 100%, 5%, 0.8)");
+        if(!ActiveExtendedE){
+          this.lifetime = 0;
+          effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+        }
       }
     }
-  };
 
-  function YoneWeffect() {
-    this.start = GetTime();
-    this.lifetime;
-    freezeBackground = true;
-    var bar1 = new BarEffect("left", "red", 15, 1000, 1500, 1);
-    var bar2 = new BarEffect("left", "black", 15, 1000, 1500, 1);
-
-    this.Process = function(){
-      if(this.lifetime <= 0){
-        freezeBackground = false;
-        stateMgr.Pop();
+    function YoneWeffect() {
+        this.start = GetTime();
+        this.lifetime;
+        freezeBackground = true;
+        var bar1 = new BarEffect("left", "red", 15, 1000, 1500, 1);
+        var bar2 = new BarEffect("left", "black", 15, 1000, 1500, 1);
+        this.Process = function(){
+          if(this.lifetime <= 0){
+            freezeBackground = false;
+            stateMgr.Pop();
+          }
+          this.draw()
+        }
+        this.draw = function () {
+          drawScreenOnKeyboard();
+          this.lifetime = 1000 - (GetTime() - this.start)
+          if (this.lifetime > 900) {
+            bar1.draw();
+          } else if (this.lifetime >0){
+            bar1.draw();
+            bar2.draw();
+          }
+        }
       }
-      this.draw()
-    }
 
-    this.draw = function () {
-      drawScreenOnKeyboard();
-      this.lifetime = 1000 - (GetTime() - this.start)
-      if (this.lifetime > 900) {
-        bar1.draw();
-      } else if (this.lifetime >0){
-        bar1.draw();
-        bar2.draw();
-      }
-    }
-  };
-
-  function YoneQeffect (color) {
+      function YoneQeffect (color) {
       this.start = GetTime();
       this.lifetime;
       this.x = -320;
@@ -949,6 +992,8 @@
       }
 
     //END YONE -----------------------------------------------------------------------------
+
+    // START EFFECT/HELPER FUNCTIONS --------------------------------------------------------------------
   
     function DrawCube(x,y,width, height, color){
       ctx.beginPath();
@@ -1036,7 +1081,7 @@
   }
 
 
-    function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed) {
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY) {
     this.start = GetTime();
     this.col = color;
     this.speed = speed;
@@ -1048,11 +1093,17 @@
     this.y = y;
     this.fadeSpeed = fadeSpeed;
     this.particles = [];
+   
     while (this.particles.length < this.amount) {
+       if (notrandomY) {
+        this.yspeed = -this.speed/1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
       this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
         {
           x: ((Math.random() - 0.5) * this.speed),
-          y: ((Math.random() - 0.5) * this.speed)
+          y: this.yspeed
         }))
       this.draw = function () {
         this.lifetime = this.duration - (GetTime() - this.start)
@@ -1061,7 +1112,7 @@
         })
       }
     }
-  };
+  }
 
   class RandomCube{
     constructor(width, height, color, moveDir, speed, y){
