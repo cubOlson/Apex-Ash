@@ -49,6 +49,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   </meta>
   <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
   </meta>
+  <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height = "0.001"  h="0-360" s="0-100" l="0-30" type="area">
+  </meta>
   <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
   </meta>
   <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
@@ -73,7 +75,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   </meta>
   <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
   </meta>
-  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="50">
+  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="100">
   </meta>
   <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75" type="area">
   </meta>
@@ -96,7 +98,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 </body>
 
 <script>
-  var c, ctx, champion, Gold;
+  var c, ctx, champion;
   var stateMgr = new StateHandler();
   var effects = [];
   var height = 200;
@@ -105,7 +107,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var ActiveExtendedE = false;
   var ActiveExtendedQ = false;
   var ActiveExtendedW = false;
-  var freezeBackground =false;
+  var freezeBackground = false;
   var StopEffects = false;
   var inShop;
   var noR = false;
@@ -119,6 +121,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var utilityPlayed = false;
   var deadAllies = 0;
   var levelUpAnim = false;
+  var deathAnim = false;
+  var turretAnim = false;
 
   // All meter definitions
   var checkLoadMeter = new Meter(5, loadGoing);
@@ -144,10 +148,10 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var manaQMeter = new Meter(3, manaQ);
   var manaEMeter = new Meter(3, manaE);
   var manaWMeter = new Meter(3, manaW);
-  var playingMeter1 = new Meter(5, playingGame1);
-  var playingMeter2 = new Meter(5, playingGame2);
+  var playingMeter1 = new Meter(10, playingGame1);
+  var playingMeter2 = new Meter(10, playingGame2);
   var damageMeter = new Meter(1, damageEffects);
-  var lowHealthMeter = new Meter(1, damageEffects);
+  var lowHealthMeter = new Meter(2, damageEffects);
 
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
@@ -202,14 +206,12 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       playingMeter2.setValue(engine.vision.inGame2);
 
     champion = character;
-    Gold = goldLimit;
 
     //Screen ambience play
     if(!freezeBackground){
       copyScreen();
     }
     
-    console.log(d_Meter.value)
     //Effects animation play
     if(effects.length){
       effects.forEach((element, index) => {
@@ -221,13 +223,13 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     }
 
     //Gold effect
-    if(engine.vision.gold > Gold && !goldAnimPushed && checkAll()){
+    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2){
       goldAnimPushed = true;
       effects.push(new goldEffect());
     }
 
     //Low Health Effect
-    if (lowHealthMeter.value < 1 && checkAll()){
+    if (lowHealthMeter.value < 1 && lowHealthMeter.value > .05 && play1 && play2){
       for(let i = 0; i < 3; i++){
         effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"))
       }
@@ -241,7 +243,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   // START CALLBACK FUNCTIONS ----------------------------------------------------------------
 
   function Q_Effects(){
-    if(q_Meter.value == 0 && checkAll()){
+    if(q_Meter.value == 0){
       switch (champion) {
         case "Ahri":
           break;
@@ -335,7 +337,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   };
 
   function W_Effects(){
-    if(w_Meter.value == 0 && checkAll()){
+    if(w_Meter.value == 0){
       switch (champion) {
         case "Ahri":
           break;
@@ -420,7 +422,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   };
 
   function E_Effects(){
-    if(e_Meter.value == 0 && checkAll()){
+    if(e_Meter.value == 0){
       switch (champion) {
         case "Ahri":
           break;
@@ -507,7 +509,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   };
 
   function R_Effects(){
-    if(r_Meter.value == 0 && checkAll()){
+    if(r_Meter.value == 0){
         switch (champion) {
         case "Ahri":
           break;
@@ -600,7 +602,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     allyMeter3.value == 0 ? count++ : null;
     allyMeter4.value == 0 ? count++ : null;
 
-    if (count > deadAllies && checkAll()){
+    if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1){
+      deathAnim = true;
       effects.push(new deathEffect());
     };
     
@@ -645,7 +648,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   }
 
   function levelUpEffect(){
-    if(levelUpMeter.decreased && !levelUpAnim && checkAll()){
+    if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
       levelUpAnim = true;
       StopEffects = true;
       effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3));
@@ -673,7 +676,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   };
 
   function playingGame1(){
-    if(playingMeter1.value >0.8){
+    if(playingMeter1.value > 0.8){
       play1 = true
     } else {
       play1 = false;
@@ -694,7 +697,14 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   };
 
   function turretEffects(){
-    return 1;
+    console.log('IN TURRET')
+    if(alliedTurretMeter.value == 1 && !turretAnim){
+      turretAnim = true;
+      effects.push(new fallingTurret("blue"));
+    } else if(enemyTurretMeter.value == 1 && !turretAnim){
+      turretAnim = true;
+      effects.push(new fallingTurret("red"));
+    }
   };
 
   function loadGoing(){
@@ -1018,7 +1028,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         }
       }
 
-      function YoneQeffect (color) {
+      function YoneQeffect(color) {
       this.start = GetTime();
       this.lifetime;
       this.x = -320;
@@ -1095,7 +1105,6 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       }
 
     //END YONE -----------------------------------------------------------------------------
-
     // START EFFECT/HELPER FUNCTIONS --------------------------------------------------------------------
   
     function DrawCube(x,y,width, height, color){
@@ -1203,6 +1212,38 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     }
   };
 
+  function fallingTurret(color){
+    this.lifetime = 10;
+    this.angle = 0;
+    this.change = 0;
+    this.elapsed = 0;
+    this.color = color;
+    this.draw = function(){
+      ctx.save();
+      ctx.fillStyle = this.color;
+      ctx.translate(75, 200);
+      ctx.rotate(this.angle * Math.PI/180);
+      ctx.translate(-75, -200);
+      ctx.fillRect(0, -100, 75, 300);
+      ctx.fillRect(-30, -40, 135, 140);
+      ctx.restore();
+      
+      if(this.elapsed > 50){
+        this.lifetime = 0;
+        turretAnim = false;
+      } else if(this.angle >= 90){
+        this.angle = 90;
+        this.elapsed++;
+        if(this.elapsed < 5){
+            effects.push(new RippleEffect(200, 200, 20, 200, 20, this.color, "out", "stroke", 1, false));
+        }
+      } else {
+        this.angle += this.change;
+        this.change += .05;
+      }
+    }
+  };
+
   function deathEffect(){
     this.y = 350;
     this.lifetime = 10;
@@ -1229,6 +1270,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       this.y -= 6;
       if (this.y <= -200){
         this.lifetime = 0;
+        deathAnim = false;
       }
     }
   };
@@ -1357,7 +1399,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       ctx.ellipse(this.x, this.y, this.radiusX, 50, 0, 0, 2 * Math.PI);
       ctx.fill();
       this.radiusX = Math.sin(Date.now() / 100) * 20 + 30;
-      if(engine.vision.gold < Gold && engine.vision.gold != -1){
+      if((engine.vision.gold < goldLimit && engine.vision.gold != -1) || (!play1 || !play2)){
         this.lifetime = 0;
         goldAnimPushed = false;
       }
@@ -1407,50 +1449,47 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         }
       }
 
-  function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
-        this.dir = direction;
-        this.col = color;
-        this.dur = duration;
-        this.start = Date.now();
-        this.lifetime;
-        this.x = 0;
-        this.y = 0;
-        this.bW = barWidth;
-        this.speed = speed;
-        this.amount = amountOfBars;
-        switch (this.dir) {
+      function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
+          this.dir = direction;
+          this.col = color;
+          this.dur = duration;
+          this.start = GetTime();
+          this.lifetime;
+          this.x = 0;
+          this.y = 0;
+          this.bW = barWidth;
+          this.speed = speed;
+          this.amount = amountOfBars;
+          switch (this.dir) {
             case "up":
-                this.y = c.height;
-                this.speed = -this.speed;
-                break;
+              this.y = c.height;
+              this.speed = -this.speed;
+              break;
             case "right":
-                this.x -= this.bW;
-                break;
+              this.x -= this.bW;
+              break;
             case "down":
-                this.y -= this.bW;
-                break;
+              this.y -= this.bW;
+              break;
             case "left":
-                this.x = c.width + this.bW + (this.amount * this.bW);
-                this.speed = -this.speed;
-                break;
-        }
-        this.draw = function () {
+              this.x = c.width + (this.bW*this.amount) - this.bW;
+              this.speed = -this.speed;
+              break;
+          }
+          this.draw = function () {
             ctx.fillStyle = this.col;
             for (let i = 0; i < this.amount; i++) {
-                if (this.dir == "up" || this.dir == "down") {
-                    ctx.fillRect(this.x, this.y - ((this.bW * 2) * i), c.width, this.bW);
-                    this.y += this.speed / this.amount;
-                } else {
-                    ctx.fillRect(this.x - ((this.bW * 2) * i), this.y, this.bW, c.height);
-                    this.x += this.speed / this.amount;
-                }
+              if (this.dir == "up" || this.dir == "down") {
+                ctx.fillRect(this.x, this.y - ((this.bW * 2) * i), c.width, this.bW);
+                this.y += this.speed / this.amount;
+              } else {
+                ctx.fillRect(this.x - ((this.bW * 2) * i), this.y, this.bW, c.height);
+                this.x += this.speed / this.amount;
+              }
             }
-            this.lifetime = this.dur - (Date.now() - this.start);
-            if (this.lifetime <= 0){
-              StopEffects = false;
-            }
+            this.lifetime = this.dur - (GetTime() - this.start);
+          }
         }
-    }
 
     function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
         this.col = color;
