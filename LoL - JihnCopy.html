@@ -109,6 +109,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var ActiveExtendedW = false;
   var freezeBackground = false;
   var StopEffects = false;
+  var clearEffects = false;
   var inShop;
   var noR = false;
   var noW = false;
@@ -155,15 +156,18 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
+    
     //Set all meter values each update
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     if(play1 && play2){
+       damageMeter.setValue(engine.vision.tookDamage);
+      lowHealthMeter.setValue(engine.vision.lowHealth);
+      levelUpMeter.setValue(engine.vision.levelUp);
       manaWMeter.setValue(engine.vision.ManaW);
       manaQMeter.setValue(engine.vision.ManaQ);
       manaEMeter.setValue(engine.vision.ManaE);
       manaRMeter.setValue(engine.vision.ManaR);
       shopMenuMeter.setValue(engine.vision.ShopMenu)
-      
       
       if (!StopEffects) {
         if (!noQ) {
@@ -180,27 +184,30 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         }
         d_Meter.setValue(engine.vision.dButton);
         f_Meter.setValue(engine.vision.fButton);
-        levelUpMeter.setValue(engine.vision.levelUp);
+        
         alliedTurretMeter.setValue(engine.vision.alliedTurret);
         enemyTurretMeter.setValue(engine.vision.enemyTurret);
-        damageMeter.setValue(engine.vision.tookDamage);
-        lowHealthMeter.setValue(engine.vision.lowHealth);
         allyMeter1.setValue(engine.vision.allyDeath1);
         allyMeter2.setValue(engine.vision.allyDeath2);
         allyMeter3.setValue(engine.vision.allyDeath3);
         allyMeter4.setValue(engine.vision.allyDeath4);
+
+         if (!ActiveExtendedE) {
+          Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+        }
+        Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
+        if (!ActiveExtendedW) {
+          Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+        }
+        Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
+      } 
+      }
+      if(clearEffects == true){
+        effects.length = 0;
       }
 
 
-      if (!ActiveExtendedE) {
-        Extendede_Meter.setValue(engine.vision.ExtendedeButton);
-      }
-      Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-      if (!ActiveExtendedW) {
-        Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
-      }
-      Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
-    }
+     
       playingMeter1.setValue(engine.vision.inGame1);
       playingMeter2.setValue(engine.vision.inGame2);
 
@@ -655,7 +662,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
       levelUpAnim = true;
       StopEffects = true;
-      effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3));
+      effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3, true));
     } else if(levelUpMeter.value > .5){
       levelUpAnim = false;
     }
@@ -866,11 +873,15 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
               this.explosion = new ParticleExplosion(160, 200, "orange", 10, 1000, 20, 7, 1.5, true);
               this.col = 25;
               freezeBackground = true;
+              StopEffects = true;
+              clearEffects = true;
 
               this.Process = function () {
                 if (this.lifetime <= 0) {
                   stateMgr.Pop();
                   freezeBackground = false;
+                  StopEffects = false;
+                  clearEffects = false;
                 }
                 this.draw();
               }
@@ -1121,13 +1132,25 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   // END TEEMO ---------------------------------------------------------------
   // YONE --------------------------------------------------------------------
   function ExtendedEYoneEffect(){
-      this.lifetime = 1000;
+      this.lifetime
+      this.ripple = new RippleEffect(160, 100, 5, 2500, 30, "red", "out", "stroke", "3")
       this.draw = function (){
-        DrawBackground("hsla(238, 100%, 5%, 0.8)");
-        if(!ActiveExtendedE){
-          this.lifetime = 0;
-          effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+        if(ActiveExtendedE){
+          DrawBackground("hsla(238, 100%, 5%, 0.8)");
         }
+        if(!ActiveExtendedE){
+          this.lifetime = 3000;
+           if (this.lifetime == null) {
+            this.start = GetTime()
+            this.lifetime = 2000;
+          }
+        }
+        if (this.lifetime != null) {
+          this.ripple.draw()
+          this.lifetime = (2000 - (GetTime() - this.start))
+        }
+         
+        
       }
     }
 
@@ -1189,8 +1212,9 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     }
 
     function ExtendedQYoneEffect() {
-        this.lifetime = 1000;
+        this.lifetime;
         this.bars = [];
+        this.EndEffect = new YoneQeffect("blue");
         this.draw = function () {
           while (this.bars.length < 20){
             this.bars.push(new RandomCube(30, 20, "blue", "left", 3))
@@ -1203,32 +1227,45 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           this.bars.shift();
         
           if (!ActiveExtendedQ) {
-            this.lifetime = 0;
-            effects.push(new YoneQeffect("blue"))
+            if(this.lifetime == null){
+              this.start = GetTime()
+              this.lifetime = 3000;
+            }
+          }
+          if(this.lifetime != null){
+            this.EndEffect.draw()
+            this.lifetime = (2000 -(GetTime() - this.start))
           }
         }
       }
 
       function RYoneEffect(){
         this.start = GetTime();
-        this.lifetime = 1000;
+        this.lifetime = 4000;
         this.x = -120;
+        this.bloodEffect= new BloodRain("red", 5, false)
         StopEffects = true;
+        clearEffects = true
         freezeBackground = true;
+        ActiveExtendedE = false;
         this.Process = function(){
           if(this.lifetime <=0){
             stateMgr.Pop();
-            stateMgr.Push(new BloodRain("red", 5, false));
+            StopEffects = false;
+            freezeBackground = false;
+             clearEffects = false;
           }
           this.draw()
         }
         this.draw = function(){
-          if(this.lifetime > 200){
+          if(this.lifetime > 4000){
            DrawArrow("red", this.x);
            DrawArrow("black", this.x-30);
-           this.x += 10;
+           this.x += 10; 
+          } else {
+            this.bloodEffect.Process();
           }
-          this.lifetime = 1200 - (GetTime() - this.start);
+          this.lifetime = 5000 - (GetTime() - this.start);
         }
       }
 
@@ -1582,7 +1619,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         }
       }
 
-      function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
+      function BarEffect(direction, color, speed, duration, barWidth, amountOfBars, levelUp) {
           this.dir = direction;
           this.col = color;
           this.dur = duration;
@@ -1593,6 +1630,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           this.bW = barWidth;
           this.speed = speed;
           this.amount = amountOfBars;
+          this.levelUp = levelUp;
           switch (this.dir) {
             case "up":
               this.y = c.height;
@@ -1622,7 +1660,9 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
             }
             this.lifetime = this.dur - (GetTime() - this.start);
             if(this.lifetime <= 0){
-              StopEffects = false;
+              if(levelUp == true){
+                StopEffects = false;
+              }
             }
           }
         }
