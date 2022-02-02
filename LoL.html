@@ -141,8 +141,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var d_Meter = new Meter(5, Utility_Effects);
   var f_Meter = new Meter(5, Utility_Effects);
   var levelUpMeter = new Meter(5, levelUpEffect);
-  var alliedTurretMeter = new Meter(5, turretEffects);
-  var enemyTurretMeter = new Meter(5, turretEffects);
+  var alliedTurretMeter = new Meter(7, turretEffects);
+  var enemyTurretMeter = new Meter(7, turretEffects);
   var shopMenuMeter = new Meter (2, shopMenu);
   var manaRMeter = new Meter(3, manaR);
   var manaQMeter = new Meter(3, manaQ);
@@ -670,7 +670,6 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       StopEffects = true
     } else {
       inShop = false
-      effects.length = 0;
       StopEffects = false;
     }
   };
@@ -698,10 +697,13 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 
   function turretEffects(){
     console.log('IN TURRET')
-    if(alliedTurretMeter.value == 1 && !turretAnim){
+    console.log(enemyTurretMeter.value)
+    console.log(turretAnim)
+    if(alliedTurretMeter.value > .8 && !turretAnim){
       turretAnim = true;
       effects.push(new fallingTurret("blue"));
-    } else if(enemyTurretMeter.value == 1 && !turretAnim){
+    } 
+    if(enemyTurretMeter.value > .8 && !turretAnim){
       turretAnim = true;
       effects.push(new fallingTurret("red"));
     }
@@ -1231,6 +1233,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       if(this.elapsed > 50){
         this.lifetime = 0;
         turretAnim = false;
+        console.log("END OF ANIM " + turretAnim)
       } else if(this.angle >= 90){
         this.angle = 90;
         this.elapsed++;
@@ -1488,6 +1491,9 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
               }
             }
             this.lifetime = this.dur - (GetTime() - this.start);
+            if(this.lifetime <= 0){
+              StopEffects = false;
+            }
           }
         }
 
@@ -1628,9 +1634,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 
     this.setValue = function (updatedValue) {
       // Add and shift.
-      if (updatedValue == -1) return;
       values.push(updatedValue);
-
       if (values.length > this.size) {
         values.shift();
       }
@@ -1642,6 +1646,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 
       // We got here, so we've got a matching value collection.
       if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
         this.diff = Math.abs(this.value - values[0]);
         this.increased = this.value < values[0];
         this.decreased = this.value > values[0];
