@@ -6,9 +6,7 @@
   property="character" 
   label="Champions" 
   type="combobox" 
-  values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,
-Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,
-Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
+  values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
   default="Ahri"
   />
   <meta
@@ -87,7 +85,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   </meta>
   <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area">
   </meta>
-  <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="40-100" l="0-25" type="area">
+  <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="30-100" l="0-25" type="area">
   </meta>
   <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="40-100" type="linear">
   </meta>
@@ -109,6 +107,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var ActiveExtendedW = false;
   var freezeBackground = false;
   var StopEffects = false;
+  var clearEffects = false;
   var inShop;
   var noR = false;
   var noW = false;
@@ -122,7 +121,6 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var deadAllies = 0;
   var levelUpAnim = false;
   var deathAnim = false;
-  var turretAnim = false;
 
   // All meter definitions
   var checkLoadMeter = new Meter(5, loadGoing);
@@ -148,27 +146,26 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   var manaQMeter = new Meter(3, manaQ);
   var manaEMeter = new Meter(3, manaE);
   var manaWMeter = new Meter(3, manaW);
-  var playingMeter1 = new Meter(10, playingGame1);
-  var playingMeter2 = new Meter(10, playingGame2);
+  var playingMeter1 = new Meter(2, playingGame1);
+  var playingMeter2 = new Meter(2, playingGame2);
   var damageMeter = new Meter(1, damageEffects);
   var lowHealthMeter = new Meter(2, damageEffects);
 
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
+    
     //Set all meter values each update
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     if(play1 && play2){
+       damageMeter.setValue(engine.vision.tookDamage);
+      lowHealthMeter.setValue(engine.vision.lowHealth);
+      levelUpMeter.setValue(engine.vision.levelUp);
       manaWMeter.setValue(engine.vision.ManaW);
       manaQMeter.setValue(engine.vision.ManaQ);
       manaEMeter.setValue(engine.vision.ManaE);
       manaRMeter.setValue(engine.vision.ManaR);
       shopMenuMeter.setValue(engine.vision.ShopMenu)
-      allyMeter1.setValue(engine.vision.allyDeath1);
-      allyMeter2.setValue(engine.vision.allyDeath2);
-      allyMeter3.setValue(engine.vision.allyDeath3);
-      allyMeter4.setValue(engine.vision.allyDeath4);
-      damageMeter.setValue(engine.vision.tookDamage);
-      lowHealthMeter.setValue(engine.vision.lowHealth);
+      
       if (!StopEffects) {
         if (!noQ) {
           q_Meter.setValue(engine.vision.qButton);
@@ -182,26 +179,32 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         if (!noR) {
           r_Meter.setValue(engine.vision.rButton);
         }
-
         d_Meter.setValue(engine.vision.dButton);
         f_Meter.setValue(engine.vision.fButton);
-        levelUpMeter.setValue(engine.vision.levelUp);
+        
         alliedTurretMeter.setValue(engine.vision.alliedTurret);
         enemyTurretMeter.setValue(engine.vision.enemyTurret);
+        allyMeter1.setValue(engine.vision.allyDeath1);
+        allyMeter2.setValue(engine.vision.allyDeath2);
+        allyMeter3.setValue(engine.vision.allyDeath3);
+        allyMeter4.setValue(engine.vision.allyDeath4);
+
+         if (!ActiveExtendedE) {
+          Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+        }
+        Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
+        if (!ActiveExtendedW) {
+          Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+        }
+        Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
+      } 
+      }
+      if(clearEffects == true){
+        effects.length = 0;
       }
 
 
-      if (!ActiveExtendedE) {
-        Extendede_Meter.setValue(engine.vision.ExtendedeButton);
-      }
-      Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-      if (!ActiveExtendedW) {
-        Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
-      }
-      Extendedr_Meter.setValue(engine.vision.ExtendedrButton); 
-
-    }
-   
+     
       playingMeter1.setValue(engine.vision.inGame1);
       playingMeter2.setValue(engine.vision.inGame2);
 
@@ -229,8 +232,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     }
 
     //Low Health Effect
-    console.log(lowHealthMeter.value)
-    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2){
+    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 ){
       for(let i = 0; i < 3; i++){
         effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"))
       }
@@ -270,6 +272,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         case "Jax":
           break;
         case "Jhin":
+          effects.push(new JhinQ())
           break;
         case "Jinx":
           break;
@@ -322,6 +325,10 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     if(!ActiveExtendedQ){
       if (Extendedq_Meter.value > 0) {
         switch (champion) {
+          case "Janna":
+            effects.push(new jannaQ());
+            ActiveExtendedQ = true;
+            break;
           case "Lux":
             break;
           case "Yone":
@@ -360,10 +367,12 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         case "Irelia":
           break;
         case "Janna":
+          effects.push(new ArrowEffect("down", "white", 3 , 5, 2000));
           break;
         case "Jax":
           break;
         case "Jhin":
+          stateMgr.Push(new JhinW())
           break;
         case "Jinx":
           break;
@@ -445,10 +454,12 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         case "Irelia":
           break;
         case "Janna":
+          effects.push(new jannaE());
           break;
         case "Jax":
           break;
         case "Jhin":
+          effects.push(new RippleEffect(160.,100, 8, 1500, 30, "purple", "out", "stroke", 5))
           break;
         case "Jinx":
           break;
@@ -532,10 +543,12 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         case "Irelia":
           break;
         case "Janna":
+          effects.push(new jannaR());
           break;
         case "Jax":
           break;
         case "Jhin":
+          stateMgr.Push(new JhinR());
           break;
         case "Jinx":
           break;
@@ -652,7 +665,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
       levelUpAnim = true;
       StopEffects = true;
-      effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3));
+      effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3, true));
     } else if(levelUpMeter.value > .5){
       levelUpAnim = false;
     }
@@ -697,21 +710,21 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   };
 
   function turretEffects(){
-    console.log('IN TURRET')
-    console.log(enemyTurretMeter.value)
-    console.log(turretAnim)
-    if(alliedTurretMeter.value > .8 && !turretAnim){
-      turretAnim = true;
+    if(alliedTurretMeter.value > .8){
       effects.push(new fallingTurret("blue"));
     } 
-    if(enemyTurretMeter.value > .8 && !turretAnim){
-      turretAnim = true;
+    if(enemyTurretMeter.value > .8){
       effects.push(new fallingTurret("red"));
     }
   };
 
   function loadGoing(){
-    return 1;
+    if(checkLoadMeter.value> 0.6){
+      q_Meter.setValue(0);
+       w_Meter.setValue(0);
+        e_Meter.setValue(0);
+         r_Meter.setValue(0);
+    }
   };
 
   // END CALLBACKS -----------------------------------------------------------------------------------
@@ -742,9 +755,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       this.start = GetTime();
       this.state = 0;
       this.lifetime = 2000;
-      this.background = new SmoothBackgroundToBlack(12);
+      this.background = new SmoothBackgroundToBlack(16);
       this.explosion = new ParticleExplosion(160, 200, "hsl(184, 100%, 50%)", 6, 1000, 8, 7, 1.5, true);
-      
       freezeBackground = true;
           
       this.Process = function () {
@@ -772,21 +784,24 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     function asheR(){
       this.start = GetTime();
       this.state = 0;
-      this.lifetime = 3500;
+      this.lifetime = 4500;
       this.background = new SmoothBackgroundToBlack(20);
       this.cube = new RandomCube(100, 30, "hsl(184, 100%, 50%)", "right", 5.5,false ,85);
       this.bloodRain =  new BloodRain("hsl(184, 100%, 50%)", 8)
       freezeBackground = true;
+      StopEffects = true;
             
       this.Process = function (){
         if(this.lifetime <= 0){
           stateMgr.Pop();
+          StopEffects = false;
+          freezeBackground = false;
         }
         this.draw()
       }
 
       this.draw = function (){
-        this.lifetime = 4500 - (GetTime() - this.start);
+        this.lifetime = 5000 - (GetTime() - this.start);
         if(this.state == 0){
           this.background.draw();
           if (this.background.y >= 0) {
@@ -807,27 +822,212 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       }
     };
   // END ASHE ------------------------------------------------------------------------
+  // JANNA -------------------------------------------------------------------
+  function jannaQ(){
+      this.lifetime = 10;
+      this.start = Date.now();
+      this.elapsed = 0;
+      this.x = 160;
+      this.y = 100;
+      this.index = 0;
+      effects.push(new RippleEffect(160, 100, 9, 1500, 20, "white", "out", "stroke", 2, false))
+
+      this.draw = function(){
+        if (Extendedq_Meter.value != 0){
+          this.elapsed = Date.now() - this.start;
+          this.index = Math.floor(this.elapsed/500);
+
+          for (let i = 0; i < this.index; i++){
+            DrawCircle(this.x + Math.cos(Date.now() / i) * i, this.y + Math.sin(Date.now() / i) * i, i * 25, `rgba(${150 + i * 8}, ${150 + i * 10}, 150, .7)`);
+          }
+        } else {
+          this.y -= 10;
+          for (let i = 0; i < this.index; i++){
+            DrawCircle(this.x + Math.cos(Date.now() / i) * i, this.y + Math.sin(Date.now() / i) * i, i * 25, `rgba(${150 + i * 10}, ${150 + i * 10}, 150, .7)`);
+          }
+        }
+        if(this.y <= 0){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function jannaE(){
+      this.lifetime = 10;
+      this.start = Date.now();
+      this.elapsed = 0;
+      this.index = 0;
+
+      this.draw = function(){
+        this.elapsed = Date.now() - this.start;
+        var remaining = 4000 - this.elapsed;
+        this.index = Math.ceil(remaining/1000);
+
+        for (let i = 0; i < this.index; i++){
+          DrawCircle(80 * i + 40, 100, 30, `rgba(80,120,255,${.25 * this.index}`);
+        }
+
+        if(this.elapsed > 4000){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function jannaR(){
+      this.lifetime = 10;
+      this.start = Date.now();
+      this.elapsed = 0;
+
+      this.draw = function(){
+        this.elapsed = Date.now() - this.start;
+
+        DrawCircle(160, 100, this.elapsed/10, "green");
+        if (this.elapsed % 5 == 0){
+          console.log("IN")
+          effects.push(new RippleEffect(160, 100, 10, 400, 20, "white", "out", "stroke", 1, false));
+        }
+
+        if (this.elapsed > 3000){
+          this.lifetime = 0;
+        }
+      }
+    };
+  // END JANNA ---------------------------------------------------------------------
+  // JHIN -------------------------------------------------------------
+  function JhinQ(){
+    this.x = 0;
+    this.y = 80;
+    this.ySpeed = 5;
+    this.start = GetTime();
+    this.explosion;
+    this.lifetime = 2000;
+
+    this.draw = function(){
+      DrawCircle(this.x, this.y, 20, "purple");
+      this.ySpeed += 0.5;
+      this.x +=3;
+      if(this.y >180){
+        this.ySpeed = -this.ySpeed + 0.9;
+        this.explosion = new ParticleExplosion(this.x,this.y,"orange", 10, 0.5, 50, 8, 2)
+      }
+      if(this.explosion != null){
+        this.explosion.draw();
+      }
+      this.lifetime = 3300 - (GetTime() - this.start);
+      this.y += this.ySpeed;
+    }
+  }
+
+  function JhinW(){
+    this.start = GetTime();
+    this.state = 0;
+    this.lifetime = 1500;
+    this.cube = new RandomCube(30,40,"orange", "up", 10, false, 200,145)
+    this.satVal = 0;
+    this.width = 200;
+    this.background = new SmoothBackgroundToBlack(30);
+    freezeBackground = true;
+    StopEffects = true;
+    this.Process = function () {
+      if (this.lifetime <= 0) {
+        stateMgr.Pop();
+        freezeBackground = false;
+        StopEffects = false;
+      }
+      this.draw();
+    }
+    this.draw = function () {
+      this.x = 140;
+      this.lifetime = 3000 - (GetTime() - this.start)
+      if (this.state == 0) {
+        this.background.draw();
+        if (this.background.y >= 0) {
+          this.state = 1;
+        }
+      } else if(this.state ==1 ) {
+        DrawBackground("hsla(0,0%,0%, 1)")
+        DrawCube(160-(this.width)/2,0, this.width , 200, this.color)
+        this.satVal += 5;
+        this.color = `hsl(0, ${this.satVal}%, 46%)`;
+        if(this.width < 0){
+          this.state = 2
+          DrawBackground("hsla(0,0%,0%, 1)")
+        }
+        this.width -=5;
+      } else if (this.state == 2){
+        DrawBackground("hsla(0,0%,0%, 0.07)")
+        this.cube.draw();
+      }
+    }
+  }
+
+  function JhinR(){
+    this.background = new SmoothBackgroundToBlack(30);
+    this.x = 0;
+    this.lifetime = 4500;
+    this.state = 0;
+    this.start = GetTime();
+    this.s = GetTime();
+    this.bullet = new RandomCube(30, 40, "orange", "up", 5, false, 200, Math.random() * 320)
+    freezeBackground = true;
+    this.Process = function () {
+      if (this.lifetime <= 0) {
+        stateMgr.Pop();
+        freezeBackground = false;
+        StopEffects = false;
+      }
+      this.draw();
+    }
+    this.draw = function () {
+      this.lifetime = 5000 - (GetTime() - this.s)
+      if (this.state == 0) {
+        this.background.draw();
+        if (this.background.y >= 0) {
+          this.state = 1;
+        }
+      } else if (this.state == 1) {
+        DrawBackground("hsla(0,0%,0%, 1)")
+        DrawCube(160 + this.x - 15,0,30,200,"red");
+        DrawCube(160 - this.x-15, 0, 30, 200, "red");
+        this.x +=5;
+        if(this.x >= 140){
+          this.state =2;
+        }
+    } else if(this.state ==  2){
+      DrawBackground("hsla(0,0%,0%, 0.07)")
+      DrawCube(160 + this.x - 15, 0, 30, 200, "red");
+      DrawCube(160 - this.x - 15, 0, 30, 200, "red");
+      if(1000 - (GetTime() - this.start) <=0){
+        this.bullet = new RandomCube(30, 40, "orange", "up", 10, false, 200, (Math.random()*280)+20)
+        this.start= GetTime()
+      }
+      this.bullet.draw();
+    }
+  }
+}
+
+  // END JHIN -------------------------------------------------------------
   // MISS FORTUNE -------------------------------------------------------------
-  function FortuneQ(){
+    function FortuneQ() {
         this.start = GetTime();
         this.lifetime = 2000;
         this.state = 0;
-        this.cube = new RandomCube(30,30, "orange", "right", 5, 100)
-        this.explosion = new ParticleExplosion(160,100, "orange", 10,1000,200, 7, 1.5, false);
+        this.cube = new RandomCube(30, 30, "orange", "right", 10,false, 100)
+        this.explosion = new ParticleExplosion(160, 100, "orange", 10, 1000, 200, 7, 1.5, false);
 
         this.draw = function () {
-          this.lifetime = 3000 -(GetTime() - this.start)
-          if(this.state == 0){
+          this.lifetime = 3000 - (GetTime() - this.start)
+          if (this.state == 0) {
             this.cube.draw();
-            if(this.cube.x >= 160){
-              this.state =1
+            if (this.cube.x >= 160) {
+              this.state = 1
             }
-          } else if(this.state == 1){
+          } else if (this.state == 1) {
             this.explosion.draw()
-            
+
             this.explosion.particles.forEach((particle, index) => {
-              if(particle.x <= 160){
-                this.explosion.particles.splice(index,1)
+              if (particle.x <= 160) {
+                this.explosion.particles.splice(index, 1)
               }
             });
           }
@@ -839,98 +1039,66 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           this.lifetime = 3000;
           this.state = 0;
           this.cubes = [];
-          
+
           this.draw = function () {
-          this.lifetime = 3000 - (GetTime() - this.start)
-          for (let index = 0; index < 40; index++) {
-            DrawCube(Math.random() * 320, Math.random() *160, Math.random() * 20 + 5, Math.random() * 20 + 5, `hsl(10,${Math.random() * 70 + 30}%, ${Math.random() * 70 + 30}%)`)
-          }
+            this.lifetime = 3000 - (GetTime() - this.start)
+            for (let index = 0; index < 40; index++) {
+              DrawCube(Math.random() * 320, Math.random() * 160, Math.random() * 20 + 5, Math.random() * 20 + 5, `hsl(10,${Math.random() * 70 + 30}%, ${Math.random() * 70 + 30}%)`)
+            }
           }
         }
 
-        function FortuneR() {
-            this.start = GetTime();
-            this.state = 0;
-            this.lifetime = 3000;
-            this.background = new SmoothBackgroundToBlack();
-            this.explosion = new ParticleExplosion(160, 200, "orange", 10, 1000, 150, 7, 1.5, true);
-            this.col = 25;
-            freezeBackground = true;
+          function FortuneR() {
+              this.start = GetTime();
+              this.state = 0;
+              this.lifetime = 3000;
+              this.background = new SmoothBackgroundToBlack();
+              this.explosion = new ParticleExplosion(160, 200, "orange", 10, 1000, 20, 7, 1.5, true);
+              this.col = 25;
+              freezeBackground = true;
+              StopEffects = true;
+              clearEffects = true;
 
-            this.Process = function(){
-            if(this.lifetime <= 0){
-              stateMgr.Pop();
-              freezeBackground = false;
-            } 
-            this.draw();
-            }
-            this.draw = function () {
-               this.lifetime = 3500 - (GetTime() - this.start)
-              if(this.state == 0){
-                this.background.draw();
-                if(this.background.y >= 0){
-                  this.state = 1;
+              this.Process = function () {
+                if (this.lifetime <= 0) {
+                  stateMgr.Pop();
+                  freezeBackground = false;
+                  StopEffects = false;
+                  clearEffects = false;
                 }
-              } else {
-                DrawBackground("hsla(0,0%,0%, 0.1)")
-                this.explosion.draw()
-               if( this.explosion.particles[0].y <= 0){
-                this.explosion = new ParticleExplosion(160, 200, `hsl(${this.col},100%, 50%)`, 10, 1000, 150, 7, 1.5, true);
-                this.col -=10;
+                this.draw();
+              }
+              this.draw = function () {
+                this.lifetime = 3500 - (GetTime() - this.start)
+                if (this.state == 0) {
+                  this.background.draw();
+                  if (this.background.y >= 0) {
+                    this.state = 1;
+                  }
+                } else {
+                  DrawBackground("hsla(0,0%,0%, 0.1)")
+                  this.explosion.draw()
+                  if (this.explosion.particles[0].y <= 0) {
+                    this.explosion = new ParticleExplosion(160, 200, `hsl(${this.col},100%, 50%)`, 10, 1000, 20, 7, 1.5, true);
+                    this.col -= 10;
+                  }
                 }
               }
             }
-          }
   // END MISS FORTUNE ---------------------------------------------------------
   // TEEMO --------------------------------------------------------------------
-  function TeemoQ(){
-        this.state = 0;
-        this.background = new SmoothBackgroundToBlack();
-        this.cube = new RandomCube(40,20,"purple", "right", 5.3, 100)
-        this.ripple = new RippleEffect(320, 100, 8, 1500, 30, "purple", "out", "stroke", 3, true)
-        this.start = GetTime();
-       
-        freezeBackground = true;
-        StopEffects = true;
-        this.Process = function () {
-          this.Draw();
-        };
-        this.Draw = function () {
-          if(this.state ==0){
-            this.background.draw();
-             if (this.background.y >= 0) {
-              this.state = 1;
-            }
-          } else if (this.state == 1){
-            DrawBackground("black");
-            this.cube.draw()
-            if(this.cube.x >= 280){
-              this.state = 2;
-            }
-          } else {
-            DrawBackground("black");
-            this.ripple.draw()
-            if(this.ripple.radius >=500){
-              StopEffects = false
-              freezeBackground = false;
-              stateMgr.Pop();
-            }
-          }
-      }
-    }
-
-    function TeemoR() {
+   function TeemoQ() {
       this.state = 0;
-      this.background = new SmoothBackgroundToBlack();
-      this.y = -50;
-      this.explosion = new ParticleExplosion(160, 100, "purple", 7, 1000, 150, 20, 1);
+      this.background = new SmoothBackgroundToBlack(20);
+      this.cube = new RandomCube(40, 20, "purple", "right", 10, false, 100)
+      this.ripple = new RippleEffect(320, 100, 9, 1500, 30, "purple", "out", "stroke", 3, true)
+      this.start = GetTime();
 
       freezeBackground = true;
       StopEffects = true;
-       this.Process = function () {
+      this.Process = function () {
         this.Draw();
       };
-
       this.Draw = function () {
         if (this.state == 0) {
           this.background.draw();
@@ -939,27 +1107,64 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           }
         } else if (this.state == 1) {
           DrawBackground("black");
-          puffcap(this.y);
-          if(this.y <= 100){
-            this.y += 5;
-          } else {
+          this.cube.draw()
+          if (this.cube.x >= 280) {
             this.state = 2;
           }
-        } else if(this.state ==2) {
+        } else {
           DrawBackground("black");
-          this.explosion.draw();
-           if (this.start == null) {
-            this.start = GetTime();
+          this.ripple.draw()
+          if (this.ripple.radius >= 500) {
             StopEffects = false
-          }
-          if (GetTime() - this.start > 2000) {
-            stateMgr.Pop();
             freezeBackground = false;
-            effects.length = 0;
+            stateMgr.Pop();
+          }
+        }
+
+      }
+    }
+
+    function TeemoR() {
+        this.state = 0;
+        this.background = new SmoothBackgroundToBlack();
+        this.y = -50;
+        this.explosion = new ParticleExplosion(160, 100, "purple", 7, 1000, 150, 20, 1);
+
+        freezeBackground = true;
+        StopEffects = true;
+        this.Process = function () {
+          this.Draw();
+        };
+
+        this.Draw = function () {
+          if (this.state == 0) {
+            this.background.draw();
+            if (this.background.y >= 0) {
+              this.state = 1;
+            }
+          } else if (this.state == 1) {
+            DrawBackground("black");
+            puffcap(this.y);
+            if (this.y <= 100) {
+              this.y += 5;
+            } else {
+              this.state = 2;
+            }
+          } else if (this.state == 2) {
+            DrawBackground("black");
+            this.explosion.draw();
+            if (this.start == null) {
+              this.start = GetTime();
+              StopEffects = false
+            }
+            if (GetTime() - this.start > 2000) {
+              stateMgr.Pop();
+              freezeBackground = false;
+              effects.length = 0;
+            }
           }
         }
       }
-    }
 
     function TeemoW(){
       this.lifetime = 1000;
@@ -996,40 +1201,52 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
   // END TEEMO ---------------------------------------------------------------
   // YONE --------------------------------------------------------------------
   function ExtendedEYoneEffect(){
-      this.lifetime = 1000;
+      this.lifetime
+      this.ripple = new RippleEffect(160, 100, 5, 2500, 30, "red", "out", "stroke", "3")
       this.draw = function (){
-        DrawBackground("hsla(238, 100%, 5%, 0.8)");
-        if(!ActiveExtendedE){
-          this.lifetime = 0;
-          effects.push(new RippleEffect(160,100,5,2500, 30, "red", "out", "stroke", "3"))
+        if(ActiveExtendedE){
+          DrawBackground("hsla(238, 100%, 5%, 0.8)");
         }
+        if(!ActiveExtendedE){
+          this.lifetime = 3000;
+           if (this.lifetime == null) {
+            this.start = GetTime()
+            this.lifetime = 2000;
+          }
+        }
+        if (this.lifetime != null) {
+          this.ripple.draw()
+          this.lifetime = (2000 - (GetTime() - this.start))
+        }
+         
+        
       }
     }
 
-    function YoneWeffect() {
-        this.start = GetTime();
-        this.lifetime;
-        freezeBackground = true;
-        var bar1 = new BarEffect("left", "red", 15, 1000, 1500, 1);
-        var bar2 = new BarEffect("left", "black", 15, 1000, 1500, 1);
-        this.Process = function(){
-          if(this.lifetime <= 0){
-            freezeBackground = false;
-            stateMgr.Pop();
-          }
-          this.draw()
+   function YoneWeffect() {
+      this.start = GetTime();
+      this.lifetime;
+      freezeBackground = true;
+      var bar1 = new BarEffect("left", "red", 15, 1000, 1500, 1);
+      var bar2 = new BarEffect("left", "black", 15, 1000, 1500, 1);
+      this.Process = function () {
+        if (this.lifetime <= 0) {
+          freezeBackground = false;
+          stateMgr.Pop();
         }
-        this.draw = function () {
-          copyScreen();
-          this.lifetime = 1000 - (GetTime() - this.start)
-          if (this.lifetime > 900) {
-            bar1.draw();
-          } else if (this.lifetime >0){
-            bar1.draw();
-            bar2.draw();
-          }
+        this.draw()
+      }
+      this.draw = function () {
+        copyScreen();
+        this.lifetime = 1000 - (GetTime() - this.start)
+        if (this.lifetime > 900) {
+          bar1.draw();
+        } else if (this.lifetime > 0) {
+          bar1.draw();
+          bar2.draw();
         }
       }
+    }
 
       function YoneQeffect(color) {
       this.start = GetTime();
@@ -1064,8 +1281,9 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     }
 
     function ExtendedQYoneEffect() {
-        this.lifetime = 1000;
+        this.lifetime;
         this.bars = [];
+        this.EndEffect = new YoneQeffect("blue");
         this.draw = function () {
           while (this.bars.length < 20){
             this.bars.push(new RandomCube(30, 20, "blue", "left", 3))
@@ -1078,32 +1296,45 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           this.bars.shift();
         
           if (!ActiveExtendedQ) {
-            this.lifetime = 0;
-            effects.push(new YoneQeffect("blue"))
+            if(this.lifetime == null){
+              this.start = GetTime()
+              this.lifetime = 3000;
+            }
+          }
+          if(this.lifetime != null){
+            this.EndEffect.draw()
+            this.lifetime = (2000 -(GetTime() - this.start))
           }
         }
       }
 
       function RYoneEffect(){
         this.start = GetTime();
-        this.lifetime = 1000;
+        this.lifetime = 4000;
         this.x = -120;
+        this.bloodEffect= new BloodRain("red", 5, false)
         StopEffects = true;
+        clearEffects = true
         freezeBackground = true;
+        ActiveExtendedE = false;
         this.Process = function(){
           if(this.lifetime <=0){
             stateMgr.Pop();
-            stateMgr.Push(new BloodRain("red", 5));
+            StopEffects = false;
+            freezeBackground = false;
+             clearEffects = false;
           }
           this.draw()
         }
         this.draw = function(){
-          if(this.lifetime > 200){
+          if(this.lifetime > 4000){
            DrawArrow("red", this.x);
            DrawArrow("black", this.x-30);
-           this.x += 10;
+           this.x += 10; 
+          } else {
+            this.bloodEffect.Process();
           }
-          this.lifetime = 1200 - (GetTime() - this.start);
+          this.lifetime = 5000 - (GetTime() - this.start);
         }
       }
 
@@ -1233,8 +1464,6 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       
       if(this.elapsed > 50){
         this.lifetime = 0;
-        turretAnim = false;
-        console.log("END OF ANIM " + turretAnim)
       } else if(this.angle >= 90){
         this.angle = 90;
         this.elapsed++;
@@ -1317,9 +1546,8 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       }
     }
   };
-
-  class RandomCube{
-    constructor(width, height, color, moveDir, speed,randomSpeed, startY, startX){
+ class RandomCube {
+    constructor(width, height, color, moveDir, speed, randomSpeed, startY, startX) {
       this.width = width
       this.height = height;
       this.col = color;
@@ -1328,19 +1556,19 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
       this.x = startX;
       this.randomSpeed = randomSpeed;
       this.speed;
-      if(this.randomSpeed == null || this.randomSpeed == true){
-        this.speed =speed * (Math.random() * 2) + speed;
-      } else{
+      if (this.randomSpeed == null || this.randomSpeed == true) {
+        this.speed = speed * (Math.random() * 2) + speed;
+      } else {
         this.speed = speed;
       }
-      if(this.moveDir == "left" || this.moveDir == "right"){
-        if(this.y == null){
+      if (this.moveDir == "left" || this.moveDir == "right") {
+        if (this.y == null) {
           this.y = Math.random() * 200;
         }
-        if (this.x == null) {
-          this.x = Math.random() * 200;
+        if (startX == null) {
+          this.x = Math.random() * 320;
         }
-        if(this.moveDir == "left"){
+        if (this.moveDir == "left") {
           this.speed = -this.speed;
           this.x = 320;
         } else if (this.moveDir == "right") {
@@ -1350,21 +1578,21 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         if (this.moveDir == "up") {
           this.speed = -this.speed;
           this.y = 200;
-        } else if(this.moveDir == "down") {
+        } else if (this.moveDir == "down") {
           this.y = 0;
         }
       }
     }
-    draw(){
-      ctx.fillStyle = this.col; 
+    draw() {
+      ctx.fillStyle = this.col;
       ctx.fillRect(this.x, this.y, this.width, this.height);
-      if(this.moveDir == "left" || this.moveDir == "right"){
+      if (this.moveDir == "left" || this.moveDir == "right") {
         this.x += this.speed;
       } else {
         this.y += this.speed;
       }
     }
-  };
+  }
 
   class ExplosionParticle {
       constructor(x, y, radius, color, fadeSpeed, velocity) {
@@ -1421,7 +1649,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
     }
   };
 
-  function BloodRain (color, radius){
+  function BloodRain (color, radius, object){
         this.start = GetTime();
         this.elapsed = 0;
         this.bloodDrip = [];
@@ -1430,6 +1658,9 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         this.cubeY = 1;
         this.color = color;
         this.radius = radius;
+        if(object == true){
+          this.object = true;
+        }
 
         this.Process = function () {
           if (this.bloodDrip.length < 20) {
@@ -1437,10 +1668,12 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           }
           this.elapsed = GetTime() - this.start;
           if (this.elapsed >= 4000) {
-            stateMgr.Pop();
+            if(this.object == false){
+              stateMgr.Pop();
+              freezeBackground = false;
+              StopEffects = false;
+            }
             effects.length = 0;
-            freezeBackground = false;
-            StopEffects = false;
           }
           this.Draw();
         };
@@ -1453,7 +1686,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
         }
       }
 
-      function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
+      function BarEffect(direction, color, speed, duration, barWidth, amountOfBars, levelUp) {
           this.dir = direction;
           this.col = color;
           this.dur = duration;
@@ -1464,6 +1697,7 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
           this.bW = barWidth;
           this.speed = speed;
           this.amount = amountOfBars;
+          this.levelUp = levelUp;
           switch (this.dir) {
             case "up":
               this.y = c.height;
@@ -1493,7 +1727,9 @@ Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
             }
             this.lifetime = this.dur - (GetTime() - this.start);
             if(this.lifetime <= 0){
-              StopEffects = false;
+              if(levelUp == true){
+                StopEffects = false;
+              }
             }
           }
         }
