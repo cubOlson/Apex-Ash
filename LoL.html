@@ -253,13 +253,15 @@
           effects.push(new ahriQ());
           break;
         case "Ashe":
-          effects.push(new asheQ())
+          effects.push(new asheQ());
           break;
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynQ());
           break;
         case "Cassiopeia":
+          effects.push(new CassQ());
           break;
         case "Diana":
           break;
@@ -361,8 +363,10 @@
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynW());
           break;
         case "Cassiopeia":
+          effects.push(new CassW());
           break;
         case "Diana":
           break;
@@ -456,8 +460,10 @@
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynE());
           break;
         case "Cassiopeia":
+          effects.push(new CassE());
           break;
         case "Diana":
           break;
@@ -549,8 +555,10 @@
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynR());
           break;
         case "Cassiopeia":
+          effects.push(new CassR());
           break;
         case "Diana":
           break;
@@ -590,7 +598,7 @@
         case "Ryze":
           break;
         case "Sona":
-          console.log("SONA R")
+          effects.push(new SonaR())
           break;
         case "Soraka":
           break;
@@ -922,6 +930,210 @@
       }
     };
   // END ASHE ------------------------------------------------------------------------
+  // CAITYLN --------------------------------------------------------------------
+  function CaitlynQ(){
+      this.lifetime = 10;
+      this.x = 0;
+      this.radius = 20;
+      this.draw = function(){
+        DrawCircle(this.x, 100, this.radius, "yellow");
+        if (this.x >= 140){
+            effects.push(new ParticleExplosion(160, 100, "red", 50, 200, 3, 10, 1, false));
+            this.radius = 40;
+        }
+        this.x += 15;
+        if(this.x >= 350){
+            this.lifetime = 0;
+        }
+      }
+    };
+
+  function CaitlynW(){
+      this.lifetime = 20;
+      this.y = 220;
+      this.cupCakeY = -30;
+      this.draw = function(){
+          
+          DrawCircle(160, this.cupCakeY, 30, "white");
+          DrawCircle(160, this.cupCakeY - 30, 10, "red");
+          ctx.fillStyle = "brown";
+          ctx.fillRect(120, this.cupCakeY, 80, 30);
+          ctx.fillStyle = "blue";
+          ctx.fillRect(0, this.y, 320, 20);
+          DrawTriangle(0, this.y, 40, this.y - 40, 80, this.y);
+          DrawTriangle(80, this.y, 120, this.y - 40, 160, this.y);
+          DrawTriangle(160, this.y, 200, this.y - 40, 240, this.y);
+          DrawTriangle(240, this.y, 280, this.y - 40, 320, this.y);
+          if(this.y > 130){
+              this.y -= 5;
+          } else if (this.cupCakeY < 100){
+              this.cupCakeY += 5;
+          } else {
+              this.lifetime --;
+          }
+      }
+  };
+
+  function CaitlynE(){
+        this.lifetime = 20;
+        this.index = 0;
+
+        this.draw = function(){
+            for (let i = 0; i < this.index; i++){
+                ctx.beginPath();
+                ctx.strokeStyle = "yellow";
+                ctx.lineWidth = 20;
+                ctx.moveTo(60 * i - 80, 0);
+                ctx.lineTo(60 * i + 80, 200);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = "yellow";
+                ctx.lineWidth = 20;
+                ctx.moveTo(320 - (60 * i - 80), 0);
+                ctx.lineTo(320 - (60 * i + 80), 200);
+                ctx.stroke();
+            }
+            this.index+=.25;
+            if (this.index > 20){
+                this.lifetime = 0;
+            }
+        }
+    };
+
+    function CaitlynR(){
+        this.lifetime = 20;
+        this.x = 0;
+        this.start = Date.now();
+        this.elapsed = 0;
+        this.stroke = 0;
+        this.fired = false;
+
+        this.draw = function(){
+            this.elapsed = Date.now() - this.start;
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200)
+
+            if (this.elapsed < 1200){
+                ctx.beginPath();
+                ctx.strokeStyle = "blue";
+                ctx.lineWidth = 3 * this.stroke;
+                ctx.moveTo(0, 100);
+                ctx.lineTo(320, 100);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = this.stroke;
+                ctx.moveTo(0, 100);
+                ctx.lineTo(320, 100);
+                ctx.stroke();
+
+                this.stroke += .5;
+            } else {
+                if (!this.fired){
+                    effects.push(new ParticleExplosion(50, 100, "yellow", 60, 500, 30, 10, 1.5, false));
+                    this.fired = true;
+                }
+                DrawCircle(this.x, 100, 30, "red");
+                this.x += 25;
+
+                if(this.x > 340){
+                    this.lifetime = 0;
+                }
+            }
+        }
+    };
+  // END CAITLYN -----------------------------------------------------------------
+  // CASSIOPIEA ---------------------------------------------------------------
+  function CassQ(){
+      this.lifetime = 10;
+      this.draw = function(){
+        effects.push(new RippleEffect(160, 100, 10, 1000, 30, "yellow", "out", "stroke", 2, false));
+        effects.push(new ParticleExplosion(160, 100, "green", 5, 2000, 40, 30, 1, false));
+        this.lifetime = 0;
+      }
+  };
+
+  function CassW(){
+      this.lifetime = 10;
+      this.y = -20;
+      this.fired = false;
+      this.draw = function(){
+        DrawCircle(160, this.y, 30, "plum");
+        this.y+=15;
+
+        if (this.y > 200){
+          effects.push(new ParticleExplosion(160, 200, "purple", 5, 2000, 5, 30, 1, false));
+        }
+        if (this.y > 400){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function CassE(){
+      this.lifetime = 10;
+      this.x = 0;
+      this.width = 50
+      
+      this.draw = function(){
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = this.width;
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(this.x + 50, 2 * this.x);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(150, 0);
+        ctx.lineTo(this.x + 150, 2 * this.x);
+        ctx.stroke();
+
+        ctx.strokeStyle = "yellow";
+        ctx.lineWidth = this.width/3;
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(this.x + 50, 2 * this.x);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(150, 0);
+        ctx.lineTo(this.x + 150, 2 * this.x);
+        ctx.stroke();
+
+        this.x+=10;
+
+        if (this.x > 150){
+          this.width--;
+          if (this.width <= 0){
+            this.lifetime = 0;
+          }
+        }
+      }
+    };
+
+    function CassR(){
+      this.lifetime = 200;
+      
+      this.draw = function(){
+        var x = Math.cos(Date.now()/100) * 10;
+
+        if (x < -5){
+        effects.push(new RippleEffect(100, 100, 20, 1000, 10, "yellow", "out", "stroke", 1, false));
+        effects.push(new RippleEffect(200, 100, 20, 1000, 10, "green", "out", "stroke", 1, false));
+        }
+
+        DrawCircle(100, 100, 40, "white");
+        DrawCircle(200, 100, 40, "white");
+
+        DrawCircle(100 + x, 100, 20, "red");
+        DrawCircle(200 + x, 100, 20, "red");
+
+        this.lifetime-=3;
+      }
+    };
+  // END CASSIOPIEA -------------------------------------------------------------
   // JANNA -------------------------------------------------------------------
   function jannaQ(){
       this.lifetime = 10;
@@ -1235,23 +1447,59 @@
       e_Meter.value > 0 ? sonaE = true : sonaE = false;
 
       if(!sonaQ && !oldSonaQ){
-        console.log("SONA Q PLAY");
+        sonaQ = true;
+        effects.push(new SonaEffect("blue"));
       }
       if(!sonaW && !oldSonaW){
-        console.log("SONA W PLAY");
+        sonaW = true;
+        effects.push(new SonaEffect("green"));
       }
       if(!sonaE && !oldSonaE){
-        console.log("SONA E PLAY");
+        sonaE = true;
+        effects.push(new SonaEffect("purple"));
       }
       sonaCalled = false;
       return;
     }
-  }           
+  };           
 
-  function SonaQ(){
+  function SonaEffect(color){
     this.lifetime = 10;
-    //TO DO write Sona effect
-    return 1;
+    this.radius = 0;
+    this.color = color;
+    this.draw = function(){
+      DrawCircle(160, 100, this.radius, this.color);
+      this.radius+=5;
+      if (this.radius >= 160){
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function SonaR(){
+    this.lifetime = 10;
+    this.x = 0;
+    this.radius = 0;
+    this.draw = function(){
+      DrawArrow("yellow", this.x);
+      DrawArrow("yellow", this.x - 50);
+      DrawArrow("yellow", this.x - 100);
+
+      if (this.x > 320){
+        DrawCircle(320, 100, this.radius, "green");
+        if (this.x > 400){
+          DrawCircle(320, 100, this.radius - 40, "blue")
+          if (this.x > 480){
+            DrawCircle(320, 100, this.radius - 60, "purple")
+          }
+        }
+        this.radius += 10;
+      }
+      this.x += 15;
+      if (this.x > 1100){
+        this.lifetime = 0;
+      }
+    }
   }
   // END SONA --------------------------------------------------------------------
   // TEEMO --------------------------------------------------------------------
@@ -1829,7 +2077,7 @@
   function goldEffect(){
     this.x = 160;
     this.y = 100;
-    this.radiusX = 50;
+    this.radiusX = 30;
     this.lifetime = 10;
 
     this.draw = function(){
@@ -1839,9 +2087,9 @@
       if(this.radiusX < 11){
         ctx.fillStyle = "white";
       }
-      ctx.ellipse(this.x, this.y, this.radiusX, 50, 0, 0, 2 * Math.PI);
+      ctx.ellipse(this.x, this.y, this.radiusX, 30, 0, 0, 2 * Math.PI);
       ctx.fill();
-      this.radiusX = Math.sin(Date.now() / 100) * 20 + 30;
+      this.radiusX = Math.sin(Date.now() / 100) * 10 + 20;
       if((engine.vision.gold < goldLimit && engine.vision.gold != -1) || (!play1 || !play2)){
         this.lifetime = 0;
         goldAnimPushed = false;
