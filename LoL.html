@@ -105,6 +105,7 @@
   var ActiveExtendedE = false;
   var ActiveExtendedQ = false;
   var ActiveExtendedW = false;
+  var ActiveExtendedR = false;
   var freezeBackground = false;
   var StopEffects = false;
   var clearEffects = false;
@@ -135,7 +136,7 @@
   var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
   var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
   var Extendede_Meter = new Meter(2, ExtendedE_Effects);
-  var Extendedr_Meter = new Meter(5, ExtendedE_Effects);
+  var Extendedr_Meter = new Meter(5, ExtendedR_Effects);
   var d_Meter = new Meter(5, Utility_Effects);
   var f_Meter = new Meter(5, Utility_Effects);
   var levelUpMeter = new Meter(5, levelUpEffect);
@@ -249,6 +250,7 @@
     if(q_Meter.value == 0){
       switch (champion) {
         case "Ahri":
+          effects.push(new ahriQ());
           break;
         case "Ashe":
           effects.push(new asheQ())
@@ -296,6 +298,10 @@
         case "Ryze":
           break;
         case "Sona":
+          if(!sonaCalled){
+            allSona();
+            sonaCalled = true;
+          }
           break;
         case "Soraka":
           break;
@@ -389,13 +395,17 @@
         case "Lux":
           break;
         case "Miss Fortune":
-          effects.push(new ArrowEffect("up", "orange", 2, 7, 1000));
+          effects.push(new FortuneW());
           break;
         case "Rek'sai":
           break;
         case "Ryze":
           break;
         case "Sona":
+          if(!sonaCalled){
+            allSona();
+            sonaCalled = true;
+          }
           break;
         case "Soraka":
           break;
@@ -423,6 +433,9 @@
     if(Extendedw_Meter.value > 0 && !StopEffects){
       ActiveExtendedW = true;
       switch (champion) {
+        case "Ahri":
+          effects.push(new ahriW())
+          break;
         case "Teemo":
           effects.push(new ArrowEffect("up", "blue", 2 , 7,1000));
           ActiveExtendedW = false;
@@ -435,6 +448,7 @@
     if(e_Meter.value == 0){
       switch (champion) {
         case "Ahri":
+          effects.push(new ahriE())
           break;
         case "Ashe":
           effects.push(new ArrowEffect("up", "hsl(184, 100%, 50%)",1, 7, 1000))
@@ -483,6 +497,10 @@
         case "Ryze":
           break;
         case "Sona":
+          if(!sonaCalled){
+            allSona();
+            sonaCalled = true;
+          }
           break;
         case "Soraka":
           break;
@@ -572,6 +590,7 @@
         case "Ryze":
           break;
         case "Sona":
+          console.log("SONA R")
           break;
         case "Soraka":
           break;
@@ -594,6 +613,21 @@
         case "Zeri":
           break;
       } 
+    }
+  };
+
+  function ExtendedR_Effects() {
+     if(!ActiveExtendedR){
+      if (Extendedr_Meter.value > 0) {
+        ActiveExtendedR = true;
+        switch (champion) {
+          case "Ahri":
+            effects.push(new ahriR())
+            break;
+        }
+      }
+    } else if(Extendedr_Meter.value == 0) {
+      ActiveExtendedR = false;
     }
   };
 
@@ -728,6 +762,72 @@
   };
 
   // END CALLBACKS -----------------------------------------------------------------------------------
+    // AHRI --------------------------------------------------------------------------------
+    function ahriE(){
+      this.elapsed;
+      this.start = GetTime();
+      this.draw = function(){
+      this.elapsed = GetTime() - this.start;
+      DrawHeart(160, 100- this.elapsed/16,this.elapsed/2, this.elapsed/4, "hsl(305, 100%, 49%)")
+      if(this.elapsed > 2000){
+        this.lifetime = 0;
+      }
+      }
+    }
+    function ahriW(){
+      this.start = GetTime();
+      this.lifetime;
+      this.cubes = [];
+      for (let index = 0; index < 3; index++) {
+        this.cubes.push(new RandomCube(30, 30, "hsl(190, 100%, 49%)", "up", 3, true, 200 + (index * 50), 100 + (30 * index)))
+      }
+      effects.push(new RippleEffect(160, 100, 10, 1000, 30, "hsl(190, 100%, 49%)", "in", "Stroke", 1))
+      this.draw = function () {
+        this.lifetime = 2000 - (GetTime() - this.start)
+        if(this.lifetime <1500){
+          this.cubes.forEach(cube => {
+            cube.draw();
+          });
+        }
+        if(this.lifetime <= 0){
+          ActiveExtendedW = false;
+        }
+      } 
+    }
+
+    function ahriR(){
+      this.start = GetTime();
+      this.elapsed;
+      this.cubes = [];
+      for (let index = 0; index < 3; index++) {
+        this.cubes.push(new RandomCube(30, 30, "hsl(190, 100%, 49%)", "up", 3, true, 200 + (index * 50), 100 + (30 * index)))
+      }
+      effects.push(new RippleEffect(160, 100, 10, 1000, 30, "hsl(190, 100%, 49%)", "in", "Stroke", 1))
+      this.draw = function () {
+        DrawBackground("hsla(190, 100%, 49%, 0.2)");
+        this.elapsed = (GetTime() - this.start)
+        for (let i = 0; i < 5; i++) {
+          DrawCircle(40 + i * 60, 100 + Math.cos(this.elapsed/ 200 +(i*100))* 100, 40, "hsl(190, 100%, 49%)" )
+        }
+        if (!ActiveExtendedR) {
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function ahriQ(){
+      this.elapsed;
+      this.start  = GetTime();
+      this.draw = function() {
+        this.elapsed = GetTime() - this.start;
+        DrawCircle(0 + (Math.sin(this.elapsed/500)*280), 100, 40, "hsl(190, 100%, 49%)");
+        if(Math.sin(this.elapsed/500) < -0.1){
+          this.lifetime =0
+        }
+      }
+    };
+
+  // END AHRI --------------------------------------------------------------------------------
   // ASHE --------------------------------------------------------------------------------
     function asheQ(){
       this.start = GetTime();
@@ -1045,7 +1145,27 @@
               DrawCube(Math.random() * 320, Math.random() * 160, Math.random() * 20 + 5, Math.random() * 20 + 5, `hsl(10,${Math.random() * 70 + 30}%, ${Math.random() * 70 + 30}%)`)
             }
           }
-        }
+        };
+
+        function FortuneW(){
+          this.start = GetTime();
+          this.arrow = new ArrowEffect("up", "orange", 2, 7, 1000)
+          this.y = 200;
+          this.draw = function(){
+            this.elapsed = GetTime() - this.start;
+            this.arrow.draw();
+            if(this.elapsed > 500){
+              for (let i = 0; i < 5; i++) {
+                DrawHeart(40 + i * 60,this.y + (i*30), 70, 35, "red")
+              }
+              this.y -= 5.5;
+            }
+            
+            if(this.elapsed > 2000){
+              this.lifetime = 0;
+            }
+          }
+        };
 
           function FortuneR() {
               this.start = GetTime();
@@ -1085,6 +1205,55 @@
               }
             }
   // END MISS FORTUNE ---------------------------------------------------------
+  // SONA --------------------------------------------------------------------
+  
+  var secondRun = false;
+  var sonaQ = true;
+  var sonaW = true;
+  var sonaE = true;
+  var oldSonaQ = false;
+  var oldSonaW = false;
+  var oldSonaE = false;
+  var sonaCalled = false;
+  function allSona(){
+    if(!secondRun){
+      console.log("FIRST RUN")
+      effects.push(new RippleEffect(160, 100, 2, 4500, 40, "hsla(200, 100%, 49%, 0.6)", "out", "stroke", 5, false));
+      secondRun = true;
+      setTimeout(()=>{allSona()}, 1100);
+      return;
+    } else {
+      console.log("SECOND RUN")
+      secondRun = false;
+
+      sonaQ ? oldSonaQ = false : oldSonaQ = true;
+      sonaW ? oldSonaW = false : oldSonaW = true;
+      sonaE ? oldSonaE = false : oldSonaE = true;
+
+      q_Meter.value > 0 ? sonaQ = true : sonaQ = false;
+      w_Meter.value > 0 ? sonaW = true : sonaW = false;
+      e_Meter.value > 0 ? sonaE = true : sonaE = false;
+
+      if(!sonaQ && !oldSonaQ){
+        console.log("SONA Q PLAY");
+      }
+      if(!sonaW && !oldSonaW){
+        console.log("SONA W PLAY");
+      }
+      if(!sonaE && !oldSonaE){
+        console.log("SONA E PLAY");
+      }
+      sonaCalled = false;
+      return;
+    }
+  }           
+
+  function SonaQ(){
+    this.lifetime = 10;
+    //TO DO write Sona effect
+    return 1;
+  }
+  // END SONA --------------------------------------------------------------------
   // TEEMO --------------------------------------------------------------------
    function TeemoQ() {
       this.state = 0;
@@ -1375,6 +1544,49 @@
       ctx.lineTo(0 + x, 0)
       ctx.fill();
     };
+
+    function DrawHeart(x,y,xSize,Ysize,color){
+      ctx.save();
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.moveTo(x, y);
+      // top left curve
+      ctx.bezierCurveTo(
+        x,
+        y,
+        x - xSize / 2,
+        y - Ysize,
+        x - xSize/2,
+        y + Ysize/4
+      );
+      ctx.bezierCurveTo(
+        x - xSize/2,
+        y+Ysize/4,
+        x - xSize/2 ,
+        y + Ysize/4,
+        x ,
+        y + Ysize
+      );
+        ctx.bezierCurveTo(
+        x + xSize/2,
+        y + Ysize / 4,
+        x + xSize/2,
+        y + Ysize / 4,
+        x + xSize/2,
+        y + Ysize/4
+      );
+         ctx.bezierCurveTo(
+        x+xSize/2,
+        y + Ysize/4,
+        x + xSize / 2,
+        y - Ysize,
+        x,
+        y 
+      );
+
+      ctx.fill()
+      ctx.restore()
+    }
 
     function ArrowEffect(direction, color, amount, speed, duration) {
             this.start = GetTime();
