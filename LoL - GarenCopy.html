@@ -39,13 +39,13 @@
   </meta>
   <meta meter="checkLoadBar" tags="league" x=".3953" y=".7389" width=".001" h="170-200" s="50-75" l="30-50" type="linear">
   </meta>
-  <meta meter="allyDeath1" tags="league" x=".8682" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  <meta meter="allyDeath1" tags="league" x=".8695" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
   </meta>
-  <meta meter="allyDeath2" tags="league" x=".9021" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  <meta meter="allyDeath2" tags="league" x=".905" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
   </meta>
-  <meta meter="allyDeath3" tags="league" x=".9359" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  <meta meter="allyDeath3" tags="league" x=".937" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
   </meta>
-  <meta meter="allyDeath4" tags="league" x=".9693" y=".7194" width=".001" h="30-70" s="20-60" l="70-90" type="linear">
+  <meta meter="allyDeath4" tags="league" x=".9705" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
   </meta>
   <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height = "0.001"  h="0-360" s="0-100" l="0-30" type="area">
   </meta>
@@ -105,6 +105,7 @@
   var ActiveExtendedE = false;
   var ActiveExtendedQ = false;
   var ActiveExtendedW = false;
+  var ActiveExtendedR = false;
   var freezeBackground = false;
   var StopEffects = false;
   var clearEffects = false;
@@ -115,7 +116,7 @@
   var noQ = false;
   var play1 = false;
   var play2 = false;
-  var ActiveExtendedR = false;
+  var ActiveExtendedE = false;
   var goldAnimPushed = false;
   var utilityPlayed = false;
   var deadAllies = 0;
@@ -153,7 +154,6 @@
 
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
-    
     
     //Set all meter values each update
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
@@ -197,9 +197,7 @@
         if (!ActiveExtendedW) {
           Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
         }
-          Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
-        
-        
+        Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
       } 
       }
       if(clearEffects == true){
@@ -235,7 +233,7 @@
     }
 
     //Low Health Effect
-    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 ){
+    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2){
       for(let i = 0; i < 3; i++){
         effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"))
       }
@@ -244,6 +242,7 @@
     //State Manager animation play
     stateMgr.Process();
     window.requestAnimationFrame(update);
+   
   }
 
   // START CALLBACK FUNCTIONS ----------------------------------------------------------------
@@ -255,15 +254,18 @@
           effects.push(new ahriQ());
           break;
         case "Ashe":
-          effects.push(new asheQ())
+          effects.push(new asheQ());
           break;
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynQ());
           break;
         case "Cassiopeia":
+          effects.push(new CassQ());
           break;
         case "Diana":
+        effects.push(new DianaQ())
           break;
         case "Ezreal":
           break;
@@ -287,6 +289,7 @@
         case "Leona":
           break;
         case "Lucian":
+            effects.push(new LucianQ())
           break;
         case "Lulu":
           break;
@@ -300,10 +303,13 @@
         case "Ryze":
           break;
         case "Sona":
-          effects.length = 0;
-          effects.push(new SonaQ())
+          if(!sonaCalled){
+            allSona();
+            sonaCalled = true;
+          }
           break;
         case "Soraka":
+        effects.push(new SorakaQ())
           break;
         case "Senna":
           break;
@@ -335,6 +341,10 @@
             effects.push(new jannaQ());
             ActiveExtendedQ = true;
             break;
+             case "Garen":
+            effects.push(new GarenQ())
+            ActiveExtendedQ = true;
+            break;
           case "Lux":
             break;
           case "Yone":
@@ -361,14 +371,18 @@
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynW());
           break;
         case "Cassiopeia":
+          effects.push(new CassW());
           break;
         case "Diana":
+            effects.push(new DianaW())
           break;
         case "Ezreal":
           break;
         case "Garen":
+        effects.push(new GarenW())
           break;
         case "Irelia":
           break;
@@ -402,9 +416,13 @@
         case "Ryze":
           break;
         case "Sona":
-          effects.push(new SonaW());
+          if(!sonaCalled){
+            allSona();
+            sonaCalled = true;
+          }
           break;
         case "Soraka":
+            effects.push(new SorakaW())
           break;
         case "Senna":
           break;
@@ -430,15 +448,15 @@
     if(Extendedw_Meter.value > 0 && !StopEffects){
       ActiveExtendedW = true;
       switch (champion) {
+        case "Ahri":
+          effects.push(new ahriW())
+          break;
         case "Teemo":
           effects.push(new ArrowEffect("up", "blue", 2 , 7,1000));
           ActiveExtendedW = false;
           break;
-          case("Ahri"):
-         effects.push(new ahriW())
-          break;
       }
-    } 
+    }
   };
 
   function E_Effects(){
@@ -453,14 +471,18 @@
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynE());
           break;
         case "Cassiopeia":
+          effects.push(new CassE());
           break;
         case "Diana":
+        effects.push(new RandomCube(80,80, "hsla(193, 100%, 56%, 1)", "right", 20, false, 60 ))
           break;
         case "Ezreal":
           break;
         case "Garen":
+        ActiveExtendedE = false;
           break;
         case "Irelia":
           break;
@@ -494,9 +516,13 @@
         case "Ryze":
           break;
         case "Sona":
-          effects.push(new SonaE())
+          if(!sonaCalled){
+            allSona();
+            sonaCalled = true;
+          }
           break;
         case "Soraka":
+          effects.push(new SorakaE())
           break;
         case "Senna":
           break;
@@ -523,31 +549,17 @@
     if(Extendede_Meter.value > 0){
       ActiveExtendedE = true;
       switch (champion) {
+        case "Garen":
+        effects.push(new GarenE);
         case "Lux":
           break;
         case "Yone":
           effects.push(new ExtendedEYoneEffect("grey"));
           break;
+          
       }    
     }
   };
-   function ExtendedR_Effects() {
-     if(!ActiveExtendedR){
-
-     
-      if (Extendedr_Meter.value > 0) {
-        ActiveExtendedR = true;
-        switch (champion) {
-          case "Ahri":
-            effects.push(new ahriR())
-            break;
-        }
-      }
-    } else if(Extendedr_Meter.value == 0) {
-      ActiveExtendedR = false;
-    }
-    };
-
 
   function R_Effects(){
     if(r_Meter.value == 0){
@@ -560,14 +572,18 @@
         case "Aurelion Sol":
           break;
         case "Caitlyn":
+          effects.push(new CaitlynR());
           break;
         case "Cassiopeia":
+          effects.push(new CassR());
           break;
         case "Diana":
+            stateMgr.Push(new DianaR())
           break;
         case "Ezreal":
           break;
         case "Garen":
+        stateMgr.Push(new GarenR())
           break;
         case "Irelia":
           break;
@@ -601,8 +617,10 @@
         case "Ryze":
           break;
         case "Sona":
+          effects.push(new SonaR())
           break;
         case "Soraka":
+          effects.push(new SorakaR())
           break;
         case "Senna":
           break;
@@ -626,6 +644,21 @@
     }
   };
 
+  function ExtendedR_Effects() {
+     if(!ActiveExtendedR){
+      if (Extendedr_Meter.value > 0) {
+        ActiveExtendedR = true;
+        switch (champion) {
+          case "Ahri":
+            effects.push(new ahriR())
+            break;
+        }
+      }
+    } else if(Extendedr_Meter.value == 0) {
+      ActiveExtendedR = false;
+    }
+  };
+
   function Utility_Effects(){
     if (d_Meter.decreased && d_Meter.value == 0 && checkAll() && !utilityPlayed){
       utilityPlayed = true;
@@ -644,7 +677,7 @@
     allyMeter2.value == 0 ? count++ : null;
     allyMeter3.value == 0 ? count++ : null;
     allyMeter4.value == 0 ? count++ : null;
-
+ 
     if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1){
       deathAnim = true;
       effects.push(new deathEffect());
@@ -757,72 +790,72 @@
   };
 
   // END CALLBACKS -----------------------------------------------------------------------------------
-// AHRI --------------------------------------------------------------------------------
-  function ahriE(){
-    this.elapsed;
-    this.start = GetTime();
-    this.draw = function(){
-    this.elapsed = GetTime() - this.start;
-    DrawHeart(160, 100- this.elapsed/16,this.elapsed/2, this.elapsed/4, "hsl(305, 100%, 49%)")
-    if(this.elapsed > 2000){
-      this.lifetime = 0;
-    }
-    }
-  }
-  function ahriW(){
-    this.start = GetTime();
-    this.lifetime;
-    this.cubes = [];
-    for (let index = 0; index < 3; index++) {
-      this.cubes.push(new RandomCube(30, 30, "hsl(190, 100%, 49%)", "up", 3, true, 200 + (index * 50), 100 + (30 * index)))
-    }
-    effects.push(new RippleEffect(160, 100, 10, 1000, 30, "hsl(190, 100%, 49%)", "in", "Stroke", 1))
-    this.draw = function () {
-      this.lifetime = 2000 - (GetTime() - this.start)
-      if(this.lifetime <1500){
-        this.cubes.forEach(cube => {
-          cube.draw();
-        });
-      }
-      if(this.lifetime <= 0){
-        ActiveExtendedW = false;
-      }
-    } 
-  }
-
-  function ahriR(){
-    this.start = GetTime();
-    this.elapsed;
-    this.cubes = [];
-    for (let index = 0; index < 3; index++) {
-      this.cubes.push(new RandomCube(30, 30, "hsl(190, 100%, 49%)", "up", 3, true, 200 + (index * 50), 100 + (30 * index)))
-    }
-    effects.push(new RippleEffect(160, 100, 10, 1000, 30, "hsl(190, 100%, 49%)", "in", "Stroke", 1))
-    this.draw = function () {
-      DrawBackground("hsla(190, 100%, 49%, 0.2)");
-      this.elapsed = (GetTime() - this.start)
-      for (let i = 0; i < 5; i++) {
-        DrawCircle(40 + i * 60, 100 + Math.cos(this.elapsed/ 200 +(i*100))* 100, 40, "hsl(190, 100%, 49%)" )
-      }
-      if (!ActiveExtendedR) {
+    // AHRI --------------------------------------------------------------------------------
+    function ahriE(){
+      this.elapsed;
+      this.start = GetTime();
+      this.draw = function(){
+      this.elapsed = GetTime() - this.start;
+      DrawHeart(160, 100- this.elapsed/16,this.elapsed/2, this.elapsed/4, "hsl(305, 100%, 49%)")
+      if(this.elapsed > 2000){
         this.lifetime = 0;
       }
-    }
-  }
-  
-  function ahriQ(){
-    this.elapsed;
-    this.start  = GetTime();
-    this.draw = function() {
-      this.elapsed = GetTime() - this.start;
-      DrawCircle(0 + (Math.sin(this.elapsed/500)*280), 100, 40, "hsl(190, 100%, 49%)");
-      if(Math.sin(this.elapsed/500) < -0.1){
-        this.lifetime =0
       }
     }
-  }
+    function ahriW(){
+      this.start = GetTime();
+      this.lifetime;
+      this.cubes = [];
+      for (let index = 0; index < 3; index++) {
+        this.cubes.push(new RandomCube(30, 30, "hsl(190, 100%, 49%)", "up", 3, true, 200 + (index * 50), 100 + (30 * index)))
+      }
+      effects.push(new RippleEffect(160, 100, 10, 1000, 30, "hsl(190, 100%, 49%)", "in", "Stroke", 1))
+      this.draw = function () {
+        this.lifetime = 2000 - (GetTime() - this.start)
+        if(this.lifetime <1500){
+          this.cubes.forEach(cube => {
+            cube.draw();
+          });
+        }
+        if(this.lifetime <= 0){
+          ActiveExtendedW = false;
+        }
+      } 
+    }
 
-// END AHRI --------------------------------------------------------------------------------
+    function ahriR(){
+      this.start = GetTime();
+      this.elapsed;
+      this.cubes = [];
+      for (let index = 0; index < 3; index++) {
+        this.cubes.push(new RandomCube(30, 30, "hsl(190, 100%, 49%)", "up", 3, true, 200 + (index * 50), 100 + (30 * index)))
+      }
+      effects.push(new RippleEffect(160, 100, 10, 1000, 30, "hsl(190, 100%, 49%)", "in", "Stroke", 1))
+      this.draw = function () {
+        DrawBackground("hsla(190, 100%, 49%, 0.2)");
+        this.elapsed = (GetTime() - this.start)
+        for (let i = 0; i < 5; i++) {
+          DrawCircle(40 + i * 60, 100 + Math.cos(this.elapsed/ 200 +(i*100))* 100, 40, "hsl(190, 100%, 49%)" )
+        }
+        if (!ActiveExtendedR) {
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function ahriQ(){
+      this.elapsed;
+      this.start  = GetTime();
+      this.draw = function() {
+        this.elapsed = GetTime() - this.start;
+        DrawCircle(0 + (Math.sin(this.elapsed/500)*280), 100, 40, "hsl(190, 100%, 49%)");
+        if(Math.sin(this.elapsed/500) < -0.1){
+          this.lifetime =0
+        }
+      }
+    };
+
+  // END AHRI --------------------------------------------------------------------------------
   // ASHE --------------------------------------------------------------------------------
     function asheQ(){
       this.start = GetTime();
@@ -875,6 +908,7 @@
         }
       }
     };
+
     function asheR(){
       this.start = GetTime();
       this.state = 0;
@@ -893,6 +927,7 @@
         }
         this.draw()
       }
+
       this.draw = function (){
         this.lifetime = 5000 - (GetTime() - this.start);
         if(this.state == 0){
@@ -915,6 +950,368 @@
       }
     };
   // END ASHE ------------------------------------------------------------------------
+  // CAITYLN --------------------------------------------------------------------
+  function CaitlynQ(){
+      this.lifetime = 10;
+      this.x = 0;
+      this.radius = 20;
+      this.draw = function(){
+        DrawCircle(this.x, 100, this.radius, "yellow");
+        if (this.x >= 140){
+            effects.push(new ParticleExplosion(160, 100, "red", 50, 200, 3, 10, 1, false));
+            this.radius = 40;
+        }
+        this.x += 15;
+        if(this.x >= 350){
+            this.lifetime = 0;
+        }
+      }
+    };
+
+  function CaitlynW(){
+      this.lifetime = 20;
+      this.y = 220;
+      this.cupCakeY = -30;
+      this.draw = function(){
+          
+          DrawCircle(160, this.cupCakeY, 30, "white");
+          DrawCircle(160, this.cupCakeY - 30, 10, "red");
+          ctx.fillStyle = "brown";
+          ctx.fillRect(120, this.cupCakeY, 80, 30);
+          ctx.fillStyle = "blue";
+          ctx.fillRect(0, this.y, 320, 20);
+          DrawTriangle(0, this.y, 40, this.y - 40, 80, this.y);
+          DrawTriangle(80, this.y, 120, this.y - 40, 160, this.y);
+          DrawTriangle(160, this.y, 200, this.y - 40, 240, this.y);
+          DrawTriangle(240, this.y, 280, this.y - 40, 320, this.y);
+          if(this.y > 130){
+              this.y -= 5;
+          } else if (this.cupCakeY < 100){
+              this.cupCakeY += 5;
+          } else {
+              this.lifetime --;
+          }
+      }
+  };
+
+  function CaitlynE(){
+        this.lifetime = 20;
+        this.index = 0;
+
+        this.draw = function(){
+            for (let i = 0; i < this.index; i++){
+                ctx.beginPath();
+                ctx.strokeStyle = "yellow";
+                ctx.lineWidth = 20;
+                ctx.moveTo(60 * i - 80, 0);
+                ctx.lineTo(60 * i + 80, 200);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = "yellow";
+                ctx.lineWidth = 20;
+                ctx.moveTo(320 - (60 * i - 80), 0);
+                ctx.lineTo(320 - (60 * i + 80), 200);
+                ctx.stroke();
+            }
+            this.index+=.25;
+            if (this.index > 20){
+                this.lifetime = 0;
+            }
+        }
+    };
+
+    function CaitlynR(){
+        this.lifetime = 20;
+        this.x = 0;
+        this.start = Date.now();
+        this.elapsed = 0;
+        this.stroke = 0;
+        this.fired = false;
+
+        this.draw = function(){
+            this.elapsed = Date.now() - this.start;
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200)
+
+            if (this.elapsed < 1200){
+                ctx.beginPath();
+                ctx.strokeStyle = "blue";
+                ctx.lineWidth = 3 * this.stroke;
+                ctx.moveTo(0, 100);
+                ctx.lineTo(320, 100);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = this.stroke;
+                ctx.moveTo(0, 100);
+                ctx.lineTo(320, 100);
+                ctx.stroke();
+
+                this.stroke += .5;
+            } else {
+                if (!this.fired){
+                    effects.push(new ParticleExplosion(50, 100, "yellow", 60, 500, 30, 10, 1.5, false));
+                    this.fired = true;
+                }
+                DrawCircle(this.x, 100, 30, "red");
+                this.x += 25;
+
+                if(this.x > 340){
+                    this.lifetime = 0;
+                }
+            }
+        }
+    };
+  // END CAITLYN -----------------------------------------------------------------
+  // CASSIOPIEA ---------------------------------------------------------------
+  function CassQ(){
+      this.lifetime = 10;
+      this.draw = function(){
+        effects.push(new RippleEffect(160, 100, 10, 1000, 30, "yellow", "out", "stroke", 2, false));
+        effects.push(new ParticleExplosion(160, 100, "green", 5, 2000, 40, 30, 1, false));
+        this.lifetime = 0;
+      }
+  };
+
+  function CassW(){
+      this.lifetime = 10;
+      this.y = -20;
+      this.fired = false;
+      this.draw = function(){
+        DrawCircle(160, this.y, 30, "plum");
+        this.y+=15;
+
+        if (this.y > 200){
+          effects.push(new ParticleExplosion(160, 200, "purple", 5, 2000, 5, 30, 1, false));
+        }
+        if (this.y > 400){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function CassE(){
+      this.lifetime = 10;
+      this.x = 0;
+      this.width = 50
+      
+      this.draw = function(){
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = this.width;
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(this.x + 50, 2 * this.x);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(150, 0);
+        ctx.lineTo(this.x + 150, 2 * this.x);
+        ctx.stroke();
+
+        ctx.strokeStyle = "yellow";
+        ctx.lineWidth = this.width/3;
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(this.x + 50, 2 * this.x);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(150, 0);
+        ctx.lineTo(this.x + 150, 2 * this.x);
+        ctx.stroke();
+
+        this.x+=10;
+
+        if (this.x > 150){
+          this.width--;
+          if (this.width <= 0){
+            this.lifetime = 0;
+          }
+        }
+      }
+    };
+
+    function CassR(){
+      this.lifetime = 200;
+      
+      this.draw = function(){
+        var x = Math.cos(Date.now()/100) * 10;
+
+        if (x < -5){
+        effects.push(new RippleEffect(100, 100, 20, 1000, 10, "yellow", "out", "stroke", 1, false));
+        effects.push(new RippleEffect(200, 100, 20, 1000, 10, "green", "out", "stroke", 1, false));
+        }
+
+        DrawCircle(100, 100, 40, "white");
+        DrawCircle(200, 100, 40, "white");
+
+        DrawCircle(100 + x, 100, 20, "red");
+        DrawCircle(200 + x, 100, 20, "red");
+
+        this.lifetime-=3;
+      }
+    };
+  // END CASSIOPIEA ------------------------------------------------------------- 
+  // DIANA -------------------------------------------------------------
+  function DianaQ() {
+    this.start = GetTime();
+    this.ripple = new RippleEffect(300, 0 , 15, 1000, 40, "hsla(193, 100%, 56%, 1)", "out", "stroke", 1)
+    this.ripple2 = new RippleEffect(300, 0, 8, 1000, 40, "white", "out", "stroke", 1)
+    freezeBackground = true;
+    this.draw = function () {
+      DrawBackground("hsla(0,0%,0%, 0.2)")
+      this.elapsed = GetTime() - this.start;
+      DrawCircle(this.elapsed /3, 100 +Math.sin(this.elapsed / 200)*80, 20, "white")
+      DrawCircle(this.elapsed / 3, Math.sin(this.elapsed / 275) * 100, 20, "hsla(193, 100%, 56%, 1)")
+      if(this.elapsed >= 700){
+        this.ripple.draw();
+        this.ripple2.draw();
+      }
+      if(this.elapsed > 2000){
+        this.lifetime = 0;
+        freezeBackground = false;
+      }
+    }
+  }
+
+  function DianaW() {
+    this.start = GetTime();
+    this.rotation = 0;
+    this.draw = function (){
+      this.elapsed = GetTime() - this.start;
+      DrawShield(160,75,70,"hsla(193, 100%, 56%, 1)")
+      ctx.save();
+      ctx.translate(160,100);
+      ctx.rotate(this.rotation)
+      DrawCircle(0,-80, 20, "hsla(193, 100%, 56%, 1)")
+      DrawCircle(80, 40, 20, "hsla(193, 100%, 56%, 1)")
+      DrawCircle(-80, 40, 20, "hsla(193, 100%, 56%, 1)")
+      ctx.restore();
+      this.rotation = -this.elapsed /300;
+      if(this.elapsed > 4000){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function DianaR() {
+    this.start = GetTime();
+    this.ripple = new RippleEffect(160,100, 5,1000,50,"blue", "out", "stroke", 2)
+    StopEffects = true;
+    freezeBackground = true;
+    DrawBackground("hsla(0,0%,0%, 1)")
+      for (let i = 0; i < 40; i++) {
+        DrawCircle(Math.random() * 320, Math.random()*200, 5, "yellow")
+    }
+    this.Process = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed > 4000){
+        stateMgr.Pop();
+        freezeBackground = false;
+        StopEffects = false;
+      }
+      this.draw()
+    }
+    this.draw = function() {
+      if(this.elapsed < 1500) {
+        ctx.beginPath();
+        ctx.fillStyle = "hsl(0,0%,100%,0.04)"
+        ctx.moveTo(160,20);
+        ctx.bezierCurveTo(160,20,-30,100,160,180)
+        ctx.bezierCurveTo(160, 180, 60, 100, 160, 20)
+        ctx.fill();
+      } else if(this.elapsed < 2500){
+        DrawCircle(160,100, 80, "hsl(0,0%,100%,0.04)")
+      } else if( this.elapsed < 4000){
+        DrawBackground("hsla(0,0%,0%, 0.2)")
+        this.ripple.draw();
+      }
+    }
+  }
+
+  
+  // END DIANA -------------------------------------------------------------
+  
+    // GAREN -------------------------------------------------------------
+      function GarenQ() {
+        this.start = GetTime();
+        this.elapsed = 0;
+        this.draw = function () {
+          this.elapsed = GetTime() - this.start;
+          DrawCircle(160, 100, this.elapsed / 5, "hsla(58, 100%, 50%, 0.6)");
+          if (!ActiveExtendedQ) {
+            effects.push(new ArrowEffect("down", "hsla(58, 100%, 50%, 1)", 1, 8, 1000))
+            this.lifetime = 0;
+          }
+        }
+      }
+
+      function GarenW() {
+        this.start = GetTime();
+        this.alpha =1;
+        this.draw = function (){
+          this.elapsed = GetTime() - this.start
+           DrawShield(60, 70, 80, `hsla(58, 100%, 50%, ${6+this.alpha})`);
+           DrawShield(160, 70, 80, `hsla(58, 100%, 50%, ${3+this.alpha})`);
+           DrawShield(260, 70, 80, `hsla(58, 100%, 50%, ${this.alpha})`);
+        if(this.elapsed >1500){
+          this.alpha -=0.2
+        }
+        }
+      }
+
+      function GarenE(){
+        freezeBackground = true;
+        this.start = GetTime();
+        this.rotation = 0;
+        DrawBackground("hsla(0,0%,0%,1)")
+        this.draw = function () {
+        DrawBackground("hsla(0,0%,0%,0.15)")
+        this.elapsed = GetTime()- this.start;
+          ctx.save();
+          ctx.translate(160,100);
+          ctx.rotate(this.rotation);
+          ctx.fillStyle = "yellow";
+          ctx.fillRect(0,0,150,10)
+          ctx.restore()
+          this.rotation = this.elapsed/300*Math.PI;
+          if(!ActiveExtendedE){
+            this.lifetime = 0;
+            freezeBackground = false;
+          }
+        }
+      }
+
+      function GarenR() {
+        freezeBackground = true;
+        this.start = GetTime();
+        StopEffects = true;
+        this.cubeY = -200;
+        this.explosion = new ParticleExplosion(160,200, "yellow",10,1500,150,10)
+        DrawBackground("hsl(0,0%,0%)")
+        this.Process = function () {
+          this.elapsed = GetTime() - this.start;
+          if(this.elapsed > 3000){
+            stateMgr.Pop();
+            freezeBackground = false;
+            StopEffects = false;
+          }
+          this.draw()
+        }
+        this.draw = function () {
+          DrawCube(130, this.cubeY, 60, 150, "yellow")
+          DrawTriangle(130, this.cubeY + 150, 190, this.cubeY + 150, 160, this.cubeY + 200, "yellow")
+          if(this.cubeY <0){
+            this.cubeY +=10;
+          } else {
+            DrawBackground("hsla(0,0%,0%, 0.2)")
+            this.explosion.draw();
+          }
+        }
+      }
+  // END GAREN -------------------------------------------------------------
   // JANNA -------------------------------------------------------------------
   function jannaQ(){
       this.lifetime = 10;
@@ -974,12 +1371,12 @@
       this.draw = function(){
         this.elapsed = Date.now() - this.start;
 
-        DrawCircle(160, 100, this.elapsed/10, "green");
+        DrawCircle(160, 100, this.elapsed/10, "rgba(0, 255, 0, .6)");
         if (this.elapsed % 5 == 0){
-          console.log("IN")
           effects.push(new RippleEffect(160, 100, 10, 400, 20, "white", "out", "stroke", 1, false));
         }
-        if (this.elapsed > 3000){ 
+
+        if (this.elapsed > 3000){
           this.lifetime = 0;
         }
       }
@@ -1138,7 +1535,7 @@
               DrawCube(Math.random() * 320, Math.random() * 160, Math.random() * 20 + 5, Math.random() * 20 + 5, `hsl(10,${Math.random() * 70 + 30}%, ${Math.random() * 70 + 30}%)`)
             }
           }
-        }
+        };
 
         function FortuneW(){
           this.start = GetTime();
@@ -1158,7 +1555,7 @@
               this.lifetime = 0;
             }
           }
-        }
+        };
 
           function FortuneR() {
               this.start = GetTime();
@@ -1198,49 +1595,204 @@
               }
             }
   // END MISS FORTUNE ---------------------------------------------------------
-  // SONA --------------------------------------------------------------------
-  function SonaQ(){
-    this.start = GetTime();
-    this.lifetime =1;
-    this.ripple = new RippleEffect(160, 100, 2, 4500, 40, "hsla(200, 100%, 49%, 0.6)", "out", "stroke", 5, false)
-    this.draw= function(){
-    this.elapsed = GetTime() - this.start;
-    DrawCircle(160,100, this.elapsed/5, "hsla(200, 100%, 49%, 0.4)")
-    this.ripple.draw()
-    if(this.elapsed >=5000){
-      this.lifetime = 0;
-    }
-    }
-  }
-
-   function SonaW() {
-      this.start = GetTime();
-      this.lifetime = 1;
-      this.ripple = new RippleEffect(160, 100, 2, 4500, 40, "hsla(112, 100%, 45%, 0.6)", "out", "stroke", 5, false)
-      this.draw = function () {
+    // LUCIAN -------------------------------------------------------------
+    function LucianQ () {
+      this.start = GetTime()
+      freezeBackground = true;
+      this.draw = function ()
+      {
         this.elapsed = GetTime() - this.start;
-        DrawCircle(160, 100, this.elapsed / 5, "hsla(112, 100%, 45%, 0.4)")
-        this.ripple.draw()
-        if (this.elapsed >= 5000) {
-          this.lifetime = 0;
+        if(this.elapsed< 200){
+          ctx.fillStyle = "yellow"
+          ctx.fillRect(0,80,320,40);
+        } else if(this.elapsed < 700){
+          DrawBackground( "hsla(0,0%,0%,0.1)")
+        } else if(this.elapsed < 1000){
+          ctx.fillStyle = "blue"
+          ctx.fillRect(0, 100 -((this.elapsed - 700) / 10) , 320, ((this.elapsed - 700)/5));
+        } else if (this.elapsed <1500) {
+          ctx.fillStyle = "hsl(193, 100%, 56%)"
+          ctx.fillRect(0, 75, 320, 50);
+        } else {
+          this.lifetime = 0
+          freezeBackground = false;
         }
       }
     }
 
-      function SonaE() {
-          this.start = GetTime();
-          this.lifetime = 1;
-          this.arrow = new ArrowEffect("up","hsla(290, 100%, 52%, 0.6)", 5,0.1,4500)
-          this.draw = function () {
-            this.elapsed = GetTime() - this.start;
-            DrawCircle(160, 100, this.elapsed / 5, "hsla(290, 100%, 52%, 0.4)")
-            this.arrow.draw()
-            if (this.elapsed >= 5000) {
-              this.lifetime = 0;
-            }
+    function LucianW(){
+      this.start = GetTime()
+      this.draw = function (){
+        this.elapsed = GetTime() - this.start;
+        if(this.elapsed/1.5 <= 160){
+          DrawCircle(this.elapsed/1.5, 100, 30, "blue")
+          DrawCircle(this.elapsed / 1.5, 100, 10, "yellow")
+        } else if (this.elapsed < 2000) {
+          DrawCircle(160, 100, 10, "yellow")
+          DrawCube(145, 90, 30, (-this.elapsed + 300)/6, "blue")
+          DrawCube(145, 110, 30, (this.elapsed - 300) / 6, "blue")
+          DrawCube(180, 85, (this.elapsed - 300) / 6, 30, "blue")
+          DrawCube(140, 85, (-this.elapsed + 300) / 6, 30, "blue")
+        } else {
+          this.lifetime = 0;
+        }
+      }
+    }
+   // END LUCIAN ------------------------------------------------------------- 
+  // SONA --------------------------------------------------------------------
+  
+  var secondRun = false;
+  var sonaQ = true;
+  var sonaW = true;
+  var sonaE = true;
+  var oldSonaQ = false;
+  var oldSonaW = false;
+  var oldSonaE = false;
+  var sonaCalled = false;
+  function allSona(){
+    if(!secondRun){
+      console.log("FIRST RUN")
+      effects.push(new RippleEffect(160, 100, 2, 4500, 40, "hsla(200, 100%, 49%, 0.6)", "out", "stroke", 5, false));
+      secondRun = true;
+      setTimeout(()=>{allSona()}, 1100);
+      return;
+    } else {
+      console.log("SECOND RUN")
+      secondRun = false;
+
+      sonaQ ? oldSonaQ = false : oldSonaQ = true;
+      sonaW ? oldSonaW = false : oldSonaW = true;
+      sonaE ? oldSonaE = false : oldSonaE = true;
+
+      q_Meter.value > 0 ? sonaQ = true : sonaQ = false;
+      w_Meter.value > 0 ? sonaW = true : sonaW = false;
+      e_Meter.value > 0 ? sonaE = true : sonaE = false;
+
+      if(!sonaQ && !oldSonaQ){
+        sonaQ = true;
+        effects.push(new SonaEffect("blue"));
+      }
+      if(!sonaW && !oldSonaW){
+        sonaW = true;
+        effects.push(new SonaEffect("green"));
+      }
+      if(!sonaE && !oldSonaE){
+        sonaE = true;
+        effects.push(new SonaEffect("purple"));
+      }
+      sonaCalled = false;
+      return;
+    }
+  };           
+
+  function SonaEffect(color){
+    this.lifetime = 10;
+    this.radius = 0;
+    this.color = color;
+    this.draw = function(){
+      DrawCircle(160, 100, this.radius, this.color);
+      this.radius+=5;
+      if (this.radius >= 160){
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function SonaR(){
+    this.lifetime = 10;
+    this.x = 0;
+    this.radius = 0;
+    this.draw = function(){
+      DrawArrow("yellow", this.x);
+      DrawArrow("yellow", this.x - 50);
+      DrawArrow("yellow", this.x - 100);
+
+      if (this.x > 320){
+        DrawCircle(320, 100, this.radius, "green");
+        if (this.x > 400){
+          DrawCircle(320, 100, this.radius - 40, "blue")
+          if (this.x > 480){
+            DrawCircle(320, 100, this.radius - 60, "purple")
           }
         }
+        this.radius += 10;
+      }
+      this.x += 15;
+      if (this.x > 1100){
+        this.lifetime = 0;
+      }
+    }
+  }
   // END SONA --------------------------------------------------------------------
+  // SORAKA --------------------------------------------------------------------
+  function SorakaQ() {
+    this.explosionP = new ParticleExplosion(250,100,"green", 7, 2000, 50, 5,1.2 )
+    this.explosionY = new ParticleExplosion(250, 100, "yellow", 7, 2000, 50, 5,1.2)
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed<=1000){
+        DrawCircle(this.elapsed /4, this.elapsed / 10, 40, "purple");
+        DrawCircle(this.elapsed/4, this.elapsed/10, 20, "yellow");
+      } else {
+        this.explosionY.draw();
+        this.explosionP.draw();
+      }
+      if(this.elapsed > 3000){
+        this.lifetime = 0;
+      }
+    }
+  }
+  function SorakaE() {
+    this.start = GetTime();
+    this.explosion1 = new ParticleExplosion(160,100,"hsla(205, 100%, 56%, 0.8)",3,2000,50, 9,1)
+    this.draw = function () {
+    this.elapsed = GetTime() - this.start;
+    DrawCircle(160,100,100, "hsla(259, 100%, 56%, 0.4)")
+    this.explosion1.draw();
+     if (this.elapsed > 2000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function SorakaR() {
+    this.start = GetTime();
+    this.explosionG = new ParticleExplosion(160, 100, "green", 5, 2000, 250, 20, 1, false, true)
+    this.explosionP = new ParticleExplosion(160, 100, "purple", 5, 2000,250, 20, 7, false, true)
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      this.explosionG.draw();
+      this.explosionP.draw();
+      if(this.elapsed % 1500 <= 50){
+        this.explosionG = new ParticleExplosion(160, 100, "green", 5, 2000, 250, 20, 7, false, true)
+      }
+      if(this.elapsed > 4500){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function SorakaW() {
+    this.start = GetTime();
+    this.explosionG = new ParticleExplosion(160, 300, "green", 8, 2000, 250, 60, 10, false, true)
+    this.cube = new RandomCube(50,50, "green", "right", 10, false, 75)
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed<100){
+        this.cube.draw();
+      } else {
+        this.cube.draw();
+        this.explosionG.draw();
+      }
+     
+      if (this.elapsed > 4500) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  // END SORAKA --------------------------------------------------------------------
   // TEEMO --------------------------------------------------------------------
    function TeemoQ() {
       this.state = 0;
@@ -1502,6 +2054,19 @@
       ctx.fillRect(x,y,width,height)
     };
 
+    function DrawShield(x,y,scale, color){
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+      ctx.bezierCurveTo(x,y, x-scale/3, y+scale/6, x- scale/2, y+scale/6)
+      ctx.lineTo(x - scale / 2, y + scale /1.7)
+      ctx.bezierCurveTo(x - scale / 2, y + scale / 1.7, x-scale/2 , y + scale / 1.5, x , y + scale/1.2)
+      ctx.bezierCurveTo(x, y + scale / 1.2, x + scale / 2, y + scale / 1.5, x+ scale/2, y + scale / 1.7)
+      ctx.lineTo(x + scale / 2, y + scale /6)
+      ctx.bezierCurveTo(x+scale/2, y + scale/6, x+scale/3, y+scale/6, x,y)
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+
     function DrawCircle(x,y,radius,color){
         ctx.beginPath();
         ctx.fillStyle = color;
@@ -1537,7 +2102,6 @@
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.moveTo(x, y);
-      // top left curve
       ctx.bezierCurveTo(
         x,
         y,
@@ -1615,6 +2179,9 @@
               this.Ymin += this.speed;
               this.elapsed = new Date().getTime() - this.start;
               this.lifetime = this.duration - this.elapsed;
+              if (this.lifetime <= 0) {
+                speedAnim = false
+              }
             }
           }
 
@@ -1709,7 +2276,7 @@
   };
 
 
-  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY) {
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts) {
     this.start = GetTime();
     this.col = color;
     this.speed = speed;
@@ -1721,6 +2288,7 @@
     this.y = y;
     this.fadeSpeed = fadeSpeed;
     this.particles = [];
+    this.useHearts = useHearts;
    
     while (this.particles.length < this.amount) {
        if (notrandomY) {
@@ -1728,11 +2296,20 @@
       } else {
         this.yspeed = ((Math.random() - 0.5) * this.speed);
       }
-      this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
-        {
-          x: ((Math.random() - 0.5) * this.speed),
-          y: this.yspeed
-        }))
+      if(this.useHearts == null || this.useHearts == false){
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+     
       this.draw = function () {
         this.lifetime = this.duration - (GetTime() - this.start)
         this.particles.forEach((Particle, index) => {
@@ -1810,10 +2387,28 @@
       }
     }
 
+     class HeartParticle {
+        constructor(x, y, size, color, fadeSpeed, velocity) {
+          this.x = x;
+          this.y = y;
+          this.color = color;
+          this.size = size;
+          this.velocity = velocity;
+          this.alpha = 1 * fadeSpeed;
+        }
+        draw() {
+          ctx.globalAlpha = this.alpha;
+          DrawHeart(this.x, this.y, this.size, this.size/2, this.color)
+          this.x += this.velocity.x
+          this.y += this.velocity.y
+          this.alpha -= 0.01
+        }
+      }
+
   function goldEffect(){
     this.x = 160;
     this.y = 100;
-    this.radiusX = 50;
+    this.radiusX = 30;
     this.lifetime = 10;
 
     this.draw = function(){
@@ -1823,9 +2418,9 @@
       if(this.radiusX < 11){
         ctx.fillStyle = "white";
       }
-      ctx.ellipse(this.x, this.y, this.radiusX, 50, 0, 0, 2 * Math.PI);
+      ctx.ellipse(this.x, this.y, this.radiusX, 30, 0, 0, 2 * Math.PI);
       ctx.fill();
-      this.radiusX = Math.sin(Date.now() / 100) * 20 + 30;
+      this.radiusX = Math.sin(Date.now() / 100) * 10 + 20;
       if((engine.vision.gold < goldLimit && engine.vision.gold != -1) || (!play1 || !play2)){
         this.lifetime = 0;
         goldAnimPushed = false;
@@ -2093,8 +2688,9 @@
     // Grab canvas and rendering context.
     c = document.getElementById("exCanvas");
     ctx = c.getContext("2d");
-
-    // Start updates *after* our engine is accessible and ready.
+    // Start updates *after* our engine is accessible and ready
+    effects.push(new  LucianW());
     window.requestAnimationFrame(update);
+    
   }
 </script>
