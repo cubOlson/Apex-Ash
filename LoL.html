@@ -33,19 +33,17 @@
   />
   <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
   </meta>
-  <meta meter="lowMana" tags="league" x=".3557" y=".9778" width=".0526" h="200-230" s="50-100" l="40-70" type="linear">
-  </meta>
   <meta meter="loadBar" tags="league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
   </meta>
   <meta meter="checkLoadBar" tags="league" x=".3953" y=".7389" width=".001" h="170-200" s="50-75" l="30-50" type="linear">
   </meta>
-  <meta meter="allyDeath1" tags="league" x=".8695" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath1" tags="league" x=".8695" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
-  <meta meter="allyDeath2" tags="league" x=".905" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath2" tags="league" x=".905" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
-  <meta meter="allyDeath3" tags="league" x=".937" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath3" tags="league" x=".937" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
-  <meta meter="allyDeath4" tags="league" x=".9705" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath4" tags="league" x=".9705" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
   <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height = "0.001"  h="0-360" s="0-100" l="0-30" type="area">
   </meta>
@@ -73,15 +71,23 @@
   </meta>
   <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
   </meta>
+  <meta meter="greyDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="1-360" s="1-30" l="50-100" type="area">
+  </meta>
+  <meta meter="yellowDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="40-70" s="50-100" l="50-100" type="area">
+  </meta>
   <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="100">
   </meta>
   <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75" type="area">
   </meta>
   <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" height=".0001" h="0-25" s="50-100" l="50-100" type="area">
   </meta>
-  <meta meter="alliedTurret" tags="league" x=".5984" y=".1352" width=".0073" height=".0056" h="190-210" s="65-100" l="75-100" type="area">
+  <meta meter="firstAlliedTurret" tags="league" x=".6575" y=".1324" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
   </meta>
-  <meta meter="enemyTurret" tags="league" x=".6516" y=".1352" width=".0073" height=".0056" h="0-10" s="50-100" l="50-100" type="area">
+  <meta meter="alliedTurret" tags="league" x=".598" y=".135" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+  </meta>
+  <meta meter="enemyTurret" tags="league" x=".6063" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
+  </meta>
+  <meta meter="firstEnemyTurret" tags="league" x=".6516" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
   </meta>
   <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area">
   </meta>
@@ -142,15 +148,19 @@
   var levelUpMeter = new Meter(5, levelUpEffect);
   var alliedTurretMeter = new Meter(7, turretEffects);
   var enemyTurretMeter = new Meter(7, turretEffects);
+  var firstAlliedTurretMeter = new Meter(7, turretEffects);
+  var firstEnemyTurretMeter = new Meter(7, turretEffects);
   var shopMenuMeter = new Meter (2, shopMenu);
   var manaRMeter = new Meter(3, manaR);
   var manaQMeter = new Meter(3, manaQ);
   var manaEMeter = new Meter(3, manaE);
   var manaWMeter = new Meter(3, manaW);
-  var playingMeter1 = new Meter(2, playingGame1);
-  var playingMeter2 = new Meter(2, playingGame2);
+  var playingMeter1 = new Meter(15, playingGame1);
+  var playingMeter2 = new Meter(15, playingGame2);
   var damageMeter = new Meter(1, damageEffects);
   var lowHealthMeter = new Meter(2, damageEffects);
+  var greyDragonMeter = new Meter(25, dragonEffects);
+  var yellowDragonMeter = new Meter(25, dragonEffects);
 
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
@@ -185,10 +195,14 @@
         
         alliedTurretMeter.setValue(engine.vision.alliedTurret);
         enemyTurretMeter.setValue(engine.vision.enemyTurret);
+        firstAlliedTurretMeter.setValue(engine.vision.firstAlliedTurret);
+        firstEnemyTurretMeter.setValue(engine.vision.firstEnemyTurret);
         allyMeter1.setValue(engine.vision.allyDeath1);
         allyMeter2.setValue(engine.vision.allyDeath2);
         allyMeter3.setValue(engine.vision.allyDeath3);
         allyMeter4.setValue(engine.vision.allyDeath4);
+        greyDragonMeter.setValue(engine.vision.greyDragon);
+        yellowDragonMeter.setValue(engine.vision.yellowDragon);
 
          if (!ActiveExtendedE) {
           Extendede_Meter.setValue(engine.vision.ExtendedeButton);
@@ -264,6 +278,7 @@
           effects.push(new CassQ());
           break;
         case "Diana":
+          effects.push(new DianaQ())
           break;
         case "Ezreal":
           break;
@@ -287,6 +302,7 @@
         case "Leona":
           break;
         case "Lucian":
+          effects.push(new LucianQ())
           break;
         case "Lulu":
           break;
@@ -306,6 +322,7 @@
           }
           break;
         case "Soraka":
+          effects.push(new SorakaQ())
           break;
         case "Senna":
           break;
@@ -333,6 +350,10 @@
     if(!ActiveExtendedQ){
       if (Extendedq_Meter.value > 0) {
         switch (champion) {
+          case "Garen":
+            effects.push(new GarenQ())
+            ActiveExtendedQ = true;
+            break;
           case "Janna":
             effects.push(new jannaQ());
             ActiveExtendedQ = true;
@@ -369,10 +390,12 @@
           effects.push(new CassW());
           break;
         case "Diana":
+          effects.push(new DianaW())
           break;
         case "Ezreal":
           break;
         case "Garen":
+          effects.push(new GarenW())
           break;
         case "Irelia":
           break;
@@ -412,6 +435,7 @@
           }
           break;
         case "Soraka":
+          effects.push(new SorakaW())
           break;
         case "Senna":
           break;
@@ -466,10 +490,12 @@
           effects.push(new CassE());
           break;
         case "Diana":
+          effects.push(new RandomCube(80,80, "hsla(193, 100%, 56%, 1)", "right", 20, false, 60 ))
           break;
         case "Ezreal":
           break;
         case "Garen":
+          ActiveExtendedE = false;
           break;
         case "Irelia":
           break;
@@ -509,6 +535,7 @@
           }
           break;
         case "Soraka":
+          effects.push(new SorakaE())
           break;
         case "Senna":
           break;
@@ -535,6 +562,9 @@
     if(Extendede_Meter.value > 0){
       ActiveExtendedE = true;
       switch (champion) {
+        case "Garen":
+          effects.push(new GarenE());
+          break;
         case "Lux":
           break;
         case "Yone":
@@ -561,10 +591,12 @@
           effects.push(new CassR());
           break;
         case "Diana":
+          stateMgr.Push(new DianaR())
           break;
         case "Ezreal":
           break;
         case "Garen":
+          stateMgr.Push(new GarenR())
           break;
         case "Irelia":
           break;
@@ -601,6 +633,7 @@
           effects.push(new SonaR())
           break;
         case "Soraka":
+          effects.push(new SorakaR())
           break;
         case "Senna":
           break;
@@ -703,6 +736,25 @@
     }
   }
 
+  var greyPlayed = false;
+  var yellowPlayed = false;
+  function dragonEffects(){
+    if (greyDragonMeter.value > .1 && !greyPlayed){
+      greyPlayed = true;
+      yellowplayed = false;
+      effects.push(new dragonEffect("grey", "blue"));
+    }
+    if (yellowDragonMeter.value > .1 && !yellowPlayed){
+      greyPlayed = false;
+      yellowplayed = true;
+      effects.push(new dragonEffect("yellow", "red"))
+    }
+    if (yellowDragonMeter.value == 0 && greyDragonMeter.value == 0){
+      greyPlayed = false;
+      yellowPlayed = false;
+    }
+  }
+
   function levelUpEffect(){
     if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
       levelUpAnim = true;
@@ -752,10 +804,10 @@
   };
 
   function turretEffects(){
-    if(alliedTurretMeter.value > .8){
+    if(alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65){
       effects.push(new fallingTurret("blue"));
     } 
-    if(enemyTurretMeter.value > .8){
+    if(enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65){
       effects.push(new fallingTurret("red"));
     }
   };
@@ -1134,6 +1186,163 @@
       }
     };
   // END CASSIOPIEA -------------------------------------------------------------
+  // DIANA -------------------------------------------------------------
+  function DianaQ() {
+    this.start = GetTime();
+    this.ripple = new RippleEffect(300, 0 , 15, 1000, 40, "hsla(193, 100%, 56%, 1)", "out", "stroke", 1)
+    this.ripple2 = new RippleEffect(300, 0, 8, 1000, 40, "white", "out", "stroke", 1)
+    freezeBackground = true;
+    this.draw = function () {
+      DrawBackground("hsla(0,0%,0%, 0.2)")
+      this.elapsed = GetTime() - this.start;
+      DrawCircle(this.elapsed /3, 100 +Math.sin(this.elapsed / 200)*80, 20, "white")
+      DrawCircle(this.elapsed / 3, Math.sin(this.elapsed / 275) * 100, 20, "hsla(193, 100%, 56%, 1)")
+      if(this.elapsed >= 700){
+        this.ripple.draw();
+        this.ripple2.draw();
+      }
+      if(this.elapsed > 2000){
+        this.lifetime = 0;
+        freezeBackground = false;
+      }
+    }
+  }
+
+  function DianaW() {
+    this.start = GetTime();
+    this.rotation = 0;
+    this.draw = function (){
+      this.elapsed = GetTime() - this.start;
+      DrawShield(160,75,70,"hsla(193, 100%, 56%, 1)")
+      ctx.save();
+      ctx.translate(160,100);
+      ctx.rotate(this.rotation)
+      DrawCircle(0,-80, 20, "hsla(193, 100%, 56%, 1)")
+      DrawCircle(80, 40, 20, "hsla(193, 100%, 56%, 1)")
+      DrawCircle(-80, 40, 20, "hsla(193, 100%, 56%, 1)")
+      ctx.restore();
+      this.rotation = -this.elapsed /300;
+      if(this.elapsed > 4000){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function DianaR() {
+    this.start = GetTime();
+    this.ripple = new RippleEffect(160,100, 5,1000,50,"blue", "out", "stroke", 2)
+    StopEffects = true;
+    freezeBackground = true;
+    DrawBackground("hsla(0,0%,0%, 1)")
+      for (let i = 0; i < 40; i++) {
+        DrawCircle(Math.random() * 320, Math.random()*200, 5, "yellow")
+    }
+    this.Process = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed > 4000){
+        stateMgr.Pop();
+        freezeBackground = false;
+        StopEffects = false;
+      }
+      this.draw()
+    }
+    this.draw = function() {
+      if(this.elapsed < 1500) {
+        ctx.beginPath();
+        ctx.fillStyle = "hsl(0,0%,100%,0.04)"
+        ctx.moveTo(160,20);
+        ctx.bezierCurveTo(160,20,-30,100,160,180)
+        ctx.bezierCurveTo(160, 180, 60, 100, 160, 20)
+        ctx.fill();
+      } else if(this.elapsed < 2500){
+        DrawCircle(160,100, 80, "hsl(0,0%,100%,0.04)")
+      } else if( this.elapsed < 4000){
+        DrawBackground("hsla(0,0%,0%, 0.2)")
+        this.ripple.draw();
+      }
+    }
+  }
+
+  
+  // END DIANA -------------------------------------------------------------
+  // GAREN -------------------------------------------------------------
+  function GarenQ() {
+        this.start = GetTime();
+        this.elapsed = 0;
+        this.draw = function () {
+          this.elapsed = GetTime() - this.start;
+          DrawCircle(160, 100, this.elapsed / 5, "hsla(58, 100%, 50%, 0.6)");
+          if (!ActiveExtendedQ) {
+            effects.push(new ArrowEffect("down", "hsla(58, 100%, 50%, 1)", 1, 8, 1000))
+            this.lifetime = 0;
+          }
+        }
+      }
+
+      function GarenW() {
+        this.start = GetTime();
+        this.alpha =1;
+        this.draw = function (){
+          this.elapsed = GetTime() - this.start
+           DrawShield(60, 70, 80, `hsla(58, 100%, 50%, ${6+this.alpha})`);
+           DrawShield(160, 70, 80, `hsla(58, 100%, 50%, ${3+this.alpha})`);
+           DrawShield(260, 70, 80, `hsla(58, 100%, 50%, ${this.alpha})`);
+        if(this.elapsed >1500){
+          this.alpha -=0.2
+        }
+        }
+      }
+
+      function GarenE(){
+        freezeBackground = true;
+        this.start = GetTime();
+        this.rotation = 0;
+        DrawBackground("hsla(0,0%,0%,1)")
+        this.draw = function () {
+        DrawBackground("hsla(0,0%,0%,0.15)")
+        this.elapsed = GetTime()- this.start;
+          ctx.save();
+          ctx.translate(160,100);
+          ctx.rotate(this.rotation);
+          ctx.fillStyle = "yellow";
+          ctx.fillRect(0,0,150,10)
+          ctx.restore()
+          this.rotation = this.elapsed/300*Math.PI;
+          if(!ActiveExtendedE){
+            this.lifetime = 0;
+            freezeBackground = false;
+          }
+        }
+      }
+
+      function GarenR() {
+        freezeBackground = true;
+        this.start = GetTime();
+        StopEffects = true;
+        this.cubeY = -200;
+        this.explosion = new ParticleExplosion(160,200, "yellow",10,1500,150,10)
+        DrawBackground("hsl(0,0%,0%)")
+        this.Process = function () {
+          this.elapsed = GetTime() - this.start;
+          if(this.elapsed > 3000){
+            stateMgr.Pop();
+            freezeBackground = false;
+            StopEffects = false;
+          }
+          this.draw()
+        }
+        this.draw = function () {
+          DrawCube(130, this.cubeY, 60, 150, "yellow")
+          DrawTriangle(130, this.cubeY + 150, 190, this.cubeY + 150, 160, this.cubeY + 200, "yellow")
+          if(this.cubeY <0){
+            this.cubeY +=10;
+          } else {
+            DrawBackground("hsla(0,0%,0%, 0.2)")
+            this.explosion.draw();
+          }
+        }
+      }
+  // END GAREN -------------------------------------------------------------
   // JANNA -------------------------------------------------------------------
   function jannaQ(){
       this.lifetime = 10;
@@ -1318,6 +1527,49 @@
 }
 
   // END JHIN -------------------------------------------------------------
+  // LUCIAN -------------------------------------------------------------
+  function LucianQ () {
+    this.start = GetTime()
+    freezeBackground = true;
+    this.draw = function (){
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed< 200){
+        ctx.fillStyle = "yellow"
+        ctx.fillRect(0,80,320,40);
+      } else if(this.elapsed < 700){
+        DrawBackground( "hsla(0,0%,0%,0.1)")
+      } else if(this.elapsed < 1000){
+        ctx.fillStyle = "blue"
+        ctx.fillRect(0, 100 -((this.elapsed - 700) / 10) , 320, ((this.elapsed - 700)/5));
+      } else if (this.elapsed <1500) {
+        ctx.fillStyle = "hsl(193, 100%, 56%)"
+        ctx.fillRect(0, 75, 320, 50);
+      } else {
+        this.lifetime = 0
+        freezeBackground = false;
+      }
+    }
+  }
+
+  function LucianW(){
+    this.start = GetTime()
+    this.draw = function (){
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed/1.5 <= 160){
+        DrawCircle(this.elapsed/1.5, 100, 30, "blue")
+        DrawCircle(this.elapsed / 1.5, 100, 10, "yellow")
+      } else if (this.elapsed < 2000) {
+        DrawCircle(160, 100, 10, "yellow")
+        DrawCube(145, 90, 30, (-this.elapsed + 300)/6, "blue")
+        DrawCube(145, 110, 30, (this.elapsed - 300) / 6, "blue")
+        DrawCube(180, 85, (this.elapsed - 300) / 6, 30, "blue")
+        DrawCube(140, 85, (-this.elapsed + 300) / 6, 30, "blue")
+      } else {
+        this.lifetime = 0;
+      }
+    }
+  }
+   // END LUCIAN ------------------------------------------------------------- 
   // MISS FORTUNE -------------------------------------------------------------
     function FortuneQ() {
         this.start = GetTime();
@@ -1502,6 +1754,75 @@
     }
   }
   // END SONA --------------------------------------------------------------------
+  // SORAKA --------------------------------------------------------------------
+  function SorakaQ() {
+    this.explosionP = new ParticleExplosion(250,100,"green", 7, 2000, 50, 5,1.2 )
+    this.explosionY = new ParticleExplosion(250, 100, "yellow", 7, 2000, 50, 5,1.2)
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed<=1000){
+        DrawCircle(this.elapsed /4, this.elapsed / 10, 40, "purple");
+        DrawCircle(this.elapsed/4, this.elapsed/10, 20, "yellow");
+      } else {
+        this.explosionY.draw();
+        this.explosionP.draw();
+      }
+      if(this.elapsed > 3000){
+        this.lifetime = 0;
+      }
+    }
+  }
+  function SorakaE() {
+    this.start = GetTime();
+    this.explosion1 = new ParticleExplosion(160,100,"hsla(205, 100%, 56%, 0.8)",3,2000,50, 9,1)
+    this.draw = function () {
+    this.elapsed = GetTime() - this.start;
+    DrawCircle(160,100,100, "hsla(259, 100%, 56%, 0.4)")
+    this.explosion1.draw();
+     if (this.elapsed > 2000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function SorakaR() {
+    this.start = GetTime();
+    this.explosionG = new ParticleExplosion(160, 100, "green", 5, 2000, 250, 20, 1, false, true)
+    this.explosionP = new ParticleExplosion(160, 100, "purple", 5, 2000,250, 20, 7, false, true)
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      this.explosionG.draw();
+      this.explosionP.draw();
+      if(this.elapsed % 1500 <= 50){
+        this.explosionG = new ParticleExplosion(160, 100, "green", 5, 2000, 250, 20, 7, false, true)
+      }
+      if(this.elapsed > 4500){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function SorakaW() {
+    this.start = GetTime();
+    this.explosionG = new ParticleExplosion(160, 300, "green", 8, 2000, 250, 60, 10, false, true)
+    this.cube = new RandomCube(50,50, "green", "right", 10, false, 75)
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed<100){
+        this.cube.draw();
+      } else {
+        this.cube.draw();
+        this.explosionG.draw();
+      }
+     
+      if (this.elapsed > 4500) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  // END SORAKA --------------------------------------------------------------------
   // TEEMO --------------------------------------------------------------------
    function TeemoQ() {
       this.state = 0;
@@ -1763,6 +2084,19 @@
       ctx.fillRect(x,y,width,height)
     };
 
+    function DrawShield(x,y,scale, color){
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+      ctx.bezierCurveTo(x,y, x-scale/3, y+scale/6, x- scale/2, y+scale/6)
+      ctx.lineTo(x - scale / 2, y + scale /1.7)
+      ctx.bezierCurveTo(x - scale / 2, y + scale / 1.7, x-scale/2 , y + scale / 1.5, x , y + scale/1.2)
+      ctx.bezierCurveTo(x, y + scale / 1.2, x + scale / 2, y + scale / 1.5, x+ scale/2, y + scale / 1.7)
+      ctx.lineTo(x + scale / 2, y + scale /6)
+      ctx.bezierCurveTo(x+scale/2, y + scale/6, x+scale/3, y+scale/6, x,y)
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+
     function DrawCircle(x,y,radius,color){
         ctx.beginPath();
         ctx.fillStyle = color;
@@ -1905,6 +2239,52 @@
     }
   };
 
+  function dragonEffect(color1, color2){
+      this.lifetime = 30;
+      this.color1 = color1;
+      this.color2 = color2;
+      this.y = 250;
+      this.draw = function(){
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = this.color1;
+        ctx.beginPath();
+        ctx.moveTo(160, this.y);
+        ctx.lineTo(160, this.y + 200);
+        ctx.stroke();
+
+        ctx.fillStyle = this.color1;
+        ctx.beginPath();
+        ctx.moveTo(160, this.y + 50);
+        ctx.lineTo(200, this.y + 50);
+        ctx.lineTo(180, this.y + 25);
+        ctx.lineTo(320, this.y + 25);
+        ctx.lineTo(240, this.y + 100);
+        ctx.lineTo(160, this.y + 125);
+        ctx.lineTo(160, this.y + 50);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(160, this.y + 50);
+        ctx.lineTo(120, this.y + 50);
+        ctx.lineTo(140, this.y + 25);
+        ctx.lineTo(0, this.y + 25);
+        ctx.lineTo(80, this.y + 100);
+        ctx.lineTo(160, this.y + 125);
+        ctx.lineTo(160, this.y + 50);
+        ctx.fill();
+
+        this.y-=10;
+        if (this.y <= -150){
+          this.lifetime = 0;
+          effects.push(new ParticleExplosion(160, 200, this.color2, 10, 1000, 10, 10, 1.5, false))
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 150, this.color2, 10, 1000, 10, 10, 1.5, false))}, 100)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 100, this.color2, 10, 1000, 10, 10, 1.5, false))}, 200)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 50, this.color2, 10, 1000, 10, 10, 1.5, false))}, 300)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 0, this.color2, 10, 1000, 10, 10, 1.5, false))}, 400)
+        }
+      }
+    }
+
   function fallingTurret(color){
     this.lifetime = 10;
     this.angle = 0;
@@ -1973,7 +2353,7 @@
   };
 
 
-  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY) {
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts) {
     this.start = GetTime();
     this.col = color;
     this.speed = speed;
@@ -1985,6 +2365,7 @@
     this.y = y;
     this.fadeSpeed = fadeSpeed;
     this.particles = [];
+    this.useHearts = useHearts;
    
     while (this.particles.length < this.amount) {
        if (notrandomY) {
@@ -1992,11 +2373,20 @@
       } else {
         this.yspeed = ((Math.random() - 0.5) * this.speed);
       }
-      this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
-        {
-          x: ((Math.random() - 0.5) * this.speed),
-          y: this.yspeed
-        }))
+      if(this.useHearts == null || this.useHearts == false){
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+     
       this.draw = function () {
         this.lifetime = this.duration - (GetTime() - this.start)
         this.particles.forEach((Particle, index) => {
@@ -2073,6 +2463,24 @@
         this.alpha -= 0.01
       }
     }
+
+    class HeartParticle {
+        constructor(x, y, size, color, fadeSpeed, velocity) {
+          this.x = x;
+          this.y = y;
+          this.color = color;
+          this.size = size;
+          this.velocity = velocity;
+          this.alpha = 1 * fadeSpeed;
+        }
+        draw() {
+          ctx.globalAlpha = this.alpha;
+          DrawHeart(this.x, this.y, this.size, this.size/2, this.color)
+          this.x += this.velocity.x
+          this.y += this.velocity.y
+          this.alpha -= 0.01
+        }
+      }
 
   function goldEffect(){
     this.x = 160;
