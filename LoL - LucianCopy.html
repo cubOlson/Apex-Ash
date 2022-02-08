@@ -33,19 +33,17 @@
   />
   <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
   </meta>
-  <meta meter="lowMana" tags="league" x=".3557" y=".9778" width=".0526" h="200-230" s="50-100" l="40-70" type="linear">
-  </meta>
   <meta meter="loadBar" tags="league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
   </meta>
   <meta meter="checkLoadBar" tags="league" x=".3953" y=".7389" width=".001" h="170-200" s="50-75" l="30-50" type="linear">
   </meta>
-  <meta meter="allyDeath1" tags="league" x=".8695" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath1" tags="league" x=".8695" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
-  <meta meter="allyDeath2" tags="league" x=".905" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath2" tags="league" x=".905" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
-  <meta meter="allyDeath3" tags="league" x=".937" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath3" tags="league" x=".937" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
-  <meta meter="allyDeath4" tags="league" x=".9705" y=".725" width=".01" height = "0.001" h="120-140" s="70-100" l="60-90" type="area">
+  <meta meter="allyDeath4" tags="league" x=".9705" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
   </meta>
   <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height = "0.001"  h="0-360" s="0-100" l="0-30" type="area">
   </meta>
@@ -73,15 +71,23 @@
   </meta>
   <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
   </meta>
+  <meta meter="greyDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="1-360" s="1-30" l="50-100" type="area">
+  </meta>
+  <meta meter="yellowDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="40-70" s="50-100" l="50-100" type="area">
+  </meta>
   <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="100">
   </meta>
   <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75" type="area">
   </meta>
   <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" height=".0001" h="0-25" s="50-100" l="50-100" type="area">
   </meta>
-  <meta meter="alliedTurret" tags="league" x=".5984" y=".1352" width=".0073" height=".0056" h="190-210" s="65-100" l="75-100" type="area">
+  <meta meter="firstAlliedTurret" tags="league" x=".6575" y=".1324" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
   </meta>
-  <meta meter="enemyTurret" tags="league" x=".6516" y=".1352" width=".0073" height=".0056" h="0-10" s="50-100" l="50-100" type="area">
+  <meta meter="alliedTurret" tags="league" x=".598" y=".135" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+  </meta>
+  <meta meter="enemyTurret" tags="league" x=".6063" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
+  </meta>
+  <meta meter="firstEnemyTurret" tags="league" x=".6516" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
   </meta>
   <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area">
   </meta>
@@ -142,15 +148,19 @@
   var levelUpMeter = new Meter(5, levelUpEffect);
   var alliedTurretMeter = new Meter(7, turretEffects);
   var enemyTurretMeter = new Meter(7, turretEffects);
+  var firstAlliedTurretMeter = new Meter(7, turretEffects);
+  var firstEnemyTurretMeter = new Meter(7, turretEffects);
   var shopMenuMeter = new Meter (2, shopMenu);
   var manaRMeter = new Meter(3, manaR);
   var manaQMeter = new Meter(3, manaQ);
   var manaEMeter = new Meter(3, manaE);
   var manaWMeter = new Meter(3, manaW);
-  var playingMeter1 = new Meter(2, playingGame1);
-  var playingMeter2 = new Meter(2, playingGame2);
+  var playingMeter1 = new Meter(15, playingGame1);
+  var playingMeter2 = new Meter(15, playingGame2);
   var damageMeter = new Meter(1, damageEffects);
   var lowHealthMeter = new Meter(2, damageEffects);
+  var greyDragonMeter = new Meter(25, dragonEffects);
+  var yellowDragonMeter = new Meter(25, dragonEffects);
 
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
@@ -185,10 +195,14 @@
         
         alliedTurretMeter.setValue(engine.vision.alliedTurret);
         enemyTurretMeter.setValue(engine.vision.enemyTurret);
+        firstAlliedTurretMeter.setValue(engine.vision.firstAlliedTurret);
+        firstEnemyTurretMeter.setValue(engine.vision.firstEnemyTurret);
         allyMeter1.setValue(engine.vision.allyDeath1);
         allyMeter2.setValue(engine.vision.allyDeath2);
         allyMeter3.setValue(engine.vision.allyDeath3);
         allyMeter4.setValue(engine.vision.allyDeath4);
+        greyDragonMeter.setValue(engine.vision.greyDragon);
+        yellowDragonMeter.setValue(engine.vision.yellowDragon);
 
          if (!ActiveExtendedE) {
           Extendede_Meter.setValue(engine.vision.ExtendedeButton);
@@ -242,7 +256,6 @@
     //State Manager animation play
     stateMgr.Process();
     window.requestAnimationFrame(update);
-   
   }
 
   // START CALLBACK FUNCTIONS ----------------------------------------------------------------
@@ -265,7 +278,7 @@
           effects.push(new CassQ());
           break;
         case "Diana":
-        effects.push(new DianaQ())
+          effects.push(new DianaQ())
           break;
         case "Ezreal":
           break;
@@ -289,7 +302,7 @@
         case "Leona":
           break;
         case "Lucian":
-            effects.push(new LucianQ())
+          effects.push(new LucianQ())
           break;
         case "Lulu":
           break;
@@ -309,7 +322,7 @@
           }
           break;
         case "Soraka":
-        effects.push(new SorakaQ())
+          effects.push(new SorakaQ())
           break;
         case "Senna":
           break;
@@ -337,12 +350,12 @@
     if(!ActiveExtendedQ){
       if (Extendedq_Meter.value > 0) {
         switch (champion) {
-          case "Janna":
-            effects.push(new jannaQ());
+          case "Garen":
+            effects.push(new GarenQ())
             ActiveExtendedQ = true;
             break;
-             case "Garen":
-            effects.push(new GarenQ())
+          case "Janna":
+            effects.push(new jannaQ());
             ActiveExtendedQ = true;
             break;
           case "Lux":
@@ -377,12 +390,12 @@
           effects.push(new CassW());
           break;
         case "Diana":
-            effects.push(new DianaW())
+          effects.push(new DianaW())
           break;
         case "Ezreal":
           break;
         case "Garen":
-        effects.push(new GarenW())
+          effects.push(new GarenW())
           break;
         case "Irelia":
           break;
@@ -422,7 +435,7 @@
           }
           break;
         case "Soraka":
-            effects.push(new SorakaW())
+          effects.push(new SorakaW())
           break;
         case "Senna":
           break;
@@ -477,12 +490,12 @@
           effects.push(new CassE());
           break;
         case "Diana":
-        effects.push(new RandomCube(80,80, "hsla(193, 100%, 56%, 1)", "right", 20, false, 60 ))
+          effects.push(new RandomCube(80,80, "hsla(193, 100%, 56%, 1)", "right", 20, false, 60 ))
           break;
         case "Ezreal":
           break;
         case "Garen":
-        ActiveExtendedE = false;
+          ActiveExtendedE = false;
           break;
         case "Irelia":
           break;
@@ -550,13 +563,13 @@
       ActiveExtendedE = true;
       switch (champion) {
         case "Garen":
-        effects.push(new GarenE);
+          effects.push(new GarenE());
+          break;
         case "Lux":
           break;
         case "Yone":
           effects.push(new ExtendedEYoneEffect("grey"));
           break;
-          
       }    
     }
   };
@@ -578,12 +591,12 @@
           effects.push(new CassR());
           break;
         case "Diana":
-            stateMgr.Push(new DianaR())
+          stateMgr.Push(new DianaR())
           break;
         case "Ezreal":
           break;
         case "Garen":
-        stateMgr.Push(new GarenR())
+          stateMgr.Push(new GarenR())
           break;
         case "Irelia":
           break;
@@ -723,6 +736,25 @@
     }
   }
 
+  var greyPlayed = false;
+  var yellowPlayed = false;
+  function dragonEffects(){
+    if (greyDragonMeter.value > .1 && !greyPlayed){
+      greyPlayed = true;
+      yellowplayed = false;
+      effects.push(new dragonEffect("grey", "blue"));
+    }
+    if (yellowDragonMeter.value > .1 && !yellowPlayed){
+      greyPlayed = false;
+      yellowplayed = true;
+      effects.push(new dragonEffect("yellow", "red"))
+    }
+    if (yellowDragonMeter.value == 0 && greyDragonMeter.value == 0){
+      greyPlayed = false;
+      yellowPlayed = false;
+    }
+  }
+
   function levelUpEffect(){
     if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
       levelUpAnim = true;
@@ -772,10 +804,10 @@
   };
 
   function turretEffects(){
-    if(alliedTurretMeter.value > .8){
+    if(alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65){
       effects.push(new fallingTurret("blue"));
     } 
-    if(enemyTurretMeter.value > .8){
+    if(enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65){
       effects.push(new fallingTurret("red"));
     }
   };
@@ -1153,7 +1185,7 @@
         this.lifetime-=3;
       }
     };
-  // END CASSIOPIEA ------------------------------------------------------------- 
+  // END CASSIOPIEA -------------------------------------------------------------
   // DIANA -------------------------------------------------------------
   function DianaQ() {
     this.start = GetTime();
@@ -1233,9 +1265,8 @@
 
   
   // END DIANA -------------------------------------------------------------
-  
-    // GAREN -------------------------------------------------------------
-      function GarenQ() {
+  // GAREN -------------------------------------------------------------
+  function GarenQ() {
         this.start = GetTime();
         this.elapsed = 0;
         this.draw = function () {
@@ -1496,6 +1527,49 @@
 }
 
   // END JHIN -------------------------------------------------------------
+  // LUCIAN -------------------------------------------------------------
+  function LucianQ () {
+    this.start = GetTime()
+    freezeBackground = true;
+    this.draw = function (){
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed< 200){
+        ctx.fillStyle = "yellow"
+        ctx.fillRect(0,80,320,40);
+      } else if(this.elapsed < 700){
+        DrawBackground( "hsla(0,0%,0%,0.1)")
+      } else if(this.elapsed < 1000){
+        ctx.fillStyle = "blue"
+        ctx.fillRect(0, 100 -((this.elapsed - 700) / 10) , 320, ((this.elapsed - 700)/5));
+      } else if (this.elapsed <1500) {
+        ctx.fillStyle = "hsl(193, 100%, 56%)"
+        ctx.fillRect(0, 75, 320, 50);
+      } else {
+        this.lifetime = 0
+        freezeBackground = false;
+      }
+    }
+  }
+
+  function LucianW(){
+    this.start = GetTime()
+    this.draw = function (){
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed/1.5 <= 160){
+        DrawCircle(this.elapsed/1.5, 100, 30, "blue")
+        DrawCircle(this.elapsed / 1.5, 100, 10, "yellow")
+      } else if (this.elapsed < 2000) {
+        DrawCircle(160, 100, 10, "yellow")
+        DrawCube(145, 90, 30, (-this.elapsed + 300)/6, "blue")
+        DrawCube(145, 110, 30, (this.elapsed - 300) / 6, "blue")
+        DrawCube(180, 85, (this.elapsed - 300) / 6, 30, "blue")
+        DrawCube(140, 85, (-this.elapsed + 300) / 6, 30, "blue")
+      } else {
+        this.lifetime = 0;
+      }
+    }
+  }
+   // END LUCIAN ------------------------------------------------------------- 
   // MISS FORTUNE -------------------------------------------------------------
     function FortuneQ() {
         this.start = GetTime();
@@ -1595,50 +1669,6 @@
               }
             }
   // END MISS FORTUNE ---------------------------------------------------------
-    // LUCIAN -------------------------------------------------------------
-    function LucianQ () {
-      this.start = GetTime()
-      freezeBackground = true;
-      this.draw = function ()
-      {
-        this.elapsed = GetTime() - this.start;
-        if(this.elapsed< 200){
-          ctx.fillStyle = "yellow"
-          ctx.fillRect(0,80,320,40);
-        } else if(this.elapsed < 700){
-          DrawBackground( "hsla(0,0%,0%,0.1)")
-        } else if(this.elapsed < 1000){
-          ctx.fillStyle = "blue"
-          ctx.fillRect(0, 100 -((this.elapsed - 700) / 10) , 320, ((this.elapsed - 700)/5));
-        } else if (this.elapsed <1500) {
-          ctx.fillStyle = "hsl(193, 100%, 56%)"
-          ctx.fillRect(0, 75, 320, 50);
-        } else {
-          this.lifetime = 0
-          freezeBackground = false;
-        }
-      }
-    }
-
-    function LucianW(){
-      this.start = GetTime()
-      this.draw = function (){
-        this.elapsed = GetTime() - this.start;
-        if(this.elapsed/1.5 <= 160){
-          DrawCircle(this.elapsed/1.5, 100, 30, "blue")
-          DrawCircle(this.elapsed / 1.5, 100, 10, "yellow")
-        } else if (this.elapsed < 2000) {
-          DrawCircle(160, 100, 10, "yellow")
-          DrawCube(145, 90, 30, (-this.elapsed + 300)/6, "blue")
-          DrawCube(145, 110, 30, (this.elapsed - 300) / 6, "blue")
-          DrawCube(180, 85, (this.elapsed - 300) / 6, 30, "blue")
-          DrawCube(140, 85, (-this.elapsed + 300) / 6, 30, "blue")
-        } else {
-          this.lifetime = 0;
-        }
-      }
-    }
-   // END LUCIAN ------------------------------------------------------------- 
   // SONA --------------------------------------------------------------------
   
   var secondRun = false;
@@ -2102,6 +2132,7 @@
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.moveTo(x, y);
+      // top left curve
       ctx.bezierCurveTo(
         x,
         y,
@@ -2207,6 +2238,52 @@
       }
     }
   };
+
+  function dragonEffect(color1, color2){
+      this.lifetime = 30;
+      this.color1 = color1;
+      this.color2 = color2;
+      this.y = 250;
+      this.draw = function(){
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = this.color1;
+        ctx.beginPath();
+        ctx.moveTo(160, this.y);
+        ctx.lineTo(160, this.y + 200);
+        ctx.stroke();
+
+        ctx.fillStyle = this.color1;
+        ctx.beginPath();
+        ctx.moveTo(160, this.y + 50);
+        ctx.lineTo(200, this.y + 50);
+        ctx.lineTo(180, this.y + 25);
+        ctx.lineTo(320, this.y + 25);
+        ctx.lineTo(240, this.y + 100);
+        ctx.lineTo(160, this.y + 125);
+        ctx.lineTo(160, this.y + 50);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(160, this.y + 50);
+        ctx.lineTo(120, this.y + 50);
+        ctx.lineTo(140, this.y + 25);
+        ctx.lineTo(0, this.y + 25);
+        ctx.lineTo(80, this.y + 100);
+        ctx.lineTo(160, this.y + 125);
+        ctx.lineTo(160, this.y + 50);
+        ctx.fill();
+
+        this.y-=10;
+        if (this.y <= -150){
+          this.lifetime = 0;
+          effects.push(new ParticleExplosion(160, 200, this.color2, 10, 1000, 10, 10, 1.5, false))
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 150, this.color2, 10, 1000, 10, 10, 1.5, false))}, 100)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 100, this.color2, 10, 1000, 10, 10, 1.5, false))}, 200)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 50, this.color2, 10, 1000, 10, 10, 1.5, false))}, 300)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 0, this.color2, 10, 1000, 10, 10, 1.5, false))}, 400)
+        }
+      }
+    }
 
   function fallingTurret(color){
     this.lifetime = 10;
@@ -2387,7 +2464,7 @@
       }
     }
 
-     class HeartParticle {
+    class HeartParticle {
         constructor(x, y, size, color, fadeSpeed, velocity) {
           this.x = x;
           this.y = y;
@@ -2688,8 +2765,7 @@
     // Grab canvas and rendering context.
     c = document.getElementById("exCanvas");
     ctx = c.getContext("2d");
-    // Start updates *after* our engine is accessible and ready
+    // Start updates *after* our engine is accessible and ready.
     window.requestAnimationFrame(update);
-    
   }
 </script>
