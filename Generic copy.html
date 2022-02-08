@@ -5,6 +5,14 @@
 
     <meta property="Bar" label="BarEffect" type="boolean" default="0" />
     <meta property="Ripple" label="RippleEffect" type="boolean" default="0" />
+    <meta
+    property="theY"
+    label="Ambiance brightness"
+    type="number"
+    min="-200"
+    max="200"
+    default="100"
+  />
 
 </head>
 
@@ -22,57 +30,143 @@
     var effects = [];
     var animPlaying = false;
 
-    function GetTime() {
-        return new Date().getTime();
-    }
+    function update() {
 
-    function BarEffect(direction, color, speed, duration, barWidth, amountOfBars) {
-        this.dir = direction;
-        this.col = color;
-        this.dur = duration;
-        this.start = GetTime();
-        this.lifetime;
-        this.x = 0;
-        this.y = 0;
-        this.bW = barWidth;
-        this.speed = speed;
-        this.amount = amountOfBars;
-        switch (this.dir) {
-            case "up":
-                this.y = c.height;
-                this.speed = -this.speed;
-                break;
-            case "right":
-                this.x -= this.bW;
-                break;
-            case "down":
-                this.y -= this.bW;
-                break;
-            case "left":
-                this.x = c.width + this.bW + (this.amount * this.bW);
-                this.speed = -this.speed;
-                break;
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0, 320, 200);
+
+        if (effects.length < 1){
+            effects.push(new dragonEffect("grey", "blue"));
         }
-        this.draw = function () {
-            ctx.fillStyle = this.col;
-            for (let i = 0; i < this.amount; i++) {
-                if (this.dir == "up" || this.dir == "down") {
-                    ctx.fillRect(this.x, this.y - ((this.bW * 2) * i), c.width, this.bW);
-                    this.y += this.speed / this.amount;
-                } else {
-                    ctx.fillRect(this.x - ((this.bW * 2) * i), this.y, this.bW, c.height);
-                    this.x += this.speed / this.amount;
-                }
+
+        for (let i = 0; i < effects.length; i++) {
+            effects[i].draw();
+            if (effects[i].lifetime <= 0) {
+                effects.splice(i, 1);
             }
-            this.lifetime = this.dur - (GetTime() - this.start);
         }
-    }
-    function DrawBackground(color) {
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, c.width, c.height)
+
+        window.requestAnimationFrame(update);
     }
 
-    function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
+    function dragonEffect(color1, color2){
+      this.lifetime = 30;
+      this.color1 = color1;
+      this.color2 = color2;
+      this.y = 250;
+      this.draw = function(){
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = this.color1;
+        ctx.beginPath();
+        ctx.moveTo(160, this.y);
+        ctx.lineTo(160, this.y + 200);
+        ctx.stroke();
+
+        ctx.fillStyle = this.color1;
+        ctx.beginPath();
+        ctx.moveTo(160, this.y + 50);
+        ctx.lineTo(200, this.y + 50);
+        ctx.lineTo(180, this.y + 25);
+        ctx.lineTo(320, this.y + 25);
+        ctx.lineTo(240, this.y + 100);
+        ctx.lineTo(160, this.y + 125);
+        ctx.lineTo(160, this.y + 50);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(160, this.y + 50);
+        ctx.lineTo(120, this.y + 50);
+        ctx.lineTo(140, this.y + 25);
+        ctx.lineTo(0, this.y + 25);
+        ctx.lineTo(80, this.y + 100);
+        ctx.lineTo(160, this.y + 125);
+        ctx.lineTo(160, this.y + 50);
+        ctx.fill();
+
+        this.y-=10;
+        if (this.y <= -150){
+          this.lifetime = 0;
+          effects.push(new ParticleExplosion(160, 200, this.color2, 10, 1000, 10, 10, 1.5, false))
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 150, this.color2, 10, 1000, 10, 10, 1.5, false))}, 100)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 100, this.color2, 10, 1000, 10, 10, 1.5, false))}, 200)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 50, this.color2, 10, 1000, 10, 10, 1.5, false))}, 300)
+          setTimeout(()=>{effects.push(new ParticleExplosion(160, 0, this.color2, 10, 1000, 10, 10, 1.5, false))}, 400)
+        }
+      }
+    }
+
+    function DrawCircle(x,y,radius,color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+    };
+
+    function DrawTriangle(cord1X,cord1Y,cord2X,cord2Y,cord3X,cord3Y, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.moveTo(cord1X, cord1Y);
+      ctx.lineTo(cord2X,cord2Y);
+      ctx.lineTo(cord3X,cord3Y);
+      ctx.lineTo(cord1X,cord1Y);
+      ctx.fill();
+    };
+
+    function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+   
+    while (this.particles.length < this.amount) {
+       if (notrandomY) {
+        this.yspeed = -this.speed/1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+        {
+          x: ((Math.random() - 0.5) * this.speed),
+          y: this.yspeed
+        }))
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+  class ExplosionParticle {
+      constructor(x, y, radius, color, fadeSpeed, velocity) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = radius;
+        this.velocity = velocity;
+        this.alpha = 1 * fadeSpeed;
+      }
+      draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        ctx.fillStyle = this.color
+        ctx.fill()
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+        this.alpha -= 0.01
+      }
+    }
+
+    function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
         this.col = color;
         this.speed = speed;
         this.dur = duration;
@@ -84,81 +178,41 @@
         this.fill = fillOrStroke;
         this.radius = 0;
         this.amount = amountOfRipples;
+        this.background = background;
         if (inOrOut == "in") {
-            this.radius = 200 + (this.width*(this.amount*2));
-            this.speed = -this.speed
+          this.radius = 200 + (this.width * (this.amount * 2));
+          this.speed = -this.speed
         }
         this.draw = function () {
-            ctx.strokeStyle = this.col;
+          if(this.background){
+            DrawBackground("black");
+          }
+          
+          
+          ctx.lineWidth = this.width;
+          ctx.beginPath();
+          for (let i = 0; i < this.amount; i++) {
+            if (this.radius - i * (this.width * 2) > 0) {
+              ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+            }
+          }
+          if (this.fill == "fill") {
             ctx.fillStyle = this.col;
-            ctx.lineWidth = this.width;
-            ctx.beginPath();
-            for (let i = 0; i < this.amount; i++) {
-                if (this.radius- i* (this.width * 2) > 0) {
-                    ctx.arc(this.x, this.y, this.radius-i*(this.width*2), 0, 2 * Math.PI);
-                }
-            }
-            if (this.fill == "fill") {
-                ctx.fill();
-            } else {
-                ctx.stroke();
-            }
-            this.radius += this.speed;
-            this.lifetime = this.dur - (GetTime() - this.start);
+            ctx.fill();
+          } else {
+            ctx.strokeStyle = this.col;
+            ctx.stroke();
+          }
+          this.radius += this.speed;
+          this.lifetime = this.dur - (GetTime() - this.start);
+          if (this.lifetime <= 0){
+            utilityPlayed = false;
+          }
         }
-    }
+      }
 
-    function copyScreen() {
-
-        var shine = engine.vision.ShineMeter
-        let lightness = new Int8Array(engine.zone.lightness);
-        let sat = new Int8Array(engine.zone.saturation);
-        let hue = new Int16Array(engine.zone.hue);
-        for (var iZone = 0; iZone < 560; iZone++) {
-            var iRow = Math.floor(iZone / 28);
-            var iCol = iZone % 28;
-            var iWidth = 320 / 28;
-            var iHeight = 200 / 20;
-            var iZx = iCol * iWidth;
-            var iZy = iRow * iHeight;
-            ctx.fillStyle =
-                "hsla(" +
-                hue[iZone] +
-                "," +
-                sat[iZone] +
-                "%," +
-                lightness[iZone] +
-                "%, " +
-                "1" +
-                ")";
-            ctx.fillRect(iZx, iZy, iWidth, iHeight);
-        }
-    }
-
-    function update() {
-
-        copyScreen();
-
-        if (Bar == true && animPlaying == false) {
-            effects.push(new BarEffect("right", "blue", 6, 4000, 250, 5));
-            animPlaying = true;
-        }
-
-        if (Ripple == true && animPlaying == false) {
-            effects.push(new RippleEffect(160, 200, 5, 5000, 50, "blue", "in", "stroke",5))
-            animPlaying = true;
-        }
-
-        for (let i = 0; i < effects.length; i++) {
-            effects[i].draw();
-            if (effects[i].lifetime <= 0) {
-                effects.splice(i, 1);
-            }
-        }
-        if (effects.length == 0) {
-            animPlaying = false;
-        }
-        window.requestAnimationFrame(update);
+    function GetTime() {
+      return new Date().getTime()
     }
 
     window.requestAnimationFrame(update);
