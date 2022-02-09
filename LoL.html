@@ -401,7 +401,7 @@
 
     //Screen ambience play
     if(!freezeBackground && keyScreenBrightness > 1){
-      copyScreen();
+      copyScreen(1);
     }
     
     //Effects animation play
@@ -465,7 +465,7 @@
         case "Jax":
           break;
         case "Jhin":
-          effects.push(new JhinQ())
+          effects.push(new JhinQ());
           break;
         case "Jinx":
           break;
@@ -474,9 +474,10 @@
         case "Lee Sin":
           break;
         case "Leona":
+          effects.push(new LeonaQ());
           break;
         case "Lucian":
-          effects.push(new LucianQ())
+          effects.push(new LucianQ());
           break;
         case "Lulu":
           break;
@@ -588,8 +589,10 @@
         case "Lee Sin":
           break;
         case "Leona":
+          effects.push(new LeonaW());
           break;
         case "Lucian":
+          effects.push(new LucianW());
           break;
         case "Lulu":
           break;
@@ -688,15 +691,19 @@
         case "Lee Sin":
           break;
         case "Leona":
+          effects.push(new LeonaE());
           break;
         case "Lucian":
+          if(q_Meter.value !=0){
+            effects.push(new LucianE());
+          };
           break;
         case "Lulu":
           break;
         case "Lux":
           break;
         case "Miss Fortune":
-          effects.push(new FortuneE())
+          effects.push(new FortuneE());
           break;
         case "Rek'sai":
           break;
@@ -706,7 +713,7 @@
           if(!sonaCalled){
             allSona();
             sonaCalled = true;
-          }
+          };
           break;
         case "Soraka":
           effects.push(new SorakaE())
@@ -754,7 +761,7 @@
         case "Ahri":
           break;
         case "Ashe":
-          stateMgr.Push(new asheR())
+          stateMgr.Push(new asheR());
           break;
         case "Aurelion Sol":
           break;
@@ -765,7 +772,7 @@
           effects.push(new CassR());
           break;
         case "Diana":
-          stateMgr.Push(new DianaR())
+          stateMgr.Push(new DianaR());
           break;
         case "Ezreal":
           break;
@@ -789,8 +796,10 @@
         case "Lee Sin":
           break;
         case "Leona":
+          stateMgr.Push(new LeonaR());
           break;
         case "Lucian":
+          stateMgr.Push(new LucianR());
           break;
         case "Lulu":
           break;
@@ -837,7 +846,7 @@
         ActiveExtendedR = true;
         switch (champion) {
           case "Ahri":
-            effects.push(new ahriR())
+            effects.push(new ahriR());
             break;
         }
       }
@@ -987,12 +996,13 @@
   };
 
   function loadGoing(){
-    if(checkLoadMeter.value> 0.6){
-      q_Meter.setValue(0);
-       w_Meter.setValue(0);
-        e_Meter.setValue(0);
-         r_Meter.setValue(0);
-    }
+    // if(checkLoadMeter.value> 0.6){
+    //   q_Meter.setValue(0);
+    //    w_Meter.setValue(0);
+    //     e_Meter.setValue(0);
+    //      r_Meter.setValue(0);
+    // }
+    return 1;
   };
 
   // END CALLBACKS -----------------------------------------------------------------------------------
@@ -1701,6 +1711,91 @@
 }
 
   // END JHIN -------------------------------------------------------------
+  // LEONA ------------------------------------------------------------- 
+  function LeonaQ() 
+      { 
+        StopEffects = true;
+        this.start = GetTime();
+        this.rotation = 0;
+        this.draw = function () {
+          this.elapsed = GetTime() - this.start;
+          ctx.save();
+          ctx.translate(160, 100);
+          ctx.rotate(this.rotation);
+          DrawSun(0, 0, this.elapsed/25, "Yellow")
+          ctx.restore()
+          this.rotation = this.elapsed / 2000 * Math.PI;
+          if(this.elapsed > 3500){
+            this.lifetime = 0;
+            effects.push(new RippleEffect(160,100,8,2000,20, "orange", "out", "stroke", 3))
+            StopEffects = false;
+          }
+        }
+      }
+
+      function LeonaE(){
+          freezeBackground = true;
+          this.start = GetTime();
+          this.cube = new RandomCube(60,30, "orange", "right",10, false, 85,0)
+          this.draw = function () {
+            this.elapsed = GetTime() - this.start;
+            copyScreen(0.1);
+            this.cube.draw();
+            if(this.elapsed >1000){
+               DrawCircle((this.elapsed-1000) / 1.8, 100, 50, "hsla(39, 100%, 51%, 1)")
+            }
+           
+            if (this.elapsed > 2000) {
+              this.lifetime = 0;
+              StopEffects = false;
+              freezeBackground = false;
+            }
+          }
+        };
+
+        function LeonaW(){
+          this.start = GetTime();
+          this.cube = new RandomCube(60, 30, "orange", "right", 10, false, 85, 0)
+          this.draw = function () {
+            this.elapsed = GetTime() - this.start;
+              ctx.beginPath();
+            ctx.strokeStyle = "yellow";
+            ctx.lineWidth = 15;
+            ctx.arc(160, 100, 60 -this.elapsed/50, 0, 2 * Math.PI)
+            ctx.stroke();
+            ctx.lineWidth = 1;
+            if (this.elapsed > 2000) {
+              this.lifetime = 0;
+              effects.push(new RippleEffect(160,100,6,1000,30,"orange","out","fill", 1))
+            }
+          }
+        };
+      
+
+      function LeonaR(){
+        this.start = GetTime();
+        clearEffects = true;
+        StopEffects = true;
+        freezeBackground = true;
+        this.Process = function() {
+          this.elapsed = GetTime()- this.start;
+          if(this.elapsed > 4000){
+            stateMgr.Pop();
+            clearEffects = false;
+            StopEffects = false;
+            freezeBackground = false;
+            effects.push(new ParticleExplosion(160,60,"orange",8,2000,500,5,1,false))
+          }
+          this.draw();
+        }
+        this.draw = function(){
+          DrawBackground( `hsl(189,100%,${this.elapsed/100}%)`)
+          DrawCircle(160,160 - this.elapsed/40,40, "yellow")
+          ctx.fillStyle = `hsl(125,100%,${this.elapsed / 100}%)`
+          ctx.fillRect(0,120,320,100)
+        } 
+      };
+   // END LEONA -------------------------------------------------------------
   // LUCIAN -------------------------------------------------------------
   function LucianQ () {
     this.start = GetTime()
@@ -1723,7 +1818,7 @@
         freezeBackground = false;
       }
     }
-  }
+  };
 
   function LucianW(){
     this.start = GetTime()
@@ -1742,7 +1837,52 @@
         this.lifetime = 0;
       }
     }
-  }
+  };
+
+  function LucianE() {
+    freezeBackground = true;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      copyScreen(0.1);
+      DrawCircle(this.elapsed/1.8, 100, 50, "hsl(193, 100%, 56%)")
+      if(this.elapsed > 2000){
+        this.lifetime = 0;
+        StopEffects = false;
+        freezeBackground = false;
+      }
+    }
+  };
+
+  function LucianR() {
+    this.start = GetTime();
+    StopEffects = true;
+    clearEffects = true;
+    this.bullets = [];
+    DrawBackground("black")
+    freezeBackground = true;
+    this.Process = function () {
+      this.elapsed = GetTime() - this.start;
+      if(this.elapsed > 4000){
+        StopEffects = false;
+        freezeBackground = false;
+        clearEffects = false;
+        stateMgr.Pop();
+      }
+      this.draw();
+    }
+    this.draw = function(){
+      DrawBackground("hsla(0,0%,0%,0.1)")
+      if(this.elapsed % 150 <= 30){
+        this.bullets.push(new RandomCube(10,10, "hsl(193, 100%, 56%)", "up", 10, false,200, Math.random()*320))
+      } else if(this.elapsed % 200 >= 180){
+         this.bullets.push(new RandomCube(10, 10, "yellow", "up", 10, false, 200, Math.random() * 320))
+      }
+      this.bullets.forEach(bullet => {
+        bullet.draw();
+      });
+    }
+  };
    // END LUCIAN ------------------------------------------------------------- 
   // MISS FORTUNE -------------------------------------------------------------
     function FortuneQ() {
@@ -2134,7 +2274,7 @@
       }
     }
 
-   function YoneWeffect() {
+    function YoneWeffect() {
       this.start = GetTime();
       this.lifetime;
       freezeBackground = true;
@@ -2148,7 +2288,7 @@
         this.draw()
       }
       this.draw = function () {
-        copyScreen();
+        copyScreen(1);
         this.lifetime = 1000 - (GetTime() - this.start)
         if (this.lifetime > 900) {
           bar1.draw();
@@ -2342,7 +2482,19 @@
 
       ctx.fill()
       ctx.restore()
-    }
+    };
+
+    function DrawSun(x,y,size,color){
+      DrawCircle(x,y,size, color);
+      DrawTriangle(x-size/5, y-size, x + size / 5, y - size, x, y-size*2.5)
+      DrawTriangle(x - size / 5 - size/1.5, y - size/2, x + size / 5 - size / 1.5, y - size/1.5, x-size-size /1.5, y - size * 1.5)
+      DrawTriangle(x-size,y-size/5, x-size,y+size/5,x-size*2.5,y)
+      DrawTriangle(x + size / 5 + size / 1.5, y - size / 2, x - size / 5 + size / 1.5, y - size / 1.5, x + size + size / 1.5, y - size * 1.5)
+      DrawTriangle(x + size, y + size / 5, x + size, y - size / 5, x + size * 2.5, y)
+      DrawTriangle(x + size / 5 + size / 1.5, y + size / 2, x - size / 5 + size / 1.5, y + size / 1.5, x + size + size / 1.5, y + size * 1.5)
+      DrawTriangle(x - size / 5 - size / 1.5, y + size / 2, x + size / 5 - size / 1.5, y + size / 1.5, x - size - size / 1.5, y + size * 1.5)
+      DrawTriangle(x - size / 5, y + size, x + size / 5, y + size, x, y + size * 2.5)
+    };
 
     function ArrowEffect(direction, color, amount, speed, duration) {
             this.start = GetTime();
@@ -2842,13 +2994,11 @@
       return new Date().getTime()
     }
 
-  function copyScreen() {
+    function copyScreen(alpha) {
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let hue = new Int16Array(engine.zone.hue);
 
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, c.width, c.height);
     for (var iZone = 0; iZone < 560; iZone++) {
         ctx.fillStyle =
           "hsla(" +
@@ -2856,9 +3006,10 @@
           "," +
           sat[iZone] +
           "%," +
-          lightness[iZone] +
+          lightness[iZone] *keyScreenBrightness * 0.01  +
           "%, " +
-          keyScreenBrightness * 0.01 +
+          alpha
+          +
           ")";
       
       var iRow = Math.floor(iZone / 28);
