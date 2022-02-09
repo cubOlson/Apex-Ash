@@ -1,7 +1,7 @@
 <head>
   <title>League of Legends Cub Copy</title>
   <meta description="Metering and ambiance for League of Legends." />
-  <meta publisher="WhirlwindFX" />
+  <meta publisher="SignalRGB" />
   <meta 
   property="character" 
   label="Champions" 
@@ -18,16 +18,52 @@
     default="100"
   />
   <meta
-  property="goldLimit"
-  label="Gold Effect Threshold"
-  type="number"
-  min="0"
-  max="10000"
-  default="1000"
-  />
-  <meta
     property="enableHealth"
     label="Health effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableGold"
+    label="Gold effect. Accurate to within ~150"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="goldLimit"
+    label="Gold Effect Threshold"
+    type="number"
+    min="0"
+    max="10000"
+    default="1000"
+  />
+  <meta
+    property="enableTower"
+    label="Tower effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableDragon"
+    label="Dragon effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableAllies"
+    label="Ally death effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableLevel"
+    label="Level-up effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableChampions"
+    label="Champion effects"
     type="boolean"
     default="1"
   />
@@ -263,6 +299,7 @@
     <resolution size="1280x800" x=".523" y=".9296" width=".0542" height=".0056"/>
   </meta>
   <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="20-100" type="linear">
+    <resolution size="3440x1440" x="0.1439" y=".1882" width=".5335"/> 
     <resolution size="2560x1600" x="0.1599" y=".1880" width=".5335"/>  
     <resolution size="1920x1200" x="0.1599" y=".1880" width=".5335"/>
     <resolution size="1680x1050" x="0.1599" y=".1880" width=".5335"/>
@@ -342,7 +379,7 @@
     //Set all meter values each update
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     if(play1 && play2){
-       damageMeter.setValue(engine.vision.tookDamage);
+      damageMeter.setValue(engine.vision.tookDamage);
       lowHealthMeter.setValue(engine.vision.lowHealth);
       levelUpMeter.setValue(engine.vision.levelUp);
       manaWMeter.setValue(engine.vision.ManaW);
@@ -351,7 +388,7 @@
       manaRMeter.setValue(engine.vision.ManaR);
       shopMenuMeter.setValue(engine.vision.ShopMenu)
       
-      if (!StopEffects) {
+      if (!StopEffects && enableChampions) {
         if (!noQ) {
           q_Meter.setValue(engine.vision.qButton);
         }
@@ -415,13 +452,13 @@
     }
 
     //Gold effect
-    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2){
+    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2 && enableGold){
       goldAnimPushed = true;
       effects.push(new goldEffect());
     }
 
     //Low Health Effect
-    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2){
+    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2 && enableHealth){
       for(let i = 0; i < 3; i++){
         effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"))
       }
@@ -874,7 +911,7 @@
     allyMeter3.value == 0 ? count++ : null;
     allyMeter4.value == 0 ? count++ : null;
  
-    if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1){
+    if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1 && enableAllies){
       deathAnim = true;
       effects.push(new deathEffect());
     };
@@ -912,34 +949,53 @@
         }
 
   function damageEffects(){
-    if (damageMeter.value > .01){
+    if (damageMeter.value > .01 && enableHealth){
       for(let i = 0; i < 10; i++){
         setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 20);
       }
     }
   }
 
-  var greyPlayed = false;
-  var yellowPlayed = false;
+  var greyDPlayed = false;
+  var yellowDPlayed = false;
   function dragonEffects(){
-    if (greyDragonMeter.value > .1 && !greyPlayed){
-      greyPlayed = true;
-      yellowplayed = false;
+    if (greyDragonMeter.value > .1 && greyDragonMeter.value < .4 && !greyDPlayed && enableDragon){
+      greyDPlayed = true;
+      yellowDPlayed = false;
       effects.push(new dragonEffect("grey", "blue"));
     }
-    if (yellowDragonMeter.value > .1 && !yellowPlayed){
-      greyPlayed = false;
-      yellowplayed = true;
+    if (yellowDragonMeter.value > .1 && yellowDragonMeter.value < .4 && !yellowDPlayed && greyDPlayed && enableDragon){
+      greyDPlayed = false;
+      yellowDPlayed = true;
       effects.push(new dragonEffect("yellow", "red"))
     }
-    if (yellowDragonMeter.value == 0 && greyDragonMeter.value == 0){
-      greyPlayed = false;
-      yellowPlayed = false;
+    if (yellowDragonMeter.value == 0 && greyDragonMeter.value == 0 && enableDragon){
+      greyDPlayed = false;
+      yellowDPlayed = false;
     }
-  }
+  };
+
+  // var greyBPlayed = false;
+  // var yellowBPlayed = false;
+  // function dragonEffects(){
+  //   if (greyBaronMeter.value > .1 && greyBaronMeter.value < .4 && !greyBPlayed){
+  //     greyBPlayed = true;
+  //     yellowBPlayed = false;
+  //     effects.push(new dragonEffect("grey", "blue"));
+  //   }
+  //   if (yellowBaronPlayed.value > .1 && yellowBaronPlayed.value < .4 && !yellowBPlayed && greyBPlayed){
+  //     greyBPlayed = false;
+  //     yellowBPlayed = true;
+  //     effects.push(new dragonEffect("yellow", "red"))
+  //   }
+  //   if (yellowBaronPlayed.value == 0 && greyBaronMeter.value == 0){
+  //     greyBPlayed = false;
+  //     yellowBPlayed = false;
+  //   }
+  // };
 
   function levelUpEffect(){
-    if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
+    if(levelUpMeter.decreased && !levelUpAnim && play1 && play2 && enableLevel){
       levelUpAnim = true;
       StopEffects = true;
       effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3, true));
@@ -987,10 +1043,10 @@
   };
 
   function turretEffects(){
-    if(alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65){
+    if((alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65) && enableTower){
       effects.push(new fallingTurret("blue"));
     } 
-    if(enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65){
+    if((enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65) && enableTower){
       effects.push(new fallingTurret("red"));
     }
   };
