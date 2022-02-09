@@ -562,6 +562,10 @@
     if(!ActiveExtendedQ){
       if (Extendedq_Meter.value > 0) {
         switch (champion) {
+          case "Aurelion Sol":
+            effects.push(new AurelionQ())
+            ActiveExtendedQ = true;
+            break;
           case "Garen":
             effects.push(new GarenQ())
             ActiveExtendedQ = true;
@@ -678,6 +682,9 @@
         case "Ahri":
           effects.push(new ahriW())
           break;
+        case "Aurelion Sol":
+          effects.push(new AurelionW());
+          break;
         case "Teemo":
           effects.push(new ArrowEffect("up", "blue", 2 , 7,1000));
           ActiveExtendedW = false;
@@ -696,6 +703,7 @@
           effects.push(new ArrowEffect("up", "hsl(184, 100%, 50%)",1, 7, 1000))
           break;
         case "Aurelion Sol":
+          ActiveExtendedE = false;
           break;
         case "Caitlyn":
           effects.push(new CaitlynE());
@@ -780,6 +788,12 @@
     if(Extendede_Meter.value > 0){
       ActiveExtendedE = true;
       switch (champion) {
+        case "Aurelion Sol":
+          if (!auEPushed){
+            effects.push(new AurelionE());
+            auEPushed = true;
+          };
+          break;
         case "Garen":
           effects.push(new GarenE());
           break;
@@ -801,6 +815,7 @@
           stateMgr.Push(new asheR());
           break;
         case "Aurelion Sol":
+          effects.push(new AurelionR());
           break;
         case "Caitlyn":
           effects.push(new CaitlynR());
@@ -1222,6 +1237,106 @@
       }
     };
   // END ASHE ------------------------------------------------------------------------
+  // AURELION SOL -----------------------------------------------------------------
+    var auEPushed = false;
+
+    function AurelionQ(){
+      this.lifetime = 20;
+      this.rotation = 0;
+      this.x = -50;
+      this.start = GetTime();
+      this.elapsed = 0;
+
+      this.draw = function(){
+        this.elapsed = GetTime() - this.start;
+          ctx.save();
+          ctx.translate(this.x, 100);
+          ctx.rotate(this.rotation);
+          DrawSun(0, 0, 60, "purple");
+          DrawSun(0, 0, 40, "yellow");
+          ctx.restore()
+          this.rotation = this.elapsed / 1000 * Math.PI;
+          this.x += 10;
+
+          if (this.x > 370){
+            this.lifetime = 0;
+          }
+        }
+      };
+
+      function AurelionW(){
+        this.lifetime = 20;
+        this.start = GetTime();
+        this.elapsed = 0;
+        this.switch = "yellow";
+
+        this.draw = function(){
+          this.elapsed = GetTime() - this.start;
+          if(this.elapsed < 1000 && this.elapsed % 4 == 0){
+            this.switch == "yellow" ? this.switch = "purple" : this.switch = "yellow";
+            effects.push(new RippleEffect(160, 100, 10, 1000, 30, this.switch, "out", "stroke", 1, false));
+          } else if (this.elapsed > 2000 && this.elapsed % 4 == 0){
+            this.switch == "yellow" ? this.switch = "purple" : this.switch = "yellow";
+            effects.push(new RippleEffect(160, 100, 10, 1000, 30, this.switch, "in", "stroke", 1, false));
+          }
+          if (this.elapsed > 4000){
+            this.lifetime = 0;
+          }
+        }
+      };
+
+      function AurelionE(){
+        this.lifetime = 20;
+        this.x = 160;
+        this.y = 100;
+        this.now = GetTime();
+
+        this.draw = function(){
+          this.now = GetTime();
+          var headY = Math.sin(this.now / 100) * 20 + this.y;
+
+          ctx.fillStyle = "black";
+          ctx.fillRect(0, 0, 320, 200);
+
+          effects.push(new ParticleExplosion(320, 100, "blue", 20, 3000, 1, 10, 5, false));
+
+          DrawCircle(this.x + 10, headY - 10, 35, "yellow");
+          for (let i = 1; i <= 6; i++){
+            var indexY = Math.sin((this.now - (i * 100)) / 100) * 20 + this.y;
+            DrawCircle(this.x - (i * 25), indexY, 20, `rgb(${255 - (i * 40)}, 0, 255)`);
+          }
+          DrawCircle(this.x, headY, 35, "rgb(255, 0, 255)");
+          if (e_Meter.value == 0){
+            this.lifetime = 0;
+            auEPushed = false;
+          }
+        }
+      };
+
+      function AurelionR(){
+        this.lifetime = 20;
+        this.x = 0;
+        this.y = 100;
+        this.start = GetTime();
+        this.elapsed = 0;
+
+        this.draw = function(){
+          this.elapsed = GetTime() - this.start;
+
+          if (this.elapsed > 200){
+            effects.push(new ParticleExplosion(this.x, this.y, "rgb(255, 25, 255)", 15, 1000, 30, 10, 1, false));
+            this.start = GetTime();
+          }
+
+          DrawTriangle(this.x, this.y, this.x - 80, this.y + 60, this.x - 80, this.y - 60, "blue");
+          DrawTriangle(this.x, this.y, this.x - 50, this.y + 30, this.x - 50, this.y - 30, "white");
+          this.x+=15;
+          if (this.x > 450){
+            this.lifetime = 0;
+          }
+        }
+      };
+  // END AURELION SOL ------------------------------------------------------------
   // CAITYLN --------------------------------------------------------------------
   function CaitlynQ(){
       this.lifetime = 10;
