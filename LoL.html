@@ -492,6 +492,7 @@
           effects.push(new DianaQ())
           break;
         case "Ezreal":
+          effects.push(new EzrealQ())
           break;
         case "Garen":
           break;
@@ -500,6 +501,7 @@
         case "Janna":
           break;
         case "Jax":
+          effects.push(new JaxQ());
           break;
         case "Jhin":
           effects.push(new JhinQ());
@@ -609,6 +611,7 @@
           effects.push(new DianaW())
           break;
         case "Ezreal":
+          effects.push(new EzrealW())
           break;
         case "Garen":
           effects.push(new GarenW())
@@ -685,6 +688,10 @@
         case "Aurelion Sol":
           effects.push(new AurelionW());
           break;
+        case "Jax":
+          effects.push(new JaxW());
+          ActiveExtendedW = false;
+          break;
         case "Teemo":
           effects.push(new ArrowEffect("up", "blue", 2 , 7,1000));
           ActiveExtendedW = false;
@@ -715,6 +722,7 @@
           effects.push(new RandomCube(80,80, "hsla(193, 100%, 56%, 1)", "right", 20, false, 60 ))
           break;
         case "Ezreal":
+          effects.push(new EzrealE())
           break;
         case "Garen":
           ActiveExtendedE = false;
@@ -725,9 +733,10 @@
           effects.push(new jannaE());
           break;
         case "Jax":
+          ActiveExtendedE = false;
           break;
         case "Jhin":
-          effects.push(new RippleEffect(160.,100, 8, 1500, 30, "purple", "out", "stroke", 5))
+          effects.push(new RippleEffect(160,100, 8, 1500, 30, "purple", "out", "stroke", 5))
           break;
         case "Jinx":
           break;
@@ -797,6 +806,10 @@
         case "Garen":
           effects.push(new GarenE());
           break;
+        case "Jax":
+          effects.push(new JaxE());
+          ActiveExtendedE = false;
+          break;
         case "Lux":
           break;
         case "Yone":
@@ -827,6 +840,7 @@
           stateMgr.Push(new DianaR());
           break;
         case "Ezreal":
+          effects.push(new EzrealR())
           break;
         case "Garen":
           stateMgr.Push(new GarenR())
@@ -837,6 +851,7 @@
           effects.push(new jannaR());
           break;
         case "Jax":
+          effects.push(new JaxR());
           break;
         case "Jhin":
           stateMgr.Push(new JhinR());
@@ -1616,10 +1631,115 @@
         this.ripple.draw();
       }
     }
-  }
+  };
 
   
   // END DIANA -------------------------------------------------------------
+  // EZREAL -------------------------------------------------------------
+    function EzrealQ(){
+      this.lifetime = 20;
+      this.x = -30;
+  
+      this.draw = function(){
+      
+        ctx.beginPath();
+        ctx.fillStyle = "cyan";
+        ctx.ellipse(this.x - 30, 100, 75, 35, 0, 0, 2 * Math.PI);
+        ctx.fill();
+      
+        DrawCircle(this.x, 100, 25, "white");
+      
+        this.x += 25;
+        if (this.x > 450){
+          effects.push(new RippleEffect(320, 100, 20, 1000, 40, "blue", "out", "stroke", 5))
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function EzrealW(){
+      this.lifetime = 20;
+      this.y = 300;
+      this.count = 0;
+
+      this.draw = function(){
+
+        if (this.y > 100){
+          this.y -= 10;
+        } else {
+          effects.push(new RippleEffect(160, 100, 20, 1000, 10, "white", "out", "stroke", 1));
+          this.count++;
+        }
+        ctx.beginPath();
+        ctx.lineWidth = 30;
+        ctx.strokeStyle = "gold";
+        ctx.arc(160, this.y, 35, 0, 2* Math.PI)
+        ctx.stroke();
+
+        if (this.count > 30){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function EzrealE(){
+      this.lifetime = 20;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.target = 300;
+
+      this.draw = function(){
+
+        if (this.elapsed > 340){
+          this.index = Math.floor(this.target/70);
+          for (let i = 0; i < this.index; i++){
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(300 - (i * 70), 0, 30, 200);
+          }
+          this.target-=15;
+        } else {
+          this.elapsed = Date.now() - this.start;
+          this.index = Math.floor(this.elapsed/70);
+
+          for (let i = 0; i < this.index; i++){
+            ctx.fillStyle = "white";
+            ctx.fillRect(i * 70 + 20, 0, 30, 200);
+          }
+        }
+        if (this.target <= 0){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function EzrealR(){
+      this.lifetime = 20;
+      this.radius = 0;
+      this.effects = [];
+
+      this.draw = function(){
+        var jitter = Math.sin(GetTime()/40) * 3;
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+
+        this.effects.push(new RandomCube(10, 50, "white", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(10, 50, "grey", "down", 10, true, 0, Math.random()*320));
+        this.effects.forEach(ele => {
+          ele.draw()
+        });
+
+        DrawCircle(160, 200 + jitter, 6 * this.radius + 1, "yellow");
+        DrawCircle(160, 300 + jitter, 7 * this.radius + 1, "black");
+        this.radius+=.3;
+
+        if (this.radius >= 60){
+          this.lifetime = 0;
+        }
+      }
+  };
+  // END EZREAL ---------------------------------------------------------
   // GAREN -------------------------------------------------------------
   function GarenQ() {
         this.start = GetTime();
@@ -1768,6 +1888,87 @@
       }
     };
   // END JANNA ---------------------------------------------------------------------
+  // JAX -----------------------------------------------------------------------
+    function JaxQ(){
+      this.lifetime = 30;
+      this.effects = [];
+
+      this.draw = function(){
+        this.effects.push(new RandomCube(20, 50, "white", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "grey", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "red", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "orange", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "yellow", "down", 10, true, 0, Math.random()*320));
+        this.effects.forEach(ele => {
+          ele.draw()
+        });
+        this.lifetime--;
+      }
+    };
+
+    function JaxW(){
+      this.lifetime = 30;
+      this.start = GetTime();
+      this.elapsed = 0;
+
+      this.draw = function(){
+        this.elapsed = GetTime() - this.start;
+        if (this.elapsed % 15 == 0){
+        effects.push(new RippleEffect(160,100, 10, 1500, 30, "red", "out", "stroke", 5))
+        }
+        if(Extendedw_Meter.value == 0){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function JaxE(){
+      this.start = GetTime();
+      this.rotation = 0;
+      this.lifetime = 20;
+      DrawBackground("hsla(0,0%,0%,1)")
+      
+      this.draw = function () {
+        DrawBackground("hsla(0,0%,0%,0.15)")
+        this.elapsed = GetTime()- this.start;
+        ctx.save();
+        ctx.translate(160,100);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = "cyan";
+        ctx.fillRect(0,0,150,20)
+        ctx.fillRect(0,0,-150,20)
+        ctx.restore()
+        this.rotation = this.elapsed/200*Math.PI;
+        if(Extendede_Meter.value == 0){
+          this.lifetime = 0;
+          effects.push(new RippleEffect(160,100, 8, 2000, 20, "orange", "out", "stroke", 3));
+        }
+      }
+    };
+
+    function JaxR(){
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.count = 1;
+      this.lifetime = 20;
+      this.effects = [];
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        if(this.elapsed > 800){
+          this.effects.push(new RandomCube(200, 200, "gold", "left", 10, false, 0, 320))
+          this.start = GetTime();
+          this.count++;
+        }
+        if(this.count == 10){
+          this.lifetime = 0;
+        }
+        this.effects.forEach(ele => {
+          ele.draw();
+        })
+      }
+    };
+  // END JAX ---------------------------------------------------------------
   // JHIN -------------------------------------------------------------
   function JhinQ(){
     this.x = 0;
