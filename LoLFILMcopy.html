@@ -1,12 +1,12 @@
 <head>
-  <title>League of Legends Jordy Copy</title>
+  <title>League of Legends FILM</title>
   <meta description="Metering and ambiance for League of Legends." />
-  <meta publisher="WhirlwindFX" />
+  <meta publisher="SignalRGB" />
   <meta 
   property="character" 
   label="Champions" 
   type="combobox" 
-  values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
+  values="Ahri,Diana,Ezreal,Garen,Janna,Jhin,Leona,Lucian,Lux,Thresh" 
   default="Ahri"
   />
   <meta
@@ -18,82 +18,299 @@
     default="100"
   />
   <meta
-  property="goldLimit"
-  label="Gold Effect Threshold"
-  type="number"
-  min="0"
-  max="10000"
-  default="1000"
-  />
-  <meta
     property="enableHealth"
     label="Health effect"
     type="boolean"
     default="1"
   />
-  <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
+  <meta
+    property="enableGold"
+    label="Gold effect. Accurate to within ~150"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="goldLimit"
+    label="Gold Effect Threshold"
+    type="number"
+    min="0"
+    max="10000"
+    default="1000"
+  />
+  <meta
+    property="enableTower"
+    label="Tower effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableDragon"
+    label="Dragon effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableAllies"
+    label="Ally death effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableLevel"
+    label="Level-up effect"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableUtility"
+    label="Utility skill effects"
+    type="boolean"
+    default="1"
+  />
+  <meta
+    property="enableChampions"
+    label="Champion effects"
+    type="boolean"
+    default="1"
+  />
+  <meta meter="lowHealth" tags="vlc, league" x=".356" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
+    <resolution size="2560x1600" x=".3396" y=".9602" width=".0526"/> 
+    <resolution size="1920x1200" x=".3396" y=".9602" width=".0526"/>
+    <resolution size="1680x1050" x=".3396" y=".9602" width=".0526"/>
+    <resolution size="1440x900" x=".3396" y=".9602" width=".0526"/>
+    <resolution size="1280x800" x=".3396" y=".9602" width=".0526"/>   
   </meta>
-  <meta meter="loadBar" tags="league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
+  <meta meter="loadBar" tags="vlc, league" x=".3953" y=".7389" width=".2115" h="170-200" s="50-100" l="30-100" type="linear">
+    <resolution size="2560x1600" x=".3948" y=".7491" width=".2115"/>
+    <resolution size="1920x1200" x=".3948" y=".7491" width=".2115"/>
+    <resolution size="1680x1050" x=".3948" y=".7491" width=".2115"/>
+    <resolution size="1440x900" x=".3948" y=".7491" width=".2115"/>
+    <resolution size="1280x800" x=".3948" y=".7491" width=".2115"/>  
   </meta>
-  <meta meter="checkLoadBar" tags="league" x=".3953" y=".7389" width=".001" h="170-200" s="50-75" l="30-50" type="linear">
+  <meta meter="checkLoadBar" tags="vlc, league" x=".3953" y=".7389" width=".001" h="170-200" s="70-100" l="30-50" type="linear">
+    <resolution size="2560x1600" x=".3849" y=".738" width=".001"/>  
+    <resolution size="1920x1200" x=".3849" y=".738" width=".001"/>
+    <resolution size="1680x1050" x=".3849" y=".738" width=".001"/>
+    <resolution size="1440x900" x=".3849" y=".738" width=".001"/>
+    <resolution size="1280x800" x=".3849" y=".738" width=".001"/>
   </meta>
-  <meta meter="allyDeath1" tags="league" x=".8695" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
+  <meta meter="allyDeath1" tags="vlc, league" x=".8695" y=".725" width=".01" height = "0.001" h="120-150" s="50-100" l="30-90" type="area">
+    <resolution size="2560x1600" x=".8547" y=".7241" width=".01" height = "0.001"/>  
+    <resolution size="1920x1200" x=".8547" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1680x1050" x=".8547" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1440x900" x=".8547" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1280x800" x=".8547" y=".7241" width=".01" height = "0.001"/>
   </meta>
-  <meta meter="allyDeath2" tags="league" x=".905" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
+  <meta meter="allyDeath2" tags="vlc, league" x=".9026" y=".725" width=".01" height = "0.001" h="120-150" s="50-100" l="30-90" type="area">
+    <resolution size="2560x1600" x=".8917" y=".7241" width=".01" height = "0.001"/>  
+    <resolution size="1920x1200" x=".8917" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1680x1050" x=".8917" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1440x900" x=".8917" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1280x800" x=".8917" y=".7241" width=".01" height = "0.001"/>
   </meta>
-  <meta meter="allyDeath3" tags="league" x=".937" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
+  <meta meter="allyDeath3" tags="vlc, league" x=".937" y=".725" width=".01" height = "0.001" h="120-150" s="50-100" l="30-90" type="area"> 
+    <resolution size="2560x1600" x=".9297" y=".7241" width=".01" height = "0.001"/> 
+    <resolution size="1920x1200" x=".9297" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1680x1050" x=".9297" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1440x900" x=".9297" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1280x800" x=".9297" y=".7241" width=".01" height = "0.001"/> 
   </meta>
-  <meta meter="allyDeath4" tags="league" x=".9705" y=".725" width=".01" height = "0.001" h="120-150" s="70-100" l="50-90" type="area">
+  <meta meter="allyDeath4" tags="vlc, league" x=".9705" y=".725" width=".01" height = "0.001" h="120-150" s="50-100" l="30-90" type="area">
+    <resolution size="2560x1600" x=".9677" y=".7241" width=".01" height = "0.001"/>  
+    <resolution size="1920x1200" x=".9677" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1680x1050" x=".9677" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1440x900" x=".9677" y=".7241" width=".01" height = "0.001"/>
+    <resolution size="1280x800" x=".9677" y=".7241" width=".01" height = "0.001"/>
   </meta>
-  <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height = "0.001"  h="0-360" s="0-100" l="0-30" type="area">
+  <meta meter="itemHover" tags="vlc, league" x=".8505" y=".7657" width=".001" height = "0.001"  h="0-360" s="0-100" l="0-30" type="area">
+    <resolution size="2560x1600" x=".8391" y=".7694" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".8391" y=".7694" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".8391" y=".7694" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".8391" y=".7694" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".8391" y=".7694" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
+  <meta meter="qButton" tags="vlc, league" x=".3807" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="20-100" type="area">
+    <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".3677" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".3677" y=".8796" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
+  <meta meter="wButton" tags="vlc, league" x=".4156" y=".8787" width=".001" height = "0.001"  h="20-170" s="10-100" l="20-100" type="area">
+    <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".4063" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".4063" y=".8796" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height = "0.001" h="20-170" s="30-100" l="20-100" type="area">
+  <meta meter="eButton" tags="vlc, league" x=".45" y=".8787" width=".002" height = "0.001" h="20-170" s="30-100" l="20-100" type="area">
+    <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height = "0.001"/>  
+    <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height = "0.001"/>
+    <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height = "0.001"/>
+    <resolution size="1440x900" x=".4448" y=".8796" width=".002" height = "0.001"/>
+    <resolution size="1280x800" x=".4448" y=".8796" width=".002" height = "0.001"/>
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
+  <meta meter="rButton" tags="vlc, league" x=".4849" y=".8787" width=".001" height = "0.001"  h="20-170" s="30-100" l="20-100" type="area">
+    <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".4833" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".4833" y=".8796" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+  <meta meter="ExtendedqButton" tags="vlc, league" x=".3807" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+    <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".3677" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".3677" y=".8796" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+  <meta meter="ExtendedwButton" tags="vlc, league" x=".4156" y=".8787" width=".031"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+    <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".4063" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".4063" y=".8796" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="95-100" type="area">
+  <meta meter="ExtendedeButton" tags="vlc, league" x=".45" y=".8787" width=".03" height= "0.001" h="20-170" s="0-60" l="95-100" type="area">
+    <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height = "0.001"/>  
+    <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height = "0.001"/>
+    <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height = "0.001"/>
+    <resolution size="1440x900" x=".4448" y=".8796" width=".002" height = "0.001"/>
+    <resolution size="1280x800" x=".4448" y=".8796" width=".002" height = "0.001"/>
   </meta>
-  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+  <meta meter="ExtendedrButton" tags="vlc, league" x=".4849" y=".8787" width=".03"  height= "0.001" h="20-170" s="0-100" l="95-100" type="area">
+    <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height = "0.001"/>  
+    <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1440x900" x=".4833" y=".8796" width=".001" height = "0.001"/>
+    <resolution size="1280x800" x=".4833" y=".8796" width=".001" height = "0.001"/>
   </meta>
-  <meta meter="ManaR" tags="league" x=".4849" y=".88" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
-  <meta meter="ManaQ" tags="league" x=".3807" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
-  <meta meter="ManaW" tags="league" x=".4156" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
-  <meta meter="ManaE" tags="league" x=".45" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"></meta>
-  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
+  <meta meter="ManaR" tags="vlc, league" x=".4849" y=".88" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area">
+    <resolution size="2560x1600" x=".4854" y=".8898" width=".03" height="0.035"/>  
+    <resolution size="1920x1200" x=".4854" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1680x1050" x=".4854" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1440x900" x=".4854" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1280x800" x=".4854" y=".8898" width=".03" height="0.035"/>
+</meta>
+  <meta meter="ManaQ" tags="vlc, league" x=".3807" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area"> 
+    <resolution size="2560x1600" x=".37" y=".8898" width=".03" height="0.035"/>  
+    <resolution size="1920x1200" x=".37" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1680x1050" x=".37" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1440x900" x=".37" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1280x800" x=".37" y=".8898" width=".03" height="0.035"/>
+</meta>
+  <meta meter="ManaW" tags="vlc, league" x=".4156" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area">
+    <resolution size="2560x1600" x=".409" y=".8898" width=".03" height="0.035"/>  
+    <resolution size="1920x1200" x=".409" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1680x1050" x=".409" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1440x900" x=".409" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1280x800" x=".409" y=".8898" width=".03" height="0.035"/>
+</meta>
+  <meta meter="ManaE" tags="vlc, league" x=".45" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100" type="area">
+    <resolution size="2560x1600" x=".446" y=".8898" width=".03" height="0.035"/>  
+    <resolution size="1920x1200" x=".446" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1680x1050" x=".446" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1440x900" x=".446" y=".8898" width=".03" height="0.035"/>
+    <resolution size="1280x800" x=".446" y=".8898" width=".03" height="0.035"/>
+</meta>
+  <meta meter="dButton" tags="vlc, league" x=".524" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
+    <resolution size="2560x1600" x=".526" y=".8796" width=".001"/>  
+    <resolution size="1920x1200" x=".526" y=".8796" width=".001"/>
+    <resolution size="1680x1050" x=".526" y=".8796" width=".001"/>
+    <resolution size="1440x900" x=".526" y=".8796" width=".001"/>
+    <resolution size="1280x800" x=".526" y=".8796" width=".001"/>
   </meta>
-  <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
+  <meta meter="fButton" tags="vlc, league" x=".55" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
+    <resolution size="2560x1600" x=".5557" y=".8796" width=".001"/>  
+    <resolution size="1920x1200" x=".5557" y=".8796" width=".001"/>
+    <resolution size="1680x1050" x=".5557" y=".8796" width=".001"/>
+    <resolution size="1440x900" x=".5557" y=".8796" width=".001"/>
+    <resolution size="1280x800" x=".5557" y=".8796" width=".001"/>
   </meta>
-  <meta meter="greyDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="1-360" s="1-30" l="50-100" type="area">
+  <meta meter="greyDragon" tags="vlc, league" x=".9478" y=".9120" width=".005" height=".02" h="1-360" s="1-30" l="50-100" type="area">
+    <resolution size="2560x1600" x=".943" y=".913" width=".0045" height=".02"/>  
+    <resolution size="1920x1200" x=".943" y=".913" width=".0045" height=".02"/>
+    <resolution size="1680x1050" x=".943" y=".913" width=".0045" height=".02"/>
+    <resolution size="1440x900" x=".943" y=".913" width=".0045" height=".02"/>
+    <resolution size="1280x800" x=".943" y=".913" width=".0045" height=".02"/>
   </meta>
-  <meta meter="yellowDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="40-70" s="50-100" l="50-100" type="area">
+  <meta meter="yellowDragon" tags="vlc, league" x=".9478" y=".9120" width=".005" height=".02" h="40-70" s="50-100" l="50-100" type="area">
+    <resolution size="2560x1600" x=".943" y=".913" width=".0045" height=".02"/>  
+    <resolution size="1920x1200" x=".943" y=".913" width=".0045" height=".02"/>
+    <resolution size="1680x1050" x=".943" y=".913" width=".0045" height=".02"/>
+    <resolution size="1440x900" x=".943" y=".913" width=".0045" height=".02"/>
+    <resolution size="1280x800" x=".943" y=".913" width=".0045" height=".02"/>
   </meta>
-  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="100">
+  <meta meter="gold" tags="vlc, league" x=".6286" y=".9676" width=".0339" height=".0194" h="0-10" s="50-100" l="50-100" type="ocr_numeric" confidence="100"> 
+    <resolution size="2560x1600" x=".6432" y=".9685" width=".0339" height=".0194"/>  
+    <resolution size="1920x1200" x=".6432" y=".9685" width=".0339" height=".0194"/>
+    <resolution size="1680x1050" x=".6432" y=".9685" width=".0339" height=".0194"/>
+    <resolution size="1440x900" x=".6432" y=".9685" width=".0339" height=".0194"/>
+    <resolution size="1280x800" x=".6432" y=".9685" width=".0339" height=".0194"/>
   </meta>
-  <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75" type="area">
+  <meta meter="levelUp" tags="vlc, league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75" type="area">
+    <resolution size="2560x1600" x=".3234" y=".9435" width=".001" height=".001"/>  
+    <resolution size="1920x1200" x=".3234" y=".9435" width=".001" height=".001"/>
+    <resolution size="1680x1050" x=".3234" y=".9435" width=".001" height=".001"/>
+    <resolution size="1440x900" x=".3234" y=".9435" width=".001" height=".001"/>
+    <resolution size="1280x800" x=".3234" y=".9435" width=".001" height=".001"/>
   </meta>
-  <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" height=".0001" h="0-25" s="50-100" l="50-100" type="area">
+  <meta meter="tookDamage" tags="vlc, league" x=".3557" y=".9593" width=".2125" height=".0001" h="0-25" s="50-100" l="50-100" type="area">
+    <resolution size="2560x1600" x=".3557" y=".9611" width=".2125" height=".0001"/>  
+    <resolution size="1920x1200" x=".3557" y=".9611" width=".2125" height=".0001"/>
+    <resolution size="1680x1050" x=".3557" y=".9611" width=".2125" height=".0001"/>
+    <resolution size="1440x900" x=".3557" y=".9611" width=".2125" height=".0001"/>
+    <resolution size="1280x800" x=".3557" y=".9611" width=".2125" height=".0001"/>
   </meta>
-  <meta meter="firstAlliedTurret" tags="league" x=".6575" y=".1324" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+  <meta meter="firstAlliedTurret" tags="vlc, league" x=".6575" y=".1324" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+    <resolution size="2560x1600" x=".67" y=".1333" width=".0093" height=".0213"/>  
+    <resolution size="1920x1200" x=".67" y=".1333" width=".0093" height=".0213"/>
+    <resolution size="1680x1050" x=".67" y=".1333" width=".0093" height=".0213"/>
+    <resolution size="1440x900" x=".67" y=".1333" width=".0093" height=".0213"/>
+    <resolution size="1280x800" x=".67" y=".1333" width=".0093" height=".0213"/>
   </meta>
-  <meta meter="alliedTurret" tags="league" x=".598" y=".135" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+  <meta meter="alliedTurret" tags="vlc, league" x=".598" y=".135" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+    <resolution size="2560x1600" x=".6055" y=".1343" width=".0093" height=".0213"/>  
+    <resolution size="1920x1200" x=".6055" y=".1343" width=".0093" height=".0213"/>
+    <resolution size="1680x1050" x=".6055" y=".1343" width=".0093" height=".0213"/>
+    <resolution size="1440x900" x=".6055" y=".1343" width=".0093" height=".0213"/>
+    <resolution size="1280x800" x=".6055" y=".1343" width=".0093" height=".0213"/>
   </meta>
-  <meta meter="enemyTurret" tags="league" x=".6063" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
+  <meta meter="enemyTurret" tags="vlc, league" x=".6063" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area"> 
+    <resolution size="2560x1600" x=".6151" y=".1333" width=".0093" height=".0213"/>  
+    <resolution size="1920x1200" x=".6151" y=".1333" width=".0093" height=".0213"/>
+    <resolution size="1680x1050" x=".6151" y=".1333" width=".0093" height=".0213"/>
+    <resolution size="1440x900" x=".6151" y=".1333" width=".0093" height=".0213"/>
+    <resolution size="1280x800" x=".6151" y=".1333" width=".0093" height=".0213"/>
   </meta>
-  <meta meter="firstEnemyTurret" tags="league" x=".6516" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
+  <meta meter="firstEnemyTurret" tags="vlc, league" x=".6516" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100" type="area">
+    <resolution size="2560x1600" x=".6615" y=".1343" width=".0093" height=".0213"/>  
+    <resolution size="1920x1200" x=".6615" y=".1343" width=".0093" height=".0213"/>
+    <resolution size="1680x1050" x=".6615" y=".1343" width=".0093" height=".0213"/>
+    <resolution size="1440x900" x=".6615" y=".1343" width=".0093" height=".0213"/>
+    <resolution size="1280x800" x=".6615" y=".1343" width=".0093" height=".0213"/>
   </meta>
-  <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area">
+  <meta meter="inGame1" tags="vlc, league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70" type="area"> 
+    <resolution size="2560x1600" x=".2865" y=".8713" width=".001" height=".002"/>  
+    <resolution size="1920x1200" x=".2865" y=".8713" width=".001" height=".002"/>
+    <resolution size="1680x1050" x=".2865" y=".8713" width=".001" height=".002"/>
+    <resolution size="1440x900" x=".2865" y=".8713" width=".001" height=".002"/>
+    <resolution size="1280x800" x=".2865" y=".8713" width=".001" height=".002"/>
   </meta>
-  <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="30-100" l="0-25" type="area">
+  <meta meter="inGame2" tags="vlc, league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="30-100" l="0-25" type="area"> 
+    <resolution size="2560x1600" x=".523" y=".9296" width=".0542" height=".0056"/>  
+    <resolution size="1920x1200" x=".523" y=".9296" width=".0542" height=".0056"/>
+    <resolution size="1680x1050" x=".523" y=".9296" width=".0542" height=".0056"/>
+    <resolution size="1440x900" x=".523" y=".9296" width=".0542" height=".0056"/>
+    <resolution size="1280x800" x=".523" y=".9296" width=".0542" height=".0056"/>
   </meta>
-  <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="40-100" type="linear">
+  <meta meter="ShopMenu" tags="vlc, league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="20-100" type="linear">
+    <resolution size="3440x1440" x="0.1439" y=".1882" width=".5335"/> 
+    <resolution size="2560x1600" x="0.1599" y=".1880" width=".5335"/>  
+    <resolution size="1920x1200" x="0.1599" y=".1880" width=".5335"/>
+    <resolution size="1680x1050" x="0.1599" y=".1880" width=".5335"/>
+    <resolution size="1440x900" x="0.1599" y=".1880" width=".5335"/>
+    <resolution size="1280x800" x="0.1599" y=".1880" width=".5335"/>
   </meta>
 </head>
 
@@ -122,7 +339,6 @@
   var noQ = false;
   var play1 = false;
   var play2 = false;
-  var ActiveExtendedE = false;
   var goldAnimPushed = false;
   var utilityPlayed = false;
   var deadAllies = 0;
@@ -131,10 +347,10 @@
 
   // All meter definitions
   var checkLoadMeter = new Meter(5, loadGoing);
-  var allyMeter1 = new Meter(10, allyEffects);
-  var allyMeter2 = new Meter(10, allyEffects);
-  var allyMeter3 = new Meter(10, allyEffects);
-  var allyMeter4 = new Meter(10, allyEffects);
+  var allyMeter1 = new Meter(20, allyEffects);
+  var allyMeter2 = new Meter(15, allyEffects);
+  var allyMeter3 = new Meter(15, allyEffects);
+  var allyMeter4 = new Meter(15, allyEffects);
   var q_Meter = new Meter(10, Q_Effects);
   var w_Meter = new Meter(10, W_Effects);
   var e_Meter = new Meter(10, E_Effects);
@@ -155,10 +371,10 @@
   var manaQMeter = new Meter(3, manaQ);
   var manaEMeter = new Meter(3, manaE);
   var manaWMeter = new Meter(3, manaW);
-  var playingMeter1 = new Meter(5, playingGame1);
-  var playingMeter2 = new Meter(5, playingGame2);
+  var playingMeter1 = new Meter(15, playingGame1);
+  var playingMeter2 = new Meter(15, playingGame2);
   var damageMeter = new Meter(1, damageEffects);
-  var lowHealthMeter = new Meter(2, damageEffects);
+  var lowHealthMeter = new Meter(1, damageEffects);
   var greyDragonMeter = new Meter(25, dragonEffects);
   var yellowDragonMeter = new Meter(25, dragonEffects);
 
@@ -168,7 +384,7 @@
     //Set all meter values each update
     checkLoadMeter.setValue(engine.vision.checkLoadBar);
     if(play1 && play2){
-       damageMeter.setValue(engine.vision.tookDamage);
+      damageMeter.setValue(engine.vision.tookDamage);
       lowHealthMeter.setValue(engine.vision.lowHealth);
       levelUpMeter.setValue(engine.vision.levelUp);
       manaWMeter.setValue(engine.vision.ManaW);
@@ -178,16 +394,16 @@
       shopMenuMeter.setValue(engine.vision.ShopMenu)
       
       if (!StopEffects) {
-        if (!noQ) {
+        if (!noQ && enableChampions) {
           q_Meter.setValue(engine.vision.qButton);
         }
-        if (!noW) {
+        if (!noW && enableChampions) {
           w_Meter.setValue(engine.vision.wButton);
         }
-        if (!noE) {
+        if (!noE && enableChampions) {
           e_Meter.setValue(engine.vision.eButton);
         }
-        if (!noR) {
+        if (!noR && enableChampions) {
           r_Meter.setValue(engine.vision.rButton);
         }
         d_Meter.setValue(engine.vision.dButton);
@@ -204,29 +420,29 @@
         greyDragonMeter.setValue(engine.vision.greyDragon);
         yellowDragonMeter.setValue(engine.vision.yellowDragon);
 
-         if (!ActiveExtendedE) {
-          Extendede_Meter.setValue(engine.vision.ExtendedeButton);
-        }
-        Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
-        if (!ActiveExtendedW) {
-          Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
-        }
-        Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
-      } 
+        if (enableChampions){
+          if (!ActiveExtendedE) {
+            Extendede_Meter.setValue(engine.vision.ExtendedeButton);
+          }
+          Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
+          if (!ActiveExtendedW) {
+            Extendedw_Meter.setValue(engine.vision.ExtendedwButton);
+          }
+          Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
+        } 
       }
+    }
       if(clearEffects == true){
         effects.length = 0;
       }
-
-
-     
+      console.log(yellowDragonMeter.value)
       playingMeter1.setValue(engine.vision.inGame1);
       playingMeter2.setValue(engine.vision.inGame2);
 
     champion = character;
 
     //Screen ambience play
-    if(!freezeBackground){
+    if(!freezeBackground && keyScreenBrightness > 1){
       copyScreen(1);
     }
     
@@ -241,18 +457,18 @@
     }
 
     //Gold effect
-    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2){
+    if(engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2 && enableGold){
       goldAnimPushed = true;
       effects.push(new goldEffect());
     }
 
     //Low Health Effect
-    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2){
+    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .01 && play1 && play2 && enableHealth){
       for(let i = 0; i < 3; i++){
         effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"))
       }
     }
-    
+
     //State Manager animation play
     stateMgr.Process();
     window.requestAnimationFrame(update);
@@ -281,6 +497,7 @@
           effects.push(new DianaQ())
           break;
         case "Ezreal":
+          effects.push(new EzrealQ())
           break;
         case "Garen":
           break;
@@ -289,9 +506,10 @@
         case "Janna":
           break;
         case "Jax":
+          effects.push(new JaxQ());
           break;
         case "Jhin":
-          effects.push(new JhinQ())
+          effects.push(new JhinQ());
           break;
         case "Jinx":
           break;
@@ -300,14 +518,15 @@
         case "Lee Sin":
           break;
         case "Leona":
-        effects.push(new LeonaQ())
+          effects.push(new LeonaQ());
           break;
         case "Lucian":
-          effects.push(new LucianQ())
+          effects.push(new LucianQ());
           break;
         case "Lulu":
           break;
         case "Lux":
+          effects.push(new LuxQ());
           break;
         case "Miss Fortune":
           effects.push(new FortuneQ());
@@ -317,10 +536,7 @@
         case "Ryze":
           break;
         case "Sona":
-          if(!sonaCalled){
-            allSona();
-            sonaCalled = true;
-          }
+          SonaEffect();
           break;
         case "Soraka":
           effects.push(new SorakaQ())
@@ -331,6 +547,7 @@
           stateMgr.Push(new TeemoQ())
           break;
         case "Thresh":
+          effects.push(new ThreshQ());
           break;
         case "Vayne":
           break;
@@ -351,6 +568,10 @@
     if(!ActiveExtendedQ){
       if (Extendedq_Meter.value > 0) {
         switch (champion) {
+          case "Aurelion Sol":
+            effects.push(new AurelionQ())
+            ActiveExtendedQ = true;
+            break;
           case "Garen":
             effects.push(new GarenQ())
             ActiveExtendedQ = true;
@@ -358,8 +579,6 @@
           case "Janna":
             effects.push(new jannaQ());
             ActiveExtendedQ = true;
-            break;
-          case "Lux":
             break;
           case "Yone":
             effects.push(new ExtendedQYoneEffect());
@@ -394,6 +613,7 @@
           effects.push(new DianaW())
           break;
         case "Ezreal":
+          effects.push(new EzrealW())
           break;
         case "Garen":
           effects.push(new GarenW())
@@ -415,14 +635,15 @@
         case "Lee Sin":
           break;
         case "Leona":
-        effects.push(new LeonaW())
+          effects.push(new LeonaW());
           break;
         case "Lucian":
-        effects.push(new LucianW())
+          effects.push(new LucianW());
           break;
         case "Lulu":
           break;
         case "Lux":
+          effects.push(new LuxW());
           break;
         case "Miss Fortune":
           effects.push(new FortuneW());
@@ -432,10 +653,7 @@
         case "Ryze":
           break;
         case "Sona":
-          if(!sonaCalled){
-            allSona();
-            sonaCalled = true;
-          }
+          SonaEffect();
           break;
         case "Soraka":
           effects.push(new SorakaW())
@@ -443,6 +661,7 @@
         case "Senna":
           break;
         case "Thresh":
+          effects.push(new ThreshW());
           break;
         case "Vayne":
           break;
@@ -467,6 +686,13 @@
         case "Ahri":
           effects.push(new ahriW())
           break;
+        case "Aurelion Sol":
+          effects.push(new AurelionW());
+          break;
+        case "Jax":
+          effects.push(new JaxW());
+          ActiveExtendedW = false;
+          break;
         case "Teemo":
           effects.push(new ArrowEffect("up", "blue", 2 , 7,1000));
           ActiveExtendedW = false;
@@ -485,6 +711,7 @@
           effects.push(new ArrowEffect("up", "hsl(184, 100%, 50%)",1, 7, 1000))
           break;
         case "Aurelion Sol":
+          ActiveExtendedE = false;
           break;
         case "Caitlyn":
           effects.push(new CaitlynE());
@@ -496,6 +723,7 @@
           effects.push(new RandomCube(80,80, "hsla(193, 100%, 56%, 1)", "right", 20, false, 60 ))
           break;
         case "Ezreal":
+          effects.push(new EzrealE())
           break;
         case "Garen":
           ActiveExtendedE = false;
@@ -506,9 +734,10 @@
           effects.push(new jannaE());
           break;
         case "Jax":
+          ActiveExtendedE = false;
           break;
         case "Jhin":
-          effects.push(new RippleEffect(160.,100, 8, 1500, 30, "purple", "out", "stroke", 5))
+          effects.push(new RippleEffect(160,100, 8, 1500, 30, "purple", "out", "stroke", 5))
           break;
         case "Jinx":
           break;
@@ -517,29 +746,27 @@
         case "Lee Sin":
           break;
         case "Leona":
-        effects.push(new LeonaE())
+          effects.push(new LeonaE());
           break;
         case "Lucian":
-        if(q_Meter.value !=0){
-          effects.push(new LucianE())
-        }
+          if(q_Meter.value !=0){
+            effects.push(new LucianE());
+          };
           break;
         case "Lulu":
           break;
         case "Lux":
+          ActiveExtendedE = false;
           break;
         case "Miss Fortune":
-          effects.push(new FortuneE())
+          effects.push(new FortuneE());
           break;
         case "Rek'sai":
           break;
         case "Ryze":
           break;
         case "Sona":
-          if(!sonaCalled){
-            allSona();
-            sonaCalled = true;
-          }
+          SonaEffect();
           break;
         case "Soraka":
           effects.push(new SorakaE())
@@ -549,6 +776,7 @@
         case "Teemo":
           break;
         case "Thresh":
+          effects.push(new ThreshE());
           break;
         case "Vayne":
           break;
@@ -569,10 +797,22 @@
     if(Extendede_Meter.value > 0){
       ActiveExtendedE = true;
       switch (champion) {
+        case "Aurelion Sol":
+          if (!auEPushed){
+            effects.push(new AurelionE());
+            auEPushed = true;
+          };
+          break;
         case "Garen":
           effects.push(new GarenE());
           break;
+        case "Jax":
+          effects.push(new JaxE());
+          ActiveExtendedE = false;
+          break;
         case "Lux":
+          effects.push(new LuxE());
+          ActiveExtendedE = false;
           break;
         case "Yone":
           effects.push(new ExtendedEYoneEffect("grey"));
@@ -587,9 +827,14 @@
         case "Ahri":
           break;
         case "Ashe":
-          stateMgr.Push(new asheR())
+          stateMgr.Push(new asheR());
           break;
         case "Aurelion Sol":
+          setTimeout(()=>{
+            if(!auEPushed){
+              effects.push(new AurelionR())
+            }
+          }, 500)
           break;
         case "Caitlyn":
           effects.push(new CaitlynR());
@@ -598,9 +843,10 @@
           effects.push(new CassR());
           break;
         case "Diana":
-          stateMgr.Push(new DianaR())
+          stateMgr.Push(new DianaR());
           break;
         case "Ezreal":
+          effects.push(new EzrealR())
           break;
         case "Garen":
           stateMgr.Push(new GarenR())
@@ -611,6 +857,7 @@
           effects.push(new jannaR());
           break;
         case "Jax":
+          effects.push(new JaxR());
           break;
         case "Jhin":
           stateMgr.Push(new JhinR());
@@ -622,14 +869,15 @@
         case "Lee Sin":
           break;
         case "Leona":
-        stateMgr.Push(new LeonaR());
+          stateMgr.Push(new LeonaR());
           break;
         case "Lucian":
-        stateMgr.Push(new LucianR());
+          stateMgr.Push(new LucianR());
           break;
         case "Lulu":
           break;
         case "Lux":
+          effects.push(new LuxR());
           break;
         case "Miss Fortune":
           stateMgr.Push(new FortuneR())
@@ -639,7 +887,7 @@
         case "Ryze":
           break;
         case "Sona":
-          effects.push(new SonaR())
+          effects.push(new SonaR());
           break;
         case "Soraka":
           effects.push(new SorakaR())
@@ -650,6 +898,7 @@
           stateMgr.Push(new TeemoR);
           break;
         case "Thresh":
+          effects.push(new ThreshR());
           break;
         case "Vayne":
           break;
@@ -672,9 +921,8 @@
         ActiveExtendedR = true;
         switch (champion) {
           case "Ahri":
-            effects.push(new ahriR())
+            effects.push(new ahriR());
             break;
-            
         }
       }
     } else if(Extendedr_Meter.value == 0) {
@@ -683,13 +931,15 @@
   };
 
   function Utility_Effects(){
-    if (d_Meter.decreased && d_Meter.value == 0 && checkAll() && !utilityPlayed){
-      utilityPlayed = true;
-      effects.push(new RippleEffect(160, 200, 10, 2000, 10, "yellow", "in", "stroke", 5, false))
-    }
-    if (f_Meter.decreased && f_Meter.value == 0 && checkAll() && !utilityPlayed){
-      utilityPlayed = true;
-      effects.push(new RippleEffect(160, 200, 10, 2000, 10, "yellow", "in", "stroke", 5, false))
+    if (enableUtility){
+      if (d_Meter.decreased && d_Meter.value == 0 && checkAll() && !utilityPlayed){
+        utilityPlayed = true;
+        effects.push(new RippleEffect(160, 200, 10, 2000, 10, "yellow", "in", "stroke", 5, false))
+      }
+      if (f_Meter.decreased && f_Meter.value == 0 && checkAll() && !utilityPlayed){
+        utilityPlayed = true;
+        effects.push(new RippleEffect(160, 200, 10, 2000, 10, "yellow", "in", "stroke", 5, false))
+      }
     }
   };
 
@@ -701,7 +951,7 @@
     allyMeter3.value == 0 ? count++ : null;
     allyMeter4.value == 0 ? count++ : null;
  
-    if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1){
+    if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1 && enableAllies){
       deathAnim = true;
       effects.push(new deathEffect());
     };
@@ -739,34 +989,53 @@
         }
 
   function damageEffects(){
-    if (damageMeter.value > .01){
+    if (damageMeter.value > .01 && enableHealth){
       for(let i = 0; i < 10; i++){
         setTimeout(()=>{effects.push(new ballPhysics(160, 200, Math.random()* 10 + 15, "red"));}, 20);
       }
     }
   }
 
-  var greyPlayed = false;
-  var yellowPlayed = false;
+  var greyDPlayed = false;
+  var yellowDPlayed = false;
   function dragonEffects(){
-    if (greyDragonMeter.value > .1 && !greyPlayed){
-      greyPlayed = true;
-      yellowplayed = false;
+    if (greyDragonMeter.value > .1 && greyDragonMeter.value < .4 && !greyDPlayed && enableDragon){
+      greyDPlayed = true;
+      yellowDPlayed = false;
       effects.push(new dragonEffect("grey", "blue"));
     }
-    if (yellowDragonMeter.value > .1 && !yellowPlayed){
-      greyPlayed = false;
-      yellowplayed = true;
+    if (yellowDragonMeter.value > .05 && yellowDragonMeter.value < .4 && !yellowDPlayed && enableDragon){
+      greyDPlayed = false;
+      yellowDPlayed = true;
       effects.push(new dragonEffect("yellow", "red"))
     }
-    if (yellowDragonMeter.value == 0 && greyDragonMeter.value == 0){
-      greyPlayed = false;
-      yellowPlayed = false;
+    if (yellowDragonMeter.value == 0 && greyDragonMeter.value == 0 && enableDragon){
+      greyDPlayed = false;
+      yellowDPlayed = false;
     }
-  }
+  };
+
+  // var greyBPlayed = false;
+  // var yellowBPlayed = false;
+  // function dragonEffects(){
+  //   if (greyBaronMeter.value > .1 && greyBaronMeter.value < .4 && !greyBPlayed){
+  //     greyBPlayed = true;
+  //     yellowBPlayed = false;
+  //     effects.push(new dragonEffect("grey", "blue"));
+  //   }
+  //   if (yellowBaronPlayed.value > .1 && yellowBaronPlayed.value < .4 && !yellowBPlayed && greyBPlayed){
+  //     greyBPlayed = false;
+  //     yellowBPlayed = true;
+  //     effects.push(new dragonEffect("yellow", "red"))
+  //   }
+  //   if (yellowBaronPlayed.value == 0 && greyBaronMeter.value == 0){
+  //     greyBPlayed = false;
+  //     yellowBPlayed = false;
+  //   }
+  // };
 
   function levelUpEffect(){
-    if(levelUpMeter.decreased && !levelUpAnim && play1 && play2){
+    if(levelUpMeter.decreased && !levelUpAnim && play1 && play2 && enableLevel){
       levelUpAnim = true;
       StopEffects = true;
       effects.push(new BarEffect("up", "yellow", 10, 1000, 320, 3, true));
@@ -799,8 +1068,8 @@
       play1 = false;
     }
   };
-  
-  function playingGame2() {
+
+  function playingGame2(){
     if (playingMeter2.value > 0.8) {
       play2 = true
     } else {
@@ -814,21 +1083,22 @@
   };
 
   function turretEffects(){
-    if(alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65){
+    if((alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65) && enableTower){
       effects.push(new fallingTurret("blue"));
     } 
-    if(enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65){
+    if((enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65) && enableTower){
       effects.push(new fallingTurret("red"));
     }
   };
 
   function loadGoing(){
-    if(checkLoadMeter.value> 0.6){
-      q_Meter.setValue(0);
-       w_Meter.setValue(0);
-        e_Meter.setValue(0);
-         r_Meter.setValue(0);
-    }
+    // if(checkLoadMeter.value> 0.6){
+    //   q_Meter.setValue(0);
+    //    w_Meter.setValue(0);
+    //     e_Meter.setValue(0);
+    //      r_Meter.setValue(0);
+    // }
+    return 1;
   };
 
   // END CALLBACKS -----------------------------------------------------------------------------------
@@ -992,6 +1262,106 @@
       }
     };
   // END ASHE ------------------------------------------------------------------------
+  // AURELION SOL -----------------------------------------------------------------
+    var auEPushed = false;
+
+    function AurelionQ(){
+      this.lifetime = 20;
+      this.rotation = 0;
+      this.x = -50;
+      this.start = GetTime();
+      this.elapsed = 0;
+
+      this.draw = function(){
+        this.elapsed = GetTime() - this.start;
+          ctx.save();
+          ctx.translate(this.x, 100);
+          ctx.rotate(this.rotation);
+          DrawSun(0, 0, 60, "purple");
+          DrawSun(0, 0, 40, "yellow");
+          ctx.restore()
+          this.rotation = this.elapsed / 1000 * Math.PI;
+          this.x += 10;
+
+          if (this.x > 370){
+            this.lifetime = 0;
+          }
+        }
+      };
+
+      function AurelionW(){
+        this.lifetime = 20;
+        this.start = GetTime();
+        this.elapsed = 0;
+        this.switch = "yellow";
+
+        this.draw = function(){
+          this.elapsed = GetTime() - this.start;
+          if(this.elapsed < 1000 && this.elapsed % 4 == 0){
+            this.switch == "yellow" ? this.switch = "purple" : this.switch = "yellow";
+            effects.push(new RippleEffect(160, 100, 10, 1000, 30, this.switch, "out", "stroke", 1, false));
+          } else if (this.elapsed > 2000 && this.elapsed % 4 == 0){
+            this.switch == "yellow" ? this.switch = "purple" : this.switch = "yellow";
+            effects.push(new RippleEffect(160, 100, 10, 1000, 30, this.switch, "in", "stroke", 1, false));
+          }
+          if (this.elapsed > 2500){
+            this.lifetime = 0;
+          }
+        }
+      };
+
+      function AurelionE(){
+        this.lifetime = 20;
+        this.x = 160;
+        this.y = 100;
+        this.now = GetTime();
+
+        this.draw = function(){
+          this.now = GetTime();
+          var headY = Math.sin(this.now / 100) * 20 + this.y;
+
+          ctx.fillStyle = "black";
+          ctx.fillRect(0, 0, 320, 200);
+
+          effects.push(new ParticleExplosion(320, 100, "blue", 20, 3000, 1, 10, 5, false));
+
+          DrawCircle(this.x + 10, headY - 10, 35, "yellow");
+          for (let i = 1; i <= 6; i++){
+            var indexY = Math.sin((this.now - (i * 100)) / 100) * 20 + this.y;
+            DrawCircle(this.x - (i * 25), indexY, 20, `rgb(${255 - (i * 40)}, 0, 255)`);
+          }
+          DrawCircle(this.x, headY, 35, "rgb(255, 0, 255)");
+          if (e_Meter.value == 0){
+            this.lifetime = 0;
+            auEPushed = false;
+          }
+        }
+      };
+
+      function AurelionR(){
+        this.lifetime = 20;
+        this.x = 0;
+        this.y = 100;
+        this.start = GetTime();
+        this.elapsed = 0;
+
+        this.draw = function(){
+          this.elapsed = GetTime() - this.start;
+
+          if (this.elapsed > 200){
+            effects.push(new ParticleExplosion(this.x, this.y, "rgb(255, 25, 255)", 15, 1000, 50, 10, 1, false));
+            this.start = GetTime();
+          }
+
+          DrawTriangle(this.x, this.y, this.x - 80, this.y + 60, this.x - 80, this.y - 60, "blue");
+          DrawTriangle(this.x, this.y, this.x - 50, this.y + 30, this.x - 50, this.y - 30, "white");
+          this.x+=15;
+          if (this.x > 650){
+            this.lifetime = 0;
+          }
+        }
+      };
+  // END AURELION SOL ------------------------------------------------------------
   // CAITYLN --------------------------------------------------------------------
   function CaitlynQ(){
       this.lifetime = 10;
@@ -1257,28 +1627,129 @@
       this.draw()
     }
     this.draw = function() {
-      if(this.elapsed % 5 == 0){
-        DrawCircle(Math.random() * 320, Math.random() * 200, 5, "yellow")
-      }
-      DrawBackground("hsla(0,0%,0%, 0.01)")
       if(this.elapsed < 1500) {
         ctx.beginPath();
-        ctx.fillStyle = "hsl(0,0%,100%,0.05)"
+        ctx.fillStyle = "hsl(0,0%,100%,0.04)"
         ctx.moveTo(160,20);
         ctx.bezierCurveTo(160,20,-30,100,160,180)
         ctx.bezierCurveTo(160, 180, 60, 100, 160, 20)
         ctx.fill();
       } else if(this.elapsed < 2500){
-        DrawCircle(160,100, 80, "hsl(0,0%,100%,0.05)")
+        DrawCircle(160,100, 80, "hsl(0,0%,100%,0.04)")
       } else if( this.elapsed < 4000){
         DrawBackground("hsla(0,0%,0%, 0.2)")
         this.ripple.draw();
       }
     }
-  }
+  };
 
   
   // END DIANA -------------------------------------------------------------
+  // EZREAL -------------------------------------------------------------
+    function EzrealQ(){
+      this.lifetime = 20;
+      this.x = -30;
+  
+      this.draw = function(){
+      
+        ctx.beginPath();
+        ctx.fillStyle = "cyan";
+        ctx.ellipse(this.x - 30, 100, 75, 35, 0, 0, 2 * Math.PI);
+        ctx.fill();
+      
+        DrawCircle(this.x, 100, 25, "white");
+      
+        this.x += 25;
+        if (this.x > 450){
+          effects.push(new RippleEffect(320, 100, 20, 1000, 40, "blue", "out", "stroke", 5))
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function EzrealW(){
+      this.lifetime = 20;
+      this.y = 300;
+      this.count = 0;
+
+      this.draw = function(){
+
+        if (this.y > 100){
+          this.y -= 10;
+        } else {
+          effects.push(new RippleEffect(160, 100, 20, 1000, 10, "white", "out", "stroke", 1));
+          this.count++;
+        }
+        ctx.beginPath();
+        ctx.lineWidth = 30;
+        ctx.strokeStyle = "gold";
+        ctx.arc(160, this.y, 35, 0, 2* Math.PI)
+        ctx.stroke();
+
+        if (this.count > 30){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function EzrealE(){
+      this.lifetime = 20;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.target = 300;
+
+      this.draw = function(){
+
+        if (this.elapsed > 340){
+          this.index = Math.floor(this.target/70);
+          for (let i = 0; i < this.index; i++){
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(300 - (i * 70), 0, 30, 200);
+          }
+          this.target-=15;
+        } else {
+          this.elapsed = Date.now() - this.start;
+          this.index = Math.floor(this.elapsed/70);
+
+          for (let i = 0; i < this.index; i++){
+            ctx.fillStyle = "white";
+            ctx.fillRect(i * 70 + 20, 0, 30, 200);
+          }
+        }
+        if (this.target <= 0){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function EzrealR(){
+      this.lifetime = 20;
+      this.radius = 0;
+      this.effects = [];
+
+      this.draw = function(){
+        var jitter = Math.sin(GetTime()/40) * 3;
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+
+        this.effects.push(new RandomCube(10, 50, "white", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(10, 50, "grey", "down", 10, true, 0, Math.random()*320));
+        this.effects.forEach(ele => {
+          ele.draw()
+        });
+
+        DrawCircle(160, 200 + jitter, 6 * this.radius + 1, "yellow");
+        DrawCircle(160, 300 + jitter, 7 * this.radius + 1, "black");
+        this.radius+=.3;
+
+        if (this.radius >= 60){
+          this.lifetime = 0;
+        }
+      }
+  };
+  // END EZREAL ---------------------------------------------------------
   // GAREN -------------------------------------------------------------
   function GarenQ() {
         this.start = GetTime();
@@ -1427,6 +1898,87 @@
       }
     };
   // END JANNA ---------------------------------------------------------------------
+  // JAX -----------------------------------------------------------------------
+    function JaxQ(){
+      this.lifetime = 30;
+      this.effects = [];
+
+      this.draw = function(){
+        this.effects.push(new RandomCube(20, 50, "white", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "grey", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "red", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "orange", "down", 10, true, 0, Math.random()*320));
+        this.effects.push(new RandomCube(20, 50, "yellow", "down", 10, true, 0, Math.random()*320));
+        this.effects.forEach(ele => {
+          ele.draw()
+        });
+        this.lifetime--;
+      }
+    };
+
+    function JaxW(){
+      this.lifetime = 30;
+      this.start = GetTime();
+      this.elapsed = 0;
+
+      this.draw = function(){
+        this.elapsed = GetTime() - this.start;
+        if (this.elapsed % 15 == 0){
+        effects.push(new RippleEffect(160,100, 10, 1500, 30, "red", "out", "stroke", 5))
+        }
+        if(Extendedw_Meter.value == 0){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function JaxE(){
+      this.start = GetTime();
+      this.rotation = 0;
+      this.lifetime = 20;
+      DrawBackground("hsla(0,0%,0%,1)")
+      
+      this.draw = function () {
+        DrawBackground("hsla(0,0%,0%,0.15)")
+        this.elapsed = GetTime()- this.start;
+        ctx.save();
+        ctx.translate(160,100);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = "cyan";
+        ctx.fillRect(0,0,150,20)
+        ctx.fillRect(0,0,-150,20)
+        ctx.restore()
+        this.rotation = this.elapsed/200*Math.PI;
+        if(Extendede_Meter.value == 0){
+          this.lifetime = 0;
+          effects.push(new RippleEffect(160,100, 8, 2000, 20, "orange", "out", "stroke", 3));
+        }
+      }
+    };
+
+    function JaxR(){
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.count = 1;
+      this.lifetime = 20;
+      this.effects = [];
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        if(this.elapsed > 800){
+          this.effects.push(new RandomCube(200, 200, "gold", "left", 10, false, 0, 320))
+          this.start = GetTime();
+          this.count++;
+        }
+        if(this.count == 10){
+          this.lifetime = 0;
+        }
+        this.effects.forEach(ele => {
+          ele.draw();
+        })
+      }
+    };
+  // END JAX ---------------------------------------------------------------
   // JHIN -------------------------------------------------------------
   function JhinQ(){
     this.x = 0;
@@ -1541,8 +2093,8 @@
 }
 
   // END JHIN -------------------------------------------------------------
-     // LEONA ------------------------------------------------------------- 
-      function LeonaQ() 
+  // LEONA ------------------------------------------------------------- 
+  function LeonaQ() 
       { 
         StopEffects = true;
         this.start = GetTime();
@@ -1581,11 +2133,9 @@
               freezeBackground = false;
             }
           }
-        }
+        };
 
         function LeonaW(){
-         
-
           this.start = GetTime();
           this.cube = new RandomCube(60, 30, "orange", "right", 10, false, 85, 0)
           this.draw = function () {
@@ -1601,7 +2151,7 @@
               effects.push(new RippleEffect(160,100,6,1000,30,"orange","out","fill", 1))
             }
           }
-        }
+        };
       
 
       function LeonaR(){
@@ -1625,10 +2175,8 @@
           DrawCircle(160,160 - this.elapsed/40,40, "yellow")
           ctx.fillStyle = `hsl(125,100%,${this.elapsed / 100}%)`
           ctx.fillRect(0,120,320,100)
-        }
-
-        
-      }
+        } 
+      };
    // END LEONA -------------------------------------------------------------
   // LUCIAN -------------------------------------------------------------
   function LucianQ () {
@@ -1652,7 +2200,7 @@
         freezeBackground = false;
       }
     }
-  }
+  };
 
   function LucianW(){
     this.start = GetTime()
@@ -1671,7 +2219,7 @@
         this.lifetime = 0;
       }
     }
-  }
+  };
 
   function LucianE() {
     freezeBackground = true;
@@ -1686,7 +2234,8 @@
         freezeBackground = false;
       }
     }
-  }
+  };
+
   function LucianR() {
     this.start = GetTime();
     StopEffects = true;
@@ -1711,15 +2260,114 @@
       } else if(this.elapsed % 200 >= 180){
          this.bullets.push(new RandomCube(10, 10, "yellow", "up", 10, false, 200, Math.random() * 320))
       }
-      
       this.bullets.forEach(bullet => {
         bullet.draw();
       });
-      
     }
-
-  }
+  };
    // END LUCIAN ------------------------------------------------------------- 
+   // LUX ---------------------------------------------------------------------
+    function LuxQ(){
+      this.lifetime = 20;
+      this.x = 360;
+      
+      this.draw = function () {
+        DrawCircle(Math.cos(GetTime()/80) * 10 + this.x, Math.sin(GetTime()/100) * 10 + 100, 40, "rgb(255, 0, 255)")
+        DrawCircle(Math.cos(GetTime()/90) * 10 + this.x, Math.sin(GetTime()/90) * 10 + 100, 40, "rgb(255, 255, 0)")
+        DrawCircle(Math.cos(GetTime()/100) * 10 + this.x, Math.sin(GetTime()/80) * 10 + 100, 40, "rgb(0, 255, 255)")
+        DrawCircle(this.x, 100, 35, "white");
+
+        this.x -=15;
+        if (this.x <= -20){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function LuxW(){
+      this.start = GetTime();
+      this.rotation = 0;
+      this.lifetime = 20;
+      this.x = -100;
+      this.end = false;
+      
+      this.draw = function () {
+        this.elapsed = GetTime()- this.start;
+
+        if(this.elapsed > 300){
+          DrawCircle(160, 100, this.elapsed / 25, "red");
+          DrawCircle(160, 100, this.elapsed / 30, "cyan");
+          DrawCircle(160, 100, this.elapsed / 35, "yellow");
+          DrawCircle(160, 100, this.elapsed / 40, "white");
+        }
+        ctx.save();
+        ctx.translate(this.x,100);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0,0,100,30)
+        ctx.fillRect(0,0,-100,30)
+        ctx.fillStyle = "cyan";
+        ctx.fillRect(0,0,100,20)
+        ctx.fillRect(0,0,-100,20)
+        ctx.restore()
+        this.rotation = this.elapsed/400*Math.PI;
+        if (!this.end && this.x < 500){
+          this.x+=10;
+        } else {
+          this.end = true;
+          this.x -= 10;
+        }
+
+        if (this.end && this.x < -200){
+          this.lifetime = 0;
+          effects.push(new ParticleExplosion(160,100,"white",20,2000,500,5,1,false))
+        }
+      }
+    };
+
+    function LuxE(){
+      this.lifetime = 20;
+      this.start = GetTime();
+      this.elapsed = 0;
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        if (this.elapsed > 500){
+          this.start = GetTime();
+          effects.push(new RippleEffect(160, 100, 3, 1500, 10, "red", "out", "stroke", 1, false));
+          effects.push(new RippleEffect(160, 100, 4, 1500, 10, "yellow", "out", "stroke", 1, false));
+          effects.push(new RippleEffect(160, 100, 5, 1500, 15, "cyan", "out", "stroke", 1, false));
+          effects.push(new RippleEffect(160, 100, 6, 1500, 20, "white", "out", "stroke", 1, false));
+        }
+        if (Extendede_Meter.value == 0){
+          this.lifetime = 0;
+          effects.push(new ParticleExplosion(160,100,"white",20,2000,500,5,1,false))
+        }
+      }
+    };
+
+    function LuxR(){
+      this.lifetime = 20;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.colors = ["blank", "red", "yellow", "cyan", "white"];
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        for(let i = 1; i < 5; i++){
+          var width = 100 - 10 * i - (this.elapsed / 50 * i);
+          if (width <= 0){
+            width = 0;
+          }
+          ctx.fillStyle = this.colors[i];
+          ctx.fillRect(0, 100 - width, 320, width * 2)
+        }
+        if(this.elapsed > 4000){
+          this.lifetime = 0;
+        }
+      }
+    };
+   // END LUX --------------------------------------------------------------------
   // MISS FORTUNE -------------------------------------------------------------
     function FortuneQ() {
         this.start = GetTime();
@@ -1819,63 +2467,12 @@
               }
             }
   // END MISS FORTUNE ---------------------------------------------------------
-  // SONA --------------------------------------------------------------------
-  
-  var secondRun = false;
-  var sonaQ = true;
-  var sonaW = true;
-  var sonaE = true;
-  var oldSonaQ = false;
-  var oldSonaW = false;
-  var oldSonaE = false;
-  var sonaCalled = false;
-  function allSona(){
-    if(!secondRun){
-      console.log("FIRST RUN")
-      effects.push(new RippleEffect(160, 100, 2, 4500, 40, "hsla(200, 100%, 49%, 0.6)", "out", "stroke", 5, false));
-      secondRun = true;
-      setTimeout(()=>{allSona()}, 1100);
-      return;
-    } else {
-      console.log("SECOND RUN")
-      secondRun = false;
-
-      sonaQ ? oldSonaQ = false : oldSonaQ = true;
-      sonaW ? oldSonaW = false : oldSonaW = true;
-      sonaE ? oldSonaE = false : oldSonaE = true;
-
-      q_Meter.value > 0 ? sonaQ = true : sonaQ = false;
-      w_Meter.value > 0 ? sonaW = true : sonaW = false;
-      e_Meter.value > 0 ? sonaE = true : sonaE = false;
-
-      if(!sonaQ && !oldSonaQ){
-        sonaQ = true;
-        effects.push(new SonaEffect("blue"));
-      }
-      if(!sonaW && !oldSonaW){
-        sonaW = true;
-        effects.push(new SonaEffect("green"));
-      }
-      if(!sonaE && !oldSonaE){
-        sonaE = true;
-        effects.push(new SonaEffect("purple"));
-      }
-      sonaCalled = false;
-      return;
-    }
-  };           
-
-  function SonaEffect(color){
-    this.lifetime = 10;
-    this.radius = 0;
-    this.color = color;
-    this.draw = function(){
-      DrawCircle(160, 100, this.radius, this.color);
-      this.radius+=5;
-      if (this.radius >= 160){
-        this.lifetime = 0;
-      }
-    }
+  // SONA --------------------------------------------------------------------        
+  function SonaEffect(){
+      effects.push(new ParticleExplosion(160, 100, "green", 5, 3000, 5, 80, 1, false, true))
+      effects.push(new ParticleExplosion(160, 100, "purple", 5, 3000, 5, 80, 1, false, true))
+      effects.push(new ParticleExplosion(160, 100, "blue", 5, 3000, 5, 80, 1, false, true))
+      effects.push(new RippleEffect(160, 100, 9, 1500, 30, "white", "out", "stroke", 1, false))
   };
 
   function SonaR(){
@@ -1906,14 +2503,14 @@
   // END SONA --------------------------------------------------------------------
   // SORAKA --------------------------------------------------------------------
   function SorakaQ() {
-    this.explosionP = new ParticleExplosion(250,100,"green", 7, 2000, 50, 5,1.2 )
-    this.explosionY = new ParticleExplosion(250, 100, "yellow", 7, 2000, 50, 5,1.2)
+    this.explosionP = new ParticleExplosion(250,166,"white", 7, 2000, 50, 5,1.2 )
+    this.explosionY = new ParticleExplosion(250, 166, "yellow", 7, 2000, 50, 5,1.2)
     this.start = GetTime();
     this.draw = function () {
-      this.elapsed = GetTime() - this.start;
+      this.elapsed = (GetTime() - this.start) * 2;
       if(this.elapsed<=1000){
-        DrawCircle(this.elapsed /4, this.elapsed / 10, 40, "purple");
-        DrawCircle(this.elapsed/4, this.elapsed/10, 20, "yellow");
+        DrawCircle(this.elapsed / 4, this.elapsed / 6, 40, "purple");
+        DrawCircle(this.elapsed / 4, this.elapsed / 6, 20, "yellow");
       } else {
         this.explosionY.draw();
         this.explosionP.draw();
@@ -1938,14 +2535,20 @@
 
   function SorakaR() {
     this.start = GetTime();
-    this.explosionG = new ParticleExplosion(160, 100, "green", 5, 2000, 250, 20, 1, false, true)
-    this.explosionP = new ParticleExplosion(160, 100, "purple", 5, 2000,250, 20, 7, false, true)
+    this.width = 60;
+    this.explosionG = new ParticleExplosion(160, 100, "yellow", 5, 2000, 250, 20, 1, false, true)
+    this.explosionP = new ParticleExplosion(160, 100, "white", 5, 2000,250, 20, 7, false, true)
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
+      ctx.fillStyle = "white";
+      ctx.fillRect(160 - this.width / 2, 0, this.width, 200);
       this.explosionG.draw();
       this.explosionP.draw();
+      if (this.width > 0){
+        this.width--;
+      }
       if(this.elapsed % 1500 <= 50){
-        this.explosionG = new ParticleExplosion(160, 100, "green", 5, 2000, 250, 20, 7, false, true)
+        this.explosionG = new ParticleExplosion(160, 100, "yellow", 5, 2000, 250, 20, 7, false, true)
       }
       if(this.elapsed > 4500){
         this.lifetime = 0;
@@ -2086,6 +2689,110 @@
         DrawCircle(145, y +20, 15, "purple");
       }
   // END TEEMO ---------------------------------------------------------------
+  // THRESH ------------------------------------------------------------------
+  function ThreshQ(){
+      this.lifetime = 100;
+      this.x = -100;
+      
+      this.draw = function () {
+        if(Extendedq_Meter.value == 0){
+          DrawBackground("black");
+          DrawCircle(this.x + 5, 100, 60, "green");
+          ctx.fillRect(0, 90, this.x, 20)
+          DrawCircle(this.x - 10, 120, 40, "black");
+          this.x += 17;
+          if(this.x > 600){
+            this.lifetime = 0;
+          }
+        } else {
+          DrawBackground("red");
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, 90, 320, 20)
+          this.lifetime--;
+        }
+      }
+    };
+
+    function ThreshW(){
+      this.lifetime = 100;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.radius = 0;
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        DrawCircle(160, 100, 30, "green");
+        DrawCircle(160, 100, 20, "white");
+        ctx.beginPath();
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = "blue";
+        ctx.arc(160, 100, 150, 0, 2* Math.PI)
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.strokeStyle = `rgb(0, ${255 - (2 * this.radius)}, ${2 * this.radius})`;
+        ctx.arc(160, 100, this.radius, 0, 2* Math.PI)
+        ctx.stroke();
+
+        this.radius += 5;
+        if (this.radius >= 150){
+          this.radius = 0;
+        }
+        if (this.elapsed > 6000){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function ThreshE(){
+      this.lifetime = 100;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.count = 0;
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        if (this.elapsed > 150){
+          effects.push(new RippleEffect(160, 200, 10, 2000, 30, "green", "out", "stroke", 1, false));
+          this.start = GetTime();
+          this.count++;
+        }
+
+        if (this.count > 5){
+          this.lifetime = 0;
+        }
+      }
+    };
+
+    function ThreshR(){
+      this.lifetime = 100;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.shift = 0;
+      
+      this.draw = function () {
+        this.elapsed = GetTime() - this.start;
+        
+        DrawCircle(160, 100, 100, `rgb(255, ${255 - this.shift}, ${255 - this.shift})`);
+
+        ctx.beginPath();
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = `green`;
+        ctx.moveTo(Math.random()* 320, Math.random() * 200);
+        ctx.lineTo(Math.random()* 320, Math.random() * 200);
+        ctx.stroke();
+
+        this.shift+=3;
+
+        if (this.shift >= 255){
+          effects.push(new ParticleExplosion(160, 100, "red", 7, 1500, 5, 20, 3, false));
+        }
+
+        if (this.shift >= 400){
+          this.lifetime = 0;
+        }
+      }
+    };
+  // END THRESH -------------------------------------------------------------
   // YONE --------------------------------------------------------------------
   function ExtendedEYoneEffect(){
       this.lifetime
@@ -2110,7 +2817,7 @@
       }
     }
 
-   function YoneWeffect() {
+    function YoneWeffect() {
       this.start = GetTime();
       this.lifetime;
       freezeBackground = true;
@@ -2318,7 +3025,7 @@
 
       ctx.fill()
       ctx.restore()
-    }
+    };
 
     function DrawSun(x,y,size,color){
       DrawCircle(x,y,size, color);
@@ -2330,8 +3037,7 @@
       DrawTriangle(x + size / 5 + size / 1.5, y + size / 2, x - size / 5 + size / 1.5, y + size / 1.5, x + size + size / 1.5, y + size * 1.5)
       DrawTriangle(x - size / 5 - size / 1.5, y + size / 2, x + size / 5 - size / 1.5, y + size / 1.5, x - size - size / 1.5, y + size * 1.5)
       DrawTriangle(x - size / 5, y + size, x + size / 5, y + size, x, y + size * 2.5)
-    }
-    
+    };
 
     function ArrowEffect(direction, color, amount, speed, duration) {
             this.start = GetTime();
@@ -2624,6 +3330,7 @@
         this.x += this.velocity.x
         this.y += this.velocity.y
         this.alpha -= 0.01
+        ctx.globalAlpha = 1;
       }
     }
 
@@ -2642,6 +3349,7 @@
           this.x += this.velocity.x
           this.y += this.velocity.y
           this.alpha -= 0.01
+          ctx.globalAlpha = 1;
         }
       }
 
@@ -2831,7 +3539,7 @@
       return new Date().getTime()
     }
 
-  function copyScreen(alpha) {
+    function copyScreen(alpha) {
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let hue = new Int16Array(engine.zone.hue);
@@ -2927,7 +3635,7 @@
     // Grab canvas and rendering context.
     c = document.getElementById("exCanvas");
     ctx = c.getContext("2d");
-    ActiveExtendedR = true;
+
     // Start updates *after* our engine is accessible and ready.
     window.requestAnimationFrame(update);
   }

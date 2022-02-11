@@ -31,12 +31,11 @@
     var animPlaying = false;
 
     function update() {
-
         ctx.fillStyle = "black";
-        ctx.fillRect(0,0, 320, 200);
+        ctx.fillRect(0, 0, 320, 200);
 
         if (effects.length < 1){
-            effects.push(new dragonEffect("grey", "blue"));
+            effects.push(new baronEffect("yellow", "red"));
         }
 
         for (let i = 0; i < effects.length; i++) {
@@ -49,51 +48,28 @@
         window.requestAnimationFrame(update);
     }
 
-    function dragonEffect(color1, color2){
-      this.lifetime = 30;
+    function baronEffect(color1, color2){
+      this.lifetime = 150;
+      this.x = 350;
+      this.effects = [];
       this.color1 = color1;
       this.color2 = color2;
-      this.y = 250;
-      this.draw = function(){
-        ctx.lineWidth = 20;
-        ctx.strokeStyle = this.color1;
-        ctx.beginPath();
-        ctx.moveTo(160, this.y);
-        ctx.lineTo(160, this.y + 200);
-        ctx.stroke();
-
-        ctx.fillStyle = this.color1;
-        ctx.beginPath();
-        ctx.moveTo(160, this.y + 50);
-        ctx.lineTo(200, this.y + 50);
-        ctx.lineTo(180, this.y + 25);
-        ctx.lineTo(320, this.y + 25);
-        ctx.lineTo(240, this.y + 100);
-        ctx.lineTo(160, this.y + 125);
-        ctx.lineTo(160, this.y + 50);
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(160, this.y + 50);
-        ctx.lineTo(120, this.y + 50);
-        ctx.lineTo(140, this.y + 25);
-        ctx.lineTo(0, this.y + 25);
-        ctx.lineTo(80, this.y + 100);
-        ctx.lineTo(160, this.y + 125);
-        ctx.lineTo(160, this.y + 50);
-        ctx.fill();
-
-        this.y-=10;
-        if (this.y <= -150){
-          this.lifetime = 0;
-          effects.push(new ParticleExplosion(160, 200, this.color2, 10, 1000, 10, 10, 1.5, false))
-          setTimeout(()=>{effects.push(new ParticleExplosion(160, 150, this.color2, 10, 1000, 10, 10, 1.5, false))}, 100)
-          setTimeout(()=>{effects.push(new ParticleExplosion(160, 100, this.color2, 10, 1000, 10, 10, 1.5, false))}, 200)
-          setTimeout(()=>{effects.push(new ParticleExplosion(160, 50, this.color2, 10, 1000, 10, 10, 1.5, false))}, 300)
-          setTimeout(()=>{effects.push(new ParticleExplosion(160, 0, this.color2, 10, 1000, 10, 10, 1.5, false))}, 400)
+      
+      this.draw = function () {
+        if(this.x > 100){
+          for (let i = 0; i < 5; i++){
+            DrawCircle(this.x + 50 * i, 100, 30 + 5 * i, this.color1);
+            this.x-=2;
+          }
+        } else {
+          for (let i = 0; i < 5; i++){
+            DrawCircle(this.x + 50 * i, 100 + Math.sin(GetTime()/100 - 100 * i) * 60, 30 + 5 * i, color1);
+          }
+          effects.push(new ParticleExplosion(this.x, 100 + Math.sin(GetTime()/100) * 30, this.color2, 10, 1000, 2, 7, 1.5, false));
+          this.lifetime--;
         }
       }
-    }
+    };
 
     function DrawCircle(x,y,radius,color){
         ctx.beginPath();
@@ -101,6 +77,24 @@
         ctx.arc(x,y,radius, 0, 2* Math.PI)
         ctx.fill();
     };
+
+    function DrawBackground(color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, c.width, c.height)
+  };
+
+  function DrawShield(x,y,scale, color){
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+      ctx.bezierCurveTo(x,y, x-scale/3, y+scale/6, x- scale/2, y+scale/6)
+      ctx.lineTo(x - scale / 2, y + scale /1.7)
+      ctx.bezierCurveTo(x - scale / 2, y + scale / 1.7, x-scale/2 , y + scale / 1.5, x , y + scale/1.2)
+      ctx.bezierCurveTo(x, y + scale / 1.2, x + scale / 2, y + scale / 1.5, x+ scale/2, y + scale / 1.7)
+      ctx.lineTo(x + scale / 2, y + scale /6)
+      ctx.bezierCurveTo(x+scale/2, y + scale/6, x+scale/3, y+scale/6, x,y)
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
 
     function DrawTriangle(cord1X,cord1Y,cord2X,cord2Y,cord3X,cord3Y, color) {
       ctx.beginPath();
@@ -111,6 +105,66 @@
       ctx.lineTo(cord1X,cord1Y);
       ctx.fill();
     };
+
+    function DrawSun(x,y,size,color){
+      DrawCircle(x,y,size, color);
+      DrawTriangle(x-size/5, y-size, x + size / 5, y - size, x, y-size*2.5)
+      DrawTriangle(x - size / 5 - size/1.5, y - size/2, x + size / 5 - size / 1.5, y - size/1.5, x-size-size /1.5, y - size * 1.5)
+      DrawTriangle(x-size,y-size/5, x-size,y+size/5,x-size*2.5,y)
+      DrawTriangle(x + size / 5 + size / 1.5, y - size / 2, x - size / 5 + size / 1.5, y - size / 1.5, x + size + size / 1.5, y - size * 1.5)
+      DrawTriangle(x + size, y + size / 5, x + size, y - size / 5, x + size * 2.5, y)
+      DrawTriangle(x + size / 5 + size / 1.5, y + size / 2, x - size / 5 + size / 1.5, y + size / 1.5, x + size + size / 1.5, y + size * 1.5)
+      DrawTriangle(x - size / 5 - size / 1.5, y + size / 2, x + size / 5 - size / 1.5, y + size / 1.5, x - size - size / 1.5, y + size * 1.5)
+      DrawTriangle(x - size / 5, y + size, x + size / 5, y + size, x, y + size * 2.5)
+    };
+
+    class RandomCube {
+    constructor(width, height, color, moveDir, speed, randomSpeed, startY, startX) {
+      this.width = width
+      this.height = height;
+      this.col = color;
+      this.moveDir = moveDir;
+      this.y = startY;
+      this.x = startX;
+      this.randomSpeed = randomSpeed;
+      this.speed;
+      if (this.randomSpeed == null || this.randomSpeed == true) {
+        this.speed = speed * (Math.random() * 2) + speed;
+      } else {
+        this.speed = speed;
+      }
+      if (this.moveDir == "left" || this.moveDir == "right") {
+        if (this.y == null) {
+          this.y = Math.random() * 200;
+        }
+        if (startX == null) {
+          this.x = Math.random() * 320;
+        }
+        if (this.moveDir == "left") {
+          this.speed = -this.speed;
+          this.x = 320;
+        } else if (this.moveDir == "right") {
+          this.x = 0 - this.width;
+        }
+      } else {
+        if (this.moveDir == "up") {
+          this.speed = -this.speed;
+          this.y = 200;
+        } else if (this.moveDir == "down") {
+          this.y = 0;
+        }
+      }
+    }
+    draw() {
+      ctx.fillStyle = this.col;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      if (this.moveDir == "left" || this.moveDir == "right") {
+        this.x += this.speed;
+      } else {
+        this.y += this.speed;
+      }
+    }
+  }
 
     function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY) {
     this.start = GetTime();
