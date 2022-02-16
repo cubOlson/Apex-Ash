@@ -1,13 +1,69 @@
 <head>
-  <title>League of Legends Cub Copy</title>
+  <title>League of Legends</title>
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta 
   property="character" 
   label="Champions" 
   type="combobox" 
-  values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri" 
+  values="Ahri,Diana,Ezreal,Garen,Janna,Jhin,Leona,Lucian,Lux,Thresh" 
   default="Ahri"
+  />
+  <meta
+    property="enableChampions"
+    label="Champion effects"
+    type="boolean"
+    default="1"
+  />
+  <meta
+  property="enableHealth"
+  label="Health effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableTower"
+  label="Tower effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableDragon"
+  label="Dragon and Baron effects"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableAllies"
+  label="Ally death effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableLevel"
+  label="Level-up effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableUtility"
+  label="Utility skill effects"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="enableGold"
+  label="Gold effect"
+  type="boolean"
+  default="1"
+  />
+  <meta
+  property="goldLimit"
+  label="Gold Effect Threshold"
+  type="number"
+  min="0"
+  max="10000"
+  default="1000"
   />
   <meta
     property="keyScreenBrightness"
@@ -16,62 +72,6 @@
     min="0"
     max="100"
     default="100"
-  />
-  <meta
-    property="enableHealth"
-    label="Health effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="enableGold"
-    label="Gold effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="goldLimit"
-    label="Gold Effect Threshold"
-    type="number"
-    min="0"
-    max="10000"
-    default="1000"
-  />
-  <meta
-    property="enableTower"
-    label="Tower effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="enableDragon"
-    label="Dragon and Baron effects"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="enableAllies"
-    label="Ally death effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="enableLevel"
-    label="Level-up effect"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="enableUtility"
-    label="Utility skill effects"
-    type="boolean"
-    default="1"
-  />
-  <meta
-    property="enableChampions"
-    label="Champion effects"
-    type="boolean"
-    default="1"
   />
   <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
     <resolution size="2560x1600" x=".3396" y=".9602" width=".0526"/> 
@@ -346,6 +346,9 @@
   var levelUpAnim = false;
   var deathAnim = false;
   var Stunned = false;
+
+  // Current all heroes
+  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 
   // All meter definitions
   var recallMeter = new Meter(1, RecallBlock)
@@ -1065,6 +1068,7 @@
       play1 = true
     } else {
       play1 = false;
+      ActiveExtendedR = false
       effects.length = 0;
     }
   };
@@ -1074,6 +1078,7 @@
       play2 = true
     } else {
       play2 = false;
+      ActiveExtendedR = false
       effects.length = 0;
     }
   };
@@ -1083,12 +1088,16 @@
     ctx.fillRect(0, 0, c.width, c.height)
   };
 
+  var turretTimer = GetTime();
   function turretEffects(){
-    if((alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65) && enableTower){
+    var turretElapsed = GetTime() - turretTimer;
+    if((alliedTurretMeter.value > .65 || firstAlliedTurretMeter.value > .65) && enableTower && turretElapsed >= 5000){
       effects.push(new fallingTurret("blue"));
+      turretTimer = GetTime();
     } 
-    if((enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65) && enableTower){
+    if((enemyTurretMeter.value > .65 || firstEnemyTurretMeter.value > .65) && enableTower && turretElapsed >= 5000){
       effects.push(new fallingTurret("red"));
+      turretTimer = GetTime();
     }
   };
   // END CALLBACKS -----------------------------------------------------------------------------------
