@@ -1,0 +1,489 @@
+<html>
+
+<head>
+    <title>Gta effects</title>
+    <meta description="Gta effects">
+    <meta publisher="SignalRgb">
+    <meta property="Play" label="Enable health effects" type="boolean" default="1">
+
+
+
+
+<body style="margin: 0; padding: 0;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+    <script>
+        // Get the canvas element from the DOM
+        var c = document.getElementById("exCanvas");
+        var ctx = c.getContext("2d");
+
+        var width = 320;
+        var height = 200;
+        var hue = 0;
+        var effects = [];
+
+
+        //Meters
+
+
+
+
+
+        var stateHdlr = new StateHandler();
+
+        function StateHandler() {
+            var stack = [];
+            var state = null;
+
+            // Set current state to the top item in the stack
+            var updateState = function () {
+                if (stack.length > 0) {
+                    state = stack[stack.length - 1];
+                } else {
+                    state = null;
+                }
+            }
+            // Allows dev to add effect to state handler
+            this.Push = function (newState) {
+                stack.push(newState);
+                updateState();
+            };
+            // Allows dev to remove effect from handler
+            this.Pop = function () {
+                stack.pop();
+                updateState();
+            };
+            // Call the Process function of the current state (effect)
+            this.Process = function () {
+                if (state != null) {
+                    state.Process();
+                }
+            };
+        }
+
+
+
+
+        function Meter(size, callback) {
+            this.size = size;
+            this.value = 0;
+            this.diff = 0;
+            this.increased = false;
+            this.decreased = false;
+            var values = [];
+
+            this.setValue = function (updatedValue) {
+                values.push(updatedValue);
+                if (values.length > this.size) {
+                    values.shift();
+                }
+
+                for (var i = 0; i < values.length - 1; i++) {
+                    if (values[i] !== values[i + 1]) return;
+                }
+                if (this.value !== values[0]) {
+                    this.diff = Math.abs(this.value - values[0]);
+                    this.increased = this.value < values[0];
+                    this.decreased = this.value > values[0];
+                    this.value = values[0];
+                    callback();
+                }
+            };
+        }
+
+
+
+
+        function copyScreen(alpha) {
+
+            var shine = engine.vision.ShineMeter
+            let lightness = new Int8Array(engine.zone.lightness);
+            let sat = new Int8Array(engine.zone.saturation);
+            let hue = new Int16Array(engine.zone.hue);
+            for (var iZone = 0; iZone < 560; iZone++) {
+                var iRow = Math.floor(iZone / 28);
+                var iCol = iZone % 28;
+                var iWidth = 320 / 28;
+                var iHeight = 200 / 20;
+                var iZx = iCol * iWidth;
+                var iZy = iRow * iHeight;
+                ctx.fillStyle =
+                    "hsla(" +
+                    hue[iZone] +
+                    "," +
+                    sat[iZone] +
+                    "%," +
+                    lightness[iZone] +
+                    "%, " +
+                    `${alpha}` +
+                    ")";
+
+                ctx.fillRect(iZx, iZy, iWidth, iHeight);
+            }
+
+        }
+
+
+
+        //Effects
+        var CurrentLowHp = false;
+        function LowHpEffect() {
+            this.start = GetTime();
+            this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+
+            this.draw = function () {
+                this.elapsed = GetTime();
+                this.explosionEffect.draw();
+                DrawHeart(160, 90, (Math.sin(this.elapsed / 300) + 1) * 50, (Math.sin(this.elapsed / 300) + 1) * 25)
+                if ((Math.sin(this.elapsed / 300)) >= 0.99) {
+                    this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+                }
+                if (CurrentLowHp == false) {
+                    this.lifetime = 0
+                }
+            }
+        }
+
+        function MoneyEffect() {
+            this.start = GetTime();
+            this.money = [];
+
+            for (let i = 0; i < 15; i++) {
+                this.money.push(new fallingMoney(Math.random() * 320, (Math.random() * 1) + 5))
+            }
+            this.draw = function () {
+                this.money.forEach(money => {
+                    money.draw();
+                });
+            }
+        }
+
+        function WastedEffect() {
+            Freezbackground = true;
+            this.start = GetTime();
+            this.bloodDrip = [];
+            this.bloodHeight = 0;
+            this.Process = function () {
+
+                if (Math.random() > 0.8) {
+                    this.bloodDrip.push(new blood(Math.random() * 320, 0, "red", 0.01))
+                }
+                this.elapsed = GetTime() - this.start;
+                if (this.bloodHeight < -200) {
+                    stateHdlr.Pop();
+                    Freezbackground = false;
+                }
+                this.Draw();
+            }
+
+            this.Draw = function () {
+                copyScreen(0.1)
+                this.bloodDrip.forEach((blood, index) => {
+                    blood.Draw();
+                    if (blood.y > 200 - this.bloodHeight) {
+                        this.bloodHeight -= blood.size;
+                        this.bloodDrip.splice(index, 1)
+                    }
+                }
+                );
+                ctx.fillStyle = "red";
+                ctx.fillRect(0, 200, 320, this.bloodHeight)
+            }
+        }
+
+
+
+
+        //We could use the arrow effect as XP effect( something like this:      effects.push(new ArrowEffect("up", "blue", 3, 5, 1500));)
+
+        function ArrowEffect(direction, color, amount, speed, duration) {
+            this.start = GetTime();
+            this.speed = speed;
+            this.duration = duration;
+            this.lifetime = this.duration;
+            this.direction = direction;
+            this.color = color;
+            this.amount = amount;
+            this.draw = function () {
+                if (this.direction == 'up') {
+                    this.speed = -this.speed;
+                    ctx.fillStyle = this.color;
+                    for (let i = 0; i < this.amount; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
+                        ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+                        ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+                        ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
+                        ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+                        ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+                        ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+                        ctx.fill();
+                    }
+                } else {
+                    ctx.fillStyle = this.color;
+                    for (let i = 0; i < this.amount; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                        ctx.lineTo(320, 240 - this.lifetime / 1.5 + (200 * i));
+                        ctx.lineTo(320, 180 - this.lifetime / 1.5 + (200 * i));
+                        ctx.lineTo(160, 240 - this.lifetime / 1.5 + (200 * i));
+                        ctx.lineTo(0, 180 - this.lifetime / 1.5 + (200 * i));
+                        ctx.lineTo(0, 240 - this.lifetime / 1.5 + (200 * i));
+                        ctx.lineTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                        ctx.fill();
+                    }
+                }
+                this.Ymin += this.speed;
+                this.elapsed = new Date().getTime() - this.start;
+                this.lifetime = this.duration - this.elapsed;
+                if (this.lifetime <= 0) {
+                    speedAnim = false
+                }
+            }
+        }
+
+        function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts, hasPhysics) {
+            this.start = GetTime();
+            this.col = color;
+            this.speed = speed;
+            this.duration = duration;
+            this.lifetime = 2000;
+            this.amount = particleAmount;
+            this.size = particleSize
+            this.x = x;
+            this.y = y;
+            this.fadeSpeed = fadeSpeed;
+            this.particles = [];
+            this.useHearts = useHearts;
+            this.hasPhysics = hasPhysics;
+
+            while (this.particles.length < this.amount) {
+                if (notrandomY) {
+                    this.yspeed = -this.speed / 1.5;
+                } else {
+                    this.yspeed = ((Math.random() - 0.5) * this.speed);
+                }
+                if (this.useHearts == null || this.useHearts == false) {
+                    this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+                        {
+                            x: ((Math.random() - 0.5) * this.speed),
+                            y: this.yspeed
+                        }, this.hasPhysics))
+                } else {
+                    this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+                        {
+                            x: ((Math.random() - 0.5) * this.speed),
+                            y: this.yspeed
+                        }))
+                }
+
+                this.draw = function () {
+                    this.lifetime = this.duration - (GetTime() - this.start)
+                    this.particles.forEach((Particle, index) => {
+                        Particle.draw()
+                    })
+                }
+            }
+        };
+
+        function PoliceEffect(color1, color2, color3) {
+            this.start = new Date().getTime();
+            this.duration = 5000;
+            this.count = 2000;
+            this.color1 = color1;
+            this.color2 = color2;
+            this.color3 = color3;
+            this.size = 0;
+            this.timing = 100;
+            this.speed = 4;
+
+            this.Process = function () {
+                this.elapsed = new Date().getTime() - this.start;
+                if (this.elapsed > this.duration) {
+                    stateHdlr.Pop();
+                }
+                this.Draw();
+            };
+
+            this.Draw = function () {
+                ctx.fillStyle = "black";
+                ctx.fillRect(0, 0, 320, 200);
+
+                if (this.timing > 60 && this.timing < 100) {
+                    ctx.fillStyle = "#ff0000";
+                    ctx.fillRect(0, 0, 106, 200);
+
+                    // ctx.fillStyle = color2;
+                    // ctx.fillRect(106, 0, 108, 200);
+
+                    ctx.fillStyle = "#0000ff";
+                    ctx.fillRect(214, 0, 106, 200);
+                } else if (this.timing > 10 && this.timing < 50) {
+                    ctx.fillStyle = "#0000ff";
+                    ctx.fillRect(0, 0, 106, 200);
+
+                    // ctx.fillStyle = color3;
+                    // ctx.fillRect(106, 0, 108, 200);
+
+                    ctx.fillStyle = "#ff0000";
+                    ctx.fillRect(214, 0, 106, 200);
+                } else {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(106, 0, 108, 200);
+                }
+
+                if (this.timing > 0) {
+                    this.timing -= Math.round(this.speed);
+                } else {
+                    this.timing = 100;
+                }
+            };
+        }
+
+        //Helper effects
+
+
+        function DrawHeart(x, y, xSize, Ysize, color) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(x, y);
+            // top left curve
+            ctx.bezierCurveTo(
+                x,
+                y,
+                x - xSize / 2,
+                y - Ysize,
+                x - xSize / 2,
+                y + Ysize / 4
+            );
+            ctx.bezierCurveTo(
+                x - xSize / 2,
+                y + Ysize / 4,
+                x - xSize / 2,
+                y + Ysize / 4,
+                x,
+                y + Ysize
+            );
+            ctx.bezierCurveTo(
+                x + xSize / 2,
+                y + Ysize / 4,
+                x + xSize / 2,
+                y + Ysize / 4,
+                x + xSize / 2,
+                y + Ysize / 4
+            );
+            ctx.bezierCurveTo(
+                x + xSize / 2,
+                y + Ysize / 4,
+                x + xSize / 2,
+                y - Ysize,
+                x,
+                y
+            );
+
+            ctx.fill()
+            ctx.restore()
+        };
+
+        function GetTime() {
+            return new Date().getTime();
+        }
+
+        //classes
+        class ExplosionParticle {
+            constructor(x, y, radius, color, fadeSpeed, velocity, hasPhysics) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.radius = radius;
+                this.velocity = velocity;
+                this.alpha = 1 * fadeSpeed;
+                this.hasPhysics = hasPhysics;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath()
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+                ctx.fillStyle = this.color
+                ctx.fill()
+                this.x += this.velocity.x
+                this.y += this.velocity.y
+                if (this.hasPhysics != null || this.hasPhysics != false) {
+                    this.velocity.y += 0.3;
+                }
+                this.alpha -= 0.01
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        class fallingMoney {
+            constructor(x, speed) {
+                this.speed = speed / 2;
+                this.x = x;
+                this.y = 0 - (Math.random() * 500);
+                this.startVal = (Math.random() * 50);
+                this.start = GetTime();
+            }
+            draw() {
+                this.elapsed = GetTime() - this.start;
+                this.moveVal = (this.elapsed / 1000);
+                ctx.fillStyle = "green";
+                if (((Math.sin(this.startVal + this.moveVal))) > 0) {
+                    this.Calculatedvalue = -((Math.sin(this.startVal + this.moveVal)));
+                } else {
+                    this.Calculatedvalue = ((Math.sin(this.startVal + this.moveVal)));
+                }
+                ctx.fillRect(this.x + Math.sin(this.startVal + this.moveVal) * 100, (this.Calculatedvalue * 50) + this.y, 100, 35);
+                this.y += this.speed;
+            }
+        }
+
+        class blood {
+            constructor(x, y, color, fade) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.fade = fade;
+                this.speed = (Math.random() + 0.1) * 6
+                this.size = (Math.random() * 5) + 5;
+            }
+            Draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                this.y += this.speed * Math.random();
+                this.x += (Math.random() - 0.5) * 8;
+            }
+
+        }
+
+
+
+
+
+
+
+        Freezbackground = false;
+
+        function update() {
+            if (!Freezbackground) {
+                copyScreen(1);
+            }
+
+            for (let i = 0; i < effects.length; i++) {
+                effects[i].draw();
+                if (effects[i].lifetime <= 0) {
+                    effects.splice(i, 1);
+                }
+            }
+
+
+            stateHdlr.Process();
+            window.requestAnimationFrame(update);
+        }
+        window.requestAnimationFrame(update);
+    </script>
+</body>
+
+</html>
