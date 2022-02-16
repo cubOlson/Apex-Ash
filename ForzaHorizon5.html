@@ -1,0 +1,591 @@
+<head>
+  <title>Forza Horizon 5 Cub Fix</title>
+  <meta description="Speed through Mexico with this integration." />
+  <meta publisher="Jordywal" />
+  <meta property="HighSpeedColor" label="High speed effect color" type="color" default="#fcba03" min="0" max="360" />
+  <meta property="Brightness" label="Screen ambiance brightness" type="number" default="100" min="0" max="100">
+  <meta property="SpeedInMiles" label="Speed in miles" type="boolean" default="1" />
+  <meta property="EnableSpeed" label="Enable speed effects" type="boolean" default="1" />
+  <meta property="EnableGo" label="Enable go effect" type="boolean" default="1" />
+  <meta property="EnableFastTravel" label="Enable fast travel effect" type="boolean" default="1" />
+  <meta property="EnableFinishEffect" label="Enable finish effect" type="boolean" default="1" />
+  <meta property="EnableWheelspinEffect" label="Enable wheelspin effects" type="boolean" default="1" />
+    <meta meter="SpeedMeter" tags = "forza horizon 5, vlc" type="ocr_numeric" x=".855109375" y=".8688888" width=".090" height=".0951388888888889" confidence="10">
+        <resolution size="3440x1440" x=".8843" y=".8667" width=".0645" height=".0889"/>
+        <resolution size="1920x1200" x=".855109375" y=".8688888" width=".090" height=".1"/>
+    </meta>
+    <meta meter="FastTravelMeter" tags="vlc, forza horizon 5" type="ocr_textmatch" x=".835546875 " y=".882638888" width=".08789" height=".035" string="FAST TRAVELING" confidence="70">
+    </meta>
+    <meta meter="Finish1" tags="vlc,forza horizon 5" type="linear" x=".581" y=".63888" width=".07812" h="310-350" s="60-100" l="70-100">
+        <resolution size="3440x1440" x=".3613" y=".3931" width=".07812"/>
+        <resolution size="1920x1200" x=".3" y=".3741" width=".07812"/>
+    </meta>
+    <meta meter="Finish2" tags="vlc,forza horizon 5" type="linear" x=".245" y=".394" width=".0492" h="310-350" s="60-100" l="70-100">
+        <resolution size="3440x1440" x=".5625" y=".59097" width=".0492"/>
+        <resolution size="1920x1200" x=".5771" y=".5824" width=".0492"/>
+    </meta>
+    <meta meter="Go1" tags="league" x=".395" y=".386" width=".0089" height="0.103" h="0-360" s="0-4" l="95-100" type="area">
+        <resolution size="3440x1440" x=".4221" y=".391" width=".0089" height="0.103"/>
+        <resolution size="1920x1200" x=".3958" y=".3453" width=".0089" height="0.103"/>
+    </meta>
+    <meta meter="Go2" tags="league" x="0.5777" y=".282" width=".00895" height="0.1111" h="0-360" s="0-4" l="95-100" type="area">
+        <resolution size="3440x1440" x="0.5576" y=".2896" width=".00895" height="0.1111"/>
+        <resolution size="1920x1200" x="0.5776" y=".2556" width=".00895" height="0.1111"/>
+    </meta>
+    <meta meter="Wheelspin" tags="vlc,forza horizon 5" type="linear" x=".79" y=".153" width=".105" h="320-350" s="60-100" l="30-90">
+        <resolution size="3440x1440" x=".2605" y=".1528" width=".105"/>
+        <resolution size="1920x1200" x=".1688" y=".188" width=".105"/>
+    </meta>
+    <meta meter="Wheelspin2" tags="vlc,forza horizon 5" type="linear" x=".2" y=".153" width=".105" h="320-350" s="60-100" l="30-90">
+        <resolution size="3440x1440" x=".6116" y=".1528" width=".105"/>
+        <resolution size="1920x1200" x=".72" y=".188" width=".105"/>
+    </meta>
+</head>
+<body style="margin: 0; padding: 0;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  // Get the canvas element from the DOM
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+
+  var width = 320;
+  var height = 200;
+  var hue = 0;
+  var speed = 2;
+
+  var effects = []
+  var speedAnim = false;
+  var highSpeed;
+  var highSpeedAnim = false;
+  var prevSpeed = 0;
+  var fastTravelAnim = false;
+  var VictoryAnim = false;
+  var GoAnim = false;
+  var WheelspinsAnim = false;
+  var prevWheelspinState;
+  var go1 = false;
+  var go2 = false;
+  var Go1_Meter = new Meter(5, Go1Effect)
+  var Go2_Meter = new Meter(5, Go2Effect)
+  var stateHdlr = new StateHandler();
+
+  function StateHandler() {
+      var stack = [];
+      var state = null;
+
+      // Set current state to the top item in the stack
+      var updateState = function () {
+          if (stack.length > 0) {
+              state = stack[stack.length - 1];
+          } else {
+              state = null;
+          }
+      }
+      // Allows dev to add effect to state handler
+      this.Push = function (newState) {
+          stack.push(newState);
+          updateState();
+      };
+      // Allows dev to remove effect from handler
+      this.Pop = function () {
+          stack.pop();
+          updateState();
+      };
+      // Call the Process function of the current state (effect)
+      this.Process = function () {
+          if (state != null) {
+              state.Process();
+          }
+      };
+  }
+
+  function Meter(count, callback) {
+          this.size = count;
+          this.value = 0;
+          this.diff = 0;
+          this.increased = false;
+          this.decreased = false;
+          var values = [];
+
+          this.setValue = function (updatedValue) {
+              // Add and shift.
+              if (updatedValue == -1) return;
+              values.push(updatedValue);
+
+              if (values.length > this.size) {
+                  values.shift();
+              }
+
+              // Exit early if we've got a long-term match.
+              for (var i = 0; i < values.length - 1; i++) {
+                  if (values[i] !== values[i + 1]) return;
+              }
+
+              // We got here, so we've got a matching value collection.
+              if (this.value !== values[0]) {
+                  this.diff = Math.abs(this.value - values[0]);
+                  this.increased = this.value < values[0];
+                  this.decreased = this.value > values[0];
+                  this.value = values[0];
+                  callback();
+              }
+          };
+      }
+      function Go1Effect(){
+          if(Go1_Meter.value == 1){
+              go1 = true;
+              if(go2 == true){
+                  effects.push(new GoEffect())
+                  GoAnim = true;
+              }
+          } else {
+              go1 = false;
+          }
+      }
+      function Go2Effect() {
+              if (Go2_Meter.value == 1) {
+                  go2 = true;
+                  if (go1 == true) {
+                      effects.push(new GoEffect())
+                      GoAnim = true;
+                  }
+              } else {
+                  go2 = false;
+              }
+          }
+    class highSpeedStripe {
+          constructor(x, y) {
+              this.x = x;
+              this.y = y;
+              this.speed = (Math.random() + 0.5) * 6
+          }
+          Draw() {
+              ctx.beginPath();
+              ctx.rect(this.x, this.y, 15, 40)
+              ctx.fillStyle = HighSpeedColor
+              ctx.fill();
+              this.y += this.speed;
+          }
+      }
+
+       class VictoryParticle {
+              constructor(x, y, radius, color, fade) {
+               this.x = x;
+               this.y = y;
+               this.radius = radius;
+               this.color = color;
+               this.fade = fade;
+               this.speed = (Math.random() + 0.1) * 4
+           }
+           Draw() {
+               ctx.beginPath();
+               ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+               ctx.fillStyle = 'yellow'
+               ctx.fill();
+               this.y += this.speed * Math.random();
+               this.x += (Math.random() - 0.5) * 20;
+           }
+
+          }
+
+
+          function WheelspinEffect(){
+              this.startTime = new Date().getTime();
+              this.elapsed = 0;
+              this.currentColor;
+              this.phase = 0;
+              this.xPos =160;
+              this.backgroundState = 0;
+              this.backgroundHeight = 10;
+              this.speed = 0;
+              this.radius = 120;
+              this.radphase = 0;
+              this.cl1 = 'hsl(186, 100%, 50%)';
+              this.cl2 = 'hsl(319, 100%, 50%)';
+              this.state = 0;
+              this.yPos = c.height+this.radius;
+
+              this.Process = function () {
+                  this.elapsed = new Date().getTime() - this.startTime;
+
+                  if(this.elapsed > 7000){
+                      WheelspinsAnim = false;
+                      stateHdlr.Pop();
+                  }
+                  this.draw();
+              }
+
+
+              this.draw = function () {
+                  if(this.state ==0){
+                     this.yPos -=2 ;
+                     if(this.yPos <= 160){
+                         this.state = 1;
+                     }
+                  }
+                  if(this.backgroundState == 0){
+                      ctx.beginPath();
+                      ctx.fillStyle == 'black';
+                      ctx.rect(0,0,c.width, this.backgroundHeight);
+                      ctx.fill();
+                      this.backgroundHeight+=5;
+                  }
+
+                  if(this.elapsed < 3200) {
+                      this.speed += 0.2;
+                  } else if(this.speed > 0){
+                      this.speed -= 0.3;
+                  } else {
+                      this.speed = 0
+                  }
+                 
+                      this.phase += this.speed;
+                      for (let i = 0; i < 360; i += 0.5) {
+                          this.radphase = i / 360;
+
+                          this.start = (2 * Math.PI) * (i / 360);
+                          this.end = (2 * Math.PI) * ((i + 1) / 360);
+                          this.offset = (2 * Math.PI) * (this.phase / 360);
+
+                          if (i < 45 || i > 180 && i < 225) {
+                              this.currentColor = this.cl1;
+                          }
+
+                          if (i > 45 && i < 90 || i > 225 && i < 270) {
+                              this.currentColor = this.cl1;
+                          }
+
+                          if (i > 90 && i < 135 || i > 270 && i < 360) {
+                              this.currentColor = this.cl2;
+                          }
+
+                          if (i > 135 && i < 180 || i > 315 && i < 360) {
+                              this.currentColor = this.cl2;
+                          }
+
+                          ctx.fillStyle = this.currentColor;
+                          ctx.beginPath();
+                          ctx.arc(this.xPos, this.yPos, this.radius, this.start + this.offset, this.end + this.offset);
+                          ctx.lineTo(this.xPos, this.yPos);
+                          ctx.closePath();
+                          ctx.fill();
+                      
+                  }
+                  }
+                 
+          }
+
+
+           function PlayFinishEffect() {
+                  this.start = new Date().getTime();
+                  this.elapsed = 0;
+                  this.VictoryDrip = [];
+                  this.state = 0;
+                  this.cubeX = 0;
+                  this.cubeY = 0;
+
+                  
+               this.Process = function () {
+                   if (this.VictoryDrip.length < 140 && this.elapsed<3000) {
+                       this.VictoryDrip.push(new VictoryParticle(Math.random() * c.width, 0, 5, 'yellow', 0.01))
+                   }
+
+                   this.elapsed = new Date().getTime() - this.start;
+
+                   if (this.elapsed >= 6000) {
+                       this.VictoryDrip.pop();
+                       if(this.VictoryDrip.length >0){
+                           this.VictoryDrip.pop();
+                       }
+                   }
+                   if(this.VictoryDrip.length == 0){
+                       stateHdlr.Pop();
+                       VictoryAnim = false;
+                   }
+                   
+
+                   this.Draw();
+               };
+
+               this.Draw = function () {
+                   if (this.state == 0) {
+                       ctx.beginPath();
+                       ctx.fillStyle = 'black'
+                       ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+                       this.VictoryDrip.length = 0;
+                       this.cubeX += 15;
+                       this.cubeY += 10;
+                       effectTime = Date.now();
+                       if (this.cubeX >= c.width + 30) {
+                           this.state = 1;
+                       }
+                   }
+                   if (this.state == 1) {
+                        ctx.beginPath();
+                          ctx.fillStyle = 'black'
+                          ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+                       this.VictoryDrip.forEach(VictoryParticle => {
+                           VictoryParticle.Draw();
+                       }
+                       );
+                   }
+               }
+              }
+
+  function copyScreen(alpha) {
+      var shine = engine.vision.ShineMeter
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+      for (var iZone = 0; iZone < 560; iZone++) {
+          var iRow = Math.floor(iZone / 28);
+          var iCol = iZone % 28;
+          var iWidth = 320 / 28;
+          var iHeight = 200 / 20;
+          var iZx = iCol * iWidth;
+          var iZy = iRow * iHeight;
+          ctx.fillStyle =
+              "hsla(" +
+              hue[iZone] +
+              "," +
+              sat[iZone] +
+              "%," +
+              lightness[iZone]* (Brightness/100) +
+              "%, " +
+              alpha +
+              ")";
+
+          ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+  }
+
+  function ArrowEffect (direction, color, amount){
+      this.start = new Date().getTime();
+      this.elapsed = 0;
+      this.speed = 8;
+      this.duration = 1000;
+      this.lifetime = this.duration;
+      this.direction = direction;
+      this.Startpos;
+      this.color = color;
+      this.amount = amount;
+      this.draw = function () {
+          if(this.direction == 'up'){
+              this.speed = -8;
+              this.Startpos = c.height+50;
+               ctx.fillStyle = this.color;
+               for (let i = 0; i < this.amount ; i++) {
+                   ctx.beginPath();
+                   ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 *i));
+                   ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+                   ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+                   ctx.lineTo(160, this.lifetime / 1.5 - (200 * i)- 100);
+                   ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+                   ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+                   ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+                   ctx.fill();    
+               }
+          } else {
+              this.speed = 8;
+              this.Startpos = -50;
+              ctx.fillStyle = this.color;
+               for (let i = 0; i < this.amount; i++) {
+                   ctx.beginPath();
+                   ctx.moveTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                   ctx.lineTo(320, 240 - this.lifetime / 1.5 + (200 * i));
+                   ctx.lineTo(320, 180 - this.lifetime / 1.5 + (200 * i));
+                   ctx.lineTo(160, 240 - this.lifetime / 1.5 + (200 * i));
+                   ctx.lineTo(0, 180 - this.lifetime / 1.5 + (200 * i));
+                   ctx.lineTo(0, 240 - this.lifetime / 1.5 + (200 * i));
+                   ctx.lineTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                   ctx.fill();
+               }
+          }
+          this.Ymin += this.speed;
+          this.elapsed = new Date().getTime() - this.start;
+          this.lifetime = this.duration - this.elapsed;
+          if (this.lifetime <= 0) {
+              speedAnim = false
+          }
+      }
+  }
+  function FastTravelEffect() {
+          this.start = new Date().getTime();
+          this.elapsed = 0;
+          this.speed = 8;
+          this.duration = 3000;
+          this.lifetime = this.duration;
+          this.x = 0;
+          this.draw = function () {
+              ctx.fillStyle = 'blue';
+            for (let i = 0; i < 3; i++) {
+                  ctx.beginPath();
+                ctx.rect(-300 + (100*i) + this.x, 0, 40, c.height);
+                ctx.fill();
+                
+            }
+              this.x += 10;
+              this.elapsed = new Date().getTime() - this.start;
+              this.lifetime = this.duration - this.elapsed;
+              if (this.lifetime <= 0) {
+                  fastTravelAnim = false;
+              }
+          }  
+  }
+
+    function GoEffect() {
+          this.start = new Date().getTime();
+          this.elapsed = 0;
+          this.speed = 8;
+          this.duration = 3000;
+          this.lifetime = this.duration;
+          this.state = 0;
+          this.draw = function () {
+              if(this.state == 0){
+                  ctx.fillStyle = 'green';
+                  ctx.beginPath();
+                  ctx.fillRect(0, 0, c.width, c.height);
+                  if(this.lifetime<1000){
+                      this.state = 1;
+                  }      
+              } 
+              this.elapsed = new Date().getTime() - this.start;
+              this.lifetime = this.duration - this.elapsed;
+              if (this.lifetime <= 0) {
+                  GoAnim = false;
+              }
+          }
+      }
+  
+   function HighSpeedEffect() {
+          this.speed = 16;
+          this.stripes = [];
+          this.start;
+          this.TimeUnderHighspeed;
+
+          this.Process = function () {
+               if (this.stripes.length < 20) {
+                  this.stripes.push(new highSpeedStripe(Math.random() * c.width,0))
+              }
+
+               if (prevSpeed < 300 && !SpeedInMiles || SpeedInMiles && prevSpeed < 185) {
+                   if(this.start == null){
+                       this.start = new Date().getTime()
+                   }
+                   this.TimeUnderHighspeed = new Date().getTime() - this.start
+                   if(this.TimeUnderHighspeed >= 3000 && VictoryAnim == false ){
+                       highSpeedAnim = false 
+                       stateHdlr.Pop()
+                   }
+              } 
+              else 
+              {
+                  this.start =  null
+              }
+
+              this.Draw();
+          }
+          this.Draw = function () {
+             for (let index = 0; index < this.stripes.length; index++) {
+                 this.stripes[index].Draw()
+                 if (this.stripes[index].y > c.height) { 
+                  this.stripes.splice(index, 1)
+                 }
+             }
+          }
+      }
+  var startTimeBetweenTriggers;
+      
+  
+
+  function update() {
+      if(VictoryAnim == false){
+          if(GoAnim == false){
+              copyScreen(1)
+          } else {
+              copyScreen(0.1)
+          }
+          
+      }
+      let finishChecker = 0;
+      let fin1 = engine.vision.Finish1;
+      let fin2 = engine.vision.Finish2;
+      if(fin1 ==1 && fin2 == 1){
+          finishChecker = 1;
+      }
+
+
+      if(EnableGo){
+          Go1_Meter.setValue(engine.vision.Go1);
+          Go2_Meter.setValue(engine.vision.Go2);
+      }
+    
+      let currentSpeed = engine.vision.SpeedMeter;
+      if(currentSpeed > 1 && EnableSpeed == true){
+              if(currentSpeed - prevSpeed > 5 && speedAnim  == false)
+              {
+                  effects.push(
+                      new ArrowEffect('up', "green", 2)
+                  )      
+                  prevSpeed = currentSpeed;
+                  speedAnim = true
+                  } else if (currentSpeed - prevSpeed < -5  && speedAnim == false) {
+                      effects.push(new ArrowEffect('down', "red", 2))
+                      prevSpeed = currentSpeed;
+                       speedAnim = true
+          }
+      }
+      if(currentSpeed >300 && highSpeedAnim == false || SpeedInMiles == true && currentSpeed > 185 && highSpeedAnim == false && EnableSpeed == true ){
+          prevSpeed = currentSpeed;
+          stateHdlr.Push(new HighSpeedEffect())
+          highSpeedAnim = true
+      }
+
+      if(engine.vision.FastTravelMeter == 1 && fastTravelAnim == false && EnableFastTravel == true ){
+          effects.length = 0;
+          effects.push(new FastTravelEffect());
+          fastTravelAnim = true;
+          prevSpeed = 0;
+      }
+
+      if(finishChecker == 1 &&  VictoryAnim == false && EnableFinishEffect == true) {
+          if(highSpeedAnim == true){
+              stateHdlr.Pop();
+              highSpeedAnim = false;
+          }
+          stateHdlr.Push(new PlayFinishEffect())
+          prevSpeed = 0;
+          VictoryAnim = true;
+      }
+
+      let currentWheelspinState = false;
+      if(engine.vision.Wheelspin >0.9 && engine.vision.Wheelspin2 > 0.9){
+           currentWheelspinState = true;
+      }
+      
+      
+      if( currentWheelspinState == true && WheelspinsAnim == false && EnableWheelspinEffect == true&& currentWheelspinState != prevWheelspinState) {
+          stateHdlr.Push(new WheelspinEffect());
+          WheelspinsAnim = true;
+          prevWheelspinState = currentWheelspinState;
+      } else if(Math.abs(currentWheelspinState-prevWheelspinState)>=0.2){
+          prevWheelspinState = currentWheelspinState;
+      } else if(Math.abs(prevWheelspinState - currentWheelspinState)>=0.2){
+          prevWheelspinState = currentWheelspinState
+      } 
+
+      for (let i = 0; i < effects.length; i++) {
+          effects[i].draw();
+          if (effects[i].lifetime <= 0) {
+              effects.splice(i, 1);
+          }
+      }
+
+
+      stateHdlr.Process();
+      window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+</script>

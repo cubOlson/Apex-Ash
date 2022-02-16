@@ -35,7 +35,7 @@
         ctx.fillRect(0, 0, 320, 200);
 
         if (effects.length < 1){
-            effects.push(new baronEffect("yellow", "red"));
+            effects.push(new LuxR());
         }
 
         for (let i = 0; i < effects.length; i++) {
@@ -48,25 +48,24 @@
         window.requestAnimationFrame(update);
     }
 
-    function baronEffect(color1, color2){
-      this.lifetime = 150;
-      this.x = 350;
-      this.effects = [];
-      this.color1 = color1;
-      this.color2 = color2;
+    function LuxR(){
+      this.lifetime = 20;
+      this.start = GetTime();
+      this.elapsed = 0;
+      this.colors = ["blank", "red", "yellow", "cyan", "white"];
       
       this.draw = function () {
-        if(this.x > 100){
-          for (let i = 0; i < 5; i++){
-            DrawCircle(this.x + 50 * i, 100, 30 + 5 * i, this.color1);
-            this.x-=2;
+        this.elapsed = GetTime() - this.start;
+        for(let i = 1; i < 5; i++){
+          var width = 100 - 10 * i - (this.elapsed / 20 * i);
+          if (width <= 0){
+            width = 0;
           }
-        } else {
-          for (let i = 0; i < 5; i++){
-            DrawCircle(this.x + 50 * i, 100 + Math.sin(GetTime()/100 - 100 * i) * 60, 30 + 5 * i, color1);
-          }
-          effects.push(new ParticleExplosion(this.x, 100 + Math.sin(GetTime()/100) * 30, this.color2, 10, 1000, 2, 7, 1.5, false));
-          this.lifetime--;
+          ctx.fillStyle = this.colors[i];
+          ctx.fillRect(0, 100 - width, 320, width * 2)
+        }
+        if(this.elapsed > 4000){
+          this.lifetime = 0;
         }
       }
     };
