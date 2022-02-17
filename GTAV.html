@@ -33,11 +33,12 @@
   var wastedGoing = false;
   var copTimer = 0;
   var copRedUp = false;
+  var lowHealthGoing = false;
 
   lowHpMeter = new Meter(5, lowHpHandler);
-  redMoneyMeter = new Meter(20, moneyHandler);
-  green1MoneyMeter = new Meter(20, moneyHandler);
-  green2MoneyMeter = new Meter(20, moneyHandler);
+  redMoneyMeter = new Meter(25, moneyHandler);
+  green1MoneyMeter = new Meter(25, moneyHandler);
+  green2MoneyMeter = new Meter(25, moneyHandler);
 
 
   function update() {
@@ -87,16 +88,17 @@
   }
 
   function lowHpHandler(){
-    if (lowHpMeter.value > .1){
+    if (lowHpMeter.value > .1 && !lowHealthGoing){
       effects.push(new LowHpEffect());
+      lowHealthGoing = true;
     }
   }
 
   function moneyHandler(){
     if (redMoneyMeter.value > .3){
-      effects.push(new MoneyEffect());
+      effects.push(new MoneyEffect("red"));
     } else if (green1MoneyMeter.value > .3 || green2MoneyMeter.value > .3){
-      effects.push(new MoneyEffect());
+      effects.push(new MoneyEffect("green"));
     }
   }
 
@@ -114,6 +116,7 @@
       }
       if (lowHpMeter.value < .1) {
           this.lifetime = 0
+          lowHealthGoing = false;
       }
     }
   }
