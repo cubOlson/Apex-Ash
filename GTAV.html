@@ -8,12 +8,14 @@
   <meta property="enableWasted" label="Wasted effect" type="boolean" default="1" />
   <meta property="enableWanted" label="Wanted effect" type="boolean" default="1" />
 
-  <meta meter="wastedW" tags="GTA, Grand Theft Auto" type="area" x="0.387" y="0.5037" width="0.01" height=".001" h="0-20" s="25-100" l="10-75"/>
-  <meta meter="wastedT" tags="GTA, Grand Theft Auto" type="area" x="0.5125" y="0.4657" width="0.01" height=".001"  h="0-20" s="25-100" l="10-75"/>
-  <meta meter="wastedD" tags="GTA, Grand Theft Auto" type="area" x="0.59" y="0.5185" width="0.01" height=".001"  h="0-15" s="25-100" l="10-75"/>
-  <meta meter="moneyGreen" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="100-130" s="20-50" l="25-75"/>
+  <meta meter="wastedW" tags="GTA, Grand Theft Auto" type="area" x="0.387" y="0.5037" width="0.04" height=".001" h="330-360" s="40-100" l="0-100"/>
+  <meta meter="wastedT" tags="GTA, Grand Theft Auto" type="area" x="0.5125" y="0.4657" width="0.035" height=".001" h="330-360" s="40-100" l="0-100"/>
+  <meta meter="wastedD" tags="GTA, Grand Theft Auto" type="area" x="0.59" y="0.5185" width="0.03" height=".001" h="330-360" s="40-100" l="0-100"/>
+  <meta meter="copRed" tags="GTA, Grand Theft Auto" type="area" x="0.075" y="0.873" width="0.04" height=".03" h="0-25" s="15-100" l="10-75"/>
+  <meta meter="copBlue" tags="GTA, Grand Theft Auto" type="area" x="0.075" y="0.873" width="0.04" height=".03" h="180-240" s="15-100" l="10-75"/>
+  <meta meter="moneyGreen" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="110-130" s="25-40" l="35-65"/>
+  <meta meter="moneyGreen2" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0935" width="0.037" height=".0259" h="110-130" s="25-40" l="35-65"/>
   <meta meter="moneyRed" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="0-25" s="20-100" l="20-85"/>
-  <meta meter="stars" tags="GTA, Grand Theft Auto" type="area" x="0.913" y="0.0380" height="0.005" width="0.072" h="0-360" s="0-100" l="0-10" />
   <meta meter="lowHp" tags="GTA, Grand Theft Auto" type="area" x="0.0156" y="0.975" height="0.0019" width="0.075" h="0-10" s="15-100" l="10-70" />
 </head>
 
@@ -28,14 +30,22 @@
   var stateHdlr = new StateHandler();
   var effects = [];
   var Freezebackground = false;
+  var wastedGoing = false;
+  var copTimer = 0;
+  var copRedUp = false;
 
   lowHpMeter = new Meter(5, lowHpHandler);
   redMoneyMeter = new Meter(10, moneyHandler);
-  greenMoneyMeter = new Meter(10, moneyHandler);
-  starsMeter = new Meter(10, starHandler);
+  green1MoneyMeter = new Meter(10, moneyHandler);
+  green2MoneyMeter = new Meter(10, moneyHandler);
 
 
   function update() {
+    lowHpMeter.setValue(engine.vision.lowHp);
+    green1MoneyMeter.setValue(engine.vision.moneyGreen);
+    green2MoneyMeter.setValue(engine.vision.moneyGreen2);
+    redMoneyMeter.setValue(engine.vision.moneyRed);
+
     if (!Freezebackground) {
       copyScreen(1);
     }
@@ -49,8 +59,28 @@
 
     if (engine.vision.wastedW > .3 && engine.vision.wastedT > .3 && engine.vision.wastedD > .3){
       console.log("YEAH BOI")
-      stateHdlr.Push(new WastedEffect());
+      if (!wastedGoing){
+        stateHdlr.Push(new WastedEffect());
+        wastedGoing = true;
+      }
     }
+
+    if (engine.vision.copRed > .5 && engine.vision.copBlue < .1){
+      console.log("IN RED")
+      copTimer = GetTime();
+      copRedUp = true;
+    }
+    if (engine.vision.copBlue > .5 && engine.vision.copRed < .1 && copRedUp){
+      console.log("IN BLUE")
+      var elapsed = copTimer - GetTime();
+      if (elapsed < 1000){
+        copTimer = 0;
+        copRedUp = false;
+        effects.push(new PoliceEffect());
+        console.log("COP PUSHED")
+      }
+    }
+
     stateHdlr.Process();
     window.requestAnimationFrame(update);
   }
@@ -64,17 +94,12 @@
   function moneyHandler(){
     if (redMoneyMeter.value > .3){
       effects.push(new MoneyEffect());
-    } else if (greenMoneyMeter.value > .3){
+    } else if (green1MoneyMeter.value > .3 || green2MoneyMeter.value > .3){
       effects.push(new MoneyEffect());
     }
   }
 
-  function starHandler(){
-    return 1;
-  }
-
-        //Effects
-  var CurrentLowHp = false;
+  //Effects
   function LowHpEffect() {
     this.lifetime = 10;
     this.start = GetTime();
@@ -86,7 +111,7 @@
       if ((Math.sin(this.elapsed / 300)) >= 0.99) {
         this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
       }
-      if (CurrentLowHp == false) {
+      if (lowHpMeter.value < .1) {
           this.lifetime = 0
       }
     }
@@ -106,6 +131,7 @@
   }
 
   function WastedEffect() {
+    console.log("Wasted")
     Freezbackground = true;
     this.start = GetTime();
     this.bloodDrip = [];
@@ -118,6 +144,7 @@
       if (this.bloodHeight < -200) {
         stateHdlr.Pop();
         Freezbackground = false;
+        wastedGoing = false;
       }
       this.Draw();
     }
@@ -227,58 +254,22 @@
             }
         };
 
-        function PoliceEffect(color1, color2, color3) {
+        function PoliceEffect() {
             this.start = new Date().getTime();
-            this.duration = 5000;
-            this.count = 2000;
-            this.color1 = color1;
-            this.color2 = color2;
-            this.color3 = color3;
-            this.size = 0;
-            this.timing = 100;
-            this.speed = 4;
+            this.lifetime = 40;
 
-            this.Process = function () {
-                this.elapsed = new Date().getTime() - this.start;
-                if (this.elapsed > this.duration) {
-                    stateHdlr.Pop();
-                }
-                this.Draw();
-            };
-
-            this.Draw = function () {
-                ctx.fillStyle = "black";
+            this.draw = function(){
+              ctx.globalAlpha = .4;
+              if(this.lifetime > 20){
+                ctx.fillStyle = "blue";
                 ctx.fillRect(0, 0, 320, 200);
-
-                if (this.timing > 60 && this.timing < 100) {
-                    ctx.fillStyle = "#ff0000";
-                    ctx.fillRect(0, 0, 106, 200);
-
-                    // ctx.fillStyle = color2;
-                    // ctx.fillRect(106, 0, 108, 200);
-
-                    ctx.fillStyle = "#0000ff";
-                    ctx.fillRect(214, 0, 106, 200);
-                } else if (this.timing > 10 && this.timing < 50) {
-                    ctx.fillStyle = "#0000ff";
-                    ctx.fillRect(0, 0, 106, 200);
-
-                    // ctx.fillStyle = color3;
-                    // ctx.fillRect(106, 0, 108, 200);
-
-                    ctx.fillStyle = "#ff0000";
-                    ctx.fillRect(214, 0, 106, 200);
-                } else {
-                    ctx.fillStyle = "#ffffff";
-                    ctx.fillRect(106, 0, 108, 200);
-                }
-
-                if (this.timing > 0) {
-                    this.timing -= Math.round(this.speed);
-                } else {
-                    this.timing = 100;
-                }
-            };
+              } else if (this.lifetime > 1){
+                ctx.fillStyle = "red";
+                ctx.fillRect(0, 0, 320, 200);
+              }
+              ctx.globalAlpha = 1;
+              this.lifetime--;
+            }
         }
 
                //Helper effects
