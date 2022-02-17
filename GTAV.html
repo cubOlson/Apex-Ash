@@ -76,7 +76,8 @@
       if (elapsed < 1000){
         copTimer = 0;
         copRedUp = false;
-        effects.push(new PoliceEffect());
+        // effects.push(new PoliceEffect());
+        stateHdlr.Push(new PoliceEffect());
         console.log("COP PUSHED")
       }
     }
@@ -117,17 +118,22 @@
     }
   }
 
-  function MoneyEffect() {
-    this.start = GetTime();
-    this.money = [];
-    for (let i = 0; i < 15; i++) {
-      this.money.push(new fallingMoney(Math.random() * 320, (Math.random() * 1) + 5))
-    }
-    this.draw = function () {
-      this.money.forEach(money => {
-        money.draw();
-      });
-    }
+  function MoneyEffect(color) {
+            this.start = GetTime();
+            this.money = [];
+            this.color = color;
+
+            for (let i = 0; i < 35; i++) {
+                this.money.push(new fallingMoney(Math.random() * 320, Math.random() + 5, this.color))
+            }
+            this.draw = function () {
+                this.money.forEach(money => {
+                    money.draw();
+                });
+                if (GetTime() - this.start > 8000) {
+                    this.lifetime = 0;
+                }
+            }
   }
 
   function WastedEffect() {
@@ -256,20 +262,35 @@
 
         function PoliceEffect() {
             this.start = new Date().getTime();
-            this.lifetime = 40;
+            this.duration = 1500;
+            this.timing = 100;
+            this.speed = 8;
+            this.Process = function () {
+                this.elapsed = new Date().getTime() - this.start;
+                if (this.elapsed > this.duration) {
+                    stateHdlr.Pop();
+                }
+                this.Draw();
+            };
+            this.Draw = function () {
+                ctx.fillStyle = "black";
+                ctx.fillRect(0, 0, 320, 200);
+                if (this.timing > 30 && this.timing < 110) {
+                    ctx.fillStyle = "#ff0000";
+                    ctx.fillRect(0, 0, 106, 200);
 
-            this.draw = function(){
-              ctx.globalAlpha = .4;
-              if(this.lifetime > 20){
-                ctx.fillStyle = "blue";
-                ctx.fillRect(0, 0, 320, 200);
-              } else if (this.lifetime > 1){
-                ctx.fillStyle = "red";
-                ctx.fillRect(0, 0, 320, 200);
-              }
-              ctx.globalAlpha = 1;
-              this.lifetime--;
-            }
+                    ctx.fillStyle = "#0000ff";
+                    ctx.fillRect(214, 0, 106, 200);
+                } else {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(106, 0, 108, 200);
+                }
+                if (this.timing > 0) {
+                    this.timing -= this.speed;
+                } else {
+                    this.timing = 110;
+                }
+            };
         }
 
                //Helper effects
@@ -350,23 +371,23 @@
         }
 
         class fallingMoney {
-            constructor(x, speed) {
-                this.speed = speed / 2;
+            constructor(x, speed, color) {
+                this.speed = speed / 5;
                 this.x = x;
-                this.y = 0 - (Math.random() * 500);
+                this.y = 0 - (Math.random() * 250);
                 this.startVal = (Math.random() * 50);
                 this.start = GetTime();
+                this.color = color;
             }
             draw() {
                 this.elapsed = GetTime() - this.start;
                 this.moveVal = (this.elapsed / 1000);
-                ctx.fillStyle = "green";
-                if (((Math.sin(this.startVal + this.moveVal))) > 0) {
-                    this.Calculatedvalue = -((Math.sin(this.startVal + this.moveVal)));
-                } else {
-                    this.Calculatedvalue = ((Math.sin(this.startVal + this.moveVal)));
-                }
-                ctx.fillRect(this.x + Math.sin(this.startVal + this.moveVal) * 100, (this.Calculatedvalue * 50) + this.y, 100, 35);
+                ctx.fillStyle = this.color;
+                ctx.save();
+                ctx.translate(this.x + Math.sin(this.startVal + this.moveVal) * 100, this.y);
+                ctx.rotate(-Math.sin(this.moveVal + this.startVal) / 5);
+                ctx.fillRect(this.x, this.y, 100, 35);
+                ctx.restore();
                 this.y += this.speed;
             }
         }
