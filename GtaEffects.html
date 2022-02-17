@@ -143,17 +143,21 @@
             }
         }
 
-        function MoneyEffect() {
+        function MoneyEffect(color) {
             this.start = GetTime();
             this.money = [];
+            this.color = color;
 
-            for (let i = 0; i < 15; i++) {
-                this.money.push(new fallingMoney(Math.random() * 320, (Math.random() * 1) + 5))
+            for (let i = 0; i < 35; i++) {
+                this.money.push(new fallingMoney(Math.random() * 320, Math.random() + 5, this.color))
             }
             this.draw = function () {
                 this.money.forEach(money => {
                     money.draw();
                 });
+                if (GetTime() - this.start > 8000) {
+                    this.lifetime = 0;
+                }
             }
         }
 
@@ -285,17 +289,11 @@
             }
         };
 
-        function PoliceEffect(color1, color2, color3) {
+        function PoliceEffect() {
             this.start = new Date().getTime();
-            this.duration = 5000;
-            this.count = 2000;
-            this.color1 = color1;
-            this.color2 = color2;
-            this.color3 = color3;
-            this.size = 0;
+            this.duration = 1500;
             this.timing = 100;
-            this.speed = 4;
-
+            this.speed = 8;
             this.Process = function () {
                 this.elapsed = new Date().getTime() - this.start;
                 if (this.elapsed > this.duration) {
@@ -303,38 +301,23 @@
                 }
                 this.Draw();
             };
-
             this.Draw = function () {
                 ctx.fillStyle = "black";
                 ctx.fillRect(0, 0, 320, 200);
-
-                if (this.timing > 60 && this.timing < 100) {
+                if (this.timing > 30 && this.timing < 110) {
                     ctx.fillStyle = "#ff0000";
                     ctx.fillRect(0, 0, 106, 200);
 
-                    // ctx.fillStyle = color2;
-                    // ctx.fillRect(106, 0, 108, 200);
-
                     ctx.fillStyle = "#0000ff";
-                    ctx.fillRect(214, 0, 106, 200);
-                } else if (this.timing > 10 && this.timing < 50) {
-                    ctx.fillStyle = "#0000ff";
-                    ctx.fillRect(0, 0, 106, 200);
-
-                    // ctx.fillStyle = color3;
-                    // ctx.fillRect(106, 0, 108, 200);
-
-                    ctx.fillStyle = "#ff0000";
                     ctx.fillRect(214, 0, 106, 200);
                 } else {
                     ctx.fillStyle = "#ffffff";
                     ctx.fillRect(106, 0, 108, 200);
                 }
-
                 if (this.timing > 0) {
-                    this.timing -= Math.round(this.speed);
+                    this.timing -= this.speed;
                 } else {
-                    this.timing = 100;
+                    this.timing = 110;
                 }
             };
         }
@@ -417,23 +400,23 @@
         }
 
         class fallingMoney {
-            constructor(x, speed) {
-                this.speed = speed / 2;
+            constructor(x, speed, color) {
+                this.speed = speed / 5;
                 this.x = x;
-                this.y = 0 - (Math.random() * 500);
+                this.y = 0 - (Math.random() * 250);
                 this.startVal = (Math.random() * 50);
                 this.start = GetTime();
+                this.color = color;
             }
             draw() {
                 this.elapsed = GetTime() - this.start;
                 this.moveVal = (this.elapsed / 1000);
-                ctx.fillStyle = "green";
-                if (((Math.sin(this.startVal + this.moveVal))) > 0) {
-                    this.Calculatedvalue = -((Math.sin(this.startVal + this.moveVal)));
-                } else {
-                    this.Calculatedvalue = ((Math.sin(this.startVal + this.moveVal)));
-                }
-                ctx.fillRect(this.x + Math.sin(this.startVal + this.moveVal) * 100, (this.Calculatedvalue * 50) + this.y, 100, 35);
+                ctx.fillStyle = this.color;
+                ctx.save();
+                ctx.translate(this.x + Math.sin(this.startVal + this.moveVal) * 100, this.y);
+                ctx.rotate(-Math.sin(this.moveVal + this.startVal) / 5);
+                ctx.fillRect(this.x, this.y, 100, 35);
+                ctx.restore();
                 this.y += this.speed;
             }
         }
@@ -482,6 +465,7 @@
             stateHdlr.Process();
             window.requestAnimationFrame(update);
         }
+        effects.push(new MoneyEffect("green"))
         window.requestAnimationFrame(update);
     </script>
 </body>
