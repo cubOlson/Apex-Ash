@@ -1,37 +1,20 @@
 <head>
-  <title>GTA V</title>
+  <title>GTA V Working Code</title>
   <meta description="Go on an adventure with metering and ambiance effects" />
   <meta publisher="SignalRGB" />
   <meta property="enableHealth" label="Low Health effect" type="boolean" default="1" />
-  <meta property="effectHex" label="Low Health effect Color" type="color" min="0" max="360" default="#ff0000" />
-  <meta default="0" label="Low Health Effect Selector" max="2" min="0" property="EffectStyle" type="number" />
   <meta property="enableExp" label="Exp effect" type="boolean" default="1" />
-  <meta property="effectHex1" label="Exp effect Color" type="color" min="0" max="360" default="#004cff" />
   <meta property="enableMoney" label="Money effect" type="boolean" default="1" />
-  <meta property="effectHex2" label="Money effect Color" type="color" min="0" max="360" default="#0bfc03" />
   <meta property="enableWasted" label="Wasted effect" type="boolean" default="1" />
-
   <meta property="enableWanted" label="Wanted effect" type="boolean" default="1" />
-  <meta meter="wasted" tags="GTA, Grand Theft Auto" type="area" x="0.5214" y="0.4648" height="0.0111" width="0.0005"
-    h="0-5" s="50-80" l="40-70" />
-  <meta meter="map" tags="GTA, Grand Theft Auto" type="area" x="0.9646" y="0.9602" height="0.0009" width="0.0042"
-    h="0-0" s="0-0" l="95-100" />
-  <meta meter="money3" tags="GTA, Grand Theft Auto" type="area" x="0.9807" y="0.1019" height="0.0065" width="0.0005"
-    h="0-0" s="0-0" l="90-95" />
-  <meta meter="money2" tags="GTA, Grand Theft Auto" type="area" x="0.9812" y="0.1" height="0.0037" width="0.001" h="0-0"
-    s="0-0" l="90-95" />
-  <meta meter="exp" tags="GTA, Grand Theft Auto" type="area" x="0.3932" y="0.037" height="0.0028" width="0.0141"
-    h="212-212" s="70-80" l="70-80" />
-  <meta meter="money" tags="GTA, Grand Theft Auto" type="area" x="0.9807" y="0.0667" height="0.0065" width="0.0016"
-    h="120-122" s="20-50" l="55-60" />
-  <meta meter="Star" tags="GTA, Grand Theft Auto" type="area" x="0.9797" y="0.029" height="0.0028" width="0.001" h="0-0"
-    s="0-0" l="90-95" />
-  <meta meter="Bullets" tags="GTA, Grand Theft Auto" type="ocr_numeric" x="0.9719" y="0.0167" width="0.0187"
-    height="0.0306" confidence="70" />
-  <meta meter="lowHp" tags="GTA, Grand Theft Auto" type="area" x="0.0182" y="0.9741" height="0.0019" width="0.0021"
-    h="0-5" s="15-89" l="10-70" />
-  <meta meter="reload" tags="GTA, Grand Theft Auto" type="ocr_numeric" x="0.9432" y="0.0185" width="0.0224"
-    height="0.0287" confidence="70" />
+
+  <meta meter="wastedW" tags="GTA, Grand Theft Auto" type="area" x="0.387" y="0.5037" width="0.01" height=".001" h="0-20" s="25-100" l="10-75"/>
+  <meta meter="wastedT" tags="GTA, Grand Theft Auto" type="area" x="0.5125" y="0.4657" width="0.01" height=".001"  h="0-20" s="25-100" l="10-75"/>
+  <meta meter="wastedD" tags="GTA, Grand Theft Auto" type="area" x="0.59" y="0.5185" width="0.01" height=".001"  h="0-15" s="25-100" l="10-75"/>
+  <meta meter="moneyGreen" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="100-130" s="20-50" l="25-75"/>
+  <meta meter="moneyRed" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="0-25" s="20-100" l="20-85"/>
+  <meta meter="stars" tags="GTA, Grand Theft Auto" type="area" x="0.913" y="0.0380" height="0.005" width="0.072" h="0-360" s="0-100" l="0-10" />
+  <meta meter="lowHp" tags="GTA, Grand Theft Auto" type="area" x="0.0156" y="0.975" height="0.0019" width="0.075" h="0-10" s="15-100" l="10-70" />
 </head>
 
 <body style="margin: 0; padding: 0; background: #000;">
@@ -42,415 +25,20 @@
   var canvas, ctx;
   var width = 320;
   var height = 200;
-  var hue = 1;
-  var intensity = 50;
-  var pulse = false;
-  var stateMgr = new StateHandler();
+  var stateHdlr = new StateHandler();
   var effects = [];
-  var colors;
-  var healthMeter = new Meter(3, healthBar);
-  var expMeter = new Meter(3, expBar);
-  var moneyMeter = new Meter(3, moneyBar);
-  var starMeter = new Meter(3, starBar);
-  var moneyMeter2 = new Meter(3, moneyBar);
-  var moneyMeter3 = new Meter(3, moneyBar);
-  var wastedMeter = new Meter(3, wastedBar);
+  var Freezebackground = false;
 
-  var orbs = [];
-  var timing = 100;
-  var speed = 5;
+  lowHpMeter = new Meter(5, lowHpHandler);
+  redMoneyMeter = new Meter(10, moneyHandler);
+  greenMoneyMeter = new Meter(10, moneyHandler);
+  starsMeter = new Meter(10, starHandler);
 
-  function wastedBar() {
-    if (enableWasted) {
-      if (wastedMeter.value === 1) {
-        for (let i = 0; i < 20; i++) {
-          {
-            setTimeout(function () {
-              effects.push(
-                new moveableBar(0, i * 10, 20, 320, random(-7, 7), 0, 2, 100, 50, 0.7)
-              );
-            }, i * 50);
-          }
-        }
-      }
-    }
-  }
-  function starBar() {
-    if (enableWanted) {
-      if (starMeter.value >= 0) {
-        stateMgr.Push(new BurstRippleState("#2600ff", "#ff0000", "#2600ff"));
-      }
-    }
-  }
-
-  function expBar() {
-    if (enableExp) {
-      if (expMeter.increased) {
-        var colors = hexToHSL(effectHex1);
-        for (let i = 0; i < 20; i++) {
-          setTimeout(function () {
-            effects.push(
-              new moveableBar(i * 20, 160, 100, 20, 0, -5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9)
-            );
-          }, i * 30);
-          setTimeout(function () {
-            effects.push(
-              new moveableBar(i * 20, 160, 100, 20, 0, 5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9)
-            );
-          }, i * 30);
-        }
-      }
-    }
-  }
-  function moneyBar() {
-    if (enableMoney) {
-      if (moneyMeter.increased || moneyMeter2.increased || moneyMeter3.increased) {
-        var colors = hexToHSL(effectHex2);
-        for (let i = 0; i < 20; i++) {
-          setTimeout(function () {
-            effects.push(
-              new moveableBar(i * 20, 160, 100, 20, 0, -5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9)
-            );
-          }, i * 30);
-          setTimeout(function () {
-            effects.push(
-              new moveableBar(i * 20, 160, 100, 20, 0, 5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9)
-            );
-          }, i * 30);
-        }
-      }
-    }
-  }
-  function healthBar() {
-    if (enableHealth) {
-      if (healthMeter.increased) {
-        var colors = hexToHSL(effectHex);
-        switch (Math.round(EffectStyle)) {
-          case 0:
-            for (let i = 0; i < 20 * 2; i++) {
-              effects.push(
-                new moveableBar(
-                  random(0, 360),
-                  random(0, 200),
-                  40,
-                  40,
-                  random(-5, 5),
-                  random(-5, 5),
-                  colors.h + random(-20, 20),
-                  colors.s + random(-20, 20),
-                  colors.l,
-                  0.9
-                )
-              );
-            }
-            break;
-          case 1:
-            for (let i = 0; i < 20 * 4; i++) {
-              setTimeout(function () {
-                effects.push(
-                  new moveableBar(
-                    random(0, 360),
-                    random(-100, 0),
-                    20,
-                    40,
-                    0,
-                    -10,
-                    colors.h,
-                    colors.s,
-                    colors.l,
-                    0.9
-                  )
-                );
-              }, random(0, 1500));
-            }
-            break;
-          case 2:
-            for (let i = 0; i < 20 * 3; i++) {
-              effects.push(
-                new moveableBar(
-                  360,
-                  random(0, 200),
-                  40,
-                  20,
-                  random(-7, -1),
-                  0,
-                  colors.h + random(-30, 30),
-                  colors.s + random(-20, 20),
-                  colors.l,
-                  0.9
-                )
-              );
-              effects.push(
-                new moveableBar(
-                  0,
-                  random(0, 200),
-                  40,
-                  20,
-                  random(1, 7),
-                  0,
-                  colors.h + random(-20, 20),
-                  colors.s + random(-20, 20),
-                  colors.l,
-                  0.9
-                )
-              );
-            }
-            break;
-        }
-      }
-    }
-  }
-
-  function BurstRippleState(color1, color2, color3) {
-    this.start = new Date().getTime();
-    this.duration = 5000;
-    this.count = 2000;
-    this.color1 = color1;
-    this.color2 = color2;
-    this.color3 = color3;
-    this.size = 0;
-
-    this.Process = function () {
-      this.elapsed = new Date().getTime() - this.start;
-      if (this.elapsed > this.duration) {
-        stateMgr.Pop();
-      }
-      this.Draw();
-    };
-
-    this.Draw = function () {
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, 320, 200);
-
-      if (timing > 60 && timing < 100) {
-        ctx.fillStyle = "#ff0000";
-        ctx.fillRect(0, 0, 106, 200);
-
-        // ctx.fillStyle = color2;
-        // ctx.fillRect(106, 0, 108, 200);
-
-        ctx.fillStyle = "#0000ff";
-        ctx.fillRect(214, 0, 106, 200);
-      } else if (timing > 10 && timing < 50) {
-        ctx.fillStyle = "#0000ff";
-        ctx.fillRect(0, 0, 106, 200);
-
-        // ctx.fillStyle = color3;
-        // ctx.fillRect(106, 0, 108, 200);
-
-        ctx.fillStyle = "#ff0000";
-        ctx.fillRect(214, 0, 106, 200);
-      } else {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(106, 0, 108, 200);
-      }
-
-      if (timing > 0) {
-        timing -= Math.round(speed);
-      } else {
-        timing = 100;
-      }
-    };
-  }
-  function colorFilter(hue, lightnessOffset = 0, milliseconds = 4000) {
-    this.start = new Date().getTime();
-    this.duration = milliseconds;
-    this.hue = hue;
-    this.lightnessOffset = lightnessOffset;
-    this.Process = function () {
-      this.elapsed = new Date().getTime() - this.start;
-      if (this.elapsed > this.duration) {
-        stateMgr.Pop();
-      }
-      this.draw();
-    };
-
-    this.draw = function () {
-      let lightness = new Int8Array(engine.zone.lightness);
-      let sat = new Int8Array(engine.zone.saturation);
-      let hue = new Int16Array(engine.zone.hue);
-
-      for (var iZone = 0; iZone < 560; iZone++) {
-        var satBoost = sat[iZone] + 35;
-        ctx.fillStyle =
-          'hsla(' + this.hue + ',' + satBoost + '%,' + (lightness[iZone] + this.lightnessOffset) + '%, ' + 100 * 0.01 + ')';
-
-        var iRow = Math.floor(iZone / 28);
-        var iCol = iZone % 28;
-        var iWidth = 320 / 28;
-        var iHeight = 200 / 20;
-        var iZx = iCol * iWidth;
-        var iZy = iRow * iHeight;
-
-        ctx.fillRect(iZx, iZy, iWidth, iHeight);
-      }
-    };
-  }
-  function CenterWave(hue, saturation, lightness, value) {
-    this.start = new Date().getTime();
-    this.duration = 2000;
-    this.lifetime = 50;
-    this.size = 0;
-    this.value = value;
-    this.hue = hue;
-    this.saturation = saturation;
-    this.lightness = lightness;
-    this.flashing;
-    this.Process = function () {
-      this.elapsed = new Date().getTime() - this.start;
-      if (this.elapsed > this.duration) {
-        stateMgr.Pop();
-      }
-      this.Draw();
-    };
-    this.Draw = function () {
-      let lightness = new Int8Array(engine.zone.lightness);
-      let sat = new Int8Array(engine.zone.saturation);
-      let hue = new Int16Array(engine.zone.hue);
-
-      for (var iZone = 0; iZone < 560; iZone++) {
-        ctx.fillStyle = 'hsla(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] + '%, ' + 100 * 0.01 + ')';
-
-        var iRow = Math.floor(iZone / 28);
-        var iCol = iZone % 28;
-        var iWidth = 320 / 28;
-        var iHeight = 200 / 20;
-        var iZx = iCol * iWidth;
-        var iZy = iRow * iHeight;
-
-        ctx.fillRect(iZx, iZy, iWidth, iHeight);
-      }
-
-      ctx.fillStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + random(this.lightness - 10, this.lightness + 10) + '%)';
-
-      ctx.fillRect(160, 0, this.size * 160, 200);
-      ctx.fillRect(160, 0, -this.size * 160, 200);
-      if (this.size < this.value) {
-        this.size += 0.03;
-      }
-    };
-    this.lifetime--;
-  }
-  function moveableBar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
-    this.x = x;
-    this.y = y;
-    this.hue = hue;
-    this.sat = sat;
-    this.lit = lit;
-    this.alpha = alpha;
-    this.lifetime = 50;
-    this.size = 0;
-    this.ydirection = yDirection;
-    this.xdirection = xDirection;
-    this.width = width;
-    this.height = height;
-
-    this.draw = function () {
-      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + this.alpha + ' )';
-      ctx.fillRect(this.x, this.y, this.height, this.width);
-      this.lifetime--;
-      this.y -= this.ydirection;
-      this.x += this.xdirection;
-    };
-  }
-
-  function IdleState() {
-    this.Process = function () {
-      let lightness = new Int8Array(engine.zone.lightness);
-      let sat = new Int8Array(engine.zone.saturation);
-      let hue = new Int16Array(engine.zone.hue);
-
-      for (var iZone = 0; iZone < 560; iZone++) {
-        ctx.fillStyle =
-          "hsla(" +
-          hue[iZone] +
-          "," +
-          sat[iZone] +
-          "%," +
-          lightness[iZone] +
-          "%, " +
-          100 * 0.01 +
-          ")";
-
-        var iRow = Math.floor(iZone / 28);
-        var iCol = iZone % 28;
-        var iWidth = 320 / 28;
-        var iHeight = 200 / 20;
-        var iZx = iCol * iWidth;
-        var iZy = iRow * iHeight;
-
-        ctx.fillRect(iZx, iZy, iWidth, iHeight);
-      }
-    };
-  }
-
-  function random(min, max) {
-    // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  function hexToHSL(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-
-    var r = parseInt(result[1], 16);
-    var g = parseInt(result[2], 16);
-    var b = parseInt(result[3], 16);
-
-    (r /= 255), (g /= 255), (b /= 255);
-    var max = Math.max(r, g, b),
-      min = Math.min(r, g, b);
-    var h,
-      s,
-      l = (max + min) / 2;
-
-    if (max === min) {
-      h = s = 0; // achromatic
-    } else {
-      var d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case r:
-          h = (g - b) / d + (g < b ? 6 : 0);
-          break;
-        case g:
-          h = (b - r) / d + 2;
-          break;
-        case b:
-          h = (r - g) / d + 4;
-          break;
-      }
-      h /= 6;
-    }
-
-    s = s * 100;
-    s = Math.round(s);
-    l = l * 100;
-    l = Math.round(l);
-    h = Math.round(360 * h);
-
-    var colors = [];
-    colors['h'] = h;
-    colors['s'] = s;
-    colors['l'] = l;
-
-    return colors;
-  }
 
   function update() {
-    stateMgr.Process();
-    if (engine.vision.map === 1) {
-      enableWanted = false;
-      enableHealth = false;
-      enableMoney = false;
-      enableExp = false;
+    if (!Freezebackground) {
+      copyScreen(1);
     }
-    starMeter.setValue(engine.vision.Star);
-    wastedMeter.setValue(engine.vision.wasted);
-    healthMeter.setValue(engine.vision.lowHp);
-    expMeter.setValue(engine.vision.exp);
-    moneyMeter.setValue(engine.vision.money);
-    moneyMeter2.setValue(engine.vision.money2);
-    moneyMeter3.setValue(engine.vision.money3);
 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
@@ -458,8 +46,388 @@
         effects.splice(i, 1);
       }
     }
+
+    if (engine.vision.wastedW > .3 && engine.vision.wastedT > .3 && engine.vision.wastedD > .3){
+      console.log("YEAH BOI")
+      stateHdlr.Push(new WastedEffect());
+    }
+    stateHdlr.Process();
     window.requestAnimationFrame(update);
   }
+
+  function lowHpHandler(){
+    if (lowHpMeter.value > .1){
+      effects.push(new LowHpEffect());
+    }
+  }
+
+  function moneyHandler(){
+    if (redMoneyMeter.value > .3){
+      effects.push(new MoneyEffect());
+    } else if (greenMoneyMeter.value > .3){
+      effects.push(new MoneyEffect());
+    }
+  }
+
+  function starHandler(){
+    return 1;
+  }
+
+        //Effects
+  var CurrentLowHp = false;
+  function LowHpEffect() {
+    this.lifetime = 10;
+    this.start = GetTime();
+    this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+    this.draw = function () {
+      this.elapsed = GetTime();
+      this.explosionEffect.draw();
+      DrawHeart(160, 90, (Math.sin(this.elapsed / 300) + 1) * 50, (Math.sin(this.elapsed / 300) + 1) * 25)
+      if ((Math.sin(this.elapsed / 300)) >= 0.99) {
+        this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+      }
+      if (CurrentLowHp == false) {
+          this.lifetime = 0
+      }
+    }
+  }
+
+  function MoneyEffect() {
+    this.start = GetTime();
+    this.money = [];
+    for (let i = 0; i < 15; i++) {
+      this.money.push(new fallingMoney(Math.random() * 320, (Math.random() * 1) + 5))
+    }
+    this.draw = function () {
+      this.money.forEach(money => {
+        money.draw();
+      });
+    }
+  }
+
+  function WastedEffect() {
+    Freezbackground = true;
+    this.start = GetTime();
+    this.bloodDrip = [];
+    this.bloodHeight = 0;
+    this.Process = function () {
+      if (Math.random() > 0.8) {
+        this.bloodDrip.push(new blood(Math.random() * 320, 0, "red", 0.01))
+      }
+      this.elapsed = GetTime() - this.start;
+      if (this.bloodHeight < -200) {
+        stateHdlr.Pop();
+        Freezbackground = false;
+      }
+      this.Draw();
+    }
+    this.Draw = function () {
+      copyScreen(0.1)
+      this.bloodDrip.forEach((blood, index) => {
+        blood.Draw();
+        if (blood.y > 200 - this.bloodHeight) {
+            this.bloodHeight -= blood.size;
+            this.bloodDrip.splice(index, 1)
+        }
+      });
+      ctx.fillStyle = "red";
+      ctx.fillRect(0, 200, 320, this.bloodHeight)
+    }
+  }
+
+  //We could use the arrow effect as XP effect( something like this:      effects.push(new ArrowEffect("up", "blue", 3, 5, 1500));)
+
+  function ArrowEffect(direction, color, amount, speed, duration) {
+      this.start = GetTime();
+      this.speed = speed;
+      this.duration = duration;
+      this.lifetime = this.duration;
+      this.direction = direction;
+      this.color = color;
+      this.amount = amount;
+      this.draw = function () {
+          if (this.direction == 'up') {
+              this.speed = -this.speed;
+              ctx.fillStyle = this.color;
+              for (let i = 0; i < this.amount; i++) {
+                  ctx.beginPath();
+                  ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
+                  ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+                  ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+                  ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
+                  ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+                  ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+                  ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+                  ctx.fill();
+              }
+          } else {
+              ctx.fillStyle = this.color;
+              for (let i = 0; i < this.amount; i++) {
+                  ctx.beginPath();
+                  ctx.moveTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(320, 240 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(320, 180 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(160, 240 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(0, 180 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(0, 240 - this.lifetime / 1.5 + (200 * i));
+                  ctx.lineTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+                  ctx.fill();
+              }
+          }
+          this.Ymin += this.speed;
+          this.elapsed = new Date().getTime() - this.start;
+          this.lifetime = this.duration - this.elapsed;
+          if (this.lifetime <= 0) {
+              speedAnim = false
+          }
+      }
+  }
+
+        function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts, hasPhysics) {
+            this.start = GetTime();
+            this.col = color;
+            this.speed = speed;
+            this.duration = duration;
+            this.lifetime = 2000;
+            this.amount = particleAmount;
+            this.size = particleSize
+            this.x = x;
+            this.y = y;
+            this.fadeSpeed = fadeSpeed;
+            this.particles = [];
+            this.useHearts = useHearts;
+            this.hasPhysics = hasPhysics;
+
+            while (this.particles.length < this.amount) {
+                if (notrandomY) {
+                    this.yspeed = -this.speed / 1.5;
+                } else {
+                    this.yspeed = ((Math.random() - 0.5) * this.speed);
+                }
+                if (this.useHearts == null || this.useHearts == false) {
+                    this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+                        {
+                            x: ((Math.random() - 0.5) * this.speed),
+                            y: this.yspeed
+                        }, this.hasPhysics))
+                } else {
+                    this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+                        {
+                            x: ((Math.random() - 0.5) * this.speed),
+                            y: this.yspeed
+                        }))
+                }
+
+                this.draw = function () {
+                    this.lifetime = this.duration - (GetTime() - this.start)
+                    this.particles.forEach((Particle, index) => {
+                        Particle.draw()
+                    })
+                }
+            }
+        };
+
+        function PoliceEffect(color1, color2, color3) {
+            this.start = new Date().getTime();
+            this.duration = 5000;
+            this.count = 2000;
+            this.color1 = color1;
+            this.color2 = color2;
+            this.color3 = color3;
+            this.size = 0;
+            this.timing = 100;
+            this.speed = 4;
+
+            this.Process = function () {
+                this.elapsed = new Date().getTime() - this.start;
+                if (this.elapsed > this.duration) {
+                    stateHdlr.Pop();
+                }
+                this.Draw();
+            };
+
+            this.Draw = function () {
+                ctx.fillStyle = "black";
+                ctx.fillRect(0, 0, 320, 200);
+
+                if (this.timing > 60 && this.timing < 100) {
+                    ctx.fillStyle = "#ff0000";
+                    ctx.fillRect(0, 0, 106, 200);
+
+                    // ctx.fillStyle = color2;
+                    // ctx.fillRect(106, 0, 108, 200);
+
+                    ctx.fillStyle = "#0000ff";
+                    ctx.fillRect(214, 0, 106, 200);
+                } else if (this.timing > 10 && this.timing < 50) {
+                    ctx.fillStyle = "#0000ff";
+                    ctx.fillRect(0, 0, 106, 200);
+
+                    // ctx.fillStyle = color3;
+                    // ctx.fillRect(106, 0, 108, 200);
+
+                    ctx.fillStyle = "#ff0000";
+                    ctx.fillRect(214, 0, 106, 200);
+                } else {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(106, 0, 108, 200);
+                }
+
+                if (this.timing > 0) {
+                    this.timing -= Math.round(this.speed);
+                } else {
+                    this.timing = 100;
+                }
+            };
+        }
+
+               //Helper effects
+
+
+               function DrawHeart(x, y, xSize, Ysize, color) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(x, y);
+            // top left curve
+            ctx.bezierCurveTo(
+                x,
+                y,
+                x - xSize / 2,
+                y - Ysize,
+                x - xSize / 2,
+                y + Ysize / 4
+            );
+            ctx.bezierCurveTo(
+                x - xSize / 2,
+                y + Ysize / 4,
+                x - xSize / 2,
+                y + Ysize / 4,
+                x,
+                y + Ysize
+            );
+            ctx.bezierCurveTo(
+                x + xSize / 2,
+                y + Ysize / 4,
+                x + xSize / 2,
+                y + Ysize / 4,
+                x + xSize / 2,
+                y + Ysize / 4
+            );
+            ctx.bezierCurveTo(
+                x + xSize / 2,
+                y + Ysize / 4,
+                x + xSize / 2,
+                y - Ysize,
+                x,
+                y
+            );
+
+            ctx.fill()
+            ctx.restore()
+        };
+
+        function GetTime() {
+            return new Date().getTime();
+        }
+
+        //classes
+        class ExplosionParticle {
+            constructor(x, y, radius, color, fadeSpeed, velocity, hasPhysics) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.radius = radius;
+                this.velocity = velocity;
+                this.alpha = 1 * fadeSpeed;
+                this.hasPhysics = hasPhysics;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath()
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+                ctx.fillStyle = this.color
+                ctx.fill()
+                this.x += this.velocity.x
+                this.y += this.velocity.y
+                if (this.hasPhysics != null || this.hasPhysics != false) {
+                    this.velocity.y += 0.3;
+                }
+                this.alpha -= 0.01
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        class fallingMoney {
+            constructor(x, speed) {
+                this.speed = speed / 2;
+                this.x = x;
+                this.y = 0 - (Math.random() * 500);
+                this.startVal = (Math.random() * 50);
+                this.start = GetTime();
+            }
+            draw() {
+                this.elapsed = GetTime() - this.start;
+                this.moveVal = (this.elapsed / 1000);
+                ctx.fillStyle = "green";
+                if (((Math.sin(this.startVal + this.moveVal))) > 0) {
+                    this.Calculatedvalue = -((Math.sin(this.startVal + this.moveVal)));
+                } else {
+                    this.Calculatedvalue = ((Math.sin(this.startVal + this.moveVal)));
+                }
+                ctx.fillRect(this.x + Math.sin(this.startVal + this.moveVal) * 100, (this.Calculatedvalue * 50) + this.y, 100, 35);
+                this.y += this.speed;
+            }
+        }
+
+        class blood {
+            constructor(x, y, color, fade) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.fade = fade;
+                this.speed = (Math.random() + 0.1) * 6
+                this.size = (Math.random() * 5) + 5;
+            }
+            Draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                this.y += this.speed * Math.random();
+                this.x += (Math.random() - 0.5) * 8;
+            }
+
+        }
+
+function copyScreen(alpha) {
+
+var shine = engine.vision.ShineMeter
+let lightness = new Int8Array(engine.zone.lightness);
+let sat = new Int8Array(engine.zone.saturation);
+let hue = new Int16Array(engine.zone.hue);
+for (var iZone = 0; iZone < 560; iZone++) {
+    var iRow = Math.floor(iZone / 28);
+    var iCol = iZone % 28;
+    var iWidth = 320 / 28;
+    var iHeight = 200 / 20;
+    var iZx = iCol * iWidth;
+    var iZy = iRow * iHeight;
+    ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+    ctx.fillRect(iZx, iZy, iWidth, iHeight);
+}
+
+}
 
   function StateHandler() {
     var stack = [];
@@ -490,44 +458,39 @@
     };
   }
 
-  function Meter(count, callback) {
-    this.size = count;
-    this.value = 0;
-    this.diff = 0;
-    this.increased = false;
-    this.decreased = false;
-    var values = [];
+  function Meter(size, callback) {
+            this.size = size;
+            this.value = 0;
+            this.diff = 0;
+            this.increased = false;
+            this.decreased = false;
+            var values = [];
 
-    this.setValue = function (updatedValue) {
-      // Add and shift.
-      values.push(updatedValue);
-      if (values.length > this.size) {
-        values.shift();
-      }
+            this.setValue = function (updatedValue) {
+                values.push(updatedValue);
+                if (values.length > this.size) {
+                    values.shift();
+                }
 
-      // Exit early if we've got a long-term match.
-      for (var i = 0; i < values.length - 1; i++) {
-        if (values[i] !== values[i + 1]) return;
-      }
-
-      // We got here, so we've got a matching value collection.
-      if (this.value !== values[0]) {
-        //var fromZero = this.value === 0;
-        //var toZero = values[0] === 0;
-        this.diff = Math.abs(this.value - values[0]);
-        this.increased = this.value < values[0];
-        this.decreased = this.value > values[0];
-        this.value = values[0];
-        callback();
-      }
-    };
-  }
+                for (var i = 0; i < values.length - 1; i++) {
+                    if (values[i] !== values[i + 1]) return;
+                }
+                if (this.value !== values[0]) {
+                    this.diff = Math.abs(this.value - values[0]);
+                    this.increased = this.value < values[0];
+                    this.decreased = this.value > values[0];
+                    this.value = values[0];
+                    callback();
+                }
+            };
+        }
 
   function onEngineReady() {
     // Grab canvas and rendering context.
     canvas = document.getElementById('exCanvas');
     ctx = canvas.getContext('2d');
-    stateMgr.Push(new IdleState());
     window.requestAnimationFrame(update);
   }
+
+  onEngineReady();
 </script>
