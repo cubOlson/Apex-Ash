@@ -13,9 +13,12 @@
   <meta meter="wastedD" tags="GTA, Grand Theft Auto" type="area" x="0.59" y="0.5185" width="0.03" height=".001" h="330-360" s="40-100" l="0-100"/>
   <meta meter="copRed" tags="GTA, Grand Theft Auto" type="area" x="0.075" y="0.873" width="0.04" height=".03" h="0-25" s="15-100" l="10-75"/>
   <meta meter="copBlue" tags="GTA, Grand Theft Auto" type="area" x="0.075" y="0.873" width="0.04" height=".03" h="180-240" s="15-100" l="10-75"/>
+  <meta meter="firstStar" tags="GTA, Grand Theft Auto" type="area" x="0.977" y="0.0269" width="0.004" height=".006" h="0-360" s="0-100" l="90-100"/>
   <meta meter="moneyGreen" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="110-130" s="25-40" l="35-65"/>
   <meta meter="moneyGreen2" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0935" width="0.037" height=".0259" h="110-130" s="25-40" l="35-65"/>
-  <meta meter="moneyRed" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="0-25" s="20-100" l="20-85"/>
+  <meta meter="moneyBlack" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="0-360" s="0-100" l="0-10"/>
+  <meta meter="moneyBlack2" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0935" width="0.037" height=".0259" h="0-360" s="0-100" l="0-10"/>
+  <meta meter="moneyRed" tags="GTA, Grand Theft Auto" type="area" x="0.9485" y="0.0611" width="0.037" height=".0259" h="0-5" s="20-100" l="20-85"/>
   <meta meter="lowHp" tags="GTA, Grand Theft Auto" type="area" x="0.0156" y="0.975" height="0.0019" width="0.075" h="0-10" s="15-100" l="10-70" />
 </head>
 
@@ -37,15 +40,41 @@
 
   lowHpMeter = new Meter(5, lowHpHandler);
   redMoneyMeter = new Meter(25, moneyHandler);
-  green1MoneyMeter = new Meter(25, moneyHandler);
-  green2MoneyMeter = new Meter(25, moneyHandler);
+  green1MoneyMeter = new Meter(20, moneyHandler);
+  green2MoneyMeter = new Meter(20, moneyHandler);
+  black1MoneyMeter = new Meter(20, moneyHandler);
+  black2MoneyMeter = new Meter(20, moneyHandler);
+  firstStarMeter = new Meter(5, ()=>"");
 
 
   function update() {
     lowHpMeter.setValue(engine.vision.lowHp);
     green1MoneyMeter.setValue(engine.vision.moneyGreen);
     green2MoneyMeter.setValue(engine.vision.moneyGreen2);
+    black1MoneyMeter.setValue(engine.vision.moneyBlack);
+    black2MoneyMeter.setValue(engine.vision.moneyBlack2);
     redMoneyMeter.setValue(engine.vision.moneyRed);
+    firstStarMeter.setValue(engine.vision.firstStar);
+
+    if (engine.vision.wastedW > .3 && engine.vision.wastedT > .3 && engine.vision.wastedD > .3){
+      if (!wastedGoing){
+        stateHdlr.Push(new WastedEffect());
+        wastedGoing = true;
+      }
+    }
+
+    if (engine.vision.copRed > .3 && engine.vision.copBlue < .1){
+      copTimer = GetTime();
+      copRedUp = true;
+    }
+    if (engine.vision.copBlue > .3 && engine.vision.copRed < .1 && copRedUp && firstStarMeter.value > .9){
+      var elapsed = copTimer - GetTime();
+      if (elapsed < 1000){
+        copTimer = 0;
+        copRedUp = false;
+        effects.push(new PoliceEffect());
+      }
+    }
 
     if (!Freezebackground) {
       copyScreen(1);
@@ -55,31 +84,6 @@
       effects[i].draw();
       if (effects[i].lifetime <= 0) {
         effects.splice(i, 1);
-      }
-    }
-
-    if (engine.vision.wastedW > .3 && engine.vision.wastedT > .3 && engine.vision.wastedD > .3){
-      console.log("YEAH BOI")
-      if (!wastedGoing){
-        stateHdlr.Push(new WastedEffect());
-        wastedGoing = true;
-      }
-    }
-
-    if (engine.vision.copRed > .5 && engine.vision.copBlue < .1){
-      console.log("IN RED")
-      copTimer = GetTime();
-      copRedUp = true;
-    }
-    if (engine.vision.copBlue > .5 && engine.vision.copRed < .1 && copRedUp){
-      console.log("IN BLUE")
-      var elapsed = copTimer - GetTime();
-      if (elapsed < 1000){
-        copTimer = 0;
-        copRedUp = false;
-        // effects.push(new PoliceEffect());
-        stateHdlr.Push(new PoliceEffect());
-        console.log("COP PUSHED")
       }
     }
 
@@ -95,9 +99,9 @@
   }
 
   function moneyHandler(){
-    if (redMoneyMeter.value > .3){
+    if (redMoneyMeter.value > .3 && black1MoneyMeter.value){
       effects.push(new MoneyEffect("red"));
-    } else if (green1MoneyMeter.value > .3 || green2MoneyMeter.value > .3){
+    } else if ((green1MoneyMeter.value > .3 || green2MoneyMeter.value > .3) && (black1MoneyMeter.value || black2MoneyMeter.value)){
       effects.push(new MoneyEffect("green"));
     }
   }
@@ -268,16 +272,11 @@
             this.duration = 1500;
             this.timing = 100;
             this.speed = 8;
-            this.Process = function () {
+            this.lifetime = 10;
+
+            this.draw = function () {
                 this.elapsed = new Date().getTime() - this.start;
-                if (this.elapsed > this.duration) {
-                    stateHdlr.Pop();
-                }
-                this.Draw();
-            };
-            this.Draw = function () {
-                ctx.fillStyle = "black";
-                ctx.fillRect(0, 0, 320, 200);
+                ctx.globalAlpha = .6;
                 if (this.timing > 30 && this.timing < 110) {
                     ctx.fillStyle = "#ff0000";
                     ctx.fillRect(0, 0, 106, 200);
@@ -292,6 +291,10 @@
                     this.timing -= this.speed;
                 } else {
                     this.timing = 110;
+                }
+                ctx.globalAlpha = 1;
+                if (this.elapsed > this.duration) {
+                    this.lifetime = 0;
                 }
             };
         }
