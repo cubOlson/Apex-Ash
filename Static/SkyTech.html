@@ -7,6 +7,8 @@
   <meta property="myHuePicker2" label="Hue Picker Control" type="hue" default="65" min="0" max="360">
   <meta property="myHuePicker3" label="Hue Picker Control" type="hue" default="125" min="0" max="360">
   <meta property="myHuePicker4" label="Hue Picker Control" type="hue" default="205" min="0" max="360">
+  <meta property="reactive" label="Audio Reactive" type="boolean" default="0" />
+  <meta property="freqThresh" label="Frequency Threshold" type="number" min="100" max="3500" default="1600"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -19,19 +21,24 @@
   var speeds = [];
   var hues = [];
   var separation = [];
+  var frequency = 0;
+  var threshold = 1600;
 
   function update(){
     ctx.fillStyle = "rgb(10, 10, 10)";
     ctx.fillRect(0, 0, 320, 200);
 
-    let frequency = new Int8Array(engine.audio.freq);
+    if (reactive){
+      frequency = new Int8Array(engine.audio.freq).reduce((a, b) => a + b, 0);
+    } else {
+      frequency = 0;
+    }
 
-    console.log(frequency.reduce((a, b) => a + b, 0));
-
+    threshold = freqThresh;
     hues = [myHuePicker1, myHuePicker2, myHuePicker3, myHuePicker4];
     separation = [22, 7, -7, -22];
 
-    if (speeds.length < 10){
+    if (speeds.length < 15){
         speeds.push(new speedCircle());
     }
     speeds.forEach((ele, i) => {
@@ -52,6 +59,25 @@
     });
 
     window.requestAnimationFrame(update);
+  }
+
+  function soundRipple(x, y, color){
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.radius = 10;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.beginPath();
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.stroke();
+      this.radius += 10;
+      if(this.radius > 300){
+        this.lifetime = 0;
+      }
+    }
   }
 
   function skyTechMain(){
@@ -97,6 +123,13 @@
           this.rotate+=.1;
           if(this.rotate >= Math.PI * 2){
             this.rotate = 0;
+          }
+          if (frequency > threshold){
+            var thisFreq = frequency / 10;
+            if (thisFreq > 255){
+              thisFreq = Math.floor(thisFreq % 255);
+            }
+            effects.push(new soundRipple(this.x, this.y, `hsl(${thisFreq}, 100%, 50%)`));
           }
         }
       }
