@@ -1,5 +1,5 @@
 <head>
-  <title>Black Hole</title>
+  <title>Black Hole 2</title>
   <meta description="A swirling black hole effect." />
   <meta publisher="SignalRGB" />
   <meta
@@ -32,14 +32,6 @@
     min="0"
     max="360"
     default="240"
-  />
-  <meta
-    property="partSize"
-    label="Particle Size"
-    type="number"
-    min="1"
-    max="20"
-    default="10"
   />
   <meta
     property="speedRaw"
@@ -107,59 +99,30 @@
 
   var customHues = [fgHue1, fgHue2, fgHue3];
 
-  var getColor = function (i) {
-    var customHues = [fgHue1, fgHue2, fgHue3];
-
-    if (typeof colorLib[palette][i] == "undefined") {
-      switch (palette) {
-        case "Rainbow":
-          colorLib[palette][i] = [Math.random() * 360, 100];
-          if (rainBg < 360) {
-            rainBg += speedRaw / 50;
-          } else {
-            rainBg = 0;
-          }
-          colorLib[palette]["bg"] = "hsla(" + rainBg + ",100%,40%,0.2)";
-          break;
-        case "Space":
-          colorLib[palette][i] =
-            spaceLib[Math.floor(Math.random() * spaceLib.length)];
-          colorLib[palette]["bg"] = "hsla(" + spaceLibBg + ",100%,40%,0.2)";
-          break;
-        case "Custom":
-          var h = customHues[Math.floor(Math.random() * customHues.length)];
-          colorLib[palette][i] = [h, 100];
-          colorLib[palette]["bg"] = "hsla(" + customHues[0] + ",100%,40%,0.2)";
-          break;
-        case "Random":
-          colorLib[palette][i] = [
-            Math.round(Math.random() * 360),
-            Math.round(Math.random() * 100),
-            (colorLib[palette]["bg"] = "hsla(" + randomBg + ",100%,40%,0.2)"),
-          ];
-          break;
-        default:
-          console.log("Unknown palette.");
-          return [0, 0];
-      }
-    }
-
-    return colorLib[palette][i];
-  };
-
-  for (let i = 0; i < 300; i++) {
-    effects.push(new Particle(true));
+  for (let i = 0; i < 20; i++) {
+    effects.push(new Ring(true));
   }
+
+  var spaceBG = [getRandomInt(240, 280), getRandomInt(50, 100)];
+  var randomBg = Math.round(Math.random() * 360);
 
   function update() {
     ctx.drawImage(bgImage, 0, 0);
-    ctx.fillStyle = colorLib[palette]["bg"];
+    if (palette == "Space") {
+      ctx.fillStyle = "hsla(" + spaceBG[0] + "," + spaceBG[1] + "%,50%,0.15)";
+    } else if (palette == "Custom") {
+      ctx.fillStyle = "hsla(" + fgHue1 + "," + 100 + "%,50%,0.15)";
+    } else if (palette == "Random") { 
+      ctx.fillStyle = "hsla(" + randomBg + "," + 100 + "%,50%,0.15)";
+    } else {
+      ctx.fillStyle = "hsla(" + randomBg + "," + 100 + "%,50%,0.15)";
+    }
     ctx.fillRect(0, 0, width, height);
 
     customHues = [fgHue1, fgHue2, fgHue3];
 
-    if (effects.length < 500) {
-      effects.push(new Particle(false));
+    if (effects.length < 20) {
+      effects.push(new Ring(false));
     }
 
     for (i = 0; i < effects.length; i++) {
@@ -198,91 +161,112 @@
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function Particle(init) {
+  function Ring(init) {
     this.id = Math.floor(1000 + Math.random() * 9000);
 
-    if (!init) {
-      this.r = Math.random() * 30 + 150;
+    if (init) {
+      this.r = getRandomInt(0, 200);
     } else {
-      this.r = Math.random() * 160;
+      this.r = getRandomInt(180, 200);
     }
     this.theta = 0;
     this.degrees = Math.random() * 360;
-    this.pos = [];
-    this.posLength = Math.random() * 20 + 15;
-    this.hueDev = getRandomInt(-20, 20);
+    this.random = Math.round(Math.random() * 360);
     this.custHue = getRandomInt(0, 2);
     this.l = 10;
+    this.j = Math.random();
+    this.width = getRandomInt(8, 20);
+
+    this.spaceColors = [getRandomInt(240, 280), getRandomInt(50, 100)];
+
+    this.offset1 = Math.random() * 2;
+    this.offset2 = Math.random() * 2;
 
     this.Draw = function () {
-      this.theta = this.degrees * (Math.PI / 180);
-      let x = 160 + this.r * Math.cos(this.theta);
-      let y = 100 + this.r * Math.sin(this.theta);
-      this.pos.push([x, y]);
-      if (this.pos.length > this.posLength) {
-        this.pos.splice(0, 1);
+      var j = this.j;
+
+      if (this.r > 1) {
+        this.r -= Math.random() * (speedRaw / 50);
       }
 
-      let colorArr = getColor(this.id);
-      this.l = ((160 - this.r) / 160) * 100;
+      this.offset1 += Math.random() * (speedRaw / 1000);
+      this.offset2 += Math.random() * (speedRaw / 1000);
+      this.offset3 += Math.random() * (speedRaw / 1000);
+      this.offset4 += Math.random() * (speedRaw / 1000);
 
-      if (this.degrees < 360) {
-        this.degrees += speedRaw / 50;
+      ctx.lineWidth = this.width;
+
+      var light = 140 - Math.round((this.r / 200) * 150);
+
+      if (palette == "Space") {
+        ctx.strokeStyle =
+          "hsl(" +
+          this.spaceColors[0] +
+          "," +
+          this.spaceColors[1] +
+          "%," +
+          light +
+          "%)";
+      } else if (palette == "Custom") {
+        ctx.strokeStyle =
+          "hsl(" + customHues[this.custHue] + "," + 100 + "%," + light + "%)";
+      } else if (palette == "Random") {
+        ctx.strokeStyle = "hsl(" + this.random + "," + 100 + "%," + light + "%)";
       } else {
-        this.degrees = 0;
-        this.r -= Math.random() * 20;
+        ctx.strokeStyle = "hsl(" + (this.r / 200) * 360 + "," + 100 + "%," + 50 + "%)";
       }
 
-      for (let j = 0; j < this.pos.length; j++) {
-        const coords = this.pos[j];
-        if (palette != "Rainbow" && palette != "Custom") {
-          var opacity = j / this.pos.length;
-          ctx.fillStyle =
-            "hsla(" +
-            colorArr[0] +
-            "," +
-            colorArr[1] +
-            "%," +
-            this.l +
-            "%," +
-            opacity +
-            ")";
-        } else if (palette == "Custom") {
-          var opacity = j / this.pos.length;
-          ctx.fillStyle =
-            "hsla(" +
-            customHues[this.custHue] +
-            "," +
-            100 +
-            "%," +
-            this.l +
-            "%," +
-            opacity +
-            ")";
-        } else {
-          var rainbowHue = this.r * 5 + this.hueDev;
-          ctx.fillStyle =
-            "hsla(" +
-            rainbowHue +
-            "," +
-            colorArr[1] +
-            "%," +
-            this.l +
-            "%," +
-            1 +
-            ")";
-        }
-        ctx.fillRect(
-          coords[0] - partSize / 2,
-          coords[1] - partSize / 2,
-          partSize,
-          partSize
-        );
+      ctx.beginPath();
+      if (this.offset1 > this.offset2) {
+        try {
+          ctx.arc(
+            160,
+            100,
+            this.r,
+            this.offset2 * Math.PI,
+            this.offset1 * Math.PI
+          );
+        } catch {}
+      } else {
+        try {
+          ctx.arc(
+            160,
+            100,
+            this.r,
+            this.offset1 * Math.PI,
+            this.offset2 * Math.PI
+          );
+        } catch {}
       }
+      ctx.stroke();
+
+      ctx.beginPath();
+      if (this.offset3 > this.offset4) {
+        try {
+          ctx.arc(
+            160,
+            100,
+            this.r,
+            this.offset4 * Math.PI,
+            this.offset3 * Math.PI
+          );
+        } catch {}
+      } else {
+        try {
+          ctx.arc(
+            160,
+            100,
+            this.r,
+            this.offset3 * Math.PI,
+            this.offset4 * Math.PI
+          );
+        } catch {}
+      }
+      ctx.stroke();
     };
 
     this.IsFinished = function () {
-      if (this.r < 0) {
+      if (this.r < 1) {
         return true;
       } else {
         return false;
@@ -290,5 +274,5 @@
     };
   }
 
-//engine.zone
+  //engine.zone
 </script>

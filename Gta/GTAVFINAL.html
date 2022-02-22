@@ -1,5 +1,5 @@
 <head>
-  <title>GTA V Working Code</title>
+  <title>GTA V Final Copy</title>
   <meta description="Go on an adventure with metering and ambiance effects" />
   <meta publisher="SignalRGB" />
   <meta property="enableHealth" label="Low Health effect" type="boolean" default="1" />
@@ -214,7 +214,7 @@
 
   function moneyHandler() {
     if (enableMoney) {
-      if (redMoneyMeter.value > .3 && black1MoneyMeter.value > .1) {
+      if (redMoneyMeter.value > .2 && black1MoneyMeter.value > .1) {
         effects.push(new MoneyEffect("red"));
       } else if ((green1MoneyMeter.value > .2 || green2MoneyMeter.value > .2) && (black1MoneyMeter.value > .1 || black2MoneyMeter.value > .1)) {
         effects.push(new MoneyEffect("green"));

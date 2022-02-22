@@ -1,0 +1,93 @@
+<head>
+    <title> Audio test Jordy</title>
+    <meta description="Testing the audio" />
+    <meta publisher="SignalRgb" />
+    <meta property="Sensitivity" label="Sensitivity" type="number" default="5" min="0" max="50">
+    <meta property="particleSize" label="particleSize" type="number" default="2" min="0" max="5">
+    <meta property="colorboost" label="colorboost" type="number" default="30" min="0" max="50">
+    <meta property="Solid" label="Solid color" type="boolean" default="0" />
+    <meta property="Solidcolor" label="solidColor Control" type="color" default="#009bde" min="0" max="360" />
+
+
+</head>
+
+<body style="margin: 0; padding: 0;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+    // Get the canvas element from the DOM
+    var c = document.getElementById("exCanvas");
+    var ctx = c.getContext("2d");
+
+    var width = 320;
+    var height = 200;
+    var hue = 0;
+    var audioVol;
+    var distance = 320 / 200;
+    var particles = [];
+
+
+    function update() {
+        let freqs = new Int8Array(engine.audio.freq);
+        let beat = (freqs[0] + freqs[1] + freqs[2] + freqs[3]) / 4
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+
+        // Code goes here
+
+
+        ctx.fillRect(0, 0, 320, 200);
+
+        freqs.forEach((val, i) => {
+            audioVol = engine.audio.level;
+            audioVol -= Sensitivity;
+            if (val == 10) {
+                if (audioVol > -30) {
+                    if (particles.length < 100) {
+                        if (!Solid) {
+                            particles.push(new Particle((2 * i), 200, 30 + audioVol, 0.3, (Math.random() * 10) + 5 * particleSize, `hsl(${-audioVol * colorboost + val},100%, 50%)`, false))
+                        } else {
+                            particles.push(new Particle((2 * i), 200, 30 + audioVol, 0.3, (Math.random() * 10) + 5 * particleSize, Solidcolor, false))
+                        }
+
+                    }
+
+                }
+            }
+        });
+
+
+        particles.forEach((particle, index) => {
+            if (particle.y > 200) {
+                particles.splice(index, 1);
+            }
+            particle.draw();
+        });
+        window.requestAnimationFrame(update);
+    }
+
+    class Particle {
+        constructor(x, y, speed, physics, radius, beginColor, rainbow) {
+            this.x = x;
+            this.y = y;
+            this.speed = speed / 2;
+            this.physics = physics;
+            this.radius = radius;
+            this.beginColor = beginColor;
+            this.rainbowq = rainbow;
+            this.xSide = ((Math.random() - .5) * speed) / 4;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+            ctx.fillStyle = this.beginColor;
+            ctx.fill();
+            this.y -= this.speed;
+            this.x += this.xSide;
+            this.speed -= this.physics;
+        }
+    }
+
+    window.requestAnimationFrame(update);
+</script>

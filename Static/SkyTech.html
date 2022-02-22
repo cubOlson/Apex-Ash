@@ -1,5 +1,5 @@
 <head>
-    <title>Basic Effects</title>
+    <title>SkyTech effect</title>
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
 
@@ -16,15 +16,30 @@
   canvas = document.getElementById('exCanvas');
   ctx = canvas.getContext('2d');
   var effects = [];
+  var speeds = [];
   var hues = [];
   var separation = [];
 
   function update(){
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "rgb(10, 10, 10)";
     ctx.fillRect(0, 0, 320, 200);
+
+    let frequency = new Int8Array(engine.audio.freq);
+
+    console.log(frequency.reduce((a, b) => a + b, 0));
 
     hues = [myHuePicker1, myHuePicker2, myHuePicker3, myHuePicker4];
     separation = [22, 7, -7, -22];
+
+    if (speeds.length < 10){
+        speeds.push(new speedCircle());
+    }
+    speeds.forEach((ele, i) => {
+      ele.draw();
+      if (ele.lifetime <= 0){
+        speeds.splice(i, 1);
+      }
+    });
 
     if (effects.length < 1){
       effects.push(new skyTechMain());
@@ -34,7 +49,7 @@
       if (ele.lifetime <= 0){
         effects.splice(i, 1);
       }
-    })
+    });
 
     window.requestAnimationFrame(update);
   }
@@ -73,17 +88,31 @@
           ctx.rotate(this.rotate);
           DrawCircle(0, 0, 50, "white");
           ctx.fillStyle = "red"
-          ctx.fillRect(0, 0, 90, 20);
+          ctx.fillRect(-15, 0, 90, 20);
           ctx.rotate(Math.PI * 2/3);
-          ctx.fillRect(0, 0, 90, 20);
+          ctx.fillRect(-15, 0, 90, 20);
           ctx.rotate(Math.PI * 2/3);
-          ctx.fillRect(0, 0, 90, 20);
+          ctx.fillRect(-15, 0, 90, 20);
           ctx.restore();
           this.rotate+=.1;
           if(this.rotate >= Math.PI * 2){
             this.rotate = 0;
           }
         }
+      }
+
+      function speedCircle(){
+          this.x = 320;
+          this.y = Math.random() * 200;
+          this.lifetime = 10;
+
+          this.draw = function(){
+              DrawCircle(this.x, this.y, 10, `hsl(${hues[Math.floor(Math.random() * 4)]}, 100%, 50%)`);
+              this.x-=20;
+              if (this.x < 0){
+                  this.lifetime = 0;
+              }
+          }
       }
 
       function DrawCircle(x,y,radius,color){
