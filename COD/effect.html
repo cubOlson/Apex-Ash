@@ -1,0 +1,688 @@
+<head>
+  <title>COD: Warzone</title>
+  <meta description="Metering for COD Warzone."/>
+  <meta publisher="WhirlwindFX" />
+
+  <meta meter="atv2"  tags = "cod,warzone,modern warfare,call of duty" x=".497395" y=".87129" width=".00625" height=".0092592" h="15-45" s="50-100" l="50-100" type="area" />
+  <meta meter="truckRover2" tags = "cod,warzone,modern warfare,call of duty"  x=".491145" y=".852777" width=".0057291" height=".00625" h="15-45" s="50-100" l="50-100" type="area" />
+  <meta meter="atv" tags = "cod,warzone,modern warfare,call of duty"  x=".3901041667" y=".8175925926" width=".0026041667" height=".0148148148" h="0-360" s="0-10" l="95-100" type="area" />
+  <meta meter="truckRover" tags = "cod,warzone,modern warfare,call of duty"  x=".3901041667" y=".7888888" width=".003125" height=".009375" h="0-360" s="0-10" l="95-100" type="area" />
+  <meta meter="heli" tags = "cod,warzone,modern warfare,call of duty"  x=".3901041667" y=".8175925926" width=".0026041667" height=".0148148148" h="0-360" s="0-10" l="95-100" type="area" />
+  <meta meter="killsOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_numeric" x=".947395833" y=".04444444" width=".0234375" height=".025" confidence="1" /> 
+  <meta meter="planeIcon1"  tags = "cod,warzone,modern warfare,call of duty" x=".9338541667" y=".0537037037" width=".0046875" h="0-360" s="0-20" l="90-100" type="linear" />
+  <meta meter="planeIcon2" tags = "cod,warzone,modern warfare,call of duty"  x=".940104166" y=".0537037037" width=".003645833" h="0-360" s="0-20" l="60-75" type="linear" />
+  <meta meter="deathOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_textmatch" x=".475" y=".8416666" width=".052604166" height=".025" string="Killed By" confidence="1">
+
+  <!-- <meta meter="grenadeIcon1" x="0.9630" y="0.9083" width="0.0063" height="0.0121" h="0-360" s="0-20" l="50-100" type="area"> -->
+  <meta meter="grenadeIcon1" 
+  tags = "cod,warzone,modern warfare,call of duty"
+  type="area"
+	x= "0.9641"
+	y= "0.9185"
+	height= "0.0056"
+	width= "0.0021"
+	h="0-0"
+	s="0-0"
+	l="20-25">
+  <meta meter="grenadeOCR1" 
+  tags = "cod,warzone,modern warfare,call of duty"
+  type="ocr_numeric"
+  x="0.9703"
+	y="0.9009"
+	width="0.0115"
+	height="0.0259"
+	confidence="70">
+  <meta meter="grenadeIcon2"
+  tags = "cod,warzone,modern warfare,call of duty"
+  x= "0.9281"
+  y= "0.9083"
+  height= "0.0037"
+  width= "0.0005"
+  h="0-0"
+    s="0-0"
+     l="20-25"
+      type="area">
+  <meta meter="grenadeOCR2"
+  tags = "cod,warzone,modern warfare,call of duty"
+  type="ocr_numeric"
+  x="0.9297"
+	y="0.8954"
+	width="0.0135"
+	height="0.0315"
+	confidence="70">
+
+  <meta meter="parachuteOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_textmatch" x="0.4776" y="0.6481" width="0.0875" height="0.0269" string="Deploy Parachute" confidence="1">
+  <meta meter="parachuteOCR2" tags = "cod,warzone,modern warfare,call of duty"  type="ocr_textmatch" x="0.4729" y="0.6806" width="0.0698" height="0.0213" string="Cut Parachute" confidence="1">
+
+  <meta meter="ammoOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_numeric" x="0.8542" y="0.8815" width="0.0427" height="0.0352" confidence="1">
+
+  <meta meter="revive"  tags = "cod,warzone,modern warfare,call of duty" x=".1171875" y=".887037037" width=".003125" height=".0037037037" h="100-140" s="35-55" l="45-75" type="area" />
+  <!-- <meta meter="selfrevive" x=".0338541667" y=".9434" width=".10" height=".004" h="180-190" s="30-50" l="70-100" type="area" /> -->
+
+  <meta meter="death"  tags = "cod,warzone,modern warfare,call of duty" x=".0338541667" y=".9434" width=".10" height=".004" h="-15-15" s="90-100" l="10-60" type="area" />
+
+  <meta meter="enemydown"  tags = "cod,warzone,modern warfare,call of duty" x=".7376" y=".1236" width=".01" height=".001" h="-10-10" s="50-70" l="40-75" type="area" />
+
+  <meta meter="compass"  tags = "cod,warzone,modern warfare,call of duty" x=".478125" y=".0259259259" width=".0010416667" height=".0231481481" h="95-125" s="0-20" l="80-100" type="area" />
+
+
+  <meta meter="health"  tags = "cod,warzone,modern warfare,call of duty"  x=".0338541667" y=".9444" width=".10" h="0-360" s="0-25" l="40-100" type="linear" />
+  <meta meter="plate1"  tags = "cod,warzone,modern warfare,call of duty" x=".0338541667" y=".93333333333" width=".03125" h="190-248" s="30-100" l="40-100" type="linear" />
+  <meta meter="plate2"  tags = "cod,warzone,modern warfare,call of duty" x=".069270833" y=".93333333333" width=".03125" h="190-248" s="30-100" l="40-100" type="linear" />
+  <meta meter="plate3"  tags = "cod,warzone,modern warfare,call of duty" x=".10416667" y=".93333333333" width=".030208333" h="190-248" s="30-100" l="40-100" type="linear" />
+
+  <meta property="grenadeColor" label="grenade color" type="color" default="#50f000" min="0" max="360"/>
+  <meta property="grenadeSpeed" label="grenade speed" type="number" min="1" max="10" default="5"/>
+  <meta property="parachuteColor" label="parachute color" type="color" default="#00C0FF" min="0" max="360"/>
+  <meta property="reloadColor" label="reload color" type="color" default="#FFFF00" min="0" max="360"/>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+<canvas id="exCanvas" width="320" height="200"></canvas>  
+</body>
+
+<script>    
+// x = 0.0325
+//
+var canvas, ctx;
+var stateMgr = new StateHandler();
+var healthMeter = new Meter(3, onHealthMeterChanged);
+var damageMeter = new Meter(1, onDamageChanged);
+var selfReviveMeter = new Meter(3, onSelfReviveChanged);
+var reviveMeter = new Meter(3, onReviveChanged);
+var vehicleMeter = new Meter(3, onVehicleChanged);
+var killMeter = new Meter(20, onKillMeterChanged);
+var deathMeter = new Meter(20, onDeathMeterChanged);
+var grenadeMeter1 = new Meter(3, onGrenadeChanged);
+var grenadeMeter2 = new Meter(3, onGrenadeChanged);
+var parachuteMeter = new Meter(20, onParachuteChanged);
+var ammoMeter = new Meter( 3, onAmmoChanged);
+
+var currentKills = 0;
+
+var kill = new KillState();
+kill.complete = true;
+
+var plates = [];
+var droplets = [];
+
+plates.push(new Meter(20, onPlateChanged));
+plates.push(new Meter(20, onPlateChanged));
+plates.push(new Meter(20, onPlateChanged));
+
+function drawAmbience()
+{
+  
+}
+
+function onAmmoChanged(){
+  if(ammoMeter.increased){
+    stateMgr.Push(new ReloadState());
+  }
+}
+function ReloadState(){
+  this.start = new Date().getTime();
+  this.duration = 1000;
+  var y = 200;
+
+  this.Process = function() {
+    this.elapsed = new Date().getTime() - this.start;
+    if (this.elapsed > this.duration) { stateMgr.Pop(); }
+    this.Draw();
+  }
+
+  this.Draw = function(){
+    ctx.fillStyle = reloadColor;
+    ctx.fillRect(0, y, 320, 200 - y);
+    y -= 10;
+  }
+}
+
+function onParachuteChanged(){
+  stateMgr.Push(new ParachuteState());
+}
+function ParachuteState(){
+  this.start = new Date().getTime();
+  this.duration = 2000;
+  var y = 0;
+
+  this.Process = function() {
+    this.elapsed = new Date().getTime() - this.start;
+    // if (this.elapsed > this.duration) { stateMgr.Pop(); }
+    if(y > 200){ stateMgr.Pop(); }
+    this.Draw();
+  }
+
+  this.Draw = function() {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 320, 200);
+    ctx.fillStyle = parachuteColor;
+    ctx.fillRect(0, y, 320, y + 20);    
+    y += 10;
+    // if(y > 200){
+    //   y = 0;
+    // }
+  }
+}
+
+function onGrenadeChanged(){
+  stateMgr.Push(new GrenadeState());
+}
+function GrenadeState(){
+  var y_increase = 200;
+  var y_decrease = 0;
+  this.Process = function(){
+    if(y_increase < 0 || y_decrease > 200){ stateMgr.Pop(); }
+    this.Draw();
+  }
+  this.Draw = function(){
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 320, 200);
+    ctx.fillStyle = grenadeColor;
+    if(grenadeMeter1.increased){
+     //console.log(`grenade increased to ${grenadeMeter1.value}`)
+    }
+    else if(grenadeMeter1.decreased){
+     //console.log(`grenade decreased to ${grenadeMeter1.value}`)
+    }
+    if(grenadeMeter2.increased){
+     //console.log(`grenade increased to ${grenadeMeter2.value}`)
+    }
+    else if(grenadeMeter2.decreased){
+     //console.log(`grenade decreased to ${grenadeMeter2.value}`)
+    }
+    
+    if(grenadeMeter1.increased || grenadeMeter2.increased){
+      ctx.fillRect(0, y_increase, 320, 200 - y_increase);
+      y_increase -= grenadeSpeed;
+    }
+    else if(grenadeMeter1.decreased || grenadeMeter2.decreased){
+      ctx.fillRect(0, y_decrease, 320, 200 - y_decrease);
+      y_decrease += grenadeSpeed;
+    }
+  }
+}
+
+function onDeathMeterChanged(){
+  if( deathMeter.increased )
+    stateMgr.Push(new DeathState());
+  else 
+  stateMgr.Push(new IdleState());
+
+}
+
+function onPlateChanged()
+{
+  if (healthMeter.value > 0 && plates[0].value > 0 && escTimer <= 0 && (damageTimer<=0)){
+    stateMgr.Push(new PlateState());
+    plateTimer = 60;
+  }
+}
+
+function PlateState()
+{
+  this.start = new Date().getTime();
+  this.duration = 500;
+
+  this.Process = function() {
+    this.elapsed = new Date().getTime() - this.start;
+    if (this.elapsed > this.duration) { stateMgr.Pop(); }
+    this.Draw();
+  }
+
+  this.Draw = function() {
+    var remaining = this.elapsed / this.duration;
+    ctx.fillStyle = 'hsl('+200+','+100+'%,'+Math.random() * 50+'%)'
+    ctx.fillRect(0, 0, 320, 200);    
+  }
+}
+
+
+function DamageState()
+{
+  this.start = new Date().getTime();
+  this.duration = 2000;
+
+  this.Process = function() {
+    this.elapsed = new Date().getTime() - this.start;
+    if (this.elapsed > this.duration) { stateMgr.Pop(); }
+    this.Draw();
+  }
+
+  this.Draw = function() {
+    var norm_elapsed = this.elapsed / this.duration;
+    var phaseBrightness = norm_elapsed * Math.PI * 5;
+    var bright = 20 + Math.abs(Math.sin(phaseBrightness)) * 30;
+    ctx.fillStyle = 'hsl('+0+','+100+'%,'+bright+'%)';
+    ctx.fillRect(0, 0, 320, 200);
+
+
+    var phase = norm_elapsed * Math.PI * 5;
+    var pos = (Math.sin(phase) * 180) - 32;
+    var center = 180 - 17;
+    ctx.fillStyle = 'hsl('+0+','+100+'%,'+60+'%)'
+    ctx.fillRect(pos + center, 0, 32, 200);
+  }
+}
+
+function onVehicleChanged(){
+  if( vehicleMeter.increased )
+    stateMgr.Push(new VehicleState());
+  else 
+  stateMgr.Push(new IdleState());
+
+}
+
+function DeathState(){
+  this.duration = 90;
+  this.Process = function() {
+    this.duration--;
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for(var iZone = 0; iZone < 560; iZone++)
+    {        
+      ctx.fillStyle = 'hsl('+hue[iZone]+','+sat[iZone]+'%,'+lightness[iZone]+'%)'
+      
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle =
+          "hsla(" +
+          0 +
+          "," +
+          0 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+           .4
+          ")";
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+    if (this.duration <= 0)
+      stateMgr.Push(new IdleState());
+  }
+}
+
+function VehicleState(){
+  this.Process = function() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for(var iZone = 0; iZone < 560; iZone++)
+    {        
+      ctx.fillStyle = 'hsl('+hue[iZone]+','+sat[iZone]+'%,'+lightness[iZone]+'%)'
+      
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle =
+          "hsla(" +
+          24 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+           .4
+          ")";
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+}
+
+function ReviveState()
+{
+  this.start = new Date().getTime();
+
+  this.Process = function() {    
+    if (reviveMeter.value <= 0) { 
+      stateMgr.Pop(); 
+    }
+    this.Draw();
+  }
+
+  this.Draw = function() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for(var iZone = 0; iZone < 560; iZone++)
+    {        
+      ctx.fillStyle = 'hsl('+hue[iZone]+','+sat[iZone]+'%,'+lightness[iZone]+'%)'
+      
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle =
+          "hsla(" +
+          110 +
+          "," +
+          35 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+           .4
+          ")";
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  
+  }
+}
+
+function IdleState()
+{
+  this.Process = function() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for(var iZone = 0; iZone < 560; iZone++)
+    {        
+      ctx.fillStyle = 'hsl('+hue[iZone]+','+sat[iZone]+'%,'+lightness[iZone]+'%)'
+      
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+}
+
+function onDamageChanged()
+{
+
+}
+var damageTimer = 0;
+function onHealthMeterChanged()
+{
+  if (healthMeter.decreased && healthMeter.diff < .9 && escTimer <=0){
+    //if (damageMeter.value > 0)
+    //{
+    stateMgr.Push(new DamageState());
+    damageTimer = 60;
+    //}
+  }
+  if (healthMeter.increased){
+  }  
+}
+
+function onReviveChanged()
+{  
+  if (reviveMeter.value > 0){
+    stateMgr.Push(new ReviveState());    
+  }
+}
+
+function onSelfReviveChanged()
+{
+  
+}
+
+
+
+function StateHandler(){
+  var stack = [];
+  var state = null;
+
+  var updateState = function() {
+    if (stack.length > 0){
+      state = stack[stack.length - 1];
+    } else {
+      state = null;
+    }
+  }
+
+  this.Push = function(newState)
+  {
+    stack.push(newState);
+    updateState();    
+  }
+
+  this.Pop = function()
+  {
+    stack.pop();
+    updateState();
+  }
+
+  this.Process = function()
+  {    
+    if (state != null){      
+      state.Process();
+    }
+  }
+}
+
+
+
+function Meter(count, callback)
+{
+  this.size = count;
+  this.value = 0;
+  this.diff = 0;
+  this.increased = false;
+  this.decreased = false;
+  var values = [];
+  
+  this.setValue = function(updatedValue) 
+  {
+    // Add and shift.  
+    values.push(updatedValue);
+    if (values.length > this.size) { values.shift(); }
+
+    // Exit early if we've got a long-term match.
+    for(var i=0; i < (values.length - 1); i++){
+      if (values[i] !== values[i+1]) return;
+    }
+
+    // We got here, so we've got a matching value collection.
+    if (this.value !== values[0]) {
+      //var fromZero = this.value === 0;
+      //var toZero = values[0] === 0;      
+      this.diff = Math.abs(this.value - values[0]);
+      this.increased = this.value < values[0];
+      this.decreased = this.value > values[0];        
+      this.value = values[0];
+      callback();      
+    }
+    
+  }
+}
+
+function onKillMeterChanged() {
+    if ((killMeter.increased || killMeter.decreased) && kill.complete) {  // OCR cant recognize some numbers.  When this happens it returns -1.  That's why i have it to excecute a new killstate regardless of wheter or not it increases or decreases
+      bursts = [];
+      kill = (new KillState());
+    }
+}
+
+function KillState() {
+    var dur = 180;
+    this.duration = dur;
+    this.start = new Date().getTime();
+
+    this.xRect = 160;
+    this.yRect = 100;
+    this.width = 0;
+    this.height = 0;
+    this.complete = false;
+
+    this.Process = function () {
+      // this.elapsed = new Date().getTime() - this.start;
+      // if (this.elapsed > this.duration) {
+      //   stateMgr.Pop();
+      // }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      bursts = [];
+      if (this.duration <= 0) {
+        this.complete = true;
+        this.duration = 0;
+      }
+      if (this.duration > 0) {
+        if (this.duration >= dur / 1.5) {
+          this.xRect -= 12;
+          this.yRect -= 6;
+          this.width += 24;
+          this.height += 12;
+          ctx.fillStyle = "white";
+          ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+        }
+
+        if (this.duration < dur / 1.5 && this.duration > 0 && droplets.length < 250) {
+          droplets.push(new BloodDroplet());
+        }
+        for (i = 0; i < droplets.length; i++) {
+          droplets[i].Draw();
+        }
+        for (j = 0; j < droplets.length; j++) {
+          if (droplets[j].lifetime <= 0) {
+            droplets.splice(j, 1);
+          }
+        }
+        if (this.duration == 1) {
+          this.duration = 0;
+          stateMgr.Push(new IdleState());
+        }
+      }
+      this.duration--;
+    };
+}  
+
+function BloodDroplet() {
+    this.x = Math.random() * 320;
+    this.y = -17;
+    this.speed = Math.random() * 12;
+    this.color = "#660000";
+    this.complete = false;
+    this.lifetime = 30; // Frames.
+
+    this.Draw = function () {
+      if (this.y > 200)
+        this.complete = true;
+      ctx.fillStyle = "#660000";
+      ctx.fillRect(this.x, this.y, 6, 6);
+      this.liftime--;
+      this.y += this.speed;
+    };
+}
+
+function onEngineReady()
+{      
+ //console.clear();
+  // Grab canvas and rendering context.
+  canvas = document.getElementById( 'exCanvas' );
+  ctx = canvas.getContext( '2d' );            
+
+  stateMgr.Push(new IdleState());
+  // Start updates *after* our engine is accessible and ready.
+  window.requestAnimationFrame(update);      
+}
+
+var escTimer = 0;
+var plateTimer= 0;
+var parachuteTimer = 0;
+
+function update()
+{ 
+
+  if (engine.vision.compass < .3)
+    escTimer = 60;
+    
+  escTimer--;
+  if (escTimer <= 0)
+    escTimer = 0;
+
+  damageTimer--;
+  if (damageTimer <= 0)
+    damageTimer = 0;
+
+  if(parachuteTimer > 0){
+    parachuteTimer--;
+  }
+
+  if ((engine.vision.atv > .98 ||  engine.vision.truckRover > .98) && (engine.vision.atv2 > 0.9 || engine.vision.truckRover2 > 0.9)){
+    stateMgr.Push(new VehicleState());
+  } else if (plateTimer <= 0 ){
+
+  }// else stateMgr.Push(new IdleState());
+  
+  healthMeter.setValue(engine.vision.health);  
+  plates[0].setValue(engine.vision.plate1);
+  plates[1].setValue(engine.vision.plate2);
+  plates[2].setValue(engine.vision.plate3);
+  reviveMeter.setValue(engine.vision.revive);
+  vehicleMeter.setValue(engine.vision.atv + engine.vision.truckRover ); // + engine.vision.rover + engine.vision.suv + engine.vision.heli
+
+  if(engine.vision.grenadeIcon1 > 0.3){  //no grenades: grenade icon will be dark grey
+    grenadeMeter1.setValue(0);
+  }
+  else if(engine.vision.grenadeOCR1 > 0){
+    grenadeMeter1.setValue(engine.vision.grenadeOCR1);
+  }
+
+  if(engine.vision.grenadeIcon2 > 0.3){
+    grenadeMeter2.setValue(0);
+  }
+  else if(engine.vision.grenadeOCR2 > 0){
+    grenadeMeter2.setValue(engine.vision.grenadeOCR2);
+  }
+
+  if((engine.vision.parachuteOCR > 0 || engine.vision.parachuteOCR2 > 0) && parachuteTimer == 0){
+    stateMgr.Push(new ParachuteState());
+    parachuteTimer = 20;
+  }
+
+  if(engine.vision.ammoOCR >= 0){
+    ammoMeter.setValue(engine.vision.ammoOCR);
+  }
+
+  if (engine.vision.deathOCR>0.8)
+   stateMgr.Push(new DeathState());
+  
+  
+
+  var tempKills = engine.vision.killsOCR;
+  if (tempKills > currentKills && tempKills - currentKills <= 4 && engine.vision.planeIcon1 < 0.9 && engine.vision.planeIcon2 < 0.9 && escTimer <= 0) {
+    bursts = [];
+    droplets = [];
+    currentKills = tempKills;
+    kill = new KillState();
+  }
+  if (currentKills > 100)
+  currentKills = 0;
+
+  // ----- Driver -----
+  if (kill.complete) {
+      stateMgr.Process();
+    } else kill.Draw();
+  window.requestAnimationFrame(update);
+}
+</script>
