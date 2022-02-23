@@ -179,7 +179,6 @@
     }
     topLeftBlackMeter.setValue(engine.vision.tLCorner);
     bottomRightBlackMeter.setValue(engine.vision.bRCorner);
-    wastedEffect();
     if (!Freezebackground) {
       copyScreen(1);
     }
@@ -225,8 +224,10 @@
   var activePolice = false;
   function policeEffect() {
     if (firstStarMeter.value > 0.8 && engine.vision.firstStarBlack1 > .9 && engine.vision.firstStarBlack2 > .9 && activePolice == false) {
-      effects.push(new PoliceEffect());
-      activePolice = true;
+      if(enableWanted){
+        effects.push(new PoliceEffect());
+        activePolice = true;
+      }
     }
   }
 
@@ -307,54 +308,6 @@
       });
       ctx.fillStyle = "red";
       ctx.fillRect(0, 200, 320, this.bloodHeight)
-    }
-  }
-
-  //We could use the arrow effect as XP effect( something like this:      effects.push(new ArrowEffect("up", "blue", 3, 5, 1500));)
-
-  function ArrowEffect(direction, color, amount, speed, duration) {
-    this.start = GetTime();
-    this.speed = speed;
-    this.duration = duration;
-    this.lifetime = this.duration;
-    this.direction = direction;
-    this.color = color;
-    this.amount = amount;
-    this.draw = function () {
-      if (this.direction == 'up') {
-        this.speed = -this.speed;
-        ctx.fillStyle = this.color;
-        for (let i = 0; i < this.amount; i++) {
-          ctx.beginPath();
-          ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
-          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
-          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
-          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
-          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
-          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
-          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
-          ctx.fill();
-        }
-      } else {
-        ctx.fillStyle = this.color;
-        for (let i = 0; i < this.amount; i++) {
-          ctx.beginPath();
-          ctx.moveTo(160, 300 - this.lifetime / 1.5 + (200 * i));
-          ctx.lineTo(320, 240 - this.lifetime / 1.5 + (200 * i));
-          ctx.lineTo(320, 180 - this.lifetime / 1.5 + (200 * i));
-          ctx.lineTo(160, 240 - this.lifetime / 1.5 + (200 * i));
-          ctx.lineTo(0, 180 - this.lifetime / 1.5 + (200 * i));
-          ctx.lineTo(0, 240 - this.lifetime / 1.5 + (200 * i));
-          ctx.lineTo(160, 300 - this.lifetime / 1.5 + (200 * i));
-          ctx.fill();
-        }
-      }
-      this.Ymin += this.speed;
-      this.elapsed = new Date().getTime() - this.start;
-      this.lifetime = this.duration - this.elapsed;
-      if (this.lifetime <= 0) {
-        speedAnim = false
-      }
     }
   }
 

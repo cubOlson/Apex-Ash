@@ -12,60 +12,17 @@
   <meta meter="planeIcon1"  tags = "cod,warzone,modern warfare,call of duty" x=".9338541667" y=".0537037037" width=".0046875" h="0-360" s="0-20" l="90-100" type="linear" />
   <meta meter="planeIcon2" tags = "cod,warzone,modern warfare,call of duty"  x=".940104166" y=".0537037037" width=".003645833" h="0-360" s="0-20" l="60-75" type="linear" />
   <meta meter="deathOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_textmatch" x=".475" y=".8416666" width=".052604166" height=".025" string="Killed By" confidence="1">
-
-  <!-- <meta meter="grenadeIcon1" x="0.9630" y="0.9083" width="0.0063" height="0.0121" h="0-360" s="0-20" l="50-100" type="area"> -->
-  <meta meter="grenadeIcon1" 
-  tags = "cod,warzone,modern warfare,call of duty"
-  type="area"
-	x= "0.9641"
-	y= "0.9185"
-	height= "0.0056"
-	width= "0.0021"
-	h="0-0"
-	s="0-0"
-	l="20-25">
-  <meta meter="grenadeOCR1" 
-  tags = "cod,warzone,modern warfare,call of duty"
-  type="ocr_numeric"
-  x="0.9703"
-	y="0.9009"
-	width="0.0115"
-	height="0.0259"
-	confidence="70">
-  <meta meter="grenadeIcon2"
-  tags = "cod,warzone,modern warfare,call of duty"
-  x= "0.9281"
-  y= "0.9083"
-  height= "0.0037"
-  width= "0.0005"
-  h="0-0"
-    s="0-0"
-     l="20-25"
-      type="area">
-  <meta meter="grenadeOCR2"
-  tags = "cod,warzone,modern warfare,call of duty"
-  type="ocr_numeric"
-  x="0.9297"
-	y="0.8954"
-	width="0.0135"
-	height="0.0315"
-	confidence="70">
-
+  <meta meter="grenadeIcon1" tags = "cod,warzone,modern warfare,call of duty" type="area" x= "0.9641" y= "0.9185" height= "0.0056" width= "0.0021" h="0-0" s="0-0" l="20-25">
+  <meta meter="grenadeOCR1"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_numeric" x="0.9703" y="0.9009" width="0.0115" height="0.0259" confidence="70">
+  <meta meter="grenadeIcon2" tags = "cod,warzone,modern warfare,call of duty" x= "0.9281" y= "0.9083" height= "0.0037" width= "0.0005" h="0-0" s="0-0" l="20-25" type="area">
+  <meta meter="grenadeOCR2" tags = "cod,warzone,modern warfare,call of duty" type="ocr_numeric" x="0.9297" y="0.8954" width="0.0135" height="0.0315" confidence="70">
   <meta meter="parachuteOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_textmatch" x="0.4776" y="0.6481" width="0.0875" height="0.0269" string="Deploy Parachute" confidence="1">
   <meta meter="parachuteOCR2" tags = "cod,warzone,modern warfare,call of duty"  type="ocr_textmatch" x="0.4729" y="0.6806" width="0.0698" height="0.0213" string="Cut Parachute" confidence="1">
-
   <meta meter="ammoOCR"  tags = "cod,warzone,modern warfare,call of duty" type="ocr_numeric" x="0.8542" y="0.8815" width="0.0427" height="0.0352" confidence="1">
-
   <meta meter="revive"  tags = "cod,warzone,modern warfare,call of duty" x=".1171875" y=".887037037" width=".003125" height=".0037037037" h="100-140" s="35-55" l="45-75" type="area" />
-  <!-- <meta meter="selfrevive" x=".0338541667" y=".9434" width=".10" height=".004" h="180-190" s="30-50" l="70-100" type="area" /> -->
-
   <meta meter="death"  tags = "cod,warzone,modern warfare,call of duty" x=".0338541667" y=".9434" width=".10" height=".004" h="-15-15" s="90-100" l="10-60" type="area" />
-
   <meta meter="enemydown"  tags = "cod,warzone,modern warfare,call of duty" x=".7376" y=".1236" width=".01" height=".001" h="-10-10" s="50-70" l="40-75" type="area" />
-
   <meta meter="compass"  tags = "cod,warzone,modern warfare,call of duty" x=".478125" y=".0259259259" width=".0010416667" height=".0231481481" h="95-125" s="0-20" l="80-100" type="area" />
-
-
   <meta meter="health"  tags = "cod,warzone,modern warfare,call of duty"  x=".0338541667" y=".9444" width=".10" h="0-360" s="0-25" l="40-100" type="linear" />
   <meta meter="plate1"  tags = "cod,warzone,modern warfare,call of duty" x=".0338541667" y=".93333333333" width=".03125" h="190-248" s="30-100" l="40-100" type="linear" />
   <meta meter="plate2"  tags = "cod,warzone,modern warfare,call of duty" x=".069270833" y=".93333333333" width=".03125" h="190-248" s="30-100" l="40-100" type="linear" />
@@ -82,8 +39,6 @@
 </body>
 
 <script>    
-// x = 0.0325
-//
 var canvas, ctx;
 var stateMgr = new StateHandler();
 var healthMeter = new Meter(3, onHealthMeterChanged);
@@ -110,16 +65,12 @@ plates.push(new Meter(20, onPlateChanged));
 plates.push(new Meter(20, onPlateChanged));
 plates.push(new Meter(20, onPlateChanged));
 
-function drawAmbience()
-{
-  
-}
-
 function onAmmoChanged(){
   if(ammoMeter.increased){
     stateMgr.Push(new ReloadState());
   }
 }
+
 function ReloadState(){
   this.start = new Date().getTime();
   this.duration = 1000;
@@ -141,6 +92,7 @@ function ReloadState(){
 function onParachuteChanged(){
   stateMgr.Push(new ParachuteState());
 }
+
 function ParachuteState(){
   this.start = new Date().getTime();
   this.duration = 2000;
@@ -168,6 +120,7 @@ function ParachuteState(){
 function onGrenadeChanged(){
   stateMgr.Push(new GrenadeState());
 }
+
 function GrenadeState(){
   var y_increase = 200;
   var y_decrease = 0;
@@ -179,18 +132,6 @@ function GrenadeState(){
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, 320, 200);
     ctx.fillStyle = grenadeColor;
-    if(grenadeMeter1.increased){
-     //console.log(`grenade increased to ${grenadeMeter1.value}`)
-    }
-    else if(grenadeMeter1.decreased){
-     //console.log(`grenade decreased to ${grenadeMeter1.value}`)
-    }
-    if(grenadeMeter2.increased){
-     //console.log(`grenade increased to ${grenadeMeter2.value}`)
-    }
-    else if(grenadeMeter2.decreased){
-     //console.log(`grenade decreased to ${grenadeMeter2.value}`)
-    }
     
     if(grenadeMeter1.increased || grenadeMeter2.increased){
       ctx.fillRect(0, y_increase, 320, 200 - y_increase);
@@ -422,11 +363,8 @@ var damageTimer = 0;
 function onHealthMeterChanged()
 {
   if (healthMeter.decreased && healthMeter.diff < .9 && escTimer <=0){
-    //if (damageMeter.value > 0)
-    //{
     stateMgr.Push(new DamageState());
     damageTimer = 60;
-    //}
   }
   if (healthMeter.increased){
   }  
@@ -515,7 +453,7 @@ function Meter(count, callback)
 }
 
 function onKillMeterChanged() {
-    if ((killMeter.increased || killMeter.decreased) && kill.complete) {  // OCR cant recognize some numbers.  When this happens it returns -1.  That's why i have it to excecute a new killstate regardless of wheter or not it increases or decreases
+    if ((killMeter.increased || killMeter.decreased) && kill.complete) {
       bursts = [];
       kill = (new KillState());
     }
@@ -596,7 +534,6 @@ function BloodDroplet() {
 
 function onEngineReady()
 {      
- //console.clear();
   // Grab canvas and rendering context.
   canvas = document.getElementById( 'exCanvas' );
   ctx = canvas.getContext( '2d' );            
@@ -632,7 +569,7 @@ function update()
     stateMgr.Push(new VehicleState());
   } else if (plateTimer <= 0 ){
 
-  }// else stateMgr.Push(new IdleState());
+  }
   
   healthMeter.setValue(engine.vision.health);  
   plates[0].setValue(engine.vision.plate1);
