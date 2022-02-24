@@ -3,10 +3,13 @@
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
 
+  <meta property="rainbow" label="Rainbow Sliders" type="boolean" default="0" />
   <meta property="myHuePicker1" label="Hue Picker Control" type="hue" default="0" min="0" max="360">
   <meta property="myHuePicker2" label="Hue Picker Control" type="hue" default="65" min="0" max="360">
   <meta property="myHuePicker3" label="Hue Picker Control" type="hue" default="125" min="0" max="360">
   <meta property="myHuePicker4" label="Hue Picker Control" type="hue" default="205" min="0" max="360">
+  <meta property="backgroundStars" label="Background Particles" type="boolean" default="0" />
+  <meta property="backgroundColor" label="Background Color" type="color" default="#000000" min="0" max="360"/>
   <meta property="reactive" label="Audio Reactive" type="boolean" default="0" />
   <meta property="freqThresh" label="Frequency Threshold" type="number" min="100" max="3500" default="1600"/>
 
@@ -25,7 +28,7 @@
   var threshold = 1600;
 
   function update(){
-    ctx.fillStyle = "rgb(10, 10, 10)";
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, 320, 200);
 
     if (reactive){
@@ -35,18 +38,24 @@
     }
 
     threshold = freqThresh;
-    hues = [myHuePicker1, myHuePicker2, myHuePicker3, myHuePicker4];
+    if (rainbow){
+      hues = [myHuePicker1, myHuePicker2, myHuePicker3, myHuePicker4];
+    } else {
+      hues = [0, 0, 0, 0];
+    }
     separation = [22, 7, -7, -22];
 
-    if (speeds.length < 15){
-        speeds.push(new speedCircle());
-    }
-    speeds.forEach((ele, i) => {
-      ele.draw();
-      if (ele.lifetime <= 0){
-        speeds.splice(i, 1);
+    if (backgroundStars){
+      if (speeds.length < 15){
+          speeds.push(new speedCircle());
       }
-    });
+      speeds.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0){
+          speeds.splice(i, 1);
+        }
+      });
+    }
 
     if (effects.length < 1){
       effects.push(new skyTechMain());
