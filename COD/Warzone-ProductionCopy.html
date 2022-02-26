@@ -1,198 +1,508 @@
 <head>
   <title>COD: Warzone Production</title>
-  <meta description="Metering for COD Warzone."/>
+  <meta description="Metering for COD Warzone." />
   <meta publisher="WhirlwindFX" />
 
-  <meta meter="health" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-360" s="0-25" l="40-100" type="linear" />
-  <meta meter="healthR" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-10" s="50-100" l="40-75" type="linear" />
-  <meta meter="healthG" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="110-130" s="40-100" l="50-75" type="linear" />
-  <meta meter="plate1" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9333" width=".0312" h="190-248" s="30-100" l="40-100" type="linear" />
-  <meta meter="plate2" tags="cod,warzone,modern warfare,call of duty" x=".0693" y=".9333" width=".0312" h="190-248" s="30-100" l="40-100" type="linear" />
-  <meta meter="plate3" tags="cod,warzone,modern warfare,call of duty" x=".1042" y=".9333" width=".0302" h="190-248" s="30-100" l="40-100" type="linear" />
-  <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" h="5-25" s="50-100" l="50-75" type="linear" />
-  <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" h="5-25" s="50-100" l="50-75" type="linear" />
-  <meta meter="killBlack" tags="cod,warzone,modern warfare,call of duty" x=".476" y=".8315" width=".04" height=".01" h="0-360" s="0-75" l="0-40" type="area" />
-  <meta meter="vPlusHorizontal" tags="cod,warzone,modern warfare,call of duty" x=".4536" y=".6861" width=".01" h="0-360" s="0-50" l="85-100" type="linear" />
-  <meta meter="vPlusVertical" tags="cod,warzone,modern warfare,call of duty" x=".4586" y=".6787" width=".0008" height=".01" h="0-360" s="0-50" l="85-100" type="area" />
-  <meta meter="vHealth" tags="cod,warzone,modern warfare,call of duty" x=".4672" y=".6852" width=".064" h="0-360" s="0-50" l="85-100" type="linear" />
-  <meta meter="passengerExit" tags="cod,warzone,modern warfare,call of duty" x=".5985" y=".776" width=".011" h="0-360" s="0-50" l="85-100" type="linear" />
-  <meta meter="driverHorn" tags="cod,warzone,modern warfare,call of duty" x=".3891" y=".776" width=".012" h="0-360" s="0-50" l="85-100" type="linear" />
-  <meta meter="knockdownOrange" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005" height=".005" h="20-40" s="40-100" l="60-100" type="area" />
-  <meta meter="reviveGreen" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005" height=".005" h="90-110" s="75-100" l="60-100" type="area" />
-  <meta meter="gulagWhiteHP" tags="cod,warzone,modern warfare,call of duty" x=".4036" y=".0917" width=".07" h="0-360" s="0-50" l="70-100" type="linear" />
-  <meta meter="gulagRedHP" tags="cod,warzone,modern warfare,call of duty" x=".5245" y=".0917" width=".07" h="0-360" s="0-25" l="40-100" type="linear" />
-  <meta meter="circleClosingBlack" tags="cod,warzone,modern warfare,call of duty" x=".4943" y=".2019" width=".011" height=".011" h="0-360" s="0-25" l="0-25" type="area" />
-  <meta meter="circleClosingRed" tags="cod,warzone,modern warfare,call of duty" x=".4974" y=".2741" width=".006" height=".003" h="0-20" s="50-75" l="25-50" type="area" />
+  <meta property="enableHudEffect" label="Enable HUD Effects" type="boolean" default="1" />
+  <meta property="enableStandard" label="Enable standard effects" type="boolean" default="1" />
+
+  <meta property="HealthBarY" label="HealthBar Y" type="number" default="170" min="0" max="200">
+  <meta property="HealthBarHeight" label="HealthBar Height" type="number" default="4" min="0" max="10">
+  <meta property="ShieldBarY" label="ShieldBar Y" type="number" default="130" min="0" max="200">
+  <meta property="ShieldBarHeight" label="ShieldBar Height" type="number" default="2" min="0" max="10">
+
+  <meta meter="health" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-360" s="0-25"
+    l="40-100" type="linear" />
+  <meta meter="healthR" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-10"
+    s="50-100" l="40-75" type="linear" />
+  <meta meter="healthG" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="110-130"
+    s="40-100" l="50-75" type="linear" />
+  <meta meter="plate1" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9333" width=".0312" h="190-248"
+    s="30-100" l="40-100" type="linear" />
+  <meta meter="plate2" tags="cod,warzone,modern warfare,call of duty" x=".0693" y=".9333" width=".0312" h="190-248"
+    s="30-100" l="40-100" type="linear" />
+  <meta meter="plate3" tags="cod,warzone,modern warfare,call of duty" x=".1042" y=".9333" width=".0302" h="190-248"
+    s="30-100" l="40-100" type="linear" />
+  <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" h="5-25" s="50-100"
+    l="50-75" type="linear" />
+  <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" h="5-25" s="50-100"
+    l="50-75" type="linear" />
+  <meta meter="killBlack" tags="cod,warzone,modern warfare,call of duty" x=".476" y=".8315" width=".04" height=".01"
+    h="0-360" s="0-75" l="0-40" type="area" />
+  <meta meter="vPlusHorizontal" tags="cod,warzone,modern warfare,call of duty" x=".4536" y=".6861" width=".01" h="0-360"
+    s="0-50" l="85-100" type="linear" />
+  <meta meter="vPlusVertical" tags="cod,warzone,modern warfare,call of duty" x=".4586" y=".6787" width=".0008"
+    height=".01" h="0-360" s="0-50" l="85-100" type="area" />
+  <meta meter="vHealth" tags="cod,warzone,modern warfare,call of duty" x=".4672" y=".6852" width=".064" h="0-360"
+    s="0-50" l="85-100" type="linear" />
+  <meta meter="passengerExit" tags="cod,warzone,modern warfare,call of duty" x=".5985" y=".776" width=".011" h="0-360"
+    s="0-50" l="85-100" type="linear" />
+  <meta meter="driverHorn" tags="cod,warzone,modern warfare,call of duty" x=".3891" y=".776" width=".012" h="0-360"
+    s="0-50" l="85-100" type="linear" />
+  <meta meter="knockdownOrange" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005"
+    height=".005" h="20-40" s="40-100" l="60-100" type="area" />
+  <meta meter="reviveGreen" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005"
+    height=".005" h="90-110" s="75-100" l="60-100" type="area" />
+  <meta meter="gulagWhiteHP" tags="cod,warzone,modern warfare,call of duty" x=".4036" y=".0917" width=".07" h="0-360"
+    s="0-50" l="70-100" type="linear" />
+  <meta meter="gulagRedHP" tags="cod,warzone,modern warfare,call of duty" x=".5245" y=".0917" width=".07" h="0-360"
+    s="0-25" l="40-100" type="linear" />
+  <meta meter="circleClosingBlack" tags="cod,warzone,modern warfare,call of duty" x=".4943" y=".2019" width=".011"
+    height=".011" h="0-360" s="0-25" l="0-25" type="area" />
+  <meta meter="circleClosingRed" tags="cod,warzone,modern warfare,call of duty" x=".4974" y=".2741" width=".006"
+    height=".003" h="0-20" s="50-75" l="25-50" type="area" />
 </head>
 
+
 <body style="margin: 0; padding: 0; background: #000;">
-<canvas id="exCanvas" width="320" height="200"></canvas>  
+  <canvas id="exCanvas" width="320" height="200"></canvas>
 </body>
 
-<script>    
-var canvas, ctx;
-var stateMgr = new StateHandler();
-stateMgr.Push(new IdleState());
+<script>
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var effects = [];
+  var spaceVal = (320 / 4) / 2;
+  var knockdownGoing = false;
+  var CiclePlaying = false;
 
-var healthMeter = new Meter(5, healthEffects);
-var healthRedMeter = new Meter(5, ()=>"");
-var healthGreenMeter = new Meter(5, ()=>"");
-var plate1Meter = new Meter(5, armorEffects);
-var plate2Meter = new Meter(5, armorEffects);
-var plate3Meter = new Meter(5, armorEffects);
-var kill1Meter = new Meter(5, killEffect);
-var kill2Meter = new Meter(5, killEffect);
-var killBlackMeter = new Meter(5, killEffect);
-var vPlusHorizMeter = new Meter(5, vehicleEffects);
-var vPlusVertMeter = new Meter(5, vehicleEffects);
-var vHealthMeter = new Meter(5, vehicleEffects);
-var passengerExitMeter = new Meter(5, vehicleEffects);
-var driverHornMeter = new Meter(5, vehicleEffects);
-var downOrangeMeter = new Meter(5, knockdownEffect);
-var reviveGreenMeter = new Meter(5, reviveEffect);
-var gulagWhiteMeter = new Meter(5, gulagEffect);
-var gulagRedMeter = new Meter(5, gulagEffect);
-var circleBlackMeter = new Meter(5, circleEffects);
-var circleRedMeter = new Meter(5, circleEffects);
+  var healthMeter = new Meter(3, healthEffects);
+  var healthRedMeter = new Meter(5, knockdownEffect);
+  var healthGreenMeter = new Meter(5, () => "");
+  var plate1Meter = new Meter(5, armorEffects);
+  var plate2Meter = new Meter(5, armorEffects);
+  var plate3Meter = new Meter(5, armorEffects);
+  var kill1Meter = new Meter(5, killEffect);
+  var kill2Meter = new Meter(5, killEffect);
+  var killBlackMeter = new Meter(5, killEffect);
+  var vPlusHorizMeter = new Meter(5, vehicleEffects);
+  var vPlusVertMeter = new Meter(5, vehicleEffects);
+  var vHealthMeter = new Meter(5, vehicleEffects);
+  var passengerExitMeter = new Meter(5, vehicleEffects);
+  var driverHornMeter = new Meter(5, vehicleEffects);
+  var downOrangeMeter = new Meter(5, knockdownEffect);
+  var reviveGreenMeter = new Meter(5, reviveEffect);
+  var gulagWhiteMeter = new Meter(5, gulagEffect);
+  var gulagRedMeter = new Meter(5, gulagEffect);
+  var circleBlackMeter = new Meter(5, circleEffects);
+  var circleRedMeter = new Meter(5, circleEffects);
 
-function update(){ 
-  stateMgr.Process();
-  window.requestAnimationFrame(update);
-}
+  function update() {
+    IdleState();
 
-function healthEffects(){
-  console.log("In health effects");
-}
+    healthMeter.setValue(engine.vision.health);
+    plate1Meter.setValue(engine.vision.plate1);
+    plate2Meter.setValue(engine.vision.plate2);
+    plate3Meter.setValue(engine.vision.plate3);
+    downOrangeMeter.setValue(engine.vision.knockdownOrange)
+    healthRedMeter.setValue(engine.vision.healthR);
+    circleBlackMeter.setValue(engine.vision.circleClosingBlack)
+    circleRedMeter.setValue(engine.vision.circleClosingRed)
 
-function armorEffects(){
-  console.log("In armor effects");
-}
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    if (enableHudEffect) {
+      UpdateHud();
+    }
+    if (enableStandard) {
+      stateMgr.Process();
+    }
 
-function killEffect(){
-  console.log("In kill effect");
-}
+    window.requestAnimationFrame(update);
+  }
 
-function vehicleEffects(){
-  console.log("In vehicle effects");
-}
-
-function knockdownEffect(){
-  console.log("In knockdown effect");
-}
-
-function reviveEffect(){
-  console.log("In revive effect");
-}
-
-function gulagEffect(){
-  console.log("In gulag effect");
-}
-
-function circleEffects(){
-  console.log("In circle effects");
-}
+  function UpdateHud() {
+    //HealthBar
+    ctx.fillStyle = "Green";
+    ctx.fillRect(0, 200 - HealthBarY, healthMeter.value * 320, HealthBarHeight * 10)
 
 
-function IdleState(){
-  this.Process = function() {
+    //ShieldBar
+    ctx.fillStyle = "blue";
+    ctx.fillRect(0, 200 - ShieldBarY, plate1Meter.value * (320 / 4), ShieldBarHeight * 10)
+    ctx.fillRect(320 / 4 + spaceVal, 200 - ShieldBarY, plate2Meter.value * (320 / 4), ShieldBarHeight * 10)
+    ctx.fillRect(((320 / 4) * 2) + (spaceVal * 2), 200 - ShieldBarY, plate3Meter.value * (320 / 4), ShieldBarHeight * 10);
+
+  }
+
+  function armorEffects() {
+    console.log("In armor effects");
+    if (enableStandard) {
+      if (plate1Meter.decreased && plate1Meter.value != 0 || plate2Meter.decreased || plate3Meter.decreased) {
+        effects.push(new DamageEffect("blue"));
+      }
+     
+    }
+  }
+
+  function healthEffects() {
+    if (enableStandard) {
+      if (healthMeter.decreased && healthMeter.diff < .9) {
+        effects.push(new DamageEffect("red"));
+      }
+    }
+  }
+
+
+
+  function killEffect() {
+    console.log("In kill effect");
+  }
+
+  function vehicleEffects() {
+    console.log("In vehicle effects");
+  }
+
+  function knockdownEffect() {
+    console.log("In knockdown effect");
+    if (enableStandard) {
+      if (downOrangeMeter.value == 1 && healthRedMeter.value > 0) {
+        knockdownGoing = true;
+        effects.push(new knockdowneffect())
+      }
+    }
+  }
+
+  function reviveEffect() {
+    console.log("In revive effect");
+  }
+
+  function gulagEffect() {
+    console.log("In gulag effect");
+  }
+
+  function circleEffects() {
+    console.log("In circle effects");
+    if (circleBlackMeter.value > 0.9 && circleRedMeter.value > 0.9 && CiclePlaying == false) {
+      CiclePlaying = true;
+      effects.push(new RippleEffect(160, 100, 1, 8000, 50, "purple", "in", "stroke", 5))
+    }
+  }
+
+  function DamageEffect(color) {
+    this.start = GetTime();
+    this.bullets = [];
+    this.blood = [];
+    this.color = color;
+    for (let index = 0; index < 10; index++) {
+      this.bullets.push(new bullet((Math.random() * 220) + 50));
+    }
+
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      this.bullets.forEach((bullet, i) => {
+        bullet.draw();
+        if (bullet.y < 0) {
+          this.blood.push(new ParticleExplosion(bullet.x, bullet.y, this.color, 10, 1500, 6, 20, 2, false, false, true))
+          this.bullets.splice(i, 1)
+        }
+      });
+
+      this.blood.forEach(blood => {
+        blood.draw();
+      });
+      if (this.elapsed > 3000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts, hasPhysics) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
+    this.hasPhysics = hasPhysics;
+
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }, this.hasPhysics))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+  function knockdowneffect() {
+    this.lifetime = 10;
+    this.start = GetTime();
+    this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+    this.draw = function () {
+      this.elapsed = GetTime();
+      this.explosionEffect.draw();
+      DrawHeart(160, 90, (Math.sin(this.elapsed / 300) + 1) * 50, (Math.sin(this.elapsed / 300) + 1) * 25)
+      if ((Math.sin(this.elapsed / 300)) >= 0.99) {
+        this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+      }
+      if (downOrangeMeter.value < .1) {
+        this.lifetime = 0
+        knockdownGoing = false;
+      }
+    }
+  }
+
+  function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
+    this.col = color;
+    this.speed = speed;
+    this.dur = duration;
+    this.width = rippleWidth;
+    this.start = GetTime();
+    this.lifetime;
+    this.x = x;
+    this.y = y;
+    this.fill = fillOrStroke;
+    this.radius = 0;
+    this.amount = amountOfRipples;
+    this.background = background;
+    if (inOrOut == "in") {
+      this.radius = 200 + (this.width * (this.amount * 2));
+      this.speed = -this.speed
+    }
+    this.draw = function () {
+      if (this.background) {
+        DrawBackground("black");
+      }
+
+
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      for (let i = 0; i < this.amount; i++) {
+        if (this.radius - i * (this.width * 2) > 0) {
+          ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+        }
+      }
+      if (this.fill == "fill") {
+        ctx.fillStyle = this.col;
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = this.col;
+        ctx.stroke();
+      }
+      this.radius += this.speed;
+      this.lifetime = this.dur - (GetTime() - this.start);
+      if (this.lifetime <= 0) {
+        CiclePlaying = false;
+      }
+    }
+  }
+
+
+
+  function IdleState() {
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
     let hue = new Int16Array(engine.zone.hue);
 
-    for(var iZone = 0; iZone < 560; iZone++)
-    {        
-      ctx.fillStyle = 'hsl('+hue[iZone]+','+sat[iZone]+'%,'+lightness[iZone]+'%)'
-      
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] + '%)'
+
       var iRow = Math.floor(iZone / 28);
       var iCol = iZone % 28;
       var iWidth = 320 / 28;
       var iHeight = 200 / 20;
       var iZx = iCol * iWidth;
       var iZy = iRow * iHeight;
-      
+
       ctx.fillRect(iZx, iZy, iWidth, iHeight);
-    }
-  }
-}
 
-
-
-function StateHandler(){
-  var stack = [];
-  var state = null;
-
-  var updateState = function() {
-    if (stack.length > 0){
-      state = stack[stack.length - 1];
-    } else {
-      state = null;
     }
   }
 
-  this.Push = function(newState)
-  {
-    stack.push(newState);
-    updateState();    
+  //helper effect
+  function GetTime() {
+    return new Date().getTime();
   }
 
-  this.Pop = function()
-  {
-    stack.pop();
-    updateState();
-  }
+  function DrawHeart(x, y, xSize, Ysize, color) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.moveTo(x, y);
+    // top left curve
+    ctx.bezierCurveTo(
+      x,
+      y,
+      x - xSize / 2,
+      y - Ysize,
+      x - xSize / 2,
+      y + Ysize / 4
+    );
+    ctx.bezierCurveTo(
+      x - xSize / 2,
+      y + Ysize / 4,
+      x - xSize / 2,
+      y + Ysize / 4,
+      x,
+      y + Ysize
+    );
+    ctx.bezierCurveTo(
+      x + xSize / 2,
+      y + Ysize / 4,
+      x + xSize / 2,
+      y + Ysize / 4,
+      x + xSize / 2,
+      y + Ysize / 4
+    );
+    ctx.bezierCurveTo(
+      x + xSize / 2,
+      y + Ysize / 4,
+      x + xSize / 2,
+      y - Ysize,
+      x,
+      y
+    );
 
-  this.Process = function()
-  {    
-    if (state != null){      
-      state.Process();
+    ctx.fill()
+    ctx.restore()
+  };
+
+
+
+  class bullet {
+    constructor(x) {
+      this.x = x;
+      this.y = 200;
+      this.speed = (Math.random() * 6);
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = "red"
+      ctx.fillRect(this.x, this.y, 20, 60)
+      this.y -= this.speed + 4;
     }
   }
-}
-
-
-
-function Meter(count, callback){
-  this.size = count;
-  this.value = 0;
-  this.diff = 0;
-  this.increased = false;
-  this.decreased = false;
-  var values = [];
-  
-  this.setValue = function(updatedValue) 
-  {
-    // Add and shift.  
-    values.push(updatedValue);
-    if (values.length > this.size) { values.shift(); }
-
-    // Exit early if we've got a long-term match.
-    for(var i=0; i < (values.length - 1); i++){
-      if (values[i] !== values[i+1]) return;
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity, hasPhysics) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+      this.hasPhysics = hasPhysics;
     }
-
-    // We got here, so we've got a matching value collection.
-    if (this.value !== values[0]) {
-      //var fromZero = this.value === 0;
-      //var toZero = values[0] === 0;      
-      this.diff = Math.abs(this.value - values[0]);
-      this.increased = this.value < values[0];
-      this.decreased = this.value > values[0];        
-      this.value = values[0];
-      callback();      
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      if (this.hasPhysics != null || this.hasPhysics != false) {
+        this.velocity.y += 0.3;
+      }
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
     }
   }
-} 
 
-function onEngineReady()
-{      
-  // Grab canvas and rendering context.
-  canvas = document.getElementById( 'exCanvas' );
-  ctx = canvas.getContext( '2d' );            
 
-  stateMgr.Push(new IdleState());
-  // Start updates *after* our engine is accessible and ready.
-  window.requestAnimationFrame(update);      
-}
-onEngineReady()
+
+
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    }
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    }
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    }
+  }
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.  
+      values.push(updatedValue);
+      if (values.length > this.size) { values.shift(); }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < (values.length - 1); i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;      
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+  onEngineReady()
 
 </script>
