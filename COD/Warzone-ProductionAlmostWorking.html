@@ -23,10 +23,10 @@
     s="30-100" l="40-100" type="linear" />
   <meta meter="plate3" tags="cod,warzone,modern warfare,call of duty" x=".1042" y=".9333" width=".0302" h="190-248"
     s="30-100" l="40-100" type="linear" />
-  <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" h="5-25" s="50-100"
-    l="50-75" type="linear" />
-  <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" h="5-25" s="50-100"
-    l="50-75" type="linear" />
+  <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" height=".001"
+    h="0-30" s="30-100" l="30-75" type="area" />
+  <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" height=".001"
+    h="5-25" s="50-100" l="50-75" type="area" />
   <meta meter="killBlack" tags="cod,warzone,modern warfare,call of duty" x=".476" y=".8315" width=".04" height=".01"
     h="0-360" s="0-75" l="0-40" type="area" />
   <meta meter="vPlusHorizontal" tags="cod,warzone,modern warfare,call of duty" x=".4536" y=".6861" width=".01" h="0-360"
@@ -65,13 +65,16 @@
   var spaceVal = (320 / 4) / 2;
   var knockdownGoing = false;
   var CiclePlaying = false;
+  var reviveActive = false;
+  var killAnim = false;
+  var VehicleGoing = false;
 
   var healthMeter = new Meter(3, healthEffects);
   var healthRedMeter = new Meter(5, knockdownEffect);
-  var healthGreenMeter = new Meter(5, () => "");
+  var healthGreenMeter = new Meter(5, reviveEffect);
   var plate1Meter = new Meter(5, armorEffects);
-  var plate2Meter = new Meter(5, armorEffects);
-  var plate3Meter = new Meter(5, armorEffects);
+  var plate2Meter = new Meter(5, armorEffects2);
+  var plate3Meter = new Meter(5, armorEffects3);
   var kill1Meter = new Meter(5, killEffect);
   var kill2Meter = new Meter(5, killEffect);
   var killBlackMeter = new Meter(5, killEffect);
@@ -88,16 +91,26 @@
   var circleRedMeter = new Meter(5, circleEffects);
 
   function update() {
-    IdleState();
-
-    healthMeter.setValue(engine.vision.health);
-    plate1Meter.setValue(engine.vision.plate1);
-    plate2Meter.setValue(engine.vision.plate2);
-    plate3Meter.setValue(engine.vision.plate3);
-    downOrangeMeter.setValue(engine.vision.knockdownOrange)
-    healthRedMeter.setValue(engine.vision.healthR);
-    circleBlackMeter.setValue(engine.vision.circleClosingBlack)
-    circleRedMeter.setValue(engine.vision.circleClosingRed)
+    if (!killAnim) {
+      IdleState();
+      healthMeter.setValue(engine.vision.health);
+      plate1Meter.setValue(engine.vision.plate1);
+      plate2Meter.setValue(engine.vision.plate2);
+      plate3Meter.setValue(engine.vision.plate3);
+      downOrangeMeter.setValue(engine.vision.knockdownOrange)
+      healthRedMeter.setValue(engine.vision.healthR);
+      circleBlackMeter.setValue(engine.vision.circleClosingBlack)
+      circleRedMeter.setValue(engine.vision.circleClosingRed)
+      healthGreenMeter.setValue(engine.vision.healthG);
+      reviveGreenMeter.setValue(engine.vision.reviveGreen);
+      vPlusHorizMeter.setValue(engine.vision.vPlusHorizontal)
+      vPlusVertMeter.setValue(engine.vision.vPlusVertical)
+      vHealthMeter.setValue(engine.vision.vHealth)
+      driverHornMeter.setValue(engine.vision.driverHorn)
+    }
+    kill1Meter.setValue(engine.vision.kill1)
+    kill2Meter.setValue(engine.vision.kill2)
+    killBlackMeter.setValue(engine.vision.killBlack)
 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
@@ -130,12 +143,33 @@
   }
 
   function armorEffects() {
-    console.log("In armor effects");
     if (enableStandard) {
-      if (plate1Meter.decreased && plate1Meter.value != 0 || plate2Meter.decreased || plate3Meter.decreased) {
+      if (plate1Meter.decreased) {
         effects.push(new DamageEffect("blue"));
       }
-     
+      else if (plate1Meter.increased) {
+        effects.push(new HealEffect("blue"))
+      }
+    }
+  }
+  function armorEffects2() {
+    if (enableStandard) {
+      if (plate2Meter.decreased) {
+        effects.push(new DamageEffect("blue"));
+      }
+      else if (plate2Meter.increased) {
+        effects.push(new HealEffect("blue"))
+      }
+    }
+  }
+  function armorEffects3() {
+    if (enableStandard) {
+      if (plate3Meter.decreased) {
+        effects.push(new DamageEffect("blue"));
+      }
+      else if (plate3Meter.increased) {
+        effects.push(new HealEffect("blue"))
+      }
     }
   }
 
@@ -143,6 +177,8 @@
     if (enableStandard) {
       if (healthMeter.decreased && healthMeter.diff < .9) {
         effects.push(new DamageEffect("red"));
+      } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3) {
+        effects.push(new HealEffect())
       }
     }
   }
@@ -151,16 +187,23 @@
 
   function killEffect() {
     console.log("In kill effect");
+    if (kill1Meter.value > 0.8 && kill2Meter.value > 0.8 && killBlackMeter.value > 0.8 && killAnim == false) {
+      stateMgr.Push(new PlayKillEffect("red", 5))
+    }
   }
 
   function vehicleEffects() {
     console.log("In vehicle effects");
+    if (vPlusHorizMeter.value > 0.8 && vPlusVertMeter.value > 0 && driverHornMeter.value > 0.8 && VehicleGoing == false) {
+      VehicleGoing = true;
+      effects.push(new Vehicleeffect())
+    }
   }
 
   function knockdownEffect() {
-    console.log("In knockdown effect");
     if (enableStandard) {
-      if (downOrangeMeter.value == 1 && healthRedMeter.value > 0) {
+      if (downOrangeMeter.value > 0.8 && healthRedMeter.value > 0 && knockdownGoing == false) {
+        console.log("In knockdown effect");
         knockdownGoing = true;
         effects.push(new knockdowneffect())
       }
@@ -169,6 +212,10 @@
 
   function reviveEffect() {
     console.log("In revive effect");
+    if (reviveGreenMeter.value > 0.8 && healthGreenMeter.value > 0 && reviveActive == false) {
+      reviveActive = true;
+      effects.push(new ReviveEffect())
+    }
   }
 
   function gulagEffect() {
@@ -206,6 +253,56 @@
         blood.draw();
       });
       if (this.elapsed > 3000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function ReviveEffect() {
+    this.start = GetTime();
+    this.hearts = [];
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.fillStyle = "Green"
+      ctx.fillRect(0, 0, (this.elapsed / 5000) * 320, 200);
+      if (Math.random() > 0.9) {
+        this.hearts.push(new heart(Math.random() * ((this.elapsed / 5000) * 325), 200, "#6AFF33", 60))
+      }
+      this.hearts.forEach((heart, i) => {
+        heart.draw()
+        if (heart.y < 0) {
+          this.hearts.splice(i, 1);
+        }
+      });
+      if ((this.elapsed / 5000) * 335 > 320) {
+        effects.push(new ParticleExplosion(160, 100, "#6AFF33", 5, 2000, 10, 60, 2, false, true, false))
+      }
+      if (reviveGreenMeter.value < .1) {
+        this.lifetime = 0;
+        reviveActive = false;
+      }
+    }
+  }
+
+
+
+  function HealEffect(color) {
+    this.color = "#6AFF33"
+    if (color != null) {
+      this.color = color;
+    }
+    this.hearts = [];
+    for (let index = 0; index < 15; index++) {
+      this.hearts.push(new heart(Math.random() * 320, 200, this.color, 60))
+    }
+    this.draw = function () {
+      this.hearts.forEach((heart, i) => {
+        heart.draw()
+        if (heart.y < 0) {
+          this.hearts.splice(i, 1);
+        }
+      });
+      if (this.hearts.length == 0) {
         this.lifetime = 0;
       }
     }
@@ -256,6 +353,54 @@
     }
   };
 
+  function PlayKillEffect(color, radius) {
+    this.start = new Date().getTime();
+    this.elapsed = 0;
+    this.bloodDrip = [];
+    this.state = 0;
+    this.cubeX = 1;
+    this.cubeY = 1;
+    this.color = color;
+    this.radius = radius;
+    killAnim = true;
+    effects.length = 0
+
+    this.Process = function () {
+      if (this.bloodDrip.length < 20) {
+        this.bloodDrip.push(new blood(Math.random() * 320, 0, this.radius, this.color, 0.01))
+      }
+
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed >= 4000) {
+        stateMgr.Pop();
+        killAnim = false;
+      }
+
+      this.Draw();
+    };
+    this.Draw = function () {
+      if (this.state == 0) {
+        ctx.beginPath();
+        ctx.fillStyle = 'black'
+        ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+        this.bloodDrip.length = 0;
+        this.cubeX += 15;
+        this.cubeY += 10;
+        effectTime = Date.now();
+        if (this.cubeX >= 320 + 30) {
+          this.state = 1;
+        }
+      }
+      if (this.state == 1) {
+        this.bloodDrip.forEach(blood => {
+          blood.Draw();
+        }
+        );
+      }
+    }
+  }
+
   function knockdowneffect() {
     this.lifetime = 10;
     this.start = GetTime();
@@ -273,6 +418,20 @@
       }
     }
   }
+
+  function Vehicleeffect() {
+    this.lifetime = 10;
+    this.start = GetTime();
+    this.draw = function () {
+      ctx.fillStyle = `hsla(41, 100%, 50%, 0.6)`
+      ctx.fillRect(0, 0, 320, 200)
+      if (vPlusHorizMeter.value < .1 || vPlusVertMeter.value < .1) {
+        this.lifetime = 0
+        VehicleGoing = false;
+      }
+    }
+  }
+
 
   function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
     this.col = color;
@@ -389,6 +548,45 @@
     ctx.restore()
   };
 
+  class heart {
+    constructor(x, y, color, size) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.size = size;
+      this.speed = (Math.random() * 2) + 0.5;
+      this.start = GetTime();
+      this.xpos = this.x
+      this.offset = Math.random() * 10;
+    }
+    draw() {
+      this.elapsed = GetTime() - this.start;
+      DrawHeart(this.xpos, this.y, this.size, this.size / 2, this.color)
+      this.y -= this.speed;
+      this.xpos = this.x + Math.sin((this.elapsed + this.offset) / 1000) * 50;
+    }
+  }
+
+  class blood {
+    constructor(x, y, radius, color, fade) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.color = color;
+      this.fade = fade;
+      this.speed = (Math.random() + 0.1) * 4
+    }
+    Draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+      ctx.strokeStyle = this.color;
+      ctx.stroke();
+      this.y += this.speed * Math.random();
+      this.x += (Math.random() - 0.5) * 8;
+    }
+
+  }
+
 
 
   class bullet {
@@ -404,6 +602,26 @@
       this.y -= this.speed + 4;
     }
   }
+
+  class HeartParticle {
+    constructor(x, y, size, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.size = size;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      DrawHeart(this.x, this.y, this.size, this.size / 2, this.color)
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
+  }
+
   class ExplosionParticle {
     constructor(x, y, radius, color, fadeSpeed, velocity, hasPhysics) {
       this.x = x;
