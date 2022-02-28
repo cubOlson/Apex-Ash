@@ -3,30 +3,34 @@
   <meta description="Metering for COD Warzone." />
   <meta publisher="WhirlwindFX" />
 
+
   <meta property="enableHudEffect" label="Enable HUD Effects" type="boolean" default="1" />
   <meta property="enableStandard" label="Enable standard effects" type="boolean" default="1" />
-
   <meta property="HealthBarY" label="HealthBar Y" type="number" default="170" min="0" max="200">
   <meta property="HealthBarHeight" label="HealthBar Height" type="number" default="4" min="0" max="10">
   <meta property="ShieldBarY" label="ShieldBar Y" type="number" default="130" min="0" max="200">
   <meta property="ShieldBarHeight" label="ShieldBar Height" type="number" default="2" min="0" max="10">
+  <meta property="GulagBarY" label="GulagBar Y" type="number" default="100" min="0" max="200">
+  <meta property="GulagBarHeight" label="GulagBar Height" type="number" default="6" min="0" max="10">
 
   <meta meter="health" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-360" s="0-25"
     l="40-100" type="linear" />
   <meta meter="healthR" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-10"
     s="50-100" l="40-75" type="linear" />
   <meta meter="healthG" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="110-130"
-    s="40-100" l="50-75" type="linear" />
+    s="40-100" l="30-75" type="linear" />
   <meta meter="plate1" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9333" width=".0312" h="190-248"
     s="30-100" l="40-100" type="linear" />
   <meta meter="plate2" tags="cod,warzone,modern warfare,call of duty" x=".0693" y=".9333" width=".0312" h="190-248"
     s="30-100" l="40-100" type="linear" />
   <meta meter="plate3" tags="cod,warzone,modern warfare,call of duty" x=".1042" y=".9333" width=".0302" h="190-248"
     s="30-100" l="40-100" type="linear" />
+  <meta meter="inGame" tags="cod,warzone,modern warfare,call of duty" x=".9398" y=".048611" width=".0039" h="0-360"
+    s="0-5" l="95-100" type="linear" />
   <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" height=".001"
-    h="0-30" s="30-100" l="30-75" type="area" />
+    h="0-60" s="80-100" l="40-75" type="area" />
   <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" height=".001"
-    h="5-25" s="50-100" l="50-75" type="area" />
+    h="0-60" s="80-100" l="40-75" type="area" />
   <meta meter="killBlack" tags="cod,warzone,modern warfare,call of duty" x=".476" y=".8315" width=".04" height=".01"
     h="0-360" s="0-75" l="0-40" type="area" />
   <meta meter="vPlusHorizontal" tags="cod,warzone,modern warfare,call of duty" x=".4536" y=".6861" width=".01" h="0-360"
@@ -42,15 +46,15 @@
   <meta meter="knockdownOrange" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005"
     height=".005" h="20-40" s="40-100" l="60-100" type="area" />
   <meta meter="reviveGreen" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005"
-    height=".005" h="90-110" s="75-100" l="60-100" type="area" />
+    height=".005" h="80-120" s="75-100" l="60-100" type="area" />
   <meta meter="gulagWhiteHP" tags="cod,warzone,modern warfare,call of duty" x=".4036" y=".0917" width=".07" h="0-360"
     s="0-50" l="70-100" type="linear" />
-  <meta meter="gulagRedHP" tags="cod,warzone,modern warfare,call of duty" x=".5245" y=".0917" width=".07" h="0-360"
-    s="0-25" l="40-100" type="linear" />
+  <meta meter="gulagRedHP" tags="cod,warzone,modern warfare,call of duty" x=".5245" y=".0917" width=".07" height=".001"
+    h="0-35" s="50-80" l="40-100" type="area" />
   <meta meter="circleClosingBlack" tags="cod,warzone,modern warfare,call of duty" x=".4943" y=".2019" width=".011"
     height=".011" h="0-360" s="0-25" l="0-25" type="area" />
   <meta meter="circleClosingRed" tags="cod,warzone,modern warfare,call of duty" x=".4974" y=".2741" width=".006"
-    height=".003" h="0-20" s="50-75" l="25-50" type="area" />
+    height=".003" h="0-20" s="20-100" l="15-70" type="area" />
 </head>
 
 
@@ -59,6 +63,7 @@
 </body>
 
 <script>
+  //Declaring variables
   var canvas, ctx;
   var stateMgr = new StateHandler();
   var effects = [];
@@ -68,7 +73,12 @@
   var reviveActive = false;
   var killAnim = false;
   var VehicleGoing = false;
+  var inGulag = false;
+  var PlayingGame = false;
 
+
+  //Declaring meters
+  var inGameMeter = new Meter(2, InGameEffect)
   var healthMeter = new Meter(3, healthEffects);
   var healthRedMeter = new Meter(5, knockdownEffect);
   var healthGreenMeter = new Meter(5, reviveEffect);
@@ -91,36 +101,47 @@
   var circleRedMeter = new Meter(5, circleEffects);
 
   function update() {
+    //Updating meters
+
+    inGameMeter.setValue(engine.vision.inGame)
     if (!killAnim) {
       IdleState();
-      healthMeter.setValue(engine.vision.health);
-      plate1Meter.setValue(engine.vision.plate1);
-      plate2Meter.setValue(engine.vision.plate2);
-      plate3Meter.setValue(engine.vision.plate3);
-      downOrangeMeter.setValue(engine.vision.knockdownOrange)
-      healthRedMeter.setValue(engine.vision.healthR);
-      circleBlackMeter.setValue(engine.vision.circleClosingBlack)
-      circleRedMeter.setValue(engine.vision.circleClosingRed)
-      healthGreenMeter.setValue(engine.vision.healthG);
-      reviveGreenMeter.setValue(engine.vision.reviveGreen);
-      vPlusHorizMeter.setValue(engine.vision.vPlusHorizontal)
-      vPlusVertMeter.setValue(engine.vision.vPlusVertical)
-      vHealthMeter.setValue(engine.vision.vHealth)
-      driverHornMeter.setValue(engine.vision.driverHorn)
     }
-    kill1Meter.setValue(engine.vision.kill1)
-    kill2Meter.setValue(engine.vision.kill2)
-    killBlackMeter.setValue(engine.vision.killBlack)
-
+    if (PlayingGame) {
+      if (!killAnim) {
+        gulagWhiteMeter.setValue(engine.vision.gulagWhiteHP)
+        gulagRedMeter.setValue(engine.vision.gulagRedHP)
+        healthMeter.setValue(engine.vision.health);
+        plate1Meter.setValue(engine.vision.plate1);
+        plate2Meter.setValue(engine.vision.plate2);
+        plate3Meter.setValue(engine.vision.plate3);
+        downOrangeMeter.setValue(engine.vision.knockdownOrange)
+        healthRedMeter.setValue(engine.vision.healthR);
+        circleBlackMeter.setValue(engine.vision.circleClosingBlack)
+        circleRedMeter.setValue(engine.vision.circleClosingRed)
+        healthGreenMeter.setValue(engine.vision.healthG);
+        reviveGreenMeter.setValue(engine.vision.reviveGreen);
+        vPlusHorizMeter.setValue(engine.vision.vPlusHorizontal)
+        vPlusVertMeter.setValue(engine.vision.vPlusVertical)
+        vHealthMeter.setValue(engine.vision.vHealth)
+        driverHornMeter.setValue(engine.vision.driverHorn)
+      }
+      kill1Meter.setValue(engine.vision.kill1)
+      kill2Meter.setValue(engine.vision.kill2)
+      killBlackMeter.setValue(engine.vision.killBlack)
+    }
+    //Effect handler 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
       if (effects[i].lifetime <= 0) {
         effects.splice(i, 1);
       }
     }
-    if (enableHudEffect) {
+    //Updates the HudEffects
+    if (enableHudEffect && PlayingGame && !killAnim) {
       UpdateHud();
     }
+
     if (enableStandard) {
       stateMgr.Process();
     }
@@ -140,6 +161,23 @@
     ctx.fillRect(320 / 4 + spaceVal, 200 - ShieldBarY, plate2Meter.value * (320 / 4), ShieldBarHeight * 10)
     ctx.fillRect(((320 / 4) * 2) + (spaceVal * 2), 200 - ShieldBarY, plate3Meter.value * (320 / 4), ShieldBarHeight * 10);
 
+    if (inGulag) {
+      //GulagHud
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 200 - GulagBarY, gulagWhiteMeter.value * 160, GulagBarHeight * 10);
+      ctx.fillStyle = "red";
+      ctx.fillRect(320, 200 - GulagBarY, -gulagRedMeter.value * 160, GulagBarHeight * 10)
+    }
+  }
+
+
+  //Callbacks
+  function InGameEffect() {
+    if (inGameMeter.value == 1) {
+      PlayingGame = true;
+    } else {
+      PlayingGame = false;
+    }
   }
 
   function armorEffects() {
@@ -177,7 +215,7 @@
     if (enableStandard) {
       if (healthMeter.decreased && healthMeter.diff < .9) {
         effects.push(new DamageEffect("red"));
-      } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3) {
+      } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3 && !knockdownGoing) {
         effects.push(new HealEffect())
       }
     }
@@ -187,17 +225,21 @@
 
   function killEffect() {
     console.log("In kill effect");
-    if (kill1Meter.value > 0.8 && kill2Meter.value > 0.8 && killBlackMeter.value > 0.8 && killAnim == false) {
-      stateMgr.Push(new PlayKillEffect("red", 5))
+    if (enableStandard) {
+      if (kill1Meter.value > 0.8 && kill2Meter.value > 0.8 && killBlackMeter.value > 0.8 && killAnim == false) {
+        stateMgr.Push(new PlayKillEffect("red", 5))
+      }
     }
   }
 
   function vehicleEffects() {
     console.log("In vehicle effects");
-    if (vPlusHorizMeter.value > 0.8 && vPlusVertMeter.value > 0 && driverHornMeter.value > 0.8 && VehicleGoing == false) {
-      VehicleGoing = true;
-      effects.push(new Vehicleeffect())
-    }
+    // if (enableStandard) {
+    //   if (vPlusHorizMeter.value > 0.8 && vPlusVertMeter.value > 0 && driverHornMeter.value > 0.8 && VehicleGoing == false) {
+    //     VehicleGoing = true;
+    //     effects.push(new Vehicleeffect())
+    //   }
+    // }
   }
 
   function knockdownEffect() {
@@ -212,24 +254,35 @@
 
   function reviveEffect() {
     console.log("In revive effect");
-    if (reviveGreenMeter.value > 0.8 && healthGreenMeter.value > 0 && reviveActive == false) {
-      reviveActive = true;
-      effects.push(new ReviveEffect())
+    if (enableStandard) {
+      if (reviveGreenMeter.value > 0.8 && healthGreenMeter.value > 0 && reviveActive == false) {
+        reviveActive = true;
+        effects.push(new ReviveEffect())
+      }
     }
   }
 
   function gulagEffect() {
-    console.log("In gulag effect");
+
+    if (gulagRedMeter.value == 1 && gulagWhiteMeter.value == 1) {
+      inGulag = true;
+    }
+    if (gulagRedMeter.value == 0 && gulagWhiteMeter.value == 0) {
+      inGulag = false;
+    }
   }
 
   function circleEffects() {
     console.log("In circle effects");
-    if (circleBlackMeter.value > 0.9 && circleRedMeter.value > 0.9 && CiclePlaying == false) {
-      CiclePlaying = true;
-      effects.push(new RippleEffect(160, 100, 1, 8000, 50, "purple", "in", "stroke", 5))
+    if (enableStandard) {
+      if (circleBlackMeter.value > 0.9 && circleRedMeter.value > 0.9 && CiclePlaying == false) {
+        CiclePlaying = true;
+        effects.push(new RippleEffect(160, 100, 1, 8000, 50, "purple", "in", "stroke", 5))
+      }
     }
   }
 
+  //Effects
   function DamageEffect(color) {
     this.start = GetTime();
     this.bullets = [];
@@ -425,7 +478,7 @@
     this.draw = function () {
       ctx.fillStyle = `hsla(41, 100%, 50%, 0.6)`
       ctx.fillRect(0, 0, 320, 200)
-      if (vPlusHorizMeter.value < .1 || vPlusVertMeter.value < .1) {
+      if (vPlusHorizMeter.value < .1) {
         this.lifetime = 0
         VehicleGoing = false;
       }
@@ -500,7 +553,9 @@
     }
   }
 
-  //helper effect
+
+
+  //helper functions
   function GetTime() {
     return new Date().getTime();
   }
