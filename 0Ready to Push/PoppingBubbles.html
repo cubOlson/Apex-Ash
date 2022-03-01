@@ -1,0 +1,99 @@
+<head>
+  <title>Popping Bubbles</title>
+
+  <meta description="Random Popping Bubbles" />
+  <meta publisher="SignalRGB" />
+
+  <meta
+    property="background"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#5DFFE2"
+  />
+  <meta
+    property="circleColor"
+    label="Circle Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#7E00F5"
+  />
+  <meta
+    property="circleWidth"
+    label="Bubble Thickness"
+    type="number"
+    default="10"
+    min="1"
+    max="30"
+  />
+  <meta
+    property="radius"
+    label="Bubble Radius"
+    type="number"
+    default="20"
+    min="5"
+    max="50"
+  />
+  <meta
+    property="speed"
+    label="Speed"
+    type="number"
+    default="5"
+    min="0"
+    max="100"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  console.clear();
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var timer = 2000;
+  var circles = [];
+
+  function circle(x, y) {
+    var size = 1;
+    this.duration = radius;
+    this.x = x;
+    this.y = y;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.strokeStyle = circleColor;
+      ctx.lineWidth = circleWidth;
+      ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+      ctx.stroke();
+      size += speed / 5;
+      if (speed > 0) {
+        this.duration--;
+      }
+    };
+  }
+
+  function update() {
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, 320, 200);
+    if (timer % 5 == 0 && speed > 0) {
+      circles.push(new circle(Math.random() * 320, Math.random() * 200));
+    }
+    timer--;
+
+    for (let i = 0; i < circles.length; i++) {
+      circles[i].draw();
+      if (circles[i].duration <= 0) {
+        circles.splice(i, 1);
+      }
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+</script>

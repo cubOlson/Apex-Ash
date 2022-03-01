@@ -1,5 +1,5 @@
 <head>
-    <title>Basic Effects</title>
+    <title>Koi Pond</title>
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
     <meta property="fishNum" label="Number of fish" type="number" min="1" max="8" default="3"/>
@@ -19,7 +19,7 @@
   var foodCheck = {};
 
   function update(){
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "hsl(195, 45%, 15%)";
     ctx.fillRect(0, 0, 320, 200);
 
     if (fishes.length < fishNum){
@@ -44,13 +44,13 @@
         foods.splice(i, 1);
       }
     });
-    fishes.forEach((ele, i) => {
+    fishes.forEach((ele) => {
       ele.draw();
     })
-    water.forEach((ele, i) => {
+    water.forEach((ele) => {
       ele.draw();
     });
-    lilies.forEach((ele, i) => {
+    lilies.forEach((ele) => {
       ele.draw();
     });
 
@@ -205,7 +205,7 @@
         ctx.fillStyle = color;
         ctx.arc(x,y,radius, 0, 2* Math.PI)
         ctx.fill();
-    };
+      };
 
   window.requestAnimationFrame(update);
 </script>

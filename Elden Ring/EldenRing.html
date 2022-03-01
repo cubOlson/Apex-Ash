@@ -1,0 +1,375 @@
+<head>
+    <title>Elden Ring</title>
+    <meta description="HUD and effects for Elden Ring." />
+    <meta publisher="SignalRgb" />
+
+    <meta
+    property="keyScreenBrightness"
+    label="Ambiance brightness"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+    />
+    <meta
+    property="healthY"
+    label="Health y-value"
+    type="number"
+    min="0"
+    max="200"
+    default="100"
+    />
+    <meta
+    property="healthHeight"
+    label="Health bar height"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+    />
+    <meta
+    property="manaY"
+    label="Mana y-value"
+    type="number"
+    min="0"
+    max="200"
+    default="100"
+    />
+    <meta
+    property="manaHeight"
+    label="Mana bar height"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+    />
+    <meta
+    property="staminaY"
+    label="Stamina y-value"
+    type="number"
+    min="0"
+    max="200"
+    default="100"
+    />
+    <meta
+    property="staminaHeight"
+    label="Stamina bar height"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+    />
+
+    <meta meter="hpRed" tags="vlc,eldenring" type="linear" x= "0.0818" y= "0.0481" width= "0.3" h="0-20" s="40-90" l="0-60">
+    </meta>
+    <meta meter="hpConfirm" tags="vlc,eldenring" type="linear" x= "0.0818" y= "0.0551" width= "0.3" h="30-80" s="0-35" l="20-100">
+    </meta>
+    <meta meter="hpYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0481" height= "0.001" width= "0.3" h="30-50" s="75-100" l="50-75">
+    </meta>
+    <meta meter="manaBlue" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0639" width= "0.3" h="190-210" s="40-90" l="0-60">
+    </meta>
+    <meta meter="manaConfirm" tags="vlc,eldenring" type="linear" x= "0.0818" y= "0.0713" width= "0.3" h="40-80" s="0-35" l="20-100">
+    </meta>
+    <meta meter="manaYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0639" height= "0.001" width= "0.3" h="30-50" s="75-100" l="50-75">
+    </meta>
+    <meta meter="staminaGreen" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0806" width= "0.3" h="130-160" s="40-90" l="0-60">
+    </meta>
+    <meta meter="staminaConfirm" tags="vlc,eldenring" type="linear" x= "0.0818" y= "0.088" width= "0.3" h="40-80" s="0-35" l="20-100">
+    </meta>
+    <meta meter="staminaYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0806" height= "0.001" width= "0.3" h="30-50" s="75-100" l="50-75">
+    </meta>
+    <meta meter="greatRune" tags="vlc,ELDEN RING" type="linear" x= "0.0438" y= "0.1037" width= "0.01" h="40-80" s="0-35" l="40-75">
+    </meta>
+    <meta meter="leftItemFrame" tags="vlc,ELDEN RING" type="linear" x= "0.0281" y= "0.7944" width= "0.014" h="40-80" s="0-35" l="40-75">
+    </meta>
+    <meta meter="rightSouls" tags="vlc,ELDEN RING" type="area" x= "0.9734" y= "0.9417" height= "0.0025" width= "0.001" h="40-80" s="0-35" l="40-75">
+    </meta>
+    <meta meter="compassMark" tags="vlc,ELDEN RING" type="area" x= "0.499" y= "0.1231" height= "0.008" width= "0.003" h="40-80" s="0-35" l="40-75">
+    </meta>
+    <meta meter="itemCharges" tags="vlc,ELDEN RING" type="ocr_numeric" confidence="100" x=".1068" y=".9222" width=".015" height=".0194"> 
+    </meta>
+
+</head>
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var effects = [];
+  var inGame = false;
+  var oldHealthY = 0;
+  var oldHealthHeight = 0;
+  var oldStaminaY = 0;
+  var oldStaminaHeight = 0;
+  var oldManaY = 0;
+  var oldManaHeight = 0;
+  var compass = false;
+
+  var inGame1Meter = new Meter(10, inGameCheck);
+  var inGame2Meter = new Meter(10, inGameCheck);
+  var inGame3Meter = new Meter(10, inGameCheck);
+  var inGame4Meter = new Meter(10, inGameCheck);
+  
+  var healthLengthMeter = new Meter(20, ()=>"");
+  var healthRedMeter = new Meter(3, ()=>"");
+  var healthYellowMeter = new Meter(2, healthEffect);
+  var manaLengthMeter = new Meter(20, ()=>"");
+  var manaBlueMeter = new Meter(3, ()=>"");
+  var manaYellowMeter = new Meter(2, manaEffect);
+  var staminaLengthMeter = new Meter(20, ()=>"");
+  var staminaGreenMeter = new Meter(3, ()=>"");
+  var staminaYellowMeter = new Meter(2, staminaEffect);
+
+  var itemChargeMeter = new Meter(5, itemEffects);
+
+  function update(){
+    copyScreen(1);
+    
+    inGame1Meter.setValue(engine.vision.greatRune);
+    inGame2Meter.setValue(engine.vision.leftItemFrame);
+    inGame3Meter.setValue(engine.vision.rightSouls);
+    inGame4Meter.setValue(engine.vision.compassMark);
+
+    if(inGame4Meter.value > .75){
+        healthLengthMeter.setValue(engine.vision.hpConfirm);
+        healthRedMeter.setValue(engine.vision.hpRed);
+    }
+
+    if(inGame){
+        healthLengthMeter.setValue(engine.vision.hpConfirm);
+        healthRedMeter.setValue(engine.vision.hpRed);
+        healthYellowMeter.setValue(engine.vision.hpYellow);
+        manaLengthMeter.setValue(engine.vision.manaConfirm);
+        manaBlueMeter.setValue(engine.vision.manaBlue);
+        manaYellowMeter.setValue(engine.vision.manaYellow);
+        staminaLengthMeter.setValue(engine.vision.staminaConfirm);
+        staminaGreenMeter.setValue(engine.vision.staminaGreen);
+        staminaYellowMeter.setValue(engine.vision.staminaYellow);
+        itemChargeMeter.setValue(engine.vision.itemCharges);
+    }
+
+    healthY == oldHealthY ? null : effects.push(new adjRect(0, healthY, 320, healthHeight, "red"));
+    oldHealthY = healthY;
+    healthHeight == oldHealthHeight ? null : effects.push(new adjRect(0, healthY, 320, healthHeight, "red"));
+    oldHealthHeight = healthHeight;
+    staminaY == oldStaminaY ? null : effects.push(new adjRect(0, staminaY, 320, staminaHeight, "green"));
+    oldStaminaY = staminaY;
+    staminaHeight == oldStaminaHeight ? null : effects.push(new adjRect(0, staminaY, 320, staminaHeight, "green"));
+    oldStaminaHeight = staminaHeight;
+    manaY == oldManaY ? null : effects.push(new adjRect(0, manaY, 320, manaHeight, "blue"));
+    oldManaY = manaY;
+    manaHeight == oldManaHeight ? null : effects.push(new adjRect(0, manaY, 320, manaHeight, "blue"));
+    oldManaHeight = manaHeight;
+
+    effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0){
+            effects.splice(i, 1);
+        }
+    });
+
+    window.requestAnimationFrame(update);
+  }
+
+    function inGameCheck(){
+        if(inGame4Meter.value > .75){
+            effects.push(new healthBar());
+        }
+        if (inGame1Meter.value > .75 && inGame2Meter.value > .75 && inGame3Meter.value > .75){
+            inGame = true;
+            effects.push(new manaBar());
+            effects.push(new staminaBar());
+            effects.push(new healthBar());
+        } else {
+            inGame = false;
+        }
+    }
+
+    function healthEffect(){
+        if(healthYellowMeter.value){
+            effects.push(new statLoss(healthY, healthHeight, 0))
+        }
+    }
+
+    function manaEffect(){
+        if(manaYellowMeter.value){
+            effects.push(new statLoss(manaY, manaHeight, 210))
+        }
+    }
+
+    function staminaEffect(){
+        if(staminaYellowMeter.value){
+            effects.push(new statLoss(staminaY, staminaHeight, 60))
+        }
+    }
+
+    function statLoss(y, height, target){
+        this.x = 0;
+        this.y = y;
+        this.height = height;
+        this.target = target;
+        this.hue = 60;
+        this.lifetime = 20;
+        this.alpha = 1;
+        this.change = (this.target - this.hue) / 20;
+
+        this.draw = function(){
+            this.alpha = this.lifetime / 20;
+            ctx.globalAlpha = this.alpha;
+            drawRect(this.x, this.y, 320, this.height, `hsl(${this.hue}, 100%, 50%)`);
+            this.hue += this.change;
+            ctx.globalAlpha = 1;
+            this.lifetime--;
+        }
+    }
+
+    function healthBar(){
+        this.x = 0;
+        this.y = 0;
+        this.height = 50;
+        this.lifetime = 50;
+
+        this.draw = function(){
+            this.y = healthY;
+            this.height = healthHeight;
+            var width = healthRedMeter.value / healthLengthMeter.value * 320;
+            drawRect(this.x, this.y, width, this.height, "red");
+
+            if(!inGame && inGame4Meter.value == 0){
+                this.lifetime = 0;
+            }
+        }
+    }
+
+    function manaBar(){
+        this.x = 0;
+        this.y = 50;
+        this.height = 50;
+        this.lifetime = 50;
+
+        this.draw = function(){
+            this.y = manaY;
+            this.height = manaHeight;
+            var width = manaBlueMeter.value / manaLengthMeter.value * 320;
+            drawRect(this.x, this.y, width, this.height, "blue");
+
+            if(!inGame){
+                this.lifetime = 0;
+            }
+        }
+    }
+
+    function staminaBar(){
+        this.x = 0;
+        this.y = 100;
+        this.height = 50;
+        this.lifetime = 50;
+
+        this.draw = function(){
+            this.y = staminaY;
+            this.height = staminaHeight;
+            var width = staminaGreenMeter.value / staminaLengthMeter.value * 320;
+            console.log("STAMINA " + width)
+            drawRect(this.x, this.y, width, this.height, "green");
+
+            if(!inGame){
+                this.lifetime = 0;
+            }
+        }
+    }
+
+    function itemEffects(){
+
+    }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function copyScreen(alpha) {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] *keyScreenBrightness * 0.01  +
+          "%, " +
+          alpha
+          +
+          ")";
+      
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+    function drawRect(x, y, width, height, color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.fillRect(x,y,width,height)
+        ctx.fill();
+    }
+
+    function adjRect(x, y, width, height, color){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.lifetime = 30;
+
+        this.draw = function(){
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.fillRect(x,y,width,height)
+            ctx.fill();
+            this.lifetime--;
+        }
+    }
+
+      function DrawCircle(x,y,radius,color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+      };
+
+  window.requestAnimationFrame(update);
+</script>
+  

@@ -1,0 +1,170 @@
+<head>
+  <title>Pinwheel</title>
+    
+  <meta description="Infinite Pinwheel"/>
+  <meta publisher="SignalRGB"/>
+
+  <meta property="background" label="Background Color" type="color" default="#FFB900" min="0" max="360"/>
+  <meta property="pinwheelColor" label="Pinwheel Color" type="color" default="#A300F0" min="0" max="360"/>  
+  <meta property="rainbow" label="Rainbow Mode" type="boolean" default="0"/>
+  <meta property="num1" label="Pinwheel Center - X Coordinate" type="number" default="160" min="0" max="320">
+  <meta property="num2" label="Pinwheel Center - Y Coordinate" type="number" default="100" min="0" max="200">
+  <meta property="lineThickness" label="Ray Width" type="number" default="5" min="2" max="15">
+  <meta property="direction" label="Ray Direction" type="combobox" values="Clockwise,Counter Clockwise" default="Clockwise">
+  <meta property="speed" label="Ray Speed" type="number" default="10" min="0" max="100">
+  <meta property="bounce" label="Edge to Edge Mode" type="boolean" default="0"/>
+  <meta property="edgeToEdge" label="Edge Direction" type="combobox" values="Clockwise,Counter Clockwise" default="Clockwise">
+  <meta property="bounceSpeed" label="Edge to Edge Speed" type="number" default="40" min="0" max="100">
+
+  
+</head>
+
+<body style="margin: 0; padding: 0;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  console.clear();
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");  
+  var width = 320;
+  var height = 200;
+  var degree = 1;
+  var radians = 1;
+  var x = 0;
+  var y = 0;
+  var bouncingSpeed = 0;
+  var lines = [];
+  var pinSpeed = 0;
+  var pinwheelRainbow = 10;
+
+
+function xCoord(val, radius, angle) {
+    return val + Math.cos(angle) * radius;
+  }
+
+function yCoord(val, radius, angle) {
+    return val + Math.sin(angle) * radius;
+  }
+
+function degToRad(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
+  function update() 
+  {
+    bouncingSpeed = bounceSpeed/10;
+    pinSpeed = speed/20;
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, 320, 200);
+    pinWheel();
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+
+function pinWheel(){
+
+  ctx.strokeStyle = pinwheelColor;
+    ctx.fillStyle = pinwheelColor;
+    ctx.lineWidth = lineThickness;
+    if(bounce == 1){
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  if(rainbow == 1){
+    ctx.strokeStyle = 'hsl(' + 0 + ',' + 100 + '%,' + 50 + '%)';
+    ctx.fillStyle = 'hsl(' +0 + ',' + 100 + '%,' + 50 + '%)';  
+    }
+  ctx.fill();
+
+for (let i = 10; i <= 360; i+=10){
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  radians = degToRad(degree + i);
+  ctx.lineTo(
+  xCoord(160,200, radians),
+  yCoord(160,200, radians)
+    );
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  if(rainbow == 1){
+    ctx.strokeStyle = 'hsl(' + i + ',' + 100 + '%,' + 50 + '%)';
+    ctx.fillStyle = 'hsl(' + i + ',' + 100 + '%,' + 50 + '%)';  
+    
+    }
+  ctx.fill();
+}
+
+    if(edgeToEdge == "Clockwise"){
+    if(x <= 320 && y <= 0){
+    x+=bouncingSpeed;
+    y=0;
+    }
+    if(x >=320 && y <=200){
+    y+=bouncingSpeed;
+    x=320;
+    
+    }
+    if(y >= 200 && x <=321){
+    x-=bouncingSpeed;
+    y=200; 
+    }
+    if(y <= 201 && x<=0){
+    y-=bouncingSpeed; 
+    x=0;
+    }
+  }else if(edgeToEdge == "Counter Clockwise"){
+    if(x <= 321 && y <= 0){
+    x-=bouncingSpeed;
+    y=0;
+    }
+    if(x >=320 && y <=201){
+    y-=bouncingSpeed;
+    x=320;
+    }
+    if(y >= 200 && x <=321){
+    x+=bouncingSpeed;
+    y=200;
+    }
+    if(y <= 201 && x<=0){
+    y+=bouncingSpeed;
+    x=0;
+    }
+  }
+  }else{
+    for(let i = 10; i <= 360; i+=10){
+      ctx.beginPath();
+      ctx.arc(num1, num2, 5, 0, 2 * Math.PI);
+      if(rainbow == 1){
+        ctx.strokeStyle = 'hsl(' + (i - 10) + ',' + 100 + '%,' + 50 + '%)';
+        ctx.fillStyle = 'hsl(' + (i - 10) + ',' + 100 + '%,' + 50 + '%)';  
+        }
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(num1, num2);
+      radians = degToRad(degree + i);
+      ctx.lineTo(
+      xCoord(160, 200, radians),
+      yCoord(100, 200, radians)
+        );
+      ctx.stroke();
+    }
+
+ 
+  }
+
+  if (degree < 360) {
+      if(direction == "Clockwise"){
+        degree += pinSpeed;
+      }else if(direction == "Counter Clockwise"){
+        degree -= pinSpeed;
+      }
+    } else {
+      degree = 0;
+    }
+
+}
+
+</script>

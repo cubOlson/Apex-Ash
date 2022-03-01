@@ -1,14 +1,70 @@
 <head>
-  <title>Black HoleV2</title>
-  <meta description="Effect description goes here." />
+  <title>Black Hole v2</title>
+  <meta description="A swirling black hole effect." />
   <meta publisher="SignalRGB" />
-  <meta property="palette" label="Color palette" type="combobox" values="Rainbow,Space,Custom,Random" default="Space" />
-  <meta property="bgColor" label="Background Color" type="color" min="0" max="360" default="#170026" />
-  <meta property="fgHue1" label="Hue 1" type="hue" min="0" max="360" default="0" />
-  <meta property="fgHue2" label="Hue 2" type="hue" min="0" max="360" default="130" />
-  <meta property="fgHue3" label="Hue 3" type="hue" min="0" max="360" default="240" />
-  <meta property="speedRaw" label="Speed" type="number" min="0" max="100" default="50" />
-  <meta property="eventHoriz" label="Event Horizon Size" type="number" min="1" max="100" default="46" />
+  <meta
+    property="palette"
+    label="Color palette"
+    type="combobox"
+    values="Rainbow,Space,Custom,Random"
+    default="Space"
+  />
+  <meta
+    property="fgHue1"
+    label="Hue 1"
+    type="hue"
+    min="0"
+    max="360"
+    default="0"
+  />
+  <meta
+    property="fgHue2"
+    label="Hue 2"
+    type="hue"
+    min="0"
+    max="360"
+    default="130"
+  />
+  <meta
+    property="fgHue3"
+    label="Hue 3"
+    type="hue"
+    min="0"
+    max="360"
+    default="240"
+  />
+  <meta
+    property="partSize"
+    label="Particle Size"
+    type="number"
+    min="1"
+    max="20"
+    default="10"
+  />
+  <meta
+    property="speedRaw"
+    label="Speed"
+    type="number"
+    min="0"
+    max="100"
+    default="50"
+  />
+  <meta
+    property="eventHoriz"
+    label="Event Horizon Size"
+    type="number"
+    min="1"
+    max="100"
+    default="46"
+  />
+  <meta
+    property="extremeMode"
+    label="Extreme mode"
+    type="boolean"
+    min="0"
+    max="1"
+    default="0"
+  />
 </head>
 
 <body style="margin: 0; padding: 0">
@@ -20,57 +76,275 @@
   var ctx = c.getContext("2d");
   var width = 320;
   var height = 200;
-  var rotate = 1;
 
   var effects = [];
-  var customColors = ["0", "90", "180"];
+  var effects2 = [];
+  var rotate = 1;
+  var eventHoriz = 46;
+  var palette = "Space";
+  var bgColor = "#000000";
 
-  function update() {
-    customColors = [fgHue1, fgHue2, fgHue3];
-    ctx.fillStyle = bgColor;
-    ctx.globalAlpha = .1;
-    ctx.fillRect(0, 0, width, height);
-    ctx.globalAlpha = 1;
+  var fgHue1 = 69;
+  var fgHue2 = 69;
+  var fgHue3 = 69;
 
-    ctx.translate(160, 100);
-    ctx.rotate(rotate * Math.PI / 180);
-    ctx.translate(-160, -100);
+  var partSize = 10;
+  var speedRaw = 50;
 
-    if (effects.length < 500) {
-      effects.push(new Particle1());
-      effects.push(new Particle2());
-      effects.push(new Particle3());
-      effects.push(new Particle4());
-    }
+  var colorLib = [];
+  colorLib["Rainbow"] = [];
+  colorLib["Space"] = [];
+  colorLib["Aurora"] = [];
+  colorLib["Water"] = [];
+  colorLib["Fire"] = [];
+  colorLib["Custom"] = [];
+  colorLib["Random"] = [];
 
-    for (i = 0; i < effects.length; i++) {
-      effects[i].Draw();
-    }
+  var spaceLib = [];
+  var spaceLibBg = getRandomInt(240, 280);
 
-    for (j = 0; j < effects.length; j++) {
-      if (effects[j].IsFinished()) {
-        effects.splice(j, 1);
+  var randomBg = getRandomInt(0, 360);
+  var rainBg = 0;
+
+  for (let i = 0; i < 200; i++) {
+    spaceLib[i] = [getRandomInt(240, 280), getRandomInt(50, 100)];
+  }
+
+  var customHues = [fgHue1, fgHue2, fgHue3];
+
+  var getColor = function (i) {
+    var customHues = [fgHue1, fgHue2, fgHue3];
+
+    if (typeof colorLib[palette][i] == "undefined") {
+      switch (palette) {
+        case "Rainbow":
+          colorLib[palette][i] = [Math.random() * 360, 100];
+          if (rainBg < 360) {
+            rainBg += speedRaw / 50;
+          } else {
+            rainBg = 0;
+          }
+          colorLib[palette]["bg"] = "hsla(" + rainBg + ",100%,40%,0.2)";
+          break;
+        case "Space":
+          colorLib[palette][i] =
+            spaceLib[Math.floor(Math.random() * spaceLib.length)];
+          colorLib[palette]["bg"] = "hsla(" + spaceLibBg + ",100%,40%,0.2)";
+          break;
+        case "Custom":
+          var h = customHues[Math.floor(Math.random() * customHues.length)];
+          colorLib[palette][i] = [h, 100];
+          colorLib[palette]["bg"] = "hsla(" + customHues[0] + ",100%,40%,0.2)";
+          break;
+        case "Random":
+          colorLib[palette][i] = [
+            Math.round(Math.random() * 360),
+            Math.round(Math.random() * 100),
+            (colorLib[palette]["bg"] = "hsla(" + randomBg + ",100%,40%,0.2)"),
+          ];
+          break;
+        default:
+          console.log("Unknown palette.");
+          return [0, 0];
       }
     }
 
-    if (rotate < 360) {
-      rotate += (speedRaw / 50);
-    } else {
-      rotate = 0;
-    }
+    return colorLib[palette][i];
+  };
 
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.arc(160, 100, eventHoriz, 0, 2 * Math.PI);
-    ctx.fill();
+  for (let i = 0; i < 300; i++) {
+    effects.push(new Particle(true));
+  }
+
+  function update() {
+    customHues = [fgHue1, fgHue2, fgHue3];
+
+    if (extremeMode) {
+      // ctx.drawImage(bgImage, 0, 0);
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = colorLib[palette]["bg"];
+      ctx.fillRect(0, 0, width, height);
+
+      if (effects.length < 500) {
+        effects.push(new Particle(false));
+      }
+
+      for (i = 0; i < effects.length; i++) {
+        effects[i].Draw();
+      }
+
+      for (j = 0; j < effects.length; j++) {
+        if (effects[j].IsFinished()) {
+          effects.splice(j, 1);
+        }
+      }
+
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(160, 100, eventHoriz, 0, 2 * Math.PI);
+      ctx.fill();
+    } else {
+      if (typeof colorLib[palette]["bg"] == "undefined") {
+        var generateBg = getColor(0);
+      }
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (palette == "Rainbow") {
+        ctx.fillStyle = "hsl(" + rotate + ",100%,8%)";
+      } else {
+        ctx.fillStyle = colorLib[palette]["bg"];
+      }
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.translate(160, 100);
+      ctx.rotate((rotate * Math.PI) / 180);
+      ctx.translate(-160, -100);
+
+      if (effects2.length < 500) {
+        effects2.push(new Particle1());
+        effects2.push(new Particle2());
+        effects2.push(new Particle3());
+        effects2.push(new Particle4());
+      }
+
+      for (i = 0; i < effects2.length; i++) {
+        effects2[i].Draw();
+      }
+
+      for (j = 0; j < effects2.length; j++) {
+        if (effects2[j].IsFinished()) {
+          effects2.splice(j, 1);
+        }
+      }
+
+      if (rotate < 360) {
+        rotate += speedRaw / 50;
+      } else {
+        rotate = 0;
+      }
+
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(160, 100, eventHoriz, 0, 2 * Math.PI);
+      ctx.fill();
+    }
 
     window.requestAnimationFrame(update);
   }
 
   window.requestAnimationFrame(update);
 
+  /**
+   * Returns a random integer between min (inclusive) and max (inclusive).
+   * The value is no lower than min (or the next integer greater than min
+   * if min isn't an integer) and no greater than max (or the next integer
+   * lower than max if max isn't an integer).
+   * Using Math.round() will give you a non-uniform distribution!
+   * @param   {number}  min     The minimum random value
+   * @param   {number}  max     The maximum random value
+   * @return  {number}          The random output number
+   */
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function Particle(init) {
+    this.id = Math.floor(1000 + Math.random() * 9000);
+
+    if (!init) {
+      this.r = Math.random() * 30 + 150;
+    } else {
+      this.r = Math.random() * 160;
+    }
+    this.theta = 0;
+    this.degrees = Math.random() * 360;
+    this.pos = [];
+    this.posLength = Math.random() * 20 + 15;
+    this.hueDev = getRandomInt(-20, 20);
+    this.custHue = getRandomInt(0, 2);
+    this.l = 10;
+
+    this.Draw = function () {
+      this.theta = this.degrees * (Math.PI / 180);
+      let x = 160 + this.r * Math.cos(this.theta);
+      let y = 100 + this.r * Math.sin(this.theta);
+      this.pos.push([x, y]);
+      if (this.pos.length > this.posLength) {
+        this.pos.splice(0, 1);
+      }
+
+      let colorArr = getColor(this.id);
+      this.l = ((160 - this.r) / 160) * 100;
+
+      if (this.degrees < 360) {
+        this.degrees += speedRaw / 50;
+      } else {
+        this.degrees = 0;
+        this.r -= Math.random() * 20;
+      }
+
+      for (let j = 0; j < this.pos.length; j++) {
+        const coords = this.pos[j];
+        if (palette != "Rainbow" && palette != "Custom") {
+          var opacity = j / this.pos.length;
+          ctx.fillStyle =
+            "hsla(" +
+            colorArr[0] +
+            "," +
+            colorArr[1] +
+            "%," +
+            this.l +
+            "%," +
+            opacity +
+            ")";
+        } else if (palette == "Custom") {
+          var opacity = j / this.pos.length;
+          ctx.fillStyle =
+            "hsla(" +
+            customHues[this.custHue] +
+            "," +
+            100 +
+            "%," +
+            this.l +
+            "%," +
+            opacity +
+            ")";
+        } else {
+          var rainbowHue = this.r * 5 + this.hueDev;
+          ctx.fillStyle =
+            "hsla(" +
+            rainbowHue +
+            "," +
+            colorArr[1] +
+            "%," +
+            this.l +
+            "%," +
+            1 +
+            ")";
+        }
+        ctx.fillRect(
+          coords[0] - partSize / 2,
+          coords[1] - partSize / 2,
+          partSize,
+          partSize
+        );
+      }
+    };
+
+    this.IsFinished = function () {
+      if (this.r < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
   function Particle1() {
-    this.x = getRandomInt(-60, 150)
+    this.x = getRandomInt(-60, 150);
     this.y = getRandomInt(-100, -70);
     this.xSpeed = Math.random();
     this.ySpeed = Math.random();
@@ -81,15 +355,17 @@
 
     this.Draw = function () {
       if (palette == "Space") {
-        ctx.fillStyle = "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
+        ctx.fillStyle =
+          "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
       } else if (palette == "Custom") {
-        ctx.fillStyle = "hsl(" + customColors[this.customId] + ",100%,50%)";
+        ctx.fillStyle = "hsl(" + customHues[this.customId] + ",100%,50%)";
       } else if (palette == "Random") {
         ctx.fillStyle = "hsl(" + this.randomColor + ",100%,50%)";
       } else {
-        ctx.fillStyle = "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
+        ctx.fillStyle =
+          "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
       }
-      ctx.fillRect(this.x, this.y, 10, 10);
+      ctx.fillRect(this.x, this.y, partSize, partSize);
       this.x += this.xSpeed * (speedRaw / 50);
       this.y += this.ySpeed * (speedRaw / 50);
     };
@@ -104,7 +380,7 @@
   }
 
   function Particle2() {
-    this.x = getRandomInt(160, 330)
+    this.x = getRandomInt(160, 330);
     this.y = getRandomInt(-100, -70);
     this.xSpeed = Math.random();
     this.ySpeed = Math.random();
@@ -115,15 +391,17 @@
 
     this.Draw = function () {
       if (palette == "Space") {
-        ctx.fillStyle = "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
+        ctx.fillStyle =
+          "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
       } else if (palette == "Custom") {
-        ctx.fillStyle = "hsl(" + customColors[this.customId] + ",100%,50%)";
+        ctx.fillStyle = "hsl(" + customHues[this.customId] + ",100%,50%)";
       } else if (palette == "Random") {
         ctx.fillStyle = "hsl(" + this.randomColor + ",100%,50%)";
       } else {
-        ctx.fillStyle = "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
+        ctx.fillStyle =
+          "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
       }
-      ctx.fillRect(this.x, this.y, 10, 10);
+      ctx.fillRect(this.x, this.y, partSize, partSize);
       this.x -= this.xSpeed * (speedRaw / 50);
       this.y += this.ySpeed * (speedRaw / 50);
     };
@@ -137,9 +415,8 @@
     };
   }
 
-
   function Particle3() {
-    this.x = getRandomInt(-60, 150)
+    this.x = getRandomInt(-60, 150);
     this.y = getRandomInt(200, 280);
     this.xSpeed = Math.random();
     this.ySpeed = Math.random();
@@ -150,15 +427,17 @@
 
     this.Draw = function () {
       if (palette == "Space") {
-        ctx.fillStyle = "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
+        ctx.fillStyle =
+          "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
       } else if (palette == "Custom") {
-        ctx.fillStyle = "hsl(" + customColors[this.customId] + ",100%,50%)";
+        ctx.fillStyle = "hsl(" + customHues[this.customId] + ",100%,50%)";
       } else if (palette == "Random") {
         ctx.fillStyle = "hsl(" + this.randomColor + ",100%,50%)";
       } else {
-        ctx.fillStyle = "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
+        ctx.fillStyle =
+          "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
       }
-      ctx.fillRect(this.x, this.y, 10, 10);
+      ctx.fillRect(this.x, this.y, partSize, partSize);
       this.x += this.xSpeed * (speedRaw / 50);
       this.y -= this.ySpeed * (speedRaw / 50);
     };
@@ -173,7 +452,7 @@
   }
 
   function Particle4() {
-    this.x = getRandomInt(160, 330)
+    this.x = getRandomInt(160, 330);
     this.y = getRandomInt(200, 280);
     this.xSpeed = Math.random();
     this.ySpeed = Math.random();
@@ -184,21 +463,115 @@
 
     this.Draw = function () {
       if (palette == "Space") {
-        ctx.fillStyle = "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
+        ctx.fillStyle =
+          "hsl(" + this.spaceColors[0] + "," + this.spaceColors[1] + "%,50%)";
       } else if (palette == "Custom") {
-        ctx.fillStyle = "hsl(" + customColors[this.customId] + ",100%,50%)";
+        ctx.fillStyle = "hsl(" + customHues[this.customId] + ",100%,50%)";
       } else if (palette == "Random") {
         ctx.fillStyle = "hsl(" + this.randomColor + ",100%,50%)";
       } else {
-        ctx.fillStyle = "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
+        ctx.fillStyle =
+          "hsl(" + getDistance(this.x, this.y, 160, 100) + ",100%,50%)";
       }
-      ctx.fillRect(this.x, this.y, 10, 10);
+      ctx.fillRect(this.x, this.y, partSize, partSize);
       this.x -= this.xSpeed * (speedRaw / 50);
       this.y -= this.ySpeed * (speedRaw / 50);
     };
 
     this.IsFinished = function () {
       if (this.y < 100 || this.x < 160) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function ExtremeParticle(init) {
+    this.id = Math.floor(1000 + Math.random() * 9000);
+
+    if (!init) {
+      this.r = Math.random() * 30 + 150;
+    } else {
+      this.r = Math.random() * 160;
+    }
+    this.theta = 0;
+    this.degrees = Math.random() * 360;
+    this.pos = [];
+    this.posLength = Math.random() * 20 + 15;
+    this.hueDev = getRandomInt(-20, 20);
+    this.custHue = getRandomInt(0, 2);
+    this.l = 10;
+
+    this.Draw = function () {
+      this.theta = this.degrees * (Math.PI / 180);
+      let x = 160 + this.r * Math.cos(this.theta);
+      let y = 100 + this.r * Math.sin(this.theta);
+      this.pos.push([x, y]);
+      if (this.pos.length > this.posLength) {
+        this.pos.splice(0, 1);
+      }
+
+      let colorArr = getColor(this.id);
+      this.l = ((160 - this.r) / 160) * 100;
+
+      if (this.degrees < 360) {
+        this.degrees += speedRaw / 50;
+      } else {
+        this.degrees = 0;
+        this.r -= Math.random() * 20;
+      }
+
+      for (let j = 0; j < this.pos.length; j++) {
+        const coords = this.pos[j];
+        if (palette != "Rainbow" && palette != "Custom") {
+          var opacity = j / this.pos.length;
+          ctx.fillStyle =
+            "hsla(" +
+            colorArr[0] +
+            "," +
+            colorArr[1] +
+            "%," +
+            this.l +
+            "%," +
+            opacity +
+            ")";
+        } else if (palette == "Custom") {
+          var opacity = j / this.pos.length;
+          ctx.fillStyle =
+            "hsla(" +
+            customHues[this.custHue] +
+            "," +
+            100 +
+            "%," +
+            this.l +
+            "%," +
+            opacity +
+            ")";
+        } else {
+          var rainbowHue = this.r * 5 + this.hueDev;
+          ctx.fillStyle =
+            "hsla(" +
+            rainbowHue +
+            "," +
+            colorArr[1] +
+            "%," +
+            this.l +
+            "%," +
+            1 +
+            ")";
+        }
+        ctx.fillRect(
+          coords[0] - partSize / 2,
+          coords[1] - partSize / 2,
+          partSize,
+          partSize
+        );
+      }
+    };
+
+    this.IsFinished = function () {
+      if (this.r < 0) {
         return true;
       } else {
         return false;
@@ -217,4 +590,6 @@
     let x = y2 - y1;
     return Math.sqrt(x * x + y * y);
   }
+
+  //engine.zone
 </script>
