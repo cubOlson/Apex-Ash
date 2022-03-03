@@ -1,0 +1,79 @@
+<head>
+  <title>Checkerboard</title>
+  <meta description="Effect description goes here." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="size"
+    label="Pattern"
+    type="number"
+    min="5"
+    max="20"
+    default="10"
+  />
+  <meta
+    property="color_mode"
+    label="Color Mode"
+    type="combobox"
+    values="Single,Color Cycle"
+    default="Color Cycle"
+  />
+  <meta
+    property="fgHue"
+    label="Hue"
+    type="hue"
+    min="0"
+    max="360"
+    default="160"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var w, m, c, C, W, H, r, i, j, s;
+  var a = function () {
+    w = window;
+    m = Math;
+    c = document.getElementById("exCanvas");
+    C = c.getContext("2d");
+    W = c.width = w.innerWidth;
+    H = c.height = w.innerHeight;
+  };
+  var f = function (t) {
+    t /= 1000;
+    C.clearRect(0, 0, W, H);
+    for (i = 0; i < H; i += size) {
+      for (j = 0; j < W; j += size) {
+        s = i * W + j;
+        var hue;
+        if (color_mode == "Color Cycle") {
+          hue = m.abs(m.sin(t) * 360);
+        } else if (color_mode == "Single") {
+          hue = fgHue;
+        }
+        C.fillStyle =
+          "hsl(" +
+          hue +
+          "," +
+          m.abs(m.cos(s + t) * 100) +
+          "%," +
+          m.abs(m.sin(s + t) * 100) +
+          "%)";
+        C.fillRect(j, i, 20, 20);
+      }
+    }
+    r = requestAnimationFrame(f);
+  };
+  window.onload = function () {
+    a();
+    f();
+    w.onresize = function () {
+      cancelAnimationFrame(r);
+      W = c.width = w.innerWidth;
+      H = c.height = w.innerHeight;
+      f();
+    };
+  };
+</script>

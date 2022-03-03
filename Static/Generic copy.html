@@ -2,8 +2,9 @@
     <title>Basic Effects</title>
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
-    <meta property="fishNum" label="Number of fish" type="number" min="1" max="8" default="3"/>
-    <meta property="lilyNum" label="Number of lily pads" type="number" min="0" max="15" default="5"/>
+    <meta property="effectY" label="Y" type="number" min="0" max="200" default="100"/>
+    <meta property="effectRadius" label="Radius" type="number" min="0" max="50" default="10"/>
+    <meta property="effectNumber" label="Number" type="number" min="1" max="3" default="1"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -12,195 +13,120 @@
 <script>
   canvas = document.getElementById('exCanvas');
   ctx = canvas.getContext('2d');
-  var fishes = [];
-  var foods = [];
-  var lilies = [];
-  var water = [];
-  var foodCheck = {};
+  var effects = [];
 
   function update(){
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, 320, 200);
+    copyScreen(1)
 
-    if (fishes.length < fishNum){
-      fishes.push(new fish());
-    } else if (fishes.length > fishNum){
-      fishes.pop();
+    if(effects.length < 1){
+      effects.push(new enemyKilledEffect());
     }
 
-    if (lilies.length < lilyNum){
-      lilies.push(new lilyPad())
-    } else if (lilies.length > lilyNum){
-      lilies.pop();
-    }
-
-    if (water.length < 25){
-      water.push(new waterNoise());
-    }
-
-    foods.forEach((ele, i) => {
+    effects.forEach((ele, i) => {
       ele.draw();
-      if (ele.lifetime <= 0){
-        foods.splice(i, 1);
+      if(ele.lifetime <= 0){
+        effects.splice(i, 1);
       }
-    });
-    fishes.forEach((ele, i) => {
-      ele.draw();
-    })
-    water.forEach((ele, i) => {
-      ele.draw();
-    });
-    lilies.forEach((ele, i) => {
-      ele.draw();
     });
 
     window.requestAnimationFrame(update);
   }
 
-      function fish(){
-        this.speed = Math.random() * 2;
-        this.variance = 30 - Math.random() * 60;
-        this.x = Math.random() * 100 + 110;
-        this.vx = fishes.length % 2 == 0 ? 1 * this.speed : -1 * this.speed;
-        this.y = Math.random() * 100 + 50;
-        this.vy = fishes.length % 2 == 0 ? -1 * this.speed : 1 * this.speed;
-        this.radius = 20;
-        this.searchRange = 1;
-        this.goTo = null;
-        this.goXV = null;
-        this.goYV = null;
-
-        this.draw = function(){
-          if(this.goTo == null){
-            (this.x + this.vx + this.radius > 370 || this.x + this.vx - this.radius < -50) ? this.vx *= -1 : null;
-            (this.y + this.vy + this.radius > 250 || this.y + this.vy - this.radius < -50) ? this.vy *= -1 : null;
-            this.x += this.vx;
-            this.y+= this.vy;
-            this.vx = this.vx + (160 - this.x) / 15000;
-            this.vy = this.vy + (100 - this.y) / 4000;
-            for (let i = 0; i < 3; i++){
-              DrawCircle(this.x - (i * this.vx * 15), this.y - (i * this.vy * 15), this.radius - (i * 5), `hsl(${50 + this.variance}, 100%, 50%)`);
-            }
-            DrawCircle(this.x, this.y, 10, `hsl(${10 + this.variance}, 100%, 50%)`)
-            for (let i = 0; i < foods.length; i++){
-              if (Math.abs(this.x - foods[i].x) < this.searchRange && Math.abs(this.y - foods[i].y) < this.searchRange){
-                this.goTo = [foods[i].x, foods[i].y];
-                var xDistance = this.x - this.goTo[0];
-                var yDistance = this.y - this.goTo[1];
-                this.goXV = xDistance / -15;
-                this.goYV = yDistance / -15;
-                break;
-              } else {
-                this.searchRange += 5;
-                this.searchRange > 150 ? this.searchRange = 1 : null;
-              }
-            }
-          } else {
-            for (let i = 0; i < 3; i++){
-              DrawCircle(this.x - (i * this.goXV * 3) + Math.random()* 5, this.y - (i * this.goYV * 3), this.radius - (i * 5), `hsl(${50 + this.variance}, 100%, 50%)`);
-            }
-            DrawCircle(this.x, this.y, 10, `hsl(${10 + this.variance}, 100%, 50%)`)
-            this.x += this.goXV;
-            this.y += this.goYV;
-
-            if (Math.abs(this.x - this.goTo[0]) < this.radius && Math.abs(this.y - this.goTo[1]) < this.radius){
-              this.goTo = null;
-              this.goXV = null;
-              this.goYV = null;
-              if(Math.random() < .25){
-                this.vx = 1 * this.speed;
-                this.vy = -1 * this.speed;
-              } else if(Math.random() < .5){
-                this.vx = 1 * this.speed;
-                this.vy = 1 * this.speed;
-              } else if(Math.random() < .75){
-                this.vx = -1 * this.speed;
-                this.vy = 1 * this.speed;
-              } else {
-                this.vx = -1 * this.speed;
-                this.vy = -1 * this.speed;
-              }
-            }
-          }
+  function enemyKilledEffect(){
+    this.lifetime = 10;
+    this.start = Date.now();
+    this.draw = function(){
+      this.elapsed = Date.now() - this.start;
+      if(this.elapsed < 500){
+        ctx.beginPath();
+        ctx.globalAlpha = 1 - (this.elapsed / 750);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 20;
+        ctx.moveTo(80, 0);
+        ctx.lineTo(240, 200);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      if(this.elapsed > 250 && this.elapsed < 1000){
+        ctx.beginPath();
+        ctx.globalAlpha = 1 - ((this.elapsed - 250) / 1000);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 20;
+        ctx.moveTo(240, 0);
+        ctx.lineTo(80, 200);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      if(this.elapsed > 500){
+        for(let i = 0; i < 4; i++){
+          effects.push(new movingParticle(320 * Math.random(), 200, "yellow"));
         }
       }
-
-      function onCanvasTapped(x, y) {
-        var location = x + y;
-        if (foodCheck[location]){
-          if (Date.now() - foodCheck[location] < 1000){
-            foods.push(new food(x, y));
-          } else {
-            foodCheck[location] = Date.now();
-          }
-        } else {
-          foodCheck[location] = Date.now();
-        }
+      if(this.elapsed > 750 && this.elapsed < 1500){
+        ctx.beginPath();
+        ctx.globalAlpha = 1 - ((this.elapsed - 750) / 1500);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 20;
+        ctx.moveTo(0, 100);
+        ctx.lineTo(320, 100);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
       }
-
-      function lilyPad(){
-        this.x = Math.random() * 200 + 60;
-        this.vx = lilies.length % 2 == 0 ? .25 : -.25;
-        this.vy = lilies.length % 2 == 0 ? -.25 : .25;
-        this.y = Math.random() * 100 + 50;
-        this.radius = Math.random() * 20 + 20;
-
-        this.draw = function(){
-          (this.x + this.vx + this.radius > 320 || this.x + this.vx - this.radius < 0) ? this.vx *= -1 : null;
-          (this.y + this.vy + this.radius > 200 || this.y + this.vy - this.radius < 0) ? this.vy *= -1 : null;
-          this.x += this.vx;
-          this.y += this.vy;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = "green";
-          ctx.fill();
-        }
+      if(this.elapsed > 1500){
+        this.lifetime = 0;
       }
+    }
+  }
 
-      function waterNoise(){
-        this.speed = Math.random() * 2;
-        this.x = Math.random() * 200 + 60;
-        this.vx = lilies.length % 2 == 0 ? .5 * this.speed : -.5 * this.speed;
-        this.vy = lilies.length % 2 == 0 ? -.5 * this.speed : .5 * this.speed;
-        this.y = Math.random() * 100 + 50;
-        this.radius = Math.random() * 20 + 20;
+  function movingParticle(x, y, color){
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.radius = Math.random() * 30;
+    this.vy = 8 * Math.random() + 1;
+    this.vx = 3 * Math.random() + 1;
+    this.lifetime = 10;
 
-        this.draw = function(){
-          (this.x + this.vx + this.radius > 320 || this.x + this.vx - this.radius < 0) ? this.vx *= -1 : null;
-          (this.y + this.vy + this.radius > 200 || this.y + this.vy - this.radius < 0) ? this.vy *= -1 : null;
-          this.x += this.vx;
-          this.y += this.vy;
-          ctx.globalAlpha = .05;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.strokeStyle = "white";
-          ctx.lineWidth = 10;
-          ctx.stroke();
-          ctx.globalAlpha = 1;
-        }
+    this.draw = function(){
+      DrawCircle(this.x, this.y, this.radius, this.color);
+      this.x += this.vx;
+      this.y -= this.vy;
+      if(this.y < 0){
+        this.lifetime = 0;
       }
+    }
+  };
 
-      function food(x, y){
-        this.x = x;
-        this.y = y;
-        this.lifetime = 10;
-        this.location = x + y;
-        this.start = Date.now();
-        this.draw = function(){
-          if (Date.now() - this.start > 3000){
-            this.lifetime = 0;
-          }
-          DrawCircle(this.x, this.y, 15, "brown");
-          for (let i = 0; i < fishes.length; i++){
-            if (Math.abs(fishes[i].x - this.x) < fishes[i].radius && Math.abs(fishes[i].y - this.y) < fishes[i].radius){
-              this.lifetime = 0;
-              break;
-            }
-          }
-        }
-      }
+  function copyScreen(alpha) {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
 
-      function DrawCircle(x,y,radius,color){
+    for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          alpha
+          +
+          ")";
+      
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+    function DrawCircle(x,y,radius,color){
         ctx.beginPath();
         ctx.fillStyle = color;
         ctx.arc(x,y,radius, 0, 2* Math.PI)

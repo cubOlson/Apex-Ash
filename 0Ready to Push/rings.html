@@ -1,0 +1,163 @@
+<head>
+  <title>Rings</title>
+  <meta description="Effect description goes here." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="color_mode"
+    label="Color Mode"
+    type="combobox"
+    values="Static Colors,Color Cycle,Rainbow"
+    default="Color Cycle"
+  />
+  <meta
+    property="color1"
+    label="Color 1"
+    type="color"
+    min="0"
+    max="360"
+    default="#15b6d4"
+  />
+  <meta
+    property="color2"
+    label="Color 2"
+    type="color"
+    min="0"
+    max="360"
+    default="#d62d78"
+  />
+  <meta
+    property="bg"
+    label="Background"
+    type="color"
+    min="0"
+    max="360"
+    default="#000000"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var color1 = "#15b6d4";
+  var color2 = "#d62d78";
+  var bg = "#000000";
+  (function () {
+    "use strict";
+    window.addEventListener("load", function () {
+      var canvas = document.getElementById("exCanvas");
+
+      if (!canvas || !canvas.getContext) {
+        return false;
+      }
+
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+
+      var ctx = canvas.getContext("2d");
+      var X = (canvas.width = window.innerWidth);
+      var Y = (canvas.height = window.innerHeight);
+      var mouseX = X / 2;
+      var mouseY = Y / 2;
+      var shapes = [];
+      var shapeNum = 150;
+      var lw = 5;
+      var rotateSpeed = 0.1;
+
+      if (X < 768) {
+        shapeNum = 80;
+      }
+
+      window.requestAnimationFrame =
+        window.requestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (cb) {
+          setTimeout(cb, 17);
+        };
+
+      function Shape(ctx, x, y, i) {
+        this.ctx = ctx;
+        this.init(x, y, i);
+      }
+
+      Shape.prototype.init = function (x, y, i) {
+        this.x = x;
+        this.y = y;
+        this.i = i;
+        this.r = this.i * 7.5;
+        this.i % 2 === 0 ? (this.c = color1) : (this.c = color2);
+        this.s = (rand(0, 360) * Math.PI) / 180;
+        this.e = (rand(this.s, 360) * Math.PI) / 180;
+        this.a = rand(0, 360);
+        this.h = 0;
+        this.hb = Math.random() * 360;
+        this.hr = Math.random() * 2;
+        this.rad = (this.a * Math.PI) / 180;
+      };
+
+      Shape.prototype.draw = function () {
+        if (color_mode == "Static Colors") {
+          this.i % 2 === 0 ? (this.c = color1) : (this.c = color2);
+        } else if (color_mode == "Color Cycle") {
+          if (this.h < 360) {
+            this.h++;
+          } else {
+            this.h = 0;
+          }
+          this.c = "hsl(" + this.h + ",100%,50%)";
+        } else if (color_mode == "Rainbow") {
+          if (this.hb < 360) {
+            this.hb += this.hr;
+          } else {
+            this.hb = 0;
+          }
+          this.c = "hsl(" + this.hb + ",100%,50%)";
+        }
+
+        var ctx = this.ctx;
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+        ctx.lineWidth = lw;
+        ctx.strokeStyle = this.c;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rad * 10);
+        ctx.scale(Math.tan(this.rad), Math.tan(this.rad));
+        ctx.translate(-this.x, -this.y);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, this.s, this.e, false);
+        ctx.stroke();
+        ctx.restore();
+      };
+
+      Shape.prototype.updateParams = function (i) {
+        i % 2 === 0 ? (this.a += rotateSpeed) : (this.a -= rotateSpeed);
+        this.rad = (this.a * Math.PI) / 180;
+      };
+
+      Shape.prototype.render = function (i) {
+        this.updateParams(i);
+        this.draw();
+      };
+
+      for (var i = 0; i < shapeNum; i++) {
+        var s = new Shape(ctx, X / 2, Y / 2, i);
+        shapes.push(s);
+      }
+
+      function render() {
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 320, 200);
+        for (var i = 0; i < shapes.length; i++) {
+          shapes[i].render(i);
+        }
+        requestAnimationFrame(render);
+      }
+
+      render();
+    });
+  })();
+</script>

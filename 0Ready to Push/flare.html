@@ -1,0 +1,618 @@
+<head>
+  <title>Flares</title>
+  <meta description="Effect description goes here." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#000000"
+  />
+  <meta
+    property="palette"
+    label="Color palette"
+    type="combobox"
+    values="Rainbow,Space,Aurora,Water,Fire,Custom,Random"
+    default="Rainbow"
+  />
+  <meta
+    property="fgHue1"
+    label="Hue 1"
+    type="hue"
+    min="0"
+    max="360"
+    default="0"
+  />
+  <meta
+    property="fgHue2"
+    label="Hue 2"
+    type="hue"
+    min="0"
+    max="360"
+    default="130"
+  />
+  <meta
+    property="fgHue3"
+    label="Hue 3"
+    type="hue"
+    min="0"
+    max="360"
+    default="240"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  !(function () {
+    "use strict";
+    var r = 0.5 * (Math.sqrt(3) - 1),
+      e = (3 - Math.sqrt(3)) / 6,
+      t = 1 / 6,
+      a = (Math.sqrt(5) - 1) / 4,
+      o = (5 - Math.sqrt(5)) / 20;
+    function i(r) {
+      var e;
+      (e =
+        "function" == typeof r
+          ? r
+          : r
+          ? (function () {
+              var r = 0,
+                e = 0,
+                t = 0,
+                a = 1,
+                o =
+                  ((i = 4022871197),
+                  function (r) {
+                    r = r.toString();
+                    for (var e = 0; e < r.length; e++) {
+                      var t = 0.02519603282416938 * (i += r.charCodeAt(e));
+                      (t -= i = t >>> 0),
+                        (i = (t *= i) >>> 0),
+                        (i += 4294967296 * (t -= i));
+                    }
+                    return 2.3283064365386963e-10 * (i >>> 0);
+                  });
+              var i;
+              (r = o(" ")), (e = o(" ")), (t = o(" "));
+              for (var n = 0; n < arguments.length; n++)
+                (r -= o(arguments[n])) < 0 && (r += 1),
+                  (e -= o(arguments[n])) < 0 && (e += 1),
+                  (t -= o(arguments[n])) < 0 && (t += 1);
+              return (
+                (o = null),
+                function () {
+                  var o = 2091639 * r + 2.3283064365386963e-10 * a;
+                  return (r = e), (e = t), (t = o - (a = 0 | o));
+                }
+              );
+            })(r)
+          : Math.random),
+        (this.p = n(e)),
+        (this.perm = new Uint8Array(512)),
+        (this.permMod12 = new Uint8Array(512));
+      for (var t = 0; t < 512; t++)
+        (this.perm[t] = this.p[255 & t]),
+          (this.permMod12[t] = this.perm[t] % 12);
+    }
+    function n(r) {
+      var e,
+        t = new Uint8Array(256);
+      for (e = 0; e < 256; e++) t[e] = e;
+      for (e = 0; e < 255; e++) {
+        var a = e + ~~(r() * (256 - e)),
+          o = t[e];
+        (t[e] = t[a]), (t[a] = o);
+      }
+      return t;
+    }
+    (i.prototype = {
+      grad3: new Float32Array([
+        1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0, 1, 0, 1, -1, 0, 1, 1, 0, -1, -1,
+        0, -1, 0, 1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1,
+      ]),
+      grad4: new Float32Array([
+        0, 1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0, -1, 1, 1, 0, -1,
+        1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 1, 0, 1, 1, 1, 0, 1, -1, 1, 0, -1,
+        1, 1, 0, -1, -1, -1, 0, 1, 1, -1, 0, 1, -1, -1, 0, -1, 1, -1, 0, -1, -1,
+        1, 1, 0, 1, 1, 1, 0, -1, 1, -1, 0, 1, 1, -1, 0, -1, -1, 1, 0, 1, -1, 1,
+        0, -1, -1, -1, 0, 1, -1, -1, 0, -1, 1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1,
+        0, 1, -1, -1, 0, -1, 1, 1, 0, -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 0,
+      ]),
+      noise2D: function (t, a) {
+        var o,
+          i,
+          n = this.permMod12,
+          f = this.perm,
+          s = this.grad3,
+          v = 0,
+          h = 0,
+          l = 0,
+          u = (t + a) * r,
+          d = Math.floor(t + u),
+          p = Math.floor(a + u),
+          M = (d + p) * e,
+          m = t - (d - M),
+          c = a - (p - M);
+        m > c ? ((o = 1), (i = 0)) : ((o = 0), (i = 1));
+        var y = m - o + e,
+          w = c - i + e,
+          g = m - 1 + 2 * e,
+          A = c - 1 + 2 * e,
+          x = 255 & d,
+          q = 255 & p,
+          D = 0.5 - m * m - c * c;
+        if (D >= 0) {
+          var S = 3 * n[x + f[q]];
+          v = (D *= D) * D * (s[S] * m + s[S + 1] * c);
+        }
+        var U = 0.5 - y * y - w * w;
+        if (U >= 0) {
+          var b = 3 * n[x + o + f[q + i]];
+          h = (U *= U) * U * (s[b] * y + s[b + 1] * w);
+        }
+        var F = 0.5 - g * g - A * A;
+        if (F >= 0) {
+          var N = 3 * n[x + 1 + f[q + 1]];
+          l = (F *= F) * F * (s[N] * g + s[N + 1] * A);
+        }
+        return 70 * (v + h + l);
+      },
+      noise3D: function (r, e, a) {
+        var o,
+          i,
+          n,
+          f,
+          s,
+          v,
+          h,
+          l,
+          u,
+          d,
+          p = this.permMod12,
+          M = this.perm,
+          m = this.grad3,
+          c = (r + e + a) * (1 / 3),
+          y = Math.floor(r + c),
+          w = Math.floor(e + c),
+          g = Math.floor(a + c),
+          A = (y + w + g) * t,
+          x = r - (y - A),
+          q = e - (w - A),
+          D = a - (g - A);
+        x >= q
+          ? q >= D
+            ? ((s = 1), (v = 0), (h = 0), (l = 1), (u = 1), (d = 0))
+            : x >= D
+            ? ((s = 1), (v = 0), (h = 0), (l = 1), (u = 0), (d = 1))
+            : ((s = 0), (v = 0), (h = 1), (l = 1), (u = 0), (d = 1))
+          : q < D
+          ? ((s = 0), (v = 0), (h = 1), (l = 0), (u = 1), (d = 1))
+          : x < D
+          ? ((s = 0), (v = 1), (h = 0), (l = 0), (u = 1), (d = 1))
+          : ((s = 0), (v = 1), (h = 0), (l = 1), (u = 1), (d = 0));
+        var S = x - s + t,
+          U = q - v + t,
+          b = D - h + t,
+          F = x - l + 2 * t,
+          N = q - u + 2 * t,
+          C = D - d + 2 * t,
+          P = x - 1 + 0.5,
+          T = q - 1 + 0.5,
+          _ = D - 1 + 0.5,
+          j = 255 & y,
+          k = 255 & w,
+          z = 255 & g,
+          B = 0.6 - x * x - q * q - D * D;
+        if (B < 0) o = 0;
+        else {
+          var E = 3 * p[j + M[k + M[z]]];
+          o = (B *= B) * B * (m[E] * x + m[E + 1] * q + m[E + 2] * D);
+        }
+        var G = 0.6 - S * S - U * U - b * b;
+        if (G < 0) i = 0;
+        else {
+          var H = 3 * p[j + s + M[k + v + M[z + h]]];
+          i = (G *= G) * G * (m[H] * S + m[H + 1] * U + m[H + 2] * b);
+        }
+        var I = 0.6 - F * F - N * N - C * C;
+        if (I < 0) n = 0;
+        else {
+          var J = 3 * p[j + l + M[k + u + M[z + d]]];
+          n = (I *= I) * I * (m[J] * F + m[J + 1] * N + m[J + 2] * C);
+        }
+        var K = 0.6 - P * P - T * T - _ * _;
+        if (K < 0) f = 0;
+        else {
+          var L = 3 * p[j + 1 + M[k + 1 + M[z + 1]]];
+          f = (K *= K) * K * (m[L] * P + m[L + 1] * T + m[L + 2] * _);
+        }
+        return 32 * (o + i + n + f);
+      },
+      noise4D: function (r, e, t, i) {
+        var n,
+          f,
+          s,
+          v,
+          h,
+          l,
+          u,
+          d,
+          p,
+          M,
+          m,
+          c,
+          y,
+          w,
+          g,
+          A,
+          x,
+          q = this.perm,
+          D = this.grad4,
+          S = (r + e + t + i) * a,
+          U = Math.floor(r + S),
+          b = Math.floor(e + S),
+          F = Math.floor(t + S),
+          N = Math.floor(i + S),
+          C = (U + b + F + N) * o,
+          P = r - (U - C),
+          T = e - (b - C),
+          _ = t - (F - C),
+          j = i - (N - C),
+          k = 0,
+          z = 0,
+          B = 0,
+          E = 0;
+        P > T ? k++ : z++,
+          P > _ ? k++ : B++,
+          P > j ? k++ : E++,
+          T > _ ? z++ : B++,
+          T > j ? z++ : E++,
+          _ > j ? B++ : E++;
+        var G = P - (l = k >= 3 ? 1 : 0) + o,
+          H = T - (u = z >= 3 ? 1 : 0) + o,
+          I = _ - (d = B >= 3 ? 1 : 0) + o,
+          J = j - (p = E >= 3 ? 1 : 0) + o,
+          K = P - (M = k >= 2 ? 1 : 0) + 2 * o,
+          L = T - (m = z >= 2 ? 1 : 0) + 2 * o,
+          O = _ - (c = B >= 2 ? 1 : 0) + 2 * o,
+          Q = j - (y = E >= 2 ? 1 : 0) + 2 * o,
+          R = P - (w = k >= 1 ? 1 : 0) + 3 * o,
+          V = T - (g = z >= 1 ? 1 : 0) + 3 * o,
+          W = _ - (A = B >= 1 ? 1 : 0) + 3 * o,
+          X = j - (x = E >= 1 ? 1 : 0) + 3 * o,
+          Y = P - 1 + 4 * o,
+          Z = T - 1 + 4 * o,
+          $ = _ - 1 + 4 * o,
+          rr = j - 1 + 4 * o,
+          er = 255 & U,
+          tr = 255 & b,
+          ar = 255 & F,
+          or = 255 & N,
+          ir = 0.6 - P * P - T * T - _ * _ - j * j;
+        if (ir < 0) n = 0;
+        else {
+          var nr = (q[er + q[tr + q[ar + q[or]]]] % 32) * 4;
+          n =
+            (ir *= ir) *
+            ir *
+            (D[nr] * P + D[nr + 1] * T + D[nr + 2] * _ + D[nr + 3] * j);
+        }
+        var fr = 0.6 - G * G - H * H - I * I - J * J;
+        if (fr < 0) f = 0;
+        else {
+          var sr = (q[er + l + q[tr + u + q[ar + d + q[or + p]]]] % 32) * 4;
+          f =
+            (fr *= fr) *
+            fr *
+            (D[sr] * G + D[sr + 1] * H + D[sr + 2] * I + D[sr + 3] * J);
+        }
+        var vr = 0.6 - K * K - L * L - O * O - Q * Q;
+        if (vr < 0) s = 0;
+        else {
+          var hr = (q[er + M + q[tr + m + q[ar + c + q[or + y]]]] % 32) * 4;
+          s =
+            (vr *= vr) *
+            vr *
+            (D[hr] * K + D[hr + 1] * L + D[hr + 2] * O + D[hr + 3] * Q);
+        }
+        var lr = 0.6 - R * R - V * V - W * W - X * X;
+        if (lr < 0) v = 0;
+        else {
+          var ur = (q[er + w + q[tr + g + q[ar + A + q[or + x]]]] % 32) * 4;
+          v =
+            (lr *= lr) *
+            lr *
+            (D[ur] * R + D[ur + 1] * V + D[ur + 2] * W + D[ur + 3] * X);
+        }
+        var dr = 0.6 - Y * Y - Z * Z - $ * $ - rr * rr;
+        if (dr < 0) h = 0;
+        else {
+          var pr = (q[er + 1 + q[tr + 1 + q[ar + 1 + q[or + 1]]]] % 32) * 4;
+          h =
+            (dr *= dr) *
+            dr *
+            (D[pr] * Y + D[pr + 1] * Z + D[pr + 2] * $ + D[pr + 3] * rr);
+        }
+        return 27 * (n + f + s + v + h);
+      },
+    }),
+      (i._buildPermutationTable = n),
+      "undefined" != typeof define &&
+        define.amd &&
+        define(function () {
+          return i;
+        }),
+      "undefined" != typeof exports
+        ? (exports.SimplexNoise = i)
+        : "undefined" != typeof window && (window.SimplexNoise = i),
+      "undefined" != typeof module && (module.exports = i);
+  })();
+</script>
+
+<script>
+  var W, M, c, C, WW, WH, CW, CH, params, time, animationId;
+  var bgColor = "#000000";
+  var palette = "Rainbow";
+  var fgHue1 = 0;
+  var fgHue2 = 0;
+  var fgHue3 = 0;
+
+  var simplex = new SimplexNoise();
+
+  var getGradientColor = function (ctx, cr, cg, cb, ca, x, y, r) {
+    var col, g;
+    col = cr + "," + cg + "," + cb;
+    g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, "rgba(" + col + ", " + ca * 1 + ")");
+    g.addColorStop(0.5, "rgba(" + col + ", " + ca * 0.75 + ")");
+    g.addColorStop(0.75, "rgba(" + col + ", " + ca * 0.25 + ")");
+    g.addColorStop(1, "rgba(" + col + ", " + ca * 0 + ")");
+
+    return g;
+  };
+
+  var getRandomNumber = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  var colorLib = [];
+  colorLib["Rainbow"] = [];
+  colorLib["Space"] = [];
+  colorLib["Aurora"] = [];
+  colorLib["Water"] = [];
+  colorLib["Fire"] = [];
+  colorLib["Custom"] = [];
+  colorLib["Random"] = [];
+
+  var spaceLib = [
+    [94, 0, 211],
+    [0, 18, 99],
+    [84, 0, 186],
+    [247, 0, 231],
+    [171, 0, 137],
+    [0, 59, 105],
+    [41, 0, 117],
+  ];
+  var auroraLib = [
+    [255, 0, 251],
+    [34, 0, 255],
+    [34, 0, 255],
+    [0, 255, 140],
+    [144, 0, 255],
+  ];
+
+  var customHues = [fgHue1, fgHue2, fgHue3];
+
+  var getColor = function (i) {
+    var customHues = [fgHue1, fgHue2, fgHue3];
+
+    if (typeof colorLib[palette][i] == "undefined") {
+      switch (palette) {
+        case "Rainbow":
+          colorLib[palette][i] = hslToRgb(
+            Math.round(Math.random() * 360) / 360,
+            1,
+            0.5
+          );
+          break;
+        case "Space":
+          colorLib[palette][i] =
+            spaceLib[Math.floor(Math.random() * spaceLib.length)];
+          break;
+        case "Aurora":
+          colorLib[palette][i] =
+            auroraLib[Math.floor(Math.random() * auroraLib.length)];
+          break;
+        case "Water":
+          var h = getRandomInt(185, 240);
+          colorLib[palette][i] = hslToRgb(h / 360, 1, 0.5);
+          break;
+        case "Fire":
+          var h = getRandomInt(0, 40);
+          colorLib[palette][i] = hslToRgb(h / 360, 1, 0.5);
+          break;
+        case "Custom":
+          var h = customHues[Math.floor(Math.random() * customHues.length)];
+          colorLib[palette][i] = hslToRgb(h / 360, 1, 0.5);
+          break;
+        case "Random":
+          colorLib[palette][i] = [
+            Math.round(Math.random() * 255),
+            Math.round(Math.random() * 255),
+            Math.round(Math.random() * 255),
+          ];
+          break;
+        default:
+          console.log("Unknown palette.");
+          return [255, 255, 255];
+      }
+    }
+
+    return colorLib[palette][i];
+  };
+
+  var initialize = function () {
+    W = window;
+    M = Math;
+    c = document.getElementById("exCanvas");
+    C = c.getContext("2d");
+    WW = c.width = M.floor(W.innerWidth);
+    WH = c.height = M.floor(W.innerHeight);
+    CW = WW / 2;
+    CH = WH / 2;
+    c.style.background = "black";
+    time = 0;
+    params = new Array();
+    getParams();
+  };
+
+  var getParams = function () {
+    for (var i = 0; i < 200; i++) {
+      var x = Math.random() * WW;
+      var y = Math.random() * WH;
+      var radius;
+      var rand = Math.random();
+      if (rand < 0.5) {
+        radius = getRandomNumber(5, 10);
+      } else if (rand >= 0.5 && rand < 0.8) {
+        radius = getRandomNumber(10, 30);
+      } else {
+        radius = getRandomNumber(100, 300);
+      }
+      var ratio = radius / 300;
+      var alpha = M.min(1.0 - ratio, 0.6);
+
+      params.push([x, y, radius, ratio, alpha]);
+    }
+  };
+
+  var updateParams = function (t) {
+    for (var i = 0; i < params.length; i++) {
+      var noise = simplex.noise3D(
+        params[i][0] * params[i][3] * 0.01,
+        params[i][1] * params[i][3] * 0.01,
+        t
+      );
+
+      params[i][0] += noise * params[i][3];
+      params[i][1] += (noise + 3) * params[i][3];
+    }
+  };
+
+  var resetParams = function (t) {
+    for (var i = 0; i < params.length; i++) {
+      if (params[i][1] - params[i][2] > WH) {
+        params[i][0] = Math.random() * WW;
+        params[i][1] = -params[i][2];
+      }
+    }
+  };
+
+  var f = function () {
+    time += 0.001;
+    C.save();
+    C.fillStyle = bgColor;
+    C.fillRect(0, 0, WW, WH);
+    C.globalCompositeOperation = "source-over";
+    for (var i = 0; i < params.length; i++) {
+      C.globalAlpha = params[i][4] * params[i][4];
+      var C1 = getColor(i);
+      C.fillStyle = getGradientColor(
+        C,
+        C1[0],
+        C1[1],
+        C1[2],
+        1,
+        params[i][0],
+        params[i][1],
+        params[i][2]
+      );
+      C.beginPath();
+      C.arc(params[i][0], params[i][1], params[i][2], 0, M.PI * 2, false);
+      C.fill();
+    }
+    C.restore();
+    updateParams(time);
+    resetParams(time);
+    animationId = requestAnimationFrame(f);
+  };
+
+  window.onload = function () {
+    initialize();
+    f();
+    W.onresize = function () {
+      cancelAnimationFrame(animationId);
+      initialize();
+      f();
+    };
+  };
+
+  /**
+   * Converts an HSL color value to RGB. Conversion formula
+   * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+   * Assumes h, s, and l are contained in the set [0, 1] and
+   * returns r, g, and b in the set [0, 255].
+   *
+   * @param   {number}  h       The hue
+   * @param   {number}  s       The saturation
+   * @param   {number}  l       The lightness
+   * @return  {Array}           The RGB representation
+   */
+  function hslToRgb(h, s, l) {
+    var r, g, b;
+
+    if (s == 0) {
+      r = g = b = l; // achromatic
+    } else {
+      var hue2rgb = function hue2rgb(p, q, t) {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  }
+
+  /**
+   * Returns a random integer between min (inclusive) and max (inclusive).
+   * The value is no lower than min (or the next integer greater than min
+   * if min isn't an integer) and no greater than max (or the next integer
+   * lower than max if max isn't an integer).
+   * Using Math.round() will give you a non-uniform distribution!
+   * @param   {number}  min     The minimum random value
+   * @param   {number}  max     The maximum random value
+   * @return  {number}          The random output number
+   */
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // Loosely based on https://codepen.io/toshiya-marukubo/details/YzVVjdN
+
+  // Original license below:
+
+  // Copyright (c) 2021 by Toshiya Marukubo (https://codepen.io/toshiya-marukubo/pen/YzVVjdN)
+
+  // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</script>
