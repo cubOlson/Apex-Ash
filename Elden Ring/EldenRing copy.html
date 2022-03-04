@@ -118,6 +118,38 @@
     type="boolean"
     default="1"
     />
+    <meta
+    property="healthManual"
+    label="Manual health control"
+    type="number"
+    min="0"
+    max="320"
+    default="320"
+    />
+    <meta
+    property="staminaManual"
+    label="Manual stamina control"
+    type="number"
+    min="0"
+    max="320"
+    default="320"
+    />
+    <meta
+    property="manaManual"
+    label="Manual mana control"
+    type="number"
+    min="0"
+    max="320"
+    default="320"
+    />
+    <meta
+    property="bossManual"
+    label="Manual boss control"
+    type="number"
+    min="0"
+    max="320"
+    default="320"
+    />
 
     <meta meter="hpRed" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0481" width= "0.5" h="0-20" s="40-90" l="0-60">
     </meta>
@@ -193,12 +225,15 @@
   var enemyAnim = false;
   var legendAnim = false;
 
+  var hpPush = false;
+  var manaPush = false;
+  var staminaPush = false;
   var bFPush = false;
 
-  var inGame1Meter = new Meter(10, inGameCheck);
-  var inGame2Meter = new Meter(10, inGameCheck);
-  var inGame3Meter = new Meter(10, inGameCheck);
-  var inGame4Meter = new Meter(10, inGameCheck);
+  // var inGame1Meter = new Meter(10, inGameCheck);
+  // var inGame2Meter = new Meter(10, inGameCheck);
+  // var inGame3Meter = new Meter(10, inGameCheck);
+  // var inGame4Meter = new Meter(10, inGameCheck);
   
   var healthLengthMeter = new Meter(20, ()=>"");
   var healthRedMeter = new Meter(3, ()=>"");
@@ -228,10 +263,10 @@
       copyScreen(1);
     }
     
-    inGame1Meter.setValue(engine.vision.greatRune);
-    inGame2Meter.setValue(engine.vision.leftItemFrame);
-    inGame3Meter.setValue(engine.vision.rightSouls);
-    inGame4Meter.setValue(engine.vision.compassMark);
+    // inGame1Meter.setValue(engine.vision.greatRune);
+    // inGame2Meter.setValue(engine.vision.leftItemFrame);
+    // inGame3Meter.setValue(engine.vision.rightSouls);
+    // inGame4Meter.setValue(engine.vision.compassMark);
     diedRedMeter.setValue(engine.vision.diedRed);
     discOrange1Meter.setValue(engine.vision.discoveredOrange1);
     discOrange2Meter.setValue(engine.vision.discoveredOrange2);
@@ -279,6 +314,19 @@
         }
     });
 
+    if(manaOn && !manaPush){
+      effects.push(new manaBar());
+      manaPush = true;
+    } 
+    if(staminaOn && !staminaPush){
+      effects.push(new staminaBar());
+      staminaPush = true;
+    } 
+    if(hpOn && !hpPush){
+      effects.push(new healthBar());
+      hpPush = true;
+    } 
+
     if(bossHealthOn && !bFPush){
       effects.push(new bossBar());
       bFPush = true;
@@ -287,45 +335,45 @@
     window.requestAnimationFrame(update);
   }
 
-    function inGameCheck(){
-        if(inGame4Meter.value > .75 && !blockUpdates){
-          if(hpOn){
-            effects.push(new healthBar());
-          }
-        }
-        if (inGame1Meter.value > .75 && inGame2Meter.value > .75 && inGame3Meter.value > .75 && !blockUpdates){
-            inGame = true;
-            if(manaOn){
-              effects.push(new manaBar());
-            } 
-            if(staminaOn){
-              effects.push(new staminaBar());
-            } 
-            if(hpOn){
-              effects.push(new healthBar());
-            } 
-            if(bossHealthOn){
-              effects.push(new bossBar());
-            } 
-        } else {
-            inGame = false;
-        }
-    }
+    // function inGameCheck(){
+    //     if(inGame4Meter.value > .75 && !blockUpdates){
+    //       if(hpOn){
+    //         effects.push(new healthBar());
+    //       }
+    //     }
+    //     if (inGame1Meter.value > .75 && inGame2Meter.value > .75 && inGame3Meter.value > .75 && !blockUpdates){
+    //         inGame = true;
+    //         if(manaOn){
+    //           effects.push(new manaBar());
+    //         } 
+    //         if(staminaOn){
+    //           effects.push(new staminaBar());
+    //         } 
+    //         if(hpOn){
+    //           effects.push(new healthBar());
+    //         } 
+    //         if(bossHealthOn){
+    //           effects.push(new bossBar());
+    //         } 
+    //     } else {
+    //         inGame = false;
+    //     }
+    // }
 
     function healthEffect(){
-        if(healthYellowMeter.value && hpOn){
+        if(healthYellowMeter.value > .05 && hpOn){
             effects.push(new statLoss(healthY, healthHeight, 0))
         }
     };
 
     function manaEffect(){
-        if(manaYellowMeter.value && manaOn){
+        if(manaYellowMeter.value > .05 && manaOn){
             effects.push(new statLoss(manaY, manaHeight, 210))
         }
     };
 
     function staminaEffect(){
-        if(staminaYellowMeter.value && staminaOn){
+        if(staminaYellowMeter.value > .05 && staminaOn){
             effects.push(new statLoss(staminaY, staminaHeight, 60))
         }
     };
@@ -395,11 +443,12 @@
         this.draw = function(){
             this.y = healthY;
             this.height = healthHeight;
-            var width = healthRedMeter.value / healthLengthMeter.value * 320;
+            var width = healthManual;
             drawRect(this.x, this.y, width, this.height, "red");
 
             if(!hpOn){
                 this.lifetime = 0;
+                hpPush = false;
             }
         }
     }
@@ -413,11 +462,12 @@
         this.draw = function(){
             this.y = manaY;
             this.height = manaHeight;
-            var width = manaBlueMeter.value / manaLengthMeter.value * 320;
+            var width = manaManual;
             drawRect(this.x, this.y, width, this.height, "blue");
 
             if(!manaOn){
                 this.lifetime = 0;
+                manaPush = false;
             }
         }
     }
@@ -431,11 +481,12 @@
         this.draw = function(){
             this.y = staminaY;
             this.height = staminaHeight;
-            var width = staminaGreenMeter.value / staminaLengthMeter.value * 320;
+            var width = staminaManual;
             drawRect(this.x, this.y, width, this.height, "green");
 
             if(!staminaOn){
                 this.lifetime = 0;
+                staminaPush = false;
             }
         }
     }
@@ -449,7 +500,7 @@
         this.draw = function(){
             this.y = bossY;
             this.height = bossHeight;
-            var width = engine.vision.bossHpRed / engine.vision.bossHpConfirm * 320;
+            var width = bossManual;
             drawRect(this.x, this.y, width, this.height, bossColor);
 
             if(!bossHealthOn){
