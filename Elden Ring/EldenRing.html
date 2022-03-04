@@ -163,6 +163,10 @@
     </meta>
     <meta meter="legendE" tags="vlc,ELDEN RING" type="area" x= "0.6213" y= "0.4722" height= "0.02" width= "0.0033" h="45-60" s="60-90" l="75-100">
     </meta>
+    <meta meter="greatT" tags="vlc,ELDEN RING" type="area" x= "0.3917" y= "0.475" height= "0.02" width= "0.003" h="45-60" s="60-90" l="75-100">
+    </meta>
+    <meta meter="greatL" tags="vlc,ELDEN RING" type="area" x= "0.6635" y= "0.4750" height= "0.02" width= "0.0033" h="45-60" s="60-90" l="75-100">
+    </meta>
     <meta meter="enemyE" tags="vlc,ELDEN RING" type="area" x= "0.3442" y= "0.4731" height= "0.02" width= "0.003" h="45-60" s="60-90" l="75-100">
     </meta>
     <meta meter="enemyE2" tags="vlc,ELDEN RING" type="area" x= "0.6095" y= "0.4731" height= "0.02" width= "0.0033" h="45-60" s="60-90" l="75-100">
@@ -218,6 +222,8 @@
   var diedRedMeter = new Meter(3, deathEffect);
   var legendDMeter = new Meter(3, legendEffect);
   var legendEMeter = new Meter(3, legendEffect);
+  var greatTMeter = new Meter(3, greatEffect);
+  var greatLMeter = new Meter(3, greatEffect);
   var enemyEMeter = new Meter(3, enemyEffect);
   var enemyE2Meter = new Meter(3, enemyEffect);
 
@@ -236,6 +242,8 @@
     discOrange3Meter.setValue(engine.vision.discoveredOrange3);
     legendDMeter.setValue(engine.vision.legendD);
     legendEMeter.setValue(engine.vision.legendE);
+    greatTMeter.setValue(engine.vision.greatT);
+    greatLMeter.setValue(engine.vision.greatL);
     enemyEMeter.setValue(engine.vision.enemyE);
     enemyE2Meter.setValue(engine.vision.enemyE2);
 
@@ -352,7 +360,16 @@
             enemyAnim = true;
             blockUpdates = true;
             effects = [];
-            effects.push(new enemyKilledEffect(true));
+            effects.push(new enemyKilledEffect("legend"));
+        }
+    };
+
+    function greatEffect(){
+        if(greatTMeter.value > .9 && greatLMeter.value > .9 && !enemyAnim && killOn){
+            enemyAnim = true;
+            blockUpdates = true;
+            effects = [];
+            effects.push(new enemyKilledEffect("great"));
         }
     };
 
@@ -361,7 +378,7 @@
             blockUpdates = true;
             enemyAnim = true;
             effects = [];
-            effects.push(new enemyKilledEffect(false));
+            effects.push(new enemyKilledEffect("enemy"));
         }
     };
 
@@ -575,10 +592,10 @@
       }
     }
 
-  function enemyKilledEffect(legend){
+  function enemyKilledEffect(choice){
     this.lifetime = 10;
-    this.colors = legend ? ["blue", "cyan", "white"] : ["orange", "yellow", "white"];
-    this.speeds = legend ? [2, 6, 10] : [1, 3, 5];
+    this.colors = choice == "legend" ? ["blue", "cyan", "white"] : choice == "great" ? ["orange", "yellow", "white"] : ["red", "orange", "yellow"];
+    this.speeds = choice == "legend" ? [2, 6, 10] : choice == "great" ? [1, 4, 8] : [1, 3, 5];
     this.start = Date.now();
     this.draw = function(){
       this.elapsed = Date.now() - this.start;
