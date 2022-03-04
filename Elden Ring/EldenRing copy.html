@@ -445,10 +445,6 @@
             this.y = healthY;
             this.height = healthHeight;
             var width = healthManual;
-            if (width != this.old){
-              effects.push(new statLoss(healthY, healthHeight, 0))
-              this.old = width;
-            }
             drawRect(this.x, this.y, width, this.height, "red");
 
             if(!hpOn){
@@ -469,10 +465,6 @@
             this.y = manaY;
             this.height = manaHeight;
             var width = manaManual;
-            if (width != this.old){
-              effects.push(new statLoss(manaY, manaHeight, 210))
-              this.old = width;
-            }
             drawRect(this.x, this.y, width, this.height, "blue");
 
             if(!manaOn){
@@ -493,10 +485,6 @@
             this.y = staminaY;
             this.height = staminaHeight;
             var width = staminaManual;
-            if (width != this.old){
-              effects.push(new statLoss(staminaY, staminaHeight, 60))
-              this.old = width;
-            }
             drawRect(this.x, this.y, width, this.height, "green");
 
             if(!staminaOn){
@@ -703,7 +691,7 @@
         this.width = width;
         this.height = height;
         this.color = color;
-        this.lifetime = 30;
+        this.lifetime = 10;
 
         this.draw = function(){
             ctx.beginPath();
