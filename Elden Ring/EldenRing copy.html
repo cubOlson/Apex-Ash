@@ -12,6 +12,12 @@
     default="100"
     />
     <meta
+    property="adjToggle"
+    label="Adjustment toggle (turn off in-game)"
+    type="boolean"
+    default="1"
+    />
+    <meta
     property="hpOn"
     label="Health effects"
     type="boolean"
@@ -235,17 +241,17 @@
   // var inGame3Meter = new Meter(10, inGameCheck);
   // var inGame4Meter = new Meter(10, inGameCheck);
   
-  var healthLengthMeter = new Meter(20, ()=>"");
-  var healthRedMeter = new Meter(3, ()=>"");
-  var healthYellowMeter = new Meter(2, healthEffect);
-  var manaLengthMeter = new Meter(20, ()=>"");
-  var manaBlueMeter = new Meter(3, ()=>"");
-  var manaYellowMeter = new Meter(2, manaEffect);
-  var staminaLengthMeter = new Meter(20, ()=>"");
-  var staminaGreenMeter = new Meter(3, ()=>"");
-  var staminaYellowMeter = new Meter(2, staminaEffect);
-  var bossHealthLengthMeter = new Meter(20, ()=>"");
-  var bossHealthRedMeter = new Meter(3, ()=>"");
+  // var healthLengthMeter = new Meter(20, ()=>"");
+  // var healthRedMeter = new Meter(3, ()=>"");
+  // var healthYellowMeter = new Meter(2, healthEffect);
+  // var manaLengthMeter = new Meter(20, ()=>"");
+  // var manaBlueMeter = new Meter(3, ()=>"");
+  // var manaYellowMeter = new Meter(2, manaEffect);
+  // var staminaLengthMeter = new Meter(20, ()=>"");
+  // var staminaGreenMeter = new Meter(3, ()=>"");
+  // var staminaYellowMeter = new Meter(2, staminaEffect);
+  // var bossHealthLengthMeter = new Meter(20, ()=>"");
+  // var bossHealthRedMeter = new Meter(3, ()=>"");
 
 //   var itemChargeMeter = new Meter(3, itemEffects);
 
@@ -276,36 +282,38 @@
     enemyEMeter.setValue(engine.vision.enemyE);
     enemyE2Meter.setValue(engine.vision.enemyE2);
 
-    if(!blockUpdates){
-          healthLengthMeter.setValue(engine.vision.hpConfirm);
-          healthRedMeter.setValue(engine.vision.hpRed);
-          healthYellowMeter.setValue(engine.vision.hpYellow);
-          manaLengthMeter.setValue(engine.vision.manaConfirm);
-          manaBlueMeter.setValue(engine.vision.manaBlue);
-          manaYellowMeter.setValue(engine.vision.manaYellow);
-          staminaLengthMeter.setValue(engine.vision.staminaConfirm);
-          staminaGreenMeter.setValue(engine.vision.staminaGreen);
-          staminaYellowMeter.setValue(engine.vision.staminaYellow);
-          bossHealthLengthMeter.setValue(engine.vision.bossHpConfirm);
-          bossHealthRedMeter.setValue(engine.vision.bossHpRed);
+    // if(!blockUpdates){
+    //       healthLengthMeter.setValue(engine.vision.hpConfirm);
+    //       healthRedMeter.setValue(engine.vision.hpRed);
+    //       healthYellowMeter.setValue(engine.vision.hpYellow);
+    //       manaLengthMeter.setValue(engine.vision.manaConfirm);
+    //       manaBlueMeter.setValue(engine.vision.manaBlue);
+    //       manaYellowMeter.setValue(engine.vision.manaYellow);
+    //       staminaLengthMeter.setValue(engine.vision.staminaConfirm);
+    //       staminaGreenMeter.setValue(engine.vision.staminaGreen);
+    //       staminaYellowMeter.setValue(engine.vision.staminaYellow);
+    //       bossHealthLengthMeter.setValue(engine.vision.bossHpConfirm);
+    //       bossHealthRedMeter.setValue(engine.vision.bossHpRed);
+    // }
+
+    if(adjToggle){
+      if(hpOn){
+        drawRect(0, healthY, healthManual, healthHeight, "red");
+      }
+      if(staminaOn){
+        drawRect(0, staminaY, staminaManual, staminaHeight, "green");
+      }
+      if(manaOn){
+        drawRect(0, manaY, manaManual, manaHeight, "blue");
+      }
+      if(bossHealthOn){
+        drawRect(0, bossY, bossManual, bossHeight, bossColor);
+      }
     }
 
-    healthY == oldHealthY ? null : effects.push(new adjRect(0, healthY, 320, healthHeight, "red"));
-    oldHealthY = healthY;
-    healthHeight == oldHealthHeight ? null : effects.push(new adjRect(0, healthY, 320, healthHeight, "red"));
-    oldHealthHeight = healthHeight;
-    staminaY == oldStaminaY ? null : effects.push(new adjRect(0, staminaY, 320, staminaHeight, "green"));
-    oldStaminaY = staminaY;
-    staminaHeight == oldStaminaHeight ? null : effects.push(new adjRect(0, staminaY, 320, staminaHeight, "green"));
-    oldStaminaHeight = staminaHeight;
-    manaY == oldManaY ? null : effects.push(new adjRect(0, manaY, 320, manaHeight, "blue"));
-    oldManaY = manaY;
-    manaHeight == oldManaHeight ? null : effects.push(new adjRect(0, manaY, 320, manaHeight, "blue"));
-    oldManaHeight = manaHeight;
-    bossY == oldBossHealthY ? null : effects.push(new adjRect(0, bossY, 320, bossHeight, bossColor));
-    oldBossHealthY = bossY;
-    bossHeight == oldBossHealthHeight ? null : effects.push(new adjRect(0, bossY, 320, bossHeight, bossColor));
-    oldBossHealthHeight = bossHeight;
+    if(adjToggle){
+      effects = [];
+    }
 
     effects.forEach((ele, i) => {
         ele.draw();
@@ -360,23 +368,23 @@
     //     }
     // }
 
-    function healthEffect(){
-        if(healthYellowMeter.value > .05 && hpOn){
-            effects.push(new statLoss(healthY, healthHeight, 0))
-        }
-    };
+    // function healthEffect(){
+    //     if(healthYellowMeter.value > .05 && hpOn){
+    //         effects.push(new statLoss(healthY, healthHeight, 0))
+    //     }
+    // };
 
-    function manaEffect(){
-        if(manaYellowMeter.value > .05 && manaOn){
-            effects.push(new statLoss(manaY, manaHeight, 210))
-        }
-    };
+    // function manaEffect(){
+    //     if(manaYellowMeter.value > .05 && manaOn){
+    //         effects.push(new statLoss(manaY, manaHeight, 210))
+    //     }
+    // };
 
-    function staminaEffect(){
-        if(staminaYellowMeter.value > .05 && staminaOn){
-            effects.push(new statLoss(staminaY, staminaHeight, 60))
-        }
-    };
+    // function staminaEffect(){
+    //     if(staminaYellowMeter.value > .05 && staminaOn){
+    //         effects.push(new statLoss(staminaY, staminaHeight, 60))
+    //     }
+    // };
 
     function discoveryEffect(){
         if(discOrange1Meter.value > .9 && discOrange2Meter.value > .9 && discOrange3Meter.value > .9 && discoveryOn){
@@ -447,7 +455,7 @@
             var width = healthManual;
             drawRect(this.x, this.y, width, this.height, "red");
 
-            if(!hpOn){
+            if(!hpOn || adjToggle){
                 this.lifetime = 0;
                 hpPush = false;
             }
@@ -467,7 +475,7 @@
             var width = manaManual;
             drawRect(this.x, this.y, width, this.height, "blue");
 
-            if(!manaOn){
+            if(!manaOn || adjToggle){
                 this.lifetime = 0;
                 manaPush = false;
             }
@@ -487,7 +495,7 @@
             var width = staminaManual;
             drawRect(this.x, this.y, width, this.height, "green");
 
-            if(!staminaOn){
+            if(!staminaOn || adjToggle){
                 this.lifetime = 0;
                 staminaPush = false;
             }
@@ -506,7 +514,7 @@
             var width = bossManual;
             drawRect(this.x, this.y, width, this.height, bossColor);
 
-            if(!bossHealthOn){
+            if(!bossHealthOn || adjToggle){
                 this.lifetime = 0;
                 bFPush = false;
             }
