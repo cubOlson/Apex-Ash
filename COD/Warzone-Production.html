@@ -4,8 +4,16 @@
   <meta publisher="WhirlwindFX" />
 
 
+
   <meta property="enableHudEffect" label="Enable HUD Effects" type="boolean" default="1" />
   <meta property="enableStandard" label="Enable standard effects" type="boolean" default="1" />
+  <meta property="enableHealth" label="Enable health effects" type="boolean" default="1" />
+  <meta property="enableShield" label="Enable shield effects" type="boolean" default="1" />
+  <meta property="enableKill" label="Enable kill effects" type="boolean" default="1" />
+  <meta property="enableKnockdown" label="Enable knockdown effect" type="boolean" default="1" />
+  <meta property="enableRevive" label="Enable revive effect" type="boolean" default="1" />
+  <meta property="enableGulag" label="Enable gulag effects" type="boolean" default="1" />
+  <meta property="enableCircle" label="Enable circle effects" type="boolean" default="1" />
   <meta property="HealthBarY" label="HealthBar Y" type="number" default="170" min="0" max="200">
   <meta property="HealthBarHeight" label="HealthBar Height" type="number" default="4" min="0" max="10">
   <meta property="ShieldBarY" label="ShieldBar Y" type="number" default="130" min="0" max="200">
@@ -38,15 +46,15 @@
   <resolution size="1920x1200" x=".105" y=".9381" width=".0308" />
   </meta>
   <meta meter="inGame" tags="cod,warzone,modern warfare,call of duty" x=".9398" y=".048611" width=".0039" h="0-360"
-    s="0-5" l="95-100" type="linear">
+    s="0-10" l="90-100" type="linear">
   </meta>
   <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" height=".001"
     h="0-20" s="60-100" l="60-90" type="area">
-  <resolution size="1920x1200" x=".474" y=".8451" width=".05" height=".001" />
+  <resolution size="1920x1200" x=".474" y=".8461" width=".05" height=".001" />
   </meta>
   <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" height=".001"
     h="0-20" s="60-100" l="60-90" type="area">
-  <resolution size="1920x1200" x=".474" y=".8805" width=".05" height=".001" />
+  <resolution size="1920x1200" x=".474" y=".8810" width=".05" height=".001" />
   </meta>
   <meta meter="killBlack" tags="cod,warzone,modern warfare,call of duty" x=".476" y=".8315" width=".04" height=".01"
     h="0-360" s="0-50" l="0-40" type="area">
@@ -70,7 +78,7 @@
   </meta>
   <meta meter="circleClosingBlack" tags="cod,warzone,modern warfare,call of duty" x=".4943" y=".2019" width=".011"
     height=".011" h="0-360" s="0-25" l="0-25" type="area">
-  <resolution size="1920x1200" x=".4943" y=".2395" width=".011" height=".011" />
+  <resolution size="1920x1200" x=".4943" y=".2355" width=".011" height=".011" />
   </meta>
   <meta meter="circleClosingRed" tags="cod,warzone,modern warfare,call of duty" x=".4974" y=".2741" width=".006"
     height=".003" h="0-20" s="25-100" l="10-70" type="area">
@@ -78,7 +86,7 @@
   </meta>
   <meta meter="circleClosingWhite" tags="cod,warzone,modern warfare,call of duty" x=".506" y=".2229" width=".0078"
     height=".001" h="0-360" s="0-10" l="80-100" type="area">
-  <resolution size="1920x1200" x=".506" y=".2041" width=".0078" height=".001" />
+  <resolution size="1920x1200" x=".506" y=".2011" width=".0078" height=".001" />
   </meta>
 </head>
 
@@ -102,6 +110,7 @@
   var PlayingGame = false;
   var hpCol = "green";
   var shieldCol = "blue"
+  var damagePlaying = false;
 
 
   //Declaring meters
@@ -134,17 +143,19 @@
       if (!killAnim) {
         gulagWhiteMeter.setValue(engine.vision.gulagWhiteHP)
         gulagRedMeter.setValue(engine.vision.gulagRedHP)
-        healthMeter.setValue(engine.vision.health);
-        plate1Meter.setValue(engine.vision.plate1);
-        plate2Meter.setValue(engine.vision.plate2);
-        plate3Meter.setValue(engine.vision.plate3);
-        downOrangeMeter.setValue(engine.vision.knockdownOrange)
-        healthRedMeter.setValue(engine.vision.healthR);
-        circleBlackMeter.setValue(engine.vision.circleClosingBlack)
-        circleRedMeter.setValue(engine.vision.circleClosingRed)
-        healthGreenMeter.setValue(engine.vision.healthG);
-        reviveGreenMeter.setValue(engine.vision.reviveGreen);
-        circleWhiteMeter.setValue(engine.vision.circleClosingWhite)
+        if (!inGulag) {
+          healthMeter.setValue(engine.vision.health);
+          plate1Meter.setValue(engine.vision.plate1);
+          plate2Meter.setValue(engine.vision.plate2);
+          plate3Meter.setValue(engine.vision.plate3);
+          downOrangeMeter.setValue(engine.vision.knockdownOrange)
+          healthRedMeter.setValue(engine.vision.healthR);
+          circleBlackMeter.setValue(engine.vision.circleClosingBlack)
+          circleRedMeter.setValue(engine.vision.circleClosingRed)
+          healthGreenMeter.setValue(engine.vision.healthG);
+          reviveGreenMeter.setValue(engine.vision.reviveGreen);
+          circleWhiteMeter.setValue(engine.vision.circleClosingWhite)
+        }
       }
       kill1Meter.setValue(engine.vision.kill1)
       kill2Meter.setValue(engine.vision.kill2)
@@ -182,7 +193,7 @@
       ctx.fillRect(320 / 4 + spaceVal, 200 - ShieldBarY, plate2Meter.value * (320 / 4), ShieldBarHeight * 10)
       ctx.fillRect(((320 / 4) * 2) + (spaceVal * 2), 200 - ShieldBarY, plate3Meter.value * (320 / 4), ShieldBarHeight * 10);
     }
-    if (inGulag) {
+    if (inGulag && enableGulag) {
       //GulagHud
       ctx.fillStyle = "white";
       ctx.fillRect(0, 200 - GulagBarY, gulagWhiteMeter.value * 160, GulagBarHeight * 10);
@@ -203,19 +214,20 @@
       PlayingGame = false;
       knockdownGoing = false;
       reviveActive = false;
+      CirclePlaying = false;
     }
   }
 
   function armorEffects() {
     if (plate1Meter.decreased) {
-      if (enableStandard) {
+      if (enableStandard && enableShield) {
         effects.push(new DamageEffect("blue"));
       }
       shieldCol = "red";
       setTimeout(() => { shieldCol = "blue" }, 100)
 
     }
-    else if (plate1Meter.increased) {
+    else if (plate1Meter.increased && enableShield) {
       effects.push(new HealEffect("blue"))
     }
 
@@ -223,13 +235,13 @@
   function armorEffects2() {
 
     if (plate2Meter.decreased) {
-      if (enableStandard) {
+      if (enableStandard && enableShield) {
         effects.push(new DamageEffect("blue"));
       }
       shieldCol = "red";
       setTimeout(() => { shieldCol = "blue" }, 100)
     }
-    else if (plate2Meter.increased) {
+    else if (plate2Meter.increased && enableShield) {
       effects.push(new HealEffect("blue"))
     }
 
@@ -237,13 +249,13 @@
   function armorEffects3() {
 
     if (plate3Meter.decreased) {
-      if (enableStandard) {
+      if (enableStandard && enableShield) {
         effects.push(new DamageEffect("blue"));
       }
       shieldCol = "red";
       setTimeout(() => { shieldCol = "blue" }, 100)
     }
-    else if (plate3Meter.increased) {
+    else if (plate3Meter.increased && enableShield) {
       effects.push(new HealEffect("blue"))
     }
 
@@ -251,13 +263,15 @@
 
   function healthEffects() {
 
-    if (healthMeter.decreased && healthMeter.diff < .9) {
+    if (healthMeter.decreased && healthMeter.diff < .9 && enableHealth) {
       if (enableStandard) {
+        damagePlaying = true;
         effects.push(new DamageEffect("red"));
       }
       hpCol = "red"
       setTimeout(() => { hpCol = "green" }, 100)
-    } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3 && !knockdownGoing && healthRedMeter.value == 0) {
+      setTimeout(() => { damagePlaying = false; }, 500)
+    } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3 && !knockdownGoing && healthRedMeter.value == 0 && damagePlaying == false && enableStandard && enableHealth) {
       effects.push(new HealEffect())
     }
 
@@ -267,7 +281,7 @@
 
   function killEffect() {
     console.log("In kill effect");
-    if (enableStandard) {
+    if (enableStandard && enableKill) {
       if (kill1Meter.value > 0.8 && kill2Meter.value > 0.8 && killBlackMeter.value > 0.8 && killAnim == false) {
         stateMgr.Push(new PlayKillEffect("red", 5))
       }
@@ -276,8 +290,8 @@
 
 
   function knockdownEffect() {
-    if (enableStandard) {
-      if (downOrangeMeter.value > 0.8 && healthRedMeter.value > 0 && knockdownGoing == false) {
+    if (enableStandard && enableKnockdown) {
+      if (downOrangeMeter.value > 0.7 && healthRedMeter.value > 0 && knockdownGoing == false) {
         console.log("In knockdown effect");
         knockdownGoing = true;
         effects.push(new knockdowneffect())
@@ -287,8 +301,8 @@
 
   function reviveEffect() {
     console.log("In revive effect");
-    if (enableStandard) {
-      if (reviveGreenMeter.value > 0.8 && healthGreenMeter.value > 0 && reviveActive == false) {
+    if (enableStandard && enableRevive) {
+      if (reviveGreenMeter.value > 0.7 && healthGreenMeter.value > 0 && reviveActive == false) {
         reviveActive = true;
         effects.push(new ReviveEffect())
       }
@@ -299,15 +313,21 @@
 
     if (gulagRedMeter.value == 1 && gulagWhiteMeter.value == 1) {
       inGulag = true;
+      knockdownGoing = false;
+      reviveActive = false;
+      CirclePlaying = false;
     }
-    if (gulagRedMeter.value == 0 && gulagWhiteMeter.value == 0) {
+    if (gulagRedMeter.value == 0 && gulagWhiteMeter.value == 0 && inGulag == true) {
       inGulag = false;
+      setTimeout(() => {
+        effects.length = 0;
+      }, 200);
     }
   }
 
   function circleEffects() {
     console.log("In circle effects");
-    if (enableStandard) {
+    if (enableStandard && enableCircle) {
       if (circleBlackMeter.value > 0.9 && circleRedMeter.value > 0.7 && circleWhiteMeter.value > 0.9 && CirclePlaying == false) {
         CirclePlaying = true;
         effects.push(new RippleEffect(160, 100, 1, 10000, 50, "purple", "in", "stroke", 5))
