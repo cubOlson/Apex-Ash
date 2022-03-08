@@ -2,7 +2,6 @@
     <title>Elden Ring</title>
     <meta description="HUD and effects for Elden Ring." />
     <meta publisher="SignalRgb" />
-
     <meta
     property="keyScreenBrightness"
     label="Ambiance brightness"
@@ -10,6 +9,12 @@
     min="0"
     max="100"
     default="100"
+    />
+    <meta
+    property="adjToggle"
+    label="Adjustment toggle (turn off in-game)"
+    type="boolean"
+    default="1"
     />
     <meta
     property="hpOn"
@@ -118,61 +123,183 @@
     type="boolean"
     default="1"
     />
-
     <meta meter="hpRed" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0481" width= "0.5" h="0-20" s="40-90" l="0-60">
+      <resolution size="3440x1440" x= "0.189" y= "0.0472" width= "0.5"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.0935" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.0935" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.0935" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.0935" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.0935" width= "0.5"/> 
     </meta>
-    <meta meter="hpConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0551" width= "0.5" h="30-80" s="0-35" l="20-100">
+    <meta meter="hpConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0551" width= "0.5" h="40-80" s="15-50" l="20-100">
+      <resolution size="3440x1440" x= "0.189" y= "0.0549" width= "0.5"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.0996" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.0996" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.0996" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.0996" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.0996" width= "0.5"/>  
     </meta>
     <meta meter="hpYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0481" height= "0.0001" width= "0.5" h="45-50" s="75-85" l="50-75">
+      <resolution size="3440x1440" x= "0.189" y= "0.0472" width= "0.5" height= "0.0001"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.0935" height= "0.0001" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.0935" height= "0.0001" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.0935" height= "0.0001" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.0935" height= "0.0001" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.0935" height= "0.0001" width= "0.5"/>   
     </meta>
     <meta meter="manaBlue" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0639" width= "0.5" h="190-210" s="40-90" l="0-60">
+      <resolution size="3440x1440" x= "0.189" y= "0.0646" width= "0.5"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.1074" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.1074" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.1074" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.1074" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.1074" width= "0.5"/>
     </meta>
-    <meta meter="manaConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0713" width= "0.5" h="40-80" s="0-35" l="20-100">
-      <resolution size="2560x1440" x= "0.0818" y= "0.0718" width= "0.5"/> 
+    <meta meter="manaConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0713" width= "0.5" h="40-80" s="15-50" l="20-100">
+      <resolution size="3440x1440" x= "0.189" y= "0.0716" width= "0.5"/> 
+      <resolution size="2560x1440" x= "0.0818" y= "0.0718" width= "0.5"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.1139" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.1139" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.1139" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.1139" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.1139" width= "0.5"/> 
     </meta>
-    <meta meter="manaYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0639" height= "0.0001" width= "0.3" h="45-50" s="75-85" l="50-75">
+    <meta meter="manaYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0639" height= "0.0001" width= "0.3 h="45-50" s="75-85" l="50-75">
+      <resolution size="3440x1440" x= "0.189" y= "0.0646" width= "0.5" height= "0.0001"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.1074" height= "0.0001" width= "0.3"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.1074" height= "0.0001" width= "0.3"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.1074" height= "0.0001" width= "0.3"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.1074" height= "0.0001" width= "0.3"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.1074" height= "0.0001" width= "0.3"/> 
     </meta>
-    <meta meter="staminaGreen" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.0806" width= "0.5" h="130-160" s="40-90" l="0-60">
+    <meta meter="staminaGreen" tags="vlc,ELDEN RING" type="linear" x= "0.0823" y= "0.0806" width= "0.5" h="130-160" s="40-90" l="0-60">
+      <resolution size="3440x1440" x= "0.189" y= "0.0813" width= "0.5"/>
+      <resolution size="2560x1600" x= "0.0828" y= "0.1231" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0828" y= "0.1231" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0828" y= "0.1231" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0828" y= "0.1231" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0828" y= "0.1231" width= "0.5"/> 
     </meta>
-    <meta meter="staminaConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.0818" y= "0.088" width= "0.5" h="40-80" s="0-35" l="20-100">
-      <resolution size="2560x1440" x= "0.0818" y= "0.087" width= "0.5"/> 
+    <meta meter="staminaConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.0823" y= "0.1287" width= "0.5" h="40-80" s="15-50" l="20-100">
+      <resolution size="3440x1440" x= "0.189" y= "0.0883" width= "0.5"/>
+      <resolution size="2560x1440" x= "0.0823" y= "0.087" width= "0.5"/>
+      <resolution size="2560x1600" x= "0.0823" y= "0.1287" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0823" y= "0.1287" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0823" y= "0.1287" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0823" y= "0.1287" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0823" y= "0.1287" width= "0.5"/>  
     </meta>
-    <meta meter="staminaYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0806" height= "0.0001" width= "0.3" h="45-50" s="75-85" l="50-75">
+    <meta meter="staminaYellow" tags="vlc,ELDEN RING" type="area" x= "0.0818" y= "0.0806" height= "0.0001" width= "0.5" h="45-50" s="75-85" l="50-75">
+      <resolution size="3440x1440" x= "0.189" y= "0.0813" width= "0.5" height= "0.0001"/>
+      <resolution size="2560x1600" x= "0.0823" y= "0.1231" height= "0.0001" width= "0.5"/>
+      <resolution size="1920x1200" x= "0.0823" y= "0.1231" height= "0.0001" width= "0.5"/>
+      <resolution size="1680x1050" x= "0.0823" y= "0.1231" height= "0.0001" width= "0.5"/>
+      <resolution size="1440x900" x= "0.0823" y= "0.1231" height= "0.0001" width= "0.5"/>
+      <resolution size="1280x800" x= "0.0823" y= "0.1231" height= "0.0001" width= "0.5"/>
     </meta>
-    <meta meter="bossHpRed" tags="vlc,ELDEN RING" type="linear" x= "0.244" y= "0.8074" width= "0.55" h="0-20" s="90-100" l="30-40">
+    <meta meter="bossHpRed" tags="vlc,ELDEN RING" type="linear" x= "0.244" y= "0.8074" width= "0.55" h="0-20" s="80-100" l="0-50">
+      <resolution size="3440x1440" x= "0.32" y= "0.8069" width= "0.55"/>
+      <resolution size="2560x1600" x= "0.2443" y= "0.7759" width= "0.55"/>
+      <resolution size="1920x1200" x= "0.2443" y= "0.7759" width= "0.55"/>
+      <resolution size="1680x1050" x= "0.2443" y= "0.7759" width= "0.55"/>
+      <resolution size="1440x900" x= "0.2443" y= "0.7759" width= "0.55"/>
+      <resolution size="1280x800" x= "0.2443" y= "0.7759" width= "0.55"/>
     </meta>
-    <meta meter="bossHpConfirm" tags="vlc,ELDEN RING" type="linear" x= "0.2432" y= "0.8135" width= "0.55" h="30-80" s="0-35" l="20-100">
+    <meta meter="bossHpConfirm" tags="vlc,ELDEN RING" type="area" x= "0.2432" y= "0.8135" width= "0.55" height= "0.0001" h="30-80" s="0-40" l="10-100">
+      <resolution size="3440x1440" x= "0.32" y= "0.8132" width= "0.55" height= "0.0001"/>
+      <resolution size="2560x1600" x= "0.2443" y= "0.7825" width= "0.55" height= "0.0001"/>
+      <resolution size="1920x1200" x= "0.2443" y= "0.7825" width= "0.55" height= "0.0001"/>
+      <resolution size="1680x1050" x= "0.2443" y= "0.7825" width= "0.55" height= "0.0001"/>
+      <resolution size="1440x900" x= "0.2443" y= "0.7825" width= "0.55" height= "0.0001"/>
+      <resolution size="1280x800" x= "0.2443" y= "0.7825" width= "0.55" height= "0.0001"/>
     </meta>
     <meta meter="greatRune" tags="vlc,ELDEN RING" type="area" x= "0.0443" y= "0.1037" width= "0.01" height = ".0001" h="20-80" s="0-35" l="40-75">
+      <resolution size="3440x1440" x= "0.161" y= "0.0257" width= "0.006" height = ".0001"/>
+      <resolution size="2560x1600" x= "0.0448" y= "0.0736" width= "0.01" height = ".0001"/>
+      <resolution size="1920x1200" x= "0.0448" y= "0.0736" width= "0.01" height = ".0001"/>
+      <resolution size="1680x1050" x= "0.0448" y= "0.0736" width= "0.01" height = ".0001"/>
+      <resolution size="1440x900" x= "0.0448" y= "0.0736" width= "0.01" height = ".0001"/>
+      <resolution size="1280x800" x= "0.0448" y= "0.0736" width= "0.01" height = ".0001"/>
     </meta>
-    <meta meter="leftItemFrame" tags="vlc,ELDEN RING" type="area" x= "0.0281" y= "0.7944" width= "0.014" height = ".0001" h="20-80" s="0-35" l="40-90">
-      <resolution size="2560x1440" x= "0.0927" y= "0.7444" width= "0.014" height = ".0001"/> 
+    <meta meter="leftItemFrame" tags="vlc,ELDEN RING" type="area" x= "0.0281" y= "0.7944" width= "0.014" height = ".0001" h="30-80" s="25-50" l="25-75">
+      <resolution size="3440x1440" x="0.1974" y= "0.7444" width= "0.007" height = ".0001"/>
+      <resolution size="2560x1440" x= "0.0927" y= "0.7444" width= "0.014" height = ".0001"/>
+      <resolution size="2560x1600" x= "0.0917" y= "0.7204" width= "0.014" height = ".0001"/>
+      <resolution size="1920x1200" x= "0.0917" y= "0.7204" width= "0.014" height = ".0001"/>
+      <resolution size="1680x1050" x= "0.0917" y= "0.7204" width= "0.014" height = ".0001"/>
+      <resolution size="1440x900" x= "0.0917" y= "0.7204" width= "0.014" height = ".0001"/>
+      <resolution size="1280x800" x= "0.0917" y= "0.7204" width= "0.014" height = ".0001"/> 
     </meta>
     <meta meter="rightSouls" tags="vlc,ELDEN RING" type="area" x= "0.9732" y= "0.9417" height= "0.0025" width= "0.0007" h="40-80" s="0-35" l="40-75">
+      <resolution size="3440x1440" x= "0.853" y= "0.945" height= "0.0201" width= "0.0005"/>
+      <resolution size="2560x1600" x= "0.9739" y= "0.9" height= "0.0025" width= "0.0007"/>
+      <resolution size="1920x1200" x= "0.9739" y= "0.9" height= "0.0025" width= "0.0007"/>
+      <resolution size="1680x1050" x= "0.9739" y= "0.9" height= "0.0025" width= "0.0007"/>
+      <resolution size="1440x900" x= "0.9739" y= "0.9" height= "0.0025" width= "0.0007"/>
+      <resolution size="1280x800" x= "0.9739" y= "0.9" height= "0.0025" width= "0.0007"/>
     </meta>
-    <meta meter="compassMark" tags="vlc,ELDEN RING" type="area" x= "0.499" y= "0.1231" height= "0.008" width= "0.003" h="40-80" s="0-35" l="40-75">
-    </meta>
-    <meta meter="itemCharges" tags="vlc,ELDEN RING" type="ocr_numeric" confidence="70" x=".1068" y=".9222" width=".013" height=".0194"> 
+    <meta meter="compassMark" tags="vlc,ELDEN RING" type="area" x= "0.499" y= "0.1602" height= "0.008" width= "0.003" h="40-80" s="0-35" l="40-75">
+      <resolution size="3440x1440" x= "0.5" y= "0.1231" height= "0.005" width= "0.001"/>
     </meta>
     <meta meter="diedRed" tags="vlc,ELDEN RING" type="area" x= "0.507" y= "0.4694" height= "0.02" width= "0.0033" h="340-360" s="75-100" l="25-50">
+      <resolution size="3440x1440" x= "0.5046" y= "0.4722" height= "0.02" width= "0.0023"/>
+      <resolution size="2560x1600" x= "0.5062" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1920x1200" x= "0.5062" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1680x1050" x= "0.5062" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1440x900" x= "0.5062" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1280x800" x= "0.5062" y= "0.4778" height= "0.02" width= "0.0033"/> 
     </meta>
     <meta meter="discoveredOrange1" tags="vlc,ELDEN RING" type="area" x= "0.224" y= "0.47" height= "0.02" width= "0.0033" h="30-40" s="65-90" l="75-100">
+      <resolution size="3440x1440" x= "0.2974" y= "0.4757" height= "0.02" width= "0.0022"/>
+      <resolution size="2560x1600" x= "0.3156" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1920x1200" x= "0.3156" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1680x1050" x= "0.3156" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1440x900" x= "0.3156" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1280x800" x= "0.3156" y= "0.4778" height= "0.02" width= "0.0033"/> 
     </meta>
     <meta meter="discoveredOrange2" tags="vlc,ELDEN RING" type="area" x= "0.507" y= "0.47" height= "0.02" width= "0.0033" h="30-40" s="65-90" l="75-100">
+      <resolution size="3440x1440" x= "0.505" y= "0.4736" height= "0.02" width= "0.0022"/>
+      <resolution size="2560x1600" x= "0.5063" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1920x1200" x= "0.5063" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1680x1050" x= "0.5063" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1440x900" x= "0.5063" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1280x800" x= "0.5063" y= "0.4778" height= "0.02" width= "0.0033"/>
     </meta>
     <meta meter="discoveredOrange3" tags="vlc,ELDEN RING" type="area" x= "0.7547" y= "0.47" height= "0.02" width= "0.0033" h="30-40" s="65-90" l="75-100">
+      <resolution size="3440x1440" x= "0.687" y= "0.4757" height= "0.02" width= "0.0022"/>
+      <resolution size="2560x1600" x= "0.7547" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1920x1200" x= "0.7547" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1680x1050" x= "0.7547" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1440x900" x= "0.7547" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1280x800" x= "0.7547" y= "0.4778" height= "0.02" width= "0.0033"/>
     </meta>
     <meta meter="legendD" tags="vlc,ELDEN RING" type="area" x= "0.499" y= "0.4796" height= "0.02" width= "0.003" h="45-60" s="60-90" l="75-100">
+      <resolution size="3440x1440" x= "0.4839" y= "0.4743" height= "0.02" width= "0.0022"/>
     </meta>
     <meta meter="legendE" tags="vlc,ELDEN RING" type="area" x= "0.6213" y= "0.4722" height= "0.02" width= "0.0033" h="45-60" s="60-90" l="75-100">
+      <resolution size="3440x1440" x= "0.5333" y= "0.4743" height= "0.02" width= "0.0022"/>
     </meta>
     <meta meter="greatT" tags="vlc,ELDEN RING" type="area" x= "0.3917" y= "0.475" height= "0.02" width= "0.003" h="45-60" s="60-90" l="75-100">
+      <resolution size="3440x1440" x= "0.4211" y= "0.4743" height= "0.02" width= "0.0022"/>
+      <resolution size="2560x1600" x= "0.3917" y= "0.4778" height= "0.02" width= "0.003"/>
+      <resolution size="1920x1200" x= "0.3917" y= "0.4778" height= "0.02" width= "0.003"/>
+      <resolution size="1680x1050" x= "0.3917" y= "0.4778" height= "0.02" width= "0.003"/>
+      <resolution size="1440x900" x= "0.3917" y= "0.4778" height= "0.02" width= "0.003"/>
+      <resolution size="1280x800" x= "0.3917" y= "0.4778" height= "0.02" width= "0.003"/>
     </meta>
     <meta meter="greatL" tags="vlc,ELDEN RING" type="area" x= "0.6635" y= "0.4750" height= "0.02" width= "0.0033" h="45-60" s="60-90" l="75-100">
+      <resolution size="3440x1440" x= "0.6198" y= "0.4743" height= "0.02" width= "0.0022"/>
+      <resolution size="2560x1600" x= "0.664" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1920x1200" x= "0.664" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1680x1050" x= "0.664" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1440x900" x= "0.664" y= "0.4778" height= "0.02" width= "0.0033"/>
+      <resolution size="1280x800" x= "0.664" y= "0.4778" height= "0.02" width= "0.0033"/>
     </meta>
     <meta meter="enemyE" tags="vlc,ELDEN RING" type="area" x= "0.3442" y= "0.4731" height= "0.02" width= "0.003" h="45-60" s="60-90" l="75-100">
+      <resolution size="3440x1440" x= "0.3855" y= "0.4743" height= "0.02" width= "0.0022"/>
     </meta>
     <meta meter="enemyE2" tags="vlc,ELDEN RING" type="area" x= "0.6095" y= "0.4731" height= "0.02" width= "0.0033" h="45-60" s="60-90" l="75-100">
+      <resolution size="3440x1440" x= "0.5805" y= "0.4743" height= "0.02" width= "0.0022"/>
     </meta>
 
 </head>
@@ -184,16 +311,7 @@
   ctx = canvas.getContext('2d');
   var effects = [];
   var inGame = false;
-  var oldHealthY = 0;
-  var oldHealthHeight = 0;
-  var oldStaminaY = 0;
-  var oldStaminaHeight = 0;
-  var oldManaY = 0;
-  var oldManaHeight = 0;
-  var oldBossHealthY = 0;
-  var oldBossHealthHeight = 0;
   var blockUpdates = false;
-  var itemAnim = false;
   var compass = false;
   var discAnim = false;
   var diedAnim = false;
@@ -213,7 +331,7 @@
   var staminaLengthMeter = new Meter(20, ()=>"");
   var staminaGreenMeter = new Meter(3, ()=>"");
   var staminaYellowMeter = new Meter(2, staminaEffect);
-  var bossHealthLengthMeter = new Meter(20, ()=>"");
+  var bossHealthLengthMeter = new Meter(2, ()=>"");
   var bossHealthRedMeter = new Meter(3, ()=>"");
 
   var discOrange1Meter = new Meter(3, discoveryEffect);
@@ -267,22 +385,24 @@
       }
     }
 
-    healthY == oldHealthY ? null : effects.push(new adjRect(0, healthY, 320, healthHeight, "red"));
-    oldHealthY = healthY;
-    healthHeight == oldHealthHeight ? null : effects.push(new adjRect(0, healthY, 320, healthHeight, "red"));
-    oldHealthHeight = healthHeight;
-    staminaY == oldStaminaY ? null : effects.push(new adjRect(0, staminaY, 320, staminaHeight, "green"));
-    oldStaminaY = staminaY;
-    staminaHeight == oldStaminaHeight ? null : effects.push(new adjRect(0, staminaY, 320, staminaHeight, "green"));
-    oldStaminaHeight = staminaHeight;
-    manaY == oldManaY ? null : effects.push(new adjRect(0, manaY, 320, manaHeight, "blue"));
-    oldManaY = manaY;
-    manaHeight == oldManaHeight ? null : effects.push(new adjRect(0, manaY, 320, manaHeight, "blue"));
-    oldManaHeight = manaHeight;
-    bossY == oldBossHealthY ? null : effects.push(new adjRect(0, bossY, 320, bossHeight, bossColor));
-    oldBossHealthY = bossY;
-    bossHeight == oldBossHealthHeight ? null : effects.push(new adjRect(0, bossY, 320, bossHeight, bossColor));
-    oldBossHealthHeight = bossHeight;
+    if(adjToggle){
+      if(hpOn){
+        drawRect(0, healthY, 320, healthHeight, "red");
+      }
+      if(staminaOn){
+        drawRect(0, staminaY, 320, staminaHeight, "green");
+      }
+      if(manaOn){
+        drawRect(0, manaY, 320, manaHeight, "blue");
+      }
+      if(bossHealthOn){
+        drawRect(0, bossY, 320, bossHeight, bossColor);
+      }
+    }
+
+    if(adjToggle){
+      effects = [];
+    }
 
     effects.forEach((ele, i) => {
         ele.draw();
@@ -295,7 +415,6 @@
   }
 
     function inGameCheck(){
-      console.log("HERE" + inGame2Meter.value)
         if(inGame4Meter.value > .75 && !blockUpdates){
           if(hpOn){
             effects.push(new healthBar());
@@ -416,7 +535,7 @@
             var width = healthRedMeter.value / healthLengthMeter.value * 320;
             drawRect(this.x, this.y, width, this.height, "red");
 
-            if((!inGame && inGame4Meter.value == 0) || !hpOn){
+            if((!inGame && inGame4Meter.value == 0) || !hpOn || adjToggle){
                 this.lifetime = 0;
             }
         }
@@ -434,7 +553,7 @@
             var width = manaBlueMeter.value / manaLengthMeter.value * 320 + 60;
             drawRect(this.x, this.y, width, this.height, "blue");
 
-            if(!inGame || !manaOn){
+            if(!inGame || !manaOn || adjToggle){
                 this.lifetime = 0;
             }
         }
@@ -452,7 +571,7 @@
             var width = staminaGreenMeter.value / staminaLengthMeter.value * 320;
             drawRect(this.x, this.y, width, this.height, "green");
 
-            if(!inGame || !staminaOn){
+            if(!inGame || !staminaOn || adjToggle){
                 this.lifetime = 0;
             }
         }
@@ -468,9 +587,10 @@
             this.y = bossY;
             this.height = bossHeight;
             var width = bossHealthRedMeter.value / bossHealthLengthMeter.value * 320;
+            console.log(width)
             drawRect(this.x, this.y, width, this.height, bossColor);
 
-            if(!inGame || bossHealthLengthMeter.value < .1 || !bossHealthOn){
+            if(!inGame || !bossHealthOn || adjToggle){
                 this.lifetime = 0;
             }
         }
