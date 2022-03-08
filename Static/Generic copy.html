@@ -15,68 +15,42 @@
   ctx = canvas.getContext('2d');
   var effects = [];
 
+  var back = "M316.22,190.42,243.72,159l-15.5-10.89-5.78-38.45,6-5.77,5.17-33.78L231.55,69s20.67-70.22-69-68.45S96,69.64,96,69.64l-1.33,2,7.11,30.67c-9.56,9.33-2.89,48.89-2.89,48.89L2.55,190.42ZM221.63,39.72,227,56.9,223,55l-1.33-4.59L219.11,47ZM125.44,125l-.77,10.22s-4.09,3.26-4.12,2.56C120.44,134.76,125.44,125,125.44,125ZM99.26,56.9c-.45-7.7,7.55-22.51,7.55-22.51v8c-5.77,5.92-.59,12.29-.59,12.29Z";
+  var vest = "M4.77,44.86.55,14.63,37.44,2.19S97.89,94.41,171.22.63L204.77,18V46.41Z";
+
   function update(){
     copyScreen(1)
 
-    if(effects.length < 1){
-      effects.push(new enemyKilledEffect());
-    }
+    renderPath(0, 0, back, "black");
 
-    effects.forEach((ele, i) => {
-      ele.draw();
-      if(ele.lifetime <= 0){
-        effects.splice(i, 1);
-      }
-    });
+    ctx.fillStyle = "red"
+    ctx.transform(1, 0, 0, 1,0, 20);
+    let p2 = new Path2D(vest);
+    ctx.fill(p2);
+
+    // if(effects.length < 1){
+    //   effects.push();
+    // }
+
+    // effects.forEach((ele, i) => {
+    //   ele.draw();
+    //   if(ele.lifetime <= 0){
+    //     effects.splice(i, 1);
+    //   }
+    // });
 
     window.requestAnimationFrame(update);
   }
 
-  function enemyKilledEffect(){
-    this.lifetime = 10;
-    this.start = Date.now();
-    this.draw = function(){
-      this.elapsed = Date.now() - this.start;
-      if(this.elapsed < 500){
-        ctx.beginPath();
-        ctx.globalAlpha = 1 - (this.elapsed / 750);
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 20;
-        ctx.moveTo(80, 0);
-        ctx.lineTo(240, 200);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-      }
-      if(this.elapsed > 250 && this.elapsed < 1000){
-        ctx.beginPath();
-        ctx.globalAlpha = 1 - ((this.elapsed - 250) / 1000);
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 20;
-        ctx.moveTo(240, 0);
-        ctx.lineTo(80, 200);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-      }
-      if(this.elapsed > 500){
-        for(let i = 0; i < 4; i++){
-          effects.push(new movingParticle(320 * Math.random(), 200, "yellow"));
-        }
-      }
-      if(this.elapsed > 750 && this.elapsed < 1500){
-        ctx.beginPath();
-        ctx.globalAlpha = 1 - ((this.elapsed - 750) / 1500);
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 20;
-        ctx.moveTo(0, 100);
-        ctx.lineTo(320, 100);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-      }
-      if(this.elapsed > 1500){
-        this.lifetime = 0;
-      }
-    }
+  function renderPath(x, y, path, color){
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
   }
+
 
   function movingParticle(x, y, color){
     this.x = x;
