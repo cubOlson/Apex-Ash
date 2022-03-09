@@ -285,6 +285,7 @@
   <canvas id="exCanvas" width="320" height="200"></canvas>
 </body>
 <script>
+  //engine.zone
   canvas = document.getElementById('exCanvas');
   ctx = canvas.getContext('2d');
   var effects = [];
@@ -468,7 +469,6 @@
             this.y = healthY;
             this.height = healthHeight;
             this.width = healthRedMeter.value / healthLengthMeter.value * 320;
-            console.log(healthLengthMeter.value)
             drawRect(this.x, this.y, this.width, this.height, "red");
 
             if((!inGame && inGame4Meter.value == 0) || !hpOn || adjToggle){
