@@ -1,0 +1,223 @@
+<head>
+  <title>Crimson</title>
+  <meta description="Crimson clouds of red around your devices." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#320000"
+  />
+  <meta
+    property="color1"
+    label="Color 1"
+    type="color"
+    min="0"
+    max="360"
+    default="#820000"
+  />
+  <meta
+    property="color2"
+    label="Color 2"
+    type="color"
+    min="0"
+    max="360"
+    default="#a20100"
+  />
+  <meta
+    property="color3"
+    label="Color 3"
+    type="color"
+    min="0"
+    max="360"
+    default="#ff0008"
+  />
+  <meta
+    property="speedRaw"
+    label="Speed"
+    type="number"
+    min="1"
+    max="10"
+    default="1"
+  />
+  <meta
+    property="tapEffect"
+    label="Keypress effect"
+    type="boolean"
+    default="1"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var effects = [];
+  var colors = [];
+  var bgColor = "#130032";
+  var colors = ["#6000fc", "#b300ff", "#8a42ff"];
+  var speedRaw = 5;
+
+  for (i = 0; i < 50; i++) {
+    effects.push(new InnitSquare());
+  }
+
+  function update() {
+    colors = [color1, color2, color3];
+    ctx.fillStyle = bgColor + "22";
+    ctx.fillRect(0, 0, width, height);
+
+    if (effects.length < 30) {
+      effects.push(new Square());
+      effects.push(new UpSquare());
+    }
+
+    for (i = 0; i < effects.length; i++) {
+      effects[i].Draw();
+    }
+
+    for (j = 0; j < effects.length; j++) {
+      if (effects[j].IsFinished()) {
+        effects.splice(j, 1);
+      }
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+
+  function InnitSquare() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.size = Math.round(Math.random() * 10) + 5;
+    this.radius = 1;
+    this.ssi = Math.floor(Math.random() * colors.length);
+
+    this.Draw = function () {
+      ctx.strokeStyle = colors[this.ssi] + "88";
+      ctx.lineWidth = this.size;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      this.x += this.speedX * (speedRaw / 5);
+      this.y += this.speedY * (speedRaw / 5);
+      this.radius += Math.random() / 1.3;
+    };
+
+    this.IsFinished = function () {
+      if (this.y > 250) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Square() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * -100;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.size = Math.round(Math.random() * 10) + 5;
+    this.radius = 1;
+    this.ssi = Math.floor(Math.random() * colors.length);
+
+    this.Draw = function () {
+      ctx.strokeStyle = colors[this.ssi] + "88";
+      ctx.lineWidth = this.size;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      this.x += this.speedX * (speedRaw / 5);
+      this.y += this.speedY * (speedRaw / 5);
+      this.radius += Math.random() / 1.3;
+    };
+
+    this.IsFinished = function () {
+      if (this.y > 250) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function UpSquare() {
+    this.x = Math.random() * 320;
+    this.y = 300 + Math.random() * 100;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.size = Math.round(Math.random() * 10) + 1;
+    this.radius = 1;
+    this.ssi = Math.floor(Math.random() * colors.length);
+
+    this.Draw = function () {
+      ctx.strokeStyle = colors[this.ssi] + "88";
+      ctx.lineWidth = this.size;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      this.x += this.speedX * (speedRaw / 5);
+      this.y -= this.speedY * (speedRaw / 5);
+      this.radius += Math.random() / 1.3;
+    };
+
+    this.IsFinished = function () {
+      if (this.y < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Tap(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = 1;
+
+    this.Draw = function () {
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = "#000000cc";
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.strokeStyle = color2;
+      ctx.beginPath();
+      ctx.lineWidth = 5;
+      ctx.arc(this.x, this.y, this.radius + 5, 0, 2 * Math.PI);
+      ctx.stroke();
+      this.radius += 10 * (speedRaw / 5);
+    };
+
+    this.IsFinished = function () {
+      if (this.radius > 500) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function onCanvasTapped(x, y) {
+    if (tapEffect) {
+      effects.push(new Tap(x, y));
+    }
+  }
+</script>

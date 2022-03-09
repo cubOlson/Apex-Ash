@@ -1,0 +1,178 @@
+<head>
+  <title>Breathing Ripples</title>
+  <meta description="Colorful ripples that flow out and back in." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="color"
+    label="Background Color"
+    type="color"
+    min="180"
+    max="220"
+    default="#000000"
+  />
+  <meta
+    property="randColors"
+    label="Alternating Colors"
+    type="boolean"
+    min="0"
+    max="1"
+    default="0"
+  />
+  <meta
+    property="iWaveWidth"
+    label="Wave Width"
+    type="number"
+    min="5"
+    max="60"
+    default="30"
+  />
+  <meta
+    property="iSpeed"
+    label="Wave Speed"
+    type="number"
+    min="1"
+    max="100"
+    default="30"
+  />
+  <meta
+    property="iWaveCount"
+    label="Number of waves"
+    type="number"
+    min="1"
+    max="10"
+    default="1"
+  />
+  <meta
+    property="enableTap"
+    label="Keypress"
+    type="boolean"
+    min="0"
+    max="1"
+    default="0"
+  />
+  <meta
+    property="randomPos"
+    label="Random position"
+    type="boolean"
+    min="0"
+    max="1"
+    default="0"
+  />
+</head>
+
+<body style="margin: 0; padding: 0; background: #222">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  console.clear();
+
+  // Get the canvas element from the DOM
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var hue = 1;
+  var intensity = 50;
+  var pulse = false;
+  var orbs = [];
+  var waveRainbow = true;
+
+  function Droplet(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = 3;
+    this.vel = 4;
+    this.lifetime = 2; // Frames.
+    this.hue = 0;
+    this.max = Math.random() * 200 + 200;
+    this.rndHue = Math.random() * 360;
+  }
+
+  function addAlpha(color, opacity) {
+    const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+    return color + _opacity.toString(16).toUpperCase();
+  }
+
+  function hslToHex(h, s, l) {
+    l /= 100;
+    const a = (s * Math.min(l, 1 - l)) / 100;
+    const f = (n) => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color)
+        .toString(16)
+        .padStart(2, "0"); // convert to Hex and prefix "0" if needed
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
+  }
+
+  Droplet.prototype.draw = function () {
+    ctx.beginPath();
+    ctx.lineWidth = iWaveWidth;
+    // var brightness = this.lifetime + 10;
+    // var opacity = this.lifetime / 45;
+    //var hue = (iHue + 30) % 360;
+    if (randColors) {
+      wavecolor = hslToHex(this.rndHue, 100, 50);
+    } else {
+      wavecolor = hslToHex(this.hue, 100, 50);
+      this.hue += iSpeed / 10;
+    }
+    ctx.strokeStyle = addAlpha(wavecolor, 1);
+    try {
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    } catch {}
+    ctx.stroke();
+  };
+
+  Droplet.prototype.update = function () {
+    if (this.size > this.max) {
+      this.lifetime = 1;
+    }
+    if (this.lifetime == 1 && this.size < 1) {
+      this.lifetime = 0;
+    }
+    if (this.lifetime == 1) {
+      this.size -= iSpeed / 10;
+    } else {
+      this.size += iSpeed / 10;
+    }
+  };
+
+  function onCanvasTapped(x, y) {
+    if (enableTap) {
+      orbs.splice(1, 1);
+      var orb = new Droplet(x, y);
+      orbs.push(orb);
+    }
+  }
+
+  function loop() {
+    ctx.fillStyle = color; //"hsl("+iHue+", 100%, 50%)";
+    ctx.fillRect(0, 0, width, height);
+    if (orbs.length > iWaveCount) {
+      orbs.length = iWaveCount;
+    }
+
+    if (orbs.length < iWaveCount) {
+      if (randomPos) {
+        orbs.push(new Droplet(Math.random() * 320, Math.random() * 200));
+      } else {
+        orbs.push(new Droplet(160, 100));
+      }
+    }
+
+    for (i = 0; i < orbs.length; i++) {
+      orbs[i].draw();
+      orbs[i].update();
+      if (orbs[i].lifetime <= 0) {
+        orbs.splice(i, 1);
+      }
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
+</script>

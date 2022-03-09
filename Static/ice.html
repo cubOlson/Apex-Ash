@@ -1,0 +1,281 @@
+<head>
+  <title>Ice</title>
+  <meta description="ice" />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#6177a6"
+  />
+  <meta
+    property="color1"
+    label="Color 1"
+    type="color"
+    min="0"
+    max="360"
+    default="#70e8ff"
+  />
+  <meta
+    property="color2"
+    label="Color 2"
+    type="color"
+    min="0"
+    max="360"
+    default="#0031ff"
+  />
+  <meta
+    property="color3"
+    label="Color 3"
+    type="color"
+    min="0"
+    max="360"
+    default="#ffffff"
+  />
+  <meta
+    property="speedRaw"
+    label="Speed"
+    type="number"
+    min="1"
+    max="10"
+    default="5"
+  />
+  <meta
+    property="tapEffect"
+    label="Keypress effect"
+    type="boolean"
+    default="1"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var effects = [];
+  var colors = [];
+  var bgColor = "#6177a6";
+  var colors = ["#70e8ff", "#0031ff", "#ffffff"];
+  var speedRaw = 5;
+  var step = 1;
+
+  for (i = 0; i < 30; i++) {
+    effects.push(new InnitSquare());
+  }
+
+  function update() {
+    colors = [color1, color2, color3];
+    ctx.fillStyle = bgColor + "22";
+    ctx.fillRect(0, 0, width, height);
+
+    plotSine(ctx, step, 0);
+    //plotSine(ctx, step, 50);
+    plotSine(ctx, step, 100);
+    //plotSine(ctx, step, 150);
+    plotSine(ctx, step, 200);
+
+    if (effects.length < 30) {
+      effects.push(new Square());
+      effects.push(new UpSquare());
+      effects.push(new Crack());
+      effects.push(new Crack());
+      effects.push(new Crack());
+      effects.push(new Crack());
+
+    }
+
+    for (i = 0; i < effects.length; i++) {
+      effects[i].Draw();
+    }
+
+    for (j = 0; j < effects.length; j++) {
+      if (effects[j].IsFinished()) {
+        effects.splice(j, 1);
+      }
+    }
+
+    step -= speedRaw / 2.5;
+
+    if (step < 0) {
+      step = 1000;
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+
+  function InnitSquare() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.size = Math.round(Math.random() * 10) + 10;
+    this.radius = 1;
+    this.ssi = Math.floor(Math.random() * colors.length);
+
+    this.Draw = function () {
+      ctx.fillStyle = colors[this.ssi] + "55";
+      ctx.fillRect(this.x, this.y, this.radius, this.radius);
+      this.x += this.speedX * (speedRaw / 5);
+      this.y += this.speedY * (speedRaw / 5);
+      this.radius += Math.random() / 1.3;
+    };
+
+    this.IsFinished = function () {
+      if (this.y > 250) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Square() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * -100;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.size = Math.round(Math.random() * 10) + 10;
+    this.radius = 1;
+    this.ssi = Math.floor(Math.random() * colors.length);
+
+    this.Draw = function () {
+      ctx.fillStyle = colors[this.ssi] + "55";
+      ctx.fillRect(this.x, this.y, this.radius, this.radius);
+      this.x += this.speedX * (speedRaw / 5);
+      this.y += this.speedY * (speedRaw / 5);
+      this.radius += Math.random() / 1.3;
+    };
+
+    this.IsFinished = function () {
+      if (this.y > 250) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function UpSquare() {
+    this.x = Math.random() * 320;
+    this.y = 300 + Math.random() * 100;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.size = Math.round(Math.random() * 10) + 5;
+    this.radius = 1;
+    this.ssi = Math.floor(Math.random() * colors.length);
+
+    this.Draw = function () {
+      ctx.strokeStyle = colors[this.ssi] + "88";
+      ctx.lineWidth = this.size;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      this.x += this.speedX * (speedRaw / 5);
+      this.y -= this.speedY * (speedRaw / 5);
+      this.radius += Math.random() / 1.3;
+    };
+
+    this.IsFinished = function () {
+      if (this.y < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Crack() {
+    this.x = [Math.random() * 100];
+    this.y = [Math.random() * 200];
+
+    this.Draw = function () {
+      for (let i = 0; i < this.x.length; i++) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.x[i], this.y[i], 7, 7);
+      }
+      this.x.push((this.x[this.x.length - 1] + 10));
+      this.y.push((Math.random() * 200));
+    };
+
+    this.IsFinished = function () {
+      if (this.x.length > 30) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Tap(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = 1;
+
+    this.Draw = function () {
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = color2;
+      ctx.beginPath();
+      ctx.lineWidth = 5;
+      ctx.arc(this.x, this.y, this.radius + 5, 0, 2 * Math.PI);
+      ctx.stroke();
+      this.radius += 10 * (speedRaw / 5);
+    };
+
+    this.IsFinished = function () {
+      if (this.radius > 500) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function onCanvasTapped(x, y) {
+    if (tapEffect) {
+      effects.push(new Tap(x, y));
+    }
+  }
+
+  function plotSine(ctx, xOffset, yOffset) {
+    var width = ctx.canvas.width;
+    var height = ctx.canvas.height;
+    var scale = 20;
+
+    ctx.beginPath();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = color1 + "11";
+
+    var x = 4;
+    var y = 0;
+    var amplitude = 40;
+    var frequency = 20;
+    //ctx.moveTo(x, y);
+    ctx.moveTo(x, 50);
+    while (x < width) {
+      y = yOffset + amplitude * Math.sin((x + xOffset) / frequency);
+      ctx.lineTo(x, y);
+      x++;
+      // console.log("x="+x+" y="+y);
+    }
+    ctx.stroke();
+    ctx.save();
+
+    ctx.stroke();
+    ctx.restore();
+  }
+</script>

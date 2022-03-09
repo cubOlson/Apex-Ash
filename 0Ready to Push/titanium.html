@@ -1,0 +1,170 @@
+<head>
+  <title>Titanium</title>
+  <meta description="Sparks of white dancing across your RGB devices." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="speedRaw"
+    label="Speed"
+    type="number"
+    min="1"
+    max="10"
+    default="1"
+  />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#101010"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var hue = 1;
+
+  var speedRaw = 5;
+
+  var effects = [];
+
+  function update() {
+    ctx.fillStyle = bgColor + "50";
+    ctx.fillRect(0, 0, width, height);
+
+    if (effects.length < 600) {
+      effects.push(new Fill());
+      effects.push(new Fill2());
+      effects.push(new Square());
+    }
+
+    for (i = 0; i < effects.length; i++) {
+      effects[i].Draw();
+    }
+
+    for (j = 0; j < effects.length; j++) {
+      if (effects[j].IsFinished()) {
+        effects.splice(j, 1);
+      }
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+
+  function Square() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * -100;
+    this.width = Math.random() * 5;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.lightness = Math.round(Math.random() * 150) + 100;
+
+    this.Draw = function () {
+      ctx.fillStyle =
+        "rgba(" +
+        this.lightness +
+        "," +
+        this.lightness +
+        "," +
+        this.lightness +
+        +",0.2)";
+      ctx.fillRect(this.x, this.y, this.width, this.width);
+      if (this.width < 10) {
+        this.width += 1;
+      }
+      this.x += this.speedX * (speedRaw / 5);
+      this.y += this.speedY * (speedRaw / 5);
+    };
+
+    this.IsFinished = function () {
+      if (this.y > 250) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Fill() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * -100;
+    this.width = Math.random() * 10;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.lightness = Math.round(Math.random() * 150) + 100;
+
+    this.Draw = function () {
+      ctx.fillStyle =
+        "rgb(" +
+        this.lightness +
+        "," +
+        this.lightness +
+        "," +
+        this.lightness +
+        ")";
+      ctx.fillRect(this.x, this.y, this.width, 5);
+      if (this.width < 15) {
+        this.width += 1;
+      }
+      this.x += this.speedX * (speedRaw / 5);
+      this.y += this.speedY * (speedRaw / 5);
+    };
+
+    this.IsFinished = function () {
+      if (this.y > 250) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Fill2() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 50 + 200;
+    this.speedX =
+      Math.random() *
+      (Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1));
+    this.speedY = Math.random() * 2 + 0.5;
+    this.width = Math.random() * 10;
+    this.lightness = Math.round(Math.random() * 150) + 100;
+
+    this.Draw = function () {
+      ctx.fillStyle =
+        "rgb(" +
+        this.lightness +
+        "," +
+        this.lightness +
+        "," +
+        this.lightness +
+        ")";
+      ctx.fillRect(this.x, this.y, this.width, 5);
+      if (this.width < 15) {
+        this.width += 1;
+      }
+      this.x += this.speedX * (speedRaw / 5);
+      this.y -= this.speedY * (speedRaw / 5);
+    };
+
+    this.IsFinished = function () {
+      if (this.y < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+</script>
