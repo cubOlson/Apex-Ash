@@ -1,62 +1,14 @@
 <head>
   <title>4th Dimension</title>
   <meta description="If the 4th dimension was an RGB effect, this would be it." />
-  <meta publisher="Jack Pendleton" />
-  <meta
-    property="bgColor"
-    label="Background Color"
-    type="color"
-    min="0"
-    max="360"
-    default="#1b1b1b"
-  />
-  <meta
-    property="colorMode"
-    label="Color mode"
-    type="combobox"
-    values="Rainbow,Static Color"
-    default="Rainbow"
-  />
-  <meta
-    property="staticHue"
-    label="Static Hue"
-    type="hue"
-    min="0"
-    max="360"
-    default="100"
-  />
-  <meta
-    property="speed"
-    label="Speed"
-    type="number"
-    min="1"
-    max="100"
-    default="50"
-  />
-  <meta
-    property="boxBorders"
-    label="Borders"
-    type="boolean"
-    min="0"
-    max="1"
-    default="0"
-  />
-  <meta
-    property="sat"
-    label="Saturation"
-    type="number"
-    min="0"
-    max="100"
-    default="60"
-  />
-  <meta
-    property="lite"
-    label="Lightness"
-    type="number"
-    min="0"
-    max="100"
-    default="50"
-  />
+  <meta publisher="SignalRGB" />
+  <meta property="bgColor" label="Background Color" type="color" min="0" max="360" default="#1b1b1b" />
+  <meta property="colorMode" label="Color mode" type="combobox" values="Rainbow,Static Color" default="Rainbow" />
+  <meta property="staticHue" label="Static Hue" type="hue" min="0" max="360" default="100" />
+  <meta property="speed" label="Speed" type="number" min="1" max="100" default="50" />
+  <meta property="boxBorders" label="Borders" type="boolean" min="0" max="1" default="0" />
+  <meta property="sat" label="Saturation" type="number" min="0" max="100" default="60" />
+  <meta property="lite" label="Lightness" type="number" min="0" max="100" default="50" />
 </head>
 
 <body style="margin: 0; padding: 0">
@@ -71,11 +23,14 @@
   var staticHue = 100;
   var W, M, c, C, WW, WH, CW, CH, options, radian, num, colors, animationId;
 
+  const shapeData = "M0.5 73.05 0.63 19.92 42.13 0.55 83.64 18.93 83.64 73.28 42.15 92.35 0.5 73.05";
+  const shapePath = new Path2D(shapeData);
+
   var getRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  var makeCanvas = function () {};
+  var makeCanvas = function () { };
 
   var initialize = function () {
     W = window;
@@ -173,34 +128,10 @@
       var y = options[i][1] + amp;
       var r = options[i][2];
 
-      for (var j = 0; j < 6; j++) {
-        C.save();
-        C.translate(x, y);
-        C.rotate((90 * M.PI) / 180);
-        C.translate(-x, -y);
-        var nx = M.cos(radian * j) * r + x;
-        var ny = M.sin(radian * j) * r + y;
-        if (j === 0) {
-          C.beginPath();
-          C.moveTo(nx, ny);
-        } else {
-          C.lineTo(nx, ny);
-          if (j === 5) {
-            C.closePath();
-            C.fill();
-            C.stroke();
+      C.translate(x -20,y);
+      C.fill(shapePath);
+      C.setTransform(1, 0, 0, 1, 0, 0);
 
-            /** line to center */
-            for (var k = 0; k < 6; k += 2) {
-              C.beginPath();
-              C.moveTo(M.cos(radian * k) * r + x, M.sin(radian * k) * r + y);
-              C.lineTo(x, y);
-              C.stroke();
-            }
-          }
-        }
-        C.restore();
-      }
     }
     C.restore();
     animationId = requestAnimationFrame(f);

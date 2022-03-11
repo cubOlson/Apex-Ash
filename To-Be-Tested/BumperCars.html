@@ -2,54 +2,13 @@
   <title>Bumper Cars</title>
   <meta description="Effect description goes here." />
   <meta publisher="Jack Pendleton" />
-  <meta
-    property="bgColor"
-    label="Background Color"
-    type="color"
-    min="0"
-    max="360"
-    default="#0b0b0b"
-  />
-  <meta
-    property="color1"
-    label="Car Color 1"
-    type="color"
-    min="0"
-    max="360"
-    default="#ff2222"
-  />
-  <meta
-    property="color2"
-    label="Car Color 2"
-    type="color"
-    min="0"
-    max="360"
-    default="#008cff"
-  />
-  <meta
-    property="color3"
-    label="Tap color"
-    type="color"
-    min="0"
-    max="360"
-    default="#33ff33"
-  />
-  <meta
-    property="speed"
-    label="Speed"
-    type="number"
-    min="0"
-    max="100"
-    default="50"
-  />
-  <meta
-    property="tapEffect"
-    label="Enable tap"
-    type="boolean"
-    min="0"
-    max="1"
-    default="1"
-  />
+  <meta property="bgColor" label="Background Color" type="color" min="0" max="360" default="#0b0b0b" />
+  <meta property="color1" label="Car Color 1" type="color" min="0" max="360" default="#ff2222" />
+  <meta property="color2" label="Car Color 2" type="color" min="0" max="360" default="#008cff" />
+  <meta property="color3" label="Tap color" type="color" min="0" max="360" default="#33ff33" />
+  <meta property="speed" label="Speed" type="number" min="0" max="100" default="50" />
+  <meta property="numCars" label="Number of Cars" type="number" min="1" max="20" default="10" />
+  <meta property="tapEffect" label="Enable tap" type="boolean" min="0" max="1" default="1" />
 </head>
 
 <body style="margin: 0; padding: 0">
@@ -168,7 +127,7 @@
   Chain.prototype.step = function () {
     this.impulse.step();
     this.branches.forEach(function (branch, i) {
-      if(speed > 0) {
+      if (speed > 0) {
         branch.step();
       }
     });
@@ -244,7 +203,7 @@
       if (entity.i === 0) {
         ctx.fillStyle = md ? color3 : self.avoiding ? color1 : color2;
       } else {
-        ctx.fillStyle = md ? hexToHSL(color3,[0,0,0,0.4]) : self.avoiding ? hexToHSL(color1,[0,0,0,0.4]) : hexToHSL(color2,[0,0,0,0.4]);
+        ctx.fillStyle = md ? hexToHSL(color3, [0, 0, 0, 0.4]) : self.avoiding ? hexToHSL(color1, [0, 0, 0, 0.4]) : hexToHSL(color2, [0, 0, 0, 0.4]);
       }
       ctx.fillRect(
         -entity.radius,
@@ -283,6 +242,12 @@
   function loop() {
     requestAnimationFrame(loop);
 
+    if (chains.length > numCars) {
+      chains.length = numCars;
+    } else if (chains.length < numCars) {
+      chains.push(new Chain());
+    }
+
     ctx.globalCompositeOperation = "destination-out";
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, a.width, a.height);
@@ -301,7 +266,7 @@
     tick++;
   }
 
-  function reset() {}
+  function reset() { }
 
   function resize() {
     w = window.innerWidth;
@@ -336,50 +301,50 @@
   reset();
 
 
-  function hexToHSL(H,offset) {
-  // Convert hex to RGB first
-  let r = 0, g = 0, b = 0;
-  if (H.length == 4) {
-    r = "0x" + H[1] + H[1];
-    g = "0x" + H[2] + H[2];
-    b = "0x" + H[3] + H[3];
-  } else if (H.length == 7) {
-    r = "0x" + H[1] + H[2];
-    g = "0x" + H[3] + H[4];
-    b = "0x" + H[5] + H[6];
-  }
-  // Then to HSL
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  let cmin = Math.min(r,g,b),
-      cmax = Math.max(r,g,b),
+  function hexToHSL(H, offset) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+      r = "0x" + H[1] + H[1];
+      g = "0x" + H[2] + H[2];
+      b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+      r = "0x" + H[1] + H[2];
+      g = "0x" + H[3] + H[4];
+      b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r, g, b),
+      cmax = Math.max(r, g, b),
       delta = cmax - cmin,
       h = 0,
       s = 0,
       l = 0;
 
-  if (delta == 0)
-    h = 0;
-  else if (cmax == r)
-    h = ((g - b) / delta) % 6;
-  else if (cmax == g)
-    h = (b - r) / delta + 2;
-  else
-    h = (r - g) / delta + 4;
+    if (delta == 0)
+      h = 0;
+    else if (cmax == r)
+      h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+      h = (b - r) / delta + 2;
+    else
+      h = (r - g) / delta + 4;
 
-  h = Math.round(h * 60);
+    h = Math.round(h * 60);
 
-  if (h < 0)
-    h += 360;
+    if (h < 0)
+      h += 360;
 
-  l = (cmax + cmin) / 2;
-  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-  s = +(s * 100).toFixed(1);
-  l = +(l * 100).toFixed(1);
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
 
-  return "hsla(" + (h + offset[0]) + "," + (s + offset[1]) + "%," + (l + offset[2]) + "%," + (1 - offset[3]) + ")";
-}
+    return "hsla(" + (h + offset[0]) + "," + (s + offset[1]) + "%," + (l + offset[2]) + "%," + (1 - offset[3]) + ")";
+  }
 
 </script>
 <!---

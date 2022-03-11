@@ -1,0 +1,103 @@
+<head>
+  <title>Heatmap</title>
+  <meta description="Hot keycolors that fade on press." />
+  <meta publisher="SignalRGB" />
+  <meta property="bRainbow" label="Rainbow" type="boolean" default="0" />
+  <meta
+    property="color"
+    label="Heatmap Color"
+    type="color"
+    min="1"
+    max="359"
+    default="#f79300"
+  />
+  <meta
+    property="background"
+    label="Background Color"
+    type="color"
+    min="1"
+    max="359"
+    default="#000e00"
+  />
+  <meta
+    property="frames"
+    label="Effect duration"
+    type="number"
+    min="20"
+    max="400"
+    default="120"
+  />
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+
+<body style="margin: 0; padding: 0;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d87e9cd2c331fad',m:'fTyw9uEasCBcDgr3whTjrAKhKGOeTdxdkCI4s9zDY7E-1644019801-0-ARvhtMoxDkkkVoIHOhmNHWC3f5loQoIUBsvjifDKeg/qMWKaFw+7gE1pkMzkqmbMH6xPyq6yG8QB6Nf0Rcuf749D+wJ4q7sAp/WdWQZu+cAxrhZmDPiZa0sZZyuFfqzWCrmFb/LPzopQXXcyX88i0YMk8yv99w8Xy4RGOp5vgiEq2uqNqRqwWwzPByNi74jQxw==',s:[0xe73f6666b8,0x00b128e8c7],}})();</script></body>
+
+<script>
+  console.clear();
+
+  // Get the canvas element from the DOM
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var orbs = [];
+
+  function Droplet(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = 10;
+    this.vel = 4;
+    this.lifetime = frames; // Frames.
+  }
+
+  function addAlpha(color, opacity) {
+    const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+    return color + _opacity.toString(16).toUpperCase();
+  }
+
+  Droplet.prototype.draw = function () {
+    if (this.lifetime > 0) {
+      if (bRainbow) {
+        var hue = 360 - this.lifetime * 3;
+        var rainbowColor = "hsl(" + hue + ",100%,50%)";
+        ctx.fillStyle = rainbowColor;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+      } else {
+        var brightness = this.lifetime + 10;
+        var opacity = this.lifetime / 45;
+        ctx.fillStyle = addAlpha(color, opacity);
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+      }
+    }
+  };
+
+  Droplet.prototype.update = function () {
+    this.lifetime--;
+  };
+
+  function onCanvasTapped(x, y) {
+    var orb = new Droplet(x, y);
+    orbs.push(orb);
+  }
+
+  function loop() {
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, width, height);
+
+    for (i = 0; i < orbs.length; i++) {
+      orbs[i].draw();
+      orbs[i].update();
+    }
+
+    for (i = 0; i < orbs.length; i++) {
+      if (orbs[i].lifetime <= 0) {
+        orbs.splice(i, 1);
+      }
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
+</script>
