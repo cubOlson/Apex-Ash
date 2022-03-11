@@ -1,0 +1,113 @@
+<head>
+    <title> snow </title>
+    <meta description="snow" />
+    <meta publisher="WhirlwindFX" />
+    <meta property="snowColor" label="Color of snow" type="color" min="0" max="360" default="#ffffff" />
+    <meta property="BgColor" label="background color" type="color" min="0" max="360" default="#0066c7">
+    <meta property="Amount" label="Amount of flakes" type="number" min="0" max="50" default="15" />
+    <meta property="BgA" label="Trail amount" type="number" min="0" max="50" default="50" />
+    <meta property="LinesOrDots" label="Lines or Dots" type="boolean" default="0" />
+    <meta property="Randomcolor" label="Random Color" type="boolean" default="0" />
+</head>
+
+<body style="margin: 0; padding: 0;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+
+</body>
+
+<script>
+    // Get the canvas element from the DOM
+    var c = document.getElementById("exCanvas");
+    var ctx = c.getContext("2d");
+
+    var width = 320;
+    var height = 200;
+    var hue = 0;
+    var snowflakes = [];
+    var prevAmount;
+    var prevColor;
+
+    function update() {
+        // Code goes here
+        if (prevAmount != Amount) {
+            snowflakes.length = 0;
+            prevAmount = Amount;
+        }
+        if (prevColor != Randomcolor) {
+            prevColor = Randomcolor;
+            snowflakes.length = 0;
+        }
+        if (snowflakes.length < Amount) {
+            if (Randomcolor) {
+                snowflakes.push(new Snowflake(Math.random() * 320, 5, `hsl(${Math.random() * 360}, 100%, 50%)`))
+            } else {
+                snowflakes.push(new Snowflake(Math.random() * 320, 5, snowColor))
+            }
+
+        }
+        ctx.fillStyle = BgColor;
+        if(BgA != 50){
+            ctx.globalAlpha = 1 / BgA;
+        } else {
+            ctx.globalAlpha =0;
+        }
+        
+        ctx.fillRect(0, 0, 320, 200)
+        ctx.globalAlpha = 1;
+        snowflakes.forEach((snow, i) => {
+            snow.draw();
+            if (snow.y > 300) {
+                snowflakes.splice(i, 1)
+            }
+        });
+        window.requestAnimationFrame(update);
+    }
+
+    function getTime() {
+        return new Date().getTime();
+    }
+
+    class Snowflake {
+        constructor(x, speed, color) {
+            this.speed = speed / 5;
+            this.x = x;
+            this.y = 0 - Math.random() * 400;
+            this.start = getTime();
+            this.color = color;
+            this.lifetime = 100;
+            this.startval = Math.random() * 100;
+        }
+        draw() {
+            this.lifetime = 3000 - (getTime() - this.start);
+            ctx.beginPath();
+            ctx.fillStyle = this.color
+            if (!LinesOrDots) {
+                ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI)
+                ctx.fill();
+            }
+            this.Spacing = 0;
+            ctx.lineWidth = 8;
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(-this.lifetime / 500)
+            for (let index = 0; index < 8; index++) {
+                ctx.strokeStyle = this.color;
+                ctx.moveTo(0, 0)
+                if (!LinesOrDots) {
+                    ctx.lineTo((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30));
+                    ctx.stroke();
+                } else {
+                    ctx.arc((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30), 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                this.Spacing += 0.8;
+            }
+            ctx.restore();
+            this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
+            this.y += this.speed
+        }
+    }
+
+    window.requestAnimationFrame(update);
+</script>
