@@ -2,9 +2,11 @@
     <title>Basic Effects</title>
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
-    <meta property="effectY" label="Y" type="number" min="0" max="200" default="100"/>
-    <meta property="effectRadius" label="Radius" type="number" min="0" max="50" default="10"/>
-    <meta property="effectNumber" label="Number" type="number" min="1" max="3" default="1"/>
+
+    <meta property="drX" label="Dr X-Coordinate" type="number" min="-200" max="200" default="-56"/>
+    <meta property="drY" label="Dr Y-Coordinate" type="number" min="-200" max="200" default="-37"/>
+    <meta property="drScale" label="Dr Scale" type="number" min="0" max="50" default="15"/>
+    <meta property="sweepSpeed" label="Sweep Speed" type="number" min="0" max="100" default="50"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -15,89 +17,125 @@
   ctx = canvas.getContext('2d');
   var effects = [];
 
-  var back = "M316.22,190.42,243.72,159l-15.5-10.89-5.78-38.45,6-5.77,5.17-33.78L231.55,69s20.67-70.22-69-68.45S96,69.64,96,69.64l-1.33,2,7.11,30.67c-9.56,9.33-2.89,48.89-2.89,48.89L2.55,190.42ZM221.63,39.72,227,56.9,223,55l-1.33-4.59L219.11,47ZM125.44,125l-.77,10.22s-4.09,3.26-4.12,2.56C120.44,134.76,125.44,125,125.44,125ZM99.26,56.9c-.45-7.7,7.55-22.51,7.55-22.51v8c-5.77,5.92-.59,12.29-.59,12.29Z";
-  var vest = "M4.77,44.86.55,14.63,37.44,2.19S97.89,94.41,171.22.63L204.77,18V46.41Z";
+  var tones1Meter = new Meter(1, ()=>"");
+  var tones2Meter = new Meter(1, ()=>"");
+  var tones3Meter = new Meter(1, ()=>"");
+  var tones4Meter = new Meter(1, ()=>"");
+  var tones5Meter = new Meter(1, ()=>"");
+  var tones6Meter = new Meter(1, ()=>"");
 
   function update(){
-    copyScreen(1)
+    drawRect(0,0, 320, 200, "black");
+    
+    var frequency = new Int8Array(engine.audio.freq)
+    var tones1 = frequency.slice(0, 33);
+    var reduced1 = tones1.reduce((a, b) => a + b, 0);
+    var tones2 = frequency.slice(33, 66);
+    var reduced2 = tones2.reduce((a, b) => a + b, 0);
+    var tones3 = frequency.slice(66, 99);
+    var reduced3 = tones3.reduce((a, b) => a + b, 0);
+    var tones4 = frequency.slice(99, 132);
+    var reduced4 = tones4.reduce((a, b) => a + b, 0);
+    var tones5 = frequency.slice(132, 165);
+    var reduced5 = tones5.reduce((a, b) => a + b, 0);
+    var tones6 = frequency.slice(165, 198);
+    var reduced6 = tones6.reduce((a, b) => a + b, 0);
+    
+    tones1Meter.setValue(reduced1);
+    tones2Meter.setValue(reduced2);
+    tones3Meter.setValue(reduced3);
+    tones4Meter.setValue(reduced4);
+    tones5Meter.setValue(reduced5);
+    tones6Meter.setValue(reduced6);
 
-    renderPath(0, 0, back, "black");
+    if(tones1Meter.increased && tones1Meter.value > 200){
+      effects.push(new audioCube("red", 1));
+    }
+    if(tones2Meter.increased && tones2Meter.value > 200){
+      effects.push(new audioCube("orange", 2));
+    }
+    if(tones3Meter.increased && tones3Meter.value > 200){
+      effects.push(new audioCube("yellow", 3));
+    }
+    if(tones4Meter.increased && tones4Meter.value > 200){
+      effects.push(new audioCube("green", 4));
+    }
+    if(tones3Meter.increased && tones3Meter.value > 200){
+      effects.push(new audioCube("blue", 5));
+    }
+    if(tones4Meter.increased && tones4Meter.value > 200){
+      effects.push(new audioCube("purple", 6));
+    }
 
-    ctx.fillStyle = "red"
-    ctx.transform(1, 0, 0, 1,0, 20);
-    let p2 = new Path2D(vest);
-    ctx.fill(p2);
 
-    // if(effects.length < 1){
-    //   effects.push();
-    // }
+    effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          effects.splice(i, 1);
+        }
+      });
 
-    // effects.forEach((ele, i) => {
-    //   ele.draw();
-    //   if(ele.lifetime <= 0){
-    //     effects.splice(i, 1);
-    //   }
-    // });
+    for (let i = 0; i < frequency.length; i++){
+      drawRect(i * 1.6, 200, 1.6, -frequency[i] * 2, "white")
+    }
 
     window.requestAnimationFrame(update);
   }
 
-  function renderPath(x, y, path, color){
-    ctx.fillStyle = color;
-    ctx.save();
-    ctx.translate(x, y);
-    let ex = new Path2D(path);
-    ctx.fill(ex);
-    ctx.restore();
-  }
+  function audioCube(color, zone){
 
+      this.lifetime = 10;
+      this.y = 200;
+      this.color = color;
+      // this.x = zone == 1 ? Math.random() * 53 : 
+      //   zone == 2 ? Math.random() * 53 + 53 : 
+      //   zone == 3 ? Math.random() * 53 + 106 : 
+      //   zone == 4 ? Math.random() * 53 + 159 :
+      //   zone == 5 ? Math.random() * 53 + 212 : Math.random() * 53 + 265;
+      this.x = zone == 1 ? 0 : 
+        zone == 2 ? 53 : 
+        zone == 3 ? 106 : 
+        zone == 4 ? 159 :
+        zone == 5 ? 212 : 265;
 
-  function movingParticle(x, y, color){
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.radius = Math.random() * 30;
-    this.vy = 8 * Math.random() + 1;
-    this.vx = 3 * Math.random() + 1;
-    this.lifetime = 10;
-
-    this.draw = function(){
-      DrawCircle(this.x, this.y, this.radius, this.color);
-      this.x += this.vx;
-      this.y -= this.vy;
-      if(this.y < 0){
-        this.lifetime = 0;
+      this.draw = function(){
+        ctx.globalAlpha = .5;
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, 53, 53);
+        ctx.globalAlpha = 1;
+        this.y-=10;
+        if(this.y < -30){
+          this.lifetime = 0;
+        }
       }
     }
-  };
 
-  function copyScreen(alpha) {
-    let lightness = new Int8Array(engine.zone.lightness);
-    let sat = new Int8Array(engine.zone.saturation);
-    let hue = new Int16Array(engine.zone.hue);
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
 
-    for (var iZone = 0; iZone < 560; iZone++) {
-        ctx.fillStyle =
-          "hsla(" +
-          hue[iZone] +
-          "," +
-          sat[iZone] +
-          "%," +
-          lightness[iZone] +
-          "%, " +
-          alpha
-          +
-          ")";
-      
-      var iRow = Math.floor(iZone / 28);
-      var iCol = iZone % 28;
-      var iWidth = 320 / 28;
-      var iHeight = 200 / 20;
-      var iZx = iCol * iWidth;
-      var iZy = iRow * iHeight;
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
 
-      ctx.fillRect(iZx, iZy, iWidth, iHeight);
-    }
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
   }
 
     function DrawCircle(x,y,radius,color){
@@ -106,6 +144,19 @@
         ctx.arc(x,y,radius, 0, 2* Math.PI)
         ctx.fill();
     };
+
+    function DrawStroke(x,y,radius,color){
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.stroke();
+    };
+
+    function drawRect(x, y, height, width, color){
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, height, width);
+    }
 
   window.requestAnimationFrame(update);
 </script>

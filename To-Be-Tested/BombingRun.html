@@ -1,0 +1,163 @@
+<head>
+  <title>Bombing Run</title>
+  <meta description="A plane going across the canvas, dropping RGBombs." />
+  <meta publisher="SignalRGB" />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#022600"
+  />
+  <meta
+    property="bombColor1"
+    label="Bomb Starting Hue"
+    type="hue"
+    min="0"
+    max="360"
+    default="0"
+  />
+  <meta property="rgbomb" label="Rainbow bombs" type="boolean" default="0" />
+  <meta
+    property="speed"
+    label="Speed"
+    type="number"
+    min="0"
+    max="100"
+    default="50"
+  />
+  <meta
+    property="radius"
+    label="Bomb Radius"
+    type="number"
+    min="1"
+    max="100"
+    default="30"
+  />
+  <meta
+    property="rippleTap"
+    label="Bombs on Keypress"
+    type="boolean"
+    default="1"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var planes = [];
+  var bombs = [];
+
+  const stealthData =
+    "M7.2,0l55,72-55,71.45L0,134.06l16.92-24.58L5.26,90.68l5.67-8.34L4.37,72l7.22-11.06L5.11,53.57S17.19,35.68,17.19,34.93,0,11.23,0,11.23";
+  const stealthPath = new Path2D(stealthData);
+
+  function update() {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, width, height);
+
+    if (planes.length < 1) {
+      planes.push(new Plane());
+    }
+
+    for (i = 0; i < bombs.length; i++) {
+      bombs[i].draw();
+      bombs[i].update();
+    }
+
+    for (i = 0; i < bombs.length; i++) {
+      if (bombs[i].lifetime <= 0) {
+        bombs.splice(i, 1);
+      }
+    }
+
+    for (i = 0; i < planes.length; i++) {
+      planes[i].draw();
+      planes[i].update();
+    }
+
+    for (i = 0; i < planes.length; i++) {
+      if (planes[i].lifetime <= 0) {
+        planes.splice(i, 1);
+      }
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  function onCanvasTapped(x, y) {
+    if (rippleTap) {
+      bombs.push(new Bomb(x, y));
+    }
+  }
+
+  function Bomb(x, y) {
+    this.x = x;
+    this.y = y;
+    this.lifetime = 100;
+    this.color = bombColor1;
+    this.opacity = 1.0;
+    if (rgbomb) {
+      this.color = 0;
+    }
+
+    this.draw = function () {
+      ctx.fillStyle = "hsla(" + this.color + ",100%, 50%," + this.opacity + ")";
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI);
+      ctx.fill();
+    };
+
+    this.update = function () {
+      if (speed > 0) {
+        this.lifetime--;
+        if (rgbomb) {
+          this.color += 5;
+        } else {
+          this.color += 0.75;
+        }
+      }
+
+      if (this.lifetime < 50) {
+        this.opacity -= 0.1;
+      }
+    };
+  }
+
+  function Plane() {
+    this.x = -100;
+    this.y = Math.random() * 20 + 30;
+    this.lifetime = 1;
+
+    this.draw = function () {
+      ctx.fillStyle = "black";
+      ctx.translate(this.x, this.y);
+      ctx.fill(stealthPath);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(this.x, this.y, 1, 1);
+
+      if (Math.round(Math.random() * 50) == 7) {
+        if (speed > 0) {
+          bombs.push(new Bomb(this.x, this.y + 50));
+        }
+      }
+    };
+
+    this.update = function () {
+      this.x += speed / 10;
+      if (this.x > 500) {
+        this.lifetime = 0;
+      }
+    };
+  }
+
+  window.requestAnimationFrame(update);
+</script>

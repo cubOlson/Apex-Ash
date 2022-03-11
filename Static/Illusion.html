@@ -1,0 +1,103 @@
+<head>
+  <title>Illusion</title>
+  <meta description="A mysterious effect made of fading shapes in various colors." />
+  <meta publisher="SignalRGB" />
+  <meta property="bgColor" label="Background Color" type="color" min="0" max="360" default="#151a2c" />
+  <meta property="color1" label="Color 1" type="color" min="0" max="360" default="#ff7b00" />
+  <meta property="color2" label="Color 2" type="color" min="0" max="360" default="#00c7c4" />
+  <meta property="color3" label="Color 3" type="color" min="0" max="360" default="#5300c7" />
+  <meta property="speed" label="Speed" type="number" min="1" max="100" default="50" />
+  <meta property="size" label="Size" type="number" min="1" max="100" default="50" />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var W, M, c, C, WW, WH, CW, CH, params, colors, length, rad, animationId, speed = 50;
+
+  var getRandomNumber = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  var initialize = function () {
+    W = window;
+    M = Math;
+    c = document.getElementsByTagName("canvas")[0];
+    ctx = c.getContext("2d");
+    WW = c.width = M.floor(W.innerWidth);
+    WH = c.height = M.floor(W.innerHeight);
+    CW = WW / 2;
+    CH = WH / 2;
+    params = new Array();
+    colors = [color1, color2, color3];
+    length = 30;
+    rad = (Math.PI * 2) / 4;
+  };
+
+  var getOptions = function () {
+    var num = M.floor(M.max(WW, WH));
+    var s = num / 5;
+    var r = num;
+
+    for (var y = 0; y < WH; y += length) {
+      for (var x = 0; x < WW; x += length) {
+        var dx = x - CW;
+        var dy = y - CH;
+        var d = M.sqrt(dx * dx + dy * dy) * 0.05;
+        var t = M.atan2(dy, dx);
+        var ci = getRandomNumber(0, colors.length - 1);
+        var c = colors[ci];
+
+        params.push([x, y, length, d, t, c, ci]);
+      }
+    }
+  };
+
+  var f = function (t) {
+    colors = [color1, color2, color3];
+    t /= (500 * (2.1 - (speed / 50)));
+    ctx.save();
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, 320, 200);
+    //ctx.globalCompositeOperation = "xor"; Not supported by ultralight
+    for (var i = 0; i < params.length; i++) {
+      var ci = params[i][6];
+      params[i][5] = colors[ci];
+      var q = M.sin(M.cos(params[i][4] * 1) + params[i][3] - t) + 1;
+      q = q * (size / 50);
+      ctx.globalAlpha = Math.min(1, q);
+      ctx.fillStyle = params[i][5];
+      for (var j = 0; j < 4; j++) {
+        var nx =
+          Math.cos(rad * j) * length * (q / 2) + params[i][0] + length / 2;
+        var ny =
+          Math.sin(rad * j) * length * (q / 2) + params[i][1] + length / 2;
+        if (j === 0) {
+          ctx.beginPath();
+          ctx.moveTo(nx, ny);
+        } else {
+          ctx.lineTo(nx, ny);
+        }
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+
+    animationId = requestAnimationFrame(f);
+  };
+
+  window.onload = function () {
+    initialize();
+    getOptions();
+    f();
+    W.onresize = function () {
+      cancelAnimationFrame(animationId);
+      initialize();
+      getOptions();
+      f();
+    };
+  };
+</script>

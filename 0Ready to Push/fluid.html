@@ -1,0 +1,242 @@
+<head>
+  <title>Fluid</title>
+  <meta description="Bubbles moving through a softly rolling fluid." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="speedBase"
+    label="Speed"
+    type="number"
+    min="1"
+    max="10"
+    default="5"
+  />
+  <meta
+    property="sizeBase"
+    label="Bubble size"
+    type="number"
+    min="1"
+    max="10"
+    default="5"
+  />
+  <meta property="hue" label="Hue" type="hue" min="0" max="360" default="195" />
+  <meta
+    property="rainbow"
+    label="Rainbow"
+    type="boolean"
+    min="0"
+    max="1"
+    default="0"
+  />
+  <meta
+    property="sat"
+    label="Saturation"
+    type="number"
+    min="0"
+    max="100"
+    default="100"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  const TWO_PI = Math.PI * 2;
+  var hue = 195;
+  var sat = 100;
+  var speedBase = 5;
+  var sizeBase = 5;
+  var rainbow = false;
+  var vizMode = false;
+
+  var speedTotal = 5;
+
+  let rainbowHues = [
+    0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360,
+  ];
+
+  var rainbowBg = rainbowHues[Math.floor(Math.random() * rainbowHues.length)];
+
+  class Application {
+    constructor() {
+      this.canvas = document.getElementById("exCanvas");
+      this.context = this.canvas.getContext("2d");
+      this.width = this.canvas.width = window.innerWidth;
+      this.height = this.canvas.height = window.innerHeight;
+      this.center = {
+        x: this.width / 2,
+        y: this.height / 2,
+      };
+
+      this.circleContainers = [];
+    }
+
+    initializeCircleContainers() {
+      for (let x = 0; x < this.width + 100; x += 100) {
+        for (let y = 0; y < this.height + 100; y += 100) {
+          let circleContainer = new CircleContainer(this.context, x, y);
+          circleContainer.initializeCircles();
+          this.circleContainers.push(circleContainer);
+        }
+      }
+    }
+
+    update() {
+      if (vizMode) {
+        if (engine.audio.level > 10 - vizSense / 2) {
+          speedTotal = 10;
+        } else {
+          speedTotal = speedBase;
+        }
+      } else {
+        speedTotal = speedBase;
+      }
+
+      for (let i = 0; i < this.circleContainers.length; i++) {
+        this.circleContainers[i].update();
+      }
+    }
+
+    render() {
+      if (rainbow) {
+        this.context.fillStyle = "hsl(" + rainbowBg + ", " + sat + "%, 7%)";
+      } else {
+        this.context.fillStyle = "hsl(" + hue + ", " + sat + "%, 7%)";
+      }
+      this.context.fillRect(0, 0, 320, 200);
+
+      for (let i = 0; i < this.circleContainers.length; i++) {
+        this.circleContainers[i].render();
+      }
+    }
+
+    loop() {
+      this.update();
+      this.render();
+
+      window.requestAnimationFrame(() => this.loop());
+    }
+  }
+
+  class CircleContainer {
+    constructor(context, x, y) {
+      this.context = context;
+      this.position = { x, y };
+
+      this.numberOfCircles = 19;
+      this.circles = [];
+
+      this.baseRadius = 20;
+      this.bounceRadius = 150;
+      this.singleSlice = TWO_PI / this.numberOfCircles;
+    }
+
+    initializeCircles() {
+      for (let i = 0; i < this.numberOfCircles; i++) {
+        this.circles.push(
+          new Circle(
+            this.position.x,
+            this.position.y + Math.random(),
+            this.baseRadius,
+            this.bounceRadius,
+            i * this.singleSlice
+          )
+        );
+      }
+    }
+
+    update() {
+      for (let i = 0; i < this.numberOfCircles; i++) {
+        this.circles[i].update(this.context);
+      }
+    }
+
+    render() {
+      for (let i = 0; i < this.numberOfCircles; i++) {
+        this.circles[i].render(this.context);
+      }
+    }
+  }
+
+  class Circle {
+    constructor(x, y, baseRadius, bounceRadius, angleCircle) {
+      this.basePosition = { x, y };
+      this.position = { x, y };
+      this.speed = 0.01;
+      this.baseSize = 10;
+      this.size = 10;
+      this.angle = x + y;
+      this.baseRadius = baseRadius;
+      this.bounceRadius = bounceRadius;
+      this.angleCircle = angleCircle;
+      this.rainbowHue =
+        rainbowHues[Math.floor(Math.random() * rainbowHues.length)];
+    }
+
+    update() {
+      this.baseSize = (sizeBase / 5) * 10;
+      this.position.x =
+        this.basePosition.x +
+        Math.cos(this.angleCircle) *
+          (Math.sin(this.angle + this.angleCircle) * this.bounceRadius +
+            this.baseRadius);
+      this.position.y =
+        this.basePosition.y +
+        Math.sin(this.angleCircle) *
+          (Math.sin(this.angle + this.angleCircle) * this.bounceRadius +
+            this.baseRadius);
+      this.size = Math.cos(this.angle) * 8 + this.baseSize;
+
+      this.angle += (speedTotal / 5) * 0.01;
+    }
+
+    render(context) {
+      if (rainbow) {
+        context.fillStyle =
+          "hsl(" + this.rainbowHue + ", " + sat + "%, " + this.size * 4 + "%)";
+      } else {
+        context.fillStyle =
+          "hsl(" + hue + ", " + sat + "%, " + this.size * 4 + "%)";
+      }
+      context.beginPath();
+      if (this.size < 1) {
+        this.size = 1;
+      }
+      if (vizMode) {
+        if (engine.audio.level > -30) {
+          var newSize = Math.abs(
+            engine.audio.level * (vizSense / 4) + this.size - 10
+          );
+          context.arc(this.position.x, this.position.y, newSize, 0, TWO_PI);
+        }
+      } else {
+        context.arc(this.position.x, this.position.y, this.size, 0, TWO_PI);
+      }
+      context.fill();
+    }
+  }
+
+  window.onload = function () {
+    const application = new Application();
+
+    application.initializeCircleContainers();
+
+    application.loop();
+  };
+</script>
+<!-- 
+
+=========================================================================
+This lightscript uses open-source code. 
+In compliance with the GNU GPL, the original license is reproduced below:
+=========================================================================
+
+Copyright (c) 2021 by Stefan Weck (https://codepen.io/stefanweck/pen/YNPdRR)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->

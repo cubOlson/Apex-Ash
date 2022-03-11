@@ -1,0 +1,304 @@
+<head>
+  <title>Flowing River</title>
+  <meta description="Effect description goes here." />
+  <meta publisher="Jack Pendleton" />
+  <meta property="fgHue1" label="Lower hue" type="hue" min="0" max="360" default="180" />
+  <meta property="fgHue2" label="Upper hue" type="hue" min="0" max="360" default="245" />
+  <meta property="rainbowMode" label="Rainbow" type="boolean" min="0" max="1" default="0" />
+  <meta property="speedRaw" label="Speed" type="number" min="0" max="100" default="50" />
+  <meta property="reverse" label="Reverse" type="boolean" min="0" max="1" default="0" />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var effects = [];
+  var effects2 = [];
+
+  var fgHue1 = 180;
+  var fgHue2 = 245;
+
+  var reverse = false;
+
+  var rainbowMode = false;
+  var rainbowHue = 0;
+
+  var reverseMeter = new Meter(1, reset);
+
+  function reset() {
+    effects.length = 0;
+    effects2.length = 0;
+
+    if (reverseMeter.value == true) {
+      for (let i = -6; i < 33; i++) {
+        effects.push(new RInitWave(i * 10));
+      }
+    } else {
+      for (let i = -6; i < 33; i++) {
+        effects.push(new InitWave(i * 10));
+      }
+    }
+  }
+
+  for (let i = -6; i < 33; i++) {
+    effects.push(new InitWave(i * 10));
+  }
+
+  function update() {
+    ctx.fillStyle = "hsl(" + fgHue1 + ",100%,50%)";
+    ctx.fillRect(0, 0, 320, 200);
+
+    if (rainbowHue < 360) {
+      rainbowHue++;
+    } else {
+      rainbowHue = 0;
+    }
+
+    reverseMeter.setValue(reverse);
+
+    if (effects.length < 33) {
+      if (reverseMeter.value == false) {
+        effects.push(new Wave());
+      } else {
+        effects.push(new RWave());
+      }
+    }
+
+    for (i = 0; i < effects.length; i++) {
+      effects[i].Draw();
+    }
+
+    for (j = 0; j < effects.length; j++) {
+      if (effects[j].IsFinished()) {
+        effects.splice(j, 1);
+      }
+    }
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+
+  function InitWave(x) {
+    this.x = x - 10;
+
+    this.h = getRandomInt(180, 220);
+    this.h2 = getRandomInt(fgHue1, fgHue2);
+
+    this.y1 = getRandomInt(-20, 20);
+    this.y2 = getRandomInt(-20, 20);
+    this.y3 = getRandomInt(-20, 20);
+    this.y4 = getRandomInt(-20, 20);
+
+    this.Draw = function () {
+      ctx.strokeStyle = "hsl(" + this.h + ",100%,50%)";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x, 200);
+      ctx.stroke();
+
+      ctx.strokeStyle = "hsla(" + this.h2 + ",100%,50%,0.5)";
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x + this.y1, 50);
+      ctx.lineTo(this.x + this.y2, 100);
+      ctx.lineTo(this.x + this.y3, 150);
+      ctx.lineTo(this.x + this.y4, 200);
+      ctx.stroke();
+
+      this.x += speedRaw / 50;
+    };
+
+    this.IsFinished = function () {
+      if (this.x > 320) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function Wave() {
+    this.x = -10;
+    this.rh = rainbowHue;
+    this.h = getRandomInt(fgHue1, fgHue2);
+
+    this.rs2 = getRandomInt(70, 100);
+    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.y1 = getRandomInt(-20, 20);
+    this.y2 = getRandomInt(-20, 20);
+    this.y3 = getRandomInt(-20, 20);
+    this.y4 = getRandomInt(-20, 20);
+
+    this.Draw = function () {
+      if (rainbowMode) {
+        ctx.strokeStyle = "hsl(" + this.rh + ",100%,50%)";
+      } else {
+        ctx.strokeStyle = "hsl(" + this.h + ",100%,50%)";
+      }
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x, 200);
+      ctx.stroke();
+
+      if (rainbowMode) {
+        ctx.strokeStyle = "hsl(" + this.rh + "," + this.rs2 + "%,50%)";
+      } else {
+        ctx.strokeStyle = "hsl(" + this.h2 + ",100%,50%)";
+      }
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x + this.y1, 50);
+      ctx.lineTo(this.x + this.y2, 100);
+      ctx.lineTo(this.x + this.y3, 150);
+      ctx.lineTo(this.x + this.y4, 200);
+      ctx.stroke();
+
+      this.x += speedRaw / 50;
+    };
+
+    this.IsFinished = function () {
+      if (this.x > 320) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function RInitWave(x) {
+    this.x = x + 10;
+
+    this.h = getRandomInt(180, 220);
+
+    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.y1 = getRandomInt(-20, 20);
+    this.y2 = getRandomInt(-20, 20);
+    this.y3 = getRandomInt(-20, 20);
+    this.y4 = getRandomInt(-20, 20);
+
+    this.Draw = function () {
+      ctx.strokeStyle = "hsl(" + this.h + ",100%,50%)";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x, 200);
+      ctx.stroke();
+
+      ctx.strokeStyle = "hsla(" + this.h2 + ",100%,50%,0.5)";
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x + this.y1, 50);
+      ctx.lineTo(this.x + this.y2, 100);
+      ctx.lineTo(this.x + this.y3, 150);
+      ctx.lineTo(this.x + this.y4, 200);
+      ctx.stroke();
+
+      this.x -= speedRaw / 50;
+    };
+
+    this.IsFinished = function () {
+      if (this.x < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function RWave() {
+    this.x = 330;
+    this.rh = rainbowHue;
+    this.h = getRandomInt(fgHue1, fgHue2);
+
+    this.rs2 = getRandomInt(70, 100);
+    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.y1 = getRandomInt(-20, 20);
+    this.y2 = getRandomInt(-20, 20);
+    this.y3 = getRandomInt(-20, 20);
+    this.y4 = getRandomInt(-20, 20);
+
+    this.Draw = function () {
+      if (rainbowMode) {
+        ctx.strokeStyle = "hsl(" + this.rh + ",100%,50%)";
+      } else {
+        ctx.strokeStyle = "hsl(" + this.h + ",100%,50%)";
+      }
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x, 200);
+      ctx.stroke();
+      this.x -= speedRaw / 50;
+
+      if (rainbowMode) {
+        ctx.strokeStyle = "hsl(" + this.rh + "," + this.rs2 + "%,50%)";
+      } else {
+        ctx.strokeStyle = "hsl(" + this.h2 + ",100%,50%)";
+      }
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0);
+      ctx.lineTo(this.x + this.y1, 50);
+      ctx.lineTo(this.x + this.y2, 100);
+      ctx.lineTo(this.x + this.y3, 150);
+      ctx.lineTo(this.x + this.y4, 200);
+      ctx.stroke();
+
+    };
+
+    this.IsFinished = function () {
+      if (this.x < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  }
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so weve got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+</script>

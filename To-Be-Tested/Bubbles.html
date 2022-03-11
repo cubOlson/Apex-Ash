@@ -1,0 +1,236 @@
+<head>
+  <title>Bubbles</title>
+
+  <meta description="A field of bubbles, with controllable speed and hue." />
+  <meta publisher="SignalRGB" />
+
+  <meta
+    property="color_mode"
+    label="Color Mode"
+    type="combobox"
+    values="Single Color,Rainbow,Color Cycle"
+    default="Single Color"
+  />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#000000"
+  />
+  <meta
+    property="color"
+    label="Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#ff0066"
+  />
+  <meta
+    property="speed"
+    label="Bubble Speed"
+    type="number"
+    min="0"
+    max="100"
+    default="10"
+  />
+  <meta
+    property="size"
+    label="Bubble Size"
+    type="number"
+    min="1"
+    max="10"
+    default="5"
+  />
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d87ea095e121fad',m:'hSx5kHohDpUCgXjUUly6QRmKF2pa5sC2zHcciM1eIE0-1644019810-0-AQ0+MEfq/SU/X6L1ky/fo5kF2aVyoKeMr8MsTRzKOS0ND3khS2xLtHiBXfCjvg4P/+DwWvOhHigCxxDx/AnxDD4iK67dOGjGmkAk9EoZtKjt/rF7Uw5duvwfFmvQ1uxQAKollDFTD9LHuLB87TTnL/C1ixakLpt/g11puS0mlD4kwiY+WeAn/kBikMDUAMKZtw==',s:[0x1a954cbce3,0x21ce76d639],}})();</script></body>
+
+<script>
+  console.clear();
+
+  // Get the canvas element from the DOM
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var globalHue = 200;
+  var hue = 0;
+
+  function random(min, max) {
+    var num = Math.floor(Math.random() * (max - min)) + min;
+    // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
+    return num;
+  }
+  function addAlpha(color, opacity) {
+    const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+    return color + _opacity.toString(16).toUpperCase();
+  }
+
+  function Ball(bright) {
+    this.x = random(25, width - 25);
+    this.y = random(25, height - 25);
+
+    this.velX = random(-speed / 10, speed / 10);
+    if (this.velX == 0) this.velX = 1;
+
+    this.velY = random(-speed / 10, speed / 10);
+    if (this.velY == 0) this.velY = 1;
+
+    this.brightness = bright / 50;
+    this.color = color;
+    this.size = random(10, 20);
+  }
+
+  Ball.prototype.setSpeed = function (value) {
+    if (this.speed !== value) {
+      this.speed = value;
+      this.velX = random(-speed / 10, speed / 10);
+      if (this.velX == 0) this.velX = 1;
+
+      this.velY = random(-speed / 10, speed / 10);
+      if (this.velY == 0) this.velY = 1;
+    }
+  };
+
+  Ball.prototype.draw = function () {
+    ctx.beginPath();
+    if (color_mode == "Single Color") {
+      ctx.fillStyle = addAlpha(color, this.brightness);
+    } else if (color_mode == "Color Cycle") {
+      ctx.fillStyle = addAlpha(HSLToHex(hue, 100, 50), this.brightness);
+    } else {
+      ctx.fillStyle = addAlpha(HSLToHex(this.x, 100, 50), this.brightness);
+    }
+    ctx.arc(this.x, this.y, this.size * (size / 5), 0, 2 * Math.PI);
+    ctx.fill();
+  };
+
+  Ball.prototype.update = function () {
+    if (speed > 0) {
+      if (this.x + this.size >= width) {
+        this.velX = -this.velX;
+      }
+
+      if (this.x - this.size <= 0) {
+        this.velX = -this.velX;
+      }
+
+      if (this.y + this.size + 1 >= height) {
+        this.velY = -this.velY;
+      }
+
+      if (this.y - this.size + 1 <= 0) {
+        this.velY = -this.velY;
+      }
+
+      this.x += this.velX;
+      this.y += this.velY;
+    }
+  };
+
+  var balls = [];
+
+  Ball.prototype.collisionDetect = function () {
+    for (j = 0; j < balls.length; j++) {
+      if (
+        !(
+          this.x === balls[j].x &&
+          this.y === balls[j].y &&
+          this.velX === balls[j].velX &&
+          this.velY === balls[j].velY
+        )
+      ) {
+        var dx = this.x - balls[j].x;
+        var dy = this.y - balls[j].y;
+        var distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < this.size + balls[j].size) {
+          balls[j].color = this.color =
+            "rgb(" + random(0, 255) + "," + 0 + "," + 0 + ")";
+        }
+      }
+    }
+  };
+
+  function HSLToHex(h, s, l) {
+    s /= 100;
+    l /= 100;
+
+    let c = (1 - Math.abs(2 * l - 1)) * s,
+      x = c * (1 - Math.abs(((h / 60) % 2) - 1)),
+      m = l - c / 2,
+      r = 0,
+      g = 0,
+      b = 0;
+
+    if (0 <= h && h < 60) {
+      r = c;
+      g = x;
+      b = 0;
+    } else if (60 <= h && h < 120) {
+      r = x;
+      g = c;
+      b = 0;
+    } else if (120 <= h && h < 180) {
+      r = 0;
+      g = c;
+      b = x;
+    } else if (180 <= h && h < 240) {
+      r = 0;
+      g = x;
+      b = c;
+    } else if (240 <= h && h < 300) {
+      r = x;
+      g = 0;
+      b = c;
+    } else if (300 <= h && h < 360) {
+      r = c;
+      g = 0;
+      b = x;
+    }
+    // Having obtained RGB, convert channels to hex
+    r = Math.round((r + m) * 255).toString(16);
+    g = Math.round((g + m) * 255).toString(16);
+    b = Math.round((b + m) * 255).toString(16);
+
+    // Prepend 0s, if necessary
+    if (r.length == 1) r = "0" + r;
+    if (g.length == 1) g = "0" + g;
+    if (b.length == 1) b = "0" + b;
+
+    return "#" + r + g + b;
+  }
+
+  function loop() {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, width, height);
+
+    var bBrightness = 50;
+    var iIdx = 0;
+    var iNumBalls = 50;
+    while (balls.length < iNumBalls) {
+      var iBrightness = (iIdx / iNumBalls) * 40 + 10;
+      var ball = new Ball(iBrightness);
+      balls.push(ball);
+      iIdx++;
+    }
+
+    for (i = 0; i < balls.length; i++) {
+      balls[i].setSpeed(speed);
+      balls[i].draw();
+      balls[i].update();
+    }
+
+    hue += 1;
+    if (hue >= 360) {
+      hue = 0;
+    }
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
+</script>

@@ -1,0 +1,170 @@
+<head>
+  <title>Matrix</title>
+
+  <meta description="Falling text with adjustable color." />
+  <meta publisher="SignalRGB" />
+  <meta
+    property="speed"
+    label="Speed"
+    type="number"
+    min="0"
+    max="100"
+    default="50"
+  />
+  <meta
+    property="color_mode"
+    label="Color Mode"
+    type="combobox"
+    values="Static,Rainbow,Color Cycle"
+    default="Static"
+  />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#000000"
+  />
+  <meta
+    property="color"
+    label="Static Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#00ff22"
+  />
+  <meta
+    property="fontSize"
+    label="Font Size"
+    type="number"
+    min="5"
+    max="12"
+    default="8"
+  />
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d87e991bd1c3b39',m:'FIXP4LnyJkUmbza9snkUCKw7imbylSbW5PtdR3lh2ZE-1644019791-0-AdiU25GGFSbVe/9itYuEouC2VnJV0aYp5Zlml2JZ12qm+uYhItZyJV41pAZuC0wP7OwRKEnEz6XYXT2YFtqHMuIevaK6rO2QTYzUylXtId/XVtJtB11FOLY6+DQuHsiCLQpt0OwlvVnRCYl/IMvNvL2ibKnrQ1kZ1jEjildEEL8N0t5OcVRDtxomhU1L/Lo7Bg==',s:[0x6619dea399,0x60b86451b1],}})();</script></body>
+
+<script>
+  var canvas = document.getElementById("exCanvas");
+  var ctx = canvas.getContext("2d");
+
+  // full screen dimensions
+  var width = 320;
+  var height = 200;
+  var charArr = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
+  var maxCharCount = 30;
+  var fallingCharArr = [];
+  var currentColumns = 0;
+  var currentHue = 0;
+  canvas.width = width;
+  canvas.height = height;
+  var huePhase = 0;
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  function randomFloat(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function Point(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  Point.prototype.draw = function (ctx) {
+    if (speed > 0) {
+      this.value = charArr[randomInt(0, charArr.length - 1)].toUpperCase();
+    } else {
+      if (this.value == undefined) {
+        this.value = charArr[randomInt(0, charArr.length - 1)].toUpperCase();
+      }
+    }
+    this.speed = randomFloat(1, 5);
+
+    if (color_mode == "Static") {
+      ctx.fillStyle = color;
+    } else if (color_mode == "Rainbow") {
+      ctx.fillStyle = "hsl(" + (this.x + huePhase) + ",100%,50%)";
+    } else {
+      ctx.fillStyle = "hsl(" + huePhase + ",100%,50%)";
+    }
+    ctx.font = fontSize + "px san-serif";
+    ctx.fillText(this.value, this.x, this.y);
+
+    this.y += this.speed * (speed / 50);
+    if (this.y > height) {
+      this.y = randomFloat(-100, 0);
+      this.speed = randomFloat(2, 5);
+    }
+  };
+
+  var update = function () {
+    if (huePhase < 360) {
+      huePhase += speed / 50;
+    } else {
+      huePhase = 0;
+    }
+    var maxColums = width / fontSize;
+
+    if (maxColums != currentColumns) {
+      fallingCharArr = [];
+      currentColumns = maxColums;
+    }
+
+    if (currentHue != color) {
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, width, height);
+      currentHue = color;
+    }
+
+    ctx.fillStyle = bgColor + "22";
+    ctx.fillRect(0, 0, width, height);
+
+    if (fallingCharArr.length == 0) {
+      for (var i = 0; i < maxColums; i++) {
+        fallingCharArr.push(new Point(i * fontSize, randomFloat(-500, 0)));
+      }
+    }
+
+    var i = fallingCharArr.length;
+
+    while (i--) {
+      fallingCharArr[i].draw(ctx);
+    }
+  };
+
+  setInterval(update, 20);
+</script>

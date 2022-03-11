@@ -1,0 +1,243 @@
+<head>
+    <title>SkyTech effect</title>
+    <meta description="Basic Effects" />
+    <meta publisher="SignalRgb" />
+
+  <meta property="rainbow" label="Rainbow Sliders" type="boolean" default="0" />
+  <meta property="myHuePicker1" label="Color 1" type="hue" default="0" min="0" max="360">
+  <meta property="myHuePicker2" label="Color 2" type="hue" default="60" min="0" max="360">
+  <meta property="myHuePicker3" label="Color 3" type="hue" default="120" min="0" max="360">
+  <meta property="myHuePicker4" label="Color 4" type="hue" default="180" min="0" max="360">
+  <meta property="myHuePicker5" label="Color 5" type="hue" default="240" min="0" max="360">
+  <meta property="myHuePicker6" label="Color 6" type="hue" default="360" min="0" max="360">
+  <meta property="backgroundStars" label="Background Particles" type="boolean" default="0" />
+  <meta property="backgroundColor" label="Background Color" type="color" default="#000000" min="0" max="360"/>
+  <meta property="reactive" label="Audio Reactive" type="boolean" default="0" />
+  <meta property="freqThresh" label="Frequency Threshold" type="number" min="0" max="1000" default="200"/>
+
+</head>
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var effects = [new skyTechMain()];
+  var audios = [];
+  var speeds = [];
+  var hues = [];
+  var separation = [];
+  var frequency = 0;
+  var threshold = 0;
+
+  var tones1Meter = new Meter(1, ()=>"");
+  var tones2Meter = new Meter(1, ()=>"");
+  var tones3Meter = new Meter(1, ()=>"");
+  var tones4Meter = new Meter(1, ()=>"");
+  var tones5Meter = new Meter(1, ()=>"");
+  var tones6Meter = new Meter(1, ()=>"");
+
+  function update(){
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, 320, 200);
+
+    if (reactive){
+      frequency = new Int8Array(engine.audio.freq)
+      var tones1 = frequency.slice(0, 33);
+      var reduced1 = tones1.reduce((a, b) => a + b, 0);
+      var tones2 = frequency.slice(33, 66);
+      var reduced2 = tones2.reduce((a, b) => a + b, 0);
+      var tones3 = frequency.slice(66, 99);
+      var reduced3 = tones3.reduce((a, b) => a + b, 0);
+      var tones4 = frequency.slice(99, 132);
+      var reduced4 = tones4.reduce((a, b) => a + b, 0);
+      var tones5 = frequency.slice(132, 165);
+      var reduced5 = tones5.reduce((a, b) => a + b, 0);
+      var tones6 = frequency.slice(165, 198);
+      var reduced6 = tones6.reduce((a, b) => a + b, 0);
+      
+      tones1Meter.setValue(reduced1);
+      tones2Meter.setValue(reduced2);
+      tones3Meter.setValue(reduced3);
+      tones4Meter.setValue(reduced4);
+      tones5Meter.setValue(reduced5);
+      tones6Meter.setValue(reduced6);
+
+      if(tones1Meter.increased && tones1Meter.value > freqThresh){
+        rainbow ? audios.push(new audioCube(myHuePicker1, 1)) : audios.push(new audioCube("red", 1));
+      }
+      if(tones2Meter.increased && tones2Meter.value > freqThresh){
+        rainbow ? audios.push(new audioCube(myHuePicker2, 2)) : audios.push(new audioCube("red", 2));
+      }
+      if(tones3Meter.increased && tones3Meter.value > freqThresh){
+        rainbow ? audios.push(new audioCube(myHuePicker3, 3)) : audios.push(new audioCube("red", 3));
+      }
+      if(tones4Meter.increased && tones4Meter.value > freqThresh){
+        rainbow ? audios.push(new audioCube(myHuePicker4, 4)) : audios.push(new audioCube("red", 4));
+      }
+      if(tones3Meter.increased && tones3Meter.value > freqThresh){
+        rainbow ? audios.push(new audioCube(myHuePicker5, 5)) : audios.push(new audioCube("red", 5));
+      }
+      if(tones4Meter.increased && tones4Meter.value > freqThresh){
+        rainbow ? audios.push(new audioCube(myHuePicker6, 6)) : audios.push(new audioCube("red", 6));
+      }
+    } else {
+      frequency = 0;
+      if (backgroundStars){
+        if (speeds.length < 15){
+            speeds.push(new speedCircle());
+        }
+        speeds.forEach((ele, i) => {
+          ele.draw();
+          if (ele.lifetime <= 0){
+            speeds.splice(i, 1);
+          }
+        });
+      }
+    }
+
+    if (rainbow){
+      hues = [myHuePicker1, myHuePicker2, myHuePicker3, myHuePicker4, myHuePicker5, myHuePicker6];
+    } else {
+      hues = [0, 0, 0, 0, 0, 0];
+    }
+    separation = [22, 7, -7, -22];
+
+    audios.forEach((ele, i) => {
+      ele.draw();
+      if (ele.lifetime <= 0){
+        audios.splice(i, 1);
+      }
+    });
+
+    effects.forEach((ele, i) => {
+      ele.draw();
+      if (ele.lifetime <= 0){
+        effects.splice(i, 1);
+      }
+    });
+
+    window.requestAnimationFrame(update);
+  }
+
+  function audioCube(color, zone){
+    this.lifetime = 10;
+    this.x = 320;
+    this.color = `hsl(${color}, 100%, 50%)`;
+    this.y = zone == 1 ? [8.33, 191.66] : 
+      zone == 2 ? [25, 175] : 
+      zone == 3 ? [41.66, 158.33] : 
+      zone == 4 ? [58.33, 141.66] :
+      zone == 5 ? [75, 124.33] : [91.66, 108.33];
+
+    this.draw = function(){
+      ctx.globalAlpha = .5;
+      DrawCircle(this.x, this.y[0], 8.33, this.color);
+      DrawCircle(this.x, this.y[1], 8.33, this.color);
+      ctx.globalAlpha = 1;
+      this.x-=10;
+      if(this.x < -30){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function skyTechMain(){
+        this.lifetime = 20;
+        this.x = 200;
+        this.y = 100;
+        this.now = Date.now();
+        this.logo = new skyTechLogo();
+
+        this.draw = function(){
+          this.now = Date.now();
+          var headY = Math.sin(this.now / 100) * 20 + this.y;
+
+          for (let index = 0; index < 4; index ++){
+            for (let i = 1; i <= 10; i++){
+              var indexY = Math.sin((this.now - (i * 100)) / 100) * 20 + this.y;
+              DrawCircle(this.x - (i * 20), indexY + separation[index], 10, `hsl(${hues[index]}, 100%, ${90 - 5 * i}%)`);
+            }
+          }
+          this.logo.draw();
+        }
+      };
+
+      function skyTechLogo(){
+        this.x = 200;
+        this.y = 100;
+        this.now = 0;
+        this.rotate = 1;
+        this.draw = function(){
+          this.now = Date.now();
+          this.y = Math.sin(this.now / 100) * 10 + 100;
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.rotate);
+          DrawCircle(0, 0, 50, "white");
+          ctx.fillStyle = "red"
+          ctx.fillRect(-15, 0, 90, 20);
+          ctx.rotate(Math.PI * 2/3);
+          ctx.fillRect(-15, 0, 90, 20);
+          ctx.rotate(Math.PI * 2/3);
+          ctx.fillRect(-15, 0, 90, 20);
+          ctx.restore();
+          this.rotate+=.1;
+          if(this.rotate >= Math.PI * 2){
+            this.rotate = 0;
+          }
+        }
+      }
+
+      function speedCircle(){
+          this.x = 320;
+          this.y = Math.random() * 200;
+          this.lifetime = 10;
+
+          this.draw = function(){
+              DrawCircle(this.x, this.y, 10, `hsl(${hues[Math.floor(Math.random() * 4)]}, 100%, 50%)`);
+              this.x-=20;
+              if (this.x < 0){
+                  this.lifetime = 0;
+              }
+          }
+      }
+
+      function DrawCircle(x,y,radius,color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+    };
+
+  window.requestAnimationFrame(update);
+</script>
+  

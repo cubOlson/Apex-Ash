@@ -1,0 +1,172 @@
+<head>
+  <title>Kaleidoscope</title>
+  <meta
+    description="Swirling colors rotating and fading around the center of the canvas."
+  />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="fgHue"
+    label="Foreground Hue"
+    type="hue"
+    min="0"
+    max="360"
+    default="60"
+  />
+  <meta
+    property="sat"
+    label="Saturation"
+    type="number"
+    min="0"
+    max="100"
+    default="80"
+  />
+  <meta
+    property="light"
+    label="Lightness"
+    type="number"
+    min="0"
+    max="100"
+    default="60"
+  />
+  <meta
+    property="color_mode"
+    label="Color Mode"
+    type="combobox"
+    values="Single,Rainbow,Color Cycle"
+    default="Color Cycle"
+  />
+  <meta
+    property="speed"
+    label="Speed"
+    type="number"
+    min="1"
+    max="10"
+    default="4"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas
+    id="exCanvas"
+    width="320"
+    height="200"
+    style="background-color: black"
+  ></canvas>
+</body>
+
+<script>
+  var W, M, c, C, WW, WH, CW, CH, WD, pos, num, rad, animationId, speed;
+
+  var hueCycle = 0;
+  var sat = 80,
+    light = 60;
+
+  c = document.getElementById("exCanvas");
+  C = c.getContext("2d");
+
+  var initialize = function () {
+    W = window;
+    M = Math;
+    WW = c.width = M.floor(W.innerWidth);
+    WH = c.height = M.floor(W.innerHeight);
+    WD = Math.sqrt(WW * WW + WH * WH) / 2;
+    CW = WW / 2;
+    CH = WH / 2;
+    pos = new Array();
+    num = 16;
+    rad = (M.PI * 2) / num;
+  };
+
+  var getPoints = function (t) {
+    var initDist = 10;
+    var x = initDist;
+    var r = initDist * M.tan(rad / 2);
+    var y2 = M.sqrt(x * x + r * r) + r;
+    var y1 = M.sqrt(x * x + r * r) - r;
+    var scale = y2 / y1;
+    var arr = [];
+
+    for (var i = 0; i < 10; i++) {
+      var dist = M.sqrt(x * x + r * r) / WD;
+      arr.push([x, r, r, dist]);
+      x = x * scale;
+      r = r * scale;
+    }
+
+    for (var j = 0; j < num; j++) {
+      for (var i = 0; i < arr.length; i++) {
+        var nx = M.cos(rad * j) * arr[i][0] - M.sin(rad * j) * arr[i][1];
+        var ny = M.sin(rad * j) * arr[i][0] + M.cos(rad * j) * arr[i][1];
+        if (j % 2 === 0) {
+          pos.push([nx, ny, M.abs(M.sin(t / 2)) * arr[i][2], arr[i][3]]);
+        } else {
+          pos.push([nx, ny, M.abs(M.cos(t / 2)) * arr[i][2], arr[i][3]]);
+        }
+      }
+    }
+  };
+
+  var f = function (t) {
+    if (hueCycle > 360) {
+      hueCycle = 0;
+    } else {
+      hueCycle++;
+    }
+
+    t /= (11 - speed) * 100;
+    getPoints(t);
+    C.save();
+    //C.clearRect(0, 0, WW, WH);
+    C.fillStyle = "rgba(0, 0, 0, 0.1)";
+    C.fillRect(0, 0, WW, WH);
+    C.translate(CW, CH);
+    for (var i = 0; i < pos.length; i++) {
+      if (color_mode == "Single") {
+        C.fillStyle = "hsl(" + fgHue + ", " + sat + "%, " + light + "%)";
+      } else if (color_mode == "Rainbow") {
+        C.fillStyle =
+          "hsl(" +
+          M.abs(M.sin(t / 4)) * 360 * pos[i][3] +
+          ", " +
+          sat +
+          "%, " +
+          light +
+          "%)";
+      } else if (color_mode == "Color Cycle") {
+        C.fillStyle = "hsl(" + hueCycle + ", " + sat + "%, " + light + "%)";
+      }
+
+      C.save();
+      if (i % 2 === 0) {
+        if (M.sin(t) > 0) C.rotate(t / 4);
+      } else {
+        if (M.sin(t) > 0) C.rotate(-t / 4);
+      }
+      C.beginPath();
+      C.arc(pos[i][0], pos[i][1], pos[i][2], 0, M.PI * 2, false);
+      C.fill();
+      C.restore();
+    }
+
+    C.restore();
+    pos = [];
+    animationId = requestAnimationFrame(f);
+  };
+
+  window.onload = function () {
+    console.clear();
+    initialize();
+    getPoints();
+    f();
+  };
+</script>
+
+<!-- This LightScript was based on a CodePen by Toshiya Marukubo. In compliance with the GNU GPL, the original license is reproduced below.
+  
+Copyright (c) 2021 by Toshiya Marukubo (https://codepen.io/toshiya-marukubo/pen/NWjKwvJ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->

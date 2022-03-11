@@ -1,0 +1,103 @@
+<head>
+  <title>Glitch</title>
+  <meta description="Effect description goes here." />
+  <meta publisher="Jack Pendleton" />
+  <meta
+    property="bgColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#000000"
+  />
+  <meta
+    property="color1"
+    label="Color 1"
+    type="color"
+    min="0"
+    max="360"
+    default="#FF0000"
+  />
+  <meta
+    property="color2"
+    label="Color 2"
+    type="color"
+    min="0"
+    max="360"
+    default="#00FF00"
+  />
+  <meta
+    property="color3"
+    label="Color 3"
+    type="color"
+    min="0"
+    max="360"
+    default="#0000FF"
+  />
+  <meta
+    property="speedRaw"
+    label="Speed"
+    type="number"
+    min="1"
+    max="10"
+    default="1"
+  />
+</head>
+
+<body style="margin: 0; padding: 0">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var w, m, c, C, W, H, HW, HH, r, diameter;
+
+  var speedRaw = 5;
+
+  function init() {
+    w = window;
+    c = document.getElementById("exCanvas");
+    c.style.background = "black";
+    C = c.getContext("2d");
+    W = c.width = w.innerWidth;
+    H = c.height = w.innerHeight;
+    HW = W / 2;
+    HH = H / 2;
+    diameter = 20;
+    bgColor = "#000000";
+    color1 = "#FF0000";
+    color2 = "#00FF00";
+    color3 = "#0000FF";
+  }
+
+  function render(t) {
+    t /= 3000 * (10.5 - speedRaw);
+    C.fillStyle = bgColor;
+    C.fillRect(0, 0, W, H);
+    C.globalCompositeOperation = "lighter";
+    for (var k = 0; k < 3; k++) {
+      if (k === 0) C.fillStyle = color1;
+      if (k === 1) C.fillStyle = color2;
+      if (k === 2) C.fillStyle = color3;
+      for (i = 0; i < H; i += diameter) {
+        for (j = 0; j < W / 2; j += diameter) {
+          var index = i * W + j;
+          C.globalAlpha = Math.tan(index * index - t);
+          C.fillRect(
+            Math.tan(i * j - Math.sin(index + k / 100) + t) * j +
+              HW -
+              diameter / 2,
+            i,
+            ((Math.tan(index + i / j + t + k / 100) / 2) * diameter) / 2,
+            (Math.tan(index * index - t) * diameter) / 2
+          );
+        }
+      }
+    }
+    r = requestAnimationFrame(render);
+  }
+
+  window.onload = function () {
+    init();
+    render();
+  };
+</script>
