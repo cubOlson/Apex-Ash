@@ -64,22 +64,22 @@
       tones6Meter.setValue(reduced6);
 
       if(tones1Meter.increased && tones1Meter.value > freqThresh){
-        rainbow ? audios.push(new audioCube(myHuePicker1, 1)) : audios.push(new audioCube("red", 1));
+        rainbow ? audios.push(new audioCube(myHuePicker1, 1)) : audios.push(new audioCube(0, 1));
       }
       if(tones2Meter.increased && tones2Meter.value > freqThresh){
-        rainbow ? audios.push(new audioCube(myHuePicker2, 2)) : audios.push(new audioCube("red", 2));
+        rainbow ? audios.push(new audioCube(myHuePicker2, 2)) : audios.push(new audioCube(0, 2));
       }
       if(tones3Meter.increased && tones3Meter.value > freqThresh){
-        rainbow ? audios.push(new audioCube(myHuePicker3, 3)) : audios.push(new audioCube("red", 3));
+        rainbow ? audios.push(new audioCube(myHuePicker3, 3)) : audios.push(new audioCube(0, 3));
       }
       if(tones4Meter.increased && tones4Meter.value > freqThresh){
-        rainbow ? audios.push(new audioCube(myHuePicker4, 4)) : audios.push(new audioCube("red", 4));
+        rainbow ? audios.push(new audioCube(myHuePicker4, 4)) : audios.push(new audioCube(0, 4));
       }
       if(tones3Meter.increased && tones3Meter.value > freqThresh){
-        rainbow ? audios.push(new audioCube(myHuePicker5, 5)) : audios.push(new audioCube("red", 5));
+        rainbow ? audios.push(new audioCube(myHuePicker5, 5)) : audios.push(new audioCube(0, 5));
       }
       if(tones4Meter.increased && tones4Meter.value > freqThresh){
-        rainbow ? audios.push(new audioCube(myHuePicker6, 6)) : audios.push(new audioCube("red", 6));
+        rainbow ? audios.push(new audioCube(myHuePicker6, 6)) : audios.push(new audioCube(0, 6));
       }
     } else {
       frequency = 0;
@@ -202,7 +202,7 @@
           ctx.save();
           ctx.translate(this.x, this.y);
           ctx.rotate(this.rotate);
-          DrawCircle(0, 0, 50, "white");
+          DrawCircle(0, 0, reactive ? 50 + tones3Meter.value / 20 : 50, "white");
           ctx.fillStyle = "red"
           ctx.fillRect(-15, 0, 90, 20);
           ctx.rotate(Math.PI * 2/3);
