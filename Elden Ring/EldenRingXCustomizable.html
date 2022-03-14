@@ -1,0 +1,670 @@
+<head>
+  <title>Elden Ring Work</title>
+  <meta description="HUD and effects for Elden Ring. Brightness should be set to 5." />
+  <meta publisher="SignalRgb" />
+  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
+  <meta property="adjToggle" label="Adjustment toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="vertMeters" label="Vertical HUD" type="boolean" default="0" />
+  <meta property="hpOn" label="Health effects" type="boolean" default="1" />
+  <meta property="healthY" label="Health bar Y position" type="number" min="0" max="320" default="100" />
+  <meta property="healthX" label="Health bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="healthWidth" label="Health bar width" type="number" min="0" max="320" default="320" />
+  <meta property="healthHeight" label="Health bar height" type="number" min="0" max="100" default="15" />
+  <meta property="manaOn" label="Mana Effects" type="boolean" default="1" />
+  <meta property="manaY" label="Mana bar Y position" type="number" min="0" max="320" default="100" />
+  <meta property="manaX" label="Mana bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="manaWidth" label="Mana bar width" type="number" min="0" max="320" default="320" />
+  <meta property="manaHeight" label="Mana bar height" type="number" min="0" max="100" default="15" />
+  <meta property="staminaOn" label="Stamina Effects" type="boolean" default="1" />
+  <meta property="staminaY" label="Stamina bar position" type="number" min="0" max="320" default="100" />
+  <meta property="staminaX" label="Stamina bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="staminaWidth" label="Stamina bar width" type="number" min="0" max="320" default="320" />
+  <meta property="staminaHeight" label="Stamina bar height" type="number" min="0" max="100" default="15" />
+  <meta property="bossHealthOn" label="Boss Health Effect" type="boolean" default="1" />
+  <meta property="bossColor" label="Boss Health Color" type="color" default="#ffd000" min="0" max="360" />
+  <meta property="bossY" label="Boss bar position" type="number" min="0" max="320" default="100" />
+  <meta property="bossX" label="Boss bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="bossWidth" label="Boss bar width" type="number" min="0" max="320" default="320" />
+  <meta property="bossHeight" label="Boss bar height" type="number" min="0" max="100" default="15" />
+  <meta property="deathOn" label="Death Effect" type="boolean" default="1" />
+  <meta property="killOn" label="Boss Kill Effect" type="boolean" default="1" />
+  <meta property="discoveryOn" label="Discovered Grace Effect" type="boolean" default="1" />
+  <meta meter="hpRed" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0481" width="0.5" h="0-20" s="40-90" l="0-60">
+  <resolution size="3440x1440" x="0.189" y="0.0472" width="0.5" />
+  <resolution size="2560x1600" x="0.0828" y="0.0935" width="0.5" />
+  <resolution size="1920x1200" x="0.0828" y="0.0935" width="0.5" />
+  <resolution size="1680x1050" x="0.0828" y="0.0935" width="0.5" />
+  <resolution size="1440x900" x="0.0828" y="0.0935" width="0.5" />
+  <resolution size="1280x800" x="0.0828" y="0.0935" width="0.5" />
+  </meta>
+  <meta meter="hpConfirm" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0551" width="0.5" h="35-80" s="0-50"
+    l="20-100">
+  <resolution size="3440x1440" x="0.189" y="0.0549" width="0.5" />
+  <resolution size="2560x1600" x="0.0828" y="0.0996" width="0.5" />
+  <resolution size="2560x1440" x="0.0818" y="0.0535" width="0.5" />
+  <resolution size="1920x1200" x="0.0828" y="0.0996" width="0.5" />
+  <resolution size="1680x1050" x="0.0828" y="0.0996" width="0.5" />
+  <resolution size="1440x900" x="0.0828" y="0.0996" width="0.5" />
+  <resolution size="1280x800" x="0.0828" y="0.0996" width="0.5" />
+  </meta>
+  <meta meter="manaBlue" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0639" width="0.5" h="190-210" s="40-90"
+    l="0-60">
+  <resolution size="3440x1440" x="0.189" y="0.0646" width="0.5" />
+  <resolution size="2560x1600" x="0.0828" y="0.1074" width="0.5" />
+  <resolution size="1920x1200" x="0.0828" y="0.1074" width="0.5" />
+  <resolution size="1680x1050" x="0.0828" y="0.1074" width="0.5" />
+  <resolution size="1440x900" x="0.0828" y="0.1074" width="0.5" />
+  <resolution size="1280x800" x="0.0828" y="0.1074" width="0.5" />
+  </meta>
+  <meta meter="manaConfirm" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0713" width="0.5" h="35-80" s="15-50"
+    l="20-100">
+  <resolution size="3440x1440" x="0.189" y="0.0716" width="0.5" />
+  <resolution size="2560x1440" x="0.0818" y="0.0718" width="0.5" />
+  <resolution size="2560x1600" x="0.0828" y="0.1134" width="0.5" />
+  <resolution size="1920x1200" x="0.0828" y="0.1139" width="0.5" />
+  <resolution size="1680x1050" x="0.0828" y="0.1139" width="0.5" />
+  <resolution size="1440x900" x="0.0828" y="0.1139" width="0.5" />
+  <resolution size="1280x800" x="0.0828" y="0.1139" width="0.5" />
+  </meta>
+  <meta meter="staminaGreen" tags="vlc,ELDEN RING" type="linear" x="0.0823" y="0.0806" width="0.5" h="130-160" s="40-90"
+    l="0-60">
+  <resolution size="3440x1440" x="0.189" y="0.0813" width="0.5" />
+  <resolution size="2560x1600" x="0.0828" y="0.1231" width="0.5" />
+  <resolution size="1920x1200" x="0.0828" y="0.1231" width="0.5" />
+  <resolution size="1680x1050" x="0.0828" y="0.1231" width="0.5" />
+  <resolution size="1440x900" x="0.0828" y="0.1231" width="0.5" />
+  <resolution size="1280x800" x="0.0828" y="0.1231" width="0.5" />
+  </meta>
+  <meta meter="staminaConfirm" tags="vlc,ELDEN RING" type="linear" x="0.0823" y="0.0885" width="0.5" h="35-80" s="15-50"
+    l="20-100">
+  <resolution size="3440x1440" x="0.189" y="0.0883" width="0.5" />
+  <resolution size="2560x1440" x="0.0823" y="0.087" width="0.5" />
+  <resolution size="2560x1600" x="0.0823" y="0.1287" width="0.5" />
+  <resolution size="1920x1200" x="0.0823" y="0.1287" width="0.5" />
+  <resolution size="1680x1050" x="0.0823" y="0.1287" width="0.5" />
+  <resolution size="1440x900" x="0.0823" y="0.1287" width="0.5" />
+  <resolution size="1280x800" x="0.0823" y="0.1287" width="0.5" />
+  </meta>
+  <meta meter="bossHpRed" tags="vlc,ELDEN RING" type="linear" x="0.244" y="0.8074" width="0.55" h="0-20" s="80-100"
+    l="0-50">
+  <resolution size="3440x1440" x="0.32" y="0.8069" width="0.55" />
+  <resolution size="2560x1600" x="0.2443" y="0.7759" width="0.55" />
+  <resolution size="1920x1200" x="0.2443" y="0.7759" width="0.55" />
+  <resolution size="1680x1050" x="0.2443" y="0.7759" width="0.55" />
+  <resolution size="1440x900" x="0.2443" y="0.7759" width="0.55" />
+  <resolution size="1280x800" x="0.2443" y="0.7759" width="0.55" />
+  </meta>
+  <meta meter="bossHpConfirm" tags="vlc,ELDEN RING" type="area" x="0.2432" y="0.8135" width="0.55" height="0.0001"
+    h="30-80" s="0-40" l="10-100">
+  <resolution size="3440x1440" x="0.32" y="0.8132" width="0.55" height="0.0001" />
+  <resolution size="2560x1600" x="0.2443" y="0.7825" width="0.55" height="0.0001" />
+  <resolution size="1920x1200" x="0.2443" y="0.7825" width="0.55" height="0.0001" />
+  <resolution size="1680x1050" x="0.2443" y="0.7825" width="0.55" height="0.0001" />
+  <resolution size="1440x900" x="0.2443" y="0.7825" width="0.55" height="0.0001" />
+  <resolution size="1280x800" x="0.2443" y="0.7825" width="0.55" height="0.0001" />
+  </meta>
+  <meta meter="greatRune" tags="vlc,ELDEN RING" type="area" x="0.0443" y="0.1037" width="0.01" height=".0001" h="20-80"
+    s="0-35" l="40-75">
+  <resolution size="3440x1440" x="0.161" y="0.0257" width="0.006" height=".0001" />
+  <resolution size="2560x1600" x="0.0448" y="0.0736" width="0.01" height=".0001" />
+  <resolution size="1920x1200" x="0.0448" y="0.0736" width="0.01" height=".0001" />
+  <resolution size="1680x1050" x="0.0448" y="0.0736" width="0.01" height=".0001" />
+  <resolution size="1440x900" x="0.0448" y="0.0736" width="0.01" height=".0001" />
+  <resolution size="1280x800" x="0.0448" y="0.0736" width="0.01" height=".0001" />
+  </meta>
+  <meta meter="leftItemFrame" tags="vlc,ELDEN RING" type="area" x="0.0355" y="0.7944" width="0.014" height=".0001"
+    h="30-80" s="25-50" l="25-75">
+  <resolution size="3440x1440" x="0.1974" y="0.7444" width="0.007" height=".0001" />
+  <resolution size="2560x1440" x="0.0927" y="0.7444" width="0.014" height=".0001" />
+  <resolution size="2560x1600" x="0.085" y="0.7204" width="0.014" height=".0001" />
+  <resolution size="1920x1200" x="0.085" y="0.7204" width="0.014" height=".0001" />
+  <resolution size="1680x1050" x="0.085" y="0.7204" width="0.014" height=".0001" />
+  <resolution size="1440x900" x="0.085" y="0.7204" width="0.014" height=".0001" />
+  <resolution size="1280x800" x="0.085" y="0.7204" width="0.014" height=".0001" />
+  </meta>
+  <meta meter="rightSouls" tags="vlc,ELDEN RING" type="area" x="0.9732" y="0.9417" height="0.0025" width="0.0007"
+    h="40-80" s="0-35" l="40-75">
+  <resolution size="3440x1440" x="0.853" y="0.945" height="0.0201" width="0.0005" />
+  <resolution size="2560x1600" x="0.9735" y="0.9" height="0.0025" width="0.0007" />
+  <resolution size="1920x1200" x="0.9739" y="0.91" height="0.0025" width="0.0007" />
+  <resolution size="1680x1050" x="0.9739" y="0.91" height="0.0025" width="0.0007" />
+  <resolution size="1440x900" x="0.9739" y="0.91" height="0.0025" width="0.0007" />
+  <resolution size="1280x800" x="0.9739" y="0.91" height="0.0025" width="0.0007" />
+  </meta>
+  <meta meter="compassMark" tags="vlc,ELDEN RING" type="area" x="0.4984" y="0.1222" height="0.008" width="0.003"
+    h="40-80" s="0-35" l="40-75">
+  <resolution size="3440x1440" x="0.5" y="0.1231" height="0.005" width="0.001" />
+  <resolution size="2560x1440" x="0.4999" y="0.1241" height="0.005" width="0.001" />
+  </meta>
+  <meta meter="diedRed" tags="vlc,ELDEN RING" type="area" x="0.507" y="0.4694" height="0.02" width="0.0033" h="340-360"
+    s="75-100" l="25-50">
+  <resolution size="3440x1440" x="0.5046" y="0.4722" height="0.02" width="0.0023" />
+  <resolution size="2560x1600" x="0.5062" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1920x1200" x="0.5062" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1680x1050" x="0.5062" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1440x900" x="0.5062" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1280x800" x="0.5062" y="0.4778" height="0.02" width="0.0033" />
+  </meta>
+  <meta meter="discoveredOrange1" tags="vlc,ELDEN RING" type="area" x="0.224" y="0.47" height="0.02" width="0.0033"
+    h="30-40" s="65-90" l="75-100">
+  <resolution size="3440x1440" x="0.2974" y="0.4757" height="0.02" width="0.0022" />
+  <resolution size="2560x1600" x="0.3156" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1920x1200" x="0.3156" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1680x1050" x="0.3156" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1440x900" x="0.3156" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1280x800" x="0.3156" y="0.4778" height="0.02" width="0.0033" />
+  </meta>
+  <meta meter="discoveredOrange2" tags="vlc,ELDEN RING" type="area" x="0.507" y="0.47" height="0.02" width="0.0033"
+    h="30-40" s="65-90" l="75-100">
+  <resolution size="3440x1440" x="0.505" y="0.4736" height="0.02" width="0.0022" />
+  <resolution size="2560x1600" x="0.5063" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1920x1200" x="0.5063" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1680x1050" x="0.5063" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1440x900" x="0.5063" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1280x800" x="0.5063" y="0.4778" height="0.02" width="0.0033" />
+  </meta>
+  <meta meter="discoveredOrange3" tags="vlc,ELDEN RING" type="area" x="0.7547" y="0.47" height="0.02" width="0.0033"
+    h="30-40" s="65-90" l="75-100">
+  <resolution size="3440x1440" x="0.687" y="0.4757" height="0.02" width="0.0022" />
+  <resolution size="2560x1600" x="0.7547" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1920x1200" x="0.7547" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1680x1050" x="0.7547" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1440x900" x="0.7547" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1280x800" x="0.7547" y="0.4778" height="0.02" width="0.0033" />
+  </meta>
+  <meta meter="legendD" tags="vlc,ELDEN RING" type="area" x="0.499" y="0.4796" height="0.02" width="0.003" h="45-60"
+    s="60-90" l="75-100">
+  <resolution size="3440x1440" x="0.4839" y="0.4743" height="0.02" width="0.0022" />
+  </meta>
+  <meta meter="legendE" tags="vlc,ELDEN RING" type="area" x="0.6213" y="0.4722" height="0.02" width="0.0033" h="45-60"
+    s="60-90" l="75-100">
+  <resolution size="3440x1440" x="0.5333" y="0.4743" height="0.02" width="0.0022" />
+  </meta>
+  <meta meter="greatT" tags="vlc,ELDEN RING" type="area" x="0.3917" y="0.475" height="0.02" width="0.003" h="45-60"
+    s="60-90" l="75-100">
+  <resolution size="3440x1440" x="0.4211" y="0.4743" height="0.02" width="0.0022" />
+  <resolution size="2560x1600" x="0.3917" y="0.4778" height="0.02" width="0.003" />
+  <resolution size="1920x1200" x="0.3917" y="0.4778" height="0.02" width="0.003" />
+  <resolution size="1680x1050" x="0.3917" y="0.4778" height="0.02" width="0.003" />
+  <resolution size="1440x900" x="0.3917" y="0.4778" height="0.02" width="0.003" />
+  <resolution size="1280x800" x="0.3917" y="0.4778" height="0.02" width="0.003" />
+  </meta>
+  <meta meter="greatL" tags="vlc,ELDEN RING" type="area" x="0.6635" y="0.4750" height="0.02" width="0.0033" h="45-60"
+    s="60-90" l="75-100">
+  <resolution size="3440x1440" x="0.6198" y="0.4743" height="0.02" width="0.0022" />
+  <resolution size="2560x1600" x="0.664" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1920x1200" x="0.664" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1680x1050" x="0.664" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1440x900" x="0.664" y="0.4778" height="0.02" width="0.0033" />
+  <resolution size="1280x800" x="0.664" y="0.4778" height="0.02" width="0.0033" />
+  </meta>
+  <meta meter="enemyE" tags="vlc,ELDEN RING" type="area" x="0.3442" y="0.4731" height="0.02" width="0.003" h="45-60"
+    s="60-90" l="75-100">
+  <resolution size="3440x1440" x="0.3855" y="0.4743" height="0.02" width="0.0022" />
+  </meta>
+  <meta meter="enemyE2" tags="vlc,ELDEN RING" type="area" x="0.6095" y="0.4731" height="0.02" width="0.0033" h="45-60"
+    s="60-90" l="75-100">
+  <resolution size="3440x1440" x="0.5805" y="0.4743" height="0.02" width="0.0022" />
+  </meta>
+
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  //engine.zone
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var effects = [];
+  var inGame = false;
+  var blockUpdates = false;
+  var compass = false;
+  var discAnim = false;
+  var diedAnim = false;
+  var enemyAnim = false;
+
+  var inGame1Meter = new Meter(10, inGameCheck);
+  var inGame2Meter = new Meter(10, inGameCheck);
+  var inGame3Meter = new Meter(10, inGameCheck);
+  var inGame4Meter = new Meter(10, inGameCheck);
+
+  var healthLengthMeter = new Meter(20, () => "");
+  var healthRedMeter = new Meter(2, () => "");
+  var manaLengthMeter = new Meter(20, () => "");
+  var manaBlueMeter = new Meter(2, () => "");
+  var staminaLengthMeter = new Meter(20, () => "");
+  var staminaGreenMeter = new Meter(2, () => "");
+  var bossHealthLengthMeter = new Meter(2, () => "");
+  var bossHealthRedMeter = new Meter(3, () => "");
+
+  var discOrange1Meter = new Meter(3, discoveryEffect);
+  var discOrange2Meter = new Meter(3, discoveryEffect);
+  var discOrange3Meter = new Meter(3, discoveryEffect);
+  var diedRedMeter = new Meter(3, deathEffect);
+  var legendDMeter = new Meter(3, legendEffect);
+  var legendEMeter = new Meter(3, legendEffect);
+  var greatTMeter = new Meter(3, greatEffect);
+  var greatLMeter = new Meter(3, greatEffect);
+  var enemyEMeter = new Meter(3, enemyEffect);
+  var enemyE2Meter = new Meter(3, enemyEffect);
+
+  function update() {
+    if (keyScreenBrightness > 5) {
+      copyScreen(1);
+    }
+
+    inGame1Meter.setValue(engine.vision.greatRune);
+    inGame2Meter.setValue(engine.vision.leftItemFrame);
+    inGame3Meter.setValue(engine.vision.rightSouls);
+    inGame4Meter.setValue(engine.vision.compassMark);
+    diedRedMeter.setValue(engine.vision.diedRed);
+    discOrange1Meter.setValue(engine.vision.discoveredOrange1);
+    discOrange2Meter.setValue(engine.vision.discoveredOrange2);
+    discOrange3Meter.setValue(engine.vision.discoveredOrange3);
+    legendDMeter.setValue(engine.vision.legendD);
+    legendEMeter.setValue(engine.vision.legendE);
+    greatTMeter.setValue(engine.vision.greatT);
+    greatLMeter.setValue(engine.vision.greatL);
+    enemyEMeter.setValue(engine.vision.enemyE);
+    enemyE2Meter.setValue(engine.vision.enemyE2);
+
+    if (!blockUpdates) {
+      if (inGame4Meter.value > .75) {
+        healthLengthMeter.setValue(engine.vision.hpConfirm);
+        healthRedMeter.setValue(engine.vision.hpRed);
+      }
+      if (inGame) {
+        healthLengthMeter.setValue(engine.vision.hpConfirm);
+        healthRedMeter.setValue(engine.vision.hpRed);
+        manaLengthMeter.setValue(engine.vision.manaConfirm);
+        manaBlueMeter.setValue(engine.vision.manaBlue);
+        staminaLengthMeter.setValue(engine.vision.staminaConfirm);
+        staminaGreenMeter.setValue(engine.vision.staminaGreen);
+        bossHealthLengthMeter.setValue(engine.vision.bossHpConfirm);
+        bossHealthRedMeter.setValue(engine.vision.bossHpRed);
+      }
+    }
+
+    if (adjToggle) {
+      if (hpOn) {
+        vertMeters ? drawRect(healthY, 200, healthHeight, -200, "red") : drawRect(healthX, healthY, healthWidth, healthHeight, "red");
+      }
+      if (staminaOn) {
+        vertMeters ? drawRect(staminaY, 200, staminaHeight, -200, "green") : drawRect(staminaX, staminaY, staminaWidth, staminaHeight, "green");
+      }
+      if (manaOn) {
+        vertMeters ? drawRect(manaY, 200, manaHeight, -200, "blue") : drawRect(manaX, manaY, manaWidth, manaHeight, "blue");
+      }
+      if (bossHealthOn) {
+        vertMeters ? drawRect(bossY, 200, bossHeight, -200, bossColor) : drawRect(bossX, bossY, bossWidth, bossHeight, bossColor);
+      }
+    }
+
+    if (adjToggle) {
+      effects = [];
+    }
+
+    effects.forEach((ele, i) => {
+      ele.draw();
+      if (ele.lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    });
+
+    window.requestAnimationFrame(update);
+  }
+
+  function inGameCheck() {
+    if (inGame4Meter.value > .75 && !blockUpdates) {
+      if (hpOn) {
+        effects.push(new healthBar());
+      }
+    }
+    if (inGame1Meter.value > .75 && inGame2Meter.value > .75 && inGame3Meter.value > .75 && !blockUpdates) {
+
+      inGame = true;
+      if (manaOn) {
+        effects.push(new manaBar());
+      }
+      if (staminaOn) {
+        effects.push(new staminaBar());
+      }
+      if (hpOn) {
+        effects.push(new healthBar());
+      }
+      if (bossHealthOn) {
+        effects.push(new bossBar());
+      }
+    } else {
+      inGame = false;
+    }
+  }
+
+  function discoveryEffect() {
+    if (discOrange1Meter.value > .9 && discOrange2Meter.value > .9 && discOrange3Meter.value > .9 && discoveryOn) {
+      discAnim = true;
+      effects.push(new foundGraceEffect());
+    } else {
+      discAnim = false;
+    }
+  };
+
+  function deathEffect() {
+    if (diedRedMeter.value > .9 && healthRedMeter.value < .01 && !diedAnim && deathOn) {
+      diedAnim = true;
+      blockUpdates = true;
+      effects = [];
+      effects.push(new death());
+    }
+  };
+
+  function legendEffect() {
+    if (legendDMeter.value > .9 && legendEMeter.value > .9 && !enemyAnim && killOn) {
+      enemyAnim = true;
+      blockUpdates = true;
+      effects = [];
+      effects.push(new enemyKilledEffect("legend"));
+    }
+  };
+
+  function greatEffect() {
+    if (greatTMeter.value > .9 && greatLMeter.value > .9 && !enemyAnim && killOn) {
+      enemyAnim = true;
+      blockUpdates = true;
+      effects = [];
+      effects.push(new enemyKilledEffect("great"));
+    }
+  };
+
+  function enemyEffect() {
+    if (enemyEMeter.value > .9 && enemyE2Meter.value > .9 && !enemyAnim && killOn) {
+      blockUpdates = true;
+      enemyAnim = true;
+      effects = [];
+      effects.push(new enemyKilledEffect("enemy"));
+    }
+  };
+
+  function healthBar() {
+    this.x = 0;
+    this.y = 0;
+    this.lifetime = 50;
+    this.size = 0;
+    this.draw = function () {
+      this.size = vertMeters ? 200 : healthWidth;
+      this.width = healthRedMeter.value / healthLengthMeter.value * this.size;
+      if (vertMeters) {
+        this.x = healthY;
+        this.y = 200;
+        drawRect(this.x, this.y, healthHeight, -this.width, "red");
+      } else {
+        this.y = healthY;
+        this.x = healthX;
+        drawRect(this.x, this.y, this.width, healthHeight, "red");
+      }
+
+      if ((!inGame && inGame4Meter.value == 0) || !hpOn || adjToggle) {
+        this.lifetime = 0;
+        healthPushed = false;
+      }
+    }
+  }
+
+  function manaBar() {
+    this.x = 0;
+    this.y = 0;
+    this.lifetime = 50;
+    this.size = 0;
+
+    this.draw = function () {
+      this.size = vertMeters ? 200 : manaWidth;
+      this.width = manaBlueMeter.value / manaLengthMeter.value * this.size;
+      if (vertMeters) {
+        this.x = manaY;
+        this.y = 200;
+        drawRect(this.x, this.y, manaHeight, -this.width, "blue");
+      } else {
+        this.y = manaY;
+        this.x = manaX;
+        drawRect(this.x, this.y, this.width, manaHeight, "blue");
+      }
+
+      if (!inGame || !manaOn || adjToggle) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function staminaBar() {
+    this.x = 0;
+    this.y = 0;
+    this.lifetime = 50;
+    this.size = 0;
+
+    this.draw = function () {
+      this.size = vertMeters ? 200 : staminaWidth;
+      this.width = engine.vision.staminaGreen / staminaLengthMeter.value * this.size;
+      if (vertMeters) {
+        this.x = staminaY;
+        this.y = 200;
+        drawRect(this.x, this.y, staminaHeight, -this.width, "green");
+      } else {
+        this.y = staminaY;
+        this.x = staminaX;
+        drawRect(this.x, this.y, this.width, staminaHeight, "green");
+      }
+
+      if (!inGame || !staminaOn || adjToggle) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function bossBar() {
+    this.x = 0;
+    this.y = 0;
+    this.lifetime = 50;
+    this.size = 0;
+
+    this.draw = function () {
+      this.size = vertMeters ? 200 : bossWidth;
+      this.width = bossHealthRedMeter.value / bossHealthLengthMeter.value * this.size;
+      if (vertMeters) {
+        this.x = bossY;
+        this.y = 200;
+        drawRect(this.x, this.y, bossHeight, -this.width, bossColor);
+      } else {
+        this.y = bossY;
+        this.x = bossX;
+        drawRect(this.x, this.y, this.width, bossHeight, bossColor);
+      }
+
+      if (!inGame || !bossHealthOn || adjToggle) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function copyScreen(alpha) {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness * 0.01 +
+        "%, " +
+        alpha
+        +
+        ")";
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+  function foundGraceEffect() {
+    this.lifetime = 100;
+    effects.push(new DrawPulseStroke(160, 100, 5, 9, 30, "gold"));
+    setTimeout(() => { effects.push(new DrawPulseStroke(160, 100, 5, 8, 25, "gold")) }, 100);
+    setTimeout(() => { effects.push(new DrawPulseStroke(160, 100, 5, 7, 20, "gold")) }, 200);
+    setTimeout(() => { effects.push(new DrawPulseStroke(160, 100, 5, 6, 15, "gold")) }, 300);
+    setTimeout(() => { effects.push(new DrawPulseStroke(160, 100, 5, 5, 10, "gold")) }, 400);
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = "yellow";
+      ctx.globalAlpha = this.lifetime / 200;
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.globalAlpha = 1;
+      this.lifetime--;
+    }
+  }
+
+  function DrawPulseStroke(x, y, radius, speed, lineWidth, color) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.speed = speed;
+    this.lineWidth = lineWidth;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = this.lineWidth;
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+      ctx.stroke();
+      this.radius += speed;
+      if (this.radius > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function death() {
+    this.start = Date.now();
+    this.elapsed = 0;
+    this.lifetime = 2000;
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      this.index = Math.floor(this.elapsed / 100);
+      ctx.globalAlpha = .2;
+      for (i = 0; i <= this.index; i++) {
+        DrawCircle(160, 100, 20 * i, "red");
+      }
+      ctx.globalAlpha = 1;
+      for (let i = 0; i < 3; i++) {
+        effects.push(new movingParticle(320 * Math.random(), 200, 1, "white", false))
+      }
+      this.lifetime -= 10;
+      if (this.lifetime <= 0) {
+        diedAnim = false;
+        setTimeout(() => { blockUpdates = false }, 5000)
+      }
+    }
+  }
+
+  function enemyKilledEffect(choice) {
+    this.lifetime = 10;
+    this.colors = choice == "legend" ? ["blue", "cyan", "white"] : choice == "great" ? ["orange", "yellow", "white"] : ["red", "orange", "yellow"];
+    this.speeds = choice == "legend" ? [2, 6, 10] : choice == "great" ? [1, 4, 8] : [1, 3, 5];
+    this.start = Date.now();
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      for (let i = 0; i < 3; i++) {
+        effects.push(new movingParticle(320 * Math.random(), 200, this.speeds[0], this.colors[0], true));
+      }
+      if (this.elapsed > 250) {
+        for (let i = 0; i < 2; i++) {
+          effects.push(new movingParticle(220 * Math.random() + 50, 200, this.speeds[1], this.colors[1], true));
+        }
+      }
+      if (this.elapsed > 1000) {
+        for (let i = 0; i < 1; i++) {
+          effects.push(new movingParticle(120 * Math.random() + 100, 200, this.speeds[2], this.colors[2], true));
+        }
+      }
+      if (this.elapsed > 5000) {
+        this.lifetime = 0;
+        enemyAnim = false;
+        setTimeout(() => { blockUpdates = false }, 5000)
+      }
+    }
+  }
+
+  function movingParticle(x, y, speed, color, up) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.color = color;
+    this.radius = Math.random() * 30;
+    this.vy = 8 * Math.random() + this.speed;
+    this.vx = up ? 0 : 3 * Math.random() + this.speed;
+    this.lifetime = 10;
+
+    this.draw = function () {
+      DrawCircle(this.x, this.y, this.radius, this.color);
+      this.x += this.vx;
+      this.y -= this.vy;
+      if (this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function drawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height)
+    ctx.fill();
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  window.requestAnimationFrame(update);
+</script>
