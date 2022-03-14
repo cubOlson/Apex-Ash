@@ -1,0 +1,609 @@
+<head>
+  <title>Minecraft Java Edition Production</title>
+  <meta description="Game intergration for Minecraft Java edition" />
+  <meta publisher="WhirlwindFX" />
+  <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
+  <meta property="effectHex1" label="Decrease Health effect Color" type="color" min="0" max="360" default="#ff0000" />
+  <meta property="effectHex2" label="Increase Health effect Color" type="color" min="0" max="360" default="#ff57ae" />
+  <meta property="enableHunger" label="Hunger effect" type="boolean" default="1" />
+  <meta property="effectHex3" label="Hunger state effect Color" type="color" min="0" max="360" default="#572b00" />
+  <meta property="effectHex4" label="Is Fed effect Color" type="color" min="0" max="360" default="#fc8c03" />
+  <meta property="enableXP" label="XP effect" type="boolean" default="1" />
+  <meta property="enableBoss" label="Boss bar effect" type="boolean" default="1" />
+  <meta property="enableFire" label="On Fire effect" type="boolean" default="1" />
+
+  <meta meter="bubble1" tags="minecraft, vlc" x=".699" y=".7965" width=".003" h="0-360" s="0-100" l="0-10"
+    type="linear">
+  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" /> -->
+  <resolution size="3840x2160" x=".699" y=".7965" width=".003" />
+  </meta>
+
+  <meta meter="bubble2" tags="minecraft, vlc" x=".699" y=".801" width=".003" h="175-240" s="60-100" l="80-100"
+    type="linear">
+  <!-- <resolution size="1920x1080" x=".699" y=".801" width=".003" /> -->
+  <resolution size="3840x2160" x=".699" y=".801" width=".003" />
+  </meta>
+
+  <meta meter="bubble3" tags="minecraft, vlc" x=".699" y=".809" width=".003" h="175-240" s="0-60" l="80-100"
+    type="linear">
+  <!-- <resolution size="1920x1080" x=".699" y=".809" width=".003" /> -->
+  <resolution size="3840x2160" x=".699" y=".809" width=".003" />
+  </meta>
+
+  <meta meter="health" tags="minecraft, vlc" x=".291" y=".8489" width=".1625" height=".001" h="0-20" s="60-100"
+    l="80-100" type="area">
+  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" /> -->
+  <resolution size="3840x2160" x=".291" y=".8472" width=".1625" height=".001" />
+  </meta>
+
+  <meta meter="lowHp" tags="minecraft, vlc" x=".291" y=".8529" width=".04" height=".001" h="0-20" s="60-100" l="80-100"
+    type="area">
+  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" /> -->
+  <resolution size="3840x2160" x=".291" y=".8472" width=".04" height=".001" />
+  </meta>
+
+  <meta meter="LastHealth" tags="minecraft, vlc" x=".460" y=".8529" width=".01" height=".001" h="0-20" s="60-100"
+    l="80-100" type="area">
+  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" /> -->
+  <resolution size="3840x2160" x=".460" y=".8529" width=".01" height=".001" />
+  </meta>
+
+  <meta meter="healthB" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="170-220" s="0-50"
+    l="70-100" type="area">
+  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" /> -->
+  <resolution size="3840x2160" x=".291" y=".8472" width=".0150" height=".001" />
+  </meta>
+
+  <meta meter="healthG" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="47-80" s="0-100"
+    l="40-90" type="area">
+  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" /> -->
+  <resolution size="3840x2160" x=".291" y=".8472" width=".0150" height=".001" />
+  </meta>
+
+  <meta meter="armor" tags="minecraft, vlc" x=".3124" y=".83" width=".164" height=".0020" h="0-360" s="0-10" l="70-80"
+    type="area">
+  <!-- <resolution size="1920x1080" x=".3124" y=".83" width=".164" height=".0020" /> -->
+  <resolution size="3840x2160" x=".29" y=".81" width=".164" height=".004" />
+  </meta>
+  <meta meter="xp" tags="minecraft, vlc" x=".2898" y=".8861" width=".376" height=".002" h="80-100" s="30-100" l="0-100"
+    type="area">
+  <!-- <resolution size="1920x1080" x=".3188" y=".9009" width=".376" height=".002" /> -->
+  <resolution size="3840x2160" x=".2898" y=".8861" width=".376" height=".002" />
+  </meta>
+
+  <meta meter="boss" tags="minecraft, vlc" x=".2898" y=".8861" width=".376" height=".002" h="260-330" s="80-100"
+    l="70-100" type="area">
+  <!-- <resolution size="1920x1080" x=".3151" y=".0490" width=".3125" height=".002" /> -->
+  <resolution size="3840x2160" x=".2898" y=".8861" width=".376" height=".002" />
+  </meta>
+
+  <meta meter="inGame1" tags="minecraft, vlc" x=".3058" y=".913" width=".3815" height=".001" h="0-360" s="0-10"
+    l="50-100" type="area">
+  <!-- <resolution size="1920x1080" x=".3151" y=".0499" width=".3125" height=".001" /> -->
+  <resolution size="3840x2160" x=".2898" y=".8861" width=".376" height=".001" />
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+
+  var canvas, ctx;
+  var stateHdlr = new StateHandler();
+  var healthMeter = new Meter(12, onHealthMeterChanged);
+  var lastHealthMeter = new Meter(5, () => "")
+  var freezeMeter = new Meter(5, onFreezeChange)
+  var xpMeter = new Meter(10, onXpMeterChanged);
+  var armorMeter = new Meter(10, onArmorMeterChanged);
+  var bossMeter = new Meter(10, onBossMeterChanged);
+  var inGameMeter = new Meter(5, onGameChanged)
+  var bubbleMeter = new Meter(5, onBubblechanged)
+  var poisonMeter = new Meter(5, onPoisonChanged)
+  var lowHpMeter = new Meter(5, onLowHpChanged)
+  var effects = [];
+  var inGame = false;
+  var freezeGoing = false;
+  var bubblegoing = false;
+  var poisongoing = false;
+  var lowHpGoing = false;
+
+
+  function update() {
+    IdleState();
+    lastHealthMeter.setValue(engine.vision.LastHealth)
+    inGameMeter.setValue(engine.vision.inGame1)
+    lowHpMeter.setValue(engine.vision.lowHp)
+    freezeMeter.setValue(engine.vision.healthB)
+    poisonMeter.setValue(engine.vision.healthG)
+    healthMeter.setValue(engine.vision.health);
+
+    if (inGame) {
+      xpMeter.setValue(engine.vision.xp);
+      armorMeter.setValue(engine.vision.armor);
+      bossMeter.setValue(engine.vision.boss);
+      bubbleMeter.setValue(engine.vision.bubble1)
+    }
+
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    stateHdlr.Process();
+    window.requestAnimationFrame(update);
+  }
+
+
+  //Callbacks
+  function onGameChanged() {
+    if (inGameMeter.value > 0.6) {
+      if (healthMeter.value > 0 || freezeMeter.value > 0 || poisonMeter.value > 0 || lowHpMeter.value > 0) {
+        if (inGame == false) {
+          setTimeout(() => {
+            clearEffects()
+            CheckAfterInGame();
+          }, 5);
+        }
+        inGame = true;
+      }
+    } else {
+      clearEffects()
+      inGame = false
+    }
+  }
+
+  function clearEffects() {
+    effects.length = 0
+    freezeGoing = false;
+    poisongoing = false;
+    bubblegoing = false;
+    lowHpGoing = false;
+  }
+
+
+  function CheckAfterInGame() {
+    onBubblechanged()
+    onPoisonChanged()
+    onFreezeChange()
+    onLowHpChanged()
+  }
+
+  function onLowHpChanged() {
+    if (inGame && lowHpGoing == false && lowHpMeter.value < 0.7 && lastHealthMeter.value == 0) {
+      effects.push(new lowHealthState())
+      lowHpGoing = true;
+    }
+  }
+
+
+  function onFreezeChange() {
+    if (freezeMeter.value > 0.2 && freezeGoing == false) {
+      effects.push(new FreezeEffect())
+      freezeGoing = true;
+    }
+  }
+
+  function onBubblechanged() {
+    if (bubbleMeter.value == 1 && engine.vision.bubble2 == 1 && engine.vision.bubble3 == 1 && inGame) {
+      effects.push(new bubbleEffect("hsla(222, 100%, 46%, 0.7)", "hsla(189, 100%, 46%, 1)", "hsla(243, 100%, 46%, 1)"))
+      bubblegoing = true;
+    }
+  }
+
+  function onPoisonChanged() {
+    if (poisonMeter.value >= 0.2 && poisongoing == false && healthMeter.value == 0) {
+      effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
+      poisongoing = true;
+    }
+  }
+
+  function onHealthMeterChanged() {
+    //console.log(healthMeter.value);
+    if (enableHealth == 1 && inGame && freezeMeter.value == 0 && poisonMeter.value == 0 && lastHealthMeter.value == 0 && lowHpGoing == false) {
+      if (healthMeter.decreased) {
+        effects.push(new DamageState());
+      } else if (healthMeter.increased && healthMeter.diff < 0.2) {
+        effects.push(new HealState());
+      }
+    }
+    onGameChanged();
+  }
+
+  function onXpMeterChanged() {
+    if (enableXP == 1) {
+      if (xpMeter.increased && xpMeter.value > 0.01) {
+        effects.push(new XpUpState());
+      }
+    }
+  }
+
+  function onFoodMeterChanged() {
+    //console.log(foodMeter.value);
+    if (enableHunger == true) {
+      if (foodMeter.decreased) {
+        effects.push(new HungerState());
+      } else if (foodMeter.increased) {
+        effects.push(new fedState());
+      }
+    }
+  }
+
+  function onArmorMeterChanged() {
+    effects.push(new ArmorState());
+  }
+
+  function onBossMeterChanged() {
+    if (enableBoss == 1) {
+      if (bossMeter.increased) {
+        //console.log(bossMeter.value);
+        effects.push(new BossState());
+      }
+    }
+  }
+
+  function XpUpState() {
+    this.start = new Date().getTime();
+    this.lifetime = 45;
+
+    this.draw = function () {
+      this.lifetime -= 1;
+      ctx.fillStyle = "#42d113";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "#e1ff00";
+      ctx.beginPath();
+      ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
+      ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
+      ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
+      ctx.fill();
+    };
+  }
+
+  function FreezeEffect() {
+    this.start = getTime();
+    this.lifetime = 100;
+    this.snowflakes = [];
+    for (let index = 0; index < 15; index++) {
+      this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
+    }
+    this.draw = function () {
+      ctx.fillStyle = "hsla(206, 100%, 40%, 0.5)";
+      ctx.fillRect(0, 0, 320, 200)
+      this.snowflakes.forEach((snow, i) => {
+        snow.draw();
+        if (snow.y > 300) {
+          this.snowflakes.splice(i, 1)
+          this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
+        }
+      });
+      if (freezeMeter.value == 0) {
+        this.lifetime = 0;
+        freezeGoing = false;
+      }
+    }
+  }
+
+  function bubbleEffect(bgColor, BubblecColor, strokecolor) {
+    this.bgColor = bgColor;
+    this.bubbleColor = BubblecColor;
+    this.strokeColor = strokecolor;
+    this.bubbles = [];
+    for (let index = 0; index < 15; index++) {
+      this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
+    }
+
+    this.draw = function () {
+      ctx.fillStyle = this.bgColor;
+      ctx.fillRect(0, 0, 320, 200)
+      this.bubbles.forEach((bubble, i) => {
+        bubble.draw();
+        if (bubble.y < -50) {
+          this.bubbles.splice(i, 1)
+          this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
+        }
+      });
+      if (bubbleMeter.value < 1 && bubblegoing == true || poisongoing && poisonMeter.value == 0) {
+        this.lifetime = 0;
+        bubblegoing = false;
+        poisongoing = false;
+      }
+    }
+  }
+
+
+
+
+  function DamageState() {
+    this.start = new Date().getTime();
+    this.lifetime = 45;
+
+    this.draw = function () {
+      this.lifetime -= 1;
+      if (this.lifetime > 10 && this.lifetime < 15) {
+        ctx.fillStyle = "#ffffff";
+      } else if (this.lifetime > 40 && this.lifetime < 45) {
+        ctx.fillStyle = "#ffffff";
+      } else {
+        ctx.fillStyle = effectHex1;
+      }
+      ctx.fillRect(0, 0, 320, 200);
+    };
+  }
+
+  function HealState() {
+    this.start = new Date().getTime();
+    this.lifetime = 45;
+
+    this.draw = function () {
+      this.lifetime = 2000 - (new Date().getTime() - this.start)
+
+      ctx.fillStyle = "hsla(311,100%,50%, 0.5)";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.arc(160, 100, (200 - (this.lifetime) / 10), 0, 2 * Math.PI);
+      ctx.stroke();
+
+      ctx.fillStyle = "white";
+      ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+      ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+      ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    };
+  }
+
+  function ArmorState() {
+    this.start = new Date().getTime();
+    this.lifetime = 45;
+
+    this.draw = function () {
+      // this.lifetime -= 1;
+
+      // if (this.lifetime < 10) {
+      //   ctx.fillStyle = "rgba(255,255,255," + this.lifetime / 10 + ")";
+      // } else if (this.lifetime > 35) {
+      //   ctx.fillStyle = "rgba(255,255,255," + (35 - this.lifetime) / 10 + ")";
+      // } else {
+      //   ctx.fillStyle = "white";
+      // }
+      // ctx.fillRect(0, 0, armorMeter.value * 500, 200);
+    };
+  }
+
+  function lowHealthState() {
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.fillStyle = "hsla(0, 100%, 50%, 0.6)"
+      ctx.fillRect(0, 0, 320, 200);
+      if (lowHpMeter.value == 0 || lowHpMeter.value > 0.8) {
+        this.lifetime = 0;
+        lowHpGoing = false;
+      }
+    }
+  }
+
+  function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] + '%)'
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+    }
+  }
+
+  function BossState() {
+    this.Process = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+      //console.log(bossMeter.value);
+      for (var iZone = 0; iZone < 560; iZone++) {
+        if (iZx > bossMeter.value * 320) {
+          ctx.fillStyle =
+            "hsl(" +
+            hue[iZone] +
+            "," +
+            sat[iZone] +
+            "%," +
+            lightness[iZone] +
+            "%)";
+        } else {
+          ctx.fillStyle =
+            "hsl(" + 273 + "," + sat[iZone] + "%," + lightness[iZone] + "%)";
+        }
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+    };
+  }
+
+  function HungerState() {
+    // this.start = new Date().getTime();
+    // this.lifetime = 45;
+    // this.draw = function () {
+    //   this.lifetime -= 1;
+
+    //   ctx.fillStyle = effectHex3;
+    //   ctx.fillRect(0, 0, 320, 200);
+    // };
+  }
+
+  function fedState() {
+    // this.start = new Date().getTime();
+    // this.lifetime = 45;
+
+    // this.draw = function () {
+    //   this.lifetime -= 1;
+
+    //   ctx.fillStyle = effectHex4;
+    //   ctx.fillRect(0, 0, 320, 200);
+
+    //   ctx.fillStyle = "white";
+    //   ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    //   ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    //   ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    // };
+  }
+
+  function getTime() {
+    return new Date().getTime();
+  }
+
+  class Snowflake {
+    constructor(x, speed, color) {
+      this.speed = speed / 5;
+      this.x = x;
+      this.y = 0 - Math.random() * 400;
+      this.start = getTime();
+      this.color = color;
+      this.lifetime = 100;
+      this.startval = Math.random() * 100;
+    }
+    draw() {
+      this.lifetime = 3000 - (getTime() - this.start);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI)
+      ctx.fillStyle = this.color
+      ctx.fill();
+      this.Spacing = 0;
+      ctx.lineWidth = 8;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(-this.lifetime / 500)
+      for (let index = 0; index < 8; index++) {
+        ctx.strokeStyle = this.color;
+        ctx.moveTo(0, 0)
+        ctx.lineTo((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30));
+        ctx.stroke();
+        this.Spacing += 0.8;
+      }
+      ctx.restore();
+      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
+      this.y += this.speed
+    }
+  }
+
+  class Bubble {
+    constructor(bubbleColor, strokeColor, bubbleSize) {
+      this.bubbleColor = bubbleColor
+      this.strokeColor = strokeColor;
+      this.size = bubbleSize;
+      this.x = Math.random() * 320;
+      this.lifetime = 100;
+      this.startval = Math.random() * 100;
+      this.y = 200 + Math.random() * 400;
+      this.start = getTime();
+      this.speed = 5;
+    }
+    draw() {
+      ctx.lineWidth = 5;
+      this.lifetime = (getTime() - this.start);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
+      ctx.strokeStyle = this.strokeColor;
+      ctx.fillStyle = this.bubbleColor;
+      ctx.fill();
+      ctx.stroke();
+      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
+      this.y -= this.speed
+    }
+  }
+
+
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    // Set current state to the top item in the stack
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    // Allows dev to add effect to state handler
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+    // Allows dev to remove effect from handler
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+    // Call the Process function of the current state (effect)
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+
+        callback();
+      }
+    };
+  }
+
+
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+</script>
