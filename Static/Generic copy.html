@@ -17,13 +17,6 @@
   ctx = canvas.getContext('2d');
   var effects = [];
 
-  var tones1Meter = new Meter(1, ()=>"");
-  var tones2Meter = new Meter(1, ()=>"");
-  var tones3Meter = new Meter(1, ()=>"");
-  var tones4Meter = new Meter(1, ()=>"");
-  var tones5Meter = new Meter(1, ()=>"");
-  var tones6Meter = new Meter(1, ()=>"");
-
   function update(){
     drawRect(0,0, 320, 200, "black");
     
@@ -48,24 +41,24 @@
     tones5Meter.setValue(reduced5);
     tones6Meter.setValue(reduced6);
 
-    if(tones1Meter.increased && tones1Meter.value > 200){
-      effects.push(new audioCube("red", 1));
-    }
-    if(tones2Meter.increased && tones2Meter.value > 200){
-      effects.push(new audioCube("orange", 2));
-    }
-    if(tones3Meter.increased && tones3Meter.value > 200){
-      effects.push(new audioCube("yellow", 3));
-    }
-    if(tones4Meter.increased && tones4Meter.value > 200){
-      effects.push(new audioCube("green", 4));
-    }
-    if(tones3Meter.increased && tones3Meter.value > 200){
-      effects.push(new audioCube("blue", 5));
-    }
-    if(tones4Meter.increased && tones4Meter.value > 200){
-      effects.push(new audioCube("purple", 6));
-    }
+    // if(tones1Meter.increased && tones1Meter.value > 200){
+    //   effects.push(new audioCube("red", 1));
+    // }
+    // if(tones2Meter.increased && tones2Meter.value > 200){
+    //   effects.push(new audioCube("orange", 2));
+    // }
+    // if(tones3Meter.increased && tones3Meter.value > 200){
+    //   effects.push(new audioCube("yellow", 3));
+    // }
+    // if(tones4Meter.increased && tones4Meter.value > 200){
+    //   effects.push(new audioCube("green", 4));
+    // }
+    // if(tones3Meter.increased && tones3Meter.value > 200){
+    //   effects.push(new audioCube("blue", 5));
+    // }
+    // if(tones4Meter.increased && tones4Meter.value > 200){
+    //   effects.push(new audioCube("purple", 6));
+    // }
 
 
     effects.forEach((ele, i) => {
@@ -82,33 +75,14 @@
     window.requestAnimationFrame(update);
   }
 
-  function audioCube(color, zone){
-
-      this.lifetime = 10;
-      this.y = 200;
-      this.color = color;
-      // this.x = zone == 1 ? Math.random() * 53 : 
-      //   zone == 2 ? Math.random() * 53 + 53 : 
-      //   zone == 3 ? Math.random() * 53 + 106 : 
-      //   zone == 4 ? Math.random() * 53 + 159 :
-      //   zone == 5 ? Math.random() * 53 + 212 : Math.random() * 53 + 265;
-      this.x = zone == 1 ? 0 : 
-        zone == 2 ? 53 : 
-        zone == 3 ? 106 : 
-        zone == 4 ? 159 :
-        zone == 5 ? 212 : 265;
-
-      this.draw = function(){
-        ctx.globalAlpha = .5;
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, 53, 53);
-        ctx.globalAlpha = 1;
-        this.y-=10;
-        if(this.y < -30){
-          this.lifetime = 0;
-        }
-      }
+  function bird(x, y, color, channel){
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.draw = function(){
+      DrawCircle(this.x, this.y, 25, "blue")
     }
+  }
 
   function Meter(count, callback) {
     this.size = count;
