@@ -1,23 +1,18 @@
 <head>
-    <title>ROCCAT effect</title>
-    <meta description="Basic Effects" />
-    <meta publisher="SignalRgb" />
-    <meta
-    property="reactive"
-    label="Audio Reactive"
-    type="boolean"
-    default="1"
-    />
+    <title>DrDisRespect</title>
+    <meta description="DrDisRespect Theme from ROCCAT" />
+    <meta publisher="ROCCAT" />
     <meta
     property="realish"
     label="6-foot-8 frame"
     type="boolean"
     default="1"
     />
-    <meta property="drX" label="Dr X-Coordinate" type="number" min="-200" max="200" default="-16"/>
-    <meta property="drY" label="Dr Y-Coordinate" type="number" min="-200" max="200" default="-1"/>
-    <meta property="drScale" label="Dr Scale" type="number" min="0" max="50" default="11"/>
-    <meta property="sweepSpeed" label="Sweep Speed" type="number" min="0" max="100" default="50"/>
+    <meta property="drX" label="X-Coordinate" type="number" min="-200" max="200" default="-16"/>
+    <meta property="drY" label="Y-Coordinate" type="number" min="-200" max="200" default="-1"/>
+    <meta property="drScale" label="Scale" type="number" min="0" max="50" default="11"/>
+    <meta property="sweepSpeed" label="Speed" type="number" min="0" max="100" default="50"/>
+    <meta property="sweepFreq" label="Frequency" type="number" min="0" max="100" default="50"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -27,8 +22,6 @@
   canvas = document.getElementById('exCanvas');
   ctx = canvas.getContext('2d');
   var effects = [];
-  var frequency = 0; 
-  var lowTones = 0; 
   var sweepStart = Date.now();
 
 
@@ -44,25 +37,15 @@
   function update(){
     var movement = Math.sin(Date.now() / 300) * 2;
 
-    if (reactive){
-      frequency = new Int8Array(engine.audio.freq)
-      lowtones = frequency.slice(0, 5).reduce((a, b) => a + b, 0);
-    } else {
-      frequency = 0;
-      lowtones = 0;
-    }
-
     if (realish){
-      if (reactive){
-        ctx.fillStyle = `rgb(${100 + engine.audio.level * 3}, 0, 0)`;
-      } else {
-        ctx.fillStyle = `rgb(50, 0, 0)`;
-      }
+      ctx.fillStyle = `rgb(50, 0, 0)`;
       ctx.fillRect(0, 0, 320, 200);
 
-      for (let i = 0; i < 3; i++){
-        effects.push(new movingParticle("white", false));
-      };
+      if (sweepSpeed > 0){
+        for (let i = 0; i < sweepFreq / 25; i++){
+          effects.push(new movingParticle("white", false));
+        };
+      }
     
       effects.forEach((ele, i) => {
         ele.draw();
@@ -72,7 +55,7 @@
       });
 
       ctx.save()
-      ctx.transform(drScale/10, 0, 0, drScale/10, 0, 0);
+      ctx.transform(drScale/10, 0, 0, drScale/10, 160 - drScale * 16.5, 79 - drScale * 7.5);
       renderPath(drX, drY + 10 + movement, back, `hsl(0, 0%, 5%)`);
       renderPath(drX + 60, drY + 155 - movement, vest, `hsl(0, 100%, 50%)`);
       renderPath(drX + 123, drY + 60 + movement * .9, face, `hsl(0, 0%, 60%)`);
@@ -80,7 +63,7 @@
       renderPath(drX + 143, drY + 117 + movement * .8, mustache, `hsl(0, 0%, 5%)`);
       ctx.restore();
     } else {
-      if(Date.now() - sweepStart > 2000 - sweepSpeed * 20){
+      if(Date.now() - sweepStart > 2200 - sweepFreq * 20){
         effects.push(new upwardSweep());
         sweepStart = Date.now();
       }
@@ -92,7 +75,7 @@
         }
       });
       ctx.save()
-      ctx.transform(drScale/10, 0, 0, drScale/10, 0, 0);
+      ctx.transform(drScale/10, 0, 0, drScale/10, 155 - drScale * 15, 85 - drScale * 8);
       renderPath(drX + 100, drY + 55, logoShades, "black");
       renderPath(drX + 113, drY + 100, logoStache, "black");
       ctx.lineWidth = 10;
@@ -123,19 +106,18 @@
     this.y = 200;
     this.color = color;
     this.radius = Math.random() * 30;
-    this.vy = 3 * Math.random() + 1;
-    this.vx = direction == "up" ? 0 : 1.5 * Math.random() + 1;
+    this.random = Math.sin(Date.now()) * 4;
     this.lifetime = 10;
 
     this.draw = function(){
       ctx.globalAlpha = .1;
       DrawCircle(this.x, this.y, this.radius, this.color);
       if (this.x < 160){
-        this.x -= this.vx; 
+        this.x -= sweepSpeed/12 + this.random; 
       } else {
-        this.x += this.vx;
+        this.x += sweepSpeed/12 + this.random;
       }
-      this.y -= this.vy;
+      this.y -= sweepSpeed/10;
       if(this.y < 0){
         this.lifetime = 0;
       }
@@ -152,7 +134,7 @@
         ctx.beginPath();
         ctx.fillStyle = "red";
         ctx.fillRect(0, this.y, 320, 30);
-        this.y-=15;
+        this.y-=sweepSpeed/4;
         if (this.y < -10){
           this.lifetime = 0;
         } 
