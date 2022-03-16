@@ -11,6 +11,12 @@
     <meta property="drX" label="X-Coordinate" type="number" min="-200" max="200" default="-16"/>
     <meta property="drY" label="Y-Coordinate" type="number" min="-200" max="200" default="-1"/>
     <meta property="drScale" label="Scale" type="number" min="0" max="50" default="11"/>
+    <meta
+    property="backGroundEffect"
+    label="Background Effect"
+    type="boolean"
+    default="1"
+    />
     <meta property="sweepSpeed" label="Speed" type="number" min="0" max="100" default="50"/>
     <meta property="sweepFreq" label="Frequency" type="number" min="0" max="100" default="50"/>
 
@@ -41,8 +47,8 @@
       ctx.fillStyle = `rgb(50, 0, 0)`;
       ctx.fillRect(0, 0, 320, 200);
 
-      if (sweepSpeed > 0){
-        for (let i = 0; i < sweepFreq / 25; i++){
+      if (sweepSpeed > 0 && backGroundEffect){
+        for (let i = 0; i < sweepFreq / 10; i++){
           effects.push(new movingParticle("white", false));
         };
       }
@@ -63,7 +69,7 @@
       renderPath(drX + 143, drY + 117 + movement * .8, mustache, `hsl(0, 0%, 5%)`);
       ctx.restore();
     } else {
-      if(Date.now() - sweepStart > 2200 - sweepFreq * 20){
+      if(Date.now() - sweepStart > 2200 - sweepFreq * 20 && backGroundEffect){
         effects.push(new upwardSweep());
         sweepStart = Date.now();
       }
@@ -104,20 +110,21 @@
   function movingParticle(color, direction){
     this.x = Math.random() * 320;
     this.y = 200;
+    this.xChange = Math.random() * 30;
+    this.yChange = Math.random() * 25;
     this.color = color;
     this.radius = Math.random() * 30;
-    this.random = Math.sin(Date.now()) * 4;
     this.lifetime = 10;
 
     this.draw = function(){
       ctx.globalAlpha = .1;
       DrawCircle(this.x, this.y, this.radius, this.color);
       if (this.x < 160){
-        this.x -= sweepSpeed/12 + this.random; 
+        this.x -= sweepSpeed/this.xChange; 
       } else {
-        this.x += sweepSpeed/12 + this.random;
+        this.x += sweepSpeed/this.xChange;
       }
-      this.y -= sweepSpeed/10;
+      this.y -= sweepSpeed/this.yChange;
       if(this.y < 0){
         this.lifetime = 0;
       }

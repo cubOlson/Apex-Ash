@@ -1,13 +1,11 @@
 <head>
-    <title>SkyTech</title>
+    <title>SkyTech v3</title>
     <meta description="Basic Effects" />
     <meta publisher="Skytech Gaming" />
 
-  <meta property="spinSpeed" label="Logo Rotation Speed" type="number" min="0" max="100" default="50"/>
-  <meta property="spinScale" label="Logo Scale" type="number" min="0" max="100" default="50"/>
-  <meta property="backgroundEffect" label="Background Effect" type="boolean" default="0" />
-  <meta property="backgroundSpeed" label="Background Effect Speed" type="number" min="0" max="10" default="5"/>
-  <meta property="particles" label="Particle Amount" type="number" min="0" max="50" default="5"/>
+  <meta property="animToggle" label="Logo Effect On" type="boolean" default="0" />
+  <meta property="spinSpeed" label="Rotation Speed" type="number" min="0" max="100" default="50"/>
+  <meta property="spinScale" label="Scale" type="number" min="0" max="100" default="50"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -19,84 +17,117 @@
   var effects = [];
   var hues = [`hsl(0, 100%, 50%)`, `hsl(0, 0%, 90%)`, `hsl(0, 0%, 10%)`];
   var rotation = 0;
+  var phase = 0;
+  let prevTime = Date.now();
 
   var logo = "M47.17,38.19h6.5L68.79,63s19.13,1.61,19-3.69l38.74.16S121,74.85,101.58,74.69s-62.54,0-62.54,0L23.77,98l3.38,2.25L40,79.83l31.83.33L67,86.75l-27.82.32s-11.73,12.54-5.78,18L13.64,138.84s-10.45-13.35,0-30.55S44.51,54.11,44.51,54.11l-11.74-22-3.86,2.09L39,52.34,23.29,81.12l-4-8.68,14-23.31S27.47,31.28,20.55,34.34L.78.74S14.44-2.32,26.34,13.6,58.66,69.67,58.66,69.67l26.52,1.16.33-4.45-22.67-.85Z";
 
   function update(){
-    ctx.globalAlpha = .4;
-    ctx.fillStyle = "rgb(100, 0, 0)";
-    ctx.fillRect(0, 0, 320, 200);
-    ctx.globalAlpha = 1;
-
-    if(backgroundEffect){
-      if (effects.length < particles){
-        effects.push(new speedSquare())
-      }
+    if(animToggle){
+      ctx.globalAlpha = .4;
+      ctx.fillStyle = "rgb(100, 0, 0)";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.globalAlpha = 1;
   
-      effects.forEach((ele, i) => {
-        ele.draw();
-        if (ele.lifetime <= 0){
-          effects.splice(i, 1);
+        if (effects.length < 15){
+          effects.push(new speedSquare())
         }
-      });
+    
+        effects.forEach((ele, i) => {
+          ele.draw();
+          if (ele.lifetime <= 0){
+            effects.splice(i, 1);
+          }
+        });
+  
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
+      ctx.fill();
+  
+      ctx.fillStyle = "red";
+      ctx.save();
+      ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160, 100);
+      ctx.rotate(rotation - .3)
+      ctx.translate(-48, -66);
+      let ex3 = new Path2D(logo);
+      ctx.fill(ex3);
+      ctx.restore();
+  
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.globalAlpha = .45;
+      ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+  
+      ctx.fillStyle = "red";
+      ctx.save();
+      ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160, 100);
+      ctx.rotate(rotation - .15)
+      ctx.translate(-48, -66);
+      let ex2 = new Path2D(logo);
+      ctx.fill(ex2);
+      ctx.restore();
+  
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.globalAlpha = .45;
+      ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+  
+      ctx.strokeStyle = "white";
+      ctx.beginPath();
+      ctx.lineWidth = 20;
+      ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
+      ctx.stroke();
+  
+      ctx.fillStyle = "red";
+      ctx.save();
+      ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160, 100);
+      ctx.rotate(rotation)
+      ctx.translate(-48, -66);
+      let ex = new Path2D(logo);
+      ctx.fill(ex);
+      ctx.restore();
+      rotation+=spinSpeed/600;
+    } else {
+        ctx.fillStyle = "hsl(0, 100%, 0%)";
+        ctx.fillRect(0, 0, 320, 200);
+
+        let elapsedTime = Date.now() - prevTime;
+        prevTime = Date.now();
+
+        phase += spinSpeed * elapsedTime/500;
+
+        phase = phase % 360;
+
+        ctx.save();
+        ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160 - spinScale * 3.2, 100 - spinScale * 2);
+        drawSpiral();
+        ctx.restore();
     }
-
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "red";
-    ctx.save();
-    ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160, 100);
-    ctx.rotate(rotation - .3)
-    ctx.translate(-48, -66);
-    let ex3 = new Path2D(logo);
-    ctx.fill(ex3);
-    ctx.restore();
-
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.globalAlpha = .45;
-    ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    ctx.fillStyle = "red";
-    ctx.save();
-    ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160, 100);
-    ctx.rotate(rotation - .15)
-    ctx.translate(-48, -66);
-    let ex2 = new Path2D(logo);
-    ctx.fill(ex2);
-    ctx.restore();
-
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.globalAlpha = .45;
-    ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    ctx.strokeStyle = "white";
-    ctx.beginPath();
-    ctx.lineWidth = 20;
-    ctx.arc(160, 100, spinScale * 2, 0, Math.PI * 2);
-    ctx.stroke();
-
-    ctx.fillStyle = "red";
-    ctx.save();
-    ctx.transform(spinScale / 50, 0, 0, spinScale / 50, 160, 100);
-    ctx.rotate(rotation)
-    ctx.translate(-48, -66);
-    let ex = new Path2D(logo);
-    ctx.fill(ex);
-    ctx.restore();
-    rotation+=spinSpeed/600;
 
 
     window.requestAnimationFrame(update);
   }
+
+  function drawSpiral() {
+        for (var i = 0; i < 360; i += 1) {
+          var radphase = i / 360;
+
+          var start = 2 * Math.PI * (i + phase) / 360;
+          var end = 2 * Math.PI * (i + 3 + phase) / 360;
+
+          ctx.fillStyle = `hsl(0, ${radphase * 100}%, ${100 - radphase * 100}%)`;
+          ctx.beginPath();
+          ctx.arc(160, 100, 400, start, end);
+          ctx.lineTo(160, 100);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
 
       function speedSquare(){
           this.x = Math.random() * 320;
@@ -109,8 +140,8 @@
 
           this.draw = function(){
               DrawCircle(this.x, this.y, this.radius, "white");
-              this.vert ? this.y += (this.radius / 4 + this.rand) * backgroundSpeed / 10 : this.y -= (this.radius / 4 + this.rand) * backgroundSpeed / 10;
-              this.horiz ? this.x += (this.radius / 4 + this.rand) * backgroundSpeed / 10 : this.x -= (this.radius / 4 + this.rand) * backgroundSpeed / 10;
+              this.vert ? this.y += (this.radius / 4 + this.rand) * .5 : this.y -= (this.radius / 4 + this.rand) * .5;
+              this.horiz ? this.x += (this.radius / 4 + this.rand) * .5 : this.x -= (this.radius / 4 + this.rand) * .5;
               if (this.y < -35 || this.y > 235){
                 this.lifetime = 0;
               }
