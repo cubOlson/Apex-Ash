@@ -72,6 +72,9 @@
       if(Date.now() - sweepStart > 2200 - sweepFreq * 20 && backGroundEffect){
         effects.push(new upwardSweep());
         sweepStart = Date.now();
+      } else if (!backGroundEffect){
+        ctx.fillStyle = `rgb(150, 0, 0)`;
+        ctx.fillRect(0, 0, 320, 200);
       }
 
       effects.forEach((ele, i) => {
@@ -85,7 +88,7 @@
       renderPath(drX + 100, drY + 55, logoShades, "black");
       renderPath(drX + 113, drY + 100, logoStache, "black");
       ctx.lineWidth = 10;
-      DrawStroke(drX + 155, drY + 95, 75, `hsl(0, 0%, 5%)`);
+      DrawStroke(drX + 155, drY + 95, 75, `black`);
       ctx.restore();
 
       ctx.globalAlpha = .1;

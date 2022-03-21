@@ -1,0 +1,250 @@
+<head>
+    <title>Destiny 2 Production</title>
+    <meta description="Go on an adventure with metering and ambiance effects" />
+    <meta publisher="SignalRGB" />
+
+  
+    <meta meter="inGame" tags="Destiny 2" type="area" x="0.3525" y="0.8729" width="0.0085" height=".001" h="0-360" s="0-30" l="70-100">
+    </meta>
+    <meta meter="ab1Orange" tags="Destiny 2" type="area" x="0.2017" y="0.8465" width="0.004" height=".001" h="0-30" s="60-90" l="65-100">
+    </meta>
+    <meta meter="ab2Orange" tags="Destiny 2" type="area" x="0.2276" y="0.8424" width="0.004" height=".001" h="0-30" s="60-90" l="65-100">
+    </meta>
+    <meta meter="ab3Orange" tags="Destiny 2" type="area" x="0.2532" y="0.8382" width="0.004" height=".001" h="0-30" s="60-90" l="65-100">
+    </meta>
+    <meta meter="ab1Purple" tags="Destiny 2" type="area" x="0.2017" y="0.8465" width="0.004" height=".001" h="250-340" s="15-50" l="25-65">
+    </meta>
+    <meta meter="ab2Purple" tags="Destiny 2" type="area" x="0.2276" y="0.8424" width="0.004" height=".001" h="250-340" s="15-50" l="25-65">
+    </meta>
+    <meta meter="ab3Purple" tags="Destiny 2" type="area" x="0.2532" y="0.8382" width="0.004" height=".001" h="250-340" s="15-50" l="25-65">
+    </meta>
+    <meta meter="ab1Blue" tags="Destiny 2" type="area" x="0.2017" y="0.8465" width="0.004" height=".001" h="165-195" s="25-60" l="50-90">
+    </meta>
+    <meta meter="ab2Blue" tags="Destiny 2" type="area" x="0.2276" y="0.8424" width="0.004" height=".001" h="165-195" s="25-60" l="50-90">
+    </meta>
+    <meta meter="ab3Blue" tags="Destiny 2" type="area" x="0.2532" y="0.8382" width="0.004" height=".001" h="165-195" s="25-60" l="50-90">
+    </meta>
+    <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.1791" y="0.8292" width="0.004" height=".001" h="45-75" s="50-75" l="50-100">
+    </meta>
+    <meta meter="bossNoGhost" tags="Destiny 2" type="area" x="0.4953" y="0.15" width="0.002" height=".001" h="0-360" s="0-20" l="80-100">
+    </meta>
+    <meta meter="healthWhite" tags="Destiny 2" type="linear" x="0.4166" y="0.1132" width="0.165" h="0-360" s="0-20" l="80-100">
+    </meta>
+    <meta meter="healthRed" tags="Destiny 2" type="linear" x="0.4185" y="0.1132" width="0.01" h="0-10" s="75-100" l="75-100">
+    </meta>
+    <meta meter="ammoColorWhite" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="0-360" s="0-20" l="80-100">
+    </meta>
+    <meta meter="ammoColorPurple" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="250-280" s="25-50" l="75-100">
+    </meta>
+    <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="120-150" s="25-50" l="75-100">
+    </meta>
+    <meta meter="damageColorOrange" tags="Destiny 2" type="area" x="0.3045" y="0.8444" width="0.006" height=".025" h="0-25" s="30-100" l="0-100">
+    </meta>
+    <meta meter="damageColorPurple" tags="Destiny 2" type="area" x="0.3045" y="0.8444" width="0.006" height=".025" h="250-340" s="15-50" l="25-65">
+    </meta>
+    <meta meter="damageColorBlue" tags="Destiny 2" type="area" x="0.3045" y="0.8444" width="0.006" height=".025" h="165-195" s="25-60" l="50-90">
+    </meta>
+    <meta meter="glimmerUp" tags="Destiny 2" type="area" x="0.8318" y="0.2854" width="0.01" height=".001" h="190-210" s="50-75" l="65-95">
+    </meta>
+    <meta meter="downedGhost" tags="Destiny 2" type="area" x="0.1613" y="0.0979" width="0.01" height=".001" h="0-25" s="30-100" l="40-100">
+    </meta>
+    <meta meter="downedTo" tags="Destiny 2" type="ocr_textmatch" x="0.2549" y="0.1611" width="0.015" height=".02" string="TO" confidence="70">
+    </meta>
+  
+  </head>
+  
+  <body style="margin: 0; padding: 0; background: #000;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+  </body>
+  
+  <script>
+    var canvas, ctx;
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    var width = 320;
+    var height = 200;
+    var stateHdlr = new StateHandler();
+    var effects = [];
+
+    var InGameMeter = new Meter(10, ()=>"");
+    var Ability1OrangeMeter = new Meter(5, grenadeHandler);
+    var Ability2OrangeMeter = new Meter(5, meleeHandler);
+    var Ability3OrangeMeter = new Meter(5, zoneHandler);
+    var Ability1PurpleMeter = new Meter(5, grenadeHandler);
+    var Ability2PurpleMeter = new Meter(5, meleeHandler);
+    var Ability3PurpleMeter = new Meter(5, zoneHandler);
+    var Ability1BlueMeter = new Meter(5, grenadeHandler);
+    var Ability2BlueMeter = new Meter(5, meleeHandler);
+    var Ability3BlueMeter = new Meter(5, zoneHandler);
+    var UltimateMeter = new Meter(5, ultimateHandler);
+    var NoGhostMeter = new Meter(5, bossHandler);
+    var AmmoColorPurpleMeter = new Meter(5, ammoTypeHandler);
+    var AmmoColorWhiteMeter = new Meter(5, ammoTypeHandler);
+    var AmmoColorGreenMeter = new Meter(5, ammoTypeHandler);
+    var DamageColorPurpleMeter = new Meter(5, damageTypeHandler);
+    var DamageColorOrangeMeter = new Meter(5, damageTypeHandler);
+    var DamageColorBlueMeter = new Meter(5, damageTypeHandler);
+    var GlimmerMeter = new Meter(5, glimmerHandler);
+    var DownedGhostMeter = new Meter(5, downedHandler);
+    var DownedToMeter = new Meter(5, downedHandler);
+
+  
+    function update() {
+      InGameMeter.setValue(engine.vision.inGame);
+
+      if(InGameMeter.value == 1){
+        Ability1OrangeMeter.setValue(engine.vision.ab1Orange);
+        Ability2OrangeMeter.setValue(engine.vision.ab2Orange);
+        Ability3OrangeMeter.setValue(engine.vision.ab3Orange);
+        Ability1PurpleMeter.setValue(engine.vision.ab1Purple);
+        Ability2PurpleMeter.setValue(engine.vision.ab2Purple);
+        Ability3PurpleMeter.setValue(engine.vision.ab3Purple);
+        Ability1BlueMeter.setValue(engine.vision.ab1Blue);
+        Ability2BlueMeter.setValue(engine.vision.ab2Blue);
+        Ability3BlueMeter.setValue(engine.vision.ab3Blue);
+        NoGhostMeter.setValue(engine.vision.bossNoGhost);
+        AmmoColorPurpleMeter.setValue(engine.vision.ammoColorPurple);
+        AmmoColorWhiteMeter.setValue(engine.vision.ammoColorWhite);
+        AmmoColorGreenMeter.setValue(engine.vision.ammoColorGreen);
+        DamageColorPurpleMeter.setValue(engine.vision.damageColorPurple);
+        DamageColorOrangeMeter.setValue(engine.vision.damageColorOrange);
+        DamageColorBlueMeter.setValue(engine.vision.damageColorBlue);
+        GlimmerMeter.setValue(engine.vision.glimmerUp);
+        DownedGhostMeter.setValue(engine.vision.downedGhost);
+        DownedToMeter.setValue(engine.vision.downedTo);
+      }
+
+        copyScreen(1);
+  
+      for (let i = 0; i < effects.length; i++) {
+        effects[i].draw();
+        if (effects[i].lifetime <= 0) {
+          effects.splice(i, 1);
+        }
+      }
+  
+      stateHdlr.Process();
+      window.requestAnimationFrame(update);
+    }
+
+    function grenadeHandler(){
+      console.log("Grenade Used " + Date.now())
+    }
+
+    function meleeHandler(){
+      console.log("Melee Used " + Date.now())
+    }
+
+    function zoneHandler(){
+      console.log("Zone Used " + Date.now())
+    }
+
+    function ultimateHandler(){
+      console.log("Ultimate Used " + Date.now())
+    }
+
+    function bossHandler(){
+      console.log("In Boss Fight " + Date.now())
+    }
+
+    function ammoTypeHandler(){
+      console.log("Ammo Type Check " + Date.now())
+    }
+
+    function damageTypeHandler(){
+      console.log("Damage Type Check " + Date.now())
+    }
+
+    function glimmerHandler(){
+      console.log("Glimmer Increase " + Date.now())
+    }
+
+    function downedHandler(){
+      console.log("Downed " + Date.now())
+    }
+  
+  function copyScreen(alpha) {
+  
+  var shine = engine.vision.ShineMeter
+  let lightness = new Int8Array(engine.zone.lightness);
+  let sat = new Int8Array(engine.zone.saturation);
+  let hue = new Int16Array(engine.zone.hue);
+  for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          `${alpha}` +
+          ")";
+  
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+  }
+  
+  }
+  
+    function StateHandler() {
+      var stack = [];
+      var state = null;
+  
+      var updateState = function () {
+        if (stack.length > 0) {
+          state = stack[stack.length - 1];
+        } else {
+          state = null;
+        }
+      };
+  
+      this.Push = function (newState) {
+        stack.push(newState);
+        updateState();
+      };
+  
+      this.Pop = function () {
+        stack.pop();
+        updateState();
+      };
+  
+      this.Process = function () {
+        if (state != null) {
+          state.Process();
+        }
+      };
+    }
+  
+    function Meter(size, callback) {
+              this.size = size;
+              this.value = 0;
+              this.diff = 0;
+              this.increased = false;
+              this.decreased = false;
+              var values = [];
+  
+              this.setValue = function (updatedValue) {
+                  values.push(updatedValue);
+                  if (values.length > this.size) {
+                      values.shift();
+                  }
+  
+                  for (var i = 0; i < values.length - 1; i++) {
+                      if (values[i] !== values[i + 1]) return;
+                  }
+                  if (this.value !== values[0]) {
+                      this.diff = Math.abs(this.value - values[0]);
+                      this.increased = this.value < values[0];
+                      this.decreased = this.value > values[0];
+                      this.value = values[0];
+                      callback();
+                  }
+              };
+          }
+  </script>
