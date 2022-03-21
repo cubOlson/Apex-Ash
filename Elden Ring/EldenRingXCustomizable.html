@@ -1,5 +1,5 @@
 <head>
-  <title>Elden Ring Work</title>
+  <title>Elden Ring Production</title>
   <meta description="HUD and effects for Elden Ring. Brightness should be set to 5." />
   <meta publisher="SignalRgb" />
   <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
@@ -30,7 +30,7 @@
   <meta property="killOn" label="Boss Kill Effect" type="boolean" default="1" />
   <meta property="discoveryOn" label="Discovered Grace Effect" type="boolean" default="1" />
   <meta meter="hpRed" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0481" width="0.5" h="0-20" s="40-90" l="0-60">
-  <resolution size="3440x1440" x="0.189" y="0.0472" width="0.5" />
+  <resolution size="3440x1440" x="0.189" y="0.0472" width="0.33" />
   <resolution size="2560x1600" x="0.0828" y="0.0935" width="0.5" />
   <resolution size="1920x1200" x="0.0828" y="0.0935" width="0.5" />
   <resolution size="1680x1050" x="0.0828" y="0.0935" width="0.5" />
@@ -39,7 +39,7 @@
   </meta>
   <meta meter="hpConfirm" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0551" width="0.5" h="35-80" s="0-50"
     l="20-100">
-  <resolution size="3440x1440" x="0.189" y="0.0549" width="0.5" />
+  <resolution size="3440x1440" x="0.189" y="0.0549" width="0.33" />
   <resolution size="2560x1600" x="0.0828" y="0.0996" width="0.5" />
   <resolution size="2560x1440" x="0.0818" y="0.0535" width="0.5" />
   <resolution size="1920x1200" x="0.0828" y="0.0996" width="0.5" />
@@ -49,7 +49,7 @@
   </meta>
   <meta meter="manaBlue" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0639" width="0.5" h="190-210" s="40-90"
     l="0-60">
-  <resolution size="3440x1440" x="0.189" y="0.0646" width="0.5" />
+  <resolution size="3440x1440" x="0.189" y="0.0646" width="0.33" />
   <resolution size="2560x1600" x="0.0828" y="0.1074" width="0.5" />
   <resolution size="1920x1200" x="0.0828" y="0.1074" width="0.5" />
   <resolution size="1680x1050" x="0.0828" y="0.1074" width="0.5" />
@@ -58,7 +58,7 @@
   </meta>
   <meta meter="manaConfirm" tags="vlc,ELDEN RING" type="linear" x="0.0818" y="0.0713" width="0.5" h="35-80" s="15-50"
     l="20-100">
-  <resolution size="3440x1440" x="0.189" y="0.0716" width="0.5" />
+  <resolution size="3440x1440" x="0.189" y="0.0716" width="0.33" />
   <resolution size="2560x1440" x="0.0818" y="0.0718" width="0.5" />
   <resolution size="2560x1600" x="0.0828" y="0.1134" width="0.5" />
   <resolution size="1920x1200" x="0.0828" y="0.1139" width="0.5" />
@@ -68,7 +68,7 @@
   </meta>
   <meta meter="staminaGreen" tags="vlc,ELDEN RING" type="linear" x="0.0823" y="0.0806" width="0.5" h="130-160" s="40-90"
     l="0-60">
-  <resolution size="3440x1440" x="0.189" y="0.0813" width="0.5" />
+  <resolution size="3440x1440" x="0.189" y="0.0813" width="0.33" />
   <resolution size="2560x1600" x="0.0828" y="0.1231" width="0.5" />
   <resolution size="1920x1200" x="0.0828" y="0.1231" width="0.5" />
   <resolution size="1680x1050" x="0.0828" y="0.1231" width="0.5" />
@@ -77,7 +77,7 @@
   </meta>
   <meta meter="staminaConfirm" tags="vlc,ELDEN RING" type="linear" x="0.0823" y="0.0885" width="0.5" h="35-80" s="15-50"
     l="20-100">
-  <resolution size="3440x1440" x="0.189" y="0.0883" width="0.5" />
+  <resolution size="3440x1440" x="0.189" y="0.0883" width="0.33" />
   <resolution size="2560x1440" x="0.0823" y="0.087" width="0.5" />
   <resolution size="2560x1600" x="0.0823" y="0.1287" width="0.5" />
   <resolution size="1920x1200" x="0.0823" y="0.1287" width="0.5" />
@@ -312,6 +312,8 @@
       }
     });
 
+    console.log(engine.vision.staminaGreen + ' ' + Date.now())
+
     window.requestAnimationFrame(update);
   }
 
@@ -391,6 +393,7 @@
     this.y = 0;
     this.lifetime = 50;
     this.size = 0;
+    this.width = 0;
     this.draw = function () {
       this.size = vertMeters ? 200 : healthWidth;
       this.width = healthRedMeter.value / healthLengthMeter.value * this.size;
@@ -416,10 +419,10 @@
     this.y = 0;
     this.lifetime = 50;
     this.size = 0;
-
+    this.width = 0;
     this.draw = function () {
       this.size = vertMeters ? 200 : manaWidth;
-      this.width = manaBlueMeter.value / manaLengthMeter.value * this.size;
+      this.width = engine.vision.manaBlue / manaLengthMeter.value * this.size;
       if (vertMeters) {
         this.x = manaY;
         this.y = 200;
@@ -441,7 +444,7 @@
     this.y = 0;
     this.lifetime = 50;
     this.size = 0;
-
+    this.width = 0;
     this.draw = function () {
       this.size = vertMeters ? 200 : staminaWidth;
       this.width = engine.vision.staminaGreen / staminaLengthMeter.value * this.size;
@@ -466,7 +469,7 @@
     this.y = 0;
     this.lifetime = 50;
     this.size = 0;
-
+    this.width = 0;
     this.draw = function () {
       this.size = vertMeters ? 200 : bossWidth;
       this.width = bossHealthRedMeter.value / bossHealthLengthMeter.value * this.size;
