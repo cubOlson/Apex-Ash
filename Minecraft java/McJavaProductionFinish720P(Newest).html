@@ -2,85 +2,105 @@
   <title>Minecraft Java Edition Production</title>
   <meta description="Game intergration for Minecraft Java edition" />
   <meta publisher="WhirlwindFX" />
+  <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
+  <meta property="enableHud" label="enable Hud Effects" type="boolean" default="1" />
+  <meta property="adjMeter" label="Adjust Bar(Turn on only when not in Game)" type="boolean" default="0" />
   <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
-  <meta property="effectHex1" label="Decrease Health effect Color" type="color" min="0" max="360" default="#ff0000" />
-  <meta property="effectHex2" label="Increase Health effect Color" type="color" min="0" max="360" default="#ff57ae" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#ff0000" min="0" max="360" />
+  <meta property="healthY" label="Health bar Y position" type="number" min="0" max="200" default="70" />
+  <meta property="healthX" label="Health bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="healthWidth" label="Health bar width" type="number" min="0" max="320" default="320" />
+  <meta property="healthHeight" label="Health bar height" type="number" min="0" max="100" default="15" />
   <meta property="enableHunger" label="Hunger effect" type="boolean" default="1" />
-  <meta property="effectHex3" label="Hunger state effect Color" type="color" min="0" max="360" default="#572b00" />
-  <meta property="effectHex4" label="Is Fed effect Color" type="color" min="0" max="360" default="#fc8c03" />
-  <meta property="enableXP" label="XP effect" type="boolean" default="1" />
-  <meta property="enableBoss" label="Boss bar effect" type="boolean" default="1" />
-  <meta property="enableFire" label="On Fire effect" type="boolean" default="1" />
+  <meta property="foodColor" label="Food Bar Color" type="color" default="#ffaa00" min="0" max="360" />
+  <meta property="foodY" label="Food bar Y position" type="number" min="0" max="200" default="90" />
+  <meta property="foodX" label="Food bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="foodWidth" label="Food bar width" type="number" min="0" max="320" default="320" />
+  <meta property="foodHeight" label="Food bar height" type="number" min="0" max="100" default="15" />
+  <meta property="enableXP" label="enable XP effect" type="boolean" default="1" />
+  <meta property="enableBoss" label="enable Boss bar effect" type="boolean" default="1" />
+  <meta property="enableFreeze" label="enable Freeze effect" type="boolean" default="1" />
+  <meta property="enablePoison" label="enable Poison effect" type="boolean" default="1" />
+  <meta property="enableUnderwater" label="enable Underwater effect" type="boolean" default="1" />
 
   <meta meter="bubble1" tags="minecraft, vlc" x=".699" y=".7965" width=".003" h="0-360" s="0-100" l="0-10"
     type="linear">
-  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" /> -->
-  <resolution size="3840x2160" x=".699" y=".7965" width=".003" />
+  <resolution size="1920x1080" x=".678" y=".819" width=".003" />
+  <!-- <resolution size="2560x1440" x=".699" y=".7965" width=".003" /> -->
   </meta>
 
   <meta meter="bubble2" tags="minecraft, vlc" x=".699" y=".801" width=".003" h="175-240" s="60-100" l="80-100"
     type="linear">
-  <!-- <resolution size="1920x1080" x=".699" y=".801" width=".003" /> -->
-  <resolution size="3840x2160" x=".699" y=".801" width=".003" />
+  <resolution size="1920x1080" x=".6786" y=".824" width=".003" />
+  <!-- <resolution size="2560x1440" x=".699" y=".801" width=".003" /> -->
+
   </meta>
 
   <meta meter="bubble3" tags="minecraft, vlc" x=".699" y=".809" width=".003" h="175-240" s="0-60" l="80-100"
     type="linear">
-  <!-- <resolution size="1920x1080" x=".699" y=".809" width=".003" /> -->
-  <resolution size="3840x2160" x=".699" y=".809" width=".003" />
+  <resolution size="1920x1080" x=".6786" y=".831" width=".003" />
+  <!-- <resolution size="2560x1440" x=".699" y=".809" width=".003" /> -->
   </meta>
 
   <meta meter="health" tags="minecraft, vlc" x=".291" y=".8489" width=".1625" height=".001" h="0-20" s="60-100"
     l="80-100" type="area">
-  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" /> -->
-  <resolution size="3840x2160" x=".291" y=".8472" width=".1625" height=".001" />
+  <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" />
+  <!-- <resolution size="2560x1440" x=".291" y=".8489" width=".1625" height=".001" /> -->
+  </meta>
+
+  <meta meter="Food" tags="minecraft, vlc" x=".65234" y=".8687" width=".0007" height=".001" h="0-360" s="0-100"
+    l="80-100" type="area">
+  <resolution size="1920x1080" x=".6359" y=".88233" width=".0007" height=".001" />
+  <!-- <resolution size="2560x1440" x=".65234" y=".8687" width=".0007" height=".001" /> -->
+  </meta>
+
+  <meta meter="FoodBar" tags="minecraft" x=".5281" y=".8472" width=".18" height=".004" h="0-50" s="40-80" l="65-100"
+    type="area">
+  <resolution size="1920x1080" x=".5280" y=".865" width=".164" height=".002" />
+  <!-- <resolution size="2560x1440" x=".5281" y=".8472" width=".18" height=".004"  /> -->
   </meta>
 
   <meta meter="lowHp" tags="minecraft, vlc" x=".291" y=".8529" width=".04" height=".001" h="0-20" s="60-100" l="80-100"
     type="area">
-  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" /> -->
-  <resolution size="3840x2160" x=".291" y=".8472" width=".04" height=".001" />
+  <resolution size="1920x1080" x=".3150" y=".87" width=".04" height=".001" />
+  <!-- <resolution size="2560x1440" x=".291" y=".8529" width=".04" height=".001" /> -->
   </meta>
 
   <meta meter="LastHealth" tags="minecraft, vlc" x=".460" y=".8529" width=".01" height=".001" h="0-20" s="60-100"
     l="80-100" type="area">
-  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" /> -->
-  <resolution size="3840x2160" x=".460" y=".8529" width=".01" height=".001" />
+  <resolution size="1920x1080" x=".465" y=".87" width=".01" height=".001" />
+  <!-- <resolution size="2560x1440" x=".460" y=".8529" width=".01" height=".001" /> -->
+
   </meta>
 
   <meta meter="healthB" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="170-220" s="0-50"
     l="70-100" type="area">
-  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" /> -->
-  <resolution size="3840x2160" x=".291" y=".8472" width=".0150" height=".001" />
+  <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" />
+  <!-- <resolution size="2560x1440" x=".291" y=".8529" width=".0130" height=".001" /> -->
   </meta>
 
-  <meta meter="healthG" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="47-80" s="0-100"
+  <meta meter="healthG" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="40-80" s="0-100"
     l="40-90" type="area">
-  <!-- <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" /> -->
-  <resolution size="3840x2160" x=".291" y=".8472" width=".0150" height=".001" />
+  <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" />
+  <!-- <resolution size="2560x1440" x=".291" y=".8529" width=".0130" height=".001" /> -->
   </meta>
 
-  <meta meter="armor" tags="minecraft, vlc" x=".3124" y=".83" width=".164" height=".0020" h="0-360" s="0-10" l="70-80"
-    type="area">
-  <!-- <resolution size="1920x1080" x=".3124" y=".83" width=".164" height=".0020" /> -->
-  <resolution size="3840x2160" x=".29" y=".81" width=".164" height=".004" />
-  </meta>
   <meta meter="xp" tags="minecraft, vlc" x=".2898" y=".8861" width=".376" height=".002" h="80-100" s="30-100" l="0-100"
     type="area">
-  <!-- <resolution size="1920x1080" x=".3188" y=".9009" width=".376" height=".002" /> -->
-  <resolution size="3840x2160" x=".2898" y=".8861" width=".376" height=".002" />
+  <resolution size="1920x1080" x=".3188" y=".9009" width=".374" height=".002" />
+  <!-- <resolution size="2560x1440" x=".2898" y=".8861" width=".376" height=".002" /> -->
+
   </meta>
 
-  <meta meter="boss" tags="minecraft, vlc" x=".2898" y=".8861" width=".376" height=".002" h="260-330" s="80-100"
+  <meta meter="boss" tags="minecraft, vlc" x=".2898" y=".056" width=".376" height=".002" h="260-330" s="80-100"
     l="70-100" type="area">
-  <!-- <resolution size="1920x1080" x=".3151" y=".0490" width=".3125" height=".002" /> -->
-  <resolution size="3840x2160" x=".2898" y=".8861" width=".376" height=".002" />
+  <resolution size="1920x1080" x=".3151" y=".0490" width=".3125" height=".002" />
+  <!-- <resolution size="2560x1440" x=".2898" y=".056" width=".376" height=".002" /> -->
   </meta>
-
   <meta meter="inGame1" tags="minecraft, vlc" x=".3058" y=".913" width=".3815" height=".001" h="0-360" s="0-10"
     l="50-100" type="area">
-  <!-- <resolution size="1920x1080" x=".3151" y=".0499" width=".3125" height=".001" /> -->
-  <resolution size="3840x2160" x=".2898" y=".8861" width=".376" height=".001" />
+  <resolution size="1920x1080" x=".314" y=".924" width=".3815" height=".001" />
+  <!-- <resolution size="2560x1440" x=".3058" y=".913" width=".3815" height=".001" /> -->
   </meta>
 </head>
 
@@ -93,25 +113,35 @@
   var canvas, ctx;
   var stateHdlr = new StateHandler();
   var healthMeter = new Meter(12, onHealthMeterChanged);
+  var foodBarMeter = new Meter(40, () => "")
   var lastHealthMeter = new Meter(5, () => "")
   var freezeMeter = new Meter(5, onFreezeChange)
   var xpMeter = new Meter(10, onXpMeterChanged);
-  var armorMeter = new Meter(10, onArmorMeterChanged);
   var bossMeter = new Meter(10, onBossMeterChanged);
   var inGameMeter = new Meter(5, onGameChanged)
   var bubbleMeter = new Meter(5, onBubblechanged)
   var poisonMeter = new Meter(5, onPoisonChanged)
   var lowHpMeter = new Meter(5, onLowHpChanged)
+  var lowFoodMeter = new Meter(20, onFoodMeterChanged)
   var effects = [];
   var inGame = false;
   var freezeGoing = false;
   var bubblegoing = false;
   var poisongoing = false;
   var lowHpGoing = false;
+  var bossGoing = false;
 
 
   function update() {
-    IdleState();
+    if (Brightness != 0) {
+      IdleState();
+    } else {
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, 320, 200)
+    }
+
+    bossMeter.setValue(engine.vision.boss);
+    foodBarMeter.setValue(engine.vision.FoodBar)
     lastHealthMeter.setValue(engine.vision.LastHealth)
     inGameMeter.setValue(engine.vision.inGame1)
     lowHpMeter.setValue(engine.vision.lowHp)
@@ -121,9 +151,8 @@
 
     if (inGame) {
       xpMeter.setValue(engine.vision.xp);
-      armorMeter.setValue(engine.vision.armor);
-      bossMeter.setValue(engine.vision.boss);
       bubbleMeter.setValue(engine.vision.bubble1)
+      lowFoodMeter.setValue(engine.vision.Food)
     }
 
     //Effect handler 
@@ -133,26 +162,53 @@
         effects.splice(i, 1);
       }
     }
+    if (enableHud) {
+      UpdateUi(adjMeter);
+    }
+
     stateHdlr.Process();
     window.requestAnimationFrame(update);
+  }
+
+  function UpdateUi(adj) {
+    if (adj && !inGame) {
+      ctx.fillStyle = healthColor;
+      //HealthBar
+      ctx.fillRect(healthX, healthY, ((0.745 * 1.3) + (1 / 10)) * healthWidth, healthHeight)
+      ctx.fillStyle = foodColor;
+      ctx.fillRect(foodX, foodY, (0.36 * 2.95) * foodWidth, foodHeight)
+    }
+    ctx.fillStyle = healthColor;
+    //HealthBar
+    ctx.fillRect(healthX, healthY, ((healthMeter.value * 1.3) + (lastHealthMeter.value / 10)) * healthWidth, healthHeight)
+    ctx.fillStyle = foodColor;
+    ctx.fillRect(foodX, foodY, (foodBarMeter.value * 2.95) * foodWidth, foodHeight)
   }
 
 
   //Callbacks
   function onGameChanged() {
     if (inGameMeter.value > 0.6) {
-      if (healthMeter.value > 0 || freezeMeter.value > 0 || poisonMeter.value > 0 || lowHpMeter.value > 0) {
+      if (healthMeter.value > 0 || freezeMeter.value > 0 || lowHpMeter.value > 0 || poisonMeter.value > 0) {
         if (inGame == false) {
           setTimeout(() => {
             clearEffects()
             CheckAfterInGame();
-          }, 5);
+            console.log("clear");
+          }, 2);
         }
         inGame = true;
+      } else {
+        clearEffects()
+        inGame = false
+        onBossMeterChanged(true)
+        console.log("out");
       }
     } else {
       clearEffects()
       inGame = false
+      onBossMeterChanged(true)
+      console.log("out");
     }
   }
 
@@ -170,10 +226,13 @@
     onPoisonChanged()
     onFreezeChange()
     onLowHpChanged()
+    onFoodMeterChanged()
+    onBossMeterChanged(true)
+
   }
 
   function onLowHpChanged() {
-    if (inGame && lowHpGoing == false && lowHpMeter.value < 0.7 && lastHealthMeter.value == 0) {
+    if (inGame && lowHpGoing == false && lowHpMeter.value < 0.7 && lastHealthMeter.value == 0 && enableHealth) {
       effects.push(new lowHealthState())
       lowHpGoing = true;
     }
@@ -181,21 +240,21 @@
 
 
   function onFreezeChange() {
-    if (freezeMeter.value > 0.2 && freezeGoing == false) {
+    if (freezeMeter.value > 0.2 && freezeGoing == false && enableFreeze) {
       effects.push(new FreezeEffect())
       freezeGoing = true;
     }
   }
 
   function onBubblechanged() {
-    if (bubbleMeter.value == 1 && engine.vision.bubble2 == 1 && engine.vision.bubble3 == 1 && inGame) {
+    if (bubbleMeter.value == 1 && engine.vision.bubble2 == 1 && engine.vision.bubble3 == 1 && inGame && enableUnderwater) {
       effects.push(new bubbleEffect("hsla(222, 100%, 46%, 0.7)", "hsla(189, 100%, 46%, 1)", "hsla(243, 100%, 46%, 1)"))
       bubblegoing = true;
     }
   }
 
   function onPoisonChanged() {
-    if (poisonMeter.value >= 0.2 && poisongoing == false && healthMeter.value == 0) {
+    if (poisonMeter.value >= 0.2 && poisongoing == false && healthMeter.value == 0 && enablePoison) {
       effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
       poisongoing = true;
     }
@@ -203,19 +262,26 @@
 
   function onHealthMeterChanged() {
     //console.log(healthMeter.value);
-    if (enableHealth == 1 && inGame && freezeMeter.value == 0 && poisonMeter.value == 0 && lastHealthMeter.value == 0 && lowHpGoing == false) {
+    if (enableHealth && inGame && freezeMeter.value == 0 && poisonMeter.value == 0 && lastHealthMeter.value == 0) {
       if (healthMeter.decreased) {
-        effects.push(new DamageState());
+        for (let index = 0; index < 20; index++) {
+          setTimeout(() => {
+            effects.push(new DamageState(160, 200, Math.random() * 10 + 15, "red"));
+          }, 20);
+
+        }
+
       } else if (healthMeter.increased && healthMeter.diff < 0.2) {
         effects.push(new HealState());
       }
     }
     onGameChanged();
+    onPoisonChanged()
   }
 
   function onXpMeterChanged() {
     if (enableXP == 1) {
-      if (xpMeter.increased && xpMeter.value > 0.01) {
+      if (xpMeter.increased && xpMeter.value > 0.01 || xpMeter.decreased && xpMeter.value) {
         effects.push(new XpUpState());
       }
     }
@@ -224,21 +290,17 @@
   function onFoodMeterChanged() {
     //console.log(foodMeter.value);
     if (enableHunger == true) {
-      if (foodMeter.decreased) {
-        effects.push(new HungerState());
-      } else if (foodMeter.increased) {
-        effects.push(new fedState());
+      if (lowFoodMeter.value < 0.3) {
+        effects.push(new FoodState());
       }
     }
   }
-
-  function onArmorMeterChanged() {
-    effects.push(new ArmorState());
-  }
-
-  function onBossMeterChanged() {
+  function onBossMeterChanged(Gamecheck) {
     if (enableBoss == 1) {
-      if (bossMeter.increased) {
+      if (Gamecheck && bossGoing) {
+        effects.push(new BossState());
+      }
+      if (bossMeter.increased != bossGoing) {
         //console.log(bossMeter.value);
         effects.push(new BossState());
       }
@@ -253,11 +315,12 @@
       this.lifetime -= 1;
       ctx.fillStyle = "#42d113";
       ctx.fillRect(0, 0, 320, 200);
-      ctx.fillStyle = "#e1ff00";
+      ctx.fillStyle = "green";
       ctx.beginPath();
-      ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
-      ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
-      ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
+      ctx.fillStyle = "blue";
+      for (let index = 0; index < 5; index++) {
+        ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
+      }
       ctx.fill();
     };
   }
@@ -316,22 +379,28 @@
 
 
 
-  function DamageState() {
-    this.start = new Date().getTime();
-    this.lifetime = 45;
-
+  function DamageState(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = x;
+    this.vx = 7 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -20;
+    this.ay = 1;
+    this.lifetime = 10;
     this.draw = function () {
-      this.lifetime -= 1;
-      if (this.lifetime > 10 && this.lifetime < 15) {
-        ctx.fillStyle = "#ffffff";
-      } else if (this.lifetime > 40 && this.lifetime < 45) {
-        ctx.fillStyle = "#ffffff";
-      } else {
-        ctx.fillStyle = effectHex1;
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
       }
-      ctx.fillRect(0, 0, 320, 200);
-    };
-  }
+    }
+  };
 
   function HealState() {
     this.start = new Date().getTime();
@@ -356,28 +425,14 @@
     };
   }
 
-  function ArmorState() {
-    this.start = new Date().getTime();
-    this.lifetime = 45;
 
-    this.draw = function () {
-      // this.lifetime -= 1;
-
-      // if (this.lifetime < 10) {
-      //   ctx.fillStyle = "rgba(255,255,255," + this.lifetime / 10 + ")";
-      // } else if (this.lifetime > 35) {
-      //   ctx.fillStyle = "rgba(255,255,255," + (35 - this.lifetime) / 10 + ")";
-      // } else {
-      //   ctx.fillStyle = "white";
-      // }
-      // ctx.fillRect(0, 0, armorMeter.value * 500, 200);
-    };
-  }
 
   function lowHealthState() {
     this.lifetime = 10;
+    this.start = getTime();
     this.draw = function () {
-      ctx.fillStyle = "hsla(0, 100%, 50%, 0.6)"
+      this.duration = getTime() - this.start;
+      ctx.fillStyle = `hsla(0, 100%, 50%, ${((Math.sin(this.duration / 600) + 1) / 3) + 0.1})`
       ctx.fillRect(0, 0, 320, 200);
       if (lowHpMeter.value == 0 || lowHpMeter.value > 0.8) {
         this.lifetime = 0;
@@ -392,7 +447,7 @@
     let hue = new Int16Array(engine.zone.hue);
 
     for (var iZone = 0; iZone < 560; iZone++) {
-      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] + '%)'
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * Brightness / 100 + '%)'
 
       var iRow = Math.floor(iZone / 28);
       var iCol = iZone % 28;
@@ -407,64 +462,38 @@
   }
 
   function BossState() {
-    this.Process = function () {
-      let lightness = new Int8Array(engine.zone.lightness);
-      let sat = new Int8Array(engine.zone.saturation);
-      let hue = new Int16Array(engine.zone.hue);
-      //console.log(bossMeter.value);
-      for (var iZone = 0; iZone < 560; iZone++) {
-        if (iZx > bossMeter.value * 320) {
-          ctx.fillStyle =
-            "hsl(" +
-            hue[iZone] +
-            "," +
-            sat[iZone] +
-            "%," +
-            lightness[iZone] +
-            "%)";
-        } else {
-          ctx.fillStyle =
-            "hsl(" + 273 + "," + sat[iZone] + "%," + lightness[iZone] + "%)";
-        }
-        var iRow = Math.floor(iZone / 28);
-        var iCol = iZone % 28;
-        var iWidth = 320 / 28;
-        var iHeight = 200 / 20;
-        var iZx = iCol * iWidth;
-        var iZy = iRow * iHeight;
+    bossGoing = true;
+    this.draw = function () {
+      ctx.fillStyle = "hsla(282, 100%, 50%, 0.4)"
+      ctx.fillRect(0, 0, bossMeter.value * 330, 200)
+      if (bossMeter.value == 0) {
+        this.lifetime = 0;
+        bossGoing = false;
+      }
+    }
+  }
 
-        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+  function FoodState() {
+    this.start = getTime();
+    this.lifetime = 100;
+    this.arrow = new ArrowEffect("down", "orange", 1, 0.5, 3000)
+    this.draw = function () {
+      this.dur = getTime() - this.start;
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(26, 100%, 50%, 0.4)"
+      ctx.fillRect(0, 0, 320, 200)
+      if (this.dur % 3000 < 100) {
+        this.arrow = new ArrowEffect("down", "orange", 1, 0.5, 3000)
+      }
+      this.arrow.draw();
+      if (lowFoodMeter.value == 1 && lowFoodMeter.increased) {
+        this.lifetime = 0;
+        effects.push(new RippleEffect(160, 100, 10, 3000, 30, "orange", "out", "stroke", 10))
       }
     };
   }
 
-  function HungerState() {
-    // this.start = new Date().getTime();
-    // this.lifetime = 45;
-    // this.draw = function () {
-    //   this.lifetime -= 1;
 
-    //   ctx.fillStyle = effectHex3;
-    //   ctx.fillRect(0, 0, 320, 200);
-    // };
-  }
-
-  function fedState() {
-    // this.start = new Date().getTime();
-    // this.lifetime = 45;
-
-    // this.draw = function () {
-    //   this.lifetime -= 1;
-
-    //   ctx.fillStyle = effectHex4;
-    //   ctx.fillRect(0, 0, 320, 200);
-
-    //   ctx.fillStyle = "white";
-    //   ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
-    //   ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
-    //   ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
-    // };
-  }
 
   function getTime() {
     return new Date().getTime();
@@ -504,6 +533,93 @@
     }
   }
 
+  function ArrowEffect(direction, color, amount, speed, duration) {
+    this.start = getTime();
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = this.duration;
+    this.direction = direction;
+    this.color = color;
+    this.amount = amount;
+    this.draw = function () {
+      if (this.direction == 'up') {
+        this.speed = -this.speed;
+        ctx.fillStyle = this.color;
+        for (let i = 0; i < this.amount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
+          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
+          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+          ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = this.color;
+        for (let i = 0; i < this.amount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, 300 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(320, 240 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(320, 180 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(160, 240 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(0, 180 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(0, 240 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(160, 300 - this.lifetime / 2.5 + (200 * i));
+          ctx.fill();
+        }
+      }
+      this.Ymin += this.speed;
+      this.elapsed = new Date().getTime() - this.start;
+      this.lifetime = this.duration - this.elapsed;
+    }
+  }
+  function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
+    this.col = color;
+    this.speed = speed;
+    this.dur = duration;
+    this.width = rippleWidth;
+    this.start = getTime();
+    this.lifetime;
+    this.x = x;
+    this.y = y;
+    this.fill = fillOrStroke;
+    this.radius = 0;
+    this.amount = amountOfRipples;
+    this.background = background;
+    if (inOrOut == "in") {
+      this.radius = 200 + (this.width * (this.amount * 2));
+      this.speed = -this.speed
+    }
+    this.draw = function () {
+      if (this.background) {
+        DrawBackground("black");
+      }
+
+
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      for (let i = 0; i < this.amount; i++) {
+        if (this.radius - i * (this.width * 2) > 0) {
+          ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+        }
+      }
+      if (this.fill == "fill") {
+        ctx.fillStyle = this.col;
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = this.col;
+        ctx.stroke();
+      }
+      this.radius += this.speed;
+      this.lifetime = this.dur - (getTime() - this.start);
+      if (this.lifetime <= 0) {
+        utilityPlayed = false;
+      }
+    }
+  }
+
   class Bubble {
     constructor(bubbleColor, strokeColor, bubbleSize) {
       this.bubbleColor = bubbleColor
@@ -527,6 +643,12 @@
       ctx.stroke();
       this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
       this.y -= this.speed
+    }
+  }
+
+  class dot {
+    constructor(x, y) {
+      this.x = x;
     }
   }
 
