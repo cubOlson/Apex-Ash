@@ -289,6 +289,7 @@
     <resolution size="1280x800" x=".3557" y=".9611" width=".2125" height=".0001"/>
   </meta>
   <meta meter="firstAlliedTurret" tags="league" x=".6575" y=".1324" width=".0093" height=".0213" h="190-210" s="65-100" l="75-100" type="area">
+    <resolution size="3440x1440" x=".6329" y=".135" width=".0073" height=".015"/> 
     <resolution size="2560x1600" x=".67" y=".1333" width=".0093" height=".0213"/>  
     <resolution size="1920x1200" x=".67" y=".1333" width=".0093" height=".0213"/>
     <resolution size="1680x1050" x=".67" y=".1333" width=".0093" height=".0213"/>
@@ -344,7 +345,7 @@
     <resolution size="1280x800" x="0.1599" y=".1880" width=".5335"/>
   </meta>
   <meta meter="RecallMeter" tags="league" x=".6715" y=".9340" width=".00898" height="0.0104" h="150-250" s="50-100" l="59-100" type="area">
-    <resolution size="3440x1440" x="0.6267" y=".9354" width=".00898" height="0.0104"/> 
+    <resolution size="3440x1440" x="0.6267" y=".9354" width=".0045" height="0.005"/> 
   </meta>
 </head>
 
@@ -400,10 +401,10 @@
   var d_Meter = new Meter(5, Utility_Effects);
   var f_Meter = new Meter(5, Utility_Effects);
   var levelUpMeter = new Meter(5, levelUpEffect);
-  var alliedTurretMeter = new Meter(7, turretEffects);
-  var enemyTurretMeter = new Meter(7, turretEffects);
-  var firstAlliedTurretMeter = new Meter(7, turretEffects);
-  var firstEnemyTurretMeter = new Meter(7, turretEffects);
+  var alliedTurretMeter = new Meter(8, turretEffects);
+  var enemyTurretMeter = new Meter(8, turretEffects);
+  var firstAlliedTurretMeter = new Meter(8, turretEffects);
+  var firstEnemyTurretMeter = new Meter(8, turretEffects);
   var shopMenuMeter = new Meter (2, shopMenu);
   var manaRMeter = new Meter(3, manaR);
   var manaQMeter = new Meter(3, manaQ);
@@ -1090,6 +1091,11 @@
     if(shopMenuMeter.value == 1){
       inShop = true;
       StopEffects = true
+    } else if (shopMenuMeter.value < .1 && inShop == true){
+      setTimeout(() => {
+        inShop = false;
+        StopEffects = false;
+      }, 1000);
     } else {
       inShop = false
       StopEffects = false;

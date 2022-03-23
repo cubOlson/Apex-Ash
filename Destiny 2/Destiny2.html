@@ -26,8 +26,6 @@
     </meta>
     <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.1791" y="0.8292" width="0.004" height=".001" h="45-75" s="50-75" l="50-100">
     </meta>
-    <meta meter="bossNoGhost" tags="Destiny 2" type="area" x="0.4953" y="0.15" width="0.002" height=".001" h="0-360" s="0-20" l="80-100">
-    </meta>
     <meta meter="healthWhite" tags="Destiny 2" type="linear" x="0.4166" y="0.1132" width="0.165" h="0-360" s="0-20" l="80-100">
     </meta>
     <meta meter="healthRed" tags="Destiny 2" type="linear" x="0.4185" y="0.1132" width="0.01" h="0-10" s="75-100" l="75-100">
@@ -38,17 +36,9 @@
     </meta>
     <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="120-150" s="25-50" l="75-100">
     </meta>
-    <meta meter="damageColorOrange" tags="Destiny 2" type="area" x="0.3045" y="0.8444" width="0.006" height=".025" h="0-25" s="30-100" l="0-100">
-    </meta>
-    <meta meter="damageColorPurple" tags="Destiny 2" type="area" x="0.3045" y="0.8444" width="0.006" height=".025" h="250-340" s="15-50" l="25-65">
-    </meta>
-    <meta meter="damageColorBlue" tags="Destiny 2" type="area" x="0.3045" y="0.8444" width="0.006" height=".025" h="165-195" s="25-60" l="50-90">
-    </meta>
     <meta meter="glimmerUp" tags="Destiny 2" type="area" x="0.8318" y="0.2854" width="0.01" height=".001" h="190-210" s="50-75" l="65-95">
     </meta>
     <meta meter="downedGhost" tags="Destiny 2" type="area" x="0.1613" y="0.0979" width="0.01" height=".001" h="0-25" s="30-100" l="40-100">
-    </meta>
-    <meta meter="downedTo" tags="Destiny 2" type="ocr_textmatch" x="0.2549" y="0.1611" width="0.015" height=".02" string="TO" confidence="70">
     </meta>
   
   </head>
@@ -67,26 +57,21 @@
     var effects = [];
 
     var InGameMeter = new Meter(10, ()=>"");
-    var Ability1OrangeMeter = new Meter(5, grenadeHandler);
-    var Ability2OrangeMeter = new Meter(5, meleeHandler);
-    var Ability3OrangeMeter = new Meter(5, zoneHandler);
-    var Ability1PurpleMeter = new Meter(5, grenadeHandler);
-    var Ability2PurpleMeter = new Meter(5, meleeHandler);
-    var Ability3PurpleMeter = new Meter(5, zoneHandler);
-    var Ability1BlueMeter = new Meter(5, grenadeHandler);
-    var Ability2BlueMeter = new Meter(5, meleeHandler);
-    var Ability3BlueMeter = new Meter(5, zoneHandler);
-    var UltimateMeter = new Meter(5, ultimateHandler);
-    var NoGhostMeter = new Meter(5, bossHandler);
+    var Ability1OrangeMeter = new Meter(10, grenadeHandler);
+    var Ability2OrangeMeter = new Meter(10, meleeHandler);
+    var Ability3OrangeMeter = new Meter(15, zoneHandler);
+    var Ability1PurpleMeter = new Meter(10, grenadeHandler);
+    var Ability2PurpleMeter = new Meter(10, meleeHandler);
+    var Ability3PurpleMeter = new Meter(15, zoneHandler);
+    var Ability1BlueMeter = new Meter(10, grenadeHandler);
+    var Ability2BlueMeter = new Meter(10, meleeHandler);
+    var Ability3BlueMeter = new Meter(15, zoneHandler);
+    var UltimateMeter = new Meter(10, ultimateHandler);
     var AmmoColorPurpleMeter = new Meter(5, ammoTypeHandler);
     var AmmoColorWhiteMeter = new Meter(5, ammoTypeHandler);
     var AmmoColorGreenMeter = new Meter(5, ammoTypeHandler);
-    var DamageColorPurpleMeter = new Meter(5, damageTypeHandler);
-    var DamageColorOrangeMeter = new Meter(5, damageTypeHandler);
-    var DamageColorBlueMeter = new Meter(5, damageTypeHandler);
-    var GlimmerMeter = new Meter(5, glimmerHandler);
-    var DownedGhostMeter = new Meter(5, downedHandler);
-    var DownedToMeter = new Meter(5, downedHandler);
+    var GlimmerMeter = new Meter(20, glimmerHandler);
+    var DownedGhostMeter = new Meter(20, downedHandler);
 
   
     function update() {
@@ -102,16 +87,11 @@
         Ability1BlueMeter.setValue(engine.vision.ab1Blue);
         Ability2BlueMeter.setValue(engine.vision.ab2Blue);
         Ability3BlueMeter.setValue(engine.vision.ab3Blue);
-        NoGhostMeter.setValue(engine.vision.bossNoGhost);
         AmmoColorPurpleMeter.setValue(engine.vision.ammoColorPurple);
         AmmoColorWhiteMeter.setValue(engine.vision.ammoColorWhite);
         AmmoColorGreenMeter.setValue(engine.vision.ammoColorGreen);
-        DamageColorPurpleMeter.setValue(engine.vision.damageColorPurple);
-        DamageColorOrangeMeter.setValue(engine.vision.damageColorOrange);
-        DamageColorBlueMeter.setValue(engine.vision.damageColorBlue);
         GlimmerMeter.setValue(engine.vision.glimmerUp);
         DownedGhostMeter.setValue(engine.vision.downedGhost);
-        DownedToMeter.setValue(engine.vision.downedTo);
       }
 
         copyScreen(1);
@@ -128,39 +108,67 @@
     }
 
     function grenadeHandler(){
-      console.log("Grenade Used " + Date.now())
+      if(Ability1OrangeMeter.decreased){
+        console.log("Orange grenade Used " + Date.now())
+      }
+      if(Ability1BlueMeter.decreased){
+        console.log("Blue grenade Used " + Date.now())
+      }
+      if(Ability1PurpleMeter.decreased){
+        console.log("Purple grenade Used " + Date.now())
+      }
     }
 
     function meleeHandler(){
-      console.log("Melee Used " + Date.now())
+      if(Ability2OrangeMeter.decreased){
+        console.log("Orange melee Used " + Date.now())
+      }
+      if(Ability2BlueMeter.decreased){
+        console.log("Blue melee Used " + Date.now())
+      }
+      if(Ability2PurpleMeter.decreased){
+        console.log("Purple melee Used " + Date.now())
+      }
     }
 
     function zoneHandler(){
-      console.log("Zone Used " + Date.now())
+      if(Ability3OrangeMeter.decreased){
+        console.log("Orange zone Used " + Date.now())
+      }
+      if(Ability3BlueMeter.decreased){
+        console.log("Blue zone Used " + Date.now())
+      }
+      if(Ability3PurpleMeter.decreased){
+        console.log("Purple zone Used " + Date.now())
+      }
     }
 
     function ultimateHandler(){
       console.log("Ultimate Used " + Date.now())
     }
 
-    function bossHandler(){
-      console.log("In Boss Fight " + Date.now())
-    }
-
     function ammoTypeHandler(){
-      console.log("Ammo Type Check " + Date.now())
-    }
-
-    function damageTypeHandler(){
-      console.log("Damage Type Check " + Date.now())
+      if(AmmoColorGreenMeter.value == 1){
+        console.log("Green Ammo " + Date.now())
+      }
+      if(AmmoColorPurpleMeter.value == 1){
+        console.log("Purple Ammo " + Date.now())
+      }
+      if(AmmoColorWhiteMeter.value == 1){
+        console.log("White Ammo " + Date.now())
+      }
     }
 
     function glimmerHandler(){
-      console.log("Glimmer Increase " + Date.now())
+      if(GlimmerMeter.increased){
+        console.log("Glimmer Increase " + Date.now())
+      }
     }
 
     function downedHandler(){
-      console.log("Downed " + Date.now())
+      if(DownedGhostMeter.value == 1){
+        console.log("Downed " + Date.now())
+      }
     }
   
   function copyScreen(alpha) {
@@ -247,4 +255,6 @@
                   }
               };
           }
+
+    window.requestAnimationFrame(update);
   </script>
