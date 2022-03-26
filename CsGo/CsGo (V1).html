@@ -1,0 +1,587 @@
+<head>
+  <title>CsGo</title>
+  <meta description="Metering for CsGo" />
+  <meta publisher="WhirlwindFX" />
+
+
+  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
+
+
+  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+
+  <!-- Health -->
+  <meta meter="health" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".0652" y=".975"
+    width=".04211" h="0-360" s="0-100" l="80-100" type="linear">
+  </meta>
+
+  <!-- <meta meter="healthR" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".0652" y=".975"
+    width=".04211" h="0-30" s="70-100" l="80-100" type="linear">
+  </meta> -->
+
+  <!-- LobbyEffects -->
+  <meta meter="SearchGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609" y=".0277777"
+    width=".0001" h="140-200" s="10-40" l="80-100" type="linear">
+  </meta>
+
+  <meta meter="SearchGameConfirmation" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609"
+    y=".184" width=".0001" h="70-200" s="0-80" l="17-70" type="linear">
+  </meta>
+
+  <meta meter="FoundGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".4277"
+    width=".0001" h="70-140" s="10-80" l="10-50" type="linear">
+  </meta>
+
+  <!-- Armor -->
+  <!-- <meta meter="armor" tags="counter-strike, counter-strike:global offensive, cs:go" x=".1729" y=".9740" width=".0390"
+    h="0-360" s="0-100" l="70-100" type="linear" /> -->
+
+
+  <!-- TerroristWins -->
+  <meta meter="tWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".485" y=".1361" width=".0140"
+    height=".025" h="40-60" s="30-50" l="50-100" type="area" />
+
+  <meta meter="tWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4609" y=".206"
+    width=".0039" h="40-60" s="30-50" l="50-100" type="linear" />
+
+  <meta meter="tWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".5086" y=".168"
+    width=".0039" h="0-60" s="30-60" l="20-40" type="linear" />
+
+  <!-- CounterTerroristWins -->
+  <meta meter="ctWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".127"
+    width=".0039" h="0-360" s="0-100" l="0-5" type="linear" />
+
+  <meta meter="ctWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".497" y=".121"
+    width=".0039" height=".0002" h="165-250" s="0-40" l="40-60" type="area" />
+
+  <meta meter="ctWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4988" y=".153"
+    width=".00140" height=".0035" h="165-250" s="0-30" l="60-80" type="area" />
+
+  <!-- InShop -->
+  <meta meter="InShopBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4597" y=".9284"
+    width=".00140" h="0-360" s="0-100" l="0-10" type="linear" />
+
+
+  <meta meter="InShopBack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0429" y=".949005"
+    width=".0001" h="0-360" s="0-5" l="80-90" type="linear" />
+
+  <meta meter="AutoBuyBracket" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8941" y=".965277"
+    width=".0001" h="0-360" s="0-5" l="90-100" type="linear" />
+
+
+  <meta meter="BuyMinus" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01679" y=".3791"
+    width=".0001" h="0-30" s="50-80" l="60-80" type="linear" />
+
+  <!-- Spectating -->
+
+  <meta meter="SpectatingBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3597" y=".8840"
+    width=".0001" h="0-360" s="0-100" l="0-5" type="linear" />
+
+  <meta meter="SpectatingCt" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875"
+    width=".1" h="170-210" s="60-100" l="0-80" type="linear" />
+
+  <meta meter="SpectatingT" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875" width=".1"
+    h="30-60" s="80-100" l="70-100" type="linear" />
+
+  <!-- InGame -->
+  <meta meter="InGame" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01914" y=".33958" width=".0001"
+    h="0-360" s="0-5" l="85-100" type="linear" />
+
+  <meta meter="InGameConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".975"
+    width=".0001" h="0-360" s="0-40" l="30-60" type="linear" />
+
+  <!-- Kill -->
+
+  <meta meter="NormalKills" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8101" y=".95486"
+    width=".075" height=".0001" h="3-70" s="0-20" l="40-90" type="area" />
+
+
+
+</head>
+
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //Declaring variables
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var effects = [];
+  var healthMeter = new Meter(10, onHealthChanged);
+  var inGameMeter = new Meter(30, onGameChanged);
+  var inGame2Meter = new Meter(30, onGameChanged);
+  var SearchGameMeter = new Meter(40, onSearchChanged)
+  var SearchGameConfirmationMeter = new Meter(20, () => "")
+  var FoundGameMeter = new Meter(20, () => "")
+  var SpectatingBlackMeter = new Meter(25, onSpectatingChanged)
+  var SpectatingCtMeter = new Meter(25, onSpectatingChanged)
+  var SpectatingTMeter = new Meter(25, onSpectatingChanged)
+  var InShopBlackMeter = new Meter(10, onShopChanged)
+  var InShopBackMeter = new Meter(10, onShopChanged)
+  var AutoBuyBracketMeter = new Meter(10, onShopChanged)
+  var BuyMinusMeter = new Meter(3, onShopChanged)
+  var lowHpGoing = false;
+  var inGame = false;
+  var isSpectating = false;
+  var inShop = false;
+
+
+
+  //Declaring meters
+
+  function update() {
+    //Updating meters
+    IdleState();
+    SpectatingBlackMeter.setValue(engine.vision.SpectatingBlack)
+    SpectatingCtMeter.setValue(engine.vision.SpectatingCt)
+    SpectatingTMeter.setValue(engine.vision.SpectatingT)
+    inGameMeter.setValue(engine.vision.InGame);
+    SearchGameMeter.setValue(engine.vision.SearchGame)
+    SearchGameConfirmationMeter.setValue(engine.vision.SearchGameConfirmation)
+    FoundGameMeter.setValue(engine.vision.FoundGame)
+    inGame2Meter.setValue(engine.vision.InGameConfirmation)
+    InShopBlackMeter.setValue(engine.vision.InShopBlack)
+    InShopBackMeter.setValue(engine.vision.InShopBack)
+    AutoBuyBracketMeter.setValue(engine.vision.AutoBuyBracket)
+    BuyMinusMeter.setValue(engine.vision.BuyMinus)
+
+
+    if (inGame && !isSpectating) {
+      healthMeter.setValue(engine.vision.health)
+
+    }
+
+
+
+
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    stateMgr.Process();
+
+    window.requestAnimationFrame(update);
+  }
+
+
+
+  function onSpectatingChanged() {
+    if (SpectatingBlackMeter.value > 0.8 && SpectatingCtMeter.value > 0.7 || SpectatingBlackMeter.value > 0.8 && SpectatingTMeter.value > .7) {
+      isSpectating = true
+      if (SpectatingCtMeter.value > 0.7) {
+        effects.push(new SpectatingEffect(201, 98, 41))
+      } else {
+        effects.push(new SpectatingEffect(19, 98, 41))
+      }
+      console.log("Spectating")
+    } else {
+      isSpectating = false;
+      console.log("Stop Spectating")
+    }
+  }
+
+  function onShopChanged() {
+    if (InShopBlackMeter.value > 0.8 && InShopBackMeter.value > 0.8 && AutoBuyBracketMeter.value > 0.8) {
+      if (!inShop) {
+        effects.push(new ShopEffect())
+      }
+      inShop = true;
+    } else {
+      inShop = false;
+    }
+    if (inShop && BuyMinusMeter.value > 0.7) {
+      effects.push(new MoneyEffect("red"));
+    }
+  }
+
+  function onSearchChanged() {
+    if (SearchGameMeter.value == 1 && SearchGameConfirmationMeter.value > 0.7) {
+      console.log("Searching Match")
+      effects.push(new searchingMatchEffect());
+    }
+  }
+
+
+  function onGameChanged() {
+    if (inGameMeter.value == 1 && inGame2Meter.value == 1) {
+      inGame = true;
+      setTimeout(() => {
+
+      }, 10);
+      console.log("In game")
+    } else {
+      inGame = false;
+      ClearEffects()
+      AfterGameCheck();
+      console.log("Out game")
+    }
+  }
+
+  function ClearEffects() {
+    effects.length = 0;
+    lowHpGoing = false;
+    inShop = false;
+  }
+
+  function AfterGameCheck() {
+    onShopChanged();
+    onSpectatingChanged();
+  }
+
+  function onHealthChanged() {
+    if (healthMeter.decreased) {
+      for (let index = 0; index < 20; index++) {
+        setTimeout(() => {
+          effects.push(new DamageState(160, 200, Math.random() * 10 + 15, "red"));
+        }, 20);
+      }
+    }
+
+    if (healthMeter.value < 0.2 && lowHpGoing == false) {
+      effects.push(new lowHpState())
+      lowHpGoing = true;
+    }
+  }
+
+
+  function lowHpState() {
+    this.start = GetTime();
+    this.draw = function () {
+      ctx.fillStyle = "hsla(0,100%,50%,0.3)"
+      ctx.fillRect(0, 0, 320, 200);
+      if (healthMeter.value > 0.2) {
+        this.lifetime = 0;
+        lowHpGoing = false;
+      }
+    }
+  }
+
+  function ShopEffect() {
+    this.draw = function () {
+      ctx.fillStyle = "hsla(201, 98%, 41%, 0.3)"
+      ctx.fillRect(0, 0, 320, 200);
+      if (!inShop) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function searchingMatchEffect() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.duration = GetTime() - this.start
+      ctx.arc(160, 100, 130, 0, Math.PI * 2)
+      ctx.strokeStyle = "Green"
+      ctx.fillStyle = "hsla(99, 53%, 10%, 1)"
+      ctx.fill();
+      ctx.lineWidth = 20;
+      ctx.stroke();
+      ctx.save();
+      ctx.translate(160, 100);
+      ctx.rotate(this.duration / 500)
+      ctx.fillStyle = "Green"
+      ctx.fillRect(-15, 0, 30, 130)
+      ctx.restore();
+      if (FoundGameMeter.value == 1) {
+        effects.push(new ParticleExplosion(160, 100, "Green", 3, 2000, 100, 20, 2, false, false, false))
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function SpectatingEffect(colorh, colors, colorl) {
+    this.start = GetTime();
+    this.color = {
+      h: colorh,
+      s: colors,
+      l: colorl
+    }
+    this.cubes = [];
+
+    this.draw = function () {
+      if (Math.random() > 0.95) {
+        this.cubes.push(new MovingCube(320, 10, `hsl(${this.color.h}, ${this.color.s + ((Math.random() - .5) * 20)}%, ${this.color.l + ((Math.random() - .5) * 20)}%)`))
+      } else if (Math.random() < 0.05) {
+        this.cubes.push(new MovingCube(0, 10, `hsl(${this.color.h}, ${this.color.s + ((Math.random() - .5) * 50)}%, ${this.color.l + ((Math.random() - .5) * 50)}%)`))
+      }
+
+      console.log(this.cubes.length)
+      this.cubes.forEach(element => {
+        element.draw();
+      });
+      if (!isSpectating) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  class MovingCube {
+    constructor(startX, speed, color) {
+
+      this.startX = startX;
+      if (startX > 100) {
+        this.speed = - speed / 20;
+      } else {
+        this.speed = speed / 20;
+      }
+      this.color = color;
+      this.y = Math.random() * 200
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = this.color
+      ctx.globalAlpha = 0.6;
+      ctx.fillRect(this.startX, this.y, 50, 20);
+      ctx.globalAlpha = 1;
+      this.startX += this.speed;
+    }
+  }
+
+
+
+  function DamageState(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = x;
+    this.vx = 7 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -20;
+    this.ay = 1;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function MoneyEffect(color) {
+    this.start = GetTime();
+    this.money = [];
+    this.color = color;
+
+    for (let i = 0; i < 35; i++) {
+      this.money.push(new fallingMoney(Math.random() * 320, Math.random() + 5, this.color))
+    }
+    this.draw = function () {
+      this.money.forEach(money => {
+        money.draw();
+      });
+      if (GetTime() - this.start > 8000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+
+
+
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts, hasPhysics) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
+    this.hasPhysics = hasPhysics;
+
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }, this.hasPhysics))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+
+
+  function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * keyScreenBrightness / 100 + '%)'
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+    }
+  }
+
+
+
+  //helper functions
+  function GetTime() {
+    return new Date().getTime();
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  class fallingMoney {
+    constructor(x, speed, color) {
+      this.speed = speed / 5;
+      this.x = x;
+      this.y = 0 - (Math.random() * 250);
+      this.startVal = (Math.random() * 50);
+      this.start = GetTime();
+      this.color = color;
+    }
+    draw() {
+      this.elapsed = GetTime() - this.start;
+      this.moveVal = (this.elapsed / 1000);
+      ctx.fillStyle = this.color;
+      ctx.save();
+      ctx.translate(this.x + Math.sin(this.startVal + this.moveVal) * 100, this.y);
+      ctx.rotate(-Math.sin(this.moveVal + this.startVal) / 5);
+      ctx.fillRect(this.x, this.y, 100, 35);
+      ctx.restore();
+      this.y += this.speed;
+    }
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    }
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    }
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    }
+  }
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.  
+      values.push(updatedValue);
+      if (values.length > this.size) { values.shift(); }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < (values.length - 1); i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;      
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+  onEngineReady()
+
+</script>
