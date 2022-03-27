@@ -3,10 +3,8 @@
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
 
-    <meta property="drX" label="Dr X-Coordinate" type="number" min="-200" max="200" default="-56"/>
-    <meta property="drY" label="Dr Y-Coordinate" type="number" min="-200" max="200" default="-37"/>
-    <meta property="drScale" label="Dr Scale" type="number" min="0" max="50" default="15"/>
-    <meta property="sweepSpeed" label="Sweep Speed" type="number" min="0" max="100" default="50"/>
+    <meta property="eyeIntensity" label="Eye Shape" type="number" min="0" max="10" default="5"/>
+    <meta property="eyeEnergy" label="Eye Energy" type="number" min="1" max="10" default="1"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -16,31 +14,31 @@
   canvas = document.getElementById('exCanvas');
   ctx = canvas.getContext('2d');
   var effects = [];
+  var reduced1, reduced2, reduced3, reduced4, reduced5;
+
+  var frontTower = "M6.39,117.8s3.74-25.54,0-31.27L4.84,81.69H0L4,21.8s7.21,43.81,7.43,43.81L30.39,65,23.56,54.17,28.62,48,24.44,6.17s11,63,47.34,65.61c0,0,8.37,14.31,20.26.44L111.41,37l13,33.47s17.18,15.19,25.77.66c0,0,51.3-17,53.94-71.12V49.32l6.39,4.4L205,63h11.89l12.77-43.15-1.1,66.49s-7.71,4.85-4.62,31.49Z";
+  var backTower = "M10.14,17.73S-23.77,261,51.31,232l4.18,20,75.75-3.3-1.54-17.39s72.66,79.7,52.18-212C181.88,19.27,99.75,447.09,10.14,17.73Z";
 
   function update(){
-    drawRect(0,0, 320, 200, "black");
+    drawRect(0,0, 320, 200, "grey");
+
+    renderPath(67, -10, backTower, "yellow");
     
     var frequency = new Int8Array(engine.audio.freq)
-    var tones1 = frequency.slice(0, 33);
-    var reduced1 = tones1.reduce((a, b) => a + b, 0);
-    var tones2 = frequency.slice(33, 66);
-    var reduced2 = tones2.reduce((a, b) => a + b, 0);
-    var tones3 = frequency.slice(66, 99);
-    var reduced3 = tones3.reduce((a, b) => a + b, 0);
-    var tones4 = frequency.slice(99, 132);
-    var reduced4 = tones4.reduce((a, b) => a + b, 0);
-    var tones5 = frequency.slice(132, 165);
-    var reduced5 = tones5.reduce((a, b) => a + b, 0);
-    var tones6 = frequency.slice(165, 198);
-    var reduced6 = tones6.reduce((a, b) => a + b, 0);
-    
-    tones1Meter.setValue(reduced1);
-    tones2Meter.setValue(reduced2);
-    tones3Meter.setValue(reduced3);
-    tones4Meter.setValue(reduced4);
-    tones5Meter.setValue(reduced5);
-    tones6Meter.setValue(reduced6);
+    reduced1 = frequency.slice(0, 66);
+    reduced2 = frequency.slice(66, 132);
+    reduced3 = frequency.slice(132, 200);
 
+    new drawSoundCurve(160, 10, "right", 50, 150, "brown", reduced1).draw();
+    new drawSoundCurve(160, 10, "left", 50, 150, "brown", reduced1).draw();
+    new drawSoundCurve(160, 20, "right", 25, 130, "red", reduced2).draw();
+    new drawSoundCurve(160, 20, "left", 25, 130, "red", reduced2).draw();
+    new drawSoundCurve(160, 30, "right", 15, 110, "orange", reduced3).draw();
+    new drawSoundCurve(160, 30, "left", 15, 110, "orange", reduced3).draw();
+
+    renderPath(46, 125, frontTower, "black")
+
+    // reduced5 = frequency.slice(160, 200).reduce((a, b) => a + b, 0);
     // if(tones1Meter.increased && tones1Meter.value > 200){
     //   effects.push(new audioCube("red", 1));
     // }
@@ -68,20 +66,20 @@
         }
       });
 
-    for (let i = 0; i < frequency.length; i++){
-      drawRect(i * 1.6, 200, 1.6, -frequency[i] * 2, "white")
-    }
+    // for (let i = 0; i < frequency.length; i++){
+    //   drawRect(i * 1.6, 200, 1.6, -frequency[i] * 2, "white")
+    // }
 
     window.requestAnimationFrame(update);
   }
 
-  function bird(x, y, color, channel){
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.draw = function(){
-      DrawCircle(this.x, this.y, 25, "blue")
-    }
+  function renderPath(x, y, path, color){
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
   }
 
   function Meter(count, callback) {
@@ -111,6 +109,26 @@
       }
     };
   }
+    function drawSoundCurve(x, y, direction, width, height, color, array){
+      this.x = x;
+      this.y = y;
+      this.direction = direction;
+      this.width = width;
+      this.height = height;
+      this.color = color;
+      this.array = array;
+      this.loopHeight = this.height / this.array.length;
+      this.draw = function(){
+        this.array.forEach((ele, i) => {
+          var max = Math.max(...this.array);
+          var distance = this.array.length / 2 / Math.abs(this.array.length / 2 - i);
+          distance > 0 ? null : distance = .0001;
+          ele < 0 ? ele = 0 : null;
+          var loopWidth = this.direction == "right" ? (ele / max * this.width) * eyeEnergy + eyeIntensity * distance : (-this.width * ele / max) * eyeEnergy - eyeIntensity * distance;
+          drawRect(this.x, this.y + this.loopHeight * i, loopWidth, this.loopHeight, this.color)
+        });
+      };
+    };
 
     function DrawCircle(x,y,radius,color){
         ctx.beginPath();
