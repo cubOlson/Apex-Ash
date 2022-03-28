@@ -3,6 +3,9 @@
     <meta description="Go on an adventure with metering and ambiance effects" />
     <meta publisher="SignalRGB" />
 
+    <meta property="gameMode" label="Game mode" type="combobox"
+    values="Campaign,Crucible" default="Campaign" />
+
   
     <meta meter="inGame" tags="Destiny 2" type="area" x="0.3525" y="0.8729" width="0.0085" height=".001" h="0-360" s="0-30" l="70-100">
     </meta>
@@ -12,11 +15,11 @@
     </meta>
     <meta meter="ab3Orange" tags="Destiny 2" type="area" x="0.2363" y="0.8396" width="0.0026" height=".0479" h="0-30" s="60-90" l="65-100">
     </meta>
-    <meta meter="ab1Purple" tags="Destiny 2" type="area" x="0.1852" y="0.8465" width="0.0026" height=".0479" h="250-340" s="15-50" l="25-65">
+    <meta meter="ab1Purple" tags="Destiny 2" type="area" x="0.1852" y="0.8465" width="0.0026" height=".0479" h="270-360" s="15-50" l="25-65">
     </meta>
-    <meta meter="ab2Purple" tags="Destiny 2" type="area" x="0.2105" y="0.8431" width="0.0026" height=".0479" h="250-340" s="15-50" l="25-65">
+    <meta meter="ab2Purple" tags="Destiny 2" type="area" x="0.2105" y="0.8431" width="0.0026" height=".0479" h="270-360" s="15-50" l="25-65">
     </meta>
-    <meta meter="ab3Purple" tags="Destiny 2" type="area" x="0.2363" y="0.8396" width="0.0026" height=".0479" h="250-340" s="15-50" l="25-65">
+    <meta meter="ab3Purple" tags="Destiny 2" type="area" x="0.2363" y="0.8396" width="0.0026" height=".0479" h="270-360" s="15-50" l="25-65">
     </meta>
     <meta meter="ab1Blue" tags="Destiny 2" type="area" x="0.1852" y="0.8465" width="0.0026" height=".0479" h="165-195" s="25-60" l="50-90">
     </meta>
@@ -24,11 +27,13 @@
     </meta>
     <meta meter="ab3Blue" tags="Destiny 2" type="area" x="0.2363" y="0.8396" width="0.0026" height=".0479" h="165-195" s="25-60" l="50-90">
     </meta>
+    <meta meter="ab1White" tags="Destiny 2" type="area" x="0.1898" y="0.8542" width="0.0122" height=".0271" h="0-360" s="0-25" l="80-100">
+    </meta>
+    <meta meter="ab2White" tags="Destiny 2" type="area" x="0.216" y="0.8514" width="0.0122" height=".0271" h="0-360" s="0-25" l="80-100">
+    </meta>
+    <meta meter="ab3White" tags="Destiny 2" type="area" x="0.2416" y="0.8507" width="0.0122" height=".0271" h="0-360" s="0-25" l="80-100">
+    </meta>
     <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.1791" y="0.8292" width="0.004" height=".001" h="45-75" s="50-75" l="50-100">
-    </meta>
-    <meta meter="healthWhite" tags="Destiny 2" type="linear" x="0.4166" y="0.1132" width="0.165" h="0-360" s="0-20" l="80-100">
-    </meta>
-    <meta meter="healthRed" tags="Destiny 2" type="linear" x="0.4185" y="0.1132" width="0.01" h="0-10" s="75-100" l="75-100">
     </meta>
     <meta meter="ammoColorWhite" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="0-360" s="0-20" l="80-100">
     </meta>
@@ -36,10 +41,34 @@
     </meta>
     <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="120-150" s="25-50" l="75-100">
     </meta>
-    <meta meter="glimmerUp" tags="Destiny 2" type="area" x="0.8318" y="0.2854" width="0.01" height=".001" h="190-210" s="50-75" l="65-95">
+    <meta meter="glimmerLight" tags="Destiny 2" type="area" x="0.8381" y="0.2778" width="0.002" height=".001" h="185-210" s="20-35" l="75-100">
     </meta>
-    <meta meter="downedGhost" tags="Destiny 2" type="area" x="0.1613" y="0.0979" width="0.01" height=".001" h="0-25" s="30-100" l="40-100">
+    <meta meter="glimmerDark" tags="Destiny 2" type="area" x="0.8347" y="0.2847" width="0.002" height=".001" h="185-210" s="50-75" l="50-75">
     </meta>
+    <meta meter="downedGhostRed" tags="Destiny 2" type="area" x="0.1852" y="0.0993" width="0.006" height=".001" h="0-30" s="30-100" l="50-100">
+    </meta>
+    <meta meter="downedWhite" tags="Destiny 2" type="area" x="0.3052" y="0.1653" width="0.001" height=".001" h="0-360" s="0-50" l="60-100">
+    </meta>
+    <meta meter="crucDeathR" tags="Destiny 2" type="area" x="0.1601" y="0.2815" width="0.005" height=".002" h="0-25" s="50-75" l="40-60">
+    </meta>
+    <meta meter="crucDeathW" tags="Destiny 2" type="area" x="0.16" y="0.2889" width="0.005" height=".001" h="0-360" s="0-20" l="80-100">
+    </meta>
+    <meta meter="crucDefeatG" tags="Destiny 2" type="area" x="0.5151" y="0.5472" width="0.01" height=".001" h="45-90" s="0-25" l="50-75">
+    </meta>
+    <meta meter="crucDefeatB1" tags="Destiny 2" type="area" x="0.4968" y="0.4326" width="0.005" height=".001" h="0-360" s="40-100" l="0-15">
+    </meta>
+    <meta meter="crucDefeatB2" tags="Destiny 2" type="area" x="0.5" y="0.6188" width="0.003" height=".001" h="0-360" s="40-100" l="0-15">
+    </meta>
+    <meta meter="crucScoreR" tags="Destiny 2" type="area" x="0.5058" y="0.0625" width="0.0619" height=".001" h="0-30" s="50-75" l="50-75">
+    </meta>
+    <meta meter="crucScoreB" tags="Destiny 2" type="area" x="0.432" y="0.0625" width="0.0619" height=".001" h="200-220" s="40-60" l="50-75">
+    </meta>
+    <meta meter="crucVictoryW" tags="Destiny 2" type="area" x="0.4948" y="0.4611" width="0.001" height=".001" h="0-360" s="0-25" l="90-100">
+    </meta>
+    <meta meter="crucVictoryR" tags="Destiny 2" type="area" x="0.5023" y="0.5576" width="0.01" height=".001" h="0-25" s="75-100" l="60-90">
+    </meta>
+    <meta meter="crucVictoryB" tags="Destiny 2" type="area" x="0.4915" y="0.6097" width="0.004" height=".001" h="0-180" s="80-100" l="0-25">
+  </meta>
   
   </head>
   
@@ -55,23 +84,47 @@
     var height = 200;
     var stateHdlr = new StateHandler();
     var effects = [];
+    var ab1Activated = false;
+    var ab2Activated = false;
+    var ab3Activated = false;
 
     var InGameMeter = new Meter(10, ()=>"");
-    var Ability1OrangeMeter = new Meter(10, grenadeHandler);
-    var Ability2OrangeMeter = new Meter(10, meleeHandler);
+
+    var Ability1OrangeMeter = new Meter(15, grenadeHandler);
+    var Ability2OrangeMeter = new Meter(15, meleeHandler);
     var Ability3OrangeMeter = new Meter(15, zoneHandler);
-    var Ability1PurpleMeter = new Meter(10, grenadeHandler);
-    var Ability2PurpleMeter = new Meter(10, meleeHandler);
+    var Ability1PurpleMeter = new Meter(15, grenadeHandler);
+    var Ability2PurpleMeter = new Meter(15, meleeHandler);
     var Ability3PurpleMeter = new Meter(15, zoneHandler);
-    var Ability1BlueMeter = new Meter(10, grenadeHandler);
-    var Ability2BlueMeter = new Meter(10, meleeHandler);
+    var Ability1BlueMeter = new Meter(15, grenadeHandler);
+    var Ability2BlueMeter = new Meter(15, meleeHandler);
     var Ability3BlueMeter = new Meter(15, zoneHandler);
+    var Ability1WhiteMeter = new Meter(20, ()=>"");
+    var Ability2WhiteMeter = new Meter(20, ()=>"");
+    var Ability3WhiteMeter = new Meter(20, ()=>"");
+
     var UltimateMeter = new Meter(10, ultimateHandler);
-    var AmmoColorPurpleMeter = new Meter(5, ammoTypeHandler);
-    var AmmoColorWhiteMeter = new Meter(5, ammoTypeHandler);
-    var AmmoColorGreenMeter = new Meter(5, ammoTypeHandler);
-    var GlimmerMeter = new Meter(20, glimmerHandler);
-    var DownedGhostMeter = new Meter(20, downedHandler);
+
+    var AmmoColorPurpleMeter = new Meter(15, ammoTypeHandler);
+    var AmmoColorWhiteMeter = new Meter(15, ammoTypeHandler);
+    var AmmoColorGreenMeter = new Meter(15, ammoTypeHandler);
+
+    var GlimmerLightMeter = new Meter(20, glimmerHandler);
+    var GlimmerDarkMeter = new Meter(20, glimmerHandler);
+
+    var DownedGhostRedMeter = new Meter(25, downedHandler);
+    var DownedGhostWhiteMeter = new Meter(25, downedHandler);
+
+    var CrucibleDeathRedMeter = new Meter(15, crucibleDeathHandler);
+    var CrucibleDeathWhiteMeter = new Meter(15, crucibleDeathHandler);
+    var CrucibleDefeatGreyMeter = new Meter(15, crucibleDefeatHandler);
+    var CrucibleDefeatBlack1Meter = new Meter(15, crucibleDefeatHandler);
+    var CrucibleDefeatBlack2Meter = new Meter(15, crucibleDefeatHandler);
+    var CrucibleScoreRedMeter = new Meter(15, crucibleScoreHandler);
+    var CrucibleScoreBlueMeter = new Meter(15, crucibleScoreHandler);
+    var CrucibleVictoryRedMeter = new Meter(15, crucibleVictoryHandler);
+    var CrucibleVictoryWhiteMeter = new Meter(15, crucibleVictoryHandler);
+    var CrucibleVictoryBlackMeter = new Meter(15, crucibleVictoryHandler);
 
   
     function update() {
@@ -87,11 +140,30 @@
         Ability1BlueMeter.setValue(engine.vision.ab1Blue);
         Ability2BlueMeter.setValue(engine.vision.ab2Blue);
         Ability3BlueMeter.setValue(engine.vision.ab3Blue);
+        Ability1WhiteMeter.setValue(engine.vision.ab1White);
+        Ability2WhiteMeter.setValue(engine.vision.ab2White);
+        Ability3WhiteMeter.setValue(engine.vision.ab3White);
         AmmoColorPurpleMeter.setValue(engine.vision.ammoColorPurple);
         AmmoColorWhiteMeter.setValue(engine.vision.ammoColorWhite);
         AmmoColorGreenMeter.setValue(engine.vision.ammoColorGreen);
-        GlimmerMeter.setValue(engine.vision.glimmerUp);
-        DownedGhostMeter.setValue(engine.vision.downedGhost);
+        GlimmerLightMeter.setValue(engine.vision.glimmerLight);
+        GlimmerDarkMeter.setValue(engine.vision.glimmerDark);
+      }
+      
+      DownedGhostRedMeter.setValue(engine.vision.downedGhostRed);
+      DownedGhostWhiteMeter.setValue(engine.vision.downedWhite);
+
+      if(gameMode == "Crucible"){
+        CrucibleDeathRedMeter.setValue(engine.vision.crucDeathR)
+        CrucibleDeathWhiteMeter.setValue(engine.vision.crucDeathW)
+        CrucibleDefeatGreyMeter.setValue(engine.vision.crucDefeatG)
+        CrucibleDefeatBlack1Meter.setValue(engine.vision.crucDefeatB1)
+        CrucibleDefeatBlack2Meter.setValue(engine.vision.crucDefeatB2)
+        CrucibleScoreRedMeter.setValue(engine.vision.crucScoreR)
+        CrucibleScoreBlueMeter.setValue(engine.vision.crucScoreB)
+        CrucibleVictoryRedMeter.setValue(engine.vision.crucVictoryR)
+        CrucibleVictoryWhiteMeter.setValue(engine.vision.crucVictoryW)
+        CrucibleVictoryBlackMeter.setValue(engine.vision.crucVictoryB)
       }
 
         copyScreen(1);
@@ -108,38 +180,50 @@
     }
 
     function grenadeHandler(){
-      if(Ability1OrangeMeter.decreased){
-        console.log("Orange grenade Used " + Date.now())
-      }
-      if(Ability1BlueMeter.decreased){
-        console.log("Blue grenade Used " + Date.now())
-      }
-      if(Ability1PurpleMeter.decreased){
-        console.log("Purple grenade Used " + Date.now())
+      if(Ability1WhiteMeter.value > .15 && !ab1Activated){
+        ab1Activated = true;
+        if(Ability1OrangeMeter.decreased && Ability1OrangeMeter.diff > .5){
+          console.log("Orange grenade Used " + Date.now())
+        }
+        if(Ability1BlueMeter.decreased && Ability1BlueMeter.diff > .5){
+          console.log("Blue grenade Used " + Date.now())
+        }
+        if(Ability1PurpleMeter.decreased && Ability1PurpleMeter.diff > .5){
+          console.log("Purple grenade Used " + Date.now())
+        }
+        setTimeout(()=>{ab1Activated = false}, 1000)
       }
     }
 
     function meleeHandler(){
-      if(Ability2OrangeMeter.decreased){
-        console.log("Orange melee Used " + Date.now())
-      }
-      if(Ability2BlueMeter.decreased){
-        console.log("Blue melee Used " + Date.now())
-      }
-      if(Ability2PurpleMeter.decreased){
-        console.log("Purple melee Used " + Date.now())
+      if(Ability2WhiteMeter.value > .15 && !ab2Activated){
+        ab2Activated = true;
+        if(Ability2OrangeMeter.decreased && Ability2OrangeMeter.diff > .5){
+          console.log("Orange melee Used " + Date.now())
+        }
+        if(Ability2BlueMeter.decreased && Ability2BlueMeter.diff > .5){
+          console.log("Blue melee Used " + Date.now())
+        }
+        if(Ability2PurpleMeter.decreased && Ability2PurpleMeter.diff > .5){
+          console.log("Purple melee Used " + Date.now())
+        }
+        setTimeout(()=>{ab2Activated = false}, 1000)
       }
     }
 
     function zoneHandler(){
-      if(Ability3OrangeMeter.decreased){
-        console.log("Orange zone Used " + Date.now())
-      }
-      if(Ability3BlueMeter.decreased){
-        console.log("Blue zone Used " + Date.now())
-      }
-      if(Ability3PurpleMeter.decreased){
-        console.log("Purple zone Used " + Date.now())
+      if(Ability3WhiteMeter.value > .15 && !ab3Activated){
+        ab3Activated = true;
+        if(Ability3OrangeMeter.decreased && Ability3OrangeMeter.diff > .5){
+          console.log("Orange zone Used " + Date.now())
+        }
+        if(Ability3BlueMeter.decreased && Ability3BlueMeter.diff > .5){
+          console.log("Blue zone Used " + Date.now())
+        }
+        if(Ability3PurpleMeter.decreased && Ability3PurpleMeter.diff > .5){
+          console.log("Purple zone Used " + Date.now())
+        }
+        setTimeout(()=>{ab3Activated = false}, 1000)
       }
     }
 
@@ -148,27 +232,43 @@
     }
 
     function ammoTypeHandler(){
-      if(AmmoColorGreenMeter.value == 1){
+      if(AmmoColorGreenMeter.value == 1 && AmmoColorGreenMeter.diff > .5){
         console.log("Green Ammo " + Date.now())
       }
-      if(AmmoColorPurpleMeter.value == 1){
+      if(AmmoColorPurpleMeter.value == 1 && AmmoColorPurpleMeter.diff > .5){
         console.log("Purple Ammo " + Date.now())
       }
-      if(AmmoColorWhiteMeter.value == 1){
+      if(AmmoColorWhiteMeter.value == 1 && AmmoColorWhiteMeter.diff > .5){
         console.log("White Ammo " + Date.now())
       }
     }
 
     function glimmerHandler(){
-      if(GlimmerMeter.increased){
+      if(GlimmerLightMeter.value == 1 && GlimmerDarkMeter.value == 1){
         console.log("Glimmer Increase " + Date.now())
       }
     }
 
     function downedHandler(){
-      if(DownedGhostMeter.value == 1){
+      if(DownedGhostRedMeter.value == 1 && DownedGhostWhiteMeter.value == 1){
         console.log("Downed " + Date.now())
       }
+    }
+
+    function crucibleDeathHandler(){
+
+    }
+
+    function crucibleScoreHandler(){
+      
+    }
+
+    function crucibleVictoryHandler(){
+      
+    }
+
+    function crucibleDefeatHandler(){
+      
     }
   
   function copyScreen(alpha) {
