@@ -33,7 +33,9 @@
     </meta>
     <meta meter="ab3White" tags="Destiny 2" type="area" x="0.2416" y="0.8507" width="0.0122" height=".0271" h="0-360" s="0-25" l="80-100">
     </meta>
-    <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.1791" y="0.8292" width="0.004" height=".001" h="45-75" s="50-75" l="50-100">
+    <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.1791" y="0.8292" width="0.004" height=".001" h="20-90" s="30-80" l="60-100">
+    </meta>
+    <meta meter="ultFirstBar" tags="Destiny 2" type="area" x="0.3587" y="0.8118" width="0.003" height=".001" h="20-90" s="30-80" l="60-100">
     </meta>
     <meta meter="ammoColorWhite" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".03" h="0-360" s="0-20" l="80-100">
     </meta>
@@ -68,7 +70,7 @@
     <meta meter="crucVictoryR" tags="Destiny 2" type="area" x="0.5023" y="0.5576" width="0.01" height=".001" h="0-25" s="75-100" l="60-90">
     </meta>
     <meta meter="crucVictoryB" tags="Destiny 2" type="area" x="0.4915" y="0.6097" width="0.004" height=".001" h="0-180" s="80-100" l="0-25">
-  </meta>
+    </meta>
   
   </head>
   
@@ -87,6 +89,8 @@
     var ab1Activated = false;
     var ab2Activated = false;
     var ab3Activated = false;
+    var ultCharged = false;
+    var ultInUse = false;
 
     var InGameMeter = new Meter(10, ()=>"");
 
@@ -103,7 +107,8 @@
     var Ability2WhiteMeter = new Meter(20, ()=>"");
     var Ability3WhiteMeter = new Meter(20, ()=>"");
 
-    var UltimateMeter = new Meter(10, ultimateHandler);
+    var UltimateIconMeter = new Meter(15, ultimateHandler);
+    var UltimateBarMeter = new Meter(15, ultimateHandler);
 
     var AmmoColorPurpleMeter = new Meter(15, ammoTypeHandler);
     var AmmoColorWhiteMeter = new Meter(15, ammoTypeHandler);
@@ -148,6 +153,8 @@
         AmmoColorGreenMeter.setValue(engine.vision.ammoColorGreen);
         GlimmerLightMeter.setValue(engine.vision.glimmerLight);
         GlimmerDarkMeter.setValue(engine.vision.glimmerDark);
+        UltimateIconMeter.setValue(engine.vision.ultIcon);
+        UltimateBarMeter.setValue(engine.vision.ultFirstBar);
       }
       
       DownedGhostRedMeter.setValue(engine.vision.downedGhostRed);
@@ -228,17 +235,27 @@
     }
 
     function ultimateHandler(){
-      console.log("Ultimate Used " + Date.now())
+      if(UltimateIconMeter.value == 1 && UltimateBarMeter.value == 1 && !ultCharged){
+        console.log("Ultimate Charged " + Date.now())
+        ultCharged = true;
+      } else if (UltimateIconMeter.value == 1 && UltimateBarMeter.value == 0 && ultCharged && !ultInUse){
+        console.log("Ultimate In Use " + Date.now())
+        ultInUse = true;
+      } else if (UltimateIconMeter.value == 0 && UltimateBarMeter.value == 0 && ultCharged && ultInUse){
+        console.log("Ultimate Done " + Date.now())
+        ultCharged = false;
+        ultInUse = false;
+      }
     }
 
     function ammoTypeHandler(){
-      if(AmmoColorGreenMeter.value == 1 && AmmoColorGreenMeter.diff > .5){
+      if(AmmoColorGreenMeter.value == 1 && AmmoColorGreenMeter.diff > .5 && !ultInUse){
         console.log("Green Ammo " + Date.now())
       }
-      if(AmmoColorPurpleMeter.value == 1 && AmmoColorPurpleMeter.diff > .5){
+      if(AmmoColorPurpleMeter.value == 1 && AmmoColorPurpleMeter.diff > .5 && !ultInUse){
         console.log("Purple Ammo " + Date.now())
       }
-      if(AmmoColorWhiteMeter.value == 1 && AmmoColorWhiteMeter.diff > .5){
+      if(AmmoColorWhiteMeter.value == 1 && AmmoColorWhiteMeter.diff > .5 && !ultInUse){
         console.log("White Ammo " + Date.now())
       }
     }
@@ -250,7 +267,7 @@
     }
 
     function downedHandler(){
-      if(DownedGhostRedMeter.value == 1 && DownedGhostWhiteMeter.value == 1){
+      if(DownedGhostRedMeter.value == 1 && DownedGhostWhiteMeter.value == 1 && DownedGhostRedMeter.increased){
         console.log("Downed " + Date.now())
       }
     }
