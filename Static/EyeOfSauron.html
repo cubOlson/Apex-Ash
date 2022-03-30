@@ -1,0 +1,155 @@
+<head>
+    <title>Basic Effects</title>
+    <meta description="Basic Effects" />
+    <meta publisher="SignalRgb" />
+
+    <meta property="eyeIntensity" label="Eye Shape" type="number" min="0" max="10" default="5"/>
+    <meta property="eyeEnergy" label="Eye Energy" type="number" min="1" max="10" default="1"/>
+
+</head>
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var effects = [];
+  var reduced1, reduced2, reduced3, reduced4, reduced5;
+
+  var frontTower = "M6.39,117.8s3.74-25.54,0-31.27L4.84,81.69H0L4,21.8s7.21,43.81,7.43,43.81L30.39,65,23.56,54.17,28.62,48,24.44,6.17s11,63,47.34,65.61c0,0,8.37,14.31,20.26.44L111.41,37l13,33.47s17.18,15.19,25.77.66c0,0,51.3-17,53.94-71.12V49.32l6.39,4.4L205,63h11.89l12.77-43.15-1.1,66.49s-7.71,4.85-4.62,31.49Z";
+  var backTower = "M10.14,17.73S-23.77,261,51.31,232l4.18,20,75.75-3.3-1.54-17.39s72.66,79.7,52.18-212C181.88,19.27,99.75,447.09,10.14,17.73Z";
+
+  function update(){
+    drawRect(0,0, 320, 200, "grey");
+
+    renderPath(67, -10, backTower, "yellow");
+    
+    var frequency = new Int8Array(engine.audio.freq)
+    reduced1 = frequency.slice(0, 66);
+    reduced2 = frequency.slice(66, 132);
+    reduced3 = frequency.slice(132, 200);
+
+    new drawSoundCurve(160, 10, "right", 50, 150, "brown", reduced1).draw();
+    new drawSoundCurve(160, 10, "left", 50, 150, "brown", reduced1).draw();
+    new drawSoundCurve(160, 20, "right", 25, 130, "red", reduced2).draw();
+    new drawSoundCurve(160, 20, "left", 25, 130, "red", reduced2).draw();
+    new drawSoundCurve(160, 30, "right", 15, 110, "orange", reduced3).draw();
+    new drawSoundCurve(160, 30, "left", 15, 110, "orange", reduced3).draw();
+
+    renderPath(46, 125, frontTower, "black")
+
+    // reduced5 = frequency.slice(160, 200).reduce((a, b) => a + b, 0);
+    // if(tones1Meter.increased && tones1Meter.value > 200){
+    //   effects.push(new audioCube("red", 1));
+    // }
+    // if(tones2Meter.increased && tones2Meter.value > 200){
+    //   effects.push(new audioCube("orange", 2));
+    // }
+    // if(tones3Meter.increased && tones3Meter.value > 200){
+    //   effects.push(new audioCube("yellow", 3));
+    // }
+    // if(tones4Meter.increased && tones4Meter.value > 200){
+    //   effects.push(new audioCube("green", 4));
+    // }
+    // if(tones3Meter.increased && tones3Meter.value > 200){
+    //   effects.push(new audioCube("blue", 5));
+    // }
+    // if(tones4Meter.increased && tones4Meter.value > 200){
+    //   effects.push(new audioCube("purple", 6));
+    // }
+
+
+    effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          effects.splice(i, 1);
+        }
+      });
+
+    // for (let i = 0; i < frequency.length; i++){
+    //   drawRect(i * 1.6, 200, 1.6, -frequency[i] * 2, "white")
+    // }
+
+    window.requestAnimationFrame(update);
+  }
+
+  function renderPath(x, y, path, color){
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+    function drawSoundCurve(x, y, direction, width, height, color, array){
+      this.x = x;
+      this.y = y;
+      this.direction = direction;
+      this.width = width;
+      this.height = height;
+      this.color = color;
+      this.array = array;
+      this.loopHeight = this.height / this.array.length;
+      this.draw = function(){
+        this.array.forEach((ele, i) => {
+          var max = Math.max(...this.array);
+          var distance = this.array.length / 2 / Math.abs(this.array.length / 2 - i);
+          distance > 0 ? null : distance = .0001;
+          ele < 0 ? ele = 0 : null;
+          var loopWidth = this.direction == "right" ? (ele / max * this.width) * eyeEnergy + eyeIntensity * distance : (-this.width * ele / max) * eyeEnergy - eyeIntensity * distance;
+          drawRect(this.x, this.y + this.loopHeight * i, loopWidth, this.loopHeight, this.color)
+        });
+      };
+    };
+
+    function DrawCircle(x,y,radius,color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+    };
+
+    function DrawStroke(x,y,radius,color){
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.stroke();
+    };
+
+    function drawRect(x, y, height, width, color){
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, height, width);
+    }
+
+  window.requestAnimationFrame(update);
+</script>
+  
