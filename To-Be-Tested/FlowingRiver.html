@@ -1,12 +1,13 @@
 <head>
   <title>Flowing River</title>
   <meta description="Effect description goes here." />
-  <meta publisher="Jack Pendleton" />
-  <meta property="fgHue1" label="Lower hue" type="hue" min="0" max="360" default="180" />
-  <meta property="fgHue2" label="Upper hue" type="hue" min="0" max="360" default="245" />
+  <meta publisher="SignalRGB" />
+  <meta property="fgHue1" label="Hue 1" type="hue" min="0" max="360" default="180" />
+  <meta property="fgHue2" label="Hue 2" type="hue" min="0" max="360" default="245" />
   <meta property="rainbowMode" label="Rainbow" type="boolean" min="0" max="1" default="0" />
   <meta property="speedRaw" label="Speed" type="number" min="0" max="100" default="50" />
   <meta property="reverse" label="Reverse" type="boolean" min="0" max="1" default="0" />
+  <meta property="vertical" label="Vertical" type="boolean" min="0" max="1" default="0" />
 </head>
 
 <body style="margin: 0; padding: 0">
@@ -70,6 +71,14 @@
       }
     }
 
+    if(vertical){
+      ctx.save();
+      ctx.translate(160, 200);
+      ctx.rotate(Math.PI / 2);
+      ctx.translate(-200, -165);
+      ctx.scale(1, 2)
+    }
+
     for (i = 0; i < effects.length; i++) {
       effects[i].Draw();
     }
@@ -78,6 +87,10 @@
       if (effects[j].IsFinished()) {
         effects.splice(j, 1);
       }
+    }
+
+    if(vertical){
+      ctx.restore();
     }
     window.requestAnimationFrame(update);
   }
