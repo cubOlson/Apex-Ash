@@ -70,9 +70,6 @@
     for (i = 0; i < bombs.length; i++) {
       bombs[i].draw();
       bombs[i].update();
-    }
-
-    for (i = 0; i < bombs.length; i++) {
       if (bombs[i].lifetime <= 0) {
         bombs.splice(i, 1);
       }
@@ -81,9 +78,6 @@
     for (i = 0; i < planes.length; i++) {
       planes[i].draw();
       planes[i].update();
-    }
-
-    for (i = 0; i < planes.length; i++) {
       if (planes[i].lifetime <= 0) {
         planes.splice(i, 1);
       }
@@ -135,6 +129,8 @@
     this.x = -100;
     this.y = Math.random() * 20 + 30;
     this.lifetime = 1;
+    this.bombX = Math.random() * 320;
+    this.hasBombed = false;
 
     this.draw = function () {
       ctx.fillStyle = "black";
@@ -144,10 +140,9 @@
       ctx.fillStyle = bgColor;
       ctx.fillRect(this.x, this.y, 1, 1);
 
-      if (Math.round(Math.random() * 50) == 7) {
-        if (speed > 0) {
-          bombs.push(new Bomb(this.x, this.y + 50));
-        }
+      if(this.x > this.bombX && !this.hasBombed) {
+        bombs.push(new Bomb(this.x, this.y + 50));
+        this.hasBombed = true;
       }
     };
 

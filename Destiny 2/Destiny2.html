@@ -243,13 +243,13 @@
 
     function ultimateHandler(){
       if(UltimateIconMeter.value == 1 && UltimateBarMeter.value == 1 && !ultCharged){
-        console.log("Ultimate Charged " + Date.now())
+        effects.push(new ultimateCharged())
         ultCharged = true;
       } else if (UltimateIconMeter.value == 1 && UltimateBarMeter.value == 0 && ultCharged && !ultInUse){
-        console.log("Ultimate In Use " + Date.now())
+        effects.push(new ultimateInUse())
         ultInUse = true;
       } else if (UltimateIconMeter.value == 0 && UltimateBarMeter.value == 0 && ultCharged && ultInUse){
-        console.log("Ultimate Done " + Date.now())
+        effects.push(new ultimateDone())
         ultCharged = false;
         ultInUse = false;
       }
@@ -313,53 +313,141 @@
       }
     }
 
-    function ammoType(color){
-    this.start = 0;
-    this.elapsed = 0;
-    this.color = color;
+    function ultimateDone(){
+      this.start = Date.now();
+      this.lifetime = 10;
+      this.lightness1 = 50;
+      this.lightness2 = 50;
+      this.lightness3 = 50;
+      this.alpha = 1;
+      
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        var grd = ctx.createRadialGradient(160,100,100,160,100,400);
+        grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
+        grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
+        grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
+        this.lightness1 > 0 ? this.lightness1-- : this.lightness2 > 0 ? this.lightness2-- : this.lightness3 > 0 ? this.lightness3-- : null;
+        this.lightness3 <= 0 ? this.alpha -= .05 : null;
+        ctx.globalAlpha = this.alpha
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.globalAlpha = 1;
+        this.alpha <= 0 ? this.lifetime = 0 : null;
+      }
+    }
+
+    function ultimateInUse(speed){
+    this.start = Date.now();
     this.lifetime = 10;
-    this.y = 300;
+    this.speed = speed;
+    this.hue = 60;
     this.draw = function(){
-      var xVar = Math.cos(Date.now() / 100) * 20
-      drawRect(0, this.y, 320, 300, "black");
-      for(let i = 0; i < 4; i++){
-        drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
+      var elapsed = Date.now() - this.start;
+      if(elapsed > this.speed){
+        effects.push(new ultRect(45, 12, `hsl(${this.hue}, 100%, 50%)`));
+        this.hue > 0 ? this.hue--: null;
+        this.start = Date.now()
       }
-      if(this.y > 0){
-        this.y -= 15;
-      } else if (this.y == 0 && this.elapsed < 450){
-        if(!this.start){
-          this.start = Date.now();
+      if(!ultInUse){
+          this.lifetime = 0;
         }
-        this.elapsed = Date.now() - this.start;
-      } else {
-        this.y -= 15;
-      }
-      if(this.y < -300){
-        this.lifetime = 0;
-      }
     }
   }
 
-    function classParticleHandler(cb){
-    this.start = Date.now();
-    this.effects = [];
-    this.lifetime = 20;
-    this.draw = function(){
-      var elapsed = Date.now() - this.start;
-      if(elapsed < 1500 && this.effects.length < 50){
-        this.effects.push(new cb())
-      } else if (this.effects.length == 0){
-        this.lifetime = 0;
-      }
-      this.effects.forEach((ele, i) => {
-        ele.draw();
-        if(ele.lifetime <= 0){
-          this.effects.splice(i, 1);
+    function ultRect(height, speed, color){
+      this.lifetime = 10;
+      this.y = 200;
+      this.height = height;
+      this.speed = speed;
+      this.color = color;
+      this.draw = function(){
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.fillRect(0, this.y, 320, this.height);
+        this.y-=this.speed;
+        if(this.y < -30){
+          this.lifetime = 0;
         }
-      });
+      }
     }
-  }
+
+    function ultimateCharged(){
+      this.start = Date.now();
+      this.radius = 5;
+      this.count = 0;
+      this.x = 0;
+      this.width = 160;
+      this.lifetime = 10;
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        if(elapsed < 200){
+          DrawCircle(160, 100, this.radius, "yellow");
+        } else if (this.radius < 75){
+          DrawCircle(160, 100, this.radius, "yellow");
+          this.radius+=5;
+        } else if (this.x < 400){
+            DrawCircle(160, 100, this.radius, "yellow")
+            drawRect(160 - this.x, 25, this.x, 150, "yellow");
+            drawRect(160, 25, this.x, 150, "yellow");
+            this.x+=15;
+        } else if (this.width > 0){
+            drawRect(0, 25, this.width, 150, "yellow");
+            drawRect(320 - this.width, 25, this.width, 150, "yellow");
+            this.width -= 15;
+        } else {
+          this.lifetime = 0;
+        }
+      }
+    }
+
+    function ammoType(color){
+      this.start = 0;
+      this.elapsed = 0;
+      this.color = color;
+      this.lifetime = 10;
+      this.y = 300;
+      this.draw = function(){
+        var xVar = Math.cos(Date.now() / 100) * 20
+        drawRect(0, this.y, 320, 300, "black");
+        for(let i = 0; i < 4; i++){
+          drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
+        }
+        if(this.y > 0){
+          this.y -= 15;
+        } else if (this.y == 0 && this.elapsed < 450){
+          if(!this.start){
+            this.start = Date.now();
+          }
+          this.elapsed = Date.now() - this.start;
+        } else {
+          this.y -= 15;
+        }
+        if(this.y < -300){
+          this.lifetime = 0;
+        }
+      }
+    }
+
+    function classParticleHandler(cb){
+      this.start = Date.now();
+      this.effects = [];
+      this.lifetime = 20;
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        if(elapsed < 1500 && this.effects.length < 50){
+          this.effects.push(new cb())
+        } else if (this.effects.length == 0){
+          this.lifetime = 0;
+        }
+        this.effects.forEach((ele, i) => {
+          ele.draw();
+          if(ele.lifetime <= 0){
+            this.effects.splice(i, 1);
+          }
+        });
+      }
+    }
 
   function flameParticle(){
     this.lifetime = 10;

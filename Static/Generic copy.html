@@ -16,10 +16,10 @@
   var effects = [];
 
   function update(){
-    drawRect(0,0, 320, 200, "grey");
+    drawRect(0,0, 320, 200, "white");
 
     if(effects.length < 1){
-      effects.push(new ammoType("white"))
+      effects.push(new ultimateDone())
     }
 
     effects.forEach((ele, i) => {
@@ -32,31 +32,27 @@
     window.requestAnimationFrame(update);
   }
 
-  function ammoType(color){
-    this.start = 0;
-    this.elapsed = 0;
-    this.color = color;
+  function ultimateDone(){
+    this.start = Date.now();
     this.lifetime = 10;
-    this.y = 300;
+    this.lightness1 = 50;
+    this.lightness2 = 50;
+    this.lightness3 = 50;
+    this.alpha = 1;
+    
     this.draw = function(){
-      var xVar = Math.cos(Date.now() / 100) * 20
-      drawRect(0, this.y, 320, 300, "black");
-      for(let i = 0; i < 4; i++){
-        drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
-      }
-      if(this.y > 0){
-        this.y -= 15;
-      } else if (this.y == 0 && this.elapsed < 450){
-        if(!this.start){
-          this.start = Date.now();
-        }
-        this.elapsed = Date.now() - this.start;
-      } else {
-        this.y -= 15;
-      }
-      if(this.y < -300){
-        this.lifetime = 0;
-      }
+      var elapsed = Date.now() - this.start;
+      var grd = ctx.createRadialGradient(160,100,100,160,100,400);
+      grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
+      grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
+      grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
+      this.lightness1 > 0 ? this.lightness1-- : this.lightness2 > 0 ? this.lightness2-- : this.lightness3 > 0 ? this.lightness3-- : null;
+      this.lightness3 <= 0 ? this.alpha -= .05 : null;
+      ctx.globalAlpha = this.alpha
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.globalAlpha = 1;
+      this.alpha <= 0 ? this.lifetime = 0 : null;
     }
   }
 

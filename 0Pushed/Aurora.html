@@ -327,6 +327,29 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 
+    // nt += noiseSpeed;
+    // for (i = 0; i < lineCount; i++) {
+    //   ctx.beginPath();
+    //   ctx.lineWidth = lineWidth;
+    //   for (x = 0; x < w; x++) {
+    //     var y = noise.simplex3(x / xScale, 0, nt) * yScale;
+    //     if (i < 4) {
+    //       ctx.strokeStyle = "#ff00ee77";
+    //     } else if (i < 8 && i >= 4) {
+    //       ctx.strokeStyle = "#7600d177";
+    //     } else if (i < 12 && i >= 8) {
+    //       ctx.strokeStyle = "#1900ff77";
+    //     } else if (i < 16 && i >= 12) {
+    //       ctx.strokeStyle = "#00ff5977";
+    //     } else {
+    //       ctx.strokeStyle = "#0095ff77";
+    //     }
+    //     ctx.lineTo(x, i * (lineWidth + gap) + y * 10 * (i / 20));
+    //   }
+    //   ctx.stroke();
+    //   ctx.closePath();
+    // }
+
     renderLines();
   }
 
@@ -367,6 +390,8 @@
     } else {
       hueRb = 0;
     }
+    //ctx.fillStyle = bgColor;
+    //ctx.fillRect(0, 0, 320, 200);
     for (i = 1; i < dots.length; i++) {
       if (rainbowMode) {
         dots[i].c = dots[i].cRb;
