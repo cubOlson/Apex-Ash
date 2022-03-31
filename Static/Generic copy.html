@@ -3,8 +3,16 @@
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
 
-    <meta property="eyeIntensity" label="Eye Shape" type="number" min="0" max="10" default="5"/>
-    <meta property="eyeEnergy" label="Eye Energy" type="number" min="1" max="10" default="1"/>
+    <meta property="Red" label="red" type="number" min="0" max="10" default="5"/>
+    <meta property="Blue" label="blue" type="number" min="0" max="10" default="5"/>
+    <meta property="Red2" label="red2" type="number" min="0" max="10" default="5"/>
+    <meta property="Blue2" label="blue2" type="number" min="0" max="10" default="5"/>
+    <meta
+    property="vert"
+    label="Vertical"
+    type="boolean"
+    default="1"
+    />
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -16,10 +24,10 @@
   var effects = [];
 
   function update(){
-    drawRect(0,0, 320, 200, "white");
+    drawRect(0,0, 320, 200, "grey");
 
     if(effects.length < 1){
-      effects.push(new ultimateDone())
+      effects.push(new competitiveScore(0, 0, 320, 200, red, blue))
     }
 
     effects.forEach((ele, i) => {
@@ -32,27 +40,25 @@
     window.requestAnimationFrame(update);
   }
 
-  function ultimateDone(){
-    this.start = Date.now();
+  function competitiveScore(x, y, width, height, var1, var2){
     this.lifetime = 10;
-    this.lightness1 = 50;
-    this.lightness2 = 50;
-    this.lightness3 = 50;
-    this.alpha = 1;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.var1 = var1;
+    this.var2 = var2;
     
     this.draw = function(){
-      var elapsed = Date.now() - this.start;
-      var grd = ctx.createRadialGradient(160,100,100,160,100,400);
-      grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
-      grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
-      grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
-      this.lightness1 > 0 ? this.lightness1-- : this.lightness2 > 0 ? this.lightness2-- : this.lightness3 > 0 ? this.lightness3-- : null;
-      this.lightness3 <= 0 ? this.alpha -= .05 : null;
-      ctx.globalAlpha = this.alpha
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, 320, 200);
-      ctx.globalAlpha = 1;
-      this.alpha <= 0 ? this.lifetime = 0 : null;
+      var redValue = this.var1 / (this.var1 + this.var2);
+      var blueValue = this.var2 / (this.var1 + this.var2);
+      if(vert){
+        drawRect(this.x, this.y, this.width, blueValue * this.height, Blue >= 9 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
+        drawRect(this.x, this.y + blueValue * this.height, this.width, redValue * this.height, Red >= 9 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+      } else {
+        drawRect(this.x, this.y, blueValue * this.width, this.height, Blue >= 9 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
+        drawRect(this.x + blueValue * this.width, this.y, redValue * this.width, this.height, Red >= 9 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+      }
     }
   }
 
