@@ -1,5 +1,5 @@
 <head>
-    <title>Destiny 2 Production</title>
+    <title>Destiny 2 FILM COPY</title>
     <meta description="Go on an adventure with metering and ambiance effects" />
     <meta publisher="SignalRGB" />
 
@@ -83,7 +83,7 @@
     />
 
   
-    <meta meter="inGame" tags="Destiny 2" type="area" x="0.3525" y="0.8729" width="0.0085" height=".001" h="0-360" s="0-30" l="70-100">
+    <meta meter="inGame" tags="Destiny 2" type="area" x="0.3525" y="0.8729" width="0.0085" height=".001" h="0-360" s="0-30" l="50-100">
       <resolution size="1920x1080" x="0.3051" y="0.8731" width="0.0085" height=".001"/>
     </meta>
     <meta meter="ab1Orange" tags="Destiny 2" type="area" x="0.1852" y="0.8465" width="0.002" height=".04" h="0-30" s="60-90" l="65-100">
@@ -134,7 +134,7 @@
     <meta meter="ammoColorPurple" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".02" h="250-280" s="25-50" l="75-100">
       <resolution size="1920x1080" x="0.312" y="0.8259" width="0.0005" height=".02"/>
     </meta>
-    <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".02" h="120-150" s="25-50" l="75-100">
+    <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.361" y="0.8257" width="0.0005" height=".02" h="90-180" s="25-50" l="75-100">
       <resolution size="1920x1080" x="0.312" y="0.8259" width="0.0005" height=".02"/>
     </meta>
     <meta meter="downedGhostRed" tags="Destiny 2" type="area" x="0.1852" y="0.0993" width="0.006" height=".001" h="0-30" s="30-100" l="50-100">
@@ -399,13 +399,13 @@
     }
 
     function ammoTypeHandler(){
-      if(AmmoColorGreenMeter.value == 1 && AmmoColorGreenMeter.diff > .8 && !ultInUse){
+      if(AmmoColorGreenMeter.value > .7 && AmmoColorGreenMeter.diff > .4 && !ultInUse){
         effects.push(new ammoType("green"))
       }
-      if(AmmoColorPurpleMeter.value == 1 && AmmoColorPurpleMeter.diff > .8 && !ultInUse){
+      if(AmmoColorPurpleMeter.value > .7 && AmmoColorPurpleMeter.diff > .4 && !ultInUse){
         effects.push(new ammoType("purple"))
       }
-      if(AmmoColorWhiteMeter.value == 1 && AmmoColorWhiteMeter.diff > .8 && !ultInUse){
+      if(AmmoColorWhiteMeter.value > .7 && AmmoColorWhiteMeter.diff > .4 && !ultInUse){
         effects.push(new ammoType("white"))
       }
     }
@@ -436,7 +436,7 @@
     }
 
     function crucibleVictoryHandler(){
-      if(CrucibleVictoryBlackMeter.value == 1 && CrucibleVictoryRedMeter.value == 1 && CrucibleVictoryWhiteMeter.value == 1){
+      if(CrucibleVictoryBlackMeter.value > .75 && CrucibleVictoryRedMeter.value > .75 && CrucibleVictoryWhiteMeter.value > .75){
         effects.push(new crucibleVictory())
       }
     }
@@ -596,7 +596,7 @@
         DrawCircle(160, 100, this.radius, "grey")
         ctx.globalAlpha = 1;
         this.radius+=this.change;
-        this.change+=.01
+        gameMode == "Gambit" ? this.change+=.0035 : this.change+=.01;
         this.effects.push(new downedParticle("red"))
         if(this.radius >= 200){
           this.lifetime = 0;
@@ -648,6 +648,7 @@
     this.lifetime = 10;
     this.speed = speed;
     this.hue = 60;
+    console.log("IN ULT USE")
     this.draw = function(){
       var elapsed = Date.now() - this.start;
       if(elapsed > this.speed){

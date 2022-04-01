@@ -1,0 +1,328 @@
+<head>
+    <title>Destiny 2 Effects Kit</title>
+    <meta description="Basic Effects" />
+    <meta publisher="SignalRgb" />
+
+    <meta property="animation" 
+    label="Animation Choice" 
+    type="combobox"
+    values="Class,Grenade,Melee,Ammo" 
+    default="Class" 
+    />
+    <meta property="damageType" 
+    label="Damage Type" 
+    type="combobox"
+    values="Solar,Void,Arc,Green Ammo,White Ammo,Purple Ammo" 
+    default="Solar" 
+    />
+    <meta property="frequency" label="Animation Frequency" type="number" min="0" max="100" default="50"/>
+
+</head>
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var effects = [];
+  var start = Date.now()
+
+  var skull = "M8.05,64.93S-10.76,9.44,56.44,2.51c0,0,65.88,4.29,48.05,62.42,0,0,4,9.58-.66,18.5,0,0,6.27,9.9,1.65,12.22l4.62,8.91s-8.25,20.81-16.51,11.56c0,0-6.28-21.68-12.55,2.37,0,0,4.62,18.11-6.61,29l-4.29-2.31-3,5.94-3.31-4.29-3.3,4.29-4.12-2-4.14,2L49,147.5l-3,3.63-3.63-5.28-4.3,2.64s-3.63-9.91-6.27-11.23-5.62-14.86-.66-18.49-7.27-18.5-14.53.66c0,0-7.93,1-13.88-15.53l5-7.92s-3.64-4.63,1-10.24C8.71,85.74.45,73.85,8.05,64.93Z"
+
+  function update(){
+    drawRect(0,0, 320, 200, "grey");
+    var elapsed = Date.now() - start;
+
+      if (elapsed > frequency * 30){
+        if(animation == "Grenade"){
+          if(damageType == "Solar"){
+            effects.push(new grenade("orange"));
+          } else if (damageType == "Arc"){
+            effects.push(new grenade("blue"));
+          } else if (damageType == "Void"){
+            effects.push(new grenade("purple"));
+          }
+        }
+        if(animation == "Melee"){
+          if(damageType == "Solar"){
+            effects.push(new punch("orange"));
+          } else if (damageType == "Arc"){
+            effects.push(new punch("blue"));
+          } else if (damageType == "Void"){
+            effects.push(new punch("purple"));
+          }
+        }
+        if(animation == "Class"){
+          if(damageType == "Solar"){
+            effects.push(new classParticleHandler(flameParticle))
+          } else if (damageType == "Arc"){
+            effects.push(new classParticleHandler(arcParticle))
+          } else if (damageType == "Void"){
+            effects.push(new classParticleHandler(voidParticle))
+          }
+        }
+        if(animation == "Ammo"){
+          if(damageType == "White Ammo"){
+            effects.push(new ammoType("white"))
+          } else if (damageType == "Green Ammo"){
+            effects.push(new ammoType("green"))
+          } else if (damageType == "Purple Ammo"){
+            effects.push(new ammoType("purple"))
+          }
+        }
+        start = Date.now();
+      }
+
+    effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          effects.splice(i, 1);
+        }
+      });
+
+    window.requestAnimationFrame(update);
+  }
+
+    function ammoType(color){
+      this.start = 0;
+      this.elapsed = 0;
+      this.color = color;
+      this.lifetime = 10;
+      this.y = 300;
+      this.draw = function(){
+        var xVar = Math.cos(Date.now() / 100) * 20
+        drawRect(0, this.y, 320, 300, "black");
+        for(let i = 0; i < 4; i++){
+          drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
+        }
+        if(this.y > 0){
+          this.y -= 15;
+        } else if (this.y == 0 && this.elapsed < 450){
+          if(!this.start){
+            this.start = Date.now();
+          }
+          this.elapsed = Date.now() - this.start;
+        } else {
+          this.y -= 15;
+        }
+        if(this.y < -300){
+          this.lifetime = 0;
+        }
+      }
+    }
+
+    function classParticleHandler(cb){
+      this.start = Date.now();
+      this.effects = [];
+      this.lifetime = 20;
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        if(elapsed < 1500 && this.effects.length < 50){
+          this.effects.push(new cb())
+        } else if (this.effects.length == 0){
+          this.lifetime = 0;
+        }
+        this.effects.forEach((ele, i) => {
+          ele.draw();
+          if(ele.lifetime <= 0){
+            this.effects.splice(i, 1);
+          }
+        });
+      }
+    }
+
+  function flameParticle(){
+    this.lifetime = 10;
+    this.x = Math.random() * 320;
+    this.y = 200;
+    this.vx = Math.cos(Date.now() / 100) * 5;
+    this.vy = Math.random() * 10 + 3;
+    this.hue = Math.cos(Date.now()) * Math.random() * 30 + 35;
+    this.draw = function(){
+      this.vx = Math.cos(Date.now() / 75) * Math.random() * 10;
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, `hsl(${this.hue}, 100%, ${Math.cos(Date.now() / 200) * Math.random() * 10 + 60}%)`)
+      this.x += this.vx;
+      this.y-= this.vy;
+      if(this.y < 0){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function voidParticle(){
+    this.lifetime = 10;
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hue = Math.cos(Date.now()) * Math.random() * 30 + 290;
+    this.radius = 1;
+    this.start = Date.now();
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      DrawCircle(this.x, this.y, this.radius, `hsl(${this.hue}, 100%, 50%)`)
+      if(elapsed < 250){
+        this.radius+=4;
+      } else {
+        this.radius--;
+        if(this.radius <= 0){
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function arcParticle(){
+    this.effects = []
+    this.lifetime = 10;
+    this.x = Math.random() * 320;
+    this.y = 200;
+    this.vx = Math.random() > .5 ? 16 : -16;
+    this.vy = -16;
+    this.change = 1;
+    this.hue = Math.cos(Date.now()) * Math.random() * 30 + 215;
+    this.start = Date.now();
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(this.effects.length > 4){
+        this.effects.shift();
+      }
+      this.effects.forEach((ele) => {
+        DrawCircle(ele[0], ele[1], 10, `hsl(${this.hue}, 100%, 50%)`)
+      });
+      DrawCircle(this.x, this.y, 15, `hsl(${this.hue}, 100%, 50%)`)
+      this.effects.push([this.x, this.y]);
+      if(elapsed > 50){
+        this.start = Date.now();
+        this.change ? this.change = 0 : this.change = 1;
+      }
+      if(this.change){
+        this.x += this.vx;
+      } else {
+        this.y += this.vy;
+      }
+      if(this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+    function grenade(color){
+      this.color = color;
+      this.start = Date.now();
+      this.radius = 15;
+      this.lifetime = 10;
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        if(elapsed < 400){
+          DrawCircle(160, 100, this.radius, this.color);
+          this.radius+=10;
+        } else if (elapsed < 600){
+          DrawCircle(160, 100, this.radius, "white");
+          this.radius-=20;
+          this.radius <= 0 ? this.radius = .01 : null;
+        } else {
+          this.lifetime = 0;
+          for(let i = 0; i < 35; i++){
+            effects.push(new explosionParticle(160, 100, 50, this.color))
+          }
+          setTimeout(()=>{          
+            for(let i = 0; i < 35; i++){
+              effects.push(new explosionParticle(160, 100, 50, this.color))
+            }
+          }, 200)
+        }
+      }
+    }
+
+    function explosionParticle(x, y, min, color){
+      this.x = x;
+      this.y = y;
+      this.vx = Math.random() * -min + min/2;
+      this.vy = Math.random() * -min + min/2;
+      this.min = min;
+      this.color = color;
+      this.lifetime = 10;
+      this.draw = function(){
+        DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+        this.x += this.vx;
+        this.y += this.vy;
+        if(this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0){
+          this.lifetime = 0;
+        }
+      }
+    }
+
+  function punch(color){
+    this.color = color;
+    this.start = Date.now();
+    this.y = 200;
+    this.lifetime = 10;
+    this.drew = false;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = .6;
+      drawRect(0, 0, 320, 200, "black")
+      ctx.globalAlpha = 1;
+      drawRect(120, this.y, 70, 70, "white")
+      drawRect(170, this.y + 30, 35, 30, "white")
+      drawRect(130, this.y + 30, 50, 120, "white")
+      if(this.y > 65){
+        this.y-=20;
+      } else {
+        if (!this.drew){
+          this.drew = true;
+          effects.push(new expandingRing(160, 100, 15, this.color))
+          setTimeout(()=>{effects.push(new expandingRing(160, 100, 10, this.color))}, 200)
+        }
+        setTimeout(()=>{this.lifetime = 0}, 200)
+      }
+    }
+  }
+
+  function expandingRing(x, y, speed, color){
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.radius = 1;
+    this.color = color;
+    this.draw = function(){
+      DrawStroke(this.x, this.y, this.radius, this.color, 40)
+      this.radius += this.speed;
+      if(this.radius > 200){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function renderPath(x, y, path, color){
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  }
+
+    function DrawCircle(x, y, radius, color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+    };
+
+    function DrawStroke(x, y, radius, color, stroke){
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = stroke;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.stroke();
+    };
+
+    function drawRect(x, y, height, width, color){
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, height, width);
+    }
+
+  window.requestAnimationFrame(update);
+</script>
+  

@@ -23,11 +23,13 @@
   ctx = canvas.getContext('2d');
   var effects = [];
 
+  var skull = "M8.05,64.93S-10.76,9.44,56.44,2.51c0,0,65.88,4.29,48.05,62.42,0,0,4,9.58-.66,18.5,0,0,6.27,9.9,1.65,12.22l4.62,8.91s-8.25,20.81-16.51,11.56c0,0-6.28-21.68-12.55,2.37,0,0,4.62,18.11-6.61,29l-4.29-2.31-3,5.94-3.31-4.29-3.3,4.29-4.12-2-4.14,2L49,147.5l-3,3.63-3.63-5.28-4.3,2.64s-3.63-9.91-6.27-11.23-5.62-14.86-.66-18.49-7.27-18.5-14.53.66c0,0-7.93,1-13.88-15.53l5-7.92s-3.64-4.63,1-10.24C8.71,85.74.45,73.85,8.05,64.93Z"
+
   function update(){
     drawRect(0,0, 320, 200, "grey");
 
     if(effects.length < 1){
-      effects.push(new competitiveScore(0, 0, 320, 200, red, blue))
+      effects.push(new crucibleDefeat())
     }
 
     effects.forEach((ele, i) => {
@@ -40,27 +42,30 @@
     window.requestAnimationFrame(update);
   }
 
-  function competitiveScore(x, y, width, height, var1, var2){
-    this.lifetime = 10;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.var1 = var1;
-    this.var2 = var2;
-    
-    this.draw = function(){
-      var redValue = this.var1 / (this.var1 + this.var2);
-      var blueValue = this.var2 / (this.var1 + this.var2);
-      if(vert){
-        drawRect(this.x, this.y, this.width, blueValue * this.height, Blue >= 9 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
-        drawRect(this.x, this.y + blueValue * this.height, this.width, redValue * this.height, Red >= 9 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
-      } else {
-        drawRect(this.x, this.y, blueValue * this.width, this.height, Blue >= 9 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
-        drawRect(this.x + blueValue * this.width, this.y, redValue * this.width, this.height, Red >= 9 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+  function crucibleDefeat(){
+      this.lifetime = 10;
+      this.lightness1 = 100;
+      this.lightness2 = 100;
+      this.lightness3 = 100;
+      this.alpha = 1;
+      
+      this.draw = function(){
+        var grd = ctx.createLinearGradient(160, 0, 160, 200);
+        grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
+        grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
+        grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
+        this.lightness1 > 50 ? this.lightness1-- : this.lightness2 > 50 ? this.lightness2-- : this.lightness3 > 50 ? this.lightness3-- : null;
+        this.lightness3 <= 50 ? this.alpha -= .01 : null;
+        ctx.globalAlpha = this.alpha
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, 320, 200);
+        renderPath(105, 15, skull, "white");
+        DrawCircle(140, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
+        DrawCircle(180, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
+        ctx.globalAlpha = 1;
+        this.alpha <= 0 ? this.lifetime = 0 : null;
       }
     }
-  }
 
   function renderPath(x, y, path, color){
     ctx.fillStyle = color;
