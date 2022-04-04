@@ -1,13 +1,13 @@
 <head>
   <title>Flowing River</title>
-  <meta description="A flowing river of RGB." />
+  <meta description="A gently-flowing river of RGB." />
   <meta publisher="SignalRGB" />
-  <meta property="fgHue1" label="Hue 1" type="hue" min="0" max="360" default="180" />
-  <meta property="fgHue2" label="Hue 2" type="hue" min="0" max="360" default="245" />
+  <meta property="fgHue1" label="Lower hue" type="color" min="0" max="360" default="#00ffff" />
+  <meta property="fgHue2" label="Upper hue" type="color" min="0" max="360" default="#1500ff" />
   <meta property="rainbowMode" label="Rainbow" type="boolean" min="0" max="1" default="0" />
   <meta property="speedRaw" label="Speed" type="number" min="0" max="100" default="50" />
-  <meta property="reverse" label="Reverse" type="boolean" min="0" max="1" default="0" />
   <meta property="vertical" label="Vertical" type="boolean" min="0" max="1" default="0" />
+  <meta property="reverse" label="Reverse" type="boolean" min="0" max="1" default="0" />
 </head>
 
 <body style="margin: 0; padding: 0">
@@ -52,8 +52,6 @@
   }
 
   function update() {
-    ctx.fillStyle = "hsl(" + fgHue1 + ",100%,50%)";
-    ctx.fillRect(0, 0, 320, 200);
 
     if (rainbowHue < 360) {
       rainbowHue++;
@@ -81,17 +79,15 @@
 
     for (i = 0; i < effects.length; i++) {
       effects[i].Draw();
-    }
-
-    for (j = 0; j < effects.length; j++) {
-      if (effects[j].IsFinished()) {
-        effects.splice(j, 1);
+      if (effects[i].IsFinished()) {
+        effects.splice(i, 1);
       }
     }
 
     if(vertical){
       ctx.restore();
     }
+    
     window.requestAnimationFrame(update);
   }
 
@@ -101,7 +97,7 @@
     this.x = x - 10;
 
     this.h = getRandomInt(180, 220);
-    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.h2 = getRandomInt(180, 220);
 
     this.y1 = getRandomInt(-20, 20);
     this.y2 = getRandomInt(-20, 20);
@@ -140,10 +136,10 @@
   function Wave() {
     this.x = -10;
     this.rh = rainbowHue;
-    this.h = getRandomInt(fgHue1, fgHue2);
+    this.h = getRandomColor(fgHue1, fgHue2);
 
     this.rs2 = getRandomInt(70, 100);
-    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.h2 = getRandomColor(fgHue1, fgHue2);
     this.y1 = getRandomInt(-20, 20);
     this.y2 = getRandomInt(-20, 20);
     this.y3 = getRandomInt(-20, 20);
@@ -153,7 +149,7 @@
       if (rainbowMode) {
         ctx.strokeStyle = "hsl(" + this.rh + ",100%,50%)";
       } else {
-        ctx.strokeStyle = "hsl(" + this.h + ",100%,50%)";
+        ctx.strokeStyle = "hsl(" + this.h[0] + "," + this.h[1] + "%," + this.h[2] + "%)";
       }
       ctx.lineWidth = 10;
       ctx.beginPath();
@@ -164,7 +160,7 @@
       if (rainbowMode) {
         ctx.strokeStyle = "hsl(" + this.rh + "," + this.rs2 + "%,50%)";
       } else {
-        ctx.strokeStyle = "hsl(" + this.h2 + ",100%,50%)";
+        ctx.strokeStyle = "hsl(" + this.h2[0] + "," + this.h2[1] + "%," + this.h2[2] + "%)";
       }
       ctx.beginPath();
       ctx.moveTo(this.x, 0);
@@ -190,8 +186,7 @@
     this.x = x + 10;
 
     this.h = getRandomInt(180, 220);
-
-    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.h2 = getRandomInt(180, 220);
     this.y1 = getRandomInt(-20, 20);
     this.y2 = getRandomInt(-20, 20);
     this.y3 = getRandomInt(-20, 20);
@@ -229,10 +224,10 @@
   function RWave() {
     this.x = 330;
     this.rh = rainbowHue;
-    this.h = getRandomInt(fgHue1, fgHue2);
+    this.h = getRandomColor(fgHue1, fgHue2);
 
     this.rs2 = getRandomInt(70, 100);
-    this.h2 = getRandomInt(fgHue1, fgHue2);
+    this.h2 = getRandomColor(fgHue1, fgHue2);
     this.y1 = getRandomInt(-20, 20);
     this.y2 = getRandomInt(-20, 20);
     this.y3 = getRandomInt(-20, 20);
@@ -242,7 +237,7 @@
       if (rainbowMode) {
         ctx.strokeStyle = "hsl(" + this.rh + ",100%,50%)";
       } else {
-        ctx.strokeStyle = "hsl(" + this.h + ",100%,50%)";
+        ctx.strokeStyle = "hsl(" + this.h[0] + "," + this.h[1] + "%," + this.h[2] + "%)";
       }
       ctx.lineWidth = 10;
       ctx.beginPath();
@@ -254,7 +249,7 @@
       if (rainbowMode) {
         ctx.strokeStyle = "hsl(" + this.rh + "," + this.rs2 + "%,50%)";
       } else {
-        ctx.strokeStyle = "hsl(" + this.h2 + ",100%,50%)";
+        ctx.strokeStyle = "hsl(" + this.h2[0] + "," + this.h2[1] + "%," + this.h2[2] + "%)";
       }
       ctx.lineWidth = 10;
       ctx.beginPath();
@@ -280,6 +275,66 @@
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function getRandomColor(min, max) {
+    var minHsl = hexToHSL(min);
+    var maxHsl = hexToHSL(max);
+
+    minH = Math.ceil(minHsl[0]);
+    maxH = Math.floor(maxHsl[0]);
+    var outputHue = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
+
+    var outputSat = minHsl[1] + maxHsl[1] / 2 / 255 * 100;
+
+    var outputLit = minHsl[2] + maxHsl[2] / 2 / 255 * 100;
+
+    return [outputHue, outputSat, outputLit];
+  }
+
+  function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+      r = "0x" + H[1] + H[1];
+      g = "0x" + H[2] + H[2];
+      b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+      r = "0x" + H[1] + H[2];
+      g = "0x" + H[3] + H[4];
+      b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r, g, b),
+      cmax = Math.max(r, g, b),
+      delta = cmax - cmin,
+      h = 0,
+      s = 0,
+      l = 0;
+
+    if (delta == 0)
+      h = 0;
+    else if (cmax == r)
+      h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+      h = (b - r) / delta + 2;
+    else
+      h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0)
+      h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return [h, s, l];
   }
 
   function Meter(count, callback) {
