@@ -1,572 +1,590 @@
 <head>
-    <title>Destiny 2 Production</title>
-    <meta description="Go on an adventure with metering and ambiance effects" />
-    <meta publisher="SignalRGB" />
+  <title>Destiny 2 Production</title>
+  <meta description="Go on an adventure with metering and ambiance effects" />
+  <meta publisher="SignalRGB" />
 
-    <meta
-    property="keyScreenBrightness"
-    label="Ambience brightness"
-    type="number"
-    min="0"
-    max="100"
-    default="100"
-    />
-    <meta property="gameMode" 
-    label="Game mode" 
-    type="combobox"
-    values="Campaign/Vanguard,Crucible,Gambit" 
-    default="Campaign/Vanguard" 
-    />
-    <meta
-    property="grenadeOn"
-    label="Grenade Effect"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="meleeOn"
-    label="Melee Effect"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="classOn"
-    label="Class Effect"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="ultimateOn"
-    label="Ultimate Effect"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="ammoOn"
-    label="Ammo Change Effect"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="deathOn"
-    label="Death Effect"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="resultOn"
-    label="Crucible Win/Loss"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="scoringOn"
-    label="Competitive Scoring"
-    type="boolean"
-    default="1"
-    />
-    <meta
-    property="adjToggle"
-    label="Toggle to Adjust the Score Bar"
-    type="boolean"
-    default="0"
-    />
-    <meta property="scoreX" label="Score X-Position" type="number" min="0" max="320" default="0"/>
-    <meta property="scoreY" label="Score Y-Position" type="number" min="0" max="200" default="0"/>
-    <meta property="scoreWidth" label="Score Width" type="number" min="0" max="320" default="320"/>
-    <meta property="scoreHeight" label="Score Height" type="number" min="0" max="200" default="200"/>
-    <meta
-    property="verticalOn"
-    label="Vertical Score Bar"
-    type="boolean"
-    default="1"
-    />
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="gameMode" label="Game mode" type="combobox" values="Campaign/Vanguard,Crucible,Gambit"
+    default="Campaign/Vanguard" />
+  <meta property="grenadeOn" label="Grenade Effect" type="boolean" default="1" />
+  <meta property="meleeOn" label="Melee Effect" type="boolean" default="1" />
+  <meta property="classOn" label="Class Effect" type="boolean" default="1" />
+  <meta property="ultimateOn" label="Ultimate Effect" type="boolean" default="1" />
+  <meta property="ammoOn" label="Ammo Change Effect" type="boolean" default="1" />
+  <meta property="deathOn" label="Death Effect" type="boolean" default="1" />
+  <meta property="resultOn" label="Crucible Win/Loss" type="boolean" default="1" />
+  <meta property="scoringOn" label="Competitive Scoring" type="boolean" default="1" />
+  <meta property="adjToggle" label="Toggle to Adjust the Score Bar" type="boolean" default="0" />
+  <meta property="scoreX" label="Score X-Position" type="number" min="0" max="320" default="0" />
+  <meta property="scoreY" label="Score Y-Position" type="number" min="0" max="200" default="0" />
+  <meta property="scoreWidth" label="Score Width" type="number" min="0" max="320" default="320" />
+  <meta property="scoreHeight" label="Score Height" type="number" min="0" max="200" default="200" />
+  <meta property="verticalOn" label="Vertical Score Bar" type="boolean" default="1" />
 
-  
-    <meta meter="inGame" tags="Destiny 2" type="area" x="0.3051" y="0.8731" width="0.0085" height=".001" h="0-360" s="0-30" l="70-100">
-      <resolution size="3440x1440" x="0.3525" y="0.8729" width="0.0085" height=".001"/>
-    </meta>
-    <meta meter="ab1Orange" tags="Destiny 2" type="area" x="0.0776" y="0.8491" width="0.002" height=".04" h="0-30" s="60-90" l="65-100">
-      <resolution size="3440x1440" x="0.1852" y="0.8465" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab2Orange" tags="Destiny 2" type="area" x="0.112" y="0.8454" width="0.002" height=".04" h="0-30" s="60-90" l="65-100">
-      <resolution size="3440x1440" x="0.2105" y="0.8431" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab3Orange" tags="Destiny 2" type="area" x="0.1458" y="0.8398" width="0.002" height=".04" h="0-30" s="60-90" l="65-100">
-      <resolution size="3440x1440" x="0.2363" y="0.8396" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab1Purple" tags="Destiny 2" type="area" x="0.0776" y="0.8491" width="0.002" height=".04" h="250-360" s="15-55" l="25-65">
-      <resolution size="3440x1440" x="0.1852" y="0.8465" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab2Purple" tags="Destiny 2" type="area" x="0.112" y="0.8454" width="0.002" height=".04" h="250-360" s="15-55" l="25-65">
-      <resolution size="3440x1440" x="0.2105" y="0.8431" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab3Purple" tags="Destiny 2" type="area" x="0.1458" y="0.8398" width="0.002" height=".04" h="250-360" s="15-55" l="25-65">
-      <resolution size="3440x1440" x="0.2363" y="0.8396" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab1Blue" tags="Destiny 2" type="area" x="0.0776" y="0.8491" width="0.002" height=".04" h="145-195" s="25-60" l="50-90">
-      <resolution size="3440x1440" x="0.1852" y="0.8465" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab2Blue" tags="Destiny 2" type="area" x="0.112" y="0.8454" width="0.002" height=".04" h="145-195" s="25-60" l="50-90">
-      <resolution size="3440x1440" x="0.2105" y="0.8431" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab3Blue" tags="Destiny 2" type="area" x="0.1458" y="0.8398" width="0.002" height=".04" h="145-195" s="25-60" l="50-90">
-      <resolution size="3440x1440" x="0.2363" y="0.8396" width="0.002" height=".04"/>
-    </meta>
-    <meta meter="ab1White" tags="Destiny 2" type="area" x="0.0859" y="0.862" width="0.0122" height=".02" h="0-360" s="0-25" l="80-100">
-      <resolution size="3440x1440" x="0.1898" y="0.8542" width="0.0122" height=".0271"/>
-    </meta>
-    <meta meter="ab2White" tags="Destiny 2" type="area" x="0.1208" y="0.8556" width="0.0122" height=".02" h="0-360" s="0-25" l="80-100">
-      <resolution size="3440x1440" x="0.216" y="0.8514" width="0.0122" height=".0271"/>
-    </meta>
-    <meta meter="ab3White" tags="Destiny 2" type="area" x="0.1542" y="0.8528" width="0.0122" height=".02" h="0-360" s="0-25" l="80-100">
-      <resolution size="3440x1440" x="0.2416" y="0.8507" width="0.0122" height=".0271"/>
-    </meta>
-    <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.0703" y="0.8315" width="0.004" height=".001" h="20-90" s="40-80" l="60-100">
-      <resolution size="3440x1440" x="0.1791" y="0.8292" width="0.004" height=".001"/>
-    </meta>
-    <meta meter="ultFirstBar" tags="Destiny 2" type="area" x="0.3083" y="0.813" width="0.003" height=".001" h="20-90" s="30-80" l="60-100">
-      <resolution size="3440x1440" x="0.3587" y="0.8118" width="0.003" height=".001"/>
-    </meta>
-    <meta meter="ammoColorWhite" tags="Destiny 2" type="area" x="0.312" y="0.8259" width="0.0005" height=".02" h="0-360" s="0-20" l="80-100">
-      <resolution size="3440x1440" x="0.361" y="0.8257" width="0.0005" height=".02"/>
-    </meta>
-    <meta meter="ammoColorPurple" tags="Destiny 2" type="area" x="0.312" y="0.8259" width="0.0005" height=".02" h="250-280" s="25-50" l="75-100">
-      <resolution size="3440x1440" x="0.361" y="0.8257" width="0.0005" height=".02"/>
-    </meta>
-    <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.312" y="0.8259" width="0.0005" height=".02" h="120-150" s="25-50" l="75-100">
-      <resolution size="3440x1440" x="0.361" y="0.8257" width="0.0005" height=".02"/>
-    </meta>
-    <meta meter="downedGhostRed" tags="Destiny 2" type="area" x="0.0766" y="0.0991" width="0.006" height=".001" h="0-30" s="30-100" l="50-100">
-      <resolution size="3440x1440" x="0.1852" y="0.0993" width="0.006" height=".001"/>
-    </meta>
-    <meta meter="downedWhite" tags="Destiny 2" type="area" x="0.238" y="0.1685" width="0.001" height=".001" h="0-360" s="0-50" l="60-100">
-      <resolution size="3440x1440" x="0.3052" y="0.1653" width="0.001" height=".001"/>
-    </meta>
-    <meta meter="crucDeathR" tags="Destiny 2" type="area" x="0.0438" y="0.2816" width="0.005" height=".002" h="0-25" s="50-75" l="40-60">
-      <resolution size="3440x1440" x="0.1601" y="0.2815" width="0.005" height=".002"/>
-    </meta>
-    <meta meter="crucDeathW" tags="Destiny 2" type="area" x="0.0436" y="0.2889" width="0.005" height=".001" h="0-360" s="0-20" l="80-100">
-      <resolution size="3440x1440" x="0.16" y="0.2889" width="0.005" height=".001"/>
-    </meta>
-    <meta meter="crucDefeatG" tags="Destiny 2" type="area" x="0.4958" y="0.537" width="0.01" height=".001" h="20-90" s="0-25" l="50-100">
-      <resolution size="3440x1440" x="0.5151" y="0.5472" width="0.01" height=".001"/>
-    </meta>
-    <meta meter="crucDefeatB1" tags="Destiny 2" type="area" x="0.4969" y="0.4315" width="0.005" height=".001" h="0-360" s="0-100" l="0-15">
-      <resolution size="3440x1440" x="0.4968" y="0.4326" width="0.005" height=".001"/>
-    </meta>
-    <meta meter="crucDefeatB2" tags="Destiny 2" type="area" x="0.4969" y="0.6185" width="0.003" height=".001" h="0-360" s="0-100" l="0-15">
-      <resolution size="3440x1440" x="0.5" y="0.6188" width="0.003" height=".001"/>
-    </meta>
-    <meta meter="crucScoreR" tags="Destiny 2" type="area" x="0.5078" y="0.0639" width="0.085" height=".0001" h="0-30" s="50-75" l="45-75">
-      <resolution size="3440x1440" x="0.5058" y="0.0625" width="0.0619" height=".0001"/>
-    </meta>
-    <meta meter="crucScoreB" tags="Destiny 2" type="area" x="0.4083" y="0.0639" width="0.085" height=".0001" h="200-220" s="40-60" l="50-75">
-      <resolution size="3440x1440" x="0.432" y="0.0625" width="0.0619" height=".0001"/>
-    </meta>
-    <meta meter="crucVictoryW" tags="Destiny 2" type="area" x="0.4859" y="0.5046" width="0.001" height=".001" h="0-360" s="0-25" l="90-100">
-      <resolution size="3440x1440" x="0.4948" y="0.4611" width="0.001" height=".001"/>
-    </meta>
-    <meta meter="crucVictoryR" tags="Destiny 2" type="area" x="0.4885" y="0.5481" width="0.001" height=".001" h="0-25" s="75-100" l="60-90">
-      <resolution size="3440x1440" x="0.5023" y="0.5576" width="0.01" height=".001"/>
-    </meta>
-    <meta meter="crucVictoryB" tags="Destiny 2" type="area" x="0.4885" y="0.613" width="0.001" height=".001" h="0-180" s="0-20" l="0-25">
-      <resolution size="3440x1440" x="0.4915" y="0.6097" width="0.004" height=".001"/>
-    </meta>
-    <meta meter="gambitPrimeval1" tags="Destiny 2" type="area" x="0.2833" y="0.1157" width="0.16" height=".0001" h="45-70" s="50-75" l="75-100">
-      <resolution size="3440x1440" x="0.3371" y="0.1174" width="0.125" height=".0001"/>
-    </meta>
-    <meta meter="gambitPrimeval2" tags="Destiny 2" type="area" x="0.5531" y="0.1157" width="0.16" height=".0001" h="45-70" s="50-75" l="75-100">
-      <resolution size="3440x1440" x="0.5392" y="0.1174" width="0.125" height=".0001"/>
-    </meta>
-   
-  </head>
-  
-  <body style="margin: 0; padding: 0; background: #000;">
-    <canvas id="exCanvas" width="320" height="200"></canvas>
-  </body>
-  
-  <script>
-    var canvas, ctx;
-    canvas = document.getElementById('exCanvas');
-    ctx = canvas.getContext('2d');
-    var width = 320;
-    var height = 200;
-    var stateHdlr = new StateHandler();
-    var effects = [];
-    var ab1Activated = false;
-    var ab2Activated = false;
-    var ab3Activated = false;
-    var ultCharged = false;
-    var cruciblePushed = false;
-    var gambitPushed = false;
-    var downedPushed = false;
-    var ultInUse = false;
 
-    var skull = "M8.05,64.93S-10.76,9.44,56.44,2.51c0,0,65.88,4.29,48.05,62.42,0,0,4,9.58-.66,18.5,0,0,6.27,9.9,1.65,12.22l4.62,8.91s-8.25,20.81-16.51,11.56c0,0-6.28-21.68-12.55,2.37,0,0,4.62,18.11-6.61,29l-4.29-2.31-3,5.94-3.31-4.29-3.3,4.29-4.12-2-4.14,2L49,147.5l-3,3.63-3.63-5.28-4.3,2.64s-3.63-9.91-6.27-11.23-5.62-14.86-.66-18.49-7.27-18.5-14.53.66c0,0-7.93,1-13.88-15.53l5-7.92s-3.64-4.63,1-10.24C8.71,85.74.45,73.85,8.05,64.93Z";
+  <meta meter="inGame" tags="Destiny 2" type="area" x="0.236328" y="0.89652" width="0.0085" height=".001" h="0-360"
+    s="0-30" l="70-100">
+  <resolution size="3440x1440" x="0.3525" y="0.8729" width="0.0085" height=".001" />
+  </meta>
+  <meta meter="ab1Orange" tags="Destiny 2" type="area" x="0.0667968" y="0.869444" width="0.002" height=".04" h="0-30"
+    s="60-90" l="65-100">
+  <resolution size="3440x1440" x="0.1852" y="0.8465" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab2Orange" tags="Destiny 2" type="area" x="0.10117" y="0.869444" width="0.002" height=".04" h="0-30"
+    s="60-90" l="65-100">
+  <resolution size="3440x1440" x="0.2105" y="0.8431" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab3Orange" tags="Destiny 2" type="area" x="0.136328" y="0.8645" width="0.002" height=".04" h="0-30"
+    s="60-90" l="65-100">
+  <resolution size="3440x1440" x="0.2363" y="0.8396" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab1Purple" tags="Destiny 2" type="area" x="0.0667968" y="0.869444" width="0.002" height=".04" h="250-360"
+    s="15-55" l="25-65">
+  <resolution size="3440x1440" x="0.1852" y="0.8465" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab2Purple" tags="Destiny 2" type="area" x="0.10117" y="0.869444" width="0.002" height=".04" h="250-360"
+    s="15-55" l="25-65">
+  <resolution size="3440x1440" x="0.2105" y="0.8431" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab3Purple" tags="Destiny 2" type="area" x="0.136328" y="0.8645" width="0.002" height=".04" h="250-360"
+    s="15-55" l="25-65">
+  <resolution size="3440x1440" x="0.2363" y="0.8396" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab1Blue" tags="Destiny 2" type="area" x="0.0667968" y="0.869444" width="0.002" height=".04" h="145-195"
+    s="25-60" l="50-90">
+  <resolution size="3440x1440" x="0.1852" y="0.8465" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab2Blue" tags="Destiny 2" type="area" x="0.10117" y="0.869444" width="0.002" height=".04" h="145-195"
+    s="25-60" l="50-90">
+  <resolution size="3440x1440" x="0.2105" y="0.8431" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab3Blue" tags="Destiny 2" type="area" x="0.136328" y="0.8645" width="0.002" height=".04" h="145-195"
+    s="25-60" l="50-90">
+  <resolution size="3440x1440" x="0.2363" y="0.8396" width="0.002" height=".04" />
+  </meta>
+  <meta meter="ab1White" tags="Destiny 2" type="area" x="0.070703" y="0.87569" width="0.01875" height=".0277777"
+    h="0-360" s="0-25" l="80-100">
+  <resolution size="3440x1440" x="0.1898" y="0.8542" width="0.0122" height=".0271" />
+  </meta>
+  <meta meter="ab2White" tags="Destiny 2" type="area" x="0.10759" y="0.8701" width="0.016906" height=".0277777"
+    h="0-360" s="0-25" l="75-100">
+  <resolution size="3440x1440" x="0.216" y="0.8514" width="0.0122" height=".0271" />
+  </meta>
+  <meta meter="ab3White" tags="Destiny 2" type="area" x="0.1402" y="0.87597" width="0.01875" height=".027777" h="0-360"
+    s="0-35" l="65-100">
+  <resolution size="3440x1440" x="0.2416" y="0.8507" width="0.0122" height=".0271" />
+  </meta>
+  <meta meter="ultIcon" tags="Destiny 2" type="area" x="0.0363281" y="0.82569" width="0.004" height=".001" h="20-90"
+    s="30-80" l="60-100">
+  <resolution size="3440x1440" x="0.1791" y="0.8292" width="0.004" height=".001" />
+  </meta>
 
-    var InGameMeter = new Meter(25, ()=>"");
+  <meta meter="ultFirstBar" tags="Destiny 2" type="area" x="0.297656" y="0.83402" width="0.003" height=".001" h="20-90"
+    s="30-80" l="60-100">
+  <resolution size="3440x1440" x="0.3587" y="0.8118" width="0.003" height=".001" />
+  </meta>
 
-    var Ability1OrangeMeter = new Meter(15, grenadeHandler);
-    var Ability2OrangeMeter = new Meter(15, meleeHandler);
-    var Ability3OrangeMeter = new Meter(15, zoneHandler);
-    var Ability1PurpleMeter = new Meter(15, grenadeHandler);
-    var Ability2PurpleMeter = new Meter(15, meleeHandler);
-    var Ability3PurpleMeter = new Meter(15, zoneHandler);
-    var Ability1BlueMeter = new Meter(15, grenadeHandler);
-    var Ability2BlueMeter = new Meter(15, meleeHandler);
-    var Ability3BlueMeter = new Meter(15, zoneHandler);
-    var Ability1WhiteMeter = new Meter(17, ()=>"");
-    var Ability2WhiteMeter = new Meter(17, ()=>"");
-    var Ability3WhiteMeter = new Meter(17, ()=>"");
+  <meta meter="ammoColorWhite" tags="Destiny 2" type="area" x="0.30156" y="0.8659" width="0.0005" height=".02" h="0-360"
+    s="0-30" l="80-100">
+  <resolution size="3440x1440" x="0.361" y="0.8257" width="0.0005" height=".02" />
+  </meta>
+  <meta meter="ammoColorPurple" tags="Destiny 2" type="area" x="0.30156" y="0.8659" width="0.0005" height=".02"
+    h="250-280" s="25-50" l="75-100">
+  <resolution size="3440x1440" x="0.361" y="0.8257" width="0.0005" height=".02" />
+  </meta>
+  <meta meter="ammoColorGreen" tags="Destiny 2" type="area" x="0.30156" y="0.8659" width="0.0005" height=".02"
+    h="110-160" s="15-60" l="65-100">
+  <resolution size="3440x1440" x="0.361" y="0.8257" width="0.0005" height=".02" />
+  </meta>
+  <meta meter="downedGhostRed" tags="Destiny 2" type="area" x="0.039453" y="0.0986111" width="0.006" height=".001"
+    h="0-30" s="30-100" l="50-100">
+  <resolution size="3440x1440" x="0.1852" y="0.0993" width="0.006" height=".001" />
+  </meta>
+  <meta meter="downedWhite" tags="Destiny 2" type="area" x="0.238" y="0.1685" width="0.001" height=".001" h="0-360"
+    s="0-50" l="60-100">
+  <resolution size="3440x1440" x="0.3052" y="0.1653" width="0.001" height=".001" />
+  </meta>
+  <meta meter="downedWhiteG" tags="Destiny 2" type="area" x="0.10664" y="0.07569" width="0.001" height=".001" h="0-360"
+    s="0-100" l="90-100">
+  </meta>
+  <meta meter="crucDeathR" tags="Destiny 2" type="area" x="0.0332" y="0.2614" width="0.005" height=".002" h="0-25"
+    s="50-75" l="40-60">
+  <resolution size="3440x1440" x="0.1601" y="0.2815" width="0.005" height=".002" />
+  </meta>
+  <meta meter="crucDeathW" tags="Destiny 2" type="area" x="0.0322125" y="0.28819" width="0.005" height=".001" h="0-360"
+    s="0-20" l="80-100">
+  <resolution size="3440x1440" x="0.16" y="0.2889" width="0.005" height=".001" />
+  </meta>
+  <meta meter="crucDefeatG" tags="Destiny 2" type="area" x="0.4958" y="0.537" width="0.01" height=".001" h="20-90"
+    s="0-25" l="50-100">
+  <resolution size="3440x1440" x="0.5151" y="0.5472" width="0.01" height=".001" />
+  </meta>
+  <meta meter="crucDefeatB1" tags="Destiny 2" type="area" x="0.4969" y="0.4315" width="0.005" height=".001" h="0-360"
+    s="0-100" l="0-15">
+  <resolution size="3440x1440" x="0.4968" y="0.4326" width="0.005" height=".001" />
+  </meta>
+  <meta meter="crucDefeatB2" tags="Destiny 2" type="area" x="0.4969" y="0.6185" width="0.003" height=".001" h="0-360"
+    s="0-100" l="0-15">
+  <resolution size="3440x1440" x="0.5" y="0.6188" width="0.003" height=".001" />
+  </meta>
+  <meta meter="crucScoreR" tags="Destiny 2" type="area" x="0.507" y="0.04652" width="0.085" height=".0001" h="0-30"
+    s="50-85" l="45-75">
+  <resolution size="3440x1440" x="0.5058" y="0.0625" width="0.0619" height=".0001" />
+  </meta>
+  <meta meter="crucScoreB" tags="Destiny 2" type="area" x="0.4083" y="0.04513889" width="0.085" height=".0001"
+    h="200-220" s="40-80" l="50-75">
+  <resolution size="3440x1440" x="0.432" y="0.0625" width="0.0619" height=".0001" />
+  </meta>
+  <meta meter="crucVictoryW" tags="Destiny 2" type="area" x="0.4859" y="0.5046" width="0.001" height=".001" h="0-360"
+    s="0-25" l="90-100">
+  <resolution size="3440x1440" x="0.4948" y="0.4611" width="0.001" height=".001" />
+  </meta>
+  <meta meter="crucVictoryR" tags="Destiny 2" type="area" x="0.4885" y="0.5481" width="0.001" height=".001" h="0-25"
+    s="75-100" l="60-90">
+  <resolution size="3440x1440" x="0.5023" y="0.5576" width="0.01" height=".001" />
+  </meta>
+  <meta meter="crucVictoryB" tags="Destiny 2" type="area" x="0.4885" y="0.613" width="0.001" height=".001" h="0-180"
+    s="0-100" l="0-20">
+  <resolution size="3440x1440" x="0.4915" y="0.6097" width="0.004" height=".001" />
+  </meta>
+  <meta meter="gambitPrimeval1" tags="Destiny 2" type="area" x="0.2833" y="0.102" width="0.16" height=".0001" h="45-70"
+    s="50-95" l="75-100">
+  <resolution size="3440x1440" x="0.3371" y="0.1174" width="0.125" height=".0001" />
+  </meta>
+  <meta meter="gambitPrimeval2" tags="Destiny 2" type="area" x="0.5531" y="0.1" width="0.16" height=".0001" h="45-70"
+    s="50-95" l="75-100">
+  <resolution size="3440x1440" x="0.5392" y="0.1174" width="0.125" height=".0001" />
+  </meta>
 
-    var UltimateIconMeter = new Meter(10, ultimateHandler);
-    var UltimateBarMeter = new Meter(10, ultimateHandler);
+</head>
 
-    var AmmoColorPurpleMeter = new Meter(10, ammoTypeHandler);
-    var AmmoColorWhiteMeter = new Meter(10, ammoTypeHandler);
-    var AmmoColorGreenMeter = new Meter(10, ammoTypeHandler);
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
 
-    var DownedGhostRedMeter = new Meter(20, downedHandler);
-    var DownedGhostWhiteMeter = new Meter(20, downedHandler);
+<script>
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var stateHdlr = new StateHandler();
+  var effects = [];
+  var ab1Activated = false;
+  var ab2Activated = false;
+  var ab3Activated = false;
+  var ultCharged = false;
+  var cruciblePushed = false;
+  var gambitPushed = false;
+  var downedPushed = false;
+  var ultInUse = false;
+  var inGame = false;
+  var skull = "M8.05,64.93S-10.76,9.44,56.44,2.51c0,0,65.88,4.29,48.05,62.42,0,0,4,9.58-.66,18.5,0,0,6.27,9.9,1.65,12.22l4.62,8.91s-8.25,20.81-16.51,11.56c0,0-6.28-21.68-12.55,2.37,0,0,4.62,18.11-6.61,29l-4.29-2.31-3,5.94-3.31-4.29-3.3,4.29-4.12-2-4.14,2L49,147.5l-3,3.63-3.63-5.28-4.3,2.64s-3.63-9.91-6.27-11.23-5.62-14.86-.66-18.49-7.27-18.5-14.53.66c0,0-7.93,1-13.88-15.53l5-7.92s-3.64-4.63,1-10.24C8.71,85.74.45,73.85,8.05,64.93Z";
+  var InGameMeter = new Meter(15, GameStateHandler);
 
-    var CrucibleDeathRedMeter = new Meter(5, crucibleDeathHandler);
-    var CrucibleDeathWhiteMeter = new Meter(5, crucibleDeathHandler);
-    var CrucibleDefeatGreyMeter = new Meter(10, crucibleDefeatHandler);
-    var CrucibleDefeatBlack1Meter = new Meter(10, crucibleDefeatHandler);
-    var CrucibleDefeatBlack2Meter = new Meter(10, crucibleDefeatHandler);
-    var CrucibleScoreRedMeter = new Meter(15, crucibleScoreHandler);
-    var CrucibleScoreBlueMeter = new Meter(15, crucibleScoreHandler);
-    var CrucibleVictoryRedMeter = new Meter(10, crucibleVictoryHandler);
-    var CrucibleVictoryWhiteMeter = new Meter(10, crucibleVictoryHandler);
-    var CrucibleVictoryBlackMeter = new Meter(10, crucibleVictoryHandler);
+  var Ability1OrangeMeter = new Meter(15, grenadeHandler);
+  var Ability2OrangeMeter = new Meter(15, meleeHandler);
+  var Ability3OrangeMeter = new Meter(15, zoneHandler);
+  var Ability1PurpleMeter = new Meter(15, grenadeHandler);
+  var Ability2PurpleMeter = new Meter(15, meleeHandler);
+  var Ability3PurpleMeter = new Meter(15, zoneHandler);
+  var Ability1BlueMeter = new Meter(15, grenadeHandler);
+  var Ability2BlueMeter = new Meter(15, meleeHandler);
+  var Ability3BlueMeter = new Meter(15, zoneHandler);
+  var Ability1WhiteMeter = new Meter(17, () => "");
+  var Ability2WhiteMeter = new Meter(17, () => "");
+  var Ability3WhiteMeter = new Meter(17, () => "");
 
-    var GambitPrim1Meter = new Meter (10, primevalHandler);
-    var GambitPrim2Meter = new Meter (10, primevalHandler);
+  var UltimateIconMeter = new Meter(10, ultimateHandler);
+  var UltimateBarMeter = new Meter(10, ultimateHandler);
 
-  
-    function update() {
-      InGameMeter.setValue(engine.vision.inGame);
+  var AmmoColorPurpleMeter = new Meter(10, ammoTypeHandler);
+  var AmmoColorWhiteMeter = new Meter(10, ammoTypeHandler);
+  var AmmoColorGreenMeter = new Meter(10, ammoTypeHandler);
 
-      if(InGameMeter.value == 1){
-        if(grenadeOn){
-          Ability1OrangeMeter.setValue(engine.vision.ab1Orange);
-          Ability1PurpleMeter.setValue(engine.vision.ab1Purple);
-          Ability1BlueMeter.setValue(engine.vision.ab1Blue);
-          Ability1WhiteMeter.setValue(engine.vision.ab1White);
-        }
-        if(meleeOn){
-          Ability2OrangeMeter.setValue(engine.vision.ab2Orange);
-          Ability2PurpleMeter.setValue(engine.vision.ab2Purple);
-          Ability2BlueMeter.setValue(engine.vision.ab2Blue);
-          Ability2WhiteMeter.setValue(engine.vision.ab2White);
-        }
-        if(classOn){
-          Ability3OrangeMeter.setValue(engine.vision.ab3Orange);
-          Ability3PurpleMeter.setValue(engine.vision.ab3Purple);
-          Ability3BlueMeter.setValue(engine.vision.ab3Blue);
-          Ability3WhiteMeter.setValue(engine.vision.ab3White);
-        }
-        if(ammoOn){
-          AmmoColorPurpleMeter.setValue(engine.vision.ammoColorPurple);
-          AmmoColorWhiteMeter.setValue(engine.vision.ammoColorWhite);
-          AmmoColorGreenMeter.setValue(engine.vision.ammoColorGreen);
-        }
-        if(ultimateOn){
-          UltimateIconMeter.setValue(engine.vision.ultIcon);
-          UltimateBarMeter.setValue(engine.vision.ultFirstBar);
-        }
-      };
-      
-      if(gameMode == "Campaign/Vanguard"){
-        if(deathOn){
-          DownedGhostRedMeter.setValue(engine.vision.downedGhostRed);
-          DownedGhostWhiteMeter.setValue(engine.vision.downedWhite);
-        }
-      } else if(gameMode == "Crucible"){
-        if(deathOn){
-          CrucibleDeathRedMeter.setValue(engine.vision.crucDeathR);
-          CrucibleDeathWhiteMeter.setValue(engine.vision.crucDeathW);
-        }
-        if(resultOn){
-          CrucibleDefeatGreyMeter.setValue(engine.vision.crucDefeatG);
-          CrucibleDefeatBlack1Meter.setValue(engine.vision.crucDefeatB1);
-          CrucibleDefeatBlack2Meter.setValue(engine.vision.crucDefeatB2);
-          CrucibleVictoryRedMeter.setValue(engine.vision.crucVictoryR);
-          CrucibleVictoryWhiteMeter.setValue(engine.vision.crucVictoryW);
-          CrucibleVictoryBlackMeter.setValue(engine.vision.crucVictoryB);
-        }
-        if(engine.vision.crucScoreR > .01 && engine.vision.crucScoreB > .01){
-          if(scoringOn){
-            CrucibleScoreRedMeter.setValue(engine.vision.crucScoreR);
-            CrucibleScoreBlueMeter.setValue(engine.vision.crucScoreB);
-          }
-        }
-      } else if (gameMode == "Gambit"){
-        if(deathOn){
-          CrucibleDeathRedMeter.setValue(engine.vision.crucDeathR);
-          CrucibleDeathWhiteMeter.setValue(engine.vision.crucDeathW);
-        }
-        if(engine.vision.gambitPrimeval1 > .01 && engine.vision.gambitPrimeval2 > .01){
-          if(scoringOn){
-            GambitPrim1Meter.setValue(engine.vision.gambitPrimeval1);
-            GambitPrim2Meter.setValue(engine.vision.gambitPrimeval2);
-          }
-        }
-      };
+  var DownedGhostRedMeter = new Meter(20, downedHandler);
+  var DownedGhostWhiteMeter = new Meter(20, downedHandler)
+  var DownedWhiteGMeter = new Meter(20, downedHandler);
 
-      if(keyScreenBrightness > 5){
-        copyScreen(1);
+  var CrucibleDeathRedMeter = new Meter(5, crucibleDeathHandler);
+  var CrucibleDeathWhiteMeter = new Meter(5, crucibleDeathHandler);
+  var CrucibleDefeatGreyMeter = new Meter(10, crucibleDefeatHandler);
+  var CrucibleDefeatBlack1Meter = new Meter(10, crucibleDefeatHandler);
+  var CrucibleDefeatBlack2Meter = new Meter(10, crucibleDefeatHandler);
+  var CrucibleScoreRedMeter = new Meter(15, crucibleScoreHandler);
+  var CrucibleScoreBlueMeter = new Meter(15, crucibleScoreHandler);
+  var CrucibleVictoryRedMeter = new Meter(10, crucibleVictoryHandler);
+  var CrucibleVictoryWhiteMeter = new Meter(10, crucibleVictoryHandler);
+  var CrucibleVictoryBlackMeter = new Meter(10, crucibleVictoryHandler);
+
+  var GambitPrim1Meter = new Meter(10, primevalHandler);
+  var GambitPrim2Meter = new Meter(10, primevalHandler);
+
+
+  function update() {
+    InGameMeter.setValue(engine.vision.inGame);
+
+
+    if (grenadeOn) {
+      Ability1OrangeMeter.setValue(engine.vision.ab1Orange);
+      Ability1PurpleMeter.setValue(engine.vision.ab1Purple);
+      Ability1BlueMeter.setValue(engine.vision.ab1Blue);
+      Ability1WhiteMeter.setValue(engine.vision.ab1White);
+    }
+    if (meleeOn) {
+      Ability2OrangeMeter.setValue(engine.vision.ab2Orange);
+      Ability2PurpleMeter.setValue(engine.vision.ab2Purple);
+      Ability2BlueMeter.setValue(engine.vision.ab2Blue);
+      Ability2WhiteMeter.setValue(engine.vision.ab2White);
+    }
+    if (classOn) {
+      Ability3OrangeMeter.setValue(engine.vision.ab3Orange);
+      Ability3PurpleMeter.setValue(engine.vision.ab3Purple);
+      Ability3BlueMeter.setValue(engine.vision.ab3Blue);
+      Ability3WhiteMeter.setValue(engine.vision.ab3White);
+    }
+    if (ammoOn) {
+      AmmoColorPurpleMeter.setValue(engine.vision.ammoColorPurple);
+      AmmoColorWhiteMeter.setValue(engine.vision.ammoColorWhite);
+      AmmoColorGreenMeter.setValue(engine.vision.ammoColorGreen);
+    }
+    if (ultimateOn) {
+      UltimateIconMeter.setValue(engine.vision.ultIcon);
+      UltimateBarMeter.setValue(engine.vision.ultFirstBar);
+    }
+
+    if (gameMode == "Campaign/Vanguard") {
+      if (deathOn) {
+        DownedGhostRedMeter.setValue(engine.vision.downedGhostRed);
+        DownedGhostWhiteMeter.setValue(engine.vision.downedWhite);
+        DownedWhiteGMeter.setValue(engine.vision.downedWhiteG)
       }
-
-      if (adjToggle) {
-        drawRect(scoreX, scoreY, scoreWidth, scoreHeight, "yellow")
-        effects = [];
+    } else if (gameMode == "Crucible") {
+      if (deathOn) {
+        CrucibleDeathRedMeter.setValue(engine.vision.crucDeathR);
+        CrucibleDeathWhiteMeter.setValue(engine.vision.crucDeathW);
       }
-  
-      for (let i = 0; i < effects.length; i++) {
-        effects[i].draw();
-        if (effects[i].lifetime <= 0) {
-          effects.splice(i, 1);
+      if (resultOn) {
+        CrucibleDefeatGreyMeter.setValue(engine.vision.crucDefeatG);
+        CrucibleDefeatBlack1Meter.setValue(engine.vision.crucDefeatB1);
+        CrucibleDefeatBlack2Meter.setValue(engine.vision.crucDefeatB2);
+        CrucibleVictoryRedMeter.setValue(engine.vision.crucVictoryR);
+        CrucibleVictoryWhiteMeter.setValue(engine.vision.crucVictoryW);
+        CrucibleVictoryBlackMeter.setValue(engine.vision.crucVictoryB);
+      }
+      if (engine.vision.crucScoreR > .01 && engine.vision.crucScoreB > .01) {
+        if (scoringOn) {
+          CrucibleScoreRedMeter.setValue(engine.vision.crucScoreR);
+          CrucibleScoreBlueMeter.setValue(engine.vision.crucScoreB);
         }
-      };
-  
-      stateHdlr.Process();
-      window.requestAnimationFrame(update);
+      }
+    } else if (gameMode == "Gambit") {
+      if (deathOn) {
+        CrucibleDeathRedMeter.setValue(engine.vision.crucDeathR);
+        CrucibleDeathWhiteMeter.setValue(engine.vision.crucDeathW);
+      }
+      if (engine.vision.gambitPrimeval1 > .01 && engine.vision.gambitPrimeval2 > .01) {
+        if (scoringOn) {
+          GambitPrim1Meter.setValue(engine.vision.gambitPrimeval1);
+          GambitPrim2Meter.setValue(engine.vision.gambitPrimeval2);
+        }
+      }
     };
 
-    function grenadeHandler(){
-      if(Ability1WhiteMeter.value > .15 && !ab1Activated){
+    if (keyScreenBrightness > 5) {
+      copyScreen(1);
+    }
+
+    if (adjToggle) {
+      drawRect(scoreX, scoreY, scoreWidth, scoreHeight, "yellow")
+      effects = [];
+    }
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+
+    stateHdlr.Process();
+    window.requestAnimationFrame(update);
+  };
+
+
+  function GameStateHandler() {
+    if (InGameMeter.value == 1) {
+      ClearEffects();
+      setTimeout(() => {
+        if (InGameMeter.value == 1) {
+          inGame = true;
+          console.log("in game")
+        }
+      }, 400);
+    } else {
+      ClearEffects();
+      AfterClearCheck();
+      inGame = false;
+      console.log("out game")
+    }
+  }
+
+  function ClearEffects() {
+    effects.length = 0;
+    downedPushed = false;
+    gambitPushed = false;
+    cruciblePushed = false;
+    ultInUse = false;
+
+  }
+
+  function AfterClearCheck() {
+    downedHandler();
+  }
+
+
+  function grenadeHandler() {
+    if (inGame) {
+      if (Ability1WhiteMeter.value > .15 && !ab1Activated) {
         ab1Activated = true;
-        if(Ability1OrangeMeter.decreased && Ability1OrangeMeter.diff > .5){
+        if (Ability1OrangeMeter.decreased && Ability1OrangeMeter.diff > .5) {
           effects.push(new grenade("orange"));
-        } 
-        if(Ability1BlueMeter.decreased && Ability1BlueMeter.diff > .5){
+        }
+        if (Ability1BlueMeter.decreased && Ability1BlueMeter.diff > .5) {
           effects.push(new grenade("blue"));
-        } 
-        if(Ability1PurpleMeter.decreased && Ability1PurpleMeter.diff > .5){
+        }
+        if (Ability1PurpleMeter.decreased && Ability1PurpleMeter.diff > .5) {
           effects.push(new grenade("purple"));
         }
-        setTimeout(()=>{ab1Activated = false}, 1000)
+        setTimeout(() => { ab1Activated = false }, 1000)
       }
     }
+  }
 
-    function meleeHandler(){
-      if(Ability2WhiteMeter.value > .15 && !ab2Activated){
+  function meleeHandler() {
+    if (inGame) {
+      if (Ability2WhiteMeter.value > .1 && !ab2Activated) {
         ab2Activated = true;
-        if(Ability2OrangeMeter.decreased && Ability2OrangeMeter.diff > .8){
+        if (Ability2OrangeMeter.decreased && Ability2OrangeMeter.diff > .8) {
           effects.push(new punch("orange"));
-        } 
-        if(Ability2BlueMeter.decreased && Ability2BlueMeter.diff > .8){
+        }
+        if (Ability2BlueMeter.decreased && Ability2BlueMeter.diff > .8) {
           effects.push(new punch("blue"));
-        } 
-        if(Ability2PurpleMeter.decreased && Ability2PurpleMeter.diff > .8){
+        }
+        if (Ability2PurpleMeter.decreased && Ability2PurpleMeter.diff > .8) {
           effects.push(new punch("purple"));
         }
-        setTimeout(()=>{ab2Activated = false}, 1000)
+        setTimeout(() => { ab2Activated = false }, 1000)
       }
     }
+  }
 
-    function zoneHandler(){
-      if(Ability3WhiteMeter.value > .15 && !ab3Activated){
+  function zoneHandler() {
+    if (inGame) {
+      if (Ability3WhiteMeter.value > .15 && !ab3Activated) {
         ab3Activated = true;
-        if(Ability3OrangeMeter.decreased && Ability3OrangeMeter.diff > .8){
+        if (Ability3OrangeMeter.decreased && Ability3OrangeMeter.diff > .8) {
           effects.push(new classParticleHandler(flameParticle))
-        } 
-        if(Ability3BlueMeter.decreased && Ability3BlueMeter.diff > .8){
+        }
+        if (Ability3BlueMeter.decreased && Ability3BlueMeter.diff > .8) {
           effects.push(new classParticleHandler(arcParticle))
-        } 
-        if(Ability3PurpleMeter.decreased && Ability3PurpleMeter.diff > .8){
+        }
+        if (Ability3PurpleMeter.decreased && Ability3PurpleMeter.diff > .8) {
           effects.push(new classParticleHandler(voidParticle))
         }
-        setTimeout(()=>{ab3Activated = false}, 1000)
+        setTimeout(() => { ab3Activated = false }, 1000)
       }
     }
+  }
 
-    function ultimateHandler(){
-      if(UltimateIconMeter.value == 1 && UltimateBarMeter.value == 1 && !ultCharged){
+  function ultimateHandler() {
+    if (inGame) {
+      if (UltimateIconMeter.value == 1 && UltimateBarMeter.value == 1 && !ultCharged) {
         effects.push(new ultimateCharged())
         ultCharged = true;
-      } 
-      if (UltimateIconMeter.value == 1 && UltimateBarMeter.decreased && UltimateBarMeter.diff > .4 && ultCharged){
+      }
+      if (UltimateIconMeter.value == 1 && UltimateBarMeter.decreased && UltimateBarMeter.diff > .4 && ultCharged) {
         effects.push(new ultimateInUse(175))
         var ultInUse = true;
-      } 
-      if (UltimateIconMeter.value == 0 && UltimateBarMeter.value == 0 && ultCharged){
+      }
+      if (UltimateIconMeter.value == 0 && UltimateBarMeter.value == 0 && ultCharged) {
         effects.push(new ultimateDone())
         ultCharged = false;
       }
     }
+  }
 
-    function ammoTypeHandler(){
-      if(AmmoColorGreenMeter.value == 1 && AmmoColorGreenMeter.diff > .8 && !ultInUse){
+  function ammoTypeHandler() {
+    if (inGame) {
+      if (AmmoColorGreenMeter.value == 1 && AmmoColorGreenMeter.diff > .8 && !ultInUse) {
         effects.push(new ammoType("green"))
       }
-      if(AmmoColorPurpleMeter.value == 1 && AmmoColorPurpleMeter.diff > .8 && !ultInUse){
+      if (AmmoColorPurpleMeter.value == 1 && AmmoColorPurpleMeter.diff > .8 && !ultInUse) {
         effects.push(new ammoType("purple"))
       }
-      if(AmmoColorWhiteMeter.value == 1 && AmmoColorWhiteMeter.diff > .8 && !ultInUse){
+      if (AmmoColorWhiteMeter.value == 1 && AmmoColorWhiteMeter.diff > .8 && !ultInUse) {
         effects.push(new ammoType("white"))
       }
     }
-
-    function downedHandler(){
-      if(DownedGhostRedMeter.value == 1 && DownedGhostWhiteMeter.value == 1 && DownedGhostRedMeter.increased && !downedPushed){
-        effects.push(new downed())
-        downedPushed = true;
-      }
-    }
-
-    function crucibleDeathHandler(){
-      if(CrucibleDeathRedMeter.value > .7 
-      && CrucibleDeathWhiteMeter.value > .3 
-      && CrucibleDeathRedMeter.diff > .5 
-      && CrucibleDeathWhiteMeter.increased
-      && !downedPushed){
-        effects.push(new downed())
-        downedPushed = true;
-      }
-    }
-
-    function crucibleScoreHandler(){
-      if((CrucibleScoreRedMeter.value > .05 || CrucibleScoreBlueMeter.value > .05) && !cruciblePushed){
-        effects.push(new crucibleScore(scoreX, scoreY, scoreWidth, scoreHeight))
-        cruciblePushed = true;
-      }
-    }
-
-    function crucibleVictoryHandler(){
-      if(CrucibleVictoryBlackMeter.value == 1 && CrucibleVictoryRedMeter.value == 1 && CrucibleVictoryWhiteMeter.value == 1){
-        effects.push(new crucibleVictory())
-      }
-    }
-
-    function crucibleDefeatHandler(){
-      if(CrucibleDefeatBlack1Meter.value > .8 && CrucibleDefeatBlack2Meter.value > .8 && CrucibleDefeatGreyMeter.value > .8){
-        effects.push(new crucibleDefeat())
-      }
-    }
-
-    function primevalHandler(){
-      if((GambitPrim1Meter.value > .05 || GambitPrim2Meter.value > .05) && !gambitPushed){
-        console.log("IN GAMBIT SCORE")
-        effects.push(new gambitScore(scoreX, scoreY, scoreWidth, scoreHeight))
-        gambitPushed = true;
-      }
-    }
-
-    function crucibleScore(x, y, width, height){
-      this.lifetime = 10;
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-      
-      this.draw = function(){
-        var redValue = CrucibleScoreRedMeter.value / (CrucibleScoreRedMeter.value + CrucibleScoreBlueMeter.value);
-        var blueValue = CrucibleScoreBlueMeter.value / (CrucibleScoreRedMeter.value + CrucibleScoreBlueMeter.value);
-        if(verticalOn){
-          drawRect(this.x, this.y, this.width, blueValue * this.height, CrucibleScoreBlueMeter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
-          drawRect(this.x, this.y + blueValue * this.height, this.width, redValue * this.height, CrucibleScoreRedMeter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
-        } else {
-          drawRect(this.x, this.y, blueValue * this.width, this.height, CrucibleScoreBlueMeter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
-          drawRect(this.x + blueValue * this.width, this.y, redValue * this.width, this.height, CrucibleScoreRedMeter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
-        }
-        if(InGameMeter.value < .2){
-          this.lifetime = 0;
-          cruciblePushed = false;
-        }
-      }
-    }
-
-  function gambitScore(x, y, width, height){
-      this.lifetime = 10;
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-      
-      this.draw = function(){
-        var redValue = 1 - GambitPrim2Meter.value / (GambitPrim2Meter.value + GambitPrim1Meter.value);
-        var blueValue = 1 - GambitPrim1Meter.value / (GambitPrim2Meter.value + GambitPrim1Meter.value);
-        if(verticalOn){
-          drawRect(this.x, this.y, this.width, blueValue * this.height, GambitPrim1Meter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
-          drawRect(this.x, this.y + blueValue * this.height, this.width, redValue * this.height, GambitPrim2Meter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
-        } else {
-          drawRect(this.x, this.y, blueValue * this.width, this.height, GambitPrim1Meter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
-          drawRect(this.x + blueValue * this.width, this.y, redValue * this.width, this.height, GambitPrim2Meter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
-        }
-        if(InGameMeter.value < .2){
-          this.lifetime = 0;
-          gambitPushed = false;
-        }
-      }
   }
 
-  function crucibleDefeat(){
-      this.lifetime = 10;
-      this.lightness1 = 100;
-      this.lightness2 = 100;
-      this.lightness3 = 100;
-      this.alpha = 1;
-      
-      this.draw = function(){
-        var grd = ctx.createLinearGradient(160, 0, 160, 200);
-        grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
-        grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
-        grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
-        this.lightness1 > 50 ? this.lightness1-- : this.lightness2 > 50 ? this.lightness2-- : this.lightness3 > 50 ? this.lightness3-- : null;
-        this.lightness3 <= 50 ? this.alpha -= .01 : null;
-        ctx.globalAlpha = this.alpha
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, 320, 200);
-        renderPath(105, 15, skull, "white");
-        DrawCircle(140, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
-        DrawCircle(180, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
-        ctx.globalAlpha = 1;
-        this.alpha <= 0 ? this.lifetime = 0 : null;
+  function downedHandler() {
+    if (DownedGhostRedMeter.value == 1 && DownedGhostWhiteMeter.value == 1 && DownedGhostRedMeter.increased && DownedWhiteGMeter.value == 1 && !downedPushed) {
+      effects.push(new downed())
+      downedPushed = true;
+    }
+  }
+
+  function crucibleDeathHandler() {
+    if (CrucibleDeathRedMeter.value > .7
+      && CrucibleDeathWhiteMeter.value > .3
+      && CrucibleDeathRedMeter.diff > .5
+      && CrucibleDeathWhiteMeter.increased
+      && !downedPushed) {
+      effects.push(new downed())
+      downedPushed = true;
+    }
+  }
+
+  function crucibleScoreHandler() {
+    if ((CrucibleScoreRedMeter.value > .05 || CrucibleScoreBlueMeter.value > .05) && !cruciblePushed) {
+      effects.push(new crucibleScore(scoreX, scoreY, scoreWidth, scoreHeight))
+      cruciblePushed = true;
+    }
+  }
+
+  function crucibleVictoryHandler() {
+    if (CrucibleVictoryBlackMeter.value == 1 && CrucibleVictoryRedMeter.value == 1 && CrucibleVictoryWhiteMeter.value == 1) {
+      effects.push(new crucibleVictory())
+    }
+  }
+
+  function crucibleDefeatHandler() {
+    if (CrucibleDefeatBlack1Meter.value > .8 && CrucibleDefeatBlack2Meter.value > .8 && CrucibleDefeatGreyMeter.value > .8) {
+      effects.push(new crucibleDefeat())
+    }
+  }
+
+  function primevalHandler() {
+    if ((GambitPrim1Meter.value > .05 || GambitPrim2Meter.value > .05) && !gambitPushed) {
+      console.log("IN GAMBIT SCORE")
+      effects.push(new gambitScore(scoreX, scoreY, scoreWidth, scoreHeight))
+      gambitPushed = true;
+    }
+  }
+
+  function crucibleScore(x, y, width, height) {
+    this.lifetime = 10;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      var redValue = CrucibleScoreRedMeter.value / (CrucibleScoreRedMeter.value + CrucibleScoreBlueMeter.value);
+      var blueValue = CrucibleScoreBlueMeter.value / (CrucibleScoreRedMeter.value + CrucibleScoreBlueMeter.value);
+      if (verticalOn) {
+        drawRect(this.x, this.y, this.width, blueValue * this.height, CrucibleScoreBlueMeter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
+        drawRect(this.x, this.y + blueValue * this.height, this.width, redValue * this.height, CrucibleScoreRedMeter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+      } else {
+        drawRect(this.x, this.y, blueValue * this.width, this.height, CrucibleScoreBlueMeter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
+        drawRect(this.x + blueValue * this.width, this.y, redValue * this.width, this.height, CrucibleScoreRedMeter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+      }
+      if (InGameMeter.value < .2) {
+        this.lifetime = 0;
+        cruciblePushed = false;
       }
     }
+  }
 
-    function crucibleVictory(){
-      this.start = Date.now();
-      this.lifetime = 10;
-      this.effects = []
-      this.hues = ["black", `hsl(0, 100%, 25%)`, "red", "white"]
-      this.done = false;
-      this.draw = function(){
-        var elapsed = Date.now() - this.start;
-        if(!this.done){
-          for(let i = 0; i < 4; i++){
-            setTimeout(()=>{this.effects.push(new crucibleV(160, 150 - i * 25, 5, this.hues[i]))}, i * 200)
-          }
-          this.done = true;
-        }
-        if (elapsed < 2000){
-          this.effects.forEach((ele, i) => {
-            ele.draw();
-            if(ele.lifetime <= 0){
-              this.effects.splice(i, 1);
-            }
-          });
-        } else {
-          for(let i = 0; i < 40; i++){
-            effects.push(new downedParticle("red"))
-            setTimeout(()=>{effects.push(new downedParticle("white"))}, 300)
-          }
-          this.lifetime = 0;
-        }
+  function gambitScore(x, y, width, height) {
+    this.lifetime = 10;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      var redValue = 1 - GambitPrim2Meter.value / (GambitPrim2Meter.value + GambitPrim1Meter.value);
+      var blueValue = 1 - GambitPrim1Meter.value / (GambitPrim2Meter.value + GambitPrim1Meter.value);
+      if (verticalOn) {
+        drawRect(this.x, this.y, this.width, blueValue * this.height, GambitPrim1Meter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
+        drawRect(this.x, this.y + blueValue * this.height, this.width, redValue * this.height, GambitPrim2Meter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+      } else {
+        drawRect(this.x, this.y, blueValue * this.width, this.height, GambitPrim1Meter.value >= .85 ? `hsl(240, 100%, ${Math.cos(Date.now() / 200) * 5 + 55}%)` : "blue")
+        drawRect(this.x + blueValue * this.width, this.y, redValue * this.width, this.height, GambitPrim2Meter.value >= .85 ? `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 5 + 55}%)` : "red")
+      }
+      if (InGameMeter.value < .2) {
+        this.lifetime = 0;
+        gambitPushed = false;
       }
     }
+  }
 
-  function crucibleV(x, y, speed, color){
+  function crucibleDefeat() {
+    this.lifetime = 10;
+    this.lightness1 = 100;
+    this.lightness2 = 100;
+    this.lightness3 = 100;
+    this.alpha = 1;
+
+    this.draw = function () {
+      var grd = ctx.createLinearGradient(160, 0, 160, 200);
+      grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
+      grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
+      grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
+      this.lightness1 > 50 ? this.lightness1-- : this.lightness2 > 50 ? this.lightness2-- : this.lightness3 > 50 ? this.lightness3-- : null;
+      this.lightness3 <= 50 ? this.alpha -= .01 : null;
+      ctx.globalAlpha = this.alpha
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, 320, 200);
+      renderPath(105, 15, skull, "white");
+      DrawCircle(140, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
+      DrawCircle(180, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
+      ctx.globalAlpha = 1;
+      this.alpha <= 0 ? this.lifetime = 0 : null;
+    }
+  }
+
+  function crucibleVictory() {
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.effects = []
+    this.hues = ["black", `hsl(0, 100%, 25%)`, "red", "white"]
+    this.done = false;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (!this.done) {
+        for (let i = 0; i < 4; i++) {
+          setTimeout(() => { this.effects.push(new crucibleV(160, 150 - i * 25, 5, this.hues[i])) }, i * 200)
+        }
+        this.done = true;
+      }
+      if (elapsed < 2000) {
+        this.effects.forEach((ele, i) => {
+          ele.draw();
+          if (ele.lifetime <= 0) {
+            this.effects.splice(i, 1);
+          }
+        });
+      } else {
+        for (let i = 0; i < 40; i++) {
+          effects.push(new downedParticle("red"))
+          setTimeout(() => { effects.push(new downedParticle("white")) }, 300)
+        }
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function crucibleV(x, y, speed, color) {
     this.lifetime = 10;
     this.x = x;
     this.y = y - 200;
     this.goal = y;
     this.vy = speed;
     this.color = color;
-    this.draw = function(){
+    this.draw = function () {
       ctx.beginPath();
       ctx.moveTo(this.x - 100, this.y - 30)
       ctx.lineTo(this.x, this.y)
@@ -578,224 +596,227 @@
     }
   }
 
-    function downed(){
-      this.lifetime = 10;
-      this.radius = 1;
-      this.change = .001
-      this.effects = [];
-      
-      this.draw = function(){
-        console.log("HERE " + Date.now())
-        drawRect(0, 0, 320, 200, "black");
-        this.effects.forEach((ele, i) => {
-          ele.draw();
-          if(ele.lifetime <= 0){
-            this.effects.splice(i, 1);
-          }
-        });
-        DrawCircle(160, 100, this.radius, "grey")
-        ctx.globalAlpha = 1;
-        this.radius+=this.change;
-        this.change+=.01
-        this.effects.push(new downedParticle("red"))
-        if(this.radius >= 200){
-          this.lifetime = 0;
-          downedPushed = false;
+  function downed() {
+    this.lifetime = 10;
+    this.radius = 1;
+    this.change = .001
+    this.effects = [];
+
+    this.draw = function () {
+      console.log("HERE " + Date.now())
+      drawRect(0, 0, 320, 200, "black");
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
         }
+      });
+      DrawCircle(160, 100, this.radius, "grey")
+      ctx.globalAlpha = 1;
+      this.radius += this.change;
+      this.change += .01
+      this.effects.push(new downedParticle("red"))
+      if (this.radius >= 200) {
+        this.lifetime = 0;
+        downedPushed = false;
       }
     }
+  }
 
-    function downedParticle(color){
-      this.x = 160;
-      this.y = 100;
-      this.vx = (2 - Math.random() * 4) * 2;
-      this.vy = (2 - Math.random() * 4) * 2;
-      this.radius = 10 * Math.random() + 10;
-      this.color = color;
-      this.draw = function(){
-        DrawCircle(this.x, this.y, this.radius, this.color);
-        this.x += this.vx;
-        this.y += this.vy;
-      }
+  function downedParticle(color) {
+    this.x = 160;
+    this.y = 100;
+    this.vx = (2 - Math.random() * 4) * 2;
+    this.vy = (2 - Math.random() * 4) * 2;
+    this.radius = 10 * Math.random() + 10;
+    this.color = color;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, this.radius, this.color);
+      this.x += this.vx;
+      this.y += this.vy;
     }
+  }
 
-    function ultimateDone(){
-      this.start = Date.now();
-      this.lifetime = 10;
-      this.lightness1 = 50;
-      this.lightness2 = 50;
-      this.lightness3 = 50;
-      this.alpha = 1;
-      
-      this.draw = function(){
-        var elapsed = Date.now() - this.start;
-        var grd = ctx.createRadialGradient(160,100,100,160,100,400);
-        grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
-        grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
-        grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
-        this.lightness1 > 0 ? this.lightness1-- : this.lightness2 > 0 ? this.lightness2-- : this.lightness3 > 0 ? this.lightness3-- : null;
-        this.lightness3 <= 0 ? this.alpha -= .05 : null;
-        ctx.globalAlpha = this.alpha
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, 320, 200);
-        ctx.globalAlpha = 1;
-        this.alpha <= 0 ? this.lifetime = 0 : null;
-      }
+  function ultimateDone() {
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.lightness1 = 50;
+    this.lightness2 = 50;
+    this.lightness3 = 50;
+    this.alpha = 1;
+    this.clear = true;
+
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      var grd = ctx.createRadialGradient(160, 100, 100, 160, 100, 400);
+      grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
+      grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
+      grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
+      this.lightness1 > 0 ? this.lightness1-- : this.lightness2 > 0 ? this.lightness2-- : this.lightness3 > 0 ? this.lightness3-- : null;
+      this.lightness3 <= 0 ? this.alpha -= .05 : null;
+      ctx.globalAlpha = this.alpha
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.globalAlpha = 1;
+      this.alpha <= 0 ? this.lifetime = 0 : null;
     }
+  }
 
-  function ultimateInUse(speed){
+  function ultimateInUse(speed) {
     this.start = Date.now();
     this.lifetime = 10;
     this.speed = speed;
     this.hue = 60;
-    this.draw = function(){
+    this.draw = function () {
       var elapsed = Date.now() - this.start;
-      if(elapsed > this.speed){
+      if (elapsed > this.speed) {
         effects.push(new ultRect(45, 12, `hsl(${this.hue}, 100%, 50%)`));
-        this.hue > 0 ? this.hue--: null;
+        this.hue > 0 ? this.hue-- : null;
         this.start = Date.now()
       }
-      if(UltimateIconMeter.value == 0){
-          this.lifetime = 0;
-          var ultInUse = false;
-        }
+      if (UltimateIconMeter.value == 0) {
+        this.lifetime = 0;
+        var ultInUse = false;
+      }
     }
   }
 
-    function ultRect(height, speed, color){
-      this.lifetime = 10;
-      this.y = 200;
-      this.height = height;
-      this.speed = speed;
-      this.color = color;
-      this.draw = function(){
-        ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.fillRect(0, this.y, 320, this.height);
-        this.y-=this.speed;
-        if(this.y < -30){
-          this.lifetime = 0;
-        }
+  function ultRect(height, speed, color) {
+    this.lifetime = 10;
+    this.y = 200;
+    this.height = height;
+    this.speed = speed;
+    this.color = color;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.fillRect(0, this.y, 320, this.height);
+      this.y -= this.speed;
+      if (this.y < -30) {
+        this.lifetime = 0;
       }
     }
+  }
 
-    function ultimateCharged(){
-      this.start = Date.now();
-      this.radius = 5;
-      this.count = 0;
-      this.x = 0;
-      this.width = 160;
-      this.lifetime = 10;
-      this.draw = function(){
-        var elapsed = Date.now() - this.start;
-        if(elapsed < 200){
-          DrawCircle(160, 100, this.radius, "yellow");
-        } else if (this.radius < 75){
-          DrawCircle(160, 100, this.radius, "yellow");
-          this.radius+=5;
-        } else if (this.x < 400){
-            DrawCircle(160, 100, this.radius, "yellow")
-            drawRect(160 - this.x, 25, this.x, 150, "yellow");
-            drawRect(160, 25, this.x, 150, "yellow");
-            this.x+=15;
-        } else if (this.width > 0){
-            drawRect(0, 25, this.width, 150, "yellow");
-            drawRect(320 - this.width, 25, this.width, 150, "yellow");
-            this.width -= 15;
-        } else {
-          this.lifetime = 0;
-        }
+  function ultimateCharged() {
+    this.start = Date.now();
+    this.radius = 5;
+    this.count = 0;
+    this.clear = true;
+    this.x = 0;
+    this.width = 160;
+    this.lifetime = 10;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed < 200) {
+        DrawCircle(160, 100, this.radius, "yellow");
+      } else if (this.radius < 75) {
+        DrawCircle(160, 100, this.radius, "yellow");
+        this.radius += 5;
+      } else if (this.x < 400) {
+        DrawCircle(160, 100, this.radius, "yellow")
+        drawRect(160 - this.x, 25, this.x, 150, "yellow");
+        drawRect(160, 25, this.x, 150, "yellow");
+        this.x += 15;
+      } else if (this.width > 0) {
+        drawRect(0, 25, this.width, 150, "yellow");
+        drawRect(320 - this.width, 25, this.width, 150, "yellow");
+        this.width -= 15;
+      } else {
+        this.lifetime = 0;
       }
     }
+  }
 
-    function ammoType(color){
-      this.start = 0;
-      this.elapsed = 0;
-      this.color = color;
-      this.lifetime = 10;
-      this.y = 300;
-      this.draw = function(){
-        var xVar = Math.cos(Date.now() / 100) * 20
-        drawRect(0, this.y, 320, 300, "black");
-        for(let i = 0; i < 4; i++){
-          drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
+  function ammoType(color) {
+    this.start = 0;
+    this.clear = true;
+    this.elapsed = 0;
+    this.color = color;
+    this.lifetime = 10;
+    this.y = 300;
+    this.draw = function () {
+      var xVar = Math.cos(Date.now() / 100) * 20
+      drawRect(0, this.y, 320, 300, "black");
+      for (let i = 0; i < 4; i++) {
+        drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
+      }
+      if (this.y > 0) {
+        this.y -= 15;
+      } else if (this.y == 0 && this.elapsed < 450) {
+        if (!this.start) {
+          this.start = Date.now();
         }
-        if(this.y > 0){
-          this.y -= 15;
-        } else if (this.y == 0 && this.elapsed < 450){
-          if(!this.start){
-            this.start = Date.now();
-          }
-          this.elapsed = Date.now() - this.start;
-        } else {
-          this.y -= 15;
-        }
-        if(this.y < -300){
-          this.lifetime = 0;
-        }
+        this.elapsed = Date.now() - this.start;
+      } else {
+        this.y -= 15;
+      }
+      if (this.y < -300) {
+        this.lifetime = 0;
       }
     }
+  }
 
-    function classParticleHandler(cb){
-      this.start = Date.now();
-      this.effects = [];
-      this.lifetime = 20;
-      this.draw = function(){
-        var elapsed = Date.now() - this.start;
-        if(elapsed < 1500 && this.effects.length < 50){
-          this.effects.push(new cb())
-        } else if (this.effects.length == 0){
-          this.lifetime = 0;
-        }
-        this.effects.forEach((ele, i) => {
-          ele.draw();
-          if(ele.lifetime <= 0){
-            this.effects.splice(i, 1);
-          }
-        });
+  function classParticleHandler(cb) {
+    this.start = Date.now();
+    this.effects = [];
+    this.lifetime = 20;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed < 1500 && this.effects.length < 50) {
+        this.effects.push(new cb())
+      } else if (this.effects.length == 0) {
+        this.lifetime = 0;
       }
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      });
     }
+  }
 
-  function flameParticle(){
+  function flameParticle() {
     this.lifetime = 10;
     this.x = Math.random() * 320;
     this.y = 200;
     this.vx = Math.cos(Date.now() / 100) * 5;
     this.vy = Math.random() * 10 + 3;
     this.hue = Math.cos(Date.now()) * Math.random() * 30 + 35;
-    this.draw = function(){
+    this.draw = function () {
       this.vx = Math.cos(Date.now() / 75) * Math.random() * 10;
       DrawCircle(this.x, this.y, Math.random() * 10 + 10, `hsl(${this.hue}, 100%, ${Math.cos(Date.now() / 200) * Math.random() * 10 + 60}%)`)
       this.x += this.vx;
-      this.y-= this.vy;
-      if(this.y < 0){
+      this.y -= this.vy;
+      if (this.y < 0) {
         this.lifetime = 0;
       }
     }
   }
 
-  function voidParticle(){
+  function voidParticle() {
     this.lifetime = 10;
     this.x = Math.random() * 320;
     this.y = Math.random() * 200;
     this.hue = Math.cos(Date.now()) * Math.random() * 30 + 290;
     this.radius = 1;
     this.start = Date.now();
-    this.draw = function(){
+    this.draw = function () {
       var elapsed = Date.now() - this.start;
       DrawCircle(this.x, this.y, this.radius, `hsl(${this.hue}, 100%, 50%)`)
-      if(elapsed < 250){
-        this.radius+=4;
+      if (elapsed < 250) {
+        this.radius += 4;
       } else {
         this.radius--;
-        if(this.radius <= 0){
+        if (this.radius <= 0) {
           this.lifetime = 0;
         }
       }
     }
   }
 
-  function arcParticle(){
+  function arcParticle() {
     this.effects = []
     this.lifetime = 10;
     this.x = Math.random() * 320;
@@ -805,9 +826,9 @@
     this.change = 1;
     this.hue = Math.cos(Date.now()) * Math.random() * 30 + 215;
     this.start = Date.now();
-    this.draw = function(){
+    this.draw = function () {
       var elapsed = Date.now() - this.start;
-      if(this.effects.length > 4){
+      if (this.effects.length > 4) {
         this.effects.shift();
       }
       this.effects.forEach((ele) => {
@@ -815,74 +836,74 @@
       });
       DrawCircle(this.x, this.y, 15, `hsl(${this.hue}, 100%, 50%)`)
       this.effects.push([this.x, this.y]);
-      if(elapsed > 50){
+      if (elapsed > 50) {
         this.start = Date.now();
         this.change ? this.change = 0 : this.change = 1;
       }
-      if(this.change){
+      if (this.change) {
         this.x += this.vx;
       } else {
         this.y += this.vy;
       }
-      if(this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0){
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
         this.lifetime = 0;
       }
     }
   }
 
-    function grenade(color){
-      this.color = color;
-      this.start = Date.now();
-      this.radius = 15;
-      this.lifetime = 10;
-      this.draw = function(){
-        var elapsed = Date.now() - this.start;
-        if(elapsed < 400){
-          DrawCircle(160, 100, this.radius, this.color);
-          this.radius+=10;
-        } else if (elapsed < 600){
-          DrawCircle(160, 100, this.radius, "white");
-          this.radius-=20;
-          this.radius <= 0 ? this.radius = .01 : null;
-        } else {
-          this.lifetime = 0;
-          for(let i = 0; i < 35; i++){
+  function grenade(color) {
+    this.color = color;
+    this.start = Date.now();
+    this.radius = 15;
+    this.lifetime = 10;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed < 400) {
+        DrawCircle(160, 100, this.radius, this.color);
+        this.radius += 10;
+      } else if (elapsed < 600) {
+        DrawCircle(160, 100, this.radius, "white");
+        this.radius -= 20;
+        this.radius <= 0 ? this.radius = .01 : null;
+      } else {
+        this.lifetime = 0;
+        for (let i = 0; i < 35; i++) {
+          effects.push(new explosionParticle(160, 100, 50, this.color))
+        }
+        setTimeout(() => {
+          for (let i = 0; i < 35; i++) {
             effects.push(new explosionParticle(160, 100, 50, this.color))
           }
-          setTimeout(()=>{          
-            for(let i = 0; i < 35; i++){
-              effects.push(new explosionParticle(160, 100, 50, this.color))
-            }
-          }, 200)
-        }
+        }, 200)
       }
     }
+  }
 
-    function explosionParticle(x, y, min, color){
-      this.x = x;
-      this.y = y;
-      this.vx = Math.random() * -min + min/2;
-      this.vy = Math.random() * -min + min/2;
-      this.min = min;
-      this.color = color;
-      this.lifetime = 10;
-      this.draw = function(){
-        DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
-        this.x += this.vx;
-        this.y += this.vy;
-        if(this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0){
-          this.lifetime = 0;
-        }
+  function explosionParticle(x, y, min, color) {
+    this.x = x;
+    this.y = y;
+    this.vx = Math.random() * -min + min / 2;
+    this.vy = Math.random() * -min + min / 2;
+    this.min = min;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
       }
     }
+  }
 
-  function punch(color){
+  function punch(color) {
     this.color = color;
     this.start = Date.now();
     this.y = 200;
     this.lifetime = 10;
     this.drew = false;
-    this.draw = function(){
+    this.draw = function () {
       var elapsed = Date.now() - this.start;
       ctx.globalAlpha = .6;
       drawRect(0, 0, 320, 200, "black")
@@ -890,35 +911,35 @@
       drawRect(120, this.y, 70, 70, "white")
       drawRect(170, this.y + 30, 35, 30, "white")
       drawRect(130, this.y + 30, 50, 120, "white")
-      if(this.y > 65){
-        this.y-=20;
+      if (this.y > 65) {
+        this.y -= 20;
       } else {
-        if (!this.drew){
+        if (!this.drew) {
           this.drew = true;
           effects.push(new expandingRing(160, 100, 15, this.color))
-          setTimeout(()=>{effects.push(new expandingRing(160, 100, 10, this.color))}, 200)
+          setTimeout(() => { effects.push(new expandingRing(160, 100, 10, this.color)) }, 200)
         }
-        setTimeout(()=>{this.lifetime = 0}, 200)
+        setTimeout(() => { this.lifetime = 0 }, 200)
       }
     }
   }
 
-  function expandingRing(x, y, speed, color){
+  function expandingRing(x, y, speed, color) {
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.radius = 1;
     this.color = color;
-    this.draw = function(){
+    this.draw = function () {
       DrawStroke(this.x, this.y, this.radius, this.color, 40)
       this.radius += this.speed;
-      if(this.radius > 200){
+      if (this.radius > 200) {
         this.lifetime = 0;
       }
     }
   }
 
-  function renderPath(x, y, path, color){
+  function renderPath(x, y, path, color) {
     ctx.fillStyle = color;
     ctx.save();
     ctx.translate(x, y);
@@ -927,33 +948,33 @@
     ctx.restore();
   }
 
-    function DrawCircle(x,y,radius,color){
-        ctx.beginPath();
-        ctx.fillStyle = color;
-        ctx.arc(x,y,radius, 0, 2* Math.PI)
-        ctx.fill();
-    };
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
 
-    function DrawStroke(x, y, radius, color, stroke){
-        ctx.beginPath();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = stroke;
-        ctx.arc(x,y,radius, 0, 2* Math.PI)
-        ctx.stroke();
-    };
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
 
-    function drawRect(x, y, height, width, color){
-      ctx.beginPath();
-      ctx.fillStyle = color;
-      ctx.fillRect(x, y, height, width);
-    }
-  
+  function drawRect(x, y, height, width, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, height, width);
+  }
+
   function copyScreen(alpha) {
-  var shine = engine.vision.ShineMeter
-  let lightness = new Int8Array(engine.zone.lightness);
-  let sat = new Int8Array(engine.zone.saturation);
-  let hue = new Int16Array(engine.zone.hue);
-  for (var iZone = 0; iZone < 560; iZone++) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
       var iRow = Math.floor(iZone / 28);
       var iCol = iZone % 28;
       var iWidth = 320 / 28;
@@ -961,76 +982,76 @@
       var iZx = iCol * iWidth;
       var iZy = iRow * iHeight;
       ctx.fillStyle =
-          "hsla(" +
-          hue[iZone] +
-          "," +
-          sat[iZone] +
-          "%," +
-          lightness[iZone] * keyScreenBrightness / 100 +
-          "%, " +
-          `${alpha}` +
-          ")";
-  
-      ctx.fillRect(iZx, iZy, iWidth, iHeight);
-  }
-  
-  }
-  
-    function StateHandler() {
-      var stack = [];
-      var state = null;
-  
-      var updateState = function () {
-        if (stack.length > 0) {
-          state = stack[stack.length - 1];
-        } else {
-          state = null;
-        }
-      };
-  
-      this.Push = function (newState) {
-        stack.push(newState);
-        updateState();
-      };
-  
-      this.Pop = function () {
-        stack.pop();
-        updateState();
-      };
-  
-      this.Process = function () {
-        if (state != null) {
-          state.Process();
-        }
-      };
-    }
-  
-    function Meter(size, callback) {
-              this.size = size;
-              this.value = 0;
-              this.diff = 0;
-              this.increased = false;
-              this.decreased = false;
-              var values = [];
-  
-              this.setValue = function (updatedValue) {
-                  values.push(updatedValue);
-                  if (values.length > this.size) {
-                      values.shift();
-                  }
-  
-                  for (var i = 0; i < values.length - 1; i++) {
-                      if (values[i] !== values[i + 1]) return;
-                  }
-                  if (this.value !== values[0]) {
-                      this.diff = Math.abs(this.value - values[0]);
-                      this.increased = this.value < values[0];
-                      this.decreased = this.value > values[0];
-                      this.value = values[0];
-                      callback();
-                  }
-              };
-          }
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
 
-    window.requestAnimationFrame(update);
-  </script>
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  window.requestAnimationFrame(update);
+</script>
