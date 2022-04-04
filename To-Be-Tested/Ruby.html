@@ -1,0 +1,168 @@
+<head>
+  <title>Ruby</title>
+  <meta description="A beautiful red ruby theme that features a complex and mesmerizing effect pattern." />
+  <meta publisher="Alex Krastev" />
+  <meta property="bgColor1" label="Background Color 1" type="color" min="0" max="360" default="#520000" />
+  <meta property="bgColor2" label="Background Color 2" type="color" min="0" max="360" default="#1f0205" />
+  <meta property="color1" label="Color 1" type="color" min="0" max="360" default="#bd0021" />
+  <meta property="color2" label="Color 2" type="color" min="0" max="360" default="#ff0000" />
+  <meta property="color3" label="Color 3" type="color" min="0" max="360" default="#590900" />
+  <meta property="speed" label="Speed" type="number" min="0" max="100" default="50" />
+  <meta property="pulseSpeed" label="Pulse Speed" type="number" min="0" max="100" default="50" />
+</head>
+
+<body style="margin: 0; padding: 0;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var c = document.getElementById("exCanvas");
+  var ctx = c.getContext("2d");
+  var width = 320;
+  var height = 200;
+  var hue = 1;
+  var waves = [];
+  var stars = [];
+  var bg = [];
+  var overlayCycle = 0;
+
+  for (let i = 0; i < 15; i++) {
+    bg.push(new BG());
+  }
+
+  function update() {
+    ctx.fillStyle = bgColor1 + "22";
+    ctx.fillRect(0, 0, width, height);
+
+    for (i = 0; i < bg.length; i++) {
+      bg[i].draw();
+    }
+
+    if (waves.length < 6) {
+      var bAdd = Math.round(Math.random() * 20);
+      if (bAdd == 7) {
+        waves.push(new Wave1());
+      }
+    }
+
+    for (i = 0; i < waves.length; i++) {
+      waves[i].draw();
+      waves[i].update();
+      if (waves[i].lifetime <= 0) {
+        waves.splice(i, 1);
+      }
+    }
+
+    if (overlayCycle < 500) {
+      overlayCycle += pulseSpeed / 50;
+    } else {
+      overlayCycle = 0;
+    }
+
+    if (overlayCycle > 300 && overlayCycle < 400) {
+      var opacity = ((50 - Math.abs((overlayCycle - 300) - 50)) * 2) / 100;
+      var opacityHex = componentToHex(Math.round(opacity * 150) + 95);
+      ctx.fillStyle = color3 + opacityHex;
+      ctx.fillRect(0, 0, 320, 200);
+    }
+
+    if (stars.length < 15) {
+      stars.push(new Star());
+    }
+
+
+    for (i = 0; i < stars.length; i++) {
+      stars[i].draw();
+      stars[i].update();
+      if (stars[i].lifetime <= 0) {
+        stars.splice(i, 1);
+      }
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  window.requestAnimationFrame(update);
+
+
+  function Wave1() {
+    this.dir = Math.random() < 0.5;
+    this.x = 0;
+    this.xDiv = Math.random() * 100 + 30;
+    this.xDir = Math.random() < 0.5;
+    this.width = Math.random() * 20 + 10;
+    this.speedRnd = Math.random() * 2 + 1;
+    if (this.dir) {
+      this.x = (Math.random() * 100) - 100;
+    } else {
+      this.x = (Math.random() * 100) + 320;
+    }
+    this.lifetime = 1;
+
+    this.draw = function () {
+      ctx.strokeStyle = color1 + "66";
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      ctx.moveTo(this.x, -20);
+      if (this.xDir) {
+        ctx.lineTo(this.x + this.xDiv, 220);
+      } else {
+        ctx.lineTo(this.x - this.xDiv, 220);
+      }
+      ctx.stroke();
+    };
+
+    this.update = function () {
+      if (this.dir) {
+        this.x += this.speedRnd * (speed / 50);
+      } else {
+        this.x -= this.speedRnd * (speed / 50);
+      }
+      if (this.x > 500 && this.x + this.xDiv > 500) {
+        this.lifetime = 0;
+      } else if (this.x < -100 && this.x - this.xDiv < - 100) {
+        this.lifetime = 0;
+      }
+    };
+  }
+
+  function Star() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.lifetime = 100;
+    this.opacity = ((50 - Math.abs((this.lifetime) - 50)) * 2) / 100;
+
+    this.draw = function () {
+      this.opacity = ((50 - Math.abs((this.lifetime) - 50)) * 2) / 100;
+
+      var opacityHex = componentToHex(Math.round(this.opacity * 255));
+      ctx.fillStyle = color2 + opacityHex;
+      ctx.fillRect(this.x, this.y, 10, 10);
+    };
+
+    this.update = function () {
+      this.lifetime -= 3 * (speed / 50);
+    };
+  }
+
+  function BG() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 300 - 100;
+    this.size1 = Math.random() * 40 + 20;
+    this.size2 = Math.random() * 40 + 20;
+    this.draw = function () {
+      ctx.fillStyle = bgColor2 + "88";
+      ctx.fillRect(this.x, this.y, this.size1, this.size2);
+      if (this.y < 210) {
+        this.y += speed / 50;
+      } else {
+        this.y = -100;
+      }
+    };
+  }
+
+  function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+</script>
