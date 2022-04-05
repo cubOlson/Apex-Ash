@@ -29,7 +29,7 @@
     drawRect(0,0, 320, 200, "grey");
 
     if(effects.length < 1){
-      effects.push(new crucibleDefeat())
+      effects.push(new punch("orange"))
     }
 
     effects.forEach((ele, i) => {
@@ -42,30 +42,168 @@
     window.requestAnimationFrame(update);
   }
 
-  function crucibleDefeat(){
-      this.lifetime = 10;
-      this.lightness1 = 100;
-      this.lightness2 = 100;
-      this.lightness3 = 100;
-      this.alpha = 1;
-      
-      this.draw = function(){
-        var grd = ctx.createLinearGradient(160, 0, 160, 200);
-        grd.addColorStop(0, `hsl(0, 100%, ${this.lightness1}%)`);
-        grd.addColorStop(.5, `hsl(0, 100%, ${this.lightness2}%)`);
-        grd.addColorStop(1, `hsl(0, 100%, ${this.lightness3}%)`);
-        this.lightness1 > 50 ? this.lightness1-- : this.lightness2 > 50 ? this.lightness2-- : this.lightness3 > 50 ? this.lightness3-- : null;
-        this.lightness3 <= 50 ? this.alpha -= .01 : null;
-        ctx.globalAlpha = this.alpha
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, 320, 200);
-        renderPath(105, 15, skull, "white");
-        DrawCircle(140, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
-        DrawCircle(180, 90, 15, `hsl(0, 100%, ${this.lightness2}%)`)
-        ctx.globalAlpha = 1;
-        this.alpha <= 0 ? this.lifetime = 0 : null;
+  function classParticleHandler(cb) {
+    this.start = Date.now();
+    this.effects = [];
+    this.lifetime = 20;
+    this.y = 300;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed < 1500 && this.effects.length < 60) {
+        this.effects.push(new cb())
+      } else if (this.effects.length == 0) {
+        this.lifetime = 0;
+      }
+      if (this.y > 0) {
+        this.y -= 15;
+      } else if (this.y == 0 && elapsed < 2000) {
+        null;
+      } else {
+        this.y -= 15;
+      }
+      drawRect(0, this.y, 320, 300, "black");
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      });
+    }
+  }
+
+  function punch(color) {
+    this.color = color;
+    this.start = Date.now();
+    this.y = 200;
+    this.lifetime = 10;
+    this.drew = false;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = .75;
+      drawRect(0, 0, 320, 200, "black")
+      ctx.globalAlpha = 1;
+      drawRect(120, this.y, 70, 70, "white")
+      drawRect(170, this.y + 30, 35, 30, "white")
+      drawRect(130, this.y + 30, 50, 120, "white")
+      if (this.y > 65) {
+        this.y -= 20;
+      } else {
+        if (!this.drew) {
+          this.drew = true;
+          effects.push(new expandingRing(160, 100, 15, this.color))
+          setTimeout(() => { effects.push(new expandingRing(160, 100, 10, this.color)) }, 200)
+        }
+        setTimeout(() => { this.lifetime = 0 }, 200)
       }
     }
+  }
+
+  function expandingRing(x, y, speed, color) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.radius = 1;
+    this.color = color;
+    this.draw = function () {
+      DrawStroke(this.x, this.y, this.radius, this.color, 40)
+      this.radius += this.speed;
+      if (this.radius > 200) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function explosionParticle(x, y, min, color) {
+    this.x = x;
+    this.y = y;
+    this.vx = Math.random() * -min + min / 2;
+    this.vy = Math.random() * -min + min / 2;
+    this.min = min;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function flameParticle() {
+    this.lifetime = 10;
+    this.x = Math.random() * 320;
+    this.y = 200;
+    this.vx = Math.cos(Date.now() / 100) * 5;
+    this.vy = Math.random() * 10 + 3;
+    this.hue = Math.cos(Date.now()) * Math.random() * 30 + 35;
+    this.draw = function () {
+      this.vx = Math.cos(Date.now() / 75) * Math.random() * 10;
+      DrawCircle(this.x, this.y, Math.random() * 30 + 10, `hsl(${this.hue}, 100%, ${Math.cos(Date.now() / 200) * Math.random() * 5 + 55}%)`)
+      this.x += this.vx;
+      this.y -= this.vy;
+      if (this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function voidParticle() {
+    this.lifetime = 10;
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hue = Math.cos(Date.now()) * Math.random() * 30 + 290;
+    this.radius = 1;
+    this.start = Date.now();
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      DrawCircle(this.x, this.y, this.radius, `hsl(${this.hue}, 100%, 50%)`)
+      if (elapsed < 250) {
+        this.radius += 4;
+      } else {
+        this.radius--;
+        if (this.radius <= 0) {
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function arcParticle() {
+    this.effects = []
+    this.lifetime = 10;
+    this.x = Math.random() * 320;
+    this.y = 200;
+    this.vx = Math.random() > .5 ? 16 : -16;
+    this.vy = -16;
+    this.change = 1;
+    this.hue = Math.cos(Date.now()) * Math.random() * 30 + 215;
+    this.start = Date.now();
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (this.effects.length > 4) {
+        this.effects.shift();
+      }
+      this.effects.forEach((ele) => {
+        DrawCircle(ele[0], ele[1], 10, `hsl(${this.hue}, 100%, 50%)`)
+      });
+      DrawCircle(this.x, this.y, 15, `hsl(${this.hue}, 100%, 50%)`)
+      this.effects.push([this.x, this.y]);
+      if (elapsed > 50) {
+        this.start = Date.now();
+        this.change ? this.change = 0 : this.change = 1;
+      }
+      if (this.change) {
+        this.x += this.vx;
+      } else {
+        this.y += this.vy;
+      }
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
 
   function renderPath(x, y, path, color){
     ctx.fillStyle = color;
