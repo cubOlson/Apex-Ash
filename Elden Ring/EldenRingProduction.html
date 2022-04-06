@@ -1,5 +1,5 @@
 <head>
-  <title>Elden Ring</title>
+  <title>Elden Ring Production</title>
   <meta description="HUD and effects for Elden Ring. Brightness should be set to 5." />
   <meta publisher="SignalRgb" />
   <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
@@ -394,9 +394,11 @@
     this.lifetime = 50;
     this.size = 0;
     this.width = 0;
+    this.stableLength = 1;
     this.draw = function () {
       this.size = vertMeters ? 200 : healthWidth;
-      this.width = healthRedMeter.value / healthLengthMeter.value * this.size;
+      healthLengthMeter.diff > .2 ? this.stableLength = healthLengthMeter.value : null;
+      this.width = healthRedMeter.value / this.stableLength * this.size;
       if (vertMeters) {
         this.x = healthY;
         this.y = 200;
