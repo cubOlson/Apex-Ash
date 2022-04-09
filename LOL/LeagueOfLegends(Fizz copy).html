@@ -319,9 +319,10 @@
   var levelUpAnim = false;
   var deathAnim = false;
   var Stunned = false;
+  var shark = "M256.683,160.779c-4.758-14.251-27.335-40.694-34.065-40.694c-6.729,0-8.82,43.295-23.759,47.036 c-14.345,3.585-84.357,20.197-84.357,20.197s-11.525-9.384-15.046-8.717c-2.96,0.563-4.395,13.707-13.446,14.395 c-9.04,0.685-20.964,0.146-20.964,0.146C44.049,151.152,0,148.893,0,148.893c22.624,33.66,44.4,55.834,13.513,102.573 c21.385,0,48.714-32.472,50.694-39.601c7.574-2.002,16.29-1.928,20.991,3.563c3.563,4.162,3.66,6.077,6.437,6.869 c2.771,0.791,5.838-6.073,10.593-6.073c4.752,0,27.786,7.29,33.663,9.105c5.872,1.812,11.88,22.567,19.404,23.362 c7.522,0.796,24.553-13.86,28.513-13.86c3.961,0,33.266,4.354,65.743,3.161c5.544,5.944,12.682,17.945-1.805,40.407 c-2.767,4.357-1.979,11.487,7.134,4.357c9.106-7.134,25.918-17.127,42.948-48.015c17.424-1.587,108.042-23.669,108.042-39.904 C405.871,178.601,306.186,159.194,256.683,160.779z"
 
   // Current all heroes
-  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
+  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Fizz,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
 
   // All meter definitions
   var recallMeter = new Meter(1, RecallBlock)
@@ -491,6 +492,9 @@
           break;
         case "Ezreal":
           effects.push(new EzrealQ())
+          break;
+        case "Fizz":
+          effects.push(new FizzQ())
           break;
         case "Garen":
           break;
@@ -688,6 +692,9 @@
         case "Aurelion Sol":
           effects.push(new AurelionW());
           break;
+        case "Fizz":
+          effects.push(new FizzW())
+          break;
         case "Teemo":
           effects.push(new ArrowEffect("up", "blue", 2, 7, 1000));
           ActiveExtendedW = false;
@@ -719,6 +726,9 @@
           break;
         case "Ezreal":
           effects.push(new EzrealE())
+          break;
+        case "Fizz":
+          effects.push(new FizzE())
           break;
         case "Garen":
           ActiveExtendedE = false;
@@ -844,6 +854,9 @@
         case "Ezreal":
           effects.push(new EzrealR())
           break;
+        case "Fizz":
+          effects.push(new FizzR())
+          break;
         case "Garen":
           stateMgr.Push(new GarenR())
           break;
@@ -919,7 +932,7 @@
           case "Ahri":
             effects.push(new ahriR());
             break;
-             case "Viktor":
+          case "Viktor":
             effects.push(new ViktorR());
             break;
           case "Zeri":
@@ -1737,6 +1750,100 @@
     }
   };
   // END EZREAL ---------------------------------------------------------
+  // FIZZ
+  function FizzQ() {
+    this.elapsed;
+    this.start = GetTime();
+    this.bubbles = [];
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      DrawTrident((this.elapsed / 3) - 200, 100, 120, 90);
+      if (Math.random() > 0.7) {
+        this.bubbles.push(new bubble(this.elapsed / 3, 100, 30, "white", `hsl(${Math.random() * 50 + 180}, 100%, 50%, 0.4)`, { x: -5, y: (Math.random() - .5) * 20 }))
+      }
+      this.bubbles.forEach(element => {
+        element.draw();
+      });
+      if (this.elapsed > 3500) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function FizzW() {
+    this.elapsed;
+    this.start = GetTime();
+    this.hit = false;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed < 300) {
+        this.y = this.elapsed;
+      } else if (!this.hit) {
+        this.hit = true;
+        effects.push(new RippleEffect(160, 100, 7, 1500, 30, "hsla(182, 100%, 48%, 1)", "out", "stroke", 3))
+        this.lifetime = 0;
+      }
+      DrawTrident(160, 220 - this.y / 3.3, 120, 0);
+    }
+  }
+
+  function FizzE() {
+    this.elapsed;
+    this.rippleCount = 0;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.rippleCount == 0) {
+        effects.push(new RippleEffect(20, 160, 10, 1500, 20, "hsla(182, 100%, 48%, 1)", "out", "stroke", 1))
+        this.rippleCount++
+      } else if (this.rippleCount == 1 && this.elapsed > 500) {
+        effects.push(new RippleEffect(160, 100, 8, 1500, 20, "hsla(182, 100%, 48%, 1)", "out", "stroke", 1))
+        this.rippleCount++;
+      } else if (this.rippleCount == 2 && this.elapsed > 900) {
+        effects.push(new RippleEffect(300, 100, 8, 1500, 20, "hsla(182, 100%, 48%, 0.4)", "out", "fill", 1))
+        this.rippleCount++;
+      }
+
+    }
+  }
+
+  function FizzR() {
+    this.elapsed;
+    this.bubbles = [];
+    this.brightness;
+    this.a = 0.4
+    freezeBackground = true;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+
+      if (this.elapsed < 1300) {
+        copyScreen((1 - this.elapsed / 1000))
+        this.brightness = 50 - this.elapsed / 30
+      } else if (this.elapsed > 5000) {
+        copyScreen((0 + (this.elapsed - 5000) / 1000))
+        this.brightness = 0 + (this.elapsed - 5000) / 30
+        this.a -= 0.01;
+        if (this.elapsed > 7000) {
+          this.lifetime = 0;
+          freezeBackground = false;
+        }
+      }
+
+      this.bubbles.push(new bubble(Math.random() * 320, 200, 40, `hsla(0,0%,0%,${this.a})`, `hsla(${180 + Math.random() * 50}, 100%, ${this.brightness}%, ${this.a})`, { x: 0, y: -5 }))
+      this.bubbles.forEach((element, i) => {
+        element.draw();
+        if (element.y < -10) {
+          this.bubbles.splice(i, 1);
+
+        }
+      });
+      if (this.elapsed > 1400) {
+        DrawShark((this.elapsed - 1900) / 5, 100)
+      }
+    }
+  }
+  //END FIZZ 
   // GAREN -------------------------------------------------------------
   function GarenQ() {
     this.start = GetTime();
@@ -3156,6 +3263,27 @@
     ctx.fill();
   };
 
+  function DrawTrident(x, y, size, rotation) {
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(x, y)
+    ctx.rotate(rotation * Math.PI / 180);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, size)
+    ctx.moveTo(0, 0)
+    ctx.lineTo(0, -size / 2);
+    ctx.moveTo(0, 0)
+    ctx.lineTo(-size / 2, 0)
+    ctx.lineTo(-size / 2, -size / 2)
+    ctx.moveTo(0, 0)
+    ctx.lineTo(size / 2, 0)
+    ctx.lineTo(size / 2, -size / 2)
+    ctx.restore();
+    ctx.lineWidth = size / 7;
+    ctx.strokeStyle = "Blue";
+    ctx.stroke();
+  }
+
   function DrawTriangle(cord1X, cord1Y, cord2X, cord2Y, cord3X, cord3Y, color) {
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -3195,6 +3323,43 @@
     }
   }
 
+  class bubble {
+    constructor(x, y, radius, outcolor, incolor, speed) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.outcolor = outcolor;
+      this.incolor = incolor;
+      this.speed = {
+        x: speed.x,
+        y: speed.y
+      }
+    }
+    draw() {
+      this.x += this.speed.x;
+      this.y += this.speed.y;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.fillStyle = this.incolor;
+      ctx.fill();
+      ctx.strokeStyle = this.outcolor;
+      ctx.lineWidth = this.radius / 10;
+      ctx.stroke();
+    }
+  }
+  function DrawShark(x, y) {
+    ctx.beginPath();
+    renderPath(x - 300, y - 200, shark, "hsla(177, 100%, 52%, 1)", 7);
+  }
+  function renderPath(x, y, path, color, size) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.transform(size / 10, 0, 0, size / 10, 160 - 10 * 16.5, 79 - size * 7.5);
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  }
 
   function DrawHeart(x, y, xSize, Ysize, color) {
     ctx.save();
@@ -3939,7 +4104,6 @@
     // Grab canvas and rendering context.
     c = document.getElementById("exCanvas");
     ctx = c.getContext("2d");
-
     // Start updates *after* our engine is accessible and ready.
     window.requestAnimationFrame(update);
   }
