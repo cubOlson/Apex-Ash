@@ -15,7 +15,7 @@
     s="0-10" l="60-100">
   </meta>
   <meta meter="hpPink" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4208" y="0.959" width="0.001" height=".001" h="0-10"
-    s="60-70" l="90-100">
+    s="60-70" l="80-100">
   </meta>
   <meta meter="hpRed" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4208" y="0.959" width="0.001" height=".001" h="0-10"
     s="90-100" l="90-100">
@@ -24,8 +24,11 @@
     s="90-100" l="80-100">
   </meta>
   <meta meter="zoneClosing" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.888" y="0.7181" width="0.001" height=".002" h="340-360"
-    s="90-100" l="90-100">
+    s="80-100" l="80-100">
   </meta>
+  <meta meter="zoneClosing2" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.888" y="0.7181" width="0.001" height=".002" h="0-20"
+  s="80-100" l="80-100">
+</meta>
   <meta meter="boostYellow" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4213" y="0.9503" width="0.1593" height=".0001" h="40-50"
   s="60-75" l="75-100">
   </meta>
@@ -44,7 +47,7 @@
   <meta meter="vehicleHP" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.1478" y="0.9667" width="0.001" height="0.005" h="0-360"
   s="0-25" l="75-100">
   </meta>
-  <meta meter="vehicleEmpty" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.1464" y="0.9373" width="0.001" height="0.004" h="0-10"
+  <meta meter="vehicleEmpty" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.1464" y="0.9383" width="0.001" height="0.004" h="0-10"
   s="70-100" l="25-50">
   </meta>
 </head>
@@ -62,27 +65,49 @@
   var height = 200;
   var stateHdlr = new StateHandler();
   var effects = [];
+  var noAmmo = false;
+  var zoneClosingNow = false;
+  var boosted = false;
+  var inGameBool = false;
 
-  var InGameMeter = new Meter(5, inGameHandler);
+  var InGameMeter = new Meter(15, inGameHandler);
   var HealthWhiteMeter = new Meter(5, healthHandler);
   var HealthPinkMeter = new Meter(5, healthHandler);
   var HealthRedMeter = new Meter(5, healthHandler);
   var HealthYellowMeter = new Meter(5, healthHandler);
   var NoAmmoMeter = new Meter(5, ammoHandler);
-  var ZoneClosingMeter = new Meter(5, zoneHandler);
+  var ZoneClosingMeter = new Meter(8, zoneHandler);
   var BoostMeter = new Meter(5, boostHandler);
-  var Inventory1Meter = new Meter(5, inGameHandler);
-  var Inventory2Meter = new Meter(5, inGameHandler);
-  var KillMeter = new Meter(5, killHandler);
-  var AssistMeter = new Meter(5, assistHandler);
-  var VehicleHPMeter = new Meter(5, vehicleHandler);
-  var VehicleEMeter = new Meter(5, vehicleHandler);
+  var Inventory1Meter = new Meter(8, inGameHandler);
+  var Inventory2Meter = new Meter(8, inGameHandler);
+  var KillMeter = new Meter(10, killHandler);
+  var AssistMeter = new Meter(10, assistHandler);
+  var VehicleHPMeter = new Meter(10, vehicleHandler);
+  var VehicleEMeter = new Meter(10, vehicleHandler);
 
   function update() {
     drawRect(0, 0, 200, 320, "black");
 
     if (keyScreenBrightness > 5) {
       copyScreen(1);
+    }
+
+    InGameMeter.setValue(engine.vision.inGame);
+    Inventory1Meter.setValue(engine.vision.inventory1);
+    Inventory2Meter.setValue(engine.vision.inventory2);
+    
+    if(inGameBool){
+      HealthWhiteMeter.setValue(engine.vision.hpWhite);
+      HealthPinkMeter.setValue(engine.vision.hpPink);
+      HealthRedMeter.setValue(engine.vision.hpRed);
+      HealthYellowMeter.setValue(engine.vision.hpYellow);
+      NoAmmoMeter.setValue(engine.vision.ammo0);
+      ZoneClosingMeter.setValue(engine.vision.zoneClosing);
+      BoostMeter.setValue(engine.vision.boostYellow);
+      KillMeter.setValue(engine.vision.kill);
+      AssistMeter.setValue(engine.vision.assist);
+      VehicleHPMeter.setValue(engine.vision.vehicleHP);
+      VehicleEMeter.setValue(engine.vision.vehicleEmpty);
     }
 
     for (let i = 0; i < effects.length; i++) {
@@ -97,35 +122,77 @@
   };
 
   function inGameHandler(){
-    console.log("In Game")
+    if(InGameMeter.value == 1){
+      effects = [];
+      inGameBool = true;
+      console.log("In Game " + Date.now())
+    } else if (InGameMeter.value == 0){
+      effects = [];
+      inGameBool = false;
+      if(Inventory1Meter.value == 1 && Inventory2Meter.value == 1){
+        console.log("IN INVENTORY " + Date.now())
+      }
+    }
   }
 
   function healthHandler(){
-    console.log("In Health")
+    if(HealthWhiteMeter.value == 1){
+      console.log("GOOD HEALTH")
+    } else if (HealthYellowMeter.value == 1){
+      console.log("MEDIUM HEALTH")
+    } else if (HealthPinkMeter.value == 1){
+      console.log("LOW HEALTH")
+    } else if (HealthRedMeter.value == 1){
+      console.log("DOWNED")
+    }
   }
 
   function ammoHandler(){
-    console.log("In Ammo")
+    if(NoAmmoMeter.value == 1){
+      console.log("NO AMMO " + Date.now())
+      noAmmo = true;
+    } if (noAmmo && NoAmmoMeter.value == 0){
+      noAmmo = false;
+      console.log("RELOAD " + Date.now())
+    }
   }
 
   function zoneHandler(){
-    console.log("In Zone")
+    if(ZoneClosingMeter.value == 1 && !zoneClosingNow){
+      console.log("ZONE CLOSING " + Date.now());
+      zoneClosingNow = true;
+    } else if (ZoneClosingMeter.value == 0 && engine.vision.zoneClosing2 == 0 && zoneClosingNow) {
+      console.log("ZONE DONE CLOSED " + Date.now())
+      zoneClosingNow = false;
+    }
   }
 
   function boostHandler(){
-    console.log("In Boost")
+    if(BoostMeter.value == 1 && !boosted){
+      console.log("BOOSTED " + Date.now())
+      boosted = true;
+    } else if (BoostMeter.value == 0 && boosted){
+      console.log("NO BOOST " + Date.now())
+      boosted = false;
+    }
   }
 
   function killHandler(){
-    console.log("In Kill")
+    if(KillMeter.value > .5){
+      console.log("KILL " + Date.now())
+    }
   }
 
   function assistHandler(){
-    console.log("In Assist")
+    if(AssistMeter.value > .5){
+      console.log("ASSIST " + Date.now())
+    }
   }
 
   function vehicleHandler(){
-    console.log("In Vehicle")
+    if(VehicleEMeter.value > .75 && VehicleHPMeter.value == 1){
+      console.log("IN VEHICLE " + Date.now())
+    }
   }
 
   function renderPath(x, y, path, color) {
