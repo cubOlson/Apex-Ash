@@ -1,5 +1,5 @@
 <head>
-  <title>CsGo</title>
+  <title>CsGo Production</title>
   <meta description="Metering for CsGo" />
   <meta publisher="WhirlwindFX" />
 
@@ -11,6 +11,7 @@
   <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
   <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
   <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
+  <meta property="hudToggle" label="enable HUD effects" type="boolean" default="1" />
   <meta property="healthToggle" label="enable Health effects" type="boolean" default="1" />
   <meta property="SearchingGameToggle" label="enable Searching game effects" type="boolean" default="1" />
   <meta property="WinToggle" label="enable Win effects" type="boolean" default="1" />
@@ -105,7 +106,7 @@
 
   <!-- InGame -->
   <meta meter="InGame" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01914" y=".33958" width=".0001"
-    h="0-360" s="0-5" l="85-100" type="linear" />
+    h="0-360" s="0-10" l="85-100" type="linear" />
 
   <meta meter="InGameConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
     width=".0001" h="0-360" s="0-40" l="60-90" type="linear" />
@@ -208,8 +209,9 @@
       KillConfirmationMeter.setValue(engine.vision.KillConfirmation)
     }
 
-
-    DrawHud()
+    if(hudToggle){
+      DrawHud()
+    }
 
     //Effect handler 
     for (let i = 0; i < effects.length; i++) {

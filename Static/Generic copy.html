@@ -8,7 +8,7 @@
     <meta property="Red2" label="red2" type="number" min="0" max="10" default="5"/>
     <meta property="Blue2" label="blue2" type="number" min="0" max="10" default="5"/>
     <meta
-    property="vert"
+    property="boosted"
     label="Vertical"
     type="boolean"
     default="1"
@@ -23,17 +23,14 @@
   ctx = canvas.getContext('2d');
   var effects = [];
 
-  var skull = "M8.05,64.93S-10.76,9.44,56.44,2.51c0,0,65.88,4.29,48.05,62.42,0,0,4,9.58-.66,18.5,0,0,6.27,9.9,1.65,12.22l4.62,8.91s-8.25,20.81-16.51,11.56c0,0-6.28-21.68-12.55,2.37,0,0,4.62,18.11-6.61,29l-4.29-2.31-3,5.94-3.31-4.29-3.3,4.29-4.12-2-4.14,2L49,147.5l-3,3.63-3.63-5.28-4.3,2.64s-3.63-9.91-6.27-11.23-5.62-14.86-.66-18.49-7.27-18.5-14.53.66c0,0-7.93,1-13.88-15.53l5-7.92s-3.64-4.63,1-10.24C8.71,85.74.45,73.85,8.05,64.93Z"
-
-  var skullTop = "M79.61,59.28C91.5-.17,43.61,0,43.61,0-8.74,3.63,3.31,59,3.31,59c-10.9,8.76,8.59,12.39,8.59,12.39,9.41-2,7.76,10.9,7.76,10.9L19,90.66l1.82-2.48,1.81.83,3.64-1.16,2.8-.82,4.13-.83L34,87.85h4.46V81.74l1.65,2.65,3.47.16v2.64l3.63.66,2.64-1,5,1,3-1.32h2.31c-1-8.59,5.94-15.19,5.94-15.19L69.7,72.5l4.13-3.14C89.18,68.53,79.61,59.28,79.61,59.28ZM22.3,55.65c-11.72,3.14-10.07-6.27-10.07-6.27C9.75,40.46,20.82,37,20.82,37,36,30.72,34.19,43.76,34.19,43.76,34.36,51.85,34,52.51,22.3,55.65Zm22.79,12.4s-2.64-8.93-5.28-4-5.12,6.61-6.28,1S41,50,41,50h1.65S48.23,58,49.68,62.59,45.09,68.05,45.09,68.05ZM60,56.29C49.55,53,49.55,51,49.72,41.28S62.1,37,62.1,37c8.15,1.39,8.26,6.44,9.91,11.23S70.36,59.61,60,56.29Z";
-  var skullBottom = "M.6,6.42s5,12,4.79,14.7S6.88,42.58,6.88,42.58l6.44,12.88s5.28,15.2,23,12.89c0,0,7.93,1.63,10.57.23s13-10.31,13.54-12,4-9.74,5-10.24S69,20,71.45,16.82,75.52,4.79,74.78,5s-8.12-3.34-9.28-.54S63.36,22.6,63.36,22.6,56.29,33.4,57,36.26c0,0-4.56-1.37-5.06,0a26.12,26.12,0,0,0-.82,4.18l-3,2-2.28,1.65h-2l-1.65-.5-5.95.67-.33-1.49-4.29.66-3.3-.83H25.87l-2.15-2.47-3.63.33s-5.16-12.78-4.81-17.29-.14-16.73-.14-16.73L7.84.64Z"
-
+  var chicken = "M38.42,7.43S32.2,4.55,15.53,35c0,0-6-16.22-8,1.56,0,0-5.55,14-6.89,20S7.75,70.77,7.75,70.77s-22.44,31.55,15.34,27.55c0,0,29.77,29.78,61.77,13.78,0,0,39.12,14,76.45-20.22,0,0,14.67-7.78-7.78-23.56,0,0-9.78-16.89,24.45-34.89,0,0,9.11-8.88-2.67-11.33,0,0-3.33-20.67-14.45-2.22S132,39,132,39l-4-6.22s2.88-10.89,8.88-13.56,12-14.22-2.22-14c0,0-11.11-12.44-13.33,3.11L116.2,23.21S79.09,1.66,37.75,27.88l-.22-3.78,1.78-6.22Z";
+  var plate = "M28.44,74.29s62.89,46.22,132.89,0c0,0,84.45-47.34-35.55-73.78L18.22,15.62S-27.78,44.73,28.44,74.29Z";
 
   function update(){
-    drawRect(0,0, 320, 200, "white");
+    drawRect(0, 0, 320, 200, "grey");
 
     if(effects.length < 1){
-      effects.push(new vehicleEffect())
+      effects.push(new winEffect())
     }
 
     effects.forEach((ele, i) => {
@@ -46,37 +43,50 @@
     window.requestAnimationFrame(update);
   }
 
-  function vehicleEffect(){
+  function winEffect(){
+    this.x = 150;
+    this.y = -120;
     this.lifetime = 10;
-    this.wheel1 = new wheel(80, 80, 40);
-    this.wheel2 = new wheel(240, 80, 40);
+    this.effects = [];
+    this.start = Date.now();
     this.draw = function(){
-      drawRect(50, -20 + Math.sin((Date.now() - 400) / 100) * 5, 220, 90, "black")
-      for(let i = 0; i < 20; i++){
-        drawRect(320 / 20 * i, 200, 320 / 20, -75 + Math.sin((Date.now() - 100 * i) / 100) * 10, "green")
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          this.effects.splice(i, 1);
+        }
+      });
+      renderPath(this.x - 80, this.y + 30, plate, "white")
+      renderPath(this.x - 65, this.y - 15, chicken, "yellow")
+      if(this.y < 40){
+        this.y+=2
+      } else {
+        for(let i = 0; i < 3; i++){
+          this.effects.push(new explosionParticle(160, 100, 20, "orange"));
+        }
       }
-      this.wheel1.draw();
-      this.wheel2.draw();
+      var elapsed = Date.now() - this.start;
+      if(elapsed > 10000){
+        this.lifetime = 0;
+      }
     }
   }
 
-  function wheel(x, y, radius){
+  function explosionParticle(x, y, min, color) {
     this.x = x;
     this.y = y;
-    this.radius = radius;
-    this.rotate = 0;
-    this.draw = function(){
-      DrawCircle(this.x, this.y + Math.sin((Date.now() - 400) / 100) * 5, this.radius, "grey")
-      DrawStroke(this.x, this.y + Math.sin((Date.now() - 400) / 100) * 5, this.radius, "black", 10)
-      ctx.save()
-      ctx.translate(this.x, this.y)
-      ctx.rotate(this.rotate)
-      ctx.translate(-this.x, -this.y)
-      ctx.moveTo(this.x, this.y - this.radius)
-      ctx.lineTo(this.x, this.y + this.radius)
-      ctx.stroke()
-      ctx.restore()
-      this.rotate-=.2
+    this.vx = Math.random() * -min + min / 2;
+    this.vy = Math.random() * -min + min / 2;
+    this.min = min;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
+      }
     }
   }
 
