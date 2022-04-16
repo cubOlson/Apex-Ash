@@ -1,0 +1,851 @@
+<head>
+  <title>PUBG: Battlegrounds</title>
+  <meta description="Get that chicken dinner with ambience and RGB effects." />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="hpOn" label="HP Effects" type="boolean" default="1" />
+  <meta property="winOn" label="Chicken Dinner Effect" type="boolean" default="1" />
+  <meta property="ammoOn" label="Ammo Effects" type="boolean" default="1" />
+  <meta property="zoneOn" label="Zone Effect" type="boolean" default="1" />
+  <meta property="boostOn" label="Boost Effect" type="boolean" default="1" />
+  <meta property="killOn" label="Kill Effect" type="boolean" default="1" />
+  <meta property="assistOn" label="Assist Effect" type="boolean" default="1" />
+  <meta property="vehicleOn" label="Vehicle Effect" type="boolean" default="1" />
+  <meta property="inventoryOn" label="Inventory Effect" type="boolean" default="1" />
+
+  <meta meter="inGame" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4995" y="0.0213" width="0.003"
+    height=".001" h="0-360" s="0-20" l="80-100">
+  <resolution size="3440x1440" x="0.4991" y="0.0208" width="0.003" height=".001" />
+  </meta>
+  <meta meter="inGameBlue" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.8495" y="0.7278" width="0.003"
+    height=".001" h="225-270" s="70-100" l="50-100">
+  </meta>
+  <meta meter="hpWhite" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.3948" y="0.9574" width="0.001"
+    height=".001" h="0-360" s="0-5" l="95-100">
+  <resolution size="3440x1440" x="0.4208" y="0.959" width="0.001" height=".001" />
+  </meta>
+  <meta meter="hpYellow" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.3948" y="0.9574" width="0.001"
+    height=".001" h="40-70" s="25-40" l="90-100">
+  <resolution size="3440x1440" x="0.4208" y="0.959" width="0.001" height=".001" />
+  </meta>
+  <meta meter="hpPink" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.3948" y="0.9574" width="0.001"
+    height=".001" h="0-10" s="60-70" l="80-100">
+  <resolution size="3440x1440" x="0.4208" y="0.959" width="0.001" height=".001" />
+  </meta>
+  <meta meter="hpRed" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.3948" y="0.9574" width="0.001"
+    height=".001" h="0-10" s="90-100" l="90-100">
+  <resolution size="3440x1440" x="0.4208" y="0.959" width="0.001" height=".001" />
+  </meta>
+  <meta meter="ammo0" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4975" y="0.9213" width="0.0005"
+    height=".01" h="0-20" s="90-100" l="70-100">
+  <resolution size="3440x1440" x="0.4977" y="0.9213" width="0.0005" height=".01" />
+  </meta>
+  <meta meter="ammo1" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4975" y="0.9213" width="0.0005"
+    height=".01" h="340-360" s="90-100" l="70-100">
+  <resolution size="3440x1440" x="0.4977" y="0.9213" width="0.0005" height=".01" />
+  </meta>
+  <meta meter="zoneClosing" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.8505" y="0.7176" width="0.001"
+    height=".002" h="0-30" s="80-100" l="80-100">
+  <resolution size="3440x1440" x="0.888" y="0.7181" width="0.001" height=".002" />
+  </meta>
+  <meta meter="zoneClosing2" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.8505" y="0.7176" width="0.001"
+    height=".002" h="0-20" s="80-100" l="80-100">
+  <resolution size="3440x1440" x="0.888" y="0.7181" width="0.001" height=".002" />
+  </meta>
+  <meta meter="boostYellow" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.3937" y="0.95" width="0.001"
+    height=".0001" h="40-60" s="75-100" l="75-100">
+  <resolution size="3440x1440" x="0.4213" y="0.9503" width="0.1593" height=".0001" />
+  </meta>
+  <meta meter="inventory1" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.062" y="0.0593" width="0.001"
+    height="0.0025" h="0-360" s="0-10" l="60-75">
+  <resolution size="3440x1440" x="0.1743" y="0.0604" width="0.001" height="0.01" />
+  </meta>
+  <meta meter="inventory2" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.2297" y="0.0583" width="0.001"
+    height="0.01" h="0-360" s="0-10" l="60-75">
+  <resolution size="3440x1440" x="0.273" y="0.06" width="0.001" height="0.01" />
+  </meta>
+  <meta meter="kill" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4937" y="0.73" width="0.025"
+    height="0.002" h="0-15" s="70-100" l="70-100">
+  <resolution size="3440x1440" x="0.4938" y="0.731" width="0.025" height="0.002" />
+  </meta>
+  <meta meter="assist" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4828" y="0.7297" width="0.03"
+    height="0.002" h="40-60" s="70-100" l="70-100">
+  <resolution size="3440x1440" x="0.4872" y="0.7309" width="0.025" height="0.002" />
+  </meta>
+
+  <meta meter="vehicleHP" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.0625" y="0.97291666" width="0.01"
+    height="0.00005" h="0-360" s="0-45" l="45-100">
+  <resolution size="3440x1440" x="0.1478" y="0.9667" width="0.001" height="0.0005" />
+  </meta>
+
+  <meta meter="vehicleGas" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.150390" y="0.95625" width="0.0001"
+    height="0.0004" h="0-360" s="0-20" l="80-100">
+  </meta>
+  <meta meter="win" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4354" y="0.6037" width="0.01"
+    height="0.09" h="30-50" s="80-100" l="75-100">
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //engine.zone
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var stateHdlr = new StateHandler();
+  var effects = [];
+  var noAmmo = false;
+  var zoneClosingNow = false;
+  var inGameBool = false;
+  var lowHealth = false;
+  var playerDowned = false;
+
+  var skullTop = "M79.61,59.28C91.5-.17,43.61,0,43.61,0-8.74,3.63,3.31,59,3.31,59c-10.9,8.76,8.59,12.39,8.59,12.39,9.41-2,7.76,10.9,7.76,10.9L19,90.66l1.82-2.48,1.81.83,3.64-1.16,2.8-.82,4.13-.83L34,87.85h4.46V81.74l1.65,2.65,3.47.16v2.64l3.63.66,2.64-1,5,1,3-1.32h2.31c-1-8.59,5.94-15.19,5.94-15.19L69.7,72.5l4.13-3.14C89.18,68.53,79.61,59.28,79.61,59.28ZM22.3,55.65c-11.72,3.14-10.07-6.27-10.07-6.27C9.75,40.46,20.82,37,20.82,37,36,30.72,34.19,43.76,34.19,43.76,34.36,51.85,34,52.51,22.3,55.65Zm22.79,12.4s-2.64-8.93-5.28-4-5.12,6.61-6.28,1S41,50,41,50h1.65S48.23,58,49.68,62.59,45.09,68.05,45.09,68.05ZM60,56.29C49.55,53,49.55,51,49.72,41.28S62.1,37,62.1,37c8.15,1.39,8.26,6.44,9.91,11.23S70.36,59.61,60,56.29Z";
+  var skullBottom = "M.6,6.42s5,12,4.79,14.7S6.88,42.58,6.88,42.58l6.44,12.88s5.28,15.2,23,12.89c0,0,7.93,1.63,10.57.23s13-10.31,13.54-12,4-9.74,5-10.24S69,20,71.45,16.82,75.52,4.79,74.78,5s-8.12-3.34-9.28-.54S63.36,22.6,63.36,22.6,56.29,33.4,57,36.26c0,0-4.56-1.37-5.06,0a26.12,26.12,0,0,0-.82,4.18l-3,2-2.28,1.65h-2l-1.65-.5-5.95.67-.33-1.49-4.29.66-3.3-.83H25.87l-2.15-2.47-3.63.33s-5.16-12.78-4.81-17.29-.14-16.73-.14-16.73L7.84.64Z"
+  var chicken = "M38.42,7.43S32.2,4.55,15.53,35c0,0-6-16.22-8,1.56,0,0-5.55,14-6.89,20S7.75,70.77,7.75,70.77s-22.44,31.55,15.34,27.55c0,0,29.77,29.78,61.77,13.78,0,0,39.12,14,76.45-20.22,0,0,14.67-7.78-7.78-23.56,0,0-9.78-16.89,24.45-34.89,0,0,9.11-8.88-2.67-11.33,0,0-3.33-20.67-14.45-2.22S132,39,132,39l-4-6.22s2.88-10.89,8.88-13.56,12-14.22-2.22-14c0,0-11.11-12.44-13.33,3.11L116.2,23.21S79.09,1.66,37.75,27.88l-.22-3.78,1.78-6.22Z";
+  var plate = "M28.44,74.29s62.89,46.22,132.89,0c0,0,84.45-47.34-35.55-73.78L18.22,15.62S-27.78,44.73,28.44,74.29Z";
+
+  var InGameMeter = new Meter(25, inGameHandler);
+  var WinMeter = new Meter(10, winHandler)
+  var HealthWhiteMeter = new Meter(5, healthHandler);
+  var HealthPinkMeter = new Meter(8, healthHandler);
+  var HealthRedMeter = new Meter(8, healthHandler);
+  var HealthYellowMeter = new Meter(8, healthHandler);
+  var NoAmmo1Meter = new Meter(5, ammoHandler);
+  var NoAmmo2Meter = new Meter(5, ammoHandler);
+  var ZoneClosingMeter = new Meter(8, zoneHandler);
+  var BoostMeter = new Meter(10, boostHandler);
+  var Inventory1Meter = new Meter(5, inGameHandler);
+  var Inventory2Meter = new Meter(5, inGameHandler);
+  var KillMeter = new Meter(10, killHandler);
+  var AssistMeter = new Meter(10, assistHandler);
+  var VehicleHPMeter = new Meter(20, vehicleHandler);
+  var vehicleGasMeter = new Meter(20, vehicleHandler);
+  var stopTriggering = false;
+
+  function update() {
+    drawRect(0, 0, 320, 200, "black");
+
+    if (keyScreenBrightness > 0) {
+      copyScreen(1);
+    }
+
+    if (!stopTriggering) {
+      InGameMeter.setValue(engine.vision.inGame);
+      Inventory1Meter.setValue(engine.vision.inventory1);
+      Inventory2Meter.setValue(engine.vision.inventory2);
+      WinMeter.setValue(engine.vision.win);
+
+      if (inGameBool) {
+        HealthWhiteMeter.setValue(engine.vision.hpWhite);
+        HealthPinkMeter.setValue(engine.vision.hpPink);
+        HealthRedMeter.setValue(engine.vision.hpRed);
+        HealthYellowMeter.setValue(engine.vision.hpYellow);
+        NoAmmo1Meter.setValue(engine.vision.ammo0);
+        NoAmmo2Meter.setValue(engine.vision.ammo1);
+        ZoneClosingMeter.setValue(engine.vision.zoneClosing);
+        BoostMeter.setValue(engine.vision.boostYellow);
+        KillMeter.setValue(engine.vision.kill);
+        AssistMeter.setValue(engine.vision.assist);
+        VehicleHPMeter.setValue(engine.vision.vehicleHP);
+        vehicleGasMeter.setValue(engine.vision.vehicleGas);
+      }
+    }
+
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+
+    stateHdlr.Process();
+    window.requestAnimationFrame(update);
+  };
+
+  function inGameHandler() {
+    if (InGameMeter.value == 1 || engine.vision.inGameBlue > .9) {
+      inGameBool = true;
+      zoneClosingNow = false;
+      boostHandler();
+      setTimeout(() => {
+        zoneHandler();
+      }, 100);
+
+    } else if (InGameMeter.value == 0) {
+      effects.length = [];
+
+      inGameBool = false;
+      boostHandler();
+      if (Inventory1Meter.value == 1 && Inventory2Meter.value == 1 && inventoryOn) {
+        effects.push(new inventory())
+      }
+    }
+  }
+
+  function healthHandler() {
+    if (HealthPinkMeter.value < .1 && HealthRedMeter.value < .1 && HealthYellowMeter.value < .1) {
+      lowHealth = false;
+    }
+    if (HealthWhiteMeter.value == 1 && HealthWhiteMeter.increased && lowHealth && hpOn) {
+      lowHealth = false;
+      effects.push(new healthEffect("good"))
+    } else if (HealthYellowMeter.value == 1 && HealthYellowMeter.increased && hpOn) {
+      lowHealth = true;
+      effects.push(new healthEffect("medium"))
+    } else if (HealthPinkMeter.value == 1 && HealthPinkMeter.increased && hpOn) {
+      lowHealth = true;
+      effects.push(new healthEffect("bad"))
+    } else if (HealthRedMeter.value == 1 && !playerDowned && hpOn) {
+      lowHealth = true;
+      playerDowned = true;
+      effects.push(new healthEffect("downed"))
+    }
+  }
+
+  function winHandler() {
+    if (WinMeter.value == 1 && InGameMeter.value == 0 && winOn) {
+      stopTriggering = true;
+      effects.push(new winEffect())
+    }
+  }
+
+  function ammoHandler() {
+    if (NoAmmo1Meter.value + NoAmmo2Meter.value > .8 && ammoOn && !noAmmo) {
+      effects.push(new noAmmoEffect())
+      noAmmo = true;
+    } if (noAmmo && NoAmmo1Meter.value == 0 && NoAmmo2Meter.value == 0 && ammoOn) {
+      noAmmo = false;
+      effects.push(new reloadEffect())
+    }
+  }
+
+  function zoneHandler() {
+    if (ZoneClosingMeter.value > .75 && !zoneClosingNow && zoneOn && inGameBool) {
+      effects.push(new zoneCloseEffect())
+      zoneClosingNow = true;
+    } else if (ZoneClosingMeter.value == 0 && engine.vision.zoneClosing2 == 0 && zoneClosingNow && zoneOn && inGameBool) {
+      effects.push(new RippleEffect(10, 3000, 30, "red", 10));
+      zoneClosingNow = false;
+    }
+  }
+
+  function boostHandler() {
+    if (BoostMeter.value > .9 && boostOn) {
+      effects.push(new boostedEffect())
+    }
+  }
+
+  function killHandler() {
+    if (KillMeter.value > .4 && KillMeter.diff > .25 && killOn) {
+      effects.push(new killEffect())
+    }
+  }
+
+  function assistHandler() {
+    if (AssistMeter.value > .5 && AssistMeter.diff > .25 && assistOn) {
+      effects.push(new assistEffect())
+    }
+  }
+
+  function vehicleHandler() {
+    if (vehicleGasMeter.value == 1 && VehicleHPMeter.value == 1 && vehicleOn) {
+      effects.push(new vehicleEffect())
+    }
+  }
+
+  function boostedEffect() {
+    this.lifetime = 10;
+    this.alpha = 1;
+    this.done = false;
+    this.draw = function () {
+      var gradient = ctx.createRadialGradient(160, 100, 50, 160, 100, 120);
+      BoostMeter.value < .1 ? this.done = true : null;
+      if (this.done) {
+        ctx.globalAlpha = this.alpha;
+        gradient.addColorStop(0, 'transparent');
+        gradient.addColorStop(.4, 'transparent');
+        gradient.addColorStop(1, `hsl(0, ${90 + Math.sin(Date.now() / 300) * 10}%, ${50 + Math.sin(Date.now() / 300) * 10}%)`);
+        this.alpha -= .01;
+      } else {
+        gradient.addColorStop(0, 'transparent');
+        gradient.addColorStop(.4, 'transparent');
+        gradient.addColorStop(1, `hsl(60, ${90 + Math.sin(Date.now() / 300) * 10}%, ${50 + Math.sin(Date.now() / 300) * 10}%)`);
+      }
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.globalAlpha = 1;
+      if (this.alpha <= 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function winEffect() {
+    this.x = 150;
+    this.y = -120;
+    this.lifetime = 10;
+    this.effects = [];
+    this.start = Date.now();
+    this.draw = function () {
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      });
+      renderPath(this.x - 80, this.y + 30, plate, "white")
+      renderPath(this.x - 65, this.y - 15, chicken, "yellow")
+      if (this.y < 40) {
+        this.y += 2
+      } else {
+        for (let i = 0; i < 3; i++) {
+          this.effects.push(new explosionParticle(160, 100, 20, "orange"));
+        }
+      }
+      var elapsed = Date.now() - this.start;
+      if (elapsed > 10000) {
+        this.lifetime = 0;
+        stopTriggering = false;
+      }
+    }
+  }
+
+  function explosionParticle(x, y, min, color) {
+    this.x = x;
+    this.y = y;
+    this.vx = Math.random() * -min + min / 2;
+    this.vy = Math.random() * -min + min / 2;
+    this.min = min;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function vehicleEffect() {
+    this.lifetime = 10;
+    this.wheel1 = new wheel(80, 80, 40);
+    this.wheel2 = new wheel(240, 80, 40);
+    this.draw = function () {
+      drawRect(50, -20 + Math.sin((Date.now() - 400) / 100) * 5, 220, 90, "black")
+      for (let i = 0; i < 20; i++) {
+        drawRect(320 / 20 * i, 200, 320 / 20, -75 + Math.sin((Date.now() - 100 * i) / 100) * 10, "green")
+      }
+      this.wheel1.draw();
+      this.wheel2.draw();
+      if (vehicleGasMeter.value < .1 && VehicleHPMeter.value < .1) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function wheel(x, y, radius) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.rotate = 0;
+    this.draw = function () {
+      DrawCircle(this.x, this.y + Math.sin((Date.now() - 400) / 100) * 5, this.radius, "grey")
+      DrawStroke(this.x, this.y + Math.sin((Date.now() - 400) / 100) * 5, this.radius, "black", 10)
+      ctx.save()
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.rotate)
+      ctx.translate(-this.x, -this.y)
+      ctx.moveTo(this.x, this.y - this.radius)
+      ctx.lineTo(this.x, this.y + this.radius)
+      ctx.stroke()
+      ctx.restore()
+      this.rotate -= .2
+    }
+  }
+
+  function assistEffect() {
+    this.lifetime = 10;
+    this.start = Date.now();
+    this.y = 200;
+    this.lineWidth = 20;
+    this.alpha = 1;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      if (elapsed > 100) {
+        ctx.beginPath();
+        ctx.moveTo(0, 0)
+        ctx.lineTo(320, 200)
+        ctx.strokeStyle = "yellow";
+        ctx.lineWidth = this.lineWidth;
+        ctx.stroke()
+      }
+      if (elapsed > 300) {
+        ctx.beginPath();
+        ctx.moveTo(320, 0)
+        ctx.lineTo(0, 200)
+        ctx.strokeStyle = "#yellow";
+        ctx.lineWidth = this.lineWidth;
+        ctx.stroke()
+        if (this.y > 40) {
+          this.y -= 5;
+        }
+      }
+      if (elapsed > 1500) {
+        this.alpha -= .01;
+      }
+      drawRect(140, this.y, 40, 120, "white")
+      drawRect(100, this.y + 40, 120, 40, "white")
+      ctx.globalAlpha = 1;
+      if (this.alpha <= 0) {
+        this.lifetime = 0;
+      }
+      this.lineWidth++;
+    }
+  }
+
+  function killEffect() {
+    this.lifetime = 10;
+    this.start = Date.now();
+    this.y = 200;
+    this.lineWidth = 20;
+    this.alpha = 1;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      if (elapsed > 100) {
+        ctx.beginPath();
+        ctx.moveTo(0, 0)
+        ctx.lineTo(320, 200)
+        ctx.strokeStyle = "#FF8C00";
+        ctx.lineWidth = this.lineWidth;
+        ctx.stroke()
+      }
+      if (elapsed > 300) {
+        ctx.beginPath();
+        ctx.moveTo(320, 0)
+        ctx.lineTo(0, 200)
+        ctx.strokeStyle = "#FF8C00";
+        ctx.lineWidth = this.lineWidth;
+        ctx.stroke()
+        if (this.y > 40) {
+          this.y -= 5;
+        }
+      }
+      if (elapsed > 1500) {
+        this.alpha -= .005;
+      }
+      renderPath(120, this.y + Math.cos(Date.now() / 50) * 2, skullTop, "black")
+      renderPath(123, this.y + 60 + Math.sin(Date.now() / 50) * 8, skullBottom, "black")
+      ctx.globalAlpha = 1;
+      if (this.alpha <= 0) {
+        this.lifetime = 0;
+      }
+      this.lineWidth++;
+    }
+  }
+
+  function zoneCloseEffect() {
+    this.lifetime = 10;
+    this.start = Date.now();
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed > 5000) {
+        this.start = Date.now();
+        effects.push(new RippleEffect(8, 1000, 30, "blue", 2));
+      }
+      if (!zoneClosingNow) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  // function zoneRing(color) {
+  //   this.color = color;
+  //   this.lifetime = 10;
+  //   this.radius = 190;
+  //   this.draw = function () {
+  //     ctx.globalAlpha = .2;
+  //     drawRect(0, 0, 320, 200, this.color)
+  //     ctx.globalAlpha = 1;
+  //     this.radius -= 10;
+  //     this.radius <= 10 ? this.lifetime = 0 : DrawStroke(160, 100, this.radius, this.color, 20);
+  //   }
+  // }
+
+  function RippleEffect(speed, duration, rippleWidth, color, amountOfRipples) {
+    this.col = color;
+    this.speed = -speed;
+    this.dur = duration;
+    this.width = rippleWidth;
+    this.start = Date.now();
+    this.lifetime;
+    this.amount = amountOfRipples;
+    this.radius = 200 + (this.width * (this.amount * 2));
+
+
+    this.draw = function () {
+      ctx.globalAlpha = 0.2;
+      if (this.lifetime < (this.dur / 4) * 3) {
+        drawRect(0, 0, 320, 200, this.col)
+      }
+
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      for (let i = 0; i < this.amount; i++) {
+        if (this.radius - i * (this.width * 2) > 0) {
+          ctx.arc(160, 100, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+        }
+      }
+      ctx.strokeStyle = this.col;
+      ctx.stroke();
+      this.radius += this.speed;
+      this.lifetime = this.dur - (Date.now() - this.start);
+      ctx.lineWidth = 1;
+    }
+  }
+
+
+
+  function reloadEffect() {
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.radius = 1;
+    this.alpha = 1;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      var index = Math.floor(elapsed / 250);
+      if (elapsed < 500) {
+        DrawCircle(160, 100, this.radius, "black");
+        for (let i = 0; i < index; i++) {
+          drawRect(50, 200 - 35 * i, 220, 25, "gold")
+        }
+        this.radius += 10;
+      } else {
+        ctx.globalAlpha = this.alpha;
+        DrawCircle(160, 100, this.radius, "black");
+        for (let i = 0; i < index; i++) {
+          drawRect(50, 200 - 35 * i, 220, 25, "gold")
+        }
+        ctx.globalAlpha = 1;
+        this.alpha -= .0075;
+      }
+      if (this.alpha <= 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function noAmmoEffect() {
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.radius = 1;
+    this.alpha = 1;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed < 500) {
+        DrawCircle(160, 100, this.radius, "black");
+        this.radius += 10;
+      } else {
+        ctx.globalAlpha = this.alpha;
+        DrawCircle(160, 100, this.radius, "black");
+        DrawStroke(160, 100, 50, `hsl(0, 100%, ${30 + Math.sin(Date.now() / 100) * 20}%)`, 30);
+        ctx.globalAlpha = 1;
+        this.alpha -= .0075;
+      }
+      if (this.alpha <= 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function healthEffect(type) {
+    this.type = type;
+    this.effects = [];
+    this.pushed = false;
+    this.start = Date.now();
+    this.dstart = Date.now()
+    this.lifetime = 10;
+
+    this.draw = function () {
+      if (!this.pushed && this.type != "downed") {
+        for (let i = 0; i < 10; i++) {
+          switch (this.type) {
+            case "good":
+              setTimeout(() => { this.effects.push(new healthArrow(160, 200, 160, -75, 30, 20, "white")) }, 100 * i)
+              break;
+            case "medium":
+              setTimeout(() => { this.effects.push(new healthArrow(160, 100, -75, 100, 30, 20, "yellow")) }, 100 * i)
+              setTimeout(() => { this.effects.push(new healthArrow(160, 100, 395, 100, 30, 20, "yellow")) }, 100 * i)
+              break;
+            case "bad":
+              setTimeout(() => { this.effects.push(new healthArrow(160, 0, 160, 275, 30, 20, "red")) }, 100 * i)
+              break;
+          }
+        }
+        this.pushed = true;
+      } else if (!this.pushed && Date.now() - this.dstart > 400) {
+        this.effects.push(new healthArrow(160, 100, -75, 100, 30, 20, "red"))
+        this.effects.push(new healthArrow(160, 100, 395, 100, 30, 20, "red"))
+        this.effects.push(new healthArrow(160, 100, 160, -75, 30, 20, "red"))
+        this.effects.push(new healthArrow(160, 100, 160, 275, 30, 20, "red"))
+        this.dstart = Date.now();
+        if (HealthRedMeter.value == 0) {
+          this.pushed = true;
+          playerDowned = false;
+          this.lifetime = 0;
+        }
+      }
+
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      });
+      if (Date.now() - this.start > 3000 && this.pushed == true) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function healthArrow(startX, startY, endX, endY, strokeWidth, steps, color) {
+    this.x = startX;
+    this.y = startY;
+    this.endX = endX;
+    this.endY = endY;
+    this.vx = (endX - startX) / steps;
+    this.vy = (endY - startY) / steps;
+    this.angle = Math.atan2(endY - startY, endX - startX) + Math.PI / 2
+    this.stroke = strokeWidth;
+    this.color = color;
+    this.lifetime = 10;
+
+    this.draw = function () {
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = this.stroke;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle)
+      ctx.translate(-this.x, -this.y);
+      ctx.beginPath();
+      ctx.moveTo(this.x - 150, this.y + 75);
+      ctx.lineTo(this.x, this.y);
+      ctx.lineTo(this.x + 150, this.y + 75);
+      ctx.stroke();
+      ctx.restore();
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x == this.endX && this.y == this.endY) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function inventory() {
+    this.lifetime = 10;
+    this.effects = [];
+    this.elapsed = 0;
+    this.start = Date.now();
+
+    this.draw = function () {
+      if (this.effects.length < 5) {
+        var elapsed = Date.now() - this.start;
+        if (elapsed > 1500) {
+          this.effects.push(new crate())
+          this.start = Date.now();
+        }
+      }
+
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      });
+      if (Inventory1Meter.value == 0 && Inventory2Meter.value == 0) {
+        setTimeout(() => {
+          this.lifetime = 0
+        }, 500)
+      }
+    }
+
+  }
+
+  function crate() {
+    this.x = Math.random() * 320;
+    this.y = -10;
+    this.scale = Math.random() + .5;
+    this.lifetime = 10;
+
+    this.draw = function () {
+      drawRect(this.x, this.y, 75 * this.scale, 75 * this.scale, "red");
+      drawRect(this.x, this.y, 75 * this.scale, 25 * this.scale, "blue");
+      ctx.beginPath();
+      ctx.fillStyle = "white"
+      ctx.arc(this.x + (this.scale * 75 / 2), this.y - 50 * this.scale, 100 * this.scale, Math.PI, 0);
+      ctx.fill()
+      this.y += 2;
+      if (this.y > 500) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function renderPath(x, y, path, color) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function drawRect(x, y, height, width, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, height, width);
+  }
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function timedMeter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    this.start = Date.now();
+    this.elapsed = 0;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      this.elapsed = Date.now() - this.start;
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        this.start = Date.now();
+        callback();
+      }
+    };
+  }
+  window.requestAnimationFrame(update)
+</script>
