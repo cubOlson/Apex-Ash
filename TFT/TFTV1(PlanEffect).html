@@ -92,18 +92,21 @@
   var UIMeter = new Meter(5, () => "")
   var winMeter = new Meter(5, OnWinLoseChanged)
   var loseMeter = new Meter(5, OnWinLoseChanged)
+  var levelUpMeter = new Meter(5, onLevelUpChanged)
   var prevScore = 0;
   var winstreak = false;
   var prevMoney = 0;
   var winTrue = true;
   var loseTrue = false;
+  var prevLVL = 0;
   const a = 2 * Math.PI / 6;
+  var sword = "M5772 5963 c-18 -2 -150 -24 -294 -48 l-262 -44 -676 -678 c-372 -373 -1235 -1240 -1918 -1928 l-1242 -1249 -113 111 -112 112 -360 125 c-198 68 -362 120 -363 115 -6 -16 80 -110 429 -469 185 -190 349 -359 363 -377 l26 -31 -334 -344 c-183 -189 -383 -391 -442 -449 l-109 -105 -77 -13 c-90 -14 -147 -48 -212 -124 -64 -77 -69 -91 -74 -213 -5 -132 8 -173 85 -255 77 -82 107 -94 248 -94 140 0 171 11 247 92 56 61 76 98 99 186 13 53 29 81 72 135 79 96 822 832 841 832 8 0 202 -185 431 -410 228 -226 420 -410 426 -410 16 0 7 33 -117 403 l-114 342 -107 107 -107 107 126 133 c69 73 930 939 1912 1925 l1786 1791 20 139 c11 76 34 212 50 303 16 91 32 193 35 228 l7 62 -69 -2 c-37 0 -83 -3 -101 -5z"
+
 
 
   function update() {
     totaltime = GetTime() - this.starttime;
     copyScreen(1);
-    console.log(engine.vision.lvlUp)
     inGameMeter.setValue(engine.vision.inGame)
     planningConfirmationMeter.setValue(engine.vision.stateSwitchPlanningConfirmation)
     planningConfirmationMeter2.setValue(engine.vision.stateSwitchPlanningConfirmation2)
@@ -117,6 +120,7 @@
     moneyMeter.setValue(engine.vision.moneyCount)
     UIMeter.setValue(engine.vision.defautlUI)
     timeBarMeter.setValue(engine.vision.timeBar)
+    levelUpMeter.setValue(engine.vision.lvlUp)
 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
@@ -131,6 +135,31 @@
     window.requestAnimationFrame(update);
   };
 
+  function onLevelUpChanged() {
+    if (levelUpMeter.value > prevLVL && levelUpMeter.value != -1 && inGame) {
+      effects.push(new ArrowEffect("up", "blue", 5, 5, 2000))
+      prevLVL = levelUpMeter.value
+    } else if (levelUpMeter.value == 2) {
+      prevLVL = 2;
+    }
+  }
+
+  class raindrop {
+    constructor(Fallspeed, col, width, height) {
+      this.x = Math.random() * 320;
+      this.y = Math.random() * -50;
+      this.Fallspeed = Fallspeed;
+      this.color = col;
+      this.width = width;
+      this.height = height;
+    }
+    draw() {
+      this.y -= this.Fallspeed;
+      ctx.beginPath()
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+  }
 
 
 
@@ -152,6 +181,8 @@
       }
     }
   }
+
+
   function OnWinLoseChanged() {
     if (!winTrue) {
       if (UIMeter.value == 1) {
@@ -196,13 +227,13 @@
       }
 
     }
-
   }
 
   function OnGameChanged() {
     if (inGameMeter.value == 1) {
       console.log(`in game, time=${totaltime}`)
       inGame = true;
+      onLevelUpChanged()
     } else {
       inGame = false;
     }
@@ -216,9 +247,7 @@
           setTimeout(() => {
             stagePlaying = false;
           }, 2000);
-
-
-          console.log(`play combat stage effect, time=${totaltime}`)
+          effects.push(new CombatEffect())
         }
 
       }
@@ -272,8 +301,8 @@
                 this.glowingHexagons.splice(glowloc, 1);
                 let TimedGlow = {
                   time: Math.random() * 1000 + this.elapsed,
-                  x: Math.ceil(Math.random() * 8),
-                  y: Math.ceil(Math.random() * 5),
+                  x: Math.ceil(Math.random() * 9),
+                  y: Math.ceil(Math.random() * 6),
                   glowTime: 0
                 }
                 this.glowingHexagons.push(TimedGlow)
@@ -284,7 +313,7 @@
 
         hexagon.draw();
       });
-      if (this.elapsed > 7000) {
+      if (this.elapsed > 4000) {
         this.alpha += 0.02;
         copyScreen(this.alpha)
         if (this.alpha > 1) {
@@ -292,14 +321,110 @@
         }
       }
     }
+  }
 
+  function CombatEffect() {
+    this.start = GetTime();
+    this.elapsed = 0;
+    this.moveVal = 0;
+    this.alpha = 0;
+    this.particleActive = false;
+    this.firstSwordLoc = {
+      x: 0,
+      y: 230
+    }
+    this.secondSwordLoc = {
+      x: 150,
+      y: 300
+    }
+    this.draw = function () {
+      if (this.elapsed < 1000) {
+        ctx.globalAlpha = this.elapsed / 1000
+      }
+      this.elapsed = GetTime() - this.start;
+      ctx.beginPath();
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, 320, 200);
+      this.moveVal = Math.sin(this.elapsed / 200);
+      ctx.save();
+      ctx.translate(this.firstSwordLoc.x, this.firstSwordLoc.y)
+      ctx.rotate(this.moveVal / 2 + 4.1)
+      renderPath(0, 0, sword, "blue", 0.3)
+      ctx.restore();
+      ctx.save();
+      ctx.translate(this.secondSwordLoc.x, this.secondSwordLoc.y)
+      ctx.rotate(-this.moveVal / 2 + 4.1)
+      renderPath(0, 0, sword, "red", 0.3)
+      ctx.restore();
+      if (this.moveVal > 0.97 && this.particleActive == false) {
+        effects.push(new ParticleExplosion(160, 100, "orange", 10, 1000, 10, 10, 1))
+        this.particleActive = true;
+      } else if (this.moveVal < 9) {
+        this.particleActive = false
+      }
+
+      if (this.elapsed > 4000) {
+        this.alpha += 0.01;
+        copyScreen(this.alpha)
+        if (this.alpha > 1) {
+          this.lifetime = 0;
+        }
+      }
+    }
   }
 
 
+  function ArrowEffect(direction, color, amount, speed, duration) {
+    this.start = GetTime();
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = this.duration;
+    this.direction = direction;
+    this.color = color;
+    this.amount = amount;
+    this.draw = function () {
+      if (this.direction == 'up') {
+        this.speed = -this.speed;
+        ctx.fillStyle = this.color;
+        for (let i = 0; i < this.amount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
+          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
+          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+          ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = this.color;
+        for (let i = 0; i < this.amount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+          ctx.lineTo(320, 240 - this.lifetime / 1.5 + (200 * i));
+          ctx.lineTo(320, 180 - this.lifetime / 1.5 + (200 * i));
+          ctx.lineTo(160, 240 - this.lifetime / 1.5 + (200 * i));
+          ctx.lineTo(0, 180 - this.lifetime / 1.5 + (200 * i));
+          ctx.lineTo(0, 240 - this.lifetime / 1.5 + (200 * i));
+          ctx.lineTo(160, 300 - this.lifetime / 1.5 + (200 * i));
+          ctx.fill();
+        }
+      }
+      this.Ymin += this.speed;
+      this.elapsed = new Date().getTime() - this.start;
+      this.lifetime = this.duration - this.elapsed;
+      if (this.lifetime <= 0) {
+        speedAnim = false
+      }
+    }
+  }
 
-  function renderPath(x, y, path, color) {
+
+  function renderPath(x, y, path, color, size) {
     ctx.fillStyle = color;
     ctx.save();
+    ctx.transform(size / 10, 0, 0, size / 10, 160 - 10 * 16.5, 79 - size * 7.5);
     ctx.translate(x, y);
     let ex = new Path2D(path);
     ctx.fill(ex);
@@ -374,7 +499,63 @@
         this.lifetime = 0;
       }
     }
+  }
 
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+
+    while (this.particles.length < this.amount) {
+
+      this.yspeed = ((Math.random() - 0.5) * this.speed);
+
+
+      this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+        {
+          x: ((Math.random() - 0.5) * this.speed),
+          y: this.yspeed
+        }))
+
+
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
   }
 
   function copyScreen(alpha) {
@@ -462,7 +643,8 @@
         this.value = values[0];
         callback();
       }
-    };
+    }
   }
+  effects.push(new PlanEffect())
   window.requestAnimationFrame(update);
 </script>
