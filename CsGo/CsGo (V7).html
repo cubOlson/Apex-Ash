@@ -1,8 +1,7 @@
 <head>
   <title>CsGo Production</title>
   <meta description="Metering for CsGo" />
-  <meta publisher="WhirlwindFX" />
-
+  <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
   <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
@@ -20,112 +19,149 @@
   <meta property="KillToggle" label="enable Kill effects" type="boolean" default="1" />
   <meta property="BombToggle" label="enable Bomb effects" type="boolean" default="1" />
 
-
-
   <!-- Health -->
   <meta meter="health" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".0652" y=".975"
-    width=".04211" h="0-360" s="0-100" l="80-100" type="linear">
+    width=".04211" h="0-360" s="0-25" l="60-100" type="linear">
+    <resolution size="3440x1440" x="0.0493" y="0.9722" width="0.03" height=".001" />
   </meta>
 
   <meta meter="lowHealth" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
-    width=".0001" h="0-30" s="60-100" l="60-90" type="linear" />
-
+    width=".0001" h="0-30" s="60-100" l="50-90" type="linear" >
+    <resolution size="3440x1440" x="0.0145" y="0.982" width="0.0025" height=".0001" />
+  </meta>
   <!-- LobbyEffects -->
   <meta meter="SearchGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609" y=".0277777"
     width=".0001" h="140-200" s="10-40" l="80-100" type="linear">
-  <resolution size="1280x720" x=".974618" y=".0361111" width=".0001" />
+    <resolution size="3440x1440" x="0.9813" y="0.0345" width="0.0001" />
+    <resolution size="1280x720" x=".974618" y=".0361111" width=".0001" />
   </meta>
 
   <meta meter="SearchGameConfirmation" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609"
     y=".184" width=".0001" h="60-220" s="0-100" l="5-90" type="linear">
+    <resolution size="3440x1440" x="0.9642" y="0.1368" width="0.0001" />
   </meta>
 
   <meta meter="FoundGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".4277"
     width=".0001" h="70-140" s="50-80" l="10-50" type="linear">
+    <resolution size="3440x1440" x="0.5038" y="0.4972" width="0.0001" />
   </meta>
 
 
   <!-- TerroristWins -->
   <meta meter="tWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".485" y=".1361" width=".0140"
-    height=".025" h="40-60" s="30-50" l="50-100" type="area" />
+    height=".015" h="40-60" s="30-50" l="50-100" type="area" >
+    <resolution size="3440x1440" x="0.4988" y="0.159" width="0.002" height=".01"/>
+  </meta>
 
   <meta meter="tWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4609" y=".206"
-    width=".0039" h="40-60" s="20-50" l="50-100" type="linear" />
+    width=".0039" h="40-60" s="20-50" l="50-100" type="linear" >
+    <resolution size="3440x1440" x="0.4701" y="0.2063" width="0.002" height=".01"/>
+  </meta>
 
   <meta meter="tWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".5086" y=".168"
-    width=".0039" h="0-60" s="30-70" l="20-40" type="linear" />
+    width=".0039" h="0-60" s="30-70" l="20-40" type="linear" >
+    <resolution size="3440x1440" x="0.508" y="0.1667" width="0.002" height=".01"/>
+  </meta>
 
   <!-- CounterTerroristWins -->
   <meta meter="ctWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".127"
-    width=".0039" h="0-360" s="0-100" l="0-5" type="linear" />
+    width=".0039" h="0-360" s="0-100" l="0-5" type="linear" >
+    <resolution size="3440x1440" x="0.4983" y="0.1792" width="0.002" height=".01"/>
+  </meta>
 
   <meta meter="ctWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".497" y=".121"
     width=".0039" height=".0002" h="165-250" s="0-40" l="40-80" type="area">
-  <resolution size="1280x720" x=".484375" y=".20486" width=".0001" height=".0002" />
+    <resolution size="3440x1440" x="0.4887" y="0.2056" width="0.002" height=".01"/>
+    <resolution size="1280x720" x=".484375" y=".20486" width=".0001" height=".0002" />
   </meta>
 
   <meta meter="ctWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4988" y=".153"
-    width=".00140" height=".0035" h="165-250" s="0-30" l="60-80" type="area" />
+    width=".00140" height=".0035" h="165-250" s="0-30" l="60-80" type="area" >
+    <resolution size="3440x1440" x="0.4996" y="0.1538" width="0.002" height=".01"/>
+  </meta>
 
   <!-- InShop -->
   <meta meter="InShopBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4597" y=".9284"
-    width=".00140" h="0-360" s="0-100" l="0-30" type="linear" />
+    width=".00140" h="0-360" s="0-100" l="0-30" type="linear" >
+    <resolution size="3440x1440" x="0.0078" y="0.0153" width="0.002"/>
+  </meta>
 
 
   <meta meter="InShopBack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0429" y=".949005"
     width=".0001" h="0-360" s="0-5" l="70-100" type="linear">
-  <resolution size="1920x1080" x=".0429" y=".9602" width=".0001" />
-  <resolution size="1280x720" x=".0433" y=".9652777" width=".0001" />
+    <resolution size="3440x1440" x="0.0322" y="0.9498" width="0.001" />
+    <resolution size="1920x1080" x=".0429" y=".9602" width=".0001" />
+    <resolution size="1280x720" x=".0433" y=".9652777" width=".0001" />
   </meta>
 
 
   <meta meter="AutoBuyBracket" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8941" y=".965277"
     width=".0001" h="0-360" s="0-10" l="55-100" type="linear">
-  <resolution size="1280x720" x=".8894" y=".965277" width=".0001" />
+    <resolution size="3440x1440" x="0.9211" y="0.95" width="0.0005" />
+    <resolution size="1280x720" x=".8894" y=".965277" width=".0001" />
   </meta>
 
   <meta meter="BuyMinus" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01679" y=".3791"
     width=".0001" h="0-30" s="50-100" l="30-100" type="linear">
-  <resolution size="1280x720" x=".01718" y=".3756944" width=".0001" />
+    <resolution size="3440x1440" x="0.0125" y="0.3785" width="0.0005" />
+    <resolution size="1280x720" x=".01718" y=".3756944" width=".0001" />
   </meta>
   <!-- Spectating -->
 
   <meta meter="SpectatingBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3597" y=".8840"
     width=".0001" h="0-360" s="0-100" l="0-15" type="linear">
-  <resolution size="1280x720" x=".3597" y=".884811" width=".0001" />
+    <resolution size="3440x1440" x="0.3884" y="0.8833" width="0.0002" />
+    <resolution size="1280x720" x=".3597" y=".884811" width=".0001" />
   </meta>
 
   <meta meter="SpectatingMap" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0230" y=".30277"
-    width=".0001" h="0-360" s="0-100" l="0-10" type="linear" />
+    width=".0001" h="0-360" s="0-100" l="0-10" type="linear" >
+    <resolution size="3440x1440" x="0.0052" y="0.3111" width="0.0002" />
+  </meta>
 
   <meta meter="SpectatingCt" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875"
-    width=".1" height=".0001" h="170-210" s="60-100" l="0-80" type="area" />
+    width=".1" height=".0001" h="170-210" s="60-100" l="0-80" type="area" >
+    <resolution size="3440x1440" x="0.3933" y="0.8861" width="0.05" height=".0001"/>
+  </meta>
 
   <meta meter="SpectatingT" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875" width=".1"
-    height=".0001" h="30-60" s="70-100" l="65-100" type="area" />
+    height=".0001" h="30-60" s="70-100" l="65-100" type="area" >
+    <resolution size="3440x1440" x="0.3933" y="0.8861" width="0.05" height=".0001"/>
+  </meta>
 
   <!-- InGame -->
   <meta meter="InGame" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01914" y=".33958" width=".0001"
-    h="0-360" s="0-10" l="85-100" type="linear" />
+    h="0-360" s="0-10" l="85-100" type="linear" >
+    <resolution size="3440x1440" x="0.0137" y="0.3396" width="0.0035" height=".0001"/>
+  </meta>
 
   <meta meter="InGameConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
-    width=".0001" h="0-360" s="0-40" l="60-90" type="linear" />
+    width=".0001" h="0-360" s="0-40" l="60-90" type="linear" >
+    <resolution size="3440x1440" x="0.014" y="0.9831" width="0.002" height=".0001"/>
+  </meta>
 
   <!-- Kill -->
 
   <meta meter="Kill" tags="counter-strike, counter-strike:global offensive, cs:go" x=".99414" y=".06852" width=".0001"
-    height=".20208" h="0-30" s="60-100" l="45-95" type="area" />
+    height=".20208" h="0-30" s="60-100" l="45-95" type="area" >
+    <resolution size="3440x1440" x="0.995" y="0.0708" width="0.0001" height=".2"/>
+  </meta>
 
   <meta meter="KillConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8785" y=".96053"
-    width=".0001" height=".0001" h="0-360" s="0-10" l="85-100" type="area" />
+    width=".0001" height=".0001" h="0-360" s="0-10" l="85-100" type="area" >
+    <resolution size="3440x1440" x="0.4831" y="0.7285" width="0.002" height=".0001"/>
+  </meta>
 
   <!--Bomb planted-->
 
   <meta meter="BombPlanted" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4941" y=".014833"
-    width=".0001" height=".0001" h="0-100" s="60-100" l="35-100" type="area" />
+    width=".0001" height=".0001" h="0-100" s="60-100" l="35-100" type="area" >
+    <resolution size="3440x1440" x="0.4953" y="0.0139" width="0.002" height=".0001"/>
+  </meta>
 
   <meta meter="BombPlantedConfirmation" tags="counter-strike,counter-strike:global offensive,cs:go" x=".484375"
-    y=".731944" width=".0001" h="0-100" s="65-100" l="35-100" type="linear" />
+    y=".731944" width=".0001" h="0-100" s="65-100" l="35-100" type="linear" >
+  </meta>
 </head>
 
 
