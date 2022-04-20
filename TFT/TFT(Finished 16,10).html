@@ -1,5 +1,5 @@
 <head>
-  <title>Team fight tactics </title>
+  <title>Team fight tactics production</title>
   <meta description="Crush all your oponents with this team fight tactics integration" />
   <meta publisher="SignalRGB" />
 
@@ -162,6 +162,10 @@
     timeBarMeter.setValue(engine.vision.timeBar)
     levelUpMeter.setValue(engine.vision.lvlUp)
     unkownStateMeter.setValue(engine.vision.unkownState)
+
+    if(effects.length < 1){
+      effects.push(new PlanEffect())
+    }
 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();

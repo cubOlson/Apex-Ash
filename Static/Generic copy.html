@@ -3,15 +3,24 @@
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
 
-    <meta property="Red" label="red" type="number" min="0" max="10" default="5"/>
-    <meta property="Blue" label="blue" type="number" min="0" max="10" default="5"/>
-    <meta property="Red2" label="red2" type="number" min="0" max="10" default="5"/>
-    <meta property="Blue2" label="blue2" type="number" min="0" max="10" default="5"/>
+    <meta property="Speed" label="speed" type="number" min="0" max="100" default="50"/>
+    <meta property="Size" label="size" type="number" min="0" max="100" default="50"/>
+    <meta property="ParticleCount" label="particle count" type="number" min="0" max="200" default="20"/>
     <meta
-    property="boosted"
-    label="Vertical"
-    type="boolean"
-    default="1"
+    property="saber1"
+    label="Lightsaber 1 Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#FF0000"
+    />
+    <meta
+    property="saber2"
+    label="Lightsaber 2 Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#0000FF"
     />
 
 </head>
@@ -23,81 +32,136 @@
   ctx = canvas.getContext('2d');
   var effects = [];
 
-  var chicken = "M38.42,7.43S32.2,4.55,15.53,35c0,0-6-16.22-8,1.56,0,0-5.55,14-6.89,20S7.75,70.77,7.75,70.77s-22.44,31.55,15.34,27.55c0,0,29.77,29.78,61.77,13.78,0,0,39.12,14,76.45-20.22,0,0,14.67-7.78-7.78-23.56,0,0-9.78-16.89,24.45-34.89,0,0,9.11-8.88-2.67-11.33,0,0-3.33-20.67-14.45-2.22S132,39,132,39l-4-6.22s2.88-10.89,8.88-13.56,12-14.22-2.22-14c0,0-11.11-12.44-13.33,3.11L116.2,23.21S79.09,1.66,37.75,27.88l-.22-3.78,1.78-6.22Z";
-  var plate = "M28.44,74.29s62.89,46.22,132.89,0c0,0,84.45-47.34-35.55-73.78L18.22,15.62S-27.78,44.73,28.44,74.29Z";
-
   function update(){
-    drawRect(0, 0, 320, 200, "grey");
+    ctx.globalAlpha = .15;
+    DrawRect(0, 0, 320, 200, "black");
+    ctx.globalAlpha = 1;
 
     if(effects.length < 1){
-      effects.push(new winEffect())
+      effects.push(new slash1(saber1, saber2))
     }
 
     effects.forEach((ele, i) => {
-        ele.draw();
-        if(ele.lifetime <= 0){
-          effects.splice(i, 1);
-        }
-      });
+      ele.draw();
+      if(ele.lifetime <= 0){
+        effects.splice(i, 1);
+      }
+    });
 
     window.requestAnimationFrame(update);
   }
 
-  function winEffect(){
-    this.x = 150;
-    this.y = -120;
-    this.lifetime = 10;
-    this.effects = [];
+  function slash1(color1, color2){
     this.start = Date.now();
+    this.color1 = color1;
+    this.color2 = color2;
+    this.light1 = new lightsaber(80, 150, this.color1, 0);
+    this.light2 = new lightsaber(200, 150, this.color2, 0);
+    this.lifetime = 10;
+    this.count = 0;
     this.draw = function(){
-      this.effects.forEach((ele, i) => {
-        ele.draw();
-        if(ele.lifetime <= 0){
-          this.effects.splice(i, 1);
-        }
-      });
-      renderPath(this.x - 80, this.y + 30, plate, "white")
-      renderPath(this.x - 65, this.y - 15, chicken, "yellow")
-      if(this.y < 40){
-        this.y+=2
-      } else {
-        for(let i = 0; i < 3; i++){
-          this.effects.push(new explosionParticle(160, 100, 20, "orange"));
-        }
-      }
       var elapsed = Date.now() - this.start;
-      if(elapsed > 10000){
-        this.lifetime = 0;
-      }
-    }
-  }
 
-  function explosionParticle(x, y, min, color) {
+      if(elapsed < 200){
+        this.light1.x -= 1;
+        this.light1.rotation = .1;
+        this.light2.x += 1;
+        this.light2.rotation = -.1;
+      } else if (elapsed < 800){
+        if(this.count == 0){
+          effects.push(new contact(this.x, this.y))
+          this.count++
+        }
+        this.light1.y += Math.sin(Date.now() / 100);
+        this.light1.rotation = 0;
+        this.light2.y += Math.sin(Date.now() / 100);
+        this.light2.rotation = 0;
+      } else if (elapsed < 1000){
+        this.light1.x -= 7;
+        this.light1.y -= 3;
+        this.light1.rotation = .1;
+        this.light2.x += 1;
+        this.light2.y -= 8;
+        this.light2.rotation = .3;
+      } else if (elapsed < 1200){
+        if(this.count == 1){
+          setTimeout(()=>{effects.push(new contact(this.x, this.y))}, 100)
+          this.count++
+        }
+        this.light1.x += 5;
+        this.light1.y -= 7;
+        this.light1.rotation = .05;
+        this.light2.x -= 1;
+        this.light2.y += 6;
+        this.light2.rotation = -.5;
+      } else if (elapsed < 1400){
+        this.light1.x += 0;
+        this.light1.y += 9.5;
+        this.light1.rotation = -.25;
+        this.light2.x -= 1;
+        this.light2.y += 1.5;
+        this.light2.rotation = .3;
+      } else {
+        this.light1.rotation = 0;
+        this.light2.rotation = 0;
+        new lightsaber(80, 150, this.color1, 0).draw()
+        new lightsaber(200, 150, this.color2, 0).draw()
+        this.lifetime = 0;
+        return
+      }
+
+      this.light1.draw();
+      this.light2.draw();
+    }
+  };
+
+  function lightsaber(x, y, color, rotation){
     this.x = x;
     this.y = y;
-    this.vx = Math.random() * -min + min / 2;
-    this.vy = Math.random() * -min + min / 2;
-    this.min = min;
     this.color = color;
+    this.rotation = rotation;
+    this.rotate = 0;
+    this.draw = function(){
+      ctx.save();
+      ctx.translate(this.x + 20, this.y);
+      ctx.rotate(this.rotate);
+      ctx.translate(-this.x - 20, -this.y);
+      ctx.globalAlpha = Math.abs(Math.sin(Date.now() / 10))
+      DrawRect(this.x, this.y, 40, -110, this.color);
+      DrawCircle(this.x + 20, this.y - 110, 20, this.color)
+      ctx.globalAlpha = 1;
+      DrawRect(this.x + 12.5, this.y, 15, -100, "white");
+      DrawCircle(this.x + 20.5, this.y - 100, 7.5, "white")
+      ctx.restore();
+      this.rotate += this.rotation;
+    }
+  };
+
+  function contact(){
     this.lifetime = 10;
-    this.draw = function () {
-      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
-        this.lifetime = 0;
-      }
+    this.alpha = .8;
+    this.color1 = hexToRgb(saber1)
+    this.color2 = hexToRgb(saber2)
+    this.r = (this.color1.r + this.color2.r) / 2;
+    this.g = (this.color1.g + this.color2.g) / 2;
+    this.b = (this.color1.b + this.color2.b) / 2;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, `white`)
+      DrawRect(0, 0, 320, 200, `rgb(${this.r}, ${this.g}, ${this.b})`)
+      ctx.globalAlpha = 1;
+      this.alpha > 0 ? this.alpha -= .2 : this.lifetime = 0;
     }
   }
 
-  function renderPath(x, y, path, color){
+  function DrawPath(x, y, path, color){
     ctx.fillStyle = color;
     ctx.save();
     ctx.translate(x, y);
     let ex = new Path2D(path);
     ctx.fill(ex);
     ctx.restore();
-  }
+  };
 
     function DrawCircle(x, y, radius, color){
         ctx.beginPath();
@@ -114,10 +178,30 @@
         ctx.stroke();
     };
 
-    function drawRect(x, y, height, width, color){
+    function DrawRect(x, y, width, height, color){
       ctx.beginPath();
       ctx.fillStyle = color;
-      ctx.fillRect(x, y, height, width);
+      ctx.fillRect(x, y, width, height);
+    };
+
+    function DrawHex(x, y, color, size) {
+      ctx.beginPath();
+      for (var i = 0; i < 7; i++) {
+        ctx.lineTo(x + size * Math.cos(2 * Math.PI / 6 * i), y + size * 0.9 * Math.sin(2 * Math.PI / 6 * i));
+      }
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.strokeStyle = "black"
+      ctx.stroke()
+    };
+
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
     }
 
   window.requestAnimationFrame(update);

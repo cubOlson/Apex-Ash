@@ -1,0 +1,126 @@
+<head>
+    <title>Be Quiet!</title>
+    <meta description="SignalRGB partnered with be quiet! to bring you this custom free effect." />
+    <meta publisher="SignalRGB" />
+
+    <meta property="Speed" label="speed" type="number" min="0" max="100" default="50"/>
+    <meta property="Size" label="size" type="number" min="0" max="100" default="50"/>
+    <meta property="ParticleCount" label="particle count" type="number" min="0" max="200" default="20"/>
+    <meta
+    property="BeQuietOn"
+    label="Be Quiet"
+    type="boolean"
+    default="1"
+    />
+    <meta
+    property="backgroundColor"
+    label="Background Color"
+    type="color"
+    min="0"
+    max="360"
+    default="#000000"
+    />
+    <meta
+    property="bubble1Color"
+    label="Bubble Color 1"
+    type="color"
+    min="0"
+    max="360"
+    default="#FF0000"
+    />
+    <meta
+    property="bubble2Color"
+    label="Bubble Color 2"
+    type="color"
+    min="0"
+    max="360"
+    default="#FFFF00"
+    />
+
+</head>
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+<script>
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var effects = [];
+
+  function update(){
+    drawRect(0, 0, 320, 200, BeQuietOn ? `rgb(15, 15, 15)` : backgroundColor);
+
+    if(effects.length < ParticleCount){
+      effects.push(new ball())
+      start = Date.now()
+    }
+
+    effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          effects.splice(i, 1);
+        }
+      });
+
+    window.requestAnimationFrame(update);
+  }
+
+  function ball(){
+    this.x = Math.random() * 280 + 20;
+    this.y = Math.random() * 160 + 20;
+    this.radius = Math.random() * Size + 1;
+    this.vx = Math.sin(Date.now()) * Math.random() * Speed / 10 + 1;
+    this.vy = Math.cos(Date.now()) * Math.random() * Speed / 10 + 1;
+    this.start = Date.now();
+    this.color;
+    if(BeQuietOn){
+      this.color = Date.now() % 2 == 0 ? "white" : "darkorange";
+    } else {
+      this.color = Date.now() % 2 == 0 ? bubble1Color : bubble2Color;
+    }
+    this.swap = false;
+    this.alpha = 0;
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(this.x, this.y, this.radius, this.color)
+      ctx.globalAlpha = 1;
+      if(elapsed < 800 / (Speed / 20 + 1)){
+        this.swap = true;
+        this.vx *= 1.01
+        this.vy *= 1.01
+        this.alpha >= 1 ? this.alpha = 1: this.alpha += .05;
+      } else if(elapsed < 1600 / (Speed / 20 + 1) && this.swap){
+        this.swap = false;
+        this.vx *= -1.05
+        this.vy *= -1.05
+      } else if(elapsed < 1600 / (Speed / 20 + 1)){
+        this.vx *= 1.05
+        this.vy *= 1.05
+        this.alpha <= .05 ? this.alpha = .05: this.alpha -= .05;
+      }else if(elapsed > 2200 / (Speed / 20 + 1)){
+        this.lifetime = 0;
+      }
+      if(Speed > 0){
+        this.x += this.vx;
+        this.y += this.vy;
+      }
+    }
+  }
+
+    function DrawCircle(x, y, radius, color){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x,y,radius, 0, 2* Math.PI)
+        ctx.fill();
+    };
+
+    function drawRect(x, y, height, width, color){
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, height, width);
+    }
+
+  window.requestAnimationFrame(update);
+</script>
+  
