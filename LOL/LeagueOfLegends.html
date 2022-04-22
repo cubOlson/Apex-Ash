@@ -1,5 +1,5 @@
 <head>
-  <title>League of Legends</title>
+  <title>League of Legends Production</title>
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Champions" type="combobox"
@@ -58,7 +58,7 @@
   <resolution size="1440x900" x=".9667" y=".7241" width=".01" height="0.001" />
   <resolution size="1280x800" x=".9667" y=".7241" width=".01" height="0.001" />
   </meta>
-  <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height="0.001" h="0-360" s="0-100" l="0-30"
+  <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height="0.001" h="0-360" s="0-75" l="0-20"
     type="area">
   <resolution size="2560x1600" x=".8391" y=".7694" width=".001" height="0.001" />
   <resolution size="1920x1200" x=".8391" y=".7694" width=".001" height="0.001" />
@@ -985,6 +985,7 @@
     allyMeter3.value == 0 ? count++ : null;
     allyMeter4.value == 0 ? count++ : null;
 
+    console.log("HERE " + engine.vision.itemHover + " " + Date.now())
     if (count > deadAllies && !deathAnim && play1 && play2 && engine.vision.itemHover != 1 && enableAllies) {
       deathAnim = true;
       effects.push(new deathEffect());

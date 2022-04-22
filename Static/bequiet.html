@@ -3,14 +3,11 @@
     <meta description="SignalRGB partnered with be quiet! to bring you this custom free effect." />
     <meta publisher="SignalRGB" />
 
-    <meta property="Speed" label="speed" type="number" min="0" max="100" default="50"/>
-    <meta property="Size" label="size" type="number" min="0" max="100" default="50"/>
-    <meta property="ParticleCount" label="particle count" type="number" min="0" max="200" default="20"/>
     <meta
-    property="BeQuietOn"
-    label="Be Quiet"
+    property="CustomColors"
+    label="Custom Colors"
     type="boolean"
-    default="1"
+    default="0"
     />
     <meta
     property="backgroundColor"
@@ -36,6 +33,16 @@
     max="360"
     default="#FFFF00"
     />
+    <meta
+    property="randomMovement"
+    label="Random Movement"
+    type="boolean"
+    default="1"
+    />
+    <meta property="MoveSpeed" label="Movement Speed" type="number" min="0" max="100" default="70"/>
+    <meta property="PulseSpeed" label="Pulse Speed" type="number" min="0" max="100" default="70"/>
+    <meta property="Size" label="size" type="number" min="0" max="100" default="40"/>
+    <meta property="ParticleCount" label="particle count" type="number" min="0" max="200" default="40"/>
 
 </head>
 <body style="margin: 0; padding: 0; background: #000;">
@@ -45,21 +52,26 @@
   canvas = document.getElementById('exCanvas');
   ctx = canvas.getContext('2d');
   var effects = [];
+  var start = Date.now()
 
   function update(){
-    drawRect(0, 0, 320, 200, BeQuietOn ? `rgb(15, 15, 15)` : backgroundColor);
-
-    if(effects.length < ParticleCount){
+    var elapsed = Date.now() - start
+    
+    if(effects.length < ParticleCount && elapsed > 20){
       effects.push(new ball())
       start = Date.now()
     }
+    
+    if(MoveSpeed > 0){
+      drawRect(0, 0, 320, 200, !CustomColors ? `rgb(15, 15, 15)` : backgroundColor);
 
-    effects.forEach((ele, i) => {
+      effects.forEach((ele, i) => {
         ele.draw();
         if(ele.lifetime <= 0){
           effects.splice(i, 1);
         }
       });
+    }
 
     window.requestAnimationFrame(update);
   }
@@ -68,11 +80,18 @@
     this.x = Math.random() * 280 + 20;
     this.y = Math.random() * 160 + 20;
     this.radius = Math.random() * Size + 1;
-    this.vx = Math.sin(Date.now()) * Math.random() * Speed / 10 + 1;
-    this.vy = Math.cos(Date.now()) * Math.random() * Speed / 10 + 1;
+    this.vx;
+    this.vy;
+    if(randomMovement){
+      this.vx = Math.sin(Date.now()) * Math.random() * MoveSpeed / 30;
+      this.vy = Math.cos(Date.now()) * Math.random() * MoveSpeed / 30;
+    } else {
+      this.vx = Math.random() * MoveSpeed / 30;
+      this.vy = Math.random() * MoveSpeed / 30;
+    }
     this.start = Date.now();
     this.color;
-    if(BeQuietOn){
+    if(!CustomColors){
       this.color = Date.now() % 2 == 0 ? "white" : "darkorange";
     } else {
       this.color = Date.now() % 2 == 0 ? bubble1Color : bubble2Color;
@@ -85,23 +104,27 @@
       ctx.globalAlpha = this.alpha;
       DrawCircle(this.x, this.y, this.radius, this.color)
       ctx.globalAlpha = 1;
-      if(elapsed < 800 / (Speed / 20 + 1)){
+      if(elapsed < 10000 / PulseSpeed * 5 + 1){
         this.swap = true;
-        this.vx *= 1.01
-        this.vy *= 1.01
+        this.vx *= 1 + PulseSpeed / 10000
+        this.vy *= 1 + PulseSpeed / 10000
         this.alpha >= 1 ? this.alpha = 1: this.alpha += .05;
-      } else if(elapsed < 1600 / (Speed / 20 + 1) && this.swap){
+      } else if(elapsed < 20000 / PulseSpeed * 5 + 1 && this.swap){
         this.swap = false;
-        this.vx *= -1.05
-        this.vy *= -1.05
-      } else if(elapsed < 1600 / (Speed / 20 + 1)){
-        this.vx *= 1.05
-        this.vy *= 1.05
-        this.alpha <= .05 ? this.alpha = .05: this.alpha -= .05;
-      }else if(elapsed > 2200 / (Speed / 20 + 1)){
+        this.vx *= -1 - PulseSpeed / 3000
+        this.vy *= -1 - PulseSpeed / 3000
+      } else if(elapsed < 20000 / PulseSpeed * 5 + 1){
+        this.vx *= 1 + PulseSpeed / 3000
+        this.vy *= 1 + PulseSpeed / 3000
+        this.alpha <= .05 ? this.alpha = .05: this.alpha -= PulseSpeed / 2000;
+      }else if(elapsed > 24000 / PulseSpeed * 5 + 1){
         this.lifetime = 0;
       }
-      if(Speed > 0){
+      if(PulseSpeed <= 7){
+        this.y > 250 + 1000 / PulseSpeed ? this.lifetime = 0 : this.y < -50 - 1000 / PulseSpeed ? this.lifetime = 0: null;
+        this.x > 370 + 1000 / PulseSpeed ? this.lifetime = 0 : this.x < -50 - 1000 / PulseSpeed ? this.lifetime = 0: null;
+      }
+      if(MoveSpeed > 0){
         this.x += this.vx;
         this.y += this.vy;
       }

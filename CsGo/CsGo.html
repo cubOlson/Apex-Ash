@@ -1,106 +1,239 @@
 <head>
-  <title>CsGo</title>
-  <meta description="Metering for CsGo" />
-  <meta publisher="WhirlwindFX" />
+  <title>CS:GO</title>
+  <meta description="Rush B with ambience and RGB effects." />
+  <meta publisher="SignalRGB" />
 
-
-  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
-
-
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
   <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#ff0000" min="0" max="360" />
+  <meta property="HealthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+  <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
+  <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+  <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
+  <meta property="hudToggle" label="enable HUD effects" type="boolean" default="1" />
+  <meta property="healthToggle" label="enable Health effects" type="boolean" default="1" />
+  <meta property="SearchingGameToggle" label="enable Searching game effects" type="boolean" default="1" />
+  <meta property="WinToggle" label="enable Win effects" type="boolean" default="1" />
+  <meta property="ShopToggle" label="enable Shop effects" type="boolean" default="1" />
+  <meta property="SpectatingToggle" label="enable Spectating effects" type="boolean" default="1" />
+  <meta property="KillToggle" label="enable Kill effects" type="boolean" default="1" />
+  <meta property="BombToggle" label="enable Bomb effects" type="boolean" default="1" />
 
   <!-- Health -->
   <meta meter="health" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".0652" y=".975"
-    width=".04211" h="0-360" s="0-100" l="80-100" type="linear">
+    width=".04211" h="0-360" s="0-25" l="60-100" type="linear">
+    <resolution size="3440x1440" x="0.0493" y="0.9722" width="0.03"/>
+    <resolution size="2560x1600" x="0.074" y="0.9741" width=".04211"/>
+    <resolution size="1920x1200" x="0.074" y="0.9741" width=".04211"/>
+    <resolution size="1680x1050" x="0.074" y="0.9741" width=".04211"/>
   </meta>
 
   <meta meter="lowHealth" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
-    width=".0001" h="0-30" s="60-100" l="60-90" type="linear" />
-
+    width=".0001" h="0-30" s="60-100" l="50-90" type="linear" >
+    <resolution size="3440x1440" x="0.0145" y="0.982" width="0.0025"/>
+    <resolution size="2560x1600" x="0.0198" y="0.9833" width=".0001"/>
+    <resolution size="1920x1200" x="0.0198" y="0.9833" width=".0001"/>
+    <resolution size="1680x1050" x="0.0198" y="0.9833" width=".0001"/>
+  </meta>
   <!-- LobbyEffects -->
   <meta meter="SearchGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609" y=".0277777"
     width=".0001" h="140-200" s="10-40" l="80-100" type="linear">
+    <resolution size="3440x1440" x="0.9813" y="0.0345" width="0.0001" />
+    <resolution size="2560x1600" x="0.9719" y="0.0269" width=".0001"/>
+    <resolution size="1920x1200" x="0.9719" y="0.0269" width=".0001"/>
+    <resolution size="1680x1050" x="0.9719" y="0.0269" width=".0001"/>
+    <resolution size="1280x720" x=".974618" y=".0361111" width=".0001" />
   </meta>
 
   <meta meter="SearchGameConfirmation" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609"
     y=".184" width=".0001" h="60-220" s="0-100" l="5-90" type="linear">
+    <resolution size="3440x1440" x="0.9642" y="0.1368" width="0.0001" />
+    <resolution size="2560x1600" x="0.9474" y="0.1333" width=".0001"/>
+    <resolution size="1920x1200" x="0.9474" y="0.1333" width=".0001"/>
+    <resolution size="1680x1050" x="0.9474" y="0.1333" width=".0001"/>
   </meta>
 
   <meta meter="FoundGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".4277"
     width=".0001" h="70-140" s="50-80" l="10-50" type="linear">
+    <resolution size="3440x1440" x="0.5038" y="0.4972" width="0.0001" />
+    <resolution size="2560x1600" x="0.2927" y="0.5259" width=".0001"/>
+    <resolution size="1920x1200" x="0.2927" y="0.5259" width=".0001"/>
+    <resolution size="1680x1050" x="0.2927" y="0.5259" width=".0001"/>
   </meta>
-
 
   <!-- TerroristWins -->
   <meta meter="tWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".485" y=".1361" width=".0140"
-    height=".025" h="40-60" s="30-50" l="50-100" type="area" />
+    height=".015" h="40-60" s="30-50" l="50-100" type="area" >
+    <resolution size="3440x1440" x="0.4988" y="0.159" width="0.002" height=".01"/>
+    <resolution size="2560x1600" x="0.4979" y="0.1583" width=".0140" height=".015"/>
+    <resolution size="1920x1200" x="0.4979" y="0.1583" width=".0140" height=".015"/>
+    <resolution size="1680x1050" x="0.4979" y="0.1583" width=".0140" height=".015"/>
+  </meta>
 
   <meta meter="tWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4609" y=".206"
-    width=".0039" h="40-60" s="30-50" l="50-100" type="linear" />
+    width=".0039" h="40-60" s="20-50" l="50-100" type="linear" >
+    <resolution size="3440x1440" x="0.4701" y="0.2063" width="0.002"/>
+    <resolution size="2560x1600" x="0.4557" y="0.2056" width=".0039"/>
+    <resolution size="1920x1200" x="0.4557" y="0.2056" width=".0039"/>
+    <resolution size="1680x1050" x="0.4557" y="0.2056" width=".0039"/>
+  </meta>
 
   <meta meter="tWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".5086" y=".168"
-    width=".0039" h="0-60" s="30-60" l="20-40" type="linear" />
+    width=".0039" h="0-60" s="30-70" l="20-40" type="linear" >
+    <resolution size="3440x1440" x="0.508" y="0.1667" width="0.002"/>
+    <resolution size="2560x1600" x="0.5125" y="0.1639" width=".0039"/>
+    <resolution size="1920x1200" x="0.5125" y="0.1639" width=".0039"/>
+    <resolution size="1680x1050" x="0.5125" y="0.1639" width=".0039"/>
+  </meta>
 
   <!-- CounterTerroristWins -->
   <meta meter="ctWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".127"
-    width=".0039" h="0-360" s="0-100" l="0-5" type="linear" />
+    width=".0039" h="0-360" s="0-100" l="0-5" type="linear" >
+    <resolution size="3440x1440" x="0.4983" y="0.1792" width="0.002"/>
+    <resolution size="2560x1600" x="0.4984" y="0.1815" width=".0039"/>
+    <resolution size="1920x1200" x="0.4984" y="0.1815" width=".0039"/>
+    <resolution size="1680x1050" x="0.4984" y="0.1815" width=".0039"/>
+  </meta>
 
   <meta meter="ctWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".497" y=".121"
-    width=".0039" height=".0002" h="165-250" s="0-40" l="40-60" type="area" />
+    width=".0039" height=".0002" h="165-250" s="0-40" l="40-80" type="area">
+    <resolution size="3440x1440" x="0.4887" y="0.2056" width="0.002" height=".01"/>
+    <resolution size="2560x1600" x="0.4849" y="0.2056" width=".0039" height=".0002"/>
+    <resolution size="1920x1200" x="0.4849" y="0.2056" width=".0039" height=".0002"/>
+    <resolution size="1680x1050" x="0.4849" y="0.2056" width=".0039" height=".0002"/>
+    <resolution size="1280x720" x=".484375" y=".20486" width=".0001" height=".0002" />
+  </meta>
 
   <meta meter="ctWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4988" y=".153"
-    width=".00140" height=".0035" h="165-250" s="0-30" l="60-80" type="area" />
+    width=".00140" height=".0035" h="165-250" s="0-30" l="60-80" type="area" >
+    <resolution size="3440x1440" x="0.4996" y="0.1538" width="0.002" height=".01"/>
+    <resolution size="2560x1600" x="0.499" y="0.1528" width=".00140" height=".0035"/>
+    <resolution size="1920x1200" x="0.499" y="0.1528" width=".00140" height=".0035"/>
+    <resolution size="1680x1050" x="0.499" y="0.1528" width=".00140" height=".0035"/>
+  </meta>
 
   <!-- InShop -->
   <meta meter="InShopBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4597" y=".9284"
-    width=".00140" h="0-360" s="0-100" l="0-20" type="linear" />
-
+    width=".00140" h="0-360" s="0-100" l="0-30" type="linear" >
+    <resolution size="3440x1440" x="0.0078" y="0.0153" width="0.002"/>
+    <resolution size="2560x1600" x=".4597" y=".9284" width=".00140"/>
+    <resolution size="1920x1200" x=".4597" y=".9284" width=".00140"/>
+    <resolution size="1680x1050" x=".4597" y=".9284" width=".00140"/>
+  </meta>
 
   <meta meter="InShopBack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0429" y=".949005"
-    width=".0001" h="0-360" s="0-5" l="80-100" type="linear">
-  <resolution size="1920x1080" x=".0429" y=".9602" width=".0001" />
+    width=".0001" h="0-360" s="0-5" l="70-100" type="linear">
+    <resolution size="3440x1440" x="0.0322" y="0.9498" width="0.001" />
+    <resolution size="2560x1600" x=".0429" y=".9602" width=".0001" />
+    <resolution size="1920x1200" x=".0429" y=".9602" width=".0001" />
+    <resolution size="1680x1050" x=".0429" y=".9602" width=".0001" />
+    <resolution size="1280x720" x=".0433" y=".9652777" width=".0001" />
   </meta>
 
   <meta meter="AutoBuyBracket" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8941" y=".965277"
-    width=".0001" h="0-360" s="0-10" l="50-100" type="linear" />
-
+    width=".0001" h="0-360" s="0-10" l="55-100" type="linear">
+    <resolution size="3440x1440" x="0.9211" y="0.95" width="0.0005" />
+    <resolution size="2560x1600" x=".8818" y=".95" width=".0001" />
+    <resolution size="1920x1200" x=".8818" y=".95" width=".0001" />
+    <resolution size="1680x1050" x=".8818" y=".95" width=".0001" />
+    <resolution size="1280x720" x=".8894" y=".965277" width=".0001" />
+  </meta>
 
   <meta meter="BuyMinus" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01679" y=".3791"
-    width=".0001" h="0-30" s="50-100" l="30-100" type="linear" />
-
+    width=".0001" h="0-30" s="50-100" l="30-100" type="linear">
+    <resolution size="3440x1440" x="0.0125" y="0.3785" width="0.0005" />
+    <resolution size="2560x1600" x=".0193" y=".3787" width=".0001" />
+    <resolution size="1920x1200" x=".0193" y=".3787" width=".0001" />
+    <resolution size="1680x1050" x=".0193" y=".3787" width=".0001" />
+    <resolution size="1280x720" x=".01718" y=".3756944" width=".0001" />
+  </meta>
   <!-- Spectating -->
 
   <meta meter="SpectatingBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3597" y=".8840"
-    width=".0001" h="0-360" s="0-100" l="0-10" type="linear" />
+    width=".0001" h="0-360" s="0-100" l="0-15" type="linear">
+    <resolution size="3440x1440" x="0.3884" y="0.8833" width="0.0002" />
+    <resolution size="2560x1600" x=".3328" y=".8843" width=".0001" />
+    <resolution size="1920x1200" x=".3328" y=".8843" width=".0001" />
+    <resolution size="1680x1050" x=".3328" y=".8843" width=".0001" />
+    <resolution size="1280x720" x=".3597" y=".884811" width=".0001" />
+  </meta>
 
   <meta meter="SpectatingMap" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0230" y=".30277"
-    width=".0001" h="0-360" s="0-100" l="0-10" type="linear" />
-
+    width=".0001" h="0-360" s="0-100" l="0-10" type="linear" >
+    <resolution size="3440x1440" x="0.0052" y="0.3111" width="0.0002" />
+    <resolution size="2560x1600" x=".0094" y=".3046" width=".0001" />
+    <resolution size="1920x1200" x=".0094" y=".3046" width=".0001" />
+    <resolution size="1680x1050" x=".0094" y=".3046" width=".0001" />
+  </meta>
 
   <meta meter="SpectatingCt" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875"
-    width=".1" h="170-210" s="60-100" l="0-80" type="linear" />
+    width=".1" height=".0001" h="170-210" s="60-100" l="0-80" type="area" >
+    <resolution size="3440x1440" x="0.3933" y="0.8861" width="0.05" height=".0001"/>
+    <resolution size="2560x1600" x=".3349" y=".887" width=".1" height=".0001"/>
+    <resolution size="1920x1200" x=".3349" y=".887" width=".1" height=".0001"/>
+    <resolution size="1680x1050" x=".3349" y=".887" width=".1" height=".0001"/>
+  </meta>
 
   <meta meter="SpectatingT" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875" width=".1"
-    h="30-60" s="80-100" l="70-100" type="linear" />
+    height=".0001" h="30-60" s="70-100" l="65-100" type="area" >
+    <resolution size="3440x1440" x="0.3933" y="0.8861" width="0.05" height=".0001"/>
+    <resolution size="2560x1600" x=".3349" y=".887" width=".1" height=".0001"/>
+    <resolution size="1920x1200" x=".3349" y=".887" width=".1" height=".0001"/>
+    <resolution size="1680x1050" x=".3349" y=".887" width=".1" height=".0001"/>
+  </meta>
 
   <!-- InGame -->
   <meta meter="InGame" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01914" y=".33958" width=".0001"
-    h="0-360" s="0-5" l="85-100" type="linear" />
+    h="0-360" s="0-10" l="85-100" type="linear" >
+    <resolution size="3440x1440" x="0.0137" y="0.3396" width="0.0035"/>
+    <resolution size="2560x1600" x=".0203" y=".338" width=".0001"/>
+    <resolution size="1920x1200" x=".0203" y=".338" width=".0001"/>
+    <resolution size="1680x1050" x=".0203" y=".338" width=".0001"/>
+  </meta>
 
   <meta meter="InGameConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
-    width=".0001" h="0-360" s="0-40" l="60-90" type="linear" />
+    width=".0001" h="0-360" s="0-40" l="60-90" type="linear" >
+    <resolution size="3440x1440" x="0.014" y="0.9831" width="0.002"/>
+    <resolution size="2560x1600" x=".0198" y=".9833" width="0.0001"/>
+    <resolution size="1920x1200" x=".0198" y=".9833" width="0.0001"/>
+    <resolution size="1680x1050" x=".0198" y=".9833" width="0.0001"/>
+  </meta>
 
   <!-- Kill -->
-  <meta meter="Kill" tags="counter-strike, counter-strike:global offensive, cs:go" x=".99414" y=".07152" width=".0001"
-    height=".20208" h="0-30" s="60-100" l="45-95" type="area" />
+
+  <meta meter="Kill" tags="counter-strike, counter-strike:global offensive, cs:go" x=".99414" y=".06852" width=".0001"
+    height=".20208" h="0-30" s="60-100" l="45-95" type="area" >
+    <resolution size="3440x1440" x="0.995" y="0.0708" width="0.0001" height=".2"/>
+    <resolution size="2560x1600" x=".9932" y=".0713" width=".0001" height=".20208"/>
+    <resolution size="1920x1200" x=".9932" y=".0713" width=".0001" height=".20208"/>
+    <resolution size="1680x1050" x=".9932" y=".0713" width=".0001" height=".20208"/>
+  </meta>
 
   <meta meter="KillConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8785" y=".96053"
-    width=".0001" height=".0001" h="0-360" s="0-10" l="85-100" type="area" />
+    width=".0001" height=".0001" h="0-360" s="0-10" l="85-100" type="area" >
+    <resolution size="3440x1440" x="0.9094" y="0.9574" width="0.002" height=".0001"/>
+    <resolution size="2560x1600" x=".8641" y=".9565" width=".0001" height=".0001"/>
+    <resolution size="1920x1200" x=".8641" y=".9565" width=".0001" height=".0001"/>
+    <resolution size="1680x1050" x=".8641" y=".9565" width=".0001" height=".0001"/>
+  </meta>
 
   <!--Bomb planted-->
 
   <meta meter="BombPlanted" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4941" y=".014833"
-    width=".0001" height=".0001" h="0-100" s="65-100" l="35-100" type="area" />
+    width=".0001" height=".0001" h="0-100" s="60-100" l="35-100" type="area" >
+    <resolution size="3440x1440" x="0.4953" y="0.0139" width="0.002" height=".0001"/>
+    <resolution size="2560x1600" x=".4917" y=".012" width=".0001" height=".0001"/>
+    <resolution size="1920x1200" x=".4917" y=".012" width=".0001" height=".0001"/>
+    <resolution size="1680x1050" x=".4917" y=".012" width=".0001" height=".0001"/>
+  </meta>
+
+  <meta meter="BombPlantedConfirmation" tags="counter-strike,counter-strike:global offensive,cs:go" x=".484375"
+    y=".731944" width=".0001" h="0-100" s="65-100" l="35-100" type="linear" >
+    <resolution size="3440x1440" x="0.4834" y="0.7278" width="0.002"/>
+    <resolution size="2560x1600" x=".475" y=".7269" width=".0001"/>
+    <resolution size="1920x1200" x=".475" y=".7269" width=".0001"/>
+    <resolution size="1680x1050" x=".475" y=".7269" width=".0001"/>
+  </meta>
 </head>
 
 
@@ -136,7 +269,8 @@
   var ctWinConfirmationMeter = new Meter(25, onCounterTerroristWinChanged)
   var ctWinIconMeter = new Meter(25, onCounterTerroristWinChanged)
   var BombPlantedMeter = new Meter(25, onBombPlanted)
-  var KillMeter = new Meter(5, () => onKillChanged)
+  var BombPlantedConfirmationMeter = new Meter(5, () => "")
+  var KillMeter = new Meter(20, onKillChanged)
   var lowHpGoing = false;
   var inGame = false;
   var isSpectating = false;
@@ -173,16 +307,19 @@
     BuyMinusMeter.setValue(engine.vision.BuyMinus)
     SpectatingMapMeter.setValue(engine.vision.SpectatingMap)
     BombPlantedMeter.setValue(engine.vision.BombPlanted)
-    KillMeter.setValue(engine.vision.Kill)
+    BombPlantedConfirmationMeter.setValue(engine.vision.BombPlantedConfirmation);
+
 
 
     if (inGame && !isSpectating) {
       healthMeter.setValue(engine.vision.health)
+      KillMeter.setValue(engine.vision.Kill)
       KillConfirmationMeter.setValue(engine.vision.KillConfirmation)
     }
 
-
-
+    if(hudToggle){
+      DrawHud()
+    }
 
     //Effect handler 
     for (let i = 0; i < effects.length; i++) {
@@ -196,9 +333,20 @@
     window.requestAnimationFrame(update);
   }
 
+  function DrawHud() {
+    ctx.beginPath();
+    ctx.fillStyle = healthColor;
+    if (inGame && !isSpectating) {
+      ctx.fillRect(HealthBarX, HealthBarY, healthMeter.value * HealthBarWidth, HealthBarHeight)
+    } else if (adjToggle) {
+      ctx.fillRect(HealthBarX, HealthBarY, HealthBarWidth, HealthBarHeight)
+    }
+
+
+  }
 
   function onTerroristWinChanged() {
-    if (tWinBlackConfirmationMeter.value == 1 && tWinConfirmationMeter.value == 1 && tWinIconMeter.value > .5) {
+    if (tWinBlackConfirmationMeter.value == 1 && tWinConfirmationMeter.value == 1 && tWinIconMeter.value > .5 && WinToggle) {
       console.log("TerroristWins")
       if (terroristplaying == false) {
         terroristplaying = true;
@@ -210,7 +358,7 @@
 
   function onCounterTerroristWinChanged() {
     console.log("here")
-    if (ctWinBlackConfirmationMeter.value == 1 && ctWinConfirmationMeter.value == 1 && ctWinIconMeter.value > .8 && inGameMeter.value == 1) {
+    if (ctWinBlackConfirmationMeter.value == 1 && ctWinConfirmationMeter.value == 1 && ctWinIconMeter.value > .8 && inGameMeter.value == 1 && WinToggle) {
       console.log("TerroristWins")
       if (terroristplaying == false) {
         terroristplaying = true;
@@ -221,50 +369,56 @@
   }
 
   function onSpectatingChanged() {
-    if (SpectatingBlackMeter.value > 0.8 && SpectatingCtMeter.value > 0.7 || SpectatingBlackMeter.value > 0.8 && SpectatingTMeter.value > .7) {
-      isSpectating = true
-      if (SpectatingCtMeter.value > 0.7) {
-        effects.push(new SpectatingEffect(201, 98, 41))
-      } else {
-        effects.push(new SpectatingEffect(19, 98, 41))
+   
+      if (SpectatingBlackMeter.value > 0.8 && SpectatingCtMeter.value > 0.7 || SpectatingBlackMeter.value > 0.8 && SpectatingTMeter.value > .7) {
+        ClearEffects();
+        isSpectating = true
+        if (SpectatingCtMeter.value > 0.7 && SpectatingToggle) {
+          effects.push(new SpectatingEffect(201, 98, 41))
+        } else if (SpectatingToggle) {
+          effects.push(new SpectatingEffect(19, 98, 41))
+        }
+        console.log("Spectating")
+      } else if (SpectatingMapMeter.value < 0.8) {
+        isSpectating = false;
+        console.log("Stop Spectating")
       }
-      console.log("Spectating")
-    } else if (SpectatingMapMeter.value < 0.8) {
-      isSpectating = false;
-      console.log("Stop Spectating")
-    }
+    
   }
 
   function onKillChanged() {
-    if (KillConfirmationMeter.increased && KillMeter.value != 0) {
+    if (KillConfirmationMeter.value != 0 && KillMeter.increased && KillToggle) {
       effects.push(new killEffect())
     }
   }
 
   function onBombPlanted() {
-    if (BombPlantedMeter.value >= 0.9 && BombPlantedPlaying == false && isSpectating == false) {
+    if (BombPlantedMeter.value >= 0.9 && BombPlantedConfirmationMeter.value == 1 && BombPlantedPlaying == false && isSpectating == false && BombToggle) {
       stateMgr.Push(new BombPlantedEffect());
       BombPlantedPlaying = true;
     }
   }
 
   function onShopChanged() {
-    if (InShopBlackMeter.value > 0.8 && InShopBackMeter.value > 0.8 && AutoBuyBracketMeter.value > 0.8) {
-      if (!inShop) {
-        effects.push(new ShopEffect())
+    if (ShopToggle) {
+
+
+      if (InShopBlackMeter.value > 0.8 && InShopBackMeter.value > 0.8 && AutoBuyBracketMeter.value > 0.8) {
+        if (!inShop) {
+          effects.push(new ShopEffect())
+        }
+        inShop = true;
+      } else {
+        inShop = false;
       }
-      inShop = true;
-    } else {
-      inShop = false;
+      if (inShop && BuyMinusMeter.value > 0.7) {
+        effects.push(new MoneyEffect("red"));
+      }
     }
-    if (inShop && BuyMinusMeter.value > 0.7) {
-      effects.push(new MoneyEffect("red"));
-    }
-    onLowHealthChanged();
   }
 
   function onSearchChanged() {
-    if (SearchGameMeter.value == 1 && SearchGameConfirmationMeter.value > 0.7) {
+    if (SearchGameMeter.value == 1 && SearchGameConfirmationMeter.value > 0.7 && SearchingGameToggle) {
       console.log("Searching Match")
       effects.push(new searchingMatchEffect());
     }
@@ -295,6 +449,7 @@
     });
     lowHpGoing = false;
     inShop = false;
+    isSpectating = false;
   }
 
   function AfterGameCheck() {
@@ -304,17 +459,20 @@
   }
 
   function onHealthChanged() {
-    if (healthMeter.decreased && isSpectating == false) {
-      for (let index = 0; index < 20; index++) {
-        setTimeout(() => {
-          effects.push(new DamageState(160, 200, Math.random() * 10 + 15, "red"));
-        }, 20);
+    if (healthToggle) {
+      if (healthMeter.decreased && isSpectating == false && inGame == true) {
+        for (let index = 0; index < 20; index++) {
+          setTimeout(() => {
+            effects.push(new DamageState(160, 200, Math.random() * 10 + 15, "red"));
+          }, 20);
+        }
       }
+      onLowHealthChanged()
     }
   }
 
   function onLowHealthChanged() {
-    if (lowHealthMeter.value == 1 && lowHpGoing == false && isSpectating == false) {
+    if (lowHealthMeter.value == 1 && lowHpGoing == false && isSpectating == false && healthToggle) {
       effects.push(new lowHpState())
       lowHpGoing = true;
     }
@@ -494,13 +652,14 @@
       ctx.fill();
       ctx.lineWidth = 20;
       ctx.stroke();
+      ctx.beginPath();
       ctx.save();
       ctx.translate(160, 100);
       ctx.rotate(this.duration / 500)
       ctx.fillStyle = "Green"
       ctx.fillRect(-15, 0, 30, 130)
       ctx.restore();
-      if (FoundGameMeter.value == 1 || SearchGameMeter.value == 0) {
+      if (FoundGameMeter.value == 1 || SearchGameConfirmationMeter.value == 0) {
         effects.push(new ParticleExplosion(160, 100, "Green", 3, 2000, 100, 20, 2, false, false, false))
         this.lifetime = 0;
       }
