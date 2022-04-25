@@ -1,0 +1,207 @@
+<head>
+    <title>Visualizer Tutorial</title>
+    <meta description="Basic Effects" />
+    <meta publisher="SignalRgb" />
+  
+    <meta property="hitFlash" label="Hit flash" type="boolean" default="0" />
+    <meta property="hueShift" label="Hue Shift" type="number" min="0" max="360" default="0" />
+    <meta property="hueRange" label="Hue Range" type="number" min="0" max="360" default="0" />
+    <meta property="saber1" label="Lightsaber 1 Color" type="color" min="0" max="360" default="#FF0000" />
+    <meta property="saber2" label="Lightsaber 2 Color" type="color" min="0" max="360" default="#0000FF" />
+  
+  </head>
+  
+  <body style="margin: 0; padding: 0; background: #000;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+  </body>
+  <script>
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    var effects = [];
+    var beats = []
+    var reducedFreq = [];
+    var BPM = new determineBPM()
+    var start = Date.now();
+    var flipped = false;
+    var rotate = 0;
+    var outerHue = 0;
+  
+    function update() {
+        var elapsed = Date.now() - start;
+
+        var frequency = new Int8Array(engine.audio.freq)
+        reducedFreq = frequency.filter((element, index) => {
+            return index % 4 === 0;
+        })
+
+        if(effects.length < 1){
+            effects.push(new soundBars(160, 100, 1))
+        }
+
+        if(elapsed > BPM.averageSpeed){
+            start = Date.now()
+            flipped = !flipped
+        }
+
+        DrawRect(0, 0, 320, 200, "black")
+
+        beats.forEach((ele, i) => {
+          ele.draw();
+          if (ele.lifetime <= 0) {
+            beats.splice(i, 1);
+          }
+        });
+
+        DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
+        
+        effects.forEach((ele, i) => {
+          ele.draw();
+          if (ele.lifetime <= 0) {
+            effects.splice(i, 1);
+          }
+        });
+
+        BPM.draw(engine.audio.level)
+  
+      window.requestAnimationFrame(update);
+    }
+
+    function determineBPM(){
+        this.averageMax = 0;
+        this.averageSpeed = 0;
+        this.data = [];
+        this.maxes = [];
+        this.speeds = [0];
+        this.start = Date.now()
+        this.draw = function(dec){
+            var elapsed = Date.now() - this.start;
+            this.averageSpeed = this.speeds.reduce((a, b) => a + b) / this.speeds.length;
+            if(this.speeds.length > 10){
+                this.speeds.shift()
+            }
+            this.data.push(dec)
+            if(this.data.length > 7){
+                this.data.shift()
+            }
+            var dataMax = Math.max(...this.data)
+            this.maxes.push(dataMax)
+            if(this.maxes.length > 10){
+                this.maxes.shift()
+            }
+            this.averageMax = this.maxes.reduce((a, b) => a + b) / this.maxes.length;
+            if(Math.abs(dec - this.averageMax) < Math.abs(this.averageMax / 10) && elapsed > 200){
+                this.start = Date.now()
+                this.speeds.push(elapsed)
+            }
+        }
+    }
+
+    function soundBars (x, y, scale){
+        this.x = x;
+        this.y = y;
+        this.rotate = 0;
+        this.scale = scale;
+        this.heights = [];
+        this.radius = 50;
+        this.draw = function(){
+            var max = Math.max(...reducedFreq)
+            var min = Math.min(...reducedFreq)
+            var hue = hueRange * engine.audio.density + hueShift
+            outerHue = hue;
+            for(let i = 0; i < reducedFreq.length; i++){
+                ctx.save()
+                var x = this.x + Math.cos(i) * this.radius * this.scale
+                var y = this.y + Math.sin(i) * this.radius * this.scale
+                var height = (Math.abs(reducedFreq[i]) - min) / (max - min) * 30 + 5
+                if(this.heights[i]){
+                    if (Math.abs(this.heights[i] - height) > 10 || height > 15){
+                        beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${hue}, 100%, 50%)`, height))
+                    }
+                }
+                this.heights[i] = height;
+                this.rotate = Math.atan2(y - this.y, x - this.x) + Math.PI / 2;
+                ctx.translate(x, y)
+                ctx.rotate(this.rotate)
+                ctx.translate(-x, -y)
+                DrawCircle(x, y, height, `hsl(${hue}, 100%, 50%`)
+                this.rotate = 0;
+                ctx.restore()
+            }
+            flipped ? this.radius += .05 : this.radius -= .05;
+        }
+    }
+
+    function soundSpike(x, y, vx, vy, color, radius){
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.color = color;
+        this.radius = radius;
+        this.alpha = 1
+        this.lifetime = 10;
+        this.draw = function(){
+            ctx.globalAlpha = this.alpha
+            DrawCircle(this.x, this.y, this.radius, this.color)
+            ctx.globalAlpha = 1
+            this.alpha > .03 ? this.alpha -= .03 : this.alpha = 0;
+            this.x += this.vx;
+            this.y += this.vy;
+            if(this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0){
+                this.lifetime = 0;
+            }
+        }
+    }
+  
+    function DrawPath(x, y, path, color) {
+      ctx.fillStyle = color;
+      ctx.save();
+      ctx.translate(x, y);
+      let ex = new Path2D(path);
+      ctx.fill(ex);
+      ctx.restore();
+    };
+  
+    function DrawCircle(x, y, radius, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      ctx.fill();
+    };
+  
+    function DrawStroke(x, y, radius, color, stroke) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = stroke;
+      ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      ctx.stroke();
+    };
+  
+    function DrawRect(x, y, width, height, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+    };
+  
+    function DrawHex(x, y, color, size) {
+      ctx.beginPath();
+      for (var i = 0; i < 7; i++) {
+        ctx.lineTo(x + size * Math.cos(2 * Math.PI / 6 * i), y + size * 0.9 * Math.sin(2 * Math.PI / 6 * i));
+      }
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.strokeStyle = "black"
+      ctx.stroke()
+    };
+  
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+  
+    window.requestAnimationFrame(update);
+  </script>
