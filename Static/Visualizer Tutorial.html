@@ -1,0 +1,80 @@
+<head>
+    <title>Visualizer Tutorial</title>
+    <meta description="Basic Effects" />
+    <meta publisher="SignalRgb" />
+  </head>
+  
+  <body style="margin: 0; padding: 0; background: #000;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+  </body>
+  <script>
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    var effects = [];
+    var reducedFreq = [];
+  
+    function update() {
+
+        var frequency = new Int8Array(engine.audio.freq)
+        reducedFreq = frequency.filter((element, index) => {
+            return index % 4 === 0;
+        })
+
+        if(effects.length < 1){
+            effects.push(new soundBars(160, 100))
+        }
+
+        DrawRect(0, 0, 320, 200, "black")
+        
+        effects.forEach((ele, i) => {
+          ele.draw();
+          if (ele.lifetime <= 0) {
+            effects.splice(i, 1);
+          }
+        });
+
+        var hue = engine.audio.density * 360
+        DrawCircle(160, 100, 50, `hsl(${hue}, 100%, ${100 + engine.audio.level * 10}%)`)
+  
+      window.requestAnimationFrame(update);
+    }
+
+    function soundBars (x, y){
+      this.x = x;
+      this.y = y;
+      this.rotate = 0;
+      this.draw = function(){
+        var hue = engine.audio.density * 360
+        var max = Math.max(...reducedFreq)
+        var min = Math.min(...reducedFreq)
+        for(let i = 0; i < reducedFreq.length; i++){
+          ctx.save()
+          var x = this.x + Math.cos(i) * 50
+          var y = this.y + Math.sin(i) * 50
+          var height = ((Math.abs(reducedFreq[i])) - min) / (max - min) * -50 - 5
+          this.rotate = Math.atan2(y - this.y, x - this.x) + Math.PI / 2;
+          ctx.translate(x, y)
+          ctx.rotate(this.rotate)
+          ctx.translate(-x, -y)
+          DrawRect(x, y, 5, height, `hsl(${hue}, 100%, 50%)`)
+          this.rotate = 0;
+          ctx.restore()
+        }
+      }
+    }
+  
+    function DrawRect(x, y, width, height, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+    };
+
+    function DrawCircle(x, y, radius, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      ctx.fill();
+    };
+  
+    window.requestAnimationFrame(update);
+  </script>
