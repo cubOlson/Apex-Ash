@@ -1,6 +1,6 @@
 <head>
   <title>TFT FILM</title>
-  <meta description="Crush all your oponents with this team fight tactics integration" />
+  <meta description="Crush all your opponents with this team fight tactics integration" />
   <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
@@ -171,7 +171,7 @@
   var UIMeter = new Meter(5, () => "")
   var winMeter = new Meter(5, () => "")
   var loseMeter = new Meter(5, () => "")
-  var levelUpMeter = new Meter(5, onLevelUpChanged)
+  var levelUpMeter = new Meter(3, onLevelUpChanged)
   var unkownStateMeter = new Meter(5, () => "")
   var prevScore = 0;
   var winstreak = false;
@@ -332,7 +332,7 @@
 
   function OnCombatChanged() {
     if (inGame) {
-      if (combatMeter.value == 1 || combatMeter2.value == 1 && stateMeter.value == 1 && EnableCombat) {
+      if (combatMeter.value == 1  && EnableCombat || combatMeter2.value == 1 && stateMeter.value == 1 && EnableCombat) {
         if (!stagePlaying) {
           stagePlaying = true;
           setTimeout(() => {
@@ -623,12 +623,14 @@
       this.x = Math.random() * 320
       this.y = Math.random() * -50
       this.radius = radius
+      this.radiusX = 20;
       this.col = col
     }
 
     draw() {
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.ellipse(this.x, this.y, this.radiusX, this.radius, 0, 0, 2 * Math.PI);
+      this.radiusX = Math.sin(Date.now() / 100) * 5 + 15;
       ctx.fillStyle = this.col
       ctx.fill()
       this.y += 5

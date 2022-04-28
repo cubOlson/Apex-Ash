@@ -1,5 +1,5 @@
 <head>
-  <title>PUBG: Battlegrounds Production</title>
+  <title>PUBG: Battlegrounds</title>
   <meta description="Get that chicken dinner with ambience and RGB effects." />
   <meta publisher="SignalRGB" />
 
@@ -13,12 +13,13 @@
   <meta property="assistOn" label="Assist Effect" type="boolean" default="1" />
   <meta property="vehicleOn" label="Vehicle Effect" type="boolean" default="1" />
 
-  <meta meter="inGame" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="colormean" x="0.4995" y="0.0213" width="0.003"
+  <meta meter="inGame" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4995" y="0.0213" width="0.003"
     height=".001" h="0-360" s="0-20" l="80-100">
   <resolution size="3440x1440" x="0.4991" y="0.0208" width="0.003" height=".001" />
   </meta>
   <meta meter="inGameBlue" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.8495" y="0.7278" width="0.003"
     height=".001" h="225-270" s="70-100" l="50-100">
+    <resolution size="3440x1440" x="0.8881" y="0.7285" width="0.0015" height=".001" />
   </meta>
   <meta meter="hpWhite" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.3948" y="0.9574" width="0.001"
     height=".001" h="0-360" s="0-5" l="95-100">
@@ -70,9 +71,11 @@
   </meta>
   <meta meter="vehicleGas" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.150390" y="0.95625" width="0.0001"
     height="0.0004" h="0-360" s="0-20" l="80-100">
+    <resolution size="3440x1440" x="0.1116" y="0.9549" width="0.0001" height="0.0004" />
   </meta>
   <meta meter="win" tags="PUBG,PLAYERUNKNOWN'S BATTLEGROUNDS" type="area" x="0.4354" y="0.6037" width="0.01"
     height="0.09" h="30-50" s="80-100" l="75-100">
+    <resolution size="3440x1440" x="0.4744" y="0.5306" width="0.01" height="0.09" />
   </meta>
 </head>
 
@@ -167,7 +170,7 @@
 
     } else if (InGameMeter.value == 0) {
       effects.length = [];
-
+      vehicleHandler()
       inGameBool = false;
       boostHandler();
     }

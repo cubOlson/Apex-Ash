@@ -1,0 +1,224 @@
+<head>
+  <title>Rocket League Production</title>
+  <meta description="Zoom zoom." />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="hpOn" label="HP Effects" type="boolean" default="1" />
+
+  <!-- <meta meter="inGameBlack" tags="rocket league" type="area" x="0.4974" y="0.0076" width="0.01"
+    height=".0001" h="0-360" s="0-70" l="0-25">
+  </meta>
+  <meta meter="inGameBlue" tags="rocket league" type="area" x="0.9317" y="0.8528" width="0.01"
+    height=".0001" h="200-260" s="50-100" l="30-90">
+  </meta>
+  <meta meter="inGameOrange" tags="rocket league" type="area" x="0.9317" y="0.8528" width="0.01"
+  height=".0001" h="0-60" s="50-100" l="30-90">
+  </meta> -->
+  <meta meter="boost1" tags="rocket league" type="area" x="0.9313" y="0.9458" width="0.001"
+  height=".0001" h="0-60" s="60-100" l="50-80">
+  </meta>
+  <meta meter="boost2" tags="rocket league" type="area" x="0.9061" y="0.9188" width="0.001"
+  height=".0001" h="0-60" s="60-100" l="50-100">
+  </meta>
+  <meta meter="boost3" tags="rocket league" type="area" x="0.9029" y="0.9125" width="0.001"
+  height=".0001" h="0-60" s="60-100" l="50-100">
+  </meta>
+  <meta meter="boost4" tags="rocket league" type="area" x="0.8901" y="0.8396" width="0.001"
+  height=".0001" h="0-60" s="60-100" l="50-100">
+  </meta>
+  <meta meter="boost5" tags="rocket league" type="area" x="0.904" y="0.766" width="0.001"
+  height=".0001" h="0-60" s="50-100" l="50-100">
+  </meta>
+  <meta meter="boost6" tags="rocket league" type="area" x="0.9355" y="0.7271" width="0.001"
+  height=".0001" h="0-360" s="0-10" l="90-100">
+  </meta>
+  <meta meter="boost7" tags="rocket league" type="area" x="0.9688" y="0.7616" width="0.001"
+  height=".0001" h="0-360" s="0-10" l="90-100">
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //engine.zone
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var stateHdlr = new StateHandler();
+  var effects = [];
+
+  var InGameMeter = new Meter(25, inGameHandler);
+
+  function update() {
+    drawRect(0, 0, 320, 200, "black");
+
+    if (keyScreenBrightness > 0) {
+      copyScreen(1);
+    }
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+
+    stateHdlr.Process();
+    window.requestAnimationFrame(update);
+  };
+
+  function inGameHandler() {
+
+  }
+
+  function renderPath(x, y, path, color) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function drawRect(x, y, height, width, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, height, width);
+  }
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+
+  function timedMeter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    this.start = Date.now();
+    this.elapsed = 0;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      this.elapsed = Date.now() - this.start;
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        this.start = Date.now();
+        callback();
+      }
+    };
+  }
+  window.requestAnimationFrame(update)
+</script>

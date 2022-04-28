@@ -20,44 +20,29 @@
   var backTower = "M10.14,17.73S-23.77,261,51.31,232l4.18,20,75.75-3.3-1.54-17.39s72.66,79.7,52.18-212C181.88,19.27,99.75,447.09,10.14,17.73Z";
 
   function update(){
-    drawRect(0,0, 320, 200, "grey");
+    drawRect(0,0, 320, 200, "black");
 
-    renderPath(67, -10, backTower, "yellow");
+    renderPath(67, -10, backTower, `hsl(60, 100%, ${100 + engine.audio.level * 5}%)`);
     
     var frequency = new Int8Array(engine.audio.freq)
     reduced1 = frequency.slice(0, 66);
     reduced2 = frequency.slice(66, 132);
     reduced3 = frequency.slice(132, 200);
 
-    new drawSoundCurve(160, 10, "right", 50, 150, "brown", reduced1).draw();
-    new drawSoundCurve(160, 10, "left", 50, 150, "brown", reduced1).draw();
-    new drawSoundCurve(160, 20, "right", 25, 130, "red", reduced2).draw();
-    new drawSoundCurve(160, 20, "left", 25, 130, "red", reduced2).draw();
-    new drawSoundCurve(160, 30, "right", 15, 110, "orange", reduced3).draw();
-    new drawSoundCurve(160, 30, "left", 15, 110, "orange", reduced3).draw();
+    ctx.save()
+    ctx.translate(160, 85)
+    ctx.rotate(-Math.PI / 2)
+    ctx.translate(-160, -85)
+    new drawSoundCurve(160, 10, "right", 50, 150, `hsl(0, 80%, ${100 + engine.audio.level * 6}%)`, reduced1).draw();
+    new drawSoundCurve(160, 10, "left", 50, 150, `hsl(0, 80%, ${100 + engine.audio.level * 6}%)`, reduced1).draw();
+    new drawSoundCurve(160, 20, "right", 25, 130, `hsl(20, 100%, ${100 + engine.audio.level * 6}%)`, reduced2).draw();
+    new drawSoundCurve(160, 20, "left", 25, 130, `hsl(20, 100%, ${100 + engine.audio.level * 6}%)`, reduced2).draw();
+    new drawSoundCurve(160, 30, "right", 15, 110, `hsl(40, 100%, ${100 + engine.audio.level * 6}%)`, reduced3).draw();
+    new drawSoundCurve(160, 30, "left", 15, 110, `hsl(40, 100%, ${100 + engine.audio.level * 6}%)`, reduced3).draw();
+    ctx.restore()
+    drawRect(159, 50, 4, 70, "black")
 
-    renderPath(46, 125, frontTower, "black")
-
-    // reduced5 = frequency.slice(160, 200).reduce((a, b) => a + b, 0);
-    // if(tones1Meter.increased && tones1Meter.value > 200){
-    //   effects.push(new audioCube("red", 1));
-    // }
-    // if(tones2Meter.increased && tones2Meter.value > 200){
-    //   effects.push(new audioCube("orange", 2));
-    // }
-    // if(tones3Meter.increased && tones3Meter.value > 200){
-    //   effects.push(new audioCube("yellow", 3));
-    // }
-    // if(tones4Meter.increased && tones4Meter.value > 200){
-    //   effects.push(new audioCube("green", 4));
-    // }
-    // if(tones3Meter.increased && tones3Meter.value > 200){
-    //   effects.push(new audioCube("blue", 5));
-    // }
-    // if(tones4Meter.increased && tones4Meter.value > 200){
-    //   effects.push(new audioCube("purple", 6));
-    // }
-
+    renderPath(46, 125, frontTower, `hsl(0, 0%, ${30 + engine.audio.level * 5}%)`)
 
     effects.forEach((ele, i) => {
         ele.draw();
@@ -65,10 +50,6 @@
           effects.splice(i, 1);
         }
       });
-
-    // for (let i = 0; i < frequency.length; i++){
-    //   drawRect(i * 1.6, 200, 1.6, -frequency[i] * 2, "white")
-    // }
 
     window.requestAnimationFrame(update);
   }

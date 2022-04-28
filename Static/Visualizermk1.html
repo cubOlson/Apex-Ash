@@ -3,11 +3,15 @@
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
   
-    <meta property="rainbow" label="Rainbow" type="boolean" default="1" />
-    <meta property="hueShift" label="Hue Shift" type="number" min="0" max="360" default="0" />
-    <meta property="hueRange" label="Hue Range" type="number" min="0" max="360" default="0" />
-    <meta property="bubbleHit" label="Bubble Threshhold" type="number" min="0" max="100" default="20" />
+    <meta property="colorMode" label="Color Mode" type="combobox"
+    values="Rainbow,Color Cycle,Custom Color" default="Rainbow" />
     <meta property="setColor" label="Custom Color" type="color" min="0" max="360" default="#FF0000" />
+    <meta property="backColor" label="Background Color" type="color" min="0" max="360" default="#000000" />
+    <meta property="hueShift" label="Rainbow Hue Shift" type="number" min="0" max="360" default="0" />
+    <meta property="hueRange" label="Rainbow Hue Range" type="number" min="0" max="360" default="0" />
+    <meta property="cycleSpeed" label="Color Cycle Speed" type="number" min="0" max="100" default="50" />
+    <meta property="bubbleHit" label="Bubble Threshhold" type="number" min="0" max="100" default="20" />
+    <meta property="bubbleSpeed" label="Bubble Speed" type="number" min="0" max="100" default="50" />
   
   </head>
   
@@ -25,8 +29,10 @@
     var flipped = false;
     var rotate = 0;
     var outerHue = 0;
+    var cycleHue = 0;
   
     function update() {
+      if(bubbleSpeed > 0){
         var elapsed = Date.now() - start;
 
         var frequency = new Int8Array(engine.audio.freq)
@@ -43,7 +49,7 @@
             flipped = !flipped
         }
 
-        DrawRect(0, 0, 320, 200, "black")
+        DrawRect(0, 0, 320, 200, backColor)
 
         beats.forEach((ele, i) => {
           ele.draw();
@@ -52,11 +58,13 @@
           }
         });
 
-        if(rainbow){
+        if(colorMode == "Rainbow"){
           DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
-        } else {
+        } else if(colorMode == "Custom Color") {
           var res = hexToHSL(setColor)
           DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2]}%)`)
+        } else {
+          DrawCircle(160, 100, 50, `hsl(${cycleHue}, 100%, 50%)`)
         }
  
         
@@ -68,15 +76,17 @@
         });
 
         ctx.globalAlpha = .75
-        if(rainbow){
+        if(colorMode == "Rainbow"){
           DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
-        } else {
+        } else if(colorMode == "Custom Color") {
           var res = hexToHSL(setColor)
-          DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 10}%)`)
+          DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 8}%)`)
+        } else {
+          DrawCircle(160, 100, 50, `hsl(${cycleHue}, 100%, ${100 + engine.audio.level * 8}%)`)
         }
         ctx.globalAlpha = 1
-
-        BPM.draw(engine.audio.level)
+      }
+        cycleHue += cycleSpeed / 25
   
       window.requestAnimationFrame(update);
     }
@@ -130,11 +140,13 @@
                 var height = (Math.abs(reducedFreq[i]) - min) / (max - min) * 30 + 5
                 if(this.heights[i]){
                     if (Math.abs(this.heights[i] - height) > bubbleHit / 2.5 * .75 || height > bubbleHit / 2.5){
-                        if(rainbow){
+                        if(colorMode == "Rainbow"){
                           beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${hue}, 100%, 50%)`, height))
-                        } else {
+                        } else if(colorMode == "Custom Color") {
                           var res = hexToHSL(setColor)
                           beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 10}%)`, height))
+                        } else {
+                          beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${cycleHue}, 100%, 50%)`, height))
                         }
                     }
                 }
@@ -143,11 +155,13 @@
                 ctx.translate(x, y)
                 ctx.rotate(this.rotate)
                 ctx.translate(-x, -y)
-                if(rainbow){
+                if(colorMode == "Rainbow"){
                     DrawCircle(x, y, height, `hsl(${hue}, 100%, 50%)`)
-                } else {
+                } else if(colorMode == "Custom Color") {
                     var res = hexToRgb(setColor)
                     DrawCircle(x, y, height, `rgb(${res.r}, ${res.g}, ${res.b})`)
+                } else {
+                  DrawCircle(x, y, height, `hsl(${cycleHue}, 100%, 50%)`)
                 }
                 this.rotate = 0;
                 ctx.restore()
@@ -159,8 +173,8 @@
     function soundSpike(x, y, vx, vy, color, radius){
         this.x = x;
         this.y = y;
-        this.vx = vx;
-        this.vy = vy;
+        this.vx = vx * bubbleSpeed / 50;
+        this.vy = vy * bubbleSpeed / 50;
         this.color = color;
         this.radius = radius;
         this.alpha = 1
@@ -178,15 +192,6 @@
         }
     }
   
-    function DrawPath(x, y, path, color) {
-      ctx.fillStyle = color;
-      ctx.save();
-      ctx.translate(x, y);
-      let ex = new Path2D(path);
-      ctx.fill(ex);
-      ctx.restore();
-    };
-  
     function DrawCircle(x, y, radius, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
@@ -194,29 +199,10 @@
       ctx.fill();
     };
   
-    function DrawStroke(x, y, radius, color, stroke) {
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = stroke;
-      ctx.arc(x, y, radius, 0, 2 * Math.PI)
-      ctx.stroke();
-    };
-  
     function DrawRect(x, y, width, height, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.fillRect(x, y, width, height);
-    };
-  
-    function DrawHex(x, y, color, size) {
-      ctx.beginPath();
-      for (var i = 0; i < 7; i++) {
-        ctx.lineTo(x + size * Math.cos(2 * Math.PI / 6 * i), y + size * 0.9 * Math.sin(2 * Math.PI / 6 * i));
-      }
-      ctx.fillStyle = color;
-      ctx.fill();
-      ctx.strokeStyle = "black"
-      ctx.stroke()
     };
   
     function hexToRgb(hex) {
