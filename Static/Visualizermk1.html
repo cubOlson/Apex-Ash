@@ -1,13 +1,13 @@
 <head>
-    <title>Visualizer Tutorial</title>
+    <title>Visualizer mk1</title>
     <meta description="Basic Effects" />
     <meta publisher="SignalRgb" />
   
-    <meta property="hitFlash" label="Hit flash" type="boolean" default="0" />
+    <meta property="rainbow" label="Rainbow" type="boolean" default="1" />
     <meta property="hueShift" label="Hue Shift" type="number" min="0" max="360" default="0" />
     <meta property="hueRange" label="Hue Range" type="number" min="0" max="360" default="0" />
-    <meta property="saber1" label="Lightsaber 1 Color" type="color" min="0" max="360" default="#FF0000" />
-    <meta property="saber2" label="Lightsaber 2 Color" type="color" min="0" max="360" default="#0000FF" />
+    <meta property="bubbleHit" label="Bubble Threshhold" type="number" min="0" max="100" default="20" />
+    <meta property="setColor" label="Custom Color" type="color" min="0" max="360" default="#FF0000" />
   
   </head>
   
@@ -52,7 +52,13 @@
           }
         });
 
-        DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
+        if(rainbow){
+          DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
+        } else {
+          var res = hexToHSL(setColor)
+          DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2]}%)`)
+        }
+ 
         
         effects.forEach((ele, i) => {
           ele.draw();
@@ -60,6 +66,15 @@
             effects.splice(i, 1);
           }
         });
+
+        ctx.globalAlpha = .75
+        if(rainbow){
+          DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
+        } else {
+          var res = hexToHSL(setColor)
+          DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 10}%)`)
+        }
+        ctx.globalAlpha = 1
 
         BPM.draw(engine.audio.level)
   
@@ -114,8 +129,13 @@
                 var y = this.y + Math.sin(i) * this.radius * this.scale
                 var height = (Math.abs(reducedFreq[i]) - min) / (max - min) * 30 + 5
                 if(this.heights[i]){
-                    if (Math.abs(this.heights[i] - height) > 10 || height > 15){
-                        beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${hue}, 100%, 50%)`, height))
+                    if (Math.abs(this.heights[i] - height) > bubbleHit / 2.5 * .75 || height > bubbleHit / 2.5){
+                        if(rainbow){
+                          beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${hue}, 100%, 50%)`, height))
+                        } else {
+                          var res = hexToHSL(setColor)
+                          beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 10}%)`, height))
+                        }
                     }
                 }
                 this.heights[i] = height;
@@ -123,7 +143,12 @@
                 ctx.translate(x, y)
                 ctx.rotate(this.rotate)
                 ctx.translate(-x, -y)
-                DrawCircle(x, y, height, `hsl(${hue}, 100%, 50%`)
+                if(rainbow){
+                    DrawCircle(x, y, height, `hsl(${hue}, 100%, 50%)`)
+                } else {
+                    var res = hexToRgb(setColor)
+                    DrawCircle(x, y, height, `rgb(${res.r}, ${res.g}, ${res.b})`)
+                }
                 this.rotate = 0;
                 ctx.restore()
             }
@@ -202,6 +227,51 @@
         b: parseInt(result[3], 16)
       } : null;
     }
+
+    function hexToHSL(H) {
+      let r = 0, g = 0, b = 0;
+      if (H.length == 4) {
+        r = "0x" + H[1] + H[1];
+        g = "0x" + H[2] + H[2];
+        b = "0x" + H[3] + H[3];
+      } else if (H.length == 7) {
+        r = "0x" + H[1] + H[2];
+        g = "0x" + H[3] + H[4];
+        b = "0x" + H[5] + H[6];
+      }
+      r /= 255;
+      g /= 255;
+      b /= 255;
+      let cmin = Math.min(r,g,b),
+          cmax = Math.max(r,g,b),
+          delta = cmax - cmin,
+          h = 0,
+          s = 0,
+          l = 0;
+    
+      if (delta == 0)
+        h = 0;
+      else if (cmax == r)
+        h = ((g - b) / delta) % 6;
+      else if (cmax == g)
+        h = (b - r) / delta + 2;
+      else
+        h = (r - g) / delta + 4;
+    
+      h = Math.round(h * 60);
+    
+      if (h < 0)
+        h += 360;
+    
+      l = (cmax + cmin) / 2;
+      s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+      s = +(s * 100).toFixed(1);
+      l = +(l * 100).toFixed(1);
+
+      var res = [h, s, l]
+    
+      return res
+}
   
     window.requestAnimationFrame(update);
   </script>
