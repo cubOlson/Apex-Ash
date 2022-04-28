@@ -1,0 +1,705 @@
+<head>
+  <title>Lost ark</title>
+  <meta description="Effects for Lost Ark" />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#ff0000" min="0" max="360" />
+  <meta property="healthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+  <meta property="healthBarY" label="HealthBarY" type="number" min="0" max="200" default="55" />
+  <meta property="healthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+  <meta property="healthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="20" />
+  <meta property="healthToggle" label="enable Health effects" type="boolean" default="1" />
+  <meta property="manaColor" label="Health Bar Color" type="color" default="#00a8ff" min="0" max="360" />
+  <meta property="manaBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+  <meta property="manaBarY" label="HealthBarY" type="number" min="0" max="200" default="75" />
+  <meta property="manaBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+  <meta property="manaBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="20" />
+  <meta property="manaToggle" label="enable Mana effects" type="boolean" default="1" />
+
+
+
+
+
+  <meta meter="healthBar" tags="VLC,Lost" type="area" x="0.328" y="0.8999" width=".123" height="0.0001" h="0-360"
+    s="30-100" l="20-100">
+  </meta>
+
+  <meta meter="manaBar" tags="VLC,Lost" type="area" x="0.5492" y="0.8996" width=".1235" height="0.0001" h="190-242"
+    s="36-100" l="25-95">
+  </meta>
+
+  <meta meter="levelBarCombat" tags="VLC,Lost" type="area" x="0.0012" y="0.9944" width=".9968" height="0.0001"
+    h="170-242" s="0-100" l="25-100">
+  </meta>
+
+  <meta meter="levelBarRoster" tags="VLC,Lost" type="area" x="0.0012" y="0.9944" width=".9968" height="0.0001"
+    h="251-271" s="68-98" l="43-100">
+  </meta>
+
+  <meta meter="inGame" tags="VLC,Lost" type="linear" x="0.8430" y="0.9549" width="" height="" h="0-360" s="0-34"
+    l="62-100">
+  </meta>
+
+  <meta meter="dismountGreenArrow" tags="VLC,Lost" type="area" x="0.4473" y="0.9271" width="0.001" height="0.001"
+    h="130-150" s="35-75" l="56-100">
+  </meta>
+
+  <meta meter="mountBlack" tags="VLC,Lost" type="area" x="0.4906" y="0.8889" width="0.001" height="0.001" h="0-360"
+    s="0-30" l="0-25">
+  </meta>
+
+  <meta meter="speakCharacter" tags="VLC,Lost" type="area" x="0.5035" y="0.9049" width="0.001" height="0.001" h="51-71"
+    s="0-77" l="75-100">
+  </meta>
+
+  <meta meter="speakCharacterLeave" tags="VLC,Lost" type="area" x="0.9381" y="0.9556" width="0.001" height="0.0001"
+    h="0-360" s="0-30" l="75-100">
+  <resolution size="2560x1440" x="0.9371" y="0.9549" width="0.001" height="0.0001" />
+  </meta>
+
+  <meta meter="topAbilityWhite" tags="VLC,Lost" type="area" x="0.3563" y="0.9063" width=".094" height="0.001" h="0-360"
+    s="0-45" l="50-100">
+  </meta>
+
+  <meta meter="botAbilityWhite" tags="VLC,Lost" type="area" x="0.3676" y="0.9500" width=".094" height=".001" h="0-360"
+    s="0-45" l="50-100">
+  </meta>
+
+  <meta meter="swordQuestComplete" tags="VLC,Lost" type="area" x="0.5000" y="0.0583" width=".001" height=".001"
+    h="44-64" s="43-80" l="62-100">
+  </meta>
+
+  <meta meter="questCompleteConfirmationBrown" tags="VLC,Lost" type="area" x="0.5184" y="0.1944" width=".001"
+    height=".001" h="25-45" s="20-60" l="0-45">
+  </meta>
+
+  <meta meter="questCompleteConfirmationYellow" tags="VLC,Lost" type="area" x="0.5508" y="0.1132" width=".001"
+    height=".001" h="31-51" s="39-59" l="53-100">
+  </meta>
+
+
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var mountActive = false;
+  var usedAbility = false;
+  var stateHdlr = new StateHandler();
+  var effects = [];
+  var playingGame = false;
+  var abilityValue = 0;
+  var speakingActive = false;
+  var questPlaying = false;
+  var healthMeter = new Meter(5, inGameChanged)
+  var manaMeter = new Meter(5, () => "")
+  var inGameMeter = new Meter(5, inGameChanged)
+  var dismountGreenArrowMeter = new Meter(5, mountChanged)
+  var mountBlackMeter = new Meter(5, mountChanged)
+  var speakCharacterMeter = new Meter(5, speakChanged)
+  var speakCharacterLeaveMeter = new Meter(5, speakChanged)
+  var swordQuestCompleteMeter = new Meter(5, questComplete)
+  var questCompleteConfirmationBrownMeter = new Meter(5, questComplete)
+  var questCompleteConfirmationYellowMeter = new Meter(5, questComplete)
+  var wing = "M12.35,121.46c-8.01-9.72-11.92-19.29-12.31-28.71C-0.78,73.01,10.92,58.28,28.3,47.67 c18.28-11.16,37.08-13.93,55.36-22.25C92.79,21.27,103.68,14.47,121.8,0c5.92,15.69-12.92,40.9-43.52,54.23 c9.48,0.37,19.69-2.54,30.85-9.74c-0.76,19.94-16.46,32.21-51.3,36.95c7.33,2.45,16.09,2.58,27.27-0.58 C74.33,116.81,29.9,91.06,12.35,121.46L12.35,121.46z";
+
+
+  function update() {
+    if (!mountActive) {
+      copyScreen(1);
+    }
+
+    inGameMeter.setValue(engine.vision.inGame)
+    healthMeter.setValue(engine.vision.healthBar)
+    manaMeter.setValue(engine.vision.manaBar)
+    abilityHandler();
+    dismountGreenArrowMeter.setValue(engine.vision.dismountGreenArrow)
+    mountBlackMeter.setValue(engine.vision.mountBlack)
+    speakCharacterMeter.setValue(engine.vision.speakCharacter)
+    speakCharacterLeaveMeter.setValue(engine.vision.speakCharacterLeave)
+    swordQuestCompleteMeter.setValue(engine.vision.swordQuestComplete)
+    questCompleteConfirmationBrownMeter.setValue(engine.vision.questCompleteConfirmationBrown)
+    questCompleteConfirmationYellowMeter.setValue(engine.vision.questCompleteConfirmationYellow)
+
+    if (!mountActive) {
+      DrawHud();
+    }
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+
+
+
+
+    //use TimebarMeter for HUD effect?
+
+
+    stateHdlr.Process();
+    window.requestAnimationFrame(update);
+  };
+
+
+  //callbacks
+
+
+  function DrawHud() {
+    ctx.beginPath();
+
+    if (playingGame) {
+      if (healthToggle) {
+        ctx.fillStyle = healthColor;
+        ctx.fillRect(healthBarX, healthBarY, healthMeter.value * healthBarWidth, healthBarHeight)
+      }
+      if (manaToggle) {
+        ctx.fillStyle = manaColor;
+        ctx.fillRect(manaBarX, manaBarY, manaMeter.value * manaBarWidth, manaBarHeight)
+      }
+    } else if (adjToggle) {
+      ctx.fillStyle = healthColor;
+      ctx.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight)
+      ctx.fillStyle = manaColor;
+      ctx.fillRect(manaBarX, manaBarY, manaBarWidth, manaBarHeight)
+    }
+  }
+
+  function abilityHandler() {
+    let topValue = engine.vision.topAbilityWhite;
+    let botValue = engine.vision.botAbilityWhite;
+    let combinedValue = topValue + botValue;
+
+    if (combinedValue > abilityValue && playingGame && !speakingActive) {
+      usedAbility = true;
+      console.log("question" + Math.random())
+      abilityValue = combinedValue;
+    } else {
+      abilityValue = combinedValue;
+    }
+  }
+
+  function inGameChanged() {
+    if (inGameMeter.value == 1 && healthMeter.value != 0) {
+      setTimeout(() => {
+        playingGame = true;
+        console.log("inGame")
+      }, 200);
+    } else {
+      playingGame = false;
+      console.log("outGame")
+    }
+  }
+
+  function speakChanged() {
+    if (speakCharacterLeaveMeter.value == 1 && speakCharacterMeter.value == 1 && !speakingActive) {
+      console.log("Speak effect")
+      effects.push(new speakEffect())
+      speakingActive = true;
+    } else if (speakCharacterLeaveMeter.value != 1 && speakCharacterMeter.value != 1 && speakingActive) {
+      console.log("Stop speak effect")
+      speakingActive = false;
+    }
+  }
+
+  function mountChanged() {
+    if (dismountGreenArrowMeter.value == 1 && mountBlackMeter.value == 1) {
+      mountActive = true;
+      effects.push(new mountEffect())
+    } else {
+      mountActive = false;
+    }
+  }
+
+  function questComplete() {
+    if (swordQuestCompleteMeter.value == 1 && questCompleteConfirmationBrownMeter.value > 0.7 && questCompleteConfirmationYellowMeter.value == 1 && !questPlaying) {
+
+      effects.push(new questCompleteEffect())
+      questPlaying = true;
+      setTimeout(() => {
+        questPlaying = false;
+      }, 6000);
+    }
+  }
+
+
+  function questCompleteEffect() {
+    this.elapsed;
+    this.start = GetTime();
+    this.draw = function () {
+      ctx.beginPath()
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, 320, 200)
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed > 2000) {
+        let circleGradient = ctx.createRadialGradient(160, 100, 0, 160, 100, (this.elapsed - 2000) / 7)
+        circleGradient.addColorStop(0, "yellow");
+        circleGradient.addColorStop(1, "black")
+        DrawCircle(160, 100, 200, circleGradient)
+      }
+      if (this.elapsed < 1000) {
+        drawExclamationMark(160, 50, 200 - this.elapsed / 7);
+      } else {
+        let gradient = ctx.createLinearGradient(0, 0, 0 + ((this.elapsed - 1000) / 6), 0);
+        gradient.addColorStop(0, "yellow");
+        gradient.addColorStop(0, "white");
+        gradient.addColorStop(1, "black")
+        drawExclamationMark(160, 50, 50)
+        ctx.beginPath();
+        ctx.save()
+        ctx.translate(210, 10)
+        ctx.rotate(15 * (Math.PI / 180))
+        renderPath(0, 0, wing, gradient, 10, 10)
+        ctx.restore()
+        ctx.beginPath()
+        ctx.save()
+        ctx.translate(80, -137)
+        ctx.rotate(-15 * (Math.PI / 180))
+        renderPath(0, 0, wing, gradient, -10, 10)
+        ctx.restore()
+      }
+      if (this.elapsed > 3000) {
+        copyScreen((this.elapsed - 3000) / 1000)
+        if (this.elapsed > 4000) {
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+
+  function speakEffect() {
+    this.elapsed;
+    this.start = GetTime();
+    this.exitTime = 0;
+    this.textArray = [];
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (questPlaying) {
+        this.lifetime = 0;
+      }
+      if (this.elapsed < 800) {
+        ctx.beginPath()
+        let circleGradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200 - (this.elapsed) / 5)
+        circleGradient.addColorStop(0, "hsla(0,0%,0%, 0)")
+        circleGradient.addColorStop(1, "hsla(0,0%,0%, 1)")
+        DrawCircle(160, 100, 200, circleGradient)
+        this.exitTime = this.elapsed;
+      } else if (speakCharacterLeaveMeter.value == 1 && speakCharacterMeter.value == 1) {
+        ctx.beginPath()
+        ctx.fillStyle = "hsla(0,0%,0%, 1)"
+        ctx.fillRect(0, 0, 320, 200)
+        this.exitTime = this.elapsed;
+        if (this.textArray.length < 5) {
+          this.textArray.push(new randomText())
+        }
+        this.textArray.forEach((text, index) => {
+          text.draw();
+          if (text.x > 200 + 100 && text.speed > 0 || text.x < 0 - 100 && text.speed < 0) {
+            this.textArray.splice(index, 1)
+          }
+        });
+      } else if (!questPlaying) {
+        let circleGradient = ctx.createRadialGradient(160, 100, 0, 160, 100, (this.elapsed - this.exitTime) / 5)
+        circleGradient.addColorStop(0, "hsla(0,0%,0%, 0)")
+        circleGradient.addColorStop(1, "hsla(0,0%,0%, 1)")
+        DrawCircle(160, 100, 200, circleGradient)
+        if ((this.elapsed - this.exitTime) / 7 > 200) {
+          this.lifetime = 0;
+        }
+      } else {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function mountEffect() {
+    this.elapsed;
+    this.followPoint = new followPoint();
+    this.footSteps = new footSteps();
+    this.start = GetTime();
+    this.holder = 1;
+    this.exitTime = 0;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed < 2000) {
+        let gradient = ctx.createLinearGradient(0 + (this.elapsed / 10), 0 + (this.elapsed / 10), 0 + (this.elapsed), 0 + ((this.elapsed) / 2));
+        gradient.addColorStop(0, "hsla(0,0%,0%,0.1)")
+        gradient.addColorStop(1, "hsla(0,0%,0%,0.1)")
+        ctx.fillStyle = gradient;
+      } else if (this.holder == 1) {
+        ctx.fillStyle = "black";
+        this.holder++;
+      } else {
+        ctx.fillStyle = "hsla(0,0%,0%,0.1)";
+      }
+      ctx.fillRect(0, 0, 320, 200)
+      this.followPoint.draw();
+      this.footSteps.draw(this.followPoint);
+
+      if (!mountActive) {
+        this.lifetime = 0;
+      } else {
+        this.exitTime = this.elapsed;
+      }
+    }
+  }
+
+
+  function abilityEffect() {
+    this.elapsed;
+    this.overallOpacity = 1;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (usedAbility) {
+        usedAbility = false;
+        console.log("response")
+        effects.push(new modularAbilityEffect(this.overallOpacity, 140))
+      }
+
+    }
+  }
+
+  function modularAbilityEffect(opacity, color) {
+    this.randomVal = Math.random();
+    this.start = GetTime();
+    this.opacity = opacity
+    this.color = color
+    this.randomDirection = Math.random();
+    console.log(this.randomVal)
+
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+
+
+      if (this.randomVal < .35) {
+        ctx.save();
+        ctx.translate(320, 200)
+        ctx.rotate(this.elapsed / 200)
+        ctx.fillStyle = `hsl(${this.color + Math.random() * 60}, 100%, 50%)`;
+        ctx.fillRect(0, 0, -400, 50)
+        ctx.restore();
+      } else if (this.randomVal >= 0.35 && this.randomVal < 0.8) {
+        ctx.save();
+        ctx.translate(0, 200)
+        ctx.rotate(this.elapsed / 200)
+        ctx.fillStyle = `hsl(${this.color + Math.random() * 60}, 100%, 50%)`;
+        ctx.fillRect(0, 0, -400, 50)
+        ctx.restore();
+      } else if (this.randomVal >= 0.8 && this.randomVal <= 1) {
+        effects.push(new ParticleExplosion(Math.random() * 250, Math.random() * 160, `hsl(${this.color + Math.random() * 60}, 100%, 50%)`, 5, 2000, 50, 10, 1, false, false))
+        this.lifetime = 0;
+      }
+      if (this.elapsed > 1500) {
+        this.lifetime = 0
+      }
+    }
+  }
+
+
+
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
+
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+
+  class randomText {
+    constructor() {
+      this.characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      this.randomVal = Math.random();
+      this.speed = this.randomVal > 0.5 ? 4 : -4
+      this.y = Math.random() * 200;
+      this.lettercount = Math.ceil(Math.random() * 8);
+      this.x = this.randomVal > 0.5 ? 0 - this.lettercount * 40 : 200 + this.lettercount * 40
+      this.start = GetTime();
+    }
+
+    draw() {
+      this.elapsed = GetTime() - this.start;
+      for (let i = 0; i < this.lettercount; i++) {
+        ctx.font = '48px serif';
+        ctx.fillStyle = this.randomVal < 0.2 || this.randomVal > 0.9 ? "white" : "yellow"
+        ctx.fillText(this.characters.charAt(Math.floor(this.randomVal * this.characters.length)), this.x + (this.speed * 9) * i, this.y + Math.sin(this.elapsed / 100 + i) * 30)
+      }
+      this.x += this.speed;
+    }
+  }
+
+
+  class followPoint {
+    constructor() {
+      this.x = Math.random() * 320;
+      this.y = Math.random() * 200;
+      this.speed = {
+        x: Math.random() > 0.6 ? -1 : 1,
+        y: Math.random() > 0.6 ? -1 : 1,
+      }
+    }
+    draw() {
+      this.x += this.speed.x;
+      this.y += this.speed.y;
+      if (this.x > 320 || this.x < 0) {
+        this.speed.x = -this.speed.x;
+      }
+      if (this.y > 200 || this.y < 0) {
+        this.speed.y = -this.speed.y;
+      }
+    }
+  }
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  class footSteps {
+    constructor() {
+      this.x = Math.random() * 320;
+      this.y = Math.random() * 200;
+      this.speed = {
+        x: 0,
+        y: 0
+      }
+      this.angle = 0;
+      this.timer = GetTime();
+      this.start = GetTime()
+    }
+    draw(point) {
+      this.angle = Math.atan2(point.y - this.y, point.x - this.x)
+      this.speed.x = Math.cos(this.angle);
+      this.speed.y = Math.sin(this.angle)
+      this.x += this.speed.x * 0.8;
+      this.y += this.speed.y * 0.8;
+      this.elapsed = GetTime() - this.start;
+
+
+      ctx.fillStyle = `hsl(${30 + (Math.sin(this.elapsed / 1000) + 1) * 40},100%,50%)`
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.angle)
+      if (GetTime() - this.timer > 1000) {
+        ctx.fillRect(0, -20, 50, 30)
+        setTimeout(() => {
+          ctx.save();
+          ctx.translate(this.x, this.y)
+          ctx.rotate(this.angle)
+          ctx.fillRect(0, 20, 50, 30)
+          ctx.restore();
+        }, 500);
+        this.timer = GetTime();
+      }
+      ctx.restore();
+    }
+  }
+
+
+  function renderPath(x, y, path, color, xsize, ysize) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.transform(xsize / 10, 0, 0, ysize / 10, 160 - 10 * 16.5, 79 - xsize * 7.5);
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore()
+  }
+
+  function drawExclamationMark(x, y, size) {
+    ctx.fillStyle = "yellow"
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(x, y)
+    ctx.rotate(45 * (Math.PI / 180))
+    ctx.fillRect(0, 0, size / 2, size / 2)
+    ctx.restore();
+    ctx.beginPath();
+    ctx.fillRect(x - size / 4, y + size / 4, size / 2, size)
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(x, y + size * 1.5)
+    ctx.rotate(45 * (Math.PI / 180))
+    ctx.fillRect(0, 0, size / 2, size / 2)
+    ctx.restore();
+  }
+
+
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStrokeCircle(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function drawRect(x, y, height, width, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, height, width);
+  }
+
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+  function GetTime() {
+    return new Date().getTime()
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0]
+        callback()
+      }
+    }
+  }
+
+  effects.push(new abilityEffect())
+  window.requestAnimationFrame(update)
+</script>
