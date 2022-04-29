@@ -6,7 +6,7 @@
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
   <meta property="hpOn" label="HP Effects" type="boolean" default="1" />
 
-  <!-- <meta meter="inGameBlack" tags="rocket league" type="area" x="0.4974" y="0.0076" width="0.01"
+  <meta meter="inGameBlack" tags="rocket league" type="area" x="0.4974" y="0.0076" width="0.01"
     height=".0001" h="0-360" s="0-70" l="0-25">
   </meta>
   <meta meter="inGameBlue" tags="rocket league" type="area" x="0.9317" y="0.8528" width="0.01"
@@ -14,7 +14,7 @@
   </meta>
   <meta meter="inGameOrange" tags="rocket league" type="area" x="0.9317" y="0.8528" width="0.01"
   height=".0001" h="0-60" s="50-100" l="30-90">
-  </meta> -->
+  </meta>
   <meta meter="boost1" tags="rocket league" type="area" x="0.9313" y="0.9458" width="0.001"
   height=".0001" h="0-60" s="60-100" l="50-80">
   </meta>
@@ -36,6 +36,30 @@
   <meta meter="boost7" tags="rocket league" type="area" x="0.9688" y="0.7616" width="0.001"
   height=".0001" h="0-360" s="0-10" l="90-100">
   </meta>
+  <meta meter="ballCamB" tags="rocket league" type="area" x="0.0378" y="0.9319" width="0.001"
+  height=".0001" h="0-30" s="40-75" l="75-100">
+  </meta>
+  <meta meter="ballCamB2" tags="rocket league" type="area" x="0.0378" y="0.9319" width="0.001"
+  height=".0001" h="330-360" s="40-75" l="75-100">
+  </meta>
+  <meta meter="ballCamA" tags="rocket league" type="area" x="0.0875" y="0.9368" width="0.001"
+  height=".0001" h="0-30" s="40-75" l="75-100">
+  </meta>
+  <meta meter="ballCamA2" tags="rocket league" type="area" x="0.0875" y="0.9368" width="0.001"
+  height=".0001" h="330-360" s="40-75" l="75-100">
+  </meta>
+  <meta meter="win" tags="rocket league" type="area" x="0.9826" y="0.0382" width="0.002"
+  height=".001" h="0-360" s="0-10" l="90-100">
+  </meta>
+  <meta meter="scoreLeft" tags="rocket league" type="area" x="0.4352" y="0.0403" width="0.002"
+  height=".01" h="0-360" s="0-50" l="90-100">
+  </meta>
+  <meta meter="scoreRight" tags="rocket league" type="area" x="0.5642" y="0.0383" width="0.002"
+  height=".01" h="0-360" s="0-50" l="90-100">
+  </meta>
+  <meta meter="scoreBall" tags="rocket league" type="area" x="0.9845" y="0.0743" width="0.0012"
+  height=".005" h="0-50" s="0-100" l="0-100">
+  </meta>
 </head>
 
 <body style="margin: 0; padding: 0; background: #000;">
@@ -51,10 +75,48 @@
   var height = 200;
   var stateHdlr = new StateHandler();
   var effects = [];
+  var inGame = false;
+  var boostPushed = false;
+  var boostState = 1;
+  var oldBoostState = 1;
 
-  var InGameMeter = new Meter(25, inGameHandler);
+  var InGameBlackMeter = new Meter(15, inGameHandler);
+  var InGameBlueMeter = new Meter(15, inGameHandler);
+  var InGameOrangeMeter = new Meter(15, inGameHandler);
+  var Boost1Meter = new Meter(5, boostHandler);
+  var Boost2Meter = new Meter(5, boostHandler);
+  var Boost3Meter = new Meter(5, boostHandler);
+  var Boost4Meter = new Meter(5, boostHandler);
+  var Boost5Meter = new Meter(5, boostHandler);
+  var Boost6Meter = new Meter(5, boostHandler);
+  var Boost7Meter = new Meter(5, boostHandler);
+  var WinMeter = new Meter(5, inGameHandler);
+  var ScoreLeftMeter = new Meter(5, inGameHandler);
+  var ScoreRightMeter = new Meter(5, inGameHandler);
+  var ScoreBallMeter = new Meter(5, inGameHandler);
 
   function update() {
+
+    InGameBlackMeter.setValue(engine.vision.inGameBlack)
+    InGameBlueMeter.setValue(engine.vision.inGameBlue)
+    InGameOrangeMeter.setValue(engine.vision.inGameOrange)
+
+    if(inGame){
+      Boost1Meter.setValue(engine.vision.boost1)
+      Boost2Meter.setValue(engine.vision.boost2)
+      Boost3Meter.setValue(engine.vision.boost3)
+      Boost4Meter.setValue(engine.vision.boost4)
+      Boost5Meter.setValue(engine.vision.boost5)
+      Boost6Meter.setValue(engine.vision.boost6)
+      Boost7Meter.setValue(engine.vision.boost7)
+      WinMeter.setValue(engine.vision.win)
+      ScoreLeftMeter.setValue(engine.vision.scoreLeft)
+      ScoreRightMeter.setValue(engine.vision.scoreRight)
+      ScoreBallMeter.setValue(engine.vision.scoreBall)
+    }
+
+    ballCamHandler()
+
     drawRect(0, 0, 320, 200, "black");
 
     if (keyScreenBrightness > 0) {
@@ -73,7 +135,64 @@
   };
 
   function inGameHandler() {
+    if(InGameBlackMeter.value == 1 && (InGameBlueMeter.value == 1 || InGameOrangeMeter.value == 1)){
+      inGame = true;
+    } else {
+      effects = [];
+      inGame = false;
+    }
+  };
 
+  function ballCamHandler(){
+    if(engine.vision.ballCamB + engine.vision.ballCamB2 > .75 && engine.vision.ballCamA + engine.vision.ballCamA2 > .75){
+      console.log("IN BALL CAM")
+    } else {
+      console.log("NOT BALL CAM")
+    }
+  }
+
+  function boostHandler(){
+    if(Boost7Meter.value == 1){
+      console.log("Boost Stage 7")
+      boostState = 7;
+    } else if(Boost6Meter.value == 1){
+      console.log("Boost Stage 6")
+      boostState = 6;
+    } else if(Boost5Meter.value == 1){
+      console.log("Boost Stage 5")
+      boostState = 5;
+    } else if(Boost4Meter.value == 1){
+      console.log("Boost Stage 4")
+      boostState = 4;
+    } else if(Boost3Meter.value == 1){
+      console.log("Boost Stage 3")
+      boostState = 3;
+    } else if(Boost2Meter.value == 1){
+      console.log("Boost Stage 2")
+      boostState = 2;
+    } else if(Boost1Meter.value == 1){
+      console.log("Boost Stage 1")
+      boostState = 1;
+    } else {
+      console.log("No Boost")
+      boostState = 0;
+    }
+    if(boostState > oldBoostState){
+      console.log("Boost Up");
+    }
+    oldBoostState = boostState;
+  }
+
+  function winHandler(){
+    if(WinMeter.value == 1 && ScoreBallMeter.value == 1){
+      console.log("Win")
+    }
+  }
+
+  function scoreHandler(){
+    if(ScoreBallMeter.value == 1 && (ScoreLeftMeter.value == 1 || ScoreRightMeter.value == 1)){
+      console.log("Score Increase")
+    }
   }
 
   function renderPath(x, y, path, color) {
