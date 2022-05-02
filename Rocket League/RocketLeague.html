@@ -4,7 +4,13 @@
   <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
-  <meta property="hpOn" label="HP Effects" type="boolean" default="1" />
+  <meta property="boostColor" label="Boost Color" type="color" min="0" max="360" default="#FFFF00" />
+  <meta property="xPos" label="boost X-Position" type="number" min="0" max="320" default="160" />
+  <meta property="yPos" label="boost Y-position" type="number" min="0" max="200" default="100" />
+  <meta property="HUDStyle" label="HUD style" type="boolean" default="1" />
+  <meta property="HUDRadius" label="HUD size" type="number" min="1" max="200" default="50" />
+  <meta property="HUDHeight" label="HUD size" type="number" min="1" max="200" default="50" />
+  <meta property="HUDWidth" label="HUD size" type="number" min="1" max="320" default="320" />
 
   <meta meter="inGameBlack" tags="rocket league" type="area" x="0.4974" y="0.0076" width="0.01"
     height=".0001" h="0-360" s="0-70" l="0-25">
@@ -35,18 +41,6 @@
   </meta>
   <meta meter="boost7" tags="rocket league" type="area" x="0.9688" y="0.7616" width="0.001"
   height=".0001" h="0-360" s="0-10" l="90-100">
-  </meta>
-  <meta meter="ballCamB" tags="rocket league" type="area" x="0.0378" y="0.9319" width="0.001"
-  height=".0001" h="0-30" s="40-75" l="75-100">
-  </meta>
-  <meta meter="ballCamB2" tags="rocket league" type="area" x="0.0378" y="0.9319" width="0.001"
-  height=".0001" h="330-360" s="40-75" l="75-100">
-  </meta>
-  <meta meter="ballCamA" tags="rocket league" type="area" x="0.0875" y="0.9368" width="0.001"
-  height=".0001" h="0-30" s="40-75" l="75-100">
-  </meta>
-  <meta meter="ballCamA2" tags="rocket league" type="area" x="0.0875" y="0.9368" width="0.001"
-  height=".0001" h="330-360" s="40-75" l="75-100">
   </meta>
   <meta meter="win" tags="rocket league" type="area" x="0.9826" y="0.0382" width="0.002"
   height=".001" h="0-360" s="0-10" l="90-100">
@@ -79,6 +73,7 @@
   var boostPushed = false;
   var boostState = 1;
   var oldBoostState = 1;
+  var winPushed = false;
 
   var InGameBlackMeter = new Meter(15, inGameHandler);
   var InGameBlueMeter = new Meter(15, inGameHandler);
@@ -90,10 +85,10 @@
   var Boost5Meter = new Meter(5, boostHandler);
   var Boost6Meter = new Meter(5, boostHandler);
   var Boost7Meter = new Meter(5, boostHandler);
-  var WinMeter = new Meter(5, inGameHandler);
-  var ScoreLeftMeter = new Meter(5, inGameHandler);
-  var ScoreRightMeter = new Meter(5, inGameHandler);
-  var ScoreBallMeter = new Meter(5, inGameHandler);
+  var WinMeter = new Meter(5, winHandler);
+  var ScoreLeftMeter = new Meter(5, scoreHandler);
+  var ScoreRightMeter = new Meter(5, scoreHandler);
+  var ScoreBallMeter = new Meter(5, scoreHandler);
 
   function update() {
 
@@ -115,9 +110,7 @@
       ScoreBallMeter.setValue(engine.vision.scoreBall)
     }
 
-    ballCamHandler()
-
-    drawRect(0, 0, 320, 200, "black");
+    DrawRect(0, 0, 320, 200, "black");
 
     if (keyScreenBrightness > 0) {
       copyScreen(1);
@@ -135,63 +128,207 @@
   };
 
   function inGameHandler() {
-    if(InGameBlackMeter.value == 1 && (InGameBlueMeter.value == 1 || InGameOrangeMeter.value == 1)){
+    if(InGameBlackMeter.value > .9 && (InGameBlueMeter.value > .6 || InGameOrangeMeter.value > .6)){
       inGame = true;
     } else {
-      effects = [];
+      effects = []
+      boostPushed = false;
       inGame = false;
     }
   };
 
-  function ballCamHandler(){
-    if(engine.vision.ballCamB + engine.vision.ballCamB2 > .75 && engine.vision.ballCamA + engine.vision.ballCamA2 > .75){
-      console.log("IN BALL CAM")
-    } else {
-      console.log("NOT BALL CAM")
-    }
-  }
-
   function boostHandler(){
-    if(Boost7Meter.value == 1){
-      console.log("Boost Stage 7")
+    if(!boostPushed && inGame){
+      effects.push(new boostHUD(xPos, yPos, HUDRadius))
+      boostPushed = true;
+    }
+    if(Boost7Meter.value == 1 && Boost6Meter.value == 1){
       boostState = 7;
-    } else if(Boost6Meter.value == 1){
-      console.log("Boost Stage 6")
+    } else if(Boost6Meter.value == 1 && Boost5Meter.value == 1){
       boostState = 6;
-    } else if(Boost5Meter.value == 1){
-      console.log("Boost Stage 5")
+    } else if(Boost5Meter.value == 1 && Boost4Meter.value == 1){
       boostState = 5;
-    } else if(Boost4Meter.value == 1){
-      console.log("Boost Stage 4")
+    } else if(Boost4Meter.value == 1 && Boost3Meter.value == 1){
       boostState = 4;
-    } else if(Boost3Meter.value == 1){
-      console.log("Boost Stage 3")
+    } else if(Boost3Meter.value == 1 && Boost2Meter.value == 1){
       boostState = 3;
-    } else if(Boost2Meter.value == 1){
-      console.log("Boost Stage 2")
+    } else if(Boost2Meter.value == 1 && Boost1Meter.value == 1){
       boostState = 2;
     } else if(Boost1Meter.value == 1){
-      console.log("Boost Stage 1")
       boostState = 1;
     } else {
-      console.log("No Boost")
       boostState = 0;
     }
-    if(boostState > oldBoostState){
-      console.log("Boost Up");
+    if(boostState > oldBoostState && inGame){
+      effects.push(new boostUp(xPos, yPos))
     }
     oldBoostState = boostState;
   }
 
   function winHandler(){
-    if(WinMeter.value == 1 && ScoreBallMeter.value == 1){
-      console.log("Win")
+    if(WinMeter.value == 1 && ScoreBallMeter.value > .75 && !winPushed){
+      effects.push(new win())
+      winPushed = true;
     }
   }
 
   function scoreHandler(){
-    if(ScoreBallMeter.value == 1 && (ScoreLeftMeter.value == 1 || ScoreRightMeter.value == 1)){
-      console.log("Score Increase")
+    if(ScoreBallMeter.value > .75 && ScoreLeftMeter.value > .75){
+      effects.push(new score(true))
+    } else if (ScoreBallMeter.value > .75 && ScoreRightMeter.value > .75){
+      effects.push(new score(false))
+    }
+  }
+
+  function score(you){
+    this.type = you;
+    this.type ? this.x = 0 : this.x = 320;
+    this.y = 100;
+    this.lifetime = 10;
+    InGameBlueMeter.value > InGameOrangeMeter.value ? this.color = "blue" : this.color = "orange";
+    this.draw = function(){
+      DrawCircle(this.x, this.y, 50, "grey")
+      this.type ? this.x += 10 : this.x -= 10;
+      if(Math.abs(160 - this.x) <= 20){
+        for(let i = 0; i < 30; i++){
+          effects.push(new explosionParticle(160, 100, 10, this.color))
+        }
+      }
+      if(this.x > 350 || this.x < -20){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function explosionParticle(x, y, min, color) {
+    this.x = x;
+    this.y = y;
+    this.vx = Math.random() * -min + min / 2;
+    this.vy = Math.random() * -min + min / 2;
+    this.min = min;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function win(){
+    this.lifetime = 10;
+    this.start1 = Date.now();
+    this.start2 = Date.now();
+    this.effects = []
+    this.draw = function(){
+      var elapsed = Date.now() - this.start2;
+      var color = `hsl(${engine.audio.density * 320}, 100%, 50%)`
+      var level = 100 + engine.audio.level
+      if(level > 85 && elapsed > 100){
+        this.effects.push(new winStroke(160, 200, color))
+        this.start2 = Date.now()
+      }
+      this.effects.forEach((ele, i)=>{
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      });
+
+      if(Date.now() - this.start1 > 10000){
+        this.lifetime = 0;
+        winPushed = false;
+      }
+    }
+  }
+
+  function winStroke(x, y, color){
+    this.x = x; 
+    this.y = y;
+    this.color = color;
+    this.radius = 1;
+    this.alpha = 1;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawStroke(this.x, this.y, this.radius, this.color, 30)
+      ctx.globalAlpha = 1;
+      this.radius += 5;
+      this.radius > 100 ? this.alpha -= .05 : null;
+      this.alpha <= 0 ? this.lifetime = 0 : null;
+    }
+  }
+
+  function boostHUD(x, y, radius){
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.lifetime = 10;
+    this.draw = function(){
+      this.x = xPos;
+      this.y = yPos;
+      this.radius = HUDRadius
+        switch(boostState){
+          case 0:
+            HUDStyle ? DrawCircle(this.x, this.y, this.radius, `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 20 + 70}%)`) :
+            DrawRect(this.x, this.y, 320, 50, `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 20 + 70}%)`);
+            break;
+          case 7: 
+            var thisColor = hexToHSL(boostColor)
+            HUDStyle ? DrawCircle(this.x, this.y, this.radius, `hsl(${thisColor[0]}, 100%, ${Math.sin(Date.now() / 200) * 20 + 70}%)`) :
+            DrawRect(this.x, this.y, 320, 50, `hsl(${thisColor[0]}, 100%, ${Math.sin(Date.now() / 100) * 10 + 60}%)`);
+            break;
+          default:
+            if(HUDStyle){
+              var endAngle = -Math.PI / 2 + (Math.PI * 2 / 6) * boostState
+              ctx.fillStyle = boostColor;
+              ctx.beginPath();
+              ctx.moveTo(this.x, this.y);
+              ctx.arc(this.x, this.y, this.radius, -Math.PI / 2, endAngle);
+              ctx.closePath();
+              ctx.fill();
+            } else {
+              DrawRect(this.x, this.y, 320 / 7 * boostState, 50, boostColor)
+            }
+            break;
+        }
+        if(!inGame && Boost1Meter.value == 0){
+          this.lifetime = 0;
+          boostPushed = false;
+        }
+    }
+  }
+
+  function boostUp(x, y){
+    this.x = xPos;
+    this.y = yPos;
+    this.radius = 1;
+    this.width = HUDWidth;
+    this.height = HUDHeight;
+    this.lifetime = 10;
+    this.alpha = 1;
+    this.draw = function(){
+      if(HUDStyle){
+        DrawStroke(this.x, this.y, this.radius, "white", 30)
+        this.radius += 5;
+        if(this.radius > 200){
+          this.lifetime = 0;
+        }
+      } else {
+        ctx.globalAlpha = this.alpha;
+        DrawRect(this.x, this.y, this.width, this.height, "white")
+        ctx.globalAlpha = 1;
+        this.alpha-=.05;
+        this.x -= 5;
+        this.y -= 5;
+        this.width += 10;
+        this.height += 10;
+        if(this.alpha <= 0){
+          this.lifetime = 0;
+        }
+      }
     }
   }
 
@@ -219,7 +356,7 @@
     ctx.stroke();
   };
 
-  function drawRect(x, y, height, width, color) {
+  function DrawRect(x, y, height, width, color) {
     ctx.beginPath();
     ctx.fillStyle = color;
     ctx.fillRect(x, y, height, width);
@@ -250,8 +387,52 @@
 
       ctx.fillRect(iZx, iZy, iWidth, iHeight);
     }
-
   }
+
+  function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+      r = "0x" + H[1] + H[1];
+      g = "0x" + H[2] + H[2];
+      b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+      r = "0x" + H[1] + H[2];
+      g = "0x" + H[3] + H[4];
+      b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r,g,b),
+        cmax = Math.max(r,g,b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+
+    if (delta == 0)
+      h = 0;
+    else if (cmax == r)
+      h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+      h = (b - r) / delta + 2;
+    else
+      h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0)
+      h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return [h, s, l];
+} 
 
   function StateHandler() {
     var stack = [];

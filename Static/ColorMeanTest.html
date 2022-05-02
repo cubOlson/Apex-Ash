@@ -1,0 +1,152 @@
+<head>
+  <title>Colormean Unit Test</title>
+  <meta description="Crush all your oponents with this team fight tactics integration" />
+  <meta publisher="SignalRGB" />
+
+  <meta meter="avgColor" tags="VLC, league,teamfight" type="colormean" x="0.6385" y="0.5361" width="0.01" height ="0.01">
+  </meta>
+  <meta meter="areaColor" tags="VLC, league,teamfight" type="area" x="0.488" y="0.0435" width="0.01" height ="0.001" h="100-200"
+  s="50-100" l="50-100">
+</meta>
+<meta meter="linearColor" tags="VLC, league,teamfight" type="linear" x="0.5073" y="0.0157" width="0.01" h="0-60"
+s="80-100" l="25-100">
+</meta>
+<meta meter="OCRText" tags="VLC, league,teamfight" type="ocr_textmatch" x="0.0315" y="0.2685" width="0.04" height ="0.02" string="Debonair" confidence="70">
+</meta>
+<meta meter="OCRNum" tags="VLC, league,teamfight" type="ocr_numeric" x="0.4406" y="0.0111" width="0.008" height ="0.02" confidence="70">
+</meta>
+
+  
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var effects = [];
+
+
+  function update() {
+
+    DrawRect(0, 0, 320, 200, "white")
+
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "black"
+    ctx.fillText( "AREA " + engine.vision.areaColor, 10, 30);
+    ctx.fillText( "LINEAR " + engine.vision.linearColor, 10, 60);
+    ctx.fillText( "COLORMEAN " + engine.vision.avgColor, 10, 90);
+    ctx.fillText( "OCR_TEXT " + engine.vision.OCRText, 10, 120);
+    ctx.fillText( "OCR_NUM " + engine.vision.OCRNum, 10, 150);
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+
+    window.requestAnimationFrame(update);
+  };
+
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
+  }
+
+  function GetTime() {
+    return new Date().getTime()
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  window.requestAnimationFrame(update);
+</script>

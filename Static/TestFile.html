@@ -1,0 +1,268 @@
+<head>
+  <title>Test File</title>
+  <meta description="Crush all your oponents with this team fight tactics integration" />
+  <meta publisher="SignalRGB" />
+
+  <meta property="color" label="Color" type="color" min="0" max="360" default="#FF0000" />
+  <meta property="angle" label="ANGLE" type="number" min="0" max="7" default="5" />
+  <meta property="xPos" label="X" type="number" min="0" max="320" default="160" />
+  <meta property="yPos" label="Y" type="number" min="0" max="200" default="100" />
+  <meta property="HUDStyle" label="HUD style" type="boolean" default="1" />
+  
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var effects = [];
+
+
+  function update() {
+
+    DrawRect(0, 0, 320, 200, "black")
+
+    if(effects.length < 1){
+      effects.push(new score(true))
+    }
+
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+
+    window.requestAnimationFrame(update);
+  };
+
+  function score(you){
+    this.type = you;
+    this.type ? this.x = 0 : this.x = 320;
+    this.y = 100;
+    this.lifetime = 10;
+    HUDStyle ? this.color = "blue" : this.color = "orange";
+    this.draw = function(){
+      DrawCircle(this.x, this.y, 50, "grey")
+      this.type ? this.x += 10 : this.x -= 10;
+      if(Math.abs(160 - this.x) <= 20){
+        for(let i = 0; i < 30; i++){
+          effects.push(new explosionParticle(160, 100, 10, this.color))
+        }
+      }
+      if(this.x > 350 || this.x < -20){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function explosionParticle(x, y, min, color) {
+    this.x = x;
+    this.y = y;
+    this.vx = Math.random() * -min + min / 2;
+    this.vy = Math.random() * -min + min / 2;
+    this.min = min;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function DrawPath(x, y, path, color) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  };
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
+
+  function DrawHex(x, y, color, size) {
+    ctx.beginPath();
+    for (var i = 0; i < 7; i++) {
+      ctx.lineTo(x + size * Math.cos(2 * Math.PI / 6 * i), y + size * 0.9 * Math.sin(2 * Math.PI / 6 * i));
+    }
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = "black"
+    ctx.stroke()
+  };
+
+  function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  function hexToHSL(H) {
+  // Convert hex to RGB first
+  let r = 0, g = 0, b = 0;
+  if (H.length == 4) {
+    r = "0x" + H[1] + H[1];
+    g = "0x" + H[2] + H[2];
+    b = "0x" + H[3] + H[3];
+  } else if (H.length == 7) {
+    r = "0x" + H[1] + H[2];
+    g = "0x" + H[3] + H[4];
+    b = "0x" + H[5] + H[6];
+  }
+  // Then to HSL
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  let cmin = Math.min(r,g,b),
+      cmax = Math.max(r,g,b),
+      delta = cmax - cmin,
+      h = 0,
+      s = 0,
+      l = 0;
+
+  if (delta == 0)
+    h = 0;
+  else if (cmax == r)
+    h = ((g - b) / delta) % 6;
+  else if (cmax == g)
+    h = (b - r) / delta + 2;
+  else
+    h = (r - g) / delta + 4;
+
+  h = Math.round(h * 60);
+
+  if (h < 0)
+    h += 360;
+
+  l = (cmax + cmin) / 2;
+  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+  s = +(s * 100).toFixed(1);
+  l = +(l * 100).toFixed(1);
+
+  return [h, s, l];
+}
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
+  }
+
+  function GetTime() {
+    return new Date().getTime()
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  window.requestAnimationFrame(update);
+</script>
