@@ -1,18 +1,22 @@
 <head>
-  <title>Lightsaber Test</title>
-  <meta description="Basic Effects" />
-  <meta publisher="SignalRgb" />
+  <title>Lightsaber Duel</title>
+  <meta description="May the 4th be with you." />
+  <meta publisher="SignalRGB" />
 
+  <meta property="colorMode" label="Color Mode" type="combobox"
+    values="Single Color,Gradient,Color Cycle" default="Single Color" />
+  <meta property="saber1" label="Lightsaber 1 Color" type="color" min="0" max="360" default="#FF0000" />
+  <meta property="saber2" label="Lightsaber 2 Color" type="color" min="0" max="360" default="#0000FF" />
+  <meta property="grad1" label="Gradient 1 Color" type="color" min="0" max="360" default="#0000FF" />
+  <meta property="grad2" label="Gradient 2 Color" type="color" min="0" max="360" default="#FF0000" />
+  <meta property="swordStyle" label="Sword style" type="boolean" default="0" />
+  <meta property="hitFlash" label="Hit flash" type="boolean" default="0" />
+  <meta property="backgroundFade" label="Background fade" type="number" min="0" max="100" default="100" />
+  <meta property="speed" label="Lightsaber Speed" type="number" min="0" max="100" default="50" />
   <meta property="scaleX" label="Horizontal Scaling" type="number" min="0" max="100" default="50" />
   <meta property="scaleY" label="Vertical Scaling" type="number" min="0" max="100" default="50" />
   <meta property="posX" label="Horizontal Positioning" type="number" min="0" max="100" default="50" />
   <meta property="posY" label="Vertical Positioning" type="number" min="0" max="100" default="50" />
-  <meta property="backgroundFade" label="Background fade" type="number" min="0" max="100" default="100" />
-  <meta property="hitFlash" label="Hit flash" type="boolean" default="0" />
-  <meta property="swordStyle" label="Sword style" type="boolean" default="0" />
-  <meta property="speed" label="Lightsaber Speed" type="number" min="0" max="100" default="50" />
-  <meta property="saber1" label="Lightsaber 1 Color" type="color" min="0" max="360" default="#FF0000" />
-  <meta property="saber2" label="Lightsaber 2 Color" type="color" min="0" max="360" default="#0000FF" />
 
 </head>
 
@@ -26,6 +30,7 @@
   var effects = [];
   var moveset = [slash1, slash2, stab1, stab2, feint1]
   var old = 0;
+  var cycleColor = 0;
   var start = Date.now()
 
   function update() {
@@ -35,7 +40,7 @@
       // effects.push(new feint1(saber1, saber2))
       var index = Math.floor(Math.random() * 3.99);
       index == old ? index >= moveset.length - 1 ? index-- : index++ : null;
-      effects.push(new moveset[index](saber1, saber2))
+      effects.push(new moveset[index](saber1, saber2, grad1, grad2))
       old = index;
     }
 
@@ -63,10 +68,10 @@
     window.requestAnimationFrame(update);
   }
 
-  function slash1(color1, color2) {
+  function slash1(color1, color2, color3, color4) {
     this.elapsed = 0;
-    this.light1 = new lightsaber(80, 140, color1, 0);
-    this.light2 = new lightsaber(200, 140, color2, 0);
+    this.light1 = new lightsaber(80, 140, color1, color3, 0);
+    this.light2 = new lightsaber(200, 140, color2, color4, 0);
     this.lifetime = 10;
     this.count = 0;
     this.draw = function () {
@@ -129,10 +134,10 @@
     }
   };
 
-  function slash2(color1, color2) {
+  function slash2(color1, color2, color3, color4) {
     this.elapsed = 0;
-    this.light1 = new lightsaber(80, 140, color1, 0);
-    this.light2 = new lightsaber(200, 140, color2, 0);
+    this.light1 = new lightsaber(80, 140, color1, color3, 0);
+    this.light2 = new lightsaber(200, 140, color2, color4, 0);
     this.lifetime = 10;
     this.count = 0;
     this.draw = function () {
@@ -197,10 +202,10 @@
     }
   };
 
-  function feint1(color1, color2) {
+  function feint1(color1, color2, color3, color4) {
     this.elapsed = 0;
-    this.light1 = new lightsaber(80, 140, color1, 0);
-    this.light2 = new lightsaber(200, 140, color2, 0);
+    this.light1 = new lightsaber(80, 140, color1, color3, 0);
+    this.light2 = new lightsaber(200, 140, color2, color4, 0);
     this.lifetime = 10;
     this.count = 0;
     this.draw = function () {
@@ -237,10 +242,10 @@
     }
   };
 
-  function stab1(color1, color2) {
+  function stab1(color1, color2, color3, color4) {
     this.elapsed = 0;
-    this.light1 = new lightsaber(80, 140, color1, 0);
-    this.light2 = new lightsaber(200, 140, color2, 0);
+    this.light1 = new lightsaber(80, 140, color1, color3, 0);
+    this.light2 = new lightsaber(200, 140, color2, color4, 0);
     this.lifetime = 10;
     this.count = 0;
     this.draw = function () {
@@ -307,10 +312,10 @@
     }
   };
 
-  function stab2(color1, color2) {
+  function stab2(color1, color2, color3, color4) {
     this.elapsed = 0;
-    this.light1 = new lightsaber(80, 140, color1, 0);
-    this.light2 = new lightsaber(200, 140, color2, 0);
+    this.light1 = new lightsaber(80, 140, color1, color3, 0);
+    this.light2 = new lightsaber(200, 140, color2, color4, 0);
     this.lifetime = 10;
     this.count = 0;
     this.draw = function () {
@@ -392,10 +397,12 @@
     }
   };
 
-  function lightsaber(x, y, color, rotation) {
+  function lightsaber(x, y, color1, color2, rotation) {
     this.x = x;
     this.y = y;
-    this.color = color;
+    this.c1 = color1;
+    this.c2 = color2;
+    this.color = color1;
     this.rotation = rotation;
     this.rotate = 0;
     this.draw = function () {
@@ -403,15 +410,24 @@
       ctx.translate(this.x + 20, this.y);
       ctx.rotate(this.rotate);
       ctx.translate(-this.x - 20, -this.y);
+      if(colorMode == "Single Color"){
+        this.color = color1
+      } else if(colorMode == "Gradient"){
+        this.color = ctx.createLinearGradient(this.x, this.y, 110, 0)
+        this.color.addColorStop(0, this.c1);
+        this.color.addColorStop(.5, this.c2);
+      } else if (colorMode == "Color Cycle"){
+        cycleColor++;
+      }
       ctx.globalAlpha = Math.abs(Math.sin(Date.now() / 10))
       if (swordStyle) {
-        DrawRect(this.x, this.y, 40, -110, this.color);
-        DrawCircle(this.x + 20, this.y - 110, 20, this.color)
+        DrawRect(this.x, this.y, 40, -110, colorMode == "Color Cycle" ? `hsl(${cycleColor}, 100%, 50%)` : this.color);
+        DrawCircle(this.x + 20, this.y - 110, 20, colorMode == "Gradient" ? this.c2 : colorMode == "Color Cycle" ? `hsl(${cycleColor}, 100%, 50%)` : this.color)
       }
 
       ctx.globalAlpha = 1;
-      DrawRect(this.x + 12.5, this.y, 15, -100, swordStyle ? "white" : `${this.color}`);
-      DrawCircle(this.x + 20.5, this.y - 100, 7.5, swordStyle ? "white" : `${this.color}`)
+      DrawRect(this.x + 12.5, this.y, 15, -100, swordStyle ? "white" : colorMode == "Color Cycle" ? `hsl(${cycleColor}, 100%, 50%)` : this.color);
+      DrawCircle(this.x + 20.5, this.y - 100, 7.5, swordStyle ? "white" : colorMode == "Color Cycle" ? `hsl(${cycleColor}, 100%, 50%)` : this.color)
       ctx.restore();
       this.rotate += this.rotation;
     }
@@ -485,6 +501,51 @@
       b: parseInt(result[3], 16)
     } : null;
   }
+
+  function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+      r = "0x" + H[1] + H[1];
+      g = "0x" + H[2] + H[2];
+      b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+      r = "0x" + H[1] + H[2];
+      g = "0x" + H[3] + H[4];
+      b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r,g,b),
+        cmax = Math.max(r,g,b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+
+    if (delta == 0)
+      h = 0;
+    else if (cmax == r)
+      h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+      h = (b - r) / delta + 2;
+    else
+      h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0)
+      h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return [h, s, l];
+} 
 
   window.requestAnimationFrame(update);
 </script>

@@ -29,7 +29,7 @@
     DrawRect(0, 0, 320, 200, "black")
 
     if(effects.length < 1){
-      effects.push(new score(true))
+      effects.push(new search())
     }
 
 
@@ -43,39 +43,45 @@
     window.requestAnimationFrame(update);
   };
 
-  function score(you){
-    this.type = you;
-    this.type ? this.x = 0 : this.x = 320;
-    this.y = 100;
+  function search(){
     this.lifetime = 10;
-    HUDStyle ? this.color = "blue" : this.color = "orange";
+    this.effects = [];
     this.draw = function(){
-      DrawCircle(this.x, this.y, 50, "grey")
-      this.type ? this.x += 10 : this.x -= 10;
-      if(Math.abs(160 - this.x) <= 20){
-        for(let i = 0; i < 30; i++){
-          effects.push(new explosionParticle(160, 100, 10, this.color))
+      DrawRect(0, 0, 320, 200, "black")
+      DrawHex(160, 100, "cyan", 70)
+      if(this.effects.length < 2){
+        this.effects.push(new arrow(195, 100, "right", 70, 30, 2, "cyan"))
+        this.effects.push(new arrow(125, 100, "left", 70, 30, 2, "cyan"))
+      }
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          this.effects.splice(i, 1)
         }
-      }
-      if(this.x > 350 || this.x < -20){
-        this.lifetime = 0;
-      }
+      });
     }
   }
 
-  function explosionParticle(x, y, min, color) {
+  function arrow(x, y, direction, size, stroke, speed, color){
     this.x = x;
     this.y = y;
-    this.vx = Math.random() * -min + min / 2;
-    this.vy = Math.random() * -min + min / 2;
-    this.min = min;
+    this.direction = direction;
+    this.size = size;
+    this.stroke = stroke;
+    this.speed = speed;
     this.color = color;
-    this.lifetime = 10;
-    this.draw = function () {
-      DrawCircle(this.x, this.y, Math.random() * 10 + 10, this.color)
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x > 320 || this.x < 0 || this.y > 200 || this.y < 0) {
+    this.draw = function(){
+      var firstX = this.direction == "left" ? this.x + this.size : this.x - this.size;
+      var secondX = this.direction == "left" ? this.x + this.size : this.x - this.size;
+      ctx.beginPath();
+      ctx.moveTo(firstX, this.y - this.size)
+      ctx.lineTo(this.x, this.y)
+      ctx.lineTo(secondX, this.y + this.size)
+      ctx.lineWidth = this.stroke;
+      ctx.strokeStyle = this.color
+      ctx.stroke()
+      this.direction == "left" ? this.x -= this.speed : this.x += this.speed;
+      if(this.x > 370 || this.x < -50){
         this.lifetime = 0;
       }
     }
