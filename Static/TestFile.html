@@ -26,10 +26,10 @@
 
   function update() {
 
-    DrawRect(0, 0, 320, 200, "black")
+    DrawRect(0, 0, 320, 200, "grey")
 
     if(effects.length < 1){
-      effects.push(new search())
+      effects.push(new FadeX())
     }
 
 
@@ -43,47 +43,54 @@
     window.requestAnimationFrame(update);
   };
 
-  function search(){
-    this.lifetime = 10;
-    this.effects = [];
+  function FadeX(){
+    this.start = Date.now()
+    this.lifetime = 160;
+    this.y = 200;
+    this.alpha = 0;
+    this.count = 0;
+    this.effects = []
     this.draw = function(){
-      DrawRect(0, 0, 320, 200, "black")
-      DrawHex(160, 100, "cyan", 70)
-      if(this.effects.length < 2){
-        this.effects.push(new arrow(195, 100, "right", 70, 30, 2, "cyan"))
-        this.effects.push(new arrow(125, 100, "left", 70, 30, 2, "cyan"))
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, this.y, 320, 200, "black");
+      ctx.globalAlpha = 1;
+      if(this.count < 150){
+        this.y > 0 ? this.y -= 10 : this.y = 0;
+        this.alpha < 1 ? this.alpha += .05 : this.alpha = 1;
+        this.effects.push(new fadeXParticle())
+        this.effects.push(new fadeXParticle())
+        this.count++;
+      } else {
+        this.y >= -200 ? this.y -= 10 : this.y = 0;
+        this.alpha > 0 ? this.alpha -= .05 : this.alpha = 0;
       }
       this.effects.forEach((ele, i) => {
-        ele.draw();
+        ele.draw()
         if(ele.lifetime <= 0){
           this.effects.splice(i, 1)
         }
-      });
+      })
+      if(this.count == 150 && this.y <= -160){
+        this.lifetime = 0;
+      }
     }
   }
 
-  function arrow(x, y, direction, size, stroke, speed, color){
-    this.x = x;
-    this.y = y;
-    this.direction = direction;
-    this.size = size;
-    this.stroke = stroke;
-    this.speed = speed;
-    this.color = color;
+  function fadeXParticle(){
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.radius = Math.random() * 25 + 1;
+    this.alpha = .6;
+    this.lifetime = 10;
     this.draw = function(){
-      var firstX = this.direction == "left" ? this.x + this.size : this.x - this.size;
-      var secondX = this.direction == "left" ? this.x + this.size : this.x - this.size;
-      ctx.beginPath();
-      ctx.moveTo(firstX, this.y - this.size)
-      ctx.lineTo(this.x, this.y)
-      ctx.lineTo(secondX, this.y + this.size)
-      ctx.lineWidth = this.stroke;
-      ctx.strokeStyle = this.color
-      ctx.stroke()
-      this.direction == "left" ? this.x -= this.speed : this.x += this.speed;
-      if(this.x > 370 || this.x < -50){
-        this.lifetime = 0;
-      }
+      var vx = Math.random() * 30 - 15
+      var vy = Math.random() * 30 - 15
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(this.x, this.y, this.radius, "rgb(25, 25, 50)");
+      ctx.globalAlpha = 1;
+      this.alpha > 0 ? this.alpha -=.01 : this.lifetime = 0;
+      this.x += vx;
+      this.y += vy;
     }
   }
 
@@ -94,6 +101,16 @@
     let ex = new Path2D(path);
     ctx.fill(ex);
     ctx.restore();
+  };
+
+  function DrawTriangle(cord1X, cord1Y, cord2X, cord2Y, cord3X, cord3Y, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.moveTo(cord1X, cord1Y);
+    ctx.lineTo(cord2X, cord2Y);
+    ctx.lineTo(cord3X, cord3Y);
+    ctx.lineTo(cord1X, cord1Y);
+    ctx.fill();
   };
 
   function DrawCircle(x, y, radius, color) {

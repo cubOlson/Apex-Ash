@@ -4,13 +4,18 @@
   <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="boostOn" label="Boost Effects" type="boolean" default="1" />
+  <meta property="goalOn" label="Goal Effects" type="boolean" default="1" />
+  <meta property="endGameOn" label="End Game Effects" type="boolean" default="1" />
+  <meta property="searchOn" label="Search Effects" type="boolean" default="1" />
+  <meta property="adjustHUD" label="Adjust Boost HUD" type="boolean" default="0" />
   <meta property="boostColor" label="Boost Color" type="color" min="0" max="360" default="#FFFF00" />
   <meta property="xPos" label="boost X-Position" type="number" min="0" max="320" default="160" />
   <meta property="yPos" label="boost Y-position" type="number" min="0" max="200" default="100" />
   <meta property="HUDStyle" label="HUD style" type="boolean" default="1" />
-  <meta property="HUDRadius" label="HUD size" type="number" min="1" max="200" default="50" />
-  <meta property="HUDHeight" label="HUD size" type="number" min="1" max="200" default="50" />
-  <meta property="HUDWidth" label="HUD size" type="number" min="1" max="320" default="320" />
+  <meta property="HUDRadius" label="HUD radius (circle)" type="number" min="1" max="200" default="50" />
+  <meta property="HUDHeight" label="HUD height (rectangle)" type="number" min="1" max="200" default="50" />
+  <meta property="HUDWidth" label="HUD width (rectangle)" type="number" min="1" max="320" default="320" />
 
   <meta meter="inGameBlack" tags="rocket league" type="area" x="0.4974" y="0.0139" width="0.005"
     height=".0001" h="0-360" s="0-85" l="0-25">
@@ -73,11 +78,11 @@
     <resolution size="3440x1440" x="0.9785" y="0.0403" width="0.0001" height=".1" />
   </meta>
   <meta meter="searchingMid" tags="rocket league" type="linear" x="0.4797" y="0.6306" width="0.01"
-  h="180-225" s="0-100" l="0-100">
+  h="180-225" s="40-75" l="75-100">
     <resolution size="3440x1440" x="0.4892" y="0.6306" width="0.01" />
   </meta>
   <meta meter="searchingBot" tags="rocket league" type="linear" x="0.4448" y="0.9672" width="0.01"
-  h="180-225" s="25-50" l="50-75">
+  h="180-225" s="25-60" l="50-75">
     <resolution size="3440x1440" x="0.4625" y="0.9667" width="0.01" />
   </meta>
 </head>
@@ -106,13 +111,13 @@
   var InGameWhiteMeter = new Meter(15, inGameHandler);
   var InGameBlueMeter = new Meter(15, inGameHandler);
   var InGameOrangeMeter = new Meter(15, inGameHandler);
-  var Boost1Meter = new Meter(10, boostHandler);
-  var Boost2Meter = new Meter(10, boostHandler);
-  var Boost3Meter = new Meter(10, boostHandler);
-  var Boost4Meter = new Meter(10, boostHandler);
-  var Boost5Meter = new Meter(10, boostHandler);
-  var Boost6Meter = new Meter(10, boostHandler);
-  var Boost7Meter = new Meter(10, boostHandler);
+  var Boost1Meter = new Meter(5, boostHandler);
+  var Boost2Meter = new Meter(5, boostHandler);
+  var Boost3Meter = new Meter(5, boostHandler);
+  var Boost4Meter = new Meter(5, boostHandler);
+  var Boost5Meter = new Meter(5, boostHandler);
+  var Boost6Meter = new Meter(5, boostHandler);
+  var Boost7Meter = new Meter(5, boostHandler);
   var WinMeter = new Meter(10, winHandler);
   var ScoreLeftMeter = new Meter(5, scoreHandler);
   var ScoreRightMeter = new Meter(5, scoreHandler);
@@ -156,6 +161,14 @@
       }
     };
 
+    if(adjustHUD){
+      if(HUDStyle){
+        DrawCircle(xPos, yPos, HUDRadius, boostColor)
+      } else {
+        DrawRect(xPos, yPos, HUDWidth, HUDHeight, boostColor)
+      }
+    }
+
     stateHdlr.Process();
     window.requestAnimationFrame(update);
   };
@@ -170,7 +183,7 @@
   };
 
   function boostHandler(){
-    if(!boostPushed && inGame){
+    if(!boostPushed && inGame && boostOn){
       effects.push(new boostHUD(xPos, yPos, HUDRadius))
       boostPushed = true;
     }
@@ -191,21 +204,21 @@
     } else {
       boostState = 0;
     }
-    if(boostState > oldBoostState && inGame){
+    if(boostState > oldBoostState && inGame && boostOn){
       effects.push(new boostUp(xPos, yPos))
     }
     oldBoostState = boostState;
   }
 
   function winHandler(){
-    if(WinMeter.value == 1 && ScoreBallMeter.value > .5 && !winPushed){
+    if(WinMeter.value == 1 && ScoreBallMeter.value > .5 && !winPushed && endGameOn){
       effects.push(new gameEnd())
       winPushed = true;
     }
   }
 
   function scoreHandler(){
-    if(ScoreBallMeter.value > .1 && ScoreLeftMeter.value > .75){
+    if(ScoreBallMeter.value > .1 && ScoreLeftMeter.value > .75 && goalOn){
       effects.push(new score(true))
     } else if (ScoreBallMeter.value > .1 && ScoreRightMeter.value > .75){
       effects.push(new score(false))
@@ -213,7 +226,7 @@
   }
 
   function searchHandler(){
-    if(SearchingBotMeter.value == 1 && SearchingMidMeter.value == 1 && !searchPushed){
+    if(SearchingBotMeter.value == 1 && SearchingMidMeter.value == 1 && !searchPushed && searchOn){
       effects.push(new search())
       searchPushed = true
     }
@@ -235,7 +248,7 @@
           this.effects.splice(i, 1)
         }
       });
-      if(SearchingBotMeter.value < .75 || SearchingMidMeter.value < .75){
+      if(SearchingBotMeter.value < .75 || SearchingMidMeter.value < .75 || !searchOn){
           this.lifetime = 0
           searchPushed = false
       }
@@ -331,7 +344,7 @@
         }
       });
 
-      if(Date.now() - this.start1 > 15000){
+      if(Date.now() - this.start1 > 15000 || !endGameOn){
         this.lifetime = 0;
         winPushed = false;
       }
@@ -387,7 +400,7 @@
             }
             break;
         }
-        if(!inGame){
+        if(!inGame || !boostOn){
           this.lifetime = 0;
           boostPushed = false;
         }
