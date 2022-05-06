@@ -1,0 +1,340 @@
+<head>
+  <title>Overwatch 2</title>
+  <meta description="Effects for Overwatch 2" />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+
+  <meta meter="healthBlue" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
+    h="192-212" s="46-76" l="88-100">
+  </meta>
+
+  <meta meter="healthGreen" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
+    h="100-120" s="50-90" l="70-100">
+  </meta>
+
+  <meta meter="healthWhite" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
+    h="0-360" s="0-30" l="88-100">
+  </meta>
+
+  <meta meter="healthYellow" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
+    h="0-360" s="0-30" l="88-100">
+  </meta>
+
+  <meta meter="firstHealthWhite" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8813" width=".0.001" height="0.0001"
+    h="0-360" s="0-30" l="88-100">
+  </meta>
+
+
+  <meta meter="changeHero" tags="VLC,Overwatch" type="area" x="0.4863" y="0.9139" width="0.01" height="0.001" h="13-33"
+    s="72-100" l="69-99">
+  </meta>
+
+  <meta meter="changeHeroWhite" tags="VLC,Overwatch" type="area" x="0.9441" y="0.9396" width="0.001" height="0.001"
+    h="0-360" s="0-30" l="80-100">
+  </meta>
+
+  <meta meter="InGameWhite" tags="VLC,Overwatch" type="area" x="0.0465" y="0.9563" width="0.001" height="0.001"
+    h="0-360" s="0-30" l="80-100">
+  </meta>
+
+  <meta meter="InGameBlue" tags="VLC,Overwatch" type="area" x="0.0762" y="0.9292" width="0.001" height="0.001"
+    h="183-203" s="21-100" l="32-100">
+  </meta>
+
+
+
+
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  canvas = document.getElementById('exCanvas');
+  ctx = canvas.getContext('2d');
+  var width = 320;
+  var height = 200;
+  var stateHdlr = new StateHandler();
+  var effects = [];
+  var healthWhiteMeter = new Meter(20, () => "")
+  var healthBlueMeter = new Meter(20, () => "")
+  var healthWhiteHUDMeter = new Meter(3, () => "")
+  var healthBlueHUDMeter = new Meter(3, () => "")
+  var healthYellowHUDMeter = new Meter(3, () => "")
+  var healthGreenMeter = new Meter(3, () => "")
+  var heroChangeMeter = new Meter(25, ChangeMaxHealth)
+  var heroChangeMeterWhite = new Meter(25, ChangeMaxHealth)
+  var InGameWhiteMeter = new Meter(35, GameChanged)
+  var InGameBlueMeter = new Meter(35, GameChanged)
+  var changeMaxHealth = false;
+  var inGame = false;
+  var isJumping = false;
+  var maxHealthValue = 0;
+  var healthWhiteAmount = 0;
+  var healthBlueAmount = 0;
+
+  function update() {
+
+    if (inGame) {
+      if ((engine.vision.InGameWhite == 0 || engine.vision.InGameBlue == 0 || engine.vision.firstHealthWhite == 0) && !isJumping) {
+        isJumping = true;
+        console.log("jump")
+        CheckJump();
+      }
+    }
+
+
+    if (maxHealthValue == 0) {
+      CalculateMaxValue();
+
+    }
+
+    copyScreen(1);
+    healthWhiteMeter.setValue(engine.vision.healthWhite)
+    healthBlueMeter.setValue(engine.vision.healthBlue)
+    healthWhiteHUDMeter.setValue(engine.vision.healthWhite)
+    healthBlueHUDMeter.setValue(engine.vision.healthBlue)
+    healthGreenMeter.setValue(engine.vision.healthGreen)
+    InGameBlueMeter.setValue(engine.vision.InGameBlue)
+    InGameWhiteMeter.setValue(engine.vision.InGameWhite)
+    heroChangeMeter.setValue(engine.vision.changeHero)
+    heroChangeMeterWhite.setValue(engine.vision.changeHeroWhite)
+
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    };
+    stateHdlr.Process();
+    DrawHud()
+    window.requestAnimationFrame(update);
+  };
+
+
+  function CheckJump() {
+    setTimeout(() => {
+      if (engine.vision.InGameWhite == 1) {
+        isJumping = false;
+      } else {
+        CheckJump();
+      }
+    }, 500
+    );
+  }
+
+  function DrawHud() {
+
+    var healthWidth = maxHealthValue * 320;
+    let newWhiteValue
+    let newBlueValue
+    let totalWidth
+    if (healthGreenMeter.value < 0.01) {
+      newWhiteValue = healthWhiteHUDMeter.value * healthWidth;
+      newBlueValue = healthBlueHUDMeter.value * healthWidth;
+      totalWidth = newWhiteValue + newBlueValue;
+    }
+
+    console.log(newWhiteValue + newBlueValue)
+
+
+    if (newWhiteValue + newBlueValue > 330) {
+      CalculateMaxValue();
+      console.log("Loop" + Math.random())
+    }
+
+    if (!isJumping && healthGreenMeter.value < 0.01) {
+      if (Math.abs(newWhiteValue - healthWhiteAmount) > 15 || healthWhiteHUDMeter.value == 0 || totalWidth > 320) {
+        healthWhiteAmount = newWhiteValue;
+      }
+      if (Math.abs(newBlueValue - healthBlueAmount) > 15 || healthBlueHUDMeter.value == 0 || totalWidth > 320) {
+        healthBlueAmount = newBlueValue
+      }
+    }
+
+    ctx.beginPath();
+    ctx.fillStyle = "Red";
+
+    ctx.fillRect(0, 80, healthWhiteAmount, 40);
+    ctx.fillStyle = "blue"
+
+    ctx.fillRect(healthWhiteAmount, 80, healthBlueAmount, 40);
+
+
+  }
+
+  function ChangeMaxHealth() {
+    if (heroChangeMeter.value == 1) {
+      changeMaxHealth = true;
+      console.log(changeMaxHealth);
+    }
+  }
+
+
+
+
+
+  //callbacks
+
+  function CalculateMaxValue() {
+    if (!isJumping && inGame) {
+      maxHealthValue = 2 - (healthWhiteMeter.value + healthBlueMeter.value)
+      if (maxHealthValue == 2) {
+        maxHealthValue = 0
+      }
+      console.log("MaxHealth = " + maxHealthValue);
+      changeMaxHealth = false;
+
+    } else {
+
+      setTimeout(() => {
+        CalculateMaxValue();
+      }, 500);
+    }
+  }
+
+
+
+  function GameChanged() {
+    if (InGameBlueMeter.value == 1 && InGameWhiteMeter.value == 1) {
+      inGame = true;
+      if (changeMaxHealth == true) {
+        setTimeout(() => {
+          CalculateMaxValue();
+        }, 300);
+      }
+    } else {
+      inGame = false;
+    }
+  }
+
+
+
+  function renderPath(x, y, path, color, xsize, ysize) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.transform(xsize / 10, 0, 0, ysize / 10, 160 - 10 * 16.5, 79 - xsize * 7.5);
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore()
+  }
+
+
+
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStrokeCircle(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function drawRect(x, y, height, width, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, height, width);
+  }
+
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+  function GetTime() {
+    return new Date().getTime()
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(size, callback) {
+    this.size = size;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+      if (this.value !== values[0]) {
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0]
+        callback()
+      }
+    }
+  }
+
+  window.requestAnimationFrame(update)
+</script>
