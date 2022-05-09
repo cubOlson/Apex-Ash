@@ -223,7 +223,7 @@
 
   function VictoryChanged() {
     if (victoryMeter.value == 2) {
-      console.log("Play victory effect")
+      effects.push(new VictoryEffect())
     }
   }
 
@@ -354,6 +354,58 @@
     }
   }
 
+  function VictoryEffect() {
+    this.elapsed;
+    this.drops = [];
+    this.start = GetTime();
+    this.spawnval = 0;
+    effects.push(new FadeInOut("in"))
+    this.drops.push(new victoryDrip((Math.random() - 0.6) * 360, 300, 45, this.sizeVal * 50, `hsla(${5 + Math.random() * 70},100%,50%,${1 - (this.sizeVal / 3)})`));
+
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed > 700 && this.drops.length > 0) {
+        ctx.fillStyle = "black"
+        ctx.fillRect(0, 0, 320, 200)
+        if (this.spawnval == 2 && this.elapsed < 6000) {
+          this.sizeVal = Math.random()
+          this.drops.push(new victoryDrip((Math.random() - 0.6) * 360, 300, 45, this.sizeVal * 50, `hsla(${5 + Math.random() * 70},100%,50%,${1 - (this.sizeVal / 3)})`));
+          this.spawnval = 0;
+        }
+        this.drops.forEach((drip, i) => {
+          drip.draw();
+          if (drip.x > 450 || drip.y < -150) {
+            this.drops.splice(i, 1);
+
+          }
+        });
+        this.spawnval += 1;
+        if (this.drops.length == 1 && this.elapsed > 2000) {
+          effects.push(new FadeInOut("out"))
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function FadeInOut(inOrOut) {
+    this.start = GetTime();
+    this.x = inOrOut == "in" ? -600 : 0;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.fillStyle = "black";
+      ctx.fillRect(this.x, 0, 600, 200)
+      this.x += 20;
+      if (this.elapsed > 700) {
+        this.lifetime = 0;
+      }
+    }
+
+
+
+
+  }
+
 
 
   function renderPath(x, y, path, color, xsize, ysize) {
@@ -364,6 +416,33 @@
     let ex = new Path2D(path);
     ctx.fill(ex);
     ctx.restore()
+  }
+
+
+  class victoryDrip {
+    constructor(x, y, rotation, size, col) {
+      this.x = x;
+      this.y = y;
+      this.rotation = rotation * Math.PI / 180;
+      this.size = size;
+      this.speed = (60 - (this.size / 2)) / 10;
+      this.color = col;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+
+      ctx.save();
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.rotation)
+      ctx.ellipse(0, 0, this.size, this.size * 2, 0, 0, Math.PI * 2)
+
+      ctx.fill();
+      ctx.restore();
+      this.x += this.speed;
+      this.y -= this.speed;
+    }
   }
 
 
@@ -512,9 +591,9 @@
         if (values[i] !== values[i + 1]) return;
       }
       if (this.value !== values[0]) {
-        this.diff = Math.abs(this.value - values[0]);
-        this.increased = this.value < values[0];
-        this.decreased = this.value > values[0];
+        this.diff = Math.abs(this.value - values[0])
+        this.increased = this.value < values[0]
+        this.decreased = this.value > values[0]
         this.value = values[0]
         callback()
       }
