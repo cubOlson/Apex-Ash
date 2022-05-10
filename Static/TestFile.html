@@ -1,13 +1,9 @@
 <head>
-  <title>Test File</title>
-  <meta description="Crush all your oponents with this team fight tactics integration" />
+  <title>Rocket League End Game Fake</title>
+  <meta description="" />
   <meta publisher="SignalRGB" />
 
-  <meta property="color" label="Color" type="color" min="0" max="360" default="#FF0000" />
-  <meta property="angle" label="ANGLE" type="number" min="0" max="7" default="5" />
-  <meta property="xPos" label="X" type="number" min="0" max="320" default="160" />
-  <meta property="yPos" label="Y" type="number" min="0" max="200" default="100" />
-  <meta property="HUDStyle" label="HUD style" type="boolean" default="1" />
+  <meta property="effectPush" label="Push effect" type="boolean" default="1" />
   
 </head>
 
@@ -22,14 +18,16 @@
   var width = 320;
   var height = 200;
   var effects = [];
+  var oldEffect = 1;
 
 
   function update() {
 
-    DrawRect(0, 0, 320, 200, "grey")
+    DrawRect(0, 0, 320, 200, "black")
 
-    if(effects.length < 1){
-      effects.push(new FadeX())
+    if(oldEffect != effectPush){
+      effects.push(new gameEnd())
+      oldEffect = effectPush
     }
 
 
@@ -43,54 +41,46 @@
     window.requestAnimationFrame(update);
   };
 
-  function FadeX(){
-    this.start = Date.now()
-    this.lifetime = 160;
-    this.y = 200;
-    this.alpha = 0;
-    this.count = 0;
+  function gameEnd(){
+    console.log("HERE")
+    this.lifetime = 10;
+    this.start1 = Date.now();
+    this.start2 = Date.now();
     this.effects = []
     this.draw = function(){
-      ctx.globalAlpha = this.alpha;
-      DrawRect(0, this.y, 320, 200, "black");
-      ctx.globalAlpha = 1;
-      if(this.count < 150){
-        this.y > 0 ? this.y -= 10 : this.y = 0;
-        this.alpha < 1 ? this.alpha += .05 : this.alpha = 1;
-        this.effects.push(new fadeXParticle())
-        this.effects.push(new fadeXParticle())
-        this.count++;
-      } else {
-        this.y >= -200 ? this.y -= 10 : this.y = 0;
-        this.alpha > 0 ? this.alpha -= .05 : this.alpha = 0;
+      var elapsed = Date.now() - this.start2;
+      var color = `hsl(${engine.audio.density * 320}, 100%, 50%)`
+      var level = 100 + engine.audio.level
+      if(level > 80 && elapsed > 100){
+        this.effects.push(new winStroke(160, 200, color))
+        this.start2 = Date.now()
       }
-      this.effects.forEach((ele, i) => {
-        ele.draw()
-        if(ele.lifetime <= 0){
-          this.effects.splice(i, 1)
+      this.effects.forEach((ele, i)=>{
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1);
         }
-      })
-      if(this.count == 150 && this.y <= -160){
+      });
+
+      if(Date.now() - this.start1 > 15000){
         this.lifetime = 0;
       }
     }
   }
 
-  function fadeXParticle(){
-    this.x = Math.random() * 320;
-    this.y = Math.random() * 200;
-    this.radius = Math.random() * 25 + 1;
-    this.alpha = .6;
-    this.lifetime = 10;
+  function winStroke(x, y, color){
+    this.x = x; 
+    this.y = y;
+    this.color = color;
+    this.radius = 1;
+    this.alpha = 1;
     this.draw = function(){
-      var vx = Math.random() * 30 - 15
-      var vy = Math.random() * 30 - 15
       ctx.globalAlpha = this.alpha;
-      DrawCircle(this.x, this.y, this.radius, "rgb(25, 25, 50)");
+      DrawStroke(this.x, this.y, this.radius, this.color, 30)
       ctx.globalAlpha = 1;
-      this.alpha > 0 ? this.alpha -=.01 : this.lifetime = 0;
-      this.x += vx;
-      this.y += vy;
+      this.radius += 5;
+      this.radius > 100 ? this.alpha -= .05 : null;
+      this.alpha <= 0 ? this.lifetime = 0 : null;
     }
   }
 
