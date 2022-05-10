@@ -4,9 +4,8 @@
   <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
-
   <meta meter="healthBlue" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
-    h="192-212" s="46-76" l="88-100">
+    h="192-212" s="36-86" l="78-100">
   </meta>
 
   <meta meter="healthGreen" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
@@ -14,7 +13,7 @@
   </meta>
 
   <meta meter="healthWhite" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
-    h="0-360" s="0-30" l="88-100">
+    h="0-360" s="0-25" l="88-100">
   </meta>
 
   <meta meter="healthYellow" tags="VLC,Overwatch" type="area" x="0.0859" y="0.8792" width=".1243" height="0.0001"
@@ -25,7 +24,6 @@
     h="0-360" s="0-30" l="88-100">
   </meta>
 
-
   <meta meter="changeHero" tags="VLC,Overwatch" type="area" x="0.4863" y="0.9139" width="0.01" height="0.001" h="13-33"
     s="72-100" l="69-99">
   </meta>
@@ -34,12 +32,48 @@
     h="0-360" s="0-30" l="80-100">
   </meta>
 
-  <meta meter="InGameWhite" tags="VLC,Overwatch" type="area" x="0.0465" y="0.9563" width="0.001" height="0.001"
+  <meta meter="inGameWhite" tags="VLC,Overwatch" type="area" x="0.0465" y="0.9563" width="0.001" height="0.001"
     h="0-360" s="0-30" l="80-100">
   </meta>
 
-  <meta meter="InGameBlue" tags="VLC,Overwatch" type="area" x="0.0762" y="0.9292" width="0.001" height="0.001"
+  <meta meter="inGameBlue" tags="VLC,Overwatch" type="area" x="0.0762" y="0.9292" width="0.001" height="0.001"
     h="183-203" s="21-100" l="32-100">
+  </meta>
+
+  <meta meter="ultWhite" tags="VLC,Overwatch" type="area" x="0.4980" y="0.8264" width="0.001" height="0.001" h="0-360"
+    s="0-30" l="80-100">
+  </meta>
+
+  <meta meter="ultWhiteConfirmation" tags="VLC,Overwatch" type="area" x="0.5172" y="0.8549" width="0.001" height="0.001"
+    h="0-360" s="0-30" l="80-100">
+  </meta>
+
+  <meta meter="ultBlue" tags="VLC,Overwatch" type="area" x="0.4973" y="0.8174" width="0.001" height="0.001" h="175-195"
+    s="31-100" l="32-100">
+  </meta>
+
+  <meta meter="killRed" tags="VLC,Overwatch" type="area" x="0.4855" y="0.7583" width="0.001" height="0.001" h="330-360"
+    s="50-100" l="45-100">
+  </meta>
+
+  <meta meter="killRed2" tags="VLC,Overwatch" type="area" x="0.4949" y="0.7771" width="0.001" height="0.001" h="330-360"
+    s="50-100" l="45-100">
+  </meta>
+
+  <meta meter="victoryT" tags="VLC,Overwatch" type="area" x="0.4871" y="0.4424" width="0.005" height="0.001" h="40-60"
+    s="57-90" l="46-100">
+  </meta>
+
+  <meta meter="victoryExc" tags="VLC,Overwatch" type="area" x="0.6160" y="0.5479" width=" 0.005" height="0.001"
+    h="40-60" s="57-90" l="46-100">
+  </meta>
+
+  <meta meter="defeatD" tags="VLC,Overwatch" type="area" x="0.4301" y="0.4438" width="0.005" height="0.001" h="0-16"
+    s="82-100" l="41-100">
+  </meta>
+
+  <meta meter="defeatT" tags="VLC,Overwatch" type="area" x="0.5914" y="0.4410" width="0.005" height="0.001" h="0-16"
+    s="82-100" l="41-100">
   </meta>
 
 
@@ -66,31 +100,34 @@
   var healthYellowHUDMeter = new Meter(3, () => "")
   var healthGreenMeter = new Meter(3, () => "")
   var heroChangeMeter = new Meter(25, ChangeMaxHealth)
-  var heroChangeMeterWhite = new Meter(25, ChangeMaxHealth)
-  var InGameWhiteMeter = new Meter(35, GameChanged)
-  var InGameBlueMeter = new Meter(35, GameChanged)
+  var inGameMeter = new Meter(30, GameChanged)
+  var UltMeter = new Meter(15, UltChanged)
+  var killMeter = new Meter(8, KillChanged)
+  var victoryMeter = new Meter(15, VictoryChanged)
+  var defeatMeter = new Meter(15, DefeatChanged)
   var changeMaxHealth = false;
   var inGame = false;
   var isJumping = false;
   var maxHealthValue = 0;
   var healthWhiteAmount = 0;
   var healthBlueAmount = 0;
+  var ultCharged = false
 
   function update() {
 
     if (inGame) {
       if ((engine.vision.InGameWhite == 0 || engine.vision.InGameBlue == 0 || engine.vision.firstHealthWhite == 0) && !isJumping) {
         isJumping = true;
-        console.log("jump")
+        console.log("jump" + Math.random())
         CheckJump();
       }
-    }
-
-
-    if (maxHealthValue == 0) {
-      CalculateMaxValue();
+      if (maxHealthValue == 0) {
+        CalculateMaxValue();
+      }
 
     }
+
+
 
     copyScreen(1);
     healthWhiteMeter.setValue(engine.vision.healthWhite)
@@ -98,10 +135,12 @@
     healthWhiteHUDMeter.setValue(engine.vision.healthWhite)
     healthBlueHUDMeter.setValue(engine.vision.healthBlue)
     healthGreenMeter.setValue(engine.vision.healthGreen)
-    InGameBlueMeter.setValue(engine.vision.InGameBlue)
-    InGameWhiteMeter.setValue(engine.vision.InGameWhite)
+    inGameMeter.setValue(engine.vision.inGameBlue + engine.vision.inGameWhite)
     heroChangeMeter.setValue(engine.vision.changeHero)
-    heroChangeMeterWhite.setValue(engine.vision.changeHeroWhite)
+    UltMeter.setValue(engine.vision.ultWhite + engine.vision.ultBlue + engine.vision.ultWhiteConfirmation)
+    killMeter.setValue(engine.vision.killRed + engine.vision.killRed2)
+    victoryMeter.setValue(engine.vision.victoryT + engine.vision.victoryExc)
+    defeatMeter.setValue(engine.vision.defeatT + engine.vision.defeatD)
 
 
     for (let i = 0; i < effects.length; i++) {
@@ -115,15 +154,17 @@
     window.requestAnimationFrame(update);
   };
 
-
   function CheckJump() {
     setTimeout(() => {
-      if (engine.vision.InGameWhite == 1) {
+      if (engine.vision.inGameWhite == 1 && engine.vision.inGameBlue == 1 && engine.vision.firstHealthWhite == 1) {
         isJumping = false;
+        if (UltMeter.value == 3) {
+          UltChanged();
+        }
       } else {
         CheckJump();
       }
-    }, 500
+    }, 200
     );
   }
 
@@ -139,15 +180,15 @@
       totalWidth = newWhiteValue + newBlueValue;
     }
 
-    console.log(newWhiteValue + newBlueValue)
 
 
-    if (newWhiteValue + newBlueValue > 330) {
+
+    if (newWhiteValue + newBlueValue > 335) {
       CalculateMaxValue();
-      console.log("Loop" + Math.random())
     }
 
-    if (!isJumping && healthGreenMeter.value < 0.01) {
+    if (!isJumping && healthGreenMeter.value < 0.01 || healthWhiteHUDMeter.value == 0) {
+      // console.log(newWhiteValue + newBlueValue)
       if (Math.abs(newWhiteValue - healthWhiteAmount) > 15 || healthWhiteHUDMeter.value == 0 || totalWidth > 320) {
         healthWhiteAmount = newWhiteValue;
       }
@@ -159,13 +200,12 @@
     ctx.beginPath();
     ctx.fillStyle = "Red";
 
-    ctx.fillRect(0, 80, healthWhiteAmount, 40);
+    ctx.fillRect(0, 50, healthWhiteAmount, 40);
     ctx.fillStyle = "blue"
 
-    ctx.fillRect(healthWhiteAmount, 80, healthBlueAmount, 40);
-
-
+    ctx.fillRect(healthWhiteAmount, 40, healthBlueAmount, 40);
   }
+
 
   function ChangeMaxHealth() {
     if (heroChangeMeter.value == 1) {
@@ -179,6 +219,51 @@
 
 
   //callbacks
+
+
+  function VictoryChanged() {
+    if (victoryMeter.value == 2) {
+      effects.push(new VictoryEffect())
+    }
+  }
+
+  function DefeatChanged() {
+    if (defeatMeter.value == 2) {
+      console.log("Play defeat effect")
+    }
+  }
+
+
+  function UltChanged() {
+    if (!isJumping && inGame) {
+      if (UltMeter.value == 3 && !ultCharged) {
+        ultCharged = true;
+        effects.push(new ultReadyEffect())
+      } else if (changeMaxHealth) {
+        ultCharged = false;
+      } else if (UltMeter.value == 0 && ultCharged) {
+        console.log("Play ult effect")
+        ultCharged = false;
+      }
+    } else if (ultCharged && UltMeter.value == 0) {
+      setTimeout(() => {
+        UltChanged();
+      }, 300);
+    }
+
+  }
+
+
+
+
+
+
+  function KillChanged() {
+    if (killMeter.value == 2 && inGame) {
+      console.log("Got kill" + Math.random())
+    }
+  }
+
 
   function CalculateMaxValue() {
     if (!isJumping && inGame) {
@@ -200,7 +285,7 @@
 
 
   function GameChanged() {
-    if (InGameBlueMeter.value == 1 && InGameWhiteMeter.value == 1) {
+    if (inGameMeter.value == 2) {
       inGame = true;
       if (changeMaxHealth == true) {
         setTimeout(() => {
@@ -214,6 +299,115 @@
 
 
 
+
+
+
+
+  //effects
+  function ultReadyEffect() {
+    this.elapsed;
+    this.blackEdgeGradient;
+    this.finalRing;
+    this.pushedRipples = false;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      // ctx.beginPath();
+      // if (this.elapsed < 800) {
+      //   this.blackEdgeGradient = ctx.createRadialGradient(160, 100, 5, 160, 100, 900 - this.elapsed)
+      //   this.blackEdgeGradient.addColorStop(0, "hsla(0,0%,0%,0)")
+      //   this.blackEdgeGradient.addColorStop(1, "black")
+      // }
+      // ctx.fillStyle = this.blackEdgeGradient
+      // ctx.fillRect(0, 0, 320, 200)
+      // if(this.elapsed <3000){
+      //   ctx.beginPath();
+      //   ctx.arc(160, 100, 50, 0, (this.elapsed / 500) * Math.PI);
+      //   ctx.strokeStyle = "orange"
+      //   ctx.lineWidth = 20
+      //   ctx.stroke();
+      //   ctx.lineWidth = 1;
+      // }
+
+      if (this.pushedRipples == false) {
+        console.log("here")
+        effects.push(new RippleEffect(160, 100, 8, 800, 30, `hsla(35, 100%, 58%, 1)`, "out", "fill", 1))
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+
+            effects.push(new RippleEffect(160, 100, 8, 800, 30, `hsla(${243 - i * 20}, 100%, 58%, 1)`, "out", "fill", 1))
+
+          }, 150 * i)
+          this.pushedRipples = true
+        }
+      }
+      if (this.elapsed > 1300) {
+        this.finalRing = ctx.createRadialGradient(160, 100, 5, 160, 100, 5 + ((this.elapsed - 1300) / 4))
+        this.finalRing.addColorStop(0 + (this.elapsed - 1300) / 1200, "hsla(0,0%,0%,0)")
+        this.finalRing.addColorStop(1, `hsla(${143}, 100%, 58%, 1)`)
+        ctx.fillStyle = this.finalRing
+        ctx.fillRect(0, 0, 320, 200)
+        if (this.elapsed > 2400) {
+          this.lifetime = 0
+        }
+      }
+    }
+  }
+
+  function VictoryEffect() {
+    this.elapsed;
+    this.drops = [];
+    this.start = GetTime();
+    this.spawnval = 0;
+    effects.push(new FadeInOut("in"))
+    this.drops.push(new victoryDrip((Math.random() - 0.6) * 360, 300, 45, this.sizeVal * 50, `hsla(${5 + Math.random() * 70},100%,50%,${1 - (this.sizeVal / 3)})`));
+
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed > 700 && this.drops.length > 0) {
+        ctx.fillStyle = "black"
+        ctx.fillRect(0, 0, 320, 200)
+        if (this.spawnval == 2 && this.elapsed < 6000) {
+          this.sizeVal = Math.random()
+          this.drops.push(new victoryDrip((Math.random() - 0.6) * 360, 300, 45, this.sizeVal * 50, `hsla(${5 + Math.random() * 70},100%,50%,${1 - (this.sizeVal / 3)})`));
+          this.spawnval = 0;
+        }
+        this.drops.forEach((drip, i) => {
+          drip.draw();
+          if (drip.x > 450 || drip.y < -150) {
+            this.drops.splice(i, 1);
+
+          }
+        });
+        this.spawnval += 1;
+        if (this.drops.length == 1 && this.elapsed > 2000) {
+          effects.push(new FadeInOut("out"))
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function FadeInOut(inOrOut) {
+    this.start = GetTime();
+    this.x = inOrOut == "in" ? -600 : 0;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.fillStyle = "black";
+      ctx.fillRect(this.x, 0, 600, 200)
+      this.x += 20;
+      if (this.elapsed > 700) {
+        this.lifetime = 0;
+      }
+    }
+
+
+
+
+  }
+
+
+
   function renderPath(x, y, path, color, xsize, ysize) {
     ctx.fillStyle = color;
     ctx.save();
@@ -222,6 +416,33 @@
     let ex = new Path2D(path);
     ctx.fill(ex);
     ctx.restore()
+  }
+
+
+  class victoryDrip {
+    constructor(x, y, rotation, size, col) {
+      this.x = x;
+      this.y = y;
+      this.rotation = rotation * Math.PI / 180;
+      this.size = size;
+      this.speed = (60 - (this.size / 2)) / 10;
+      this.color = col;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+
+      ctx.save();
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.rotation)
+      ctx.ellipse(0, 0, this.size, this.size * 2, 0, 0, Math.PI * 2)
+
+      ctx.fill();
+      ctx.restore();
+      this.x += this.speed;
+      this.y -= this.speed;
+    }
   }
 
 
@@ -280,6 +501,49 @@
     return new Date().getTime()
   }
 
+  function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples) {
+    this.col = color;
+    this.speed = speed;
+    this.dur = duration;
+    this.width = rippleWidth;
+    this.start = GetTime();
+    this.lifetime;
+    this.x = x;
+    this.y = y;
+    this.fill = fillOrStroke;
+    this.radius = 0;
+    this.amount = amountOfRipples;
+    if (inOrOut == "in") {
+      this.radius = 200 + (this.width * (this.amount * 2));
+      this.speed = -this.speed
+    }
+
+    this.draw = function () {
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      for (let i = 0; i < this.amount; i++) {
+        if (this.radius - i * (this.width * 2) > 0) {
+          ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+        }
+      }
+      if (this.fill == "fill") {
+        ctx.fillStyle = this.col;
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = this.col;
+        ctx.stroke();
+      }
+      this.radius += this.speed;
+      this.lifetime = this.dur - (GetTime() - this.start);
+      if (this.lifetime <= 0) {
+        utilityPlayed = false;
+      }
+    }
+  }
+
+
+
+
   function StateHandler() {
     var stack = [];
     var state = null;
@@ -327,14 +591,13 @@
         if (values[i] !== values[i + 1]) return;
       }
       if (this.value !== values[0]) {
-        this.diff = Math.abs(this.value - values[0]);
-        this.increased = this.value < values[0];
-        this.decreased = this.value > values[0];
+        this.diff = Math.abs(this.value - values[0])
+        this.increased = this.value < values[0]
+        this.decreased = this.value > values[0]
         this.value = values[0]
         callback()
       }
     }
   }
-
   window.requestAnimationFrame(update)
 </script>
