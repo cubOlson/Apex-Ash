@@ -186,7 +186,7 @@
   }
 
   function onShieldMeterChanged() {
-     if (shieldMeter.increased && shieldMeter.value != oldShield && shieldMeter.value > 0) {
+     if (shieldMeter.increased && shieldMeter.value > oldShield && shieldMeter.value > 0) {
       stateMgr.Push(new ShieldIncreaseState("#2effab"));
       oldShield = shieldMeter.value;
     }
@@ -451,10 +451,10 @@
 
   // end Cypher
   // Fade -------------------------------------------------------------------------
-  var Fade_e_meter = new Meter(10, onFade_e);
-  var Fade_c_meter = new Meter(10, onFade_c);
-  var Fade_q_meter = new Meter(10, onFade_q);
-  var Fade_x_meter = new Meter(10, onFade_x);
+  var Fade_e_meter = new Meter(15, onFade_e);
+  var Fade_c_meter = new Meter(15, onFade_c);
+  var Fade_q_meter = new Meter(15, onFade_q);
+  var Fade_x_meter = new Meter(15, onFade_x);
 
   function onFade_e() {
     if (Fade_e_meter.decreased && Fade_e_meter.diff > 0.1) {
