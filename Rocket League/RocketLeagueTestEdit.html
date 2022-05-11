@@ -169,7 +169,7 @@
       }
     };
 
-    if (adjustHUD  && !recentScore) {
+    if (adjustHUD && !recentScore) {
       if (HUDStyle) {
         DrawCircle(xPos, yPos, HUDRadius, boostColor)
       } else {
@@ -405,32 +405,34 @@
       this.x = xPos;
       this.y = yPos;
       this.radius = HUDRadius
-      switch (boostState) {
-        case 0:
-          if (!recentScore) {
-            HUDStyle ? DrawCircle(this.x, this.y, this.radius, `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 20 + 30}%)`) :
-              DrawRect(this.x, this.y, 320, 50, `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 20 + 30}%)`);
-          }
+      if (!recentScore) {
+        HUDStyle ? DrawCircle(this.x, this.y, this.radius, `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 20 + 30}%)`) :
+          DrawRect(this.x, this.y, 320, 50, `hsl(0, 100%, ${Math.sin(Date.now() / 200) * 20 + 30}%)`);
 
-          break;
-        case 7:
-          var thisColor = hexToHSL(boostColor)
-          HUDStyle ? DrawCircle(this.x, this.y, this.radius, `hsl(${thisColor[0]}, 100%, ${Math.sin(Date.now() / 200) * 20 + 60}%)`) :
-            DrawRect(this.x, this.y, 320, 50, `hsl(${thisColor[0]}, 100%, ${Math.sin(Date.now() / 100) * 10 + 60}%)`);
-          break;
-        default:
-          if (HUDStyle) {
-            var endAngle = -Math.PI / 2 + (Math.PI * 2 / 6) * boostState
-            ctx.fillStyle = boostColor;
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.arc(this.x, this.y, this.radius, -Math.PI / 2, endAngle);
-            ctx.closePath();
-            ctx.fill();
-          } else {
-            DrawRect(this.x, this.y, 320 / 7 * boostState, 50, boostColor)
-          }
-          break;
+        switch (boostState) {
+          case 0:
+
+
+            break;
+          case 7:
+            var thisColor = hexToHSL(boostColor)
+            HUDStyle ? DrawCircle(this.x, this.y, this.radius, `hsl(${thisColor[0]}, 100%, ${Math.sin(Date.now() / 200) * 20 + 60}%)`) :
+              DrawRect(this.x, this.y, 320, 50, `hsl(${thisColor[0]}, 100%, ${Math.sin(Date.now() / 100) * 10 + 60}%)`);
+            break;
+          default:
+            if (HUDStyle) {
+              var endAngle = -Math.PI / 2 + (Math.PI * 2 / 6) * boostState
+              ctx.fillStyle = boostColor;
+              ctx.beginPath();
+              ctx.moveTo(this.x, this.y);
+              ctx.arc(this.x, this.y, this.radius, -Math.PI / 2, endAngle);
+              ctx.closePath();
+              ctx.fill();
+            } else {
+              DrawRect(this.x, this.y, 320 / 7 * boostState, 50, boostColor)
+            }
+            break;
+        }
       }
       if (!inGame || !boostOn) {
         this.lifetime = 0;
