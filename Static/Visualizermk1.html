@@ -5,10 +5,11 @@
   
     <meta property="colorMode" label="Color Mode" type="combobox"
     values="Rainbow,Color Cycle,Custom Color" default="Rainbow" />
+    <meta property="circleRadius" label="Center Radius" type="number" min="1" max="100" default="50" />
     <meta property="setColor" label="Custom Color" type="color" min="0" max="360" default="#FF0000" />
     <meta property="backColor" label="Background Color" type="color" min="0" max="360" default="#000000" />
     <meta property="hueShift" label="Rainbow Hue Shift" type="number" min="0" max="360" default="0" />
-    <meta property="hueRange" label="Rainbow Hue Range" type="number" min="0" max="360" default="0" />
+    <meta property="hueRange" label="Rainbow Hue Range" type="number" min="0" max="360" default="360" />
     <meta property="cycleSpeed" label="Color Cycle Speed" type="number" min="0" max="100" default="50" />
     <meta property="bubbleHit" label="Bubble Threshhold" type="number" min="0" max="100" default="20" />
     <meta property="bubbleSpeed" label="Bubble Speed" type="number" min="0" max="100" default="50" />
@@ -59,12 +60,12 @@
         });
 
         if(colorMode == "Rainbow"){
-          DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
+          DrawCircle(160, 100, circleRadius, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
         } else if(colorMode == "Custom Color") {
           var res = hexToHSL(setColor)
-          DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2]}%)`)
+          DrawCircle(160, 100, circleRadius, `hsl(${res[0]}, ${res[1]}%, ${res[2]}%)`)
         } else {
-          DrawCircle(160, 100, 50, `hsl(${cycleHue}, 100%, 50%)`)
+          DrawCircle(160, 100, circleRadius, `hsl(${cycleHue}, 100%, 50%)`)
         }
  
         
@@ -77,12 +78,12 @@
 
         ctx.globalAlpha = .75
         if(colorMode == "Rainbow"){
-          DrawCircle(160, 100, 50, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
+          DrawCircle(160, 100, circleRadius, `hsl(${outerHue}, 100%, ${100 + engine.audio.level * 10}%)`)
         } else if(colorMode == "Custom Color") {
           var res = hexToHSL(setColor)
-          DrawCircle(160, 100, 50, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 8}%)`)
+          DrawCircle(160, 100, circleRadius, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 8}%)`)
         } else {
-          DrawCircle(160, 100, 50, `hsl(${cycleHue}, 100%, ${100 + engine.audio.level * 8}%)`)
+          DrawCircle(160, 100, circleRadius, `hsl(${cycleHue}, 100%, ${100 + engine.audio.level * 8}%)`)
         }
         ctx.globalAlpha = 1
       }
@@ -129,6 +130,7 @@
         this.heights = [];
         this.radius = 50;
         this.draw = function(){
+          this.radius = circleRadius;
             var max = Math.max(...reducedFreq)
             var min = Math.min(...reducedFreq)
             var hue = hueRange * engine.audio.density + hueShift
@@ -173,8 +175,8 @@
     function soundSpike(x, y, vx, vy, color, radius){
         this.x = x;
         this.y = y;
-        this.vx = vx * bubbleSpeed / 50;
-        this.vy = vy * bubbleSpeed / 50;
+        this.vx = vx * bubbleSpeed / circleRadius;
+        this.vy = vy * bubbleSpeed / circleRadius;
         this.color = color;
         this.radius = radius;
         this.alpha = 1
