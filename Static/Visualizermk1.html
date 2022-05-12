@@ -145,8 +145,15 @@
                         if(colorMode == "Rainbow"){
                           beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${hue}, 100%, 50%)`, height))
                         } else if(colorMode == "Custom Color") {
-                          var res = hexToHSL(setColor)
-                          beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${res[0]}, ${res[1]}%, ${res[2] / 2 + 50 + engine.audio.level * 10}%)`, height))
+                          var res = hexToRgb(setColor)
+                          var back = hexToRgb(backColor)
+                          var rLow = res.r > back.r ? back.r : res.r;
+                          var gLow = res.g > back.g ? back.g : res.g;
+                          var bLow = res.b > back.b ? back.b : res.b;
+                          var r = Math.abs(res.r - back.r) * engine.audio.density + rLow
+                          var g = Math.abs(res.g - back.g) * engine.audio.density + gLow
+                          var b = Math.abs(res.b - back.b) * engine.audio.density + bLow
+                          beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `rgb(${r}, ${g}, ${b})`, height))
                         } else {
                           beats.push(new soundSpike(x, y, (x - this.x) / 20, (y - this.y) / 20, `hsl(${cycleHue}, 100%, 50%)`, height))
                         }
