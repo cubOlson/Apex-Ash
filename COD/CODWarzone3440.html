@@ -1,0 +1,951 @@
+<head>
+  <title>COD: Warzone 3440</title>
+  <meta description="Metering for COD: Warzone." />
+  <meta publisher="SignalRGB" />
+
+
+  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
+
+
+  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="enableHudEffect" label="Enable HUD Effects" type="boolean" default="1" />
+  <meta property="enableStandard" label="Enable standard effects" type="boolean" default="1" />
+  <meta property="enableHealth" label="Enable health effects" type="boolean" default="1" />
+  <meta property="enableShield" label="Enable shield effects" type="boolean" default="1" />
+  <meta property="enableKill" label="Enable kill effects" type="boolean" default="1" />
+  <meta property="enableKnockdown" label="Enable knockdown effect" type="boolean" default="1" />
+  <meta property="enableRevive" label="Enable revive effect" type="boolean" default="1" />
+  <meta property="enableGulag" label="Enable gulag effects" type="boolean" default="1" />
+  <meta property="enableCircle" label="Enable circle effects" type="boolean" default="1" />
+  <meta property="HealthBarY" label="HealthBar Y" type="number" default="170" min="0" max="200">
+  <meta property="HealthBarX" label="HealthBar X" type="number" default="0" min="0" max="320">
+  <meta property="HealthBarWidth" label="HealthBar Width" type="number" default="170" min="0" max="320">
+  <meta property="HealthBarHeight" label="HealthBar Height" type="number" default="4" min="0" max="10">
+  <meta property="ShieldBarY" label="ShieldBar Y" type="number" default="130" min="0" max="200">
+  <meta property="ShieldBarX" label="ShieldBar X" type="number" default="0" min="0" max="320">
+  <meta property="ShieldBarWidth" label="ShieldBar Width" type="number" default="320" min="0" max="320">
+  <meta property="ShieldBarHeight" label="ShieldBar Height" type="number" default="2" min="0" max="10">
+  <meta property="GulagBarY" label="GulagBar Y" type="number" default="100" min="0" max="200">
+  <meta property="GulagBarHeight" label="GulagBar Height" type="number" default="6" min="0" max="10">
+
+  <meta meter="health" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="0-360" s="0-25"
+    l="40-100" type="linear">
+  <resolution size="3440x1440" x="0.0371" y="0.9438" width=".074" />
+
+  <resolution size="1920x1200" x=".0335" y=".9493" width=".101" />
+  <resolution size="1680x1050" x=".0335" y=".9493" width=".101" />
+  <resolution size="1440x900" x=".0335" y=".9493" width=".101" />
+  <resolution size="1280x800" x=".0335" y=".9493" width=".101" />
+
+  </meta>
+  <meta meter="healthR" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h=" 0-10"
+    s="50-100" l="40-75" type="linear">
+  <resolution size="3440x1440" x="0.0371" y="0.9438" width=".074" />
+
+  <resolution size="1920x1200" x=".0335" y=".9493" width=".101" />
+  <resolution size="1680x1050" x=".0335" y=".9493" width=".101" />
+  <resolution size="1440x900" x=".0335" y=".9493" width=".101" />
+  <resolution size="1280x800" x=".0335" y=".9493" width=".101" />
+  </meta>
+  <meta meter="healthG" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9444" width=".10" h="110-130"
+    s="40-100" l="30-75" type="linear">
+  <resolution size="3440x1440" x="0.0371" y="0.9438" width=".074" />
+  <resolution size="1920x1200" x=".0335" y=".9493" width=".101" />
+
+  <resolution size="1680x1050" x=".0335" y=".9493" width=".101" />
+  <resolution size="1440x900" x=".0335" y=".9493" width=".101" />
+  <resolution size="1280x800" x=".0335" y=".9493" width=".101" />
+  </meta>
+
+  <meta meter="plate1" tags="cod,warzone,modern warfare,call of duty" x=".0338" y=".9333" width=".0312" h="190-248"
+    s="30-100" l="40-100" type="linear">
+  <resolution size="3440x1440" x="0.0371" y="0.9326" width=".0227" />
+  <resolution size="1920x1200" x=".0339" y=".9381" width=".0308" />
+  <resolution size="1680x1050" x=".0339" y=".9381" width=".0308" />
+  <resolution size="1440x900" x=".0339" y=".9381" width=".0308" />
+  <resolution size="1280x800" x=".0339" y=".9381" width=".0308" />
+  </meta>
+
+
+
+  <meta meter="plate2" tags="cod,warzone,modern warfare,call of duty" x=".0693" y=".9333" width=".0312" h="190-248"
+    s="30-100" l="40-100" type="linear">
+  <resolution size="3440x1440" x="0.0633" y="0.9313" width=".0227" />
+  <resolution size="1920x1200" x=".069" y=".9381" width=".0308" />
+  <resolution size="1680x1050" x=".069" y=".9381" width=".0308" />
+  <resolution size="1440x900" x=".069" y=".9381" width=".0308" />
+  <resolution size="1280x800" x=".069" y=".9381" width=".0308" />
+  </meta>
+
+  <meta meter="plate3" tags="cod,warzone,modern warfare,call of duty" x=".1042" y=".9333" width=".0302" h="190-248"
+    s="30-100" l="40-100" type="linear">
+  <resolution size="3440x1440" x="0.0891" y="0.9313" width=".0227" />
+  <resolution size="1920x1200" x=".105" y=".9381" width=".0308" />
+  <resolution size="1680x1050" x=".105" y=".9381" width=".0308" />
+  <resolution size="1440x900" x=".105" y=".9381" width=".0308" />
+  <resolution size="1280x800" x=".105" y=".9381" width=".0308" />
+  </meta>
+
+  <meta meter="inGame" tags="cod,warzone,modern warfare,call of duty" x=".9398" y=".048611" width=".0039" h="0-360"
+    s="0-10" l="90-100" type="linear">
+  <resolution size="3440x1440" x="0.9441" y="0.0493" width=".001" />
+  </meta>
+
+  <meta meter="kill1" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8287" width=".05" height=".001"
+    h="0-20" s="60-100" l="60-100" type="area">
+  <resolution size="3440x1440" x="0.4904" y="0.8292" width=".03" height=".001" />
+  <resolution size="1920x1200" x=".474" y=".8461" width=".05" height=".001" />
+  <resolution size="1680x1050" x=".474" y=".8461" width=".05" height=".001" />
+  <resolution size="1440x900" x=".474" y=".8461" width=".05" height=".001" />
+  <resolution size="1280x800" x=".474" y=".8461" width=".05" height=".001" />
+  </meta>
+
+  <meta meter="kill2" tags="cod,warzone,modern warfare,call of duty" x=".474" y=".8676" width=".05" height=".001"
+    h="0-25" s="50-100" l="50-100" type="area">
+  <resolution size="3440x1440" x="0.4904" y=".8667" width=".03" height=".001" />
+  <resolution size="1920x1200" x=".474" y=".8810" width=".05" height=".001" />
+  <resolution size="1680x1050" x=".474" y=".8810" width=".05" height=".001" />
+  <resolution size="1440x900" x=".474" y=".8810" width=".05" height=".001" />
+  <resolution size="1280x800" x=".474" y=".8810" width=".05" height=".001" />
+  </meta>
+
+  <meta meter="killBlack" tags="cod,warzone,modern warfare,call of duty" x=".476" y=".8315" width=".04" height=".01"
+    h="0-360" s="0-50" l="0-40" type="area">
+  <resolution size="3440x1440" x="0.4941" y="0.8333" width=".01" height=".005" />
+  <resolution size="1920x1200" x=".476" y=".847" width=".04" height=".01" />
+  <resolution size="1680x1050" x=".476" y=".847" width=".04" height=".01" />
+  <resolution size="1440x900" x=".476" y=".847" width=".04" height=".01" />
+  <resolution size="1280x800" x=".476" y=".847" width=".04" height=".01" />
+  </meta>
+
+  <meta meter="knockdownOrange" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005"
+    height=".005" h="20-40" s="40-100" l="60-100" type="area">
+  <resolution size="3440x1440" x=".4958" y=".6574" width=".004" height=".005" />
+  <resolution size="1920x1200" x=".4958" y=".6914" width=".005" height=".001" />
+  <resolution size="1680x1050" x=".4958" y=".6914" width=".005" height=".001" />
+  <resolution size="1440x900" x=".4958" y=".6914" width=".005" height=".001" />
+  <resolution size="1280x800" x=".4958" y=".6914" width=".005" height=".001" />
+  </meta>
+
+  <meta meter="reviveGreen" tags="cod,warzone,modern warfare,call of duty" x=".4958" y=".6574" width=".005"
+    height=".005" h="80-120" s="75-100" l="60-100" type="area">
+  <resolution size="3440x1440" x=".4958" y=".6574" width=".004" height=".005" />
+  <resolution size="1920x1200" x=".4958" y=".6914" width=".005" height=".001" />
+  <resolution size="1680x1050" x=".4958" y=".6914" width=".005" height=".001" />
+  <resolution size="1440x900" x=".4958" y=".6914" width=".005" height=".001" />
+  <resolution size="1280x800" x=".4958" y=".6914" width=".005" height=".001" />
+  </meta>
+
+  <meta meter="gulagWhiteHP" tags="cod,warzone,modern warfare,call of duty" x=".4036" y=".0917" width=".07" h="0-360"
+    s="0-50" l="70-100" type="linear">
+  <resolution size="3440x1440" x="0.4285" y="0.0924" width=".0528" />
+  <resolution size="1920x1200" x=".4036" y=".08333" width=".07" />
+  <resolution size="1680x1050" x=".4036" y=".08333" width=".07" />
+  <resolution size="1440x900" x=".4036" y=".08333" width=".07" />
+  <resolution size="1280x800" x=".4036" y=".08333" width=".07" />
+  </meta>
+
+  <meta meter="gulagRedHP" tags="cod,warzone,modern warfare,call of duty" x=".5245" y=".0917" width=".07" height=".001"
+    h="0-35" s="50-80" l="40-100" type="area">
+  <resolution size="3440x1440" x="0.5199" y="0.0917" width=".0529" height=".001" />
+  <resolution size="1920x1200" x=".5245" y=".08333" width=".07" height=".01" />
+  <resolution size="1680x1050" x=".5245" y=".08333" width=".07" height=".01" />
+  <resolution size="1440x900" x=".5245" y=".08333" width=".07" height=".01" />
+  <resolution size="1280x800" x=".5245" y=".08333" width=".07" height=".01" />
+  </meta>
+
+  <meta meter="circleClosingBlack" tags="cod,warzone,modern warfare,call of duty" x=".4943" y=".2019" width=".011"
+    height=".011" h="0-360" s="0-25" l="0-25" type="area">
+  <resolution size="3440x1440" x="0.4941" y="0.2646" width=".001" height=".001" />
+  <resolution size="1920x1200" x=".4943" y=".2355" width=".011" height=".011" />
+  <resolution size="1680x1050" x=".4943" y=".2355" width=".011" height=".011" />
+  <resolution size="1440x900" x=".4943" y=".2355" width=".011" height=".011" />
+  <resolution size="1280x800" x=".4943" y=".2355" width=".011" height=".011" />
+  </meta>
+
+  <meta meter="circleClosingRed" tags="cod,warzone,modern warfare,call of duty" x=".4974" y=".2741" width=".006"
+    height=".003" h="0-30" s="25-100" l="10-70" type="area">
+  <resolution size="3440x1440" x="0.4996" y="0.2750" width=".0001" height=".001" />
+  <resolution size="1920x1200" x=".4974" y=".2458" width=".006" height=".003" />
+  <resolution size="1680x1050" x=".4974" y=".2458" width=".006" height=".003" />
+  <resolution size="1440x900" x=".4974" y=".2458" width=".006" height=".003" />
+  <resolution size="1280x800" x=".4974" y=".2458" width=".006" height=".003" />
+  </meta>
+
+  <meta meter="circleClosingWhite" tags="cod,warzone,modern warfare,call of duty" x=".506" y=".2229" width=".0078"
+    height=".001" h="0-360" s="0-10" l="80-100" type="area">
+  <resolution size="3440x1440" x="0.5055" y="0.2222" width=".0018" height=".001" />
+  <resolution size="1920x1200" x=".506" y=".2011" width=".0078" height=".001" />
+  <resolution size="1680x1050" x=".506" y=".9493" width=".0078" height=".001" />
+  <resolution size="1440x900" x=".506" y=".9493" width=".0078" height=".001" />
+  <resolution size="1280x800" x=".506" y=".9493" width=".0078" height=".001" />
+  </meta>
+
+</head>
+
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //Declaring variables
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var effects = [];
+  var spaceVal = 0;
+  var knockdownGoing = false;
+  var CirclePlaying = false;
+  var reviveActive = false;
+  var killAnim = false;
+  var VehicleGoing = false;
+  var inGulag = false;
+  var PlayingGame = false;
+  var hpCol = "green";
+  var shieldCol = "blue"
+  var damagePlaying = false;
+
+
+  //Declaring meters
+  var inGameMeter = new Meter(1, InGameEffect)
+  var healthMeter = new Meter(3, healthEffects);
+  var healthRedMeter = new Meter(2, knockdownEffect);
+  var healthGreenMeter = new Meter(5, reviveEffect);
+  var plate1Meter = new Meter(5, armorEffects);
+  var plate2Meter = new Meter(5, armorEffects2);
+  var plate3Meter = new Meter(5, armorEffects3);
+  var kill1Meter = new Meter(5, killEffect);
+  var kill2Meter = new Meter(5, killEffect);
+  var killBlackMeter = new Meter(5, killEffect);
+  var downOrangeMeter = new Meter(5, knockdownEffect);
+  var reviveGreenMeter = new Meter(5, reviveEffect);
+  var gulagWhiteMeter = new Meter(5, gulagEffect);
+  var gulagRedMeter = new Meter(5, gulagEffect);
+  var circleBlackMeter = new Meter(5, circleEffects);
+  var circleRedMeter = new Meter(5, circleEffects);
+  var circleWhiteMeter = new Meter(5, circleEffects);
+
+  function update() {
+    //Updating meters
+
+    inGameMeter.setValue(engine.vision.inGame)
+    if (!killAnim) {
+      IdleState();
+    }
+    if (PlayingGame) {
+      if (!killAnim) {
+        gulagWhiteMeter.setValue(engine.vision.gulagWhiteHP)
+        gulagRedMeter.setValue(engine.vision.gulagRedHP)
+        if (!inGulag) {
+          healthMeter.setValue(engine.vision.health);
+          plate1Meter.setValue(engine.vision.plate1);
+          plate2Meter.setValue(engine.vision.plate2);
+          plate3Meter.setValue(engine.vision.plate3);
+          downOrangeMeter.setValue(engine.vision.knockdownOrange)
+          healthRedMeter.setValue(engine.vision.healthR);
+          circleBlackMeter.setValue(engine.vision.circleClosingBlack)
+          circleRedMeter.setValue(engine.vision.circleClosingRed)
+          healthGreenMeter.setValue(engine.vision.healthG);
+          reviveGreenMeter.setValue(engine.vision.reviveGreen);
+          circleWhiteMeter.setValue(engine.vision.circleClosingWhite)
+        }
+      }
+      kill1Meter.setValue(engine.vision.kill1)
+      kill2Meter.setValue(engine.vision.kill2)
+      killBlackMeter.setValue(engine.vision.killBlack)
+    }
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    //Updates the HudEffects
+    if ((enableHudEffect && PlayingGame && !killAnim) || adjToggle) {
+      UpdateHud();
+    }
+
+    if (enableStandard) {
+      stateMgr.Process();
+    }
+
+    window.requestAnimationFrame(update);
+  }
+
+  function UpdateHud() {
+    //HealthBar
+    if (!inGulag || adjToggle) {
+
+      drawHealthHud(adjToggle);
+      //ShieldBar
+      drawShieldHud(adjToggle)
+    }
+    if ((inGulag && enableGulag || adjToggle)) {
+      //GulagHud
+      drawGulagHud(adjToggle);
+    }
+  }
+
+  function drawHealthHud(adj) {
+    var health = healthMeter.value * HealthBarWidth;
+    if (adj == true) {
+      health = HealthBarWidth;
+    }
+    ctx.fillStyle = hpCol;
+    ctx.fillRect(HealthBarX, 200 - HealthBarY, health, HealthBarHeight * 10)
+  }
+
+  function drawShieldHud(adj) {
+    this.width = (ShieldBarWidth / 4)
+    this.widthAdjustment = (((320 - ShieldBarWidth) / 300) + 1)
+    var shield1 = plate1Meter.value * this.width * widthAdjustment;
+    var shield2 = plate2Meter.value * this.width * widthAdjustment;
+    var shield3 = plate3Meter.value * this.width * widthAdjustment;
+
+    if (adj == true) {
+      shield1 = this.width * widthAdjustment
+      shield2 = this.width * widthAdjustment
+      shield3 = this.width * widthAdjustment
+    }
+    spaceVal = ((ShieldBarWidth / 4) / 2)
+    ctx.fillStyle = shieldCol;
+    ctx.fillRect(0 + ShieldBarX, 200 - ShieldBarY, shield1, ShieldBarHeight * 10)
+    ctx.fillRect(320 / 4 + spaceVal + ShieldBarX, 200 - ShieldBarY, shield2, ShieldBarHeight * 10)
+    ctx.fillRect(((320 / 4) * 2) + (spaceVal * 2) + ShieldBarX, 200 - ShieldBarY, shield3, ShieldBarHeight * 10);
+  }
+
+  function drawGulagHud(adj) {
+    var allyHp = gulagWhiteMeter.value * 160;
+    var enemyHp = -gulagRedMeter.value * 160;
+    if (adj == true) {
+      allyHp = 160;
+      enemyHp = -160;
+    }
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 200 - GulagBarY, allyHp, GulagBarHeight * 10);
+    ctx.fillStyle = "red";
+    ctx.fillRect(320, 200 - GulagBarY, enemyHp, GulagBarHeight * 10)
+  }
+
+  //Callbacks
+  function InGameEffect() {
+    if (inGameMeter.value == 1) {
+      knockdownGoing = false;
+      PlayingGame = true;
+      setTimeout(() => {
+        effects.length = 0;
+        knockdownEffect();
+      }, 200);
+    } else {
+      PlayingGame = false;
+      knockdownGoing = false;
+      reviveActive = false;
+      CirclePlaying = false;
+    }
+  }
+
+  function armorEffects() {
+    if (plate1Meter.decreased) {
+      if (enableStandard && enableShield) {
+        effects.push(new DamageEffect("blue"));
+      }
+      shieldCol = "red";
+      setTimeout(() => { shieldCol = "blue" }, 100)
+
+    }
+    else if (plate1Meter.increased && enableShield) {
+      effects.push(new HealEffect("blue"))
+    }
+
+  }
+  function armorEffects2() {
+
+    if (plate2Meter.decreased) {
+      if (enableStandard && enableShield) {
+        effects.push(new DamageEffect("blue"));
+      }
+      shieldCol = "red";
+      setTimeout(() => { shieldCol = "blue" }, 100)
+    }
+    else if (plate2Meter.increased && enableShield) {
+      effects.push(new HealEffect("blue"))
+    }
+
+  }
+  function armorEffects3() {
+
+    if (plate3Meter.decreased) {
+      if (enableStandard && enableShield) {
+        effects.push(new DamageEffect("blue"));
+      }
+      shieldCol = "red";
+      setTimeout(() => { shieldCol = "blue" }, 100)
+    }
+    else if (plate3Meter.increased && enableShield) {
+      effects.push(new HealEffect("blue"))
+    }
+
+  }
+
+  function healthEffects() {
+
+    if (healthMeter.decreased && healthMeter.diff < .9 && enableHealth) {
+      if (enableStandard) {
+        damagePlaying = true;
+        effects.push(new DamageEffect("red"));
+      }
+      hpCol = "red"
+      setTimeout(() => { hpCol = "green" }, 100)
+      setTimeout(() => { damagePlaying = false; }, 500)
+    } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3 && !knockdownGoing && healthRedMeter.value == 0 && damagePlaying == false && enableStandard && enableHealth) {
+      effects.push(new HealEffect())
+    }
+
+  }
+
+
+
+  function killEffect() {
+    console.log("In kill effect");
+    if (enableStandard && enableKill) {
+      if (kill1Meter.value > 0.8 && kill2Meter.value > 0.8 && killBlackMeter.value > 0.8 && killAnim == false) {
+        stateMgr.Push(new PlayKillEffect("red", 5))
+      }
+    }
+  }
+
+
+  function knockdownEffect() {
+    if (enableStandard && enableKnockdown) {
+      if (downOrangeMeter.value > 0.7 && healthRedMeter.value > 0 && knockdownGoing == false) {
+        console.log("In knockdown effect");
+        knockdownGoing = true;
+        effects.push(new knockdowneffect())
+      }
+    }
+  }
+
+  function reviveEffect() {
+    console.log("In revive effect");
+    if (enableStandard && enableRevive) {
+      if (reviveGreenMeter.value > 0.7 && healthGreenMeter.value > 0 && reviveActive == false) {
+        reviveActive = true;
+        effects.push(new ReviveEffect())
+      }
+    }
+  }
+
+  function gulagEffect() {
+
+    if (gulagRedMeter.value == 1 && gulagWhiteMeter.value == 1) {
+      inGulag = true;
+      knockdownGoing = false;
+      reviveActive = false;
+      CirclePlaying = false;
+    }
+    if (gulagRedMeter.value == 0 && gulagWhiteMeter.value == 0 && inGulag == true) {
+      inGulag = false;
+      setTimeout(() => {
+        effects.length = 0;
+      }, 200);
+    }
+  }
+
+  function circleEffects() {
+    console.log("In circle effects");
+    if (enableStandard && enableCircle) {
+      if (circleBlackMeter.value > 0.9 && circleRedMeter.value > 0.7 && circleWhiteMeter.value > 0.9 && CirclePlaying == false) {
+        CirclePlaying = true;
+        effects.push(new RippleEffect(160, 100, 1, 10000, 50, "purple", "in", "stroke", 5))
+      }
+    }
+  }
+
+  //Effects
+  function DamageEffect(color) {
+    this.start = GetTime();
+    this.bullets = [];
+    this.blood = [];
+    this.color = color;
+    for (let index = 0; index < 10; index++) {
+      this.bullets.push(new bullet((Math.random() * 220) + 50));
+    }
+
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      this.bullets.forEach((bullet, i) => {
+        bullet.draw();
+        if (bullet.y < 0) {
+          this.blood.push(new ParticleExplosion(bullet.x, bullet.y, this.color, 10, 1500, 6, 20, 2, false, false, true))
+          this.bullets.splice(i, 1)
+        }
+      });
+
+      this.blood.forEach(blood => {
+        blood.draw();
+      });
+      if (this.elapsed > 3000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function ReviveEffect() {
+    this.start = GetTime();
+    this.hearts = [];
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.fillStyle = "Green"
+      ctx.fillRect(0, 0, (this.elapsed / 5000) * 320, 200);
+      if (Math.random() > 0.9) {
+        this.hearts.push(new heart(Math.random() * ((this.elapsed / 5000) * 325), 200, "#6AFF33", 60))
+      }
+      this.hearts.forEach((heart, i) => {
+        heart.draw()
+        if (heart.y < 0) {
+          this.hearts.splice(i, 1);
+        }
+      });
+      if ((this.elapsed / 5000) * 335 > 320) {
+        effects.push(new ParticleExplosion(160, 100, "#6AFF33", 5, 2000, 10, 60, 2, false, true, false))
+      }
+      if (reviveGreenMeter.value < .1) {
+        this.lifetime = 0;
+        reviveActive = false;
+      }
+    }
+  }
+
+
+
+  function HealEffect(color) {
+    this.color = "#6AFF33"
+    if (color != null) {
+      this.color = color;
+    }
+    this.hearts = [];
+    for (let index = 0; index < 15; index++) {
+      this.hearts.push(new heart(Math.random() * 320, 200, this.color, 60))
+    }
+    this.draw = function () {
+      this.hearts.forEach((heart, i) => {
+        heart.draw()
+        if (heart.y < 0) {
+          this.hearts.splice(i, 1);
+        }
+      });
+      if (this.hearts.length == 0) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts, hasPhysics) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
+    this.hasPhysics = hasPhysics;
+
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }, this.hasPhysics))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+  function PlayKillEffect(color, radius) {
+    this.start = new Date().getTime();
+    this.elapsed = 0;
+    this.bloodDrip = [];
+    this.state = 0;
+    this.cubeX = 1;
+    this.cubeY = 1;
+    this.color = color;
+    this.radius = radius;
+    killAnim = true;
+    effects.length = 0
+    knockdownGoing = false;
+    reviveActive = false;
+    CirclePlaying = false
+
+    this.Process = function () {
+      if (this.bloodDrip.length < 20) {
+        this.bloodDrip.push(new blood(Math.random() * 320, 0, this.radius, this.color, 0.01))
+      }
+
+      this.elapsed = new Date().getTime() - this.start;
+
+      if (this.elapsed >= 4000) {
+        stateMgr.Pop();
+        killAnim = false;
+      }
+
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.lineWidth = 1;
+      if (this.state == 0) {
+        ctx.beginPath();
+        ctx.fillStyle = 'black'
+        ctx.fillRect(0, 0, this.cubeX, this.cubeY);
+        this.bloodDrip.length = 0;
+        this.cubeX += 15;
+        this.cubeY += 10;
+        effectTime = Date.now();
+        if (this.cubeX >= 320 + 30) {
+          this.state = 1;
+        }
+      }
+      if (this.state == 1) {
+        this.bloodDrip.forEach(blood => {
+          blood.Draw();
+        }
+        );
+      }
+    }
+  }
+
+  function knockdowneffect() {
+    this.lifetime = 10;
+    this.start = GetTime();
+    this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+    this.draw = function () {
+      this.elapsed = GetTime();
+      this.explosionEffect.draw();
+      DrawHeart(160, 90, (Math.sin(this.elapsed / 300) + 1) * 50, (Math.sin(this.elapsed / 300) + 1) * 25)
+      if ((Math.sin(this.elapsed / 300)) >= 0.99) {
+        this.explosionEffect = new ParticleExplosion(160, 100, "red", 14, 1500, 50, 10, 2, false, false, true);
+      }
+      if (downOrangeMeter.value < .1) {
+        this.lifetime = 0
+        knockdownGoing = false;
+      }
+    }
+  }
+
+  function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
+    this.col = color;
+    this.speed = speed;
+    this.dur = duration;
+    this.width = rippleWidth;
+    this.start = GetTime();
+    this.lifetime;
+    this.x = x;
+    this.y = y;
+    this.fill = fillOrStroke;
+    this.radius = 0;
+    this.amount = amountOfRipples;
+    this.background = background;
+    if (inOrOut == "in") {
+      this.radius = 200 + (this.width * (this.amount * 2));
+      this.speed = -this.speed
+    }
+    this.draw = function () {
+      if (this.background) {
+        DrawBackground("black");
+      }
+
+
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      for (let i = 0; i < this.amount; i++) {
+        if (this.radius - i * (this.width * 2) > 0) {
+          ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+        }
+      }
+      if (this.fill == "fill") {
+        ctx.fillStyle = this.col;
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = this.col;
+        ctx.stroke();
+      }
+      this.radius += this.speed;
+      this.lifetime = this.dur - (GetTime() - this.start);
+      if (this.lifetime <= 0) {
+        CirclePlaying = false;
+      }
+    }
+  }
+
+
+
+  function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * keyScreenBrightness / 100 + '%)'
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+    }
+  }
+
+
+
+  //helper functions
+  function GetTime() {
+    return new Date().getTime();
+  }
+
+  function DrawHeart(x, y, xSize, Ysize, color) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.moveTo(x, y);
+    // top left curve
+    ctx.bezierCurveTo(
+      x,
+      y,
+      x - xSize / 2,
+      y - Ysize,
+      x - xSize / 2,
+      y + Ysize / 4
+    );
+    ctx.bezierCurveTo(
+      x - xSize / 2,
+      y + Ysize / 4,
+      x - xSize / 2,
+      y + Ysize / 4,
+      x,
+      y + Ysize
+    );
+    ctx.bezierCurveTo(
+      x + xSize / 2,
+      y + Ysize / 4,
+      x + xSize / 2,
+      y + Ysize / 4,
+      x + xSize / 2,
+      y + Ysize / 4
+    );
+    ctx.bezierCurveTo(
+      x + xSize / 2,
+      y + Ysize / 4,
+      x + xSize / 2,
+      y - Ysize,
+      x,
+      y
+    );
+
+    ctx.fill()
+    ctx.restore()
+  };
+
+  class heart {
+    constructor(x, y, color, size) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.size = size;
+      this.speed = (Math.random() * 2) + 0.5;
+      this.start = GetTime();
+      this.xpos = this.x
+      this.offset = Math.random() * 10;
+    }
+    draw() {
+      this.elapsed = GetTime() - this.start;
+      DrawHeart(this.xpos, this.y, this.size, this.size / 2, this.color)
+      this.y -= this.speed;
+      this.xpos = this.x + Math.sin((this.elapsed + this.offset) / 1000) * 50;
+    }
+  }
+
+  class blood {
+    constructor(x, y, radius, color, fade) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.color = color;
+      this.fade = fade;
+      this.speed = (Math.random() + 0.1) * 4
+    }
+    Draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+      ctx.strokeStyle = this.color;
+      ctx.stroke();
+      this.y += this.speed * Math.random();
+      this.x += (Math.random() - 0.5) * 8;
+    }
+
+  }
+
+
+
+  class bullet {
+    constructor(x) {
+      this.x = x;
+      this.y = 200;
+      this.speed = (Math.random() * 6);
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = "red"
+      ctx.fillRect(this.x, this.y, 20, 60)
+      this.y -= this.speed + 4;
+    }
+  }
+
+  class HeartParticle {
+    constructor(x, y, size, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.size = size;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      DrawHeart(this.x, this.y, this.size, this.size / 2, this.color)
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity, hasPhysics) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+      this.hasPhysics = hasPhysics;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      if (this.hasPhysics != null || this.hasPhysics != false) {
+        this.velocity.y += 0.3;
+      }
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
+  }
+
+
+
+
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    }
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    }
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    }
+  }
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.  
+      values.push(updatedValue);
+      if (values.length > this.size) { values.shift(); }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < (values.length - 1); i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;      
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+  onEngineReady()
+
+</script>
