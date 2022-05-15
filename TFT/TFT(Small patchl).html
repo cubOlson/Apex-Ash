@@ -12,9 +12,9 @@
   <meta property="EnableWin" label="Enable win effect" type="boolean" default="1" />
 
 
-  <meta meter="inGame" tags="VLC, league,teamfight" type="linear" x="0.9242" y="0.83402" width="0.0085" height =".0001" h="0-60"
-    s="30-65" l="20-60">
-    <resolution size="3440x1440" x="0.9366" y="0.8319" width="0.005" height =".0001" />
+  <meta meter="inGame" tags="VLC, league,teamfight" type="linear" x="0.9242" y="0.83402" width="0.0085" height=".0001"
+    h="0-60" s="30-65" l="20-60">
+  <resolution size="3440x1440" x="0.9366" y="0.8319" width="0.005" height=".0001" />
   </meta>
 
   <meta meter="defautlUI" tags="VLC,league" type="area" x="0.4375" y="0.8102" width="0.001" height="0.001" h="0-60"
@@ -153,7 +153,7 @@
   var timeBarMeter = new Meter(5, () => "")
   var combatMeter = new Meter(5, OnCombatChanged)
   var combatMeter2 = new Meter(5, OnCombatChanged)
-  var stateMeter = new Meter(5, () => "")
+  var stateMeter = new Meter(5, OnPlanningChanged)
   var planningConfirmationMeter = new Meter(5, OnPlanningChanged)
   var planningConfirmationMeter2 = new Meter(5, OnPlanningChanged)
   var inGameMeter = new Meter(5, OnGameChanged)
@@ -337,8 +337,11 @@
 
   function OnPlanningChanged() {
     if (inGame) {
-      if (planningConfirmationMeter.value == 1 && stateMeter.value == 1 && planningConfirmationMeter2.value >  1 && EnablePlan) {
+      console.log("ingame")
+      if (planningConfirmationMeter.value > 0.9 && stateMeter.value > 0.9 && planningConfirmationMeter2.value > 0.9 && EnablePlan) {
+        console.log("passed ingame")
         if (stagePlaying == false) {
+          console.log("inPush")
           stagePlaying = true;
           setTimeout(() => {
             stagePlaying = false;
