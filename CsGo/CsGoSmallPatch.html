@@ -1,0 +1,1008 @@
+<head>
+  <title>CS:GO Production</title>
+  <meta description="Rush B with ambience and RGB effects." />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#ff0000" min="0" max="360" />
+  <meta property="HealthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+  <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
+  <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+  <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
+  <meta property="hudToggle" label="enable HUD effects" type="boolean" default="1" />
+  <meta property="healthToggle" label="enable Health effects" type="boolean" default="1" />
+  <meta property="SearchingGameToggle" label="enable Searching game effects" type="boolean" default="1" />
+  <meta property="WinToggle" label="enable Win effects" type="boolean" default="1" />
+  <meta property="ShopToggle" label="enable Shop effects" type="boolean" default="1" />
+  <meta property="SpectatingToggle" label="enable Spectating effects" type="boolean" default="1" />
+  <meta property="KillToggle" label="enable Kill effects" type="boolean" default="1" />
+  <meta property="BombToggle" label="enable Bomb effects" type="boolean" default="1" />
+
+  <!-- Health -->
+  <meta meter="health" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".0652" y=".975"
+    width=".04211" height=".0001" h="0-360" s="0-25" l="80-100" type="linear">
+  <resolution size="3440x1440" x="0.0493" y="0.9722" width="0.03" height=".0001" />
+  <resolution size="2560x1600" x="0.074" y="0.9741" width=".04211" height=".0001" />
+  <resolution size="1920x1200" x="0.074" y="0.9741" width=".04211" height=".0001" />
+  <resolution size="1680x1050" x="0.074" y="0.9741" width=".04211" height=".0001" />
+  </meta>
+
+  <meta meter="lowHealth" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
+    width=".0001" height=".0001" h="0-30" s="60-100" l="50-90" type="linear">
+  <resolution size="3440x1440" x="0.0145" y="0.982" width="0.0025" height=".0001" />
+  <resolution size="2560x1600" x="0.0198" y="0.9833" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x="0.0198" y="0.9833" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x="0.0198" y="0.9833" width=".0001" height=".0001" />
+  </meta>
+  <!-- LobbyEffects -->
+  <meta meter="SearchGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609" y=".0277777"
+    width=".0001" height=".0001" h="140-200" s="10-40" l="80-100" type="linear">
+  <resolution size="3440x1440" x="0.9813" y="0.0345" width="0.0001" height=".0001" />
+  <resolution size="2560x1600" x="0.9719" y="0.0269" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x="0.9719" y="0.0269" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x="0.9719" y="0.0269" width=".0001" height=".0001" />
+  <resolution size="1280x720" x=".974618" y=".0361111" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="SearchGameConfirmation" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".974609"
+    y=".184" width=".0001" height=".0001" h="60-220" s="0-100" l="5-90" type="linear">
+  <resolution size="3440x1440" x="0.9642" y="0.1368" width="0.0001" height=".0001" />
+  <resolution size="2560x1600" x="0.9474" y="0.1333" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x="0.9474" y="0.1333" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x="0.9474" y="0.1333" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="FoundGame" tags="vlc,counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".4277"
+    width=".0001" height=".0001" h="70-140" s="50-80" l="10-50" type="linear">
+  <resolution size="3440x1440" x="0.5038" y="0.4972" width="0.0001" height=".0001" />
+  <resolution size="2560x1600" x="0.2927" y="0.5259" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x="0.2927" y="0.5259" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x="0.2927" y="0.5259" width=".0001" height=".0001" />
+  </meta>
+
+  <!-- TerroristWins -->
+  <meta meter="tWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".485" y=".1361" width=".0140"
+    height=".015" h="40-60" s="30-50" l="50-100" type="area">
+  <resolution size="3440x1440" x="0.4988" y="0.159" width="0.002" height=".01" />
+  <resolution size="2560x1600" x="0.4979" y="0.1583" width=".0140" height=".015" />
+  <resolution size="1920x1200" x="0.4979" y="0.1583" width=".0140" height=".015" />
+  <resolution size="1680x1050" x="0.4979" y="0.1583" width=".0140" height=".015" />
+  </meta>
+
+  <meta meter="tWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4609" y=".206"
+    width=".0039" height=".0001" h="40-60" s="20-50" l="50-100" type="linear">
+  <resolution size="3440x1440" x="0.4701" y="0.2063" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x="0.4557" y="0.2056" width=".0039" height=".0001" />
+  <resolution size="1920x1200" x="0.4557" y="0.2056" width=".0039" height=".0001" />
+  <resolution size="1680x1050" x="0.4557" y="0.2056" width=".0039" height=".0001" />
+  </meta>
+
+  <meta meter="tWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".5086" y=".168"
+    width=".0039" height=".0001" h="0-60" s="30-70" l="20-40" type="linear">
+  <resolution size="3440x1440" x="0.508" y="0.1667" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x="0.5125" y="0.1639" width=".0039" height=".0001" />
+  <resolution size="1920x1200" x="0.5125" y="0.1639" width=".0039" height=".0001" />
+  <resolution size="1680x1050" x="0.5125" y="0.1639" width=".0039" height=".0001" />
+  </meta>
+
+  <!-- CounterTerroristWins -->
+  <meta meter="ctWinBlackConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".496" y=".127"
+    width=".0039" height=".0001" h="0-360" s="0-100" l="0-5" type="linear">
+  <resolution size="3440x1440" x="0.4983" y="0.1792" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x="0.4984" y="0.1815" width=".0039" height=".0001" />
+  <resolution size="1920x1200" x="0.4984" y="0.1815" width=".0039" height=".0001" />
+  <resolution size="1680x1050" x="0.4984" y="0.1815" width=".0039" height=".0001" />
+  </meta>
+
+  <meta meter="ctWinConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".497" y=".121"
+    width=".0039" height=".0002" h="165-250" s="0-40" l="40-80" type="area">
+  <resolution size="3440x1440" x="0.4887" y="0.2056" width="0.002" height=".01" />
+  <resolution size="2560x1600" x="0.4849" y="0.2056" width=".0039" height=".0002" />
+  <resolution size="1920x1200" x="0.4849" y="0.2056" width=".0039" height=".0002" />
+  <resolution size="1680x1050" x="0.4849" y="0.2056" width=".0039" height=".0002" />
+  <resolution size="1280x720" x=".484375" y=".20486" width=".0001" height=".0002" />
+  </meta>
+
+  <meta meter="ctWinIcon" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4988" y=".153"
+    width=".00140" height=".0035" h="165-250" s="0-30" l="60-80" type="area">
+  <resolution size="3440x1440" x="0.4996" y="0.1538" width="0.002" height=".01" />
+  <resolution size="2560x1600" x="0.499" y="0.1528" width=".00140" height=".0035" />
+  <resolution size="1920x1200" x="0.499" y="0.1528" width=".00140" height=".0035" />
+  <resolution size="1680x1050" x="0.499" y="0.1528" width=".00140" height=".0035" />
+  </meta>
+
+  <!-- InShop -->
+  <meta meter="InShopBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4597" y=".9284"
+    width=".00140" height=".0001" h="0-360" s="0-100" l="0-30" type="linear">
+  <resolution size="3440x1440" x="0.0078" y="0.0153" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x=".4597" y=".9284" width=".00140" height=".0001" />
+  <resolution size="1920x1200" x=".4597" y=".9284" width=".00140" height=".0001" />
+  <resolution size="1680x1050" x=".4597" y=".9284" width=".00140" height=".0001" />
+  </meta>
+
+  <meta meter="InShopBack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0429" y=".949005"
+    width=".0001" height=".0001" h="0-360" s="0-5" l="70-100" type="linear">
+  <resolution size="3440x1440" x="0.0322" y="0.9498" width="0.001" height=".0001" />
+  <resolution size="2560x1600" x=".0429" y=".9602" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".0429" y=".9602" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".0429" y=".9602" width=".0001" height=".0001" />
+  <resolution size="1280x720" x=".0433" y=".9652777" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="AutoBuyBracket" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8941" y=".965277"
+    width=".0001" height=".0001" h="0-360" s="0-10" l="55-100" type="linear">
+  <resolution size="3440x1440" x="0.9211" y="0.95" width="0.0005" height=".0001" />
+  <resolution size="2560x1600" x=".8818" y=".95" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".8818" y=".95" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".8818" y=".95" width=".0001" height=".0001" />
+  <resolution size="1280x720" x=".8894" y=".965277" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="BuyMinus" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01679" y=".3791"
+    width=".0001" height=".0001" h="0-30" s="50-100" l="30-100" type="linear">
+  <resolution size="3440x1440" x="0.0125" y="0.3785" width="0.0005" height=".0001" />
+  <resolution size="2560x1600" x=".0193" y=".3787" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".0193" y=".3787" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".0193" y=".3787" width=".0001" height=".0001" />
+  <resolution size="1280x720" x=".01718" y=".3756944" width=".0001" height=".0001" />
+  </meta>
+  <!-- Spectating -->
+
+  <meta meter="SpectatingBlack" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3597" y=".8840"
+    width=".0001" height=".0001" h="0-360" s="0-100" l="0-15" type="linear">
+  <resolution size="3440x1440" x="0.3884" y="0.8833" width="0.0002" height=".0001" />
+  <resolution size="2560x1600" x=".3328" y=".8843" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".3328" y=".8843" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".3328" y=".8843" width=".0001" height=".0001" />
+  <resolution size="1280x720" x=".3597" y=".884811" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="SpectatingMap" tags="counter-strike, counter-strike:global offensive, cs:go" x=".0230" y=".30277"
+    width=".0001" height=".0001" h="0-360" s="0-100" l="0-10" type="linear">
+  <resolution size="3440x1440" x="0.0052" y="0.3111" width="0.0002" height=".0001" />
+  <resolution size="2560x1600" x=".0094" y=".3046" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".0094" y=".3046" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".0094" y=".3046" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="SpectatingCt" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875"
+    width=".1" height=".0001" h="170-210" s="60-100" l="0-80" type="area">
+  <resolution size="3440x1440" x="0.3933" y="0.8861" width="0.05" height=".0001" />
+  <resolution size="2560x1600" x=".3349" y=".887" width=".1" height=".0001" />
+  <resolution size="1920x1200" x=".3349" y=".887" width=".1" height=".0001" />
+  <resolution size="1680x1050" x=".3349" y=".887" width=".1" height=".0001" />
+  </meta>
+
+  <meta meter="SpectatingT" tags="counter-strike, counter-strike:global offensive, cs:go" x=".3535" y=".8875" width=".1"
+    height=".0001" h="30-60" s="70-100" l="65-100" type="area">
+  <resolution size="3440x1440" x="0.3933" y="0.8861" width="0.05" height=".0001" />
+  <resolution size="2560x1600" x=".3349" y=".887" width=".1" height=".0001" />
+  <resolution size="1920x1200" x=".3349" y=".887" width=".1" height=".0001" />
+  <resolution size="1680x1050" x=".3349" y=".887" width=".1" height=".0001" />
+  </meta>
+
+  <!-- InGame -->
+  <meta meter="InGame" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01914" y=".33958" width=".0001"
+    height=".0001" h="0-360" s="0-10" l="85-100" type="linear">
+  <resolution size="3440x1440" x="0.0137" y="0.3396" width="0.0035" height=".0001" />
+  <resolution size="2560x1600" x=".0203" y=".338" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".0203" y=".338" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".0203" y=".338" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="InGameConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".01718" y=".972333"
+    width=".0001" height=".0001" h="0-360" s="0-40" l="60-90" type="linear">
+  <resolution size="3440x1440" x="0.014" y="0.9831" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x=".0198" y=".9833" width="0.0001" height=".0001" />
+  <resolution size="1920x1200" x=".0198" y=".9833" width="0.0001" height=".0001" />
+  <resolution size="1680x1050" x=".0198" y=".9833" width="0.0001" height=".0001" />
+  </meta>
+
+  <!-- Kill -->
+
+  <meta meter="Kill" tags="counter-strike, counter-strike:global offensive, cs:go" x=".99414" y=".06852" width=".0001"
+    height=".20208" h="0-30" s="60-100" l="45-95" type="area">
+  <resolution size="3440x1440" x="0.995" y="0.0708" width="0.0001" height=".2" />
+  <resolution size="2560x1600" x=".9932" y=".0713" width=".0001" height=".20208" />
+  <resolution size="1920x1200" x=".9932" y=".0713" width=".0001" height=".20208" />
+  <resolution size="1680x1050" x=".9932" y=".0713" width=".0001" height=".20208" />
+  </meta>
+
+  <meta meter="KillConfirmation" tags="counter-strike, counter-strike:global offensive, cs:go" x=".8785" y=".96053"
+    width=".0001" height=".0001" h="0-360" s="0-10" l="75-100" type="area">
+  <resolution size="3440x1440" x="0.9094" y="0.9574" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x=".8641" y=".9565" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".8641" y=".9565" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".8641" y=".9565" width=".0001" height=".0001" />
+  </meta>
+
+  <!--Bomb planted-->
+
+  <meta meter="BombPlanted" tags="counter-strike, counter-strike:global offensive, cs:go" x=".4941" y=".014833"
+    width=".0001" height=".0001" h="0-100" s="60-100" l="35-100" type="area">
+  <resolution size="3440x1440" x="0.4953" y="0.0139" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x=".4917" y=".012" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".4917" y=".012" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".4917" y=".012" width=".0001" height=".0001" />
+  </meta>
+
+  <meta meter="BombPlantedConfirmation" tags="counter-strike,counter-strike:global offensive,cs:go" x=".484375"
+    y=".731944" width=".0001" height=".0001" h="0-100" s="65-100" l="35-100" type="linear">
+  <resolution size="3440x1440" x="0.4834" y="0.7278" width="0.002" height=".0001" />
+  <resolution size="2560x1600" x=".475" y=".7269" width=".0001" height=".0001" />
+  <resolution size="1920x1200" x=".475" y=".7269" width=".0001" height=".0001" />
+  <resolution size="1680x1050" x=".475" y=".7269" width=".0001" height=".0001" />
+  </meta>
+</head>
+
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //Declaring variables
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var effects = [];
+  var healthMeter = new Meter(10, onHealthChanged);
+  var inGameMeter = new Meter(5, onGameChanged);
+  var inGame2Meter = new Meter(5, onGameChanged);
+  var SearchGameMeter = new Meter(40, onSearchChanged)
+  var SearchGameConfirmationMeter = new Meter(20, () => "")
+  var FoundGameMeter = new Meter(20, () => "")
+  var SpectatingBlackMeter = new Meter(25, onSpectatingChanged)
+  var SpectatingCtMeter = new Meter(25, onSpectatingChanged)
+  var SpectatingTMeter = new Meter(25, onSpectatingChanged)
+  var SpectatingMapMeter = new Meter(25, onSpectatingChanged)
+  var InShopBlackMeter = new Meter(10, onShopChanged)
+  var InShopBackMeter = new Meter(10, onShopChanged)
+  var AutoBuyBracketMeter = new Meter(10, onShopChanged)
+  var BuyMinusMeter = new Meter(3, onShopChanged)
+  var lowHealthMeter = new Meter(5, onLowHealthChanged)
+  var KillConfirmationMeter = new Meter(1, onKillChanged)
+  var tWinBlackConfirmationMeter = new Meter(25, onTerroristWinChanged);
+  var tWinConfirmationMeter = new Meter(25, onTerroristWinChanged);
+  var tWinIconMeter = new Meter(25, onTerroristWinChanged);
+  var ctWinBlackConfirmationMeter = new Meter(25, onCounterTerroristWinChanged)
+  var ctWinConfirmationMeter = new Meter(25, onCounterTerroristWinChanged)
+  var ctWinIconMeter = new Meter(25, onCounterTerroristWinChanged)
+  var BombPlantedMeter = new Meter(25, onBombPlanted)
+  var BombPlantedConfirmationMeter = new Meter(5, () => "")
+  var KillMeter = new Meter(20, onKillChanged)
+  var lowHpGoing = false;
+  var inGame = false;
+  var isSpectating = false;
+  var inShop = false;
+  var BombPlantedPlaying = false;
+
+  var terroristplaying = false;
+
+
+
+  //Declaring meters
+
+  function update() {
+    //Updating meters
+    IdleState();
+    tWinBlackConfirmationMeter.setValue(engine.vision.tWinBlackConfirmation)
+    tWinConfirmationMeter.setValue(engine.vision.tWinConfirmation)
+    tWinIconMeter.setValue(engine.vision.tWinIcon)
+    ctWinBlackConfirmationMeter.setValue(engine.vision.ctWinBlackConfirmation)
+    ctWinConfirmationMeter.setValue(engine.vision.ctWinConfirmation)
+    ctWinIconMeter.setValue(engine.vision.ctWinIcon)
+    lowHealthMeter.setValue(engine.vision.lowHealth)
+    SpectatingBlackMeter.setValue(engine.vision.SpectatingBlack)
+    SpectatingCtMeter.setValue(engine.vision.SpectatingCt)
+    SpectatingTMeter.setValue(engine.vision.SpectatingT)
+    inGameMeter.setValue(engine.vision.InGame);
+    SearchGameMeter.setValue(engine.vision.SearchGame)
+    SearchGameConfirmationMeter.setValue(engine.vision.SearchGameConfirmation)
+    FoundGameMeter.setValue(engine.vision.FoundGame)
+    inGame2Meter.setValue(engine.vision.InGameConfirmation)
+    InShopBlackMeter.setValue(engine.vision.InShopBlack)
+    InShopBackMeter.setValue(engine.vision.InShopBack)
+    AutoBuyBracketMeter.setValue(engine.vision.AutoBuyBracket)
+    BuyMinusMeter.setValue(engine.vision.BuyMinus)
+    SpectatingMapMeter.setValue(engine.vision.SpectatingMap)
+    BombPlantedMeter.setValue(engine.vision.BombPlanted)
+    BombPlantedConfirmationMeter.setValue(engine.vision.BombPlantedConfirmation);
+
+
+
+    if (inGame && !isSpectating) {
+      healthMeter.setValue(engine.vision.health)
+      KillMeter.setValue(engine.vision.Kill)
+      KillConfirmationMeter.setValue(engine.vision.KillConfirmation)
+    }
+
+    if (hudToggle) {
+      DrawHud()
+    }
+
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    stateMgr.Process();
+
+    window.requestAnimationFrame(update);
+  }
+
+  function DrawHud() {
+    ctx.beginPath();
+    ctx.fillStyle = healthColor;
+    if (inGame && !isSpectating) {
+      ctx.fillRect(HealthBarX, HealthBarY, healthMeter.value * HealthBarWidth, HealthBarHeight)
+    } else if (adjToggle) {
+      ctx.fillRect(HealthBarX, HealthBarY, HealthBarWidth, HealthBarHeight)
+    }
+
+
+  }
+
+  function onTerroristWinChanged() {
+    if (tWinBlackConfirmationMeter.value == 1 && tWinConfirmationMeter.value == 1 && tWinIconMeter.value > .5 && WinToggle) {
+      console.log("TerroristWins")
+      if (terroristplaying == false) {
+        terroristplaying = true;
+        stateMgr.Push(new TerroristWinsEffect())
+      }
+
+    }
+  }
+
+  function onCounterTerroristWinChanged() {
+    console.log("here")
+    if (ctWinBlackConfirmationMeter.value == 1 && ctWinConfirmationMeter.value == 1 && ctWinIconMeter.value > .8 && inGameMeter.value == 1 && WinToggle) {
+      console.log("TerroristWins")
+      if (terroristplaying == false) {
+        terroristplaying = true;
+        stateMgr.Push(new CounterTerroristWinsEffect())
+      }
+
+    }
+  }
+
+  function onSpectatingChanged() {
+
+    if (SpectatingBlackMeter.value > 0.8 && SpectatingCtMeter.value > 0.7 || SpectatingBlackMeter.value > 0.8 && SpectatingTMeter.value > .7) {
+      ClearEffects();
+      isSpectating = true
+      if (SpectatingCtMeter.value > 0.7 && SpectatingToggle) {
+        effects.push(new SpectatingEffect(201, 98, 41))
+      } else if (SpectatingToggle) {
+        effects.push(new SpectatingEffect(19, 98, 41))
+      }
+      console.log("Spectating")
+    } else if (SpectatingMapMeter.value < 0.8) {
+      isSpectating = false;
+      console.log("Stop Spectating")
+    }
+
+  }
+
+  function onKillChanged() {
+    if (KillConfirmationMeter.value != 0 && KillMeter.increased && KillToggle && KillMeter.diff > 0.05) {
+      effects.push(new killEffect())
+    }
+  }
+
+  function onBombPlanted() {
+    if (BombPlantedMeter.value >= 0.9 && BombPlantedConfirmationMeter.value == 1 && BombPlantedPlaying == false && isSpectating == false && BombToggle) {
+      stateMgr.Push(new BombPlantedEffect());
+      BombPlantedPlaying = true;
+    }
+  }
+
+  function onShopChanged() {
+    if (ShopToggle) {
+
+
+      if (InShopBlackMeter.value > 0.8 && InShopBackMeter.value > 0.8 && AutoBuyBracketMeter.value > 0.8) {
+        if (!inShop) {
+          effects.push(new ShopEffect())
+        }
+        inShop = true;
+      } else {
+        inShop = false;
+      }
+      if (inShop && BuyMinusMeter.value > 0.7) {
+        effects.push(new MoneyEffect("red"));
+      }
+    }
+  }
+
+  function onSearchChanged() {
+    if (SearchGameMeter.value == 1 && SearchGameConfirmationMeter.value > 0.7 && SearchingGameToggle) {
+      console.log("Searching Match")
+      effects.push(new searchingMatchEffect());
+    }
+  }
+
+
+  function onGameChanged() {
+    if (inGameMeter.value == 1 && inGame2Meter.value == 1 || inGameMeter.value == 1 && lowHealthMeter.value == 1) {
+      inGame = true;
+      setTimeout(() => {
+        ClearEffects()
+        AfterGameCheck();
+      }, 10);
+      console.log("In game")
+    } else {
+      inGame = false;
+      ClearEffects()
+      AfterGameCheck();
+      console.log("Out game")
+    }
+  }
+
+  function ClearEffects() {
+    effects.forEach((element, i) => {
+      if (!element.moneyTrue) {
+        effects.splice(i, 1)
+      }
+    });
+    lowHpGoing = false;
+    inShop = false;
+    isSpectating = false;
+  }
+
+  function AfterGameCheck() {
+    onShopChanged();
+    onSpectatingChanged();
+    onLowHealthChanged();
+  }
+
+  function onHealthChanged() {
+    if (healthToggle) {
+      if (healthMeter.decreased && isSpectating == false && inGame == true) {
+        for (let index = 0; index < 20; index++) {
+          setTimeout(() => {
+            effects.push(new DamageState(160, 200, Math.random() * 10 + 15, "red"));
+          }, 20);
+        }
+      }
+      onLowHealthChanged()
+    }
+  }
+
+  function onLowHealthChanged() {
+    if (lowHealthMeter.value == 1 && lowHpGoing == false && isSpectating == false && healthToggle) {
+      effects.push(new lowHpState())
+      lowHpGoing = true;
+    }
+  }
+
+
+  function lowHpState() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.duration = GetTime() - this.start;
+      ctx.fillStyle = "hsla(0,100%,50%,0.3)"
+      ctx.fillRect(0, 0, 320, 200);
+      for (let i = 0; i < 6; i++) {
+        DrawCircle(i * 50 + 30, Math.cos(this.duration / 100 + i) * 50 + 100, 30, "red")
+
+      }
+      if (healthMeter.value > 0.2) {
+        this.lifetime = 0;
+        lowHpGoing = false;
+      }
+    }
+  }
+
+  function TerroristWinsEffect() {
+    this.start = GetTime();
+    this.explosion = new ParticleExplosion(160, 100, "orange", 6, 2000, 300, 20, 2.2, false, false, false)
+    this.Process = function () {
+      this.duration = GetTime() - this.start
+      if (this.duration > 10000) {
+        stateMgr.Pop()
+        terroristplaying = false;
+      }
+      this.draw()
+    }
+    this.draw = function () {
+      if (this.duration < 2500) {
+        ctx.beginPath();
+        ctx.fillStyle = "Black"
+        ctx.fillRect(0, 0, 320, 200)
+        ctx.fillStyle = this.duration % 1000 - this.duration / 5 >= 300 - (this.duration / 5) / 2 ? "hsla(97, 100%, 27%, 1)" : "red"
+        ctx.fillRect(80, 60, 160, 80)
+        ctx.moveTo(80, 100)
+        ctx.lineTo(240, 100)
+        ctx.moveTo(160, 60)
+        ctx.lineTo(160, 140)
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "black"
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      } else if (this.duration < 5300) {
+        ctx.fillStyle = "Black"
+        ctx.fillRect(0, 0, 320, 200)
+        this.explosion.draw()
+      } else {
+
+
+      }
+    }
+  }
+
+  function CounterTerroristWinsEffect() {
+    this.start = new Date().getTime();
+    this.duration = 1500;
+    this.timing = 100;
+    this.speed = 4;
+    this.lifetime = 10;
+    this.elapsed = 0;
+    this.VictoryDrip = [];
+    this.Process = function () {
+      if (this.VictoryDrip.length < 140 && this.elapsed < 3000) {
+        if (Math.random() > 0.5) {
+          this.VictoryDrip.push(new CounterTerroristWinsParticle(Math.random() * 320, 0, 10, 'yellow', 0.01))
+        } else {
+          this.VictoryDrip.push(new CounterTerroristWinsParticle(Math.random() * 320, 0, 10, 'blue', 0.01))
+        }
+      }
+      this.duration = GetTime() - this.start
+      if (this.duration > 10000) {
+        stateMgr.Pop()
+        terroristplaying = false;
+      }
+      this.draw()
+    }
+    this.draw = function () {
+      if (this.duration < 2500) {
+        ctx.beginPath();
+        ctx.fillStyle = "black"
+        ctx.fillRect(0, 0, 320, 200)
+        ctx.globalAlpha = .5;
+        if (this.timing > 30 && this.timing < 110) {
+          ctx.fillStyle = "#ff0000";
+          ctx.fillRect(0, 0, 106, 200);
+
+          ctx.fillStyle = "#0000ff";
+          ctx.fillRect(214, 0, 106, 200);
+        } else {
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(106, 0, 108, 200);
+        }
+        if (this.timing > 0) {
+          this.timing -= this.speed;
+        } else {
+          this.timing = 110;
+        }
+        ctx.globalAlpha = 1;
+
+      } else if (this.duration < 5300) {
+
+        ctx.beginPath();
+        ctx.fillStyle = 'black'
+        ctx.fillRect(0, 0, 320, 200);
+        this.VictoryDrip.forEach(VictoryParticle => {
+          VictoryParticle.Draw();
+        }
+        );
+      }
+    }
+  }
+
+
+  function ShopEffect() {
+    this.draw = function () {
+      ctx.fillStyle = "hsla(201, 98%, 41%, 0.3)"
+      ctx.fillRect(0, 0, 320, 200);
+      if (!inShop) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function killEffect() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.duration = GetTime() - this.start;
+      DrawSkull(160, 250 - this.duration / 5, 80, "white")
+      effects.push(new DamageState(260, 0, 10, "red"))
+      if (this.duration > 2000) {
+        this.lifetime = 0
+      }
+    }
+  }
+
+  function BombPlantedEffect() {
+    this.start = GetTime();
+    this.size = 100;
+    this.Process = function () {
+      this.duration = GetTime() - this.start;
+      if (this.duration > 6000) {
+        stateMgr.Pop();
+        BombPlantedPlaying = false;
+      }
+      this.draw();
+    }
+    this.draw = function () {
+      this.size = (Math.sin(this.duration / 350) + 1) * 150;
+      ctx.beginPath();
+      ctx.moveTo(160 - this.size / 2, 100 + this.size / 2);
+      ctx.lineTo(160 + this.size / 2, 100 + this.size / 2);
+      ctx.lineTo(160, 100 - this.size / 2.5);
+      ctx.lineTo(160 - this.size / 2, 100 + this.size / 2);
+      ctx.fillStyle = "orange";
+      ctx.fill();
+      ctx.fillStyle = "black"
+      ctx.fillRect(160 - this.size / 12, 100 - this.size / 4, this.size / 6, this.size / 3)
+      DrawCircle(160, 100 + this.size / 4, this.size / 8, "black")
+
+    }
+  }
+
+  function searchingMatchEffect() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.duration = GetTime() - this.start
+      ctx.arc(160, 100, 130, 0, Math.PI * 2)
+      ctx.strokeStyle = "Green"
+      ctx.fillStyle = "hsla(99, 53%, 10%, 1)"
+      ctx.fill();
+      ctx.lineWidth = 20;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(160, 100);
+      ctx.rotate(this.duration / 500)
+      ctx.fillStyle = "Green"
+      ctx.fillRect(-15, 0, 30, 130)
+      ctx.restore();
+      if (FoundGameMeter.value == 1 || SearchGameConfirmationMeter.value == 0) {
+        effects.push(new ParticleExplosion(160, 100, "Green", 3, 2000, 100, 20, 2, false, false, false))
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function SpectatingEffect(colorh, colors, colorl) {
+    this.start = GetTime();
+    this.color = {
+      h: colorh,
+      s: colors,
+      l: colorl
+    }
+    this.cubes = [];
+
+    this.draw = function () {
+      if (Math.random() > 0.95) {
+        this.cubes.push(new MovingCube(320, 10, `hsl(${this.color.h}, ${this.color.s + ((Math.random() - .5) * 20)}%, ${this.color.l + ((Math.random() - .5) * 20)}%)`))
+      } else if (Math.random() < 0.05) {
+        this.cubes.push(new MovingCube(0, 10, `hsl(${this.color.h}, ${this.color.s + ((Math.random() - .5) * 50)}%, ${this.color.l + ((Math.random() - .5) * 50)}%)`))
+      }
+
+
+      this.cubes.forEach((element, i) => {
+        element.draw();
+        if (element.startX < 0 || element.startX > 320) {
+          this.cubes.splice(i, 1)
+        }
+      });
+      if (this.color.h > 100 && SpectatingCtMeter.value < 0.3 || this.color.h < 100 && SpectatingTMeter.value < 0.3) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  class MovingCube {
+    constructor(startX, speed, color) {
+
+      this.startX = startX;
+      if (startX > 100) {
+        this.speed = - speed / 20;
+      } else {
+        this.speed = speed / 20;
+      }
+      this.color = color;
+      this.y = Math.random() * 200
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = this.color
+      ctx.globalAlpha = 0.8;
+      ctx.fillRect(this.startX, this.y, 50, 20);
+      ctx.globalAlpha = 1;
+      this.startX += this.speed;
+    }
+  }
+
+
+
+  function DamageState(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.moneyTrue = false;
+    this.x = x;
+    this.vx = 7 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -20;
+    this.ay = 1;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function MoneyEffect(color) {
+    this.start = GetTime();
+    this.money = [];
+    this.color = color;
+    this.moneyTrue = true;
+
+    for (let i = 0; i < 35; i++) {
+      this.money.push(new fallingMoney(Math.random() * 320, Math.random() + 5, this.color))
+    }
+    this.draw = function () {
+      this.money.forEach(money => {
+        money.draw();
+      });
+      if (GetTime() - this.start > 8000) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+
+
+
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts, hasPhysics) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
+    this.hasPhysics = hasPhysics;
+
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }, this.hasPhysics))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+
+
+  function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * keyScreenBrightness / 100 + '%)'
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+    }
+  }
+
+
+
+  //helper functions
+  function GetTime() {
+    return new Date().getTime();
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+
+  function DrawSkull(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.ellipse(x, y, radius, radius / 4, 0, Math.PI / 2, true)
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x - radius, y)
+    ctx.lineTo(x - radius * 1.1, y + radius / 1.2)
+    ctx.lineTo(x - radius / 1.8, y + radius / 1.2)
+    ctx.lineTo(x - radius / 1.8, y + radius * 1.3)
+    ctx.lineTo(x + radius / 1.8, y + radius * 1.3)
+    ctx.lineTo(x + radius / 1.8, y + radius / 1.2)
+    ctx.lineTo(x + radius * 1.1, y + radius / 1.2)
+    ctx.lineTo(x + radius, y)
+    ctx.strokeStyle = "white"
+    ctx.stroke()
+    ctx.fill();
+    DrawCircle(x - radius / 2, y + radius / 4, 20, "black")
+    DrawCircle(x + radius / 2, y + radius / 4, 20, "black")
+  };
+
+
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  class
+    CounterTerroristWinsParticle {
+    constructor(x, y, radius, color, fade) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.color = color;
+      this.fade = fade;
+      this.speed = (Math.random() + 0.1) * 4
+    }
+    Draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+      ctx.fillStyle = this.color
+      ctx.fill();
+      this.y += this.speed * Math.random();
+      this.x += (Math.random() - 0.5) * 20;
+    }
+
+  }
+
+  class fallingMoney {
+    constructor(x, speed, color) {
+      this.speed = speed / 5;
+      this.x = x;
+      this.y = 0 - (Math.random() * 250);
+      this.startVal = (Math.random() * 50);
+      this.start = GetTime();
+      this.color = color;
+    }
+    draw() {
+      this.elapsed = GetTime() - this.start;
+      this.moveVal = (this.elapsed / 1000);
+      ctx.fillStyle = this.color;
+      ctx.save();
+      ctx.translate(this.x + Math.sin(this.startVal + this.moveVal) * 100, this.y);
+      ctx.rotate(-Math.sin(this.moveVal + this.startVal) / 5);
+      ctx.fillRect(this.x, this.y, 100, 35);
+      ctx.restore();
+      this.y += this.speed;
+    }
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    }
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    }
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    }
+  }
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.  
+      values.push(updatedValue);
+      if (values.length > this.size) { values.shift(); }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < (values.length - 1); i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;      
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+  onEngineReady()
+
+</script>
