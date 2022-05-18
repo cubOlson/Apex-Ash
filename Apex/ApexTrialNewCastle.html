@@ -1,9 +1,9 @@
 <head>
-  <title>Apex Legends</title>
+  <title>Apex Legends New</title>
   <meta description="Meters and ambiance for Apex Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Legends" type="combobox"
-    values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,NewCastle,Octane,Pathfinder,Rampart,Revenant,Seer,Valkyrie,Wattson,Wraith"
+    values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mad Maggie,Mirage,NewCastle,Octane,Pathfinder,Rampart,Revenant,Seer,Valkyrie,Wattson,Wraith"
     default="Ash" />
   <meta property="keyScrenBrightness" label="Brightness" type="number" min="0" max="100" default="100" />
   <meta property="effectHex" label="Legends Select Color" type="color" min="0" max="360" default="#efff00" />
@@ -361,6 +361,9 @@
 
   var newCastle_q = new Meter(5, newCastle_q_bar)
   var newCastle_z = new Meter(5, newCastle_z_bar)
+
+  var madMaggie_q = new Meter(5, madMaggie_q_bar)
+  var madMaggie_z = new Meter(5, madMaggie_z_bar)
 
   var MainZ = new Meter(5, newCastle_z_bar)
 
@@ -831,6 +834,23 @@
     }
   }
 
+  function madMaggie_q_bar() {
+    if (legend == "Mad Maggie") {
+      if (madMaggie_q.decreased && engine.vision.check == 1, engine.vision.osdEsc != 1 && madMaggie_q.value < .5 && madMaggie_q.diff > 0.5 && health != 0) {
+        effects.push(new maggieQ())
+      }
+    }
+  }
+
+  function madMaggie_z_bar() {
+    if (legend == "Mad Maggie") {
+
+      if (engine.vision.check == 1 && engine.vision.osdEsc != 1 && grey_Z.value == 1 && madMaggie_z.value == 0 && ultCharged) {
+        effects.push(new maggieZ())
+      }
+    }
+  }
+
   // ENGINE READY FUNCTION ---------------------------------------------------------------------------------------------
   function onEngineReady() {
     // Grab canvas and rendering context.
@@ -955,9 +975,16 @@
           loba_z.setValue(engine.vision.checkGreen);
           loba_t.setValue(engine.vision.loba2);
           break;
+        case "Mad Maggie":
+          madMaggie_q.setValue(engine.vision.q);
+          madMaggie_z.setValue(engine.vision.mainZ)
         case "Mirage":
           mirage_q.setValue(engine.vision.q);
           mirage_z.setValue(engine.vision.greyZ);
+          break;
+        case "NewCastle":
+          newCastle_q.setValue(engine.vision.q);
+          newCastle_z.setValue(engine.vision.mainZ)
           break;
         case "Octane":
           octane_q.setValue(engine.vision.q);
@@ -978,10 +1005,6 @@
           revenant_q1.setValue(engine.vision.q1);
           revenant_z.setValue(engine.vision.checkGreen);
           revenant_z2.setValue(engine.vision.dprotection);
-          break;
-        case "NewCastle":
-          newCastle_q.setValue(engine.vision.q);
-          newCastle_z.setValue(engine.vision.mainZ)
           break;
         case "Seer":
           seer_q.setValue(engine.vision.q);
@@ -1299,6 +1322,124 @@
       }
     };
   }
+
+  function maggieQ(){
+    this.effects = []
+    this.lifetime = 10;
+    this.start = Date.now()
+    this.start2 = Date.now();
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      var elapsed2 = Date.now() - this.start2;
+      if(elapsed > 100 && elapsed2 < 7800){
+        this.start = Date.now()
+        this.effects.push(new maggieDot(0, 100, 7, 4, 40, 20, 3, "hsl(210, 95%, 65%)"))
+        this.effects.push(new maggieDot(0, Date.now() % 2 == 0 ? 70 : 130, 10, 10, 40, 25, 9, "hsl(30, 100%, 55%)"))
+        this.effects.push(new maggieDot(0, Date.now() % 2 == 0 ? 70 : 130, 10, 10, 40, 20, 8, "white"))
+        this.effects.push(new maggieDot(0, Date.now() % 2 == 0 ? 90 : 110, 10, 10, 20, 15, 10, "hsl(30, 100%, 55%)"))
+        this.effects.push(new maggieDot(0, Date.now() % 2 == 0 ? 90 : 110, 10, 10, 20, 10, 10, "white"))
+        this.effects.push(new maggieDot(0, 100, 6, 6, 6, 20, 4, "hsl(40, 100%, 55%)"))
+        this.effects.push(new maggieDot(0, 100, 6, 6, 6, 6, 4, "white"))
+      }
+      ctx.globalAlpha = .8;
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if(ele.lifetime <= 0){
+          this.effects.splice(i, 1)
+        }
+      });
+      ctx.globalAlpha = 1;
+      if(elapsed2 > 9000){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function maggieDot(x, y, speed, amp, per, radius, mod, color){
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.amp = amp;
+    this.per = per;
+    this.radius = radius;
+    this.color = color;
+    this.lifetime = 10;
+    this.mod = mod;
+    this.draw = function(){
+      var mod = Math.sin(Date.now() / 1000) * this.mod;
+      DrawCircle(this.x, this.y, this.radius, this.color);
+      this.x += this.speed;
+      this.y += Math.cos(this.x / this.per) * this.amp;
+      this.mod ? this.per+=mod : null;
+      if(this.x > 350){
+        this.lifetime = 0;
+      }
+    }
+  }
+  function maggieZ(){
+  this.y = 250;
+  this.y2 = 200;
+  this.count = 0;
+  this.lifetime = 10;
+  this.check = true;
+  this.effects = []
+  this.draw = function(){
+    ctx.globalAlpha = .75;
+    DrawRect(0, this.y2, 320, 200, "black")
+    ctx.globalAlpha = 1;
+    if(this.y2 > 0 && !this.count){
+      this.y2 -= 10;
+    } else if (this.y2 == 0 && this.count < 300){
+      this.count++;
+    } else {
+      this.y2 -= 10;
+    }
+    this.effects.forEach((ele, i) => {
+      ele.draw();
+      if(ele.lifetime <= 0){
+        this.effects.splice(i, 1)
+      }
+    })
+
+    DrawCircle(160, this.y, Math.abs(Math.sin(this.y / 10)) * 60 + 30, "cyan")
+    this.y -= 1;
+    if(this.y % 30 == 0){
+      if(this.check){
+        this.effects.push(new maggieZHelp(160, this.y, "right"))
+      } else {
+        this.effects.push(new maggieZHelp(160, this.y, "left"))
+      }
+      this.check = !this.check
+    }
+
+    this.y < -30 ? this.lifetime = 0 : null;
+  }
+}
+
+function maggieZHelp(x, y, direction){
+  this.x = x;
+  this.y = y;
+  this.direction = direction;
+  this.lifetime = 10;
+  this.draw = function(){
+    DrawCircle(this.x, this.y, 40, `hsl(200, 100%, ${60 + Math.sin(this.x/ 75) * 10}%)`);
+    this.direction == "left" ? this.x -= 5 : this.x += 5;
+    if(this.x > 350 || this.x < -30){
+      this.lifetime = 0;
+    }
+  }
+}
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
   function seerZ() {
     this.x = 0;
     this.y = -10;

@@ -1,5 +1,5 @@
 <head>
-  <title>Rocket League End Game Fake</title>
+  <title>Test Effects</title>
   <meta description="" />
   <meta publisher="SignalRGB" />
 
@@ -18,18 +18,14 @@
   var width = 320;
   var height = 200;
   var effects = [];
-  var oldEffect = 1;
-
 
   function update() {
 
     DrawRect(0, 0, 320, 200, "black")
 
-    if(oldEffect != effectPush){
-      effects.push(new gameEnd())
-      oldEffect = effectPush
+    if(effects.length < 1){
+      effects.push(new maggieZ())
     }
-
 
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
@@ -41,48 +37,47 @@
     window.requestAnimationFrame(update);
   };
 
-  function gameEnd(){
-    console.log("HERE")
-    this.lifetime = 10;
-    this.start1 = Date.now();
-    this.start2 = Date.now();
-    this.effects = []
-    this.draw = function(){
-      var elapsed = Date.now() - this.start2;
-      var color = `hsl(${engine.audio.density * 320}, 100%, 50%)`
-      var level = 100 + engine.audio.level
-      if(level > 80 && elapsed > 100){
-        this.effects.push(new winStroke(160, 200, color))
-        this.start2 = Date.now()
+function maggieZ(){
+  this.y = 250;
+  this.lifetime = 10;
+  this.check = true;
+  this.effects = []
+  this.draw = function(){
+    this.effects.forEach((ele, i) => {
+      ele.draw();
+      if(ele.lifetime <= 0){
+        this.effects.splice(i, 1)
       }
-      this.effects.forEach((ele, i)=>{
-        ele.draw();
-        if (ele.lifetime <= 0) {
-          this.effects.splice(i, 1);
-        }
-      });
+    })
 
-      if(Date.now() - this.start1 > 15000){
-        this.lifetime = 0;
+    DrawCircle(160, this.y, Math.abs(Math.sin(this.y / 10)) * 40 + 20, "cyan")
+    this.y -= 1;
+    if(this.y % 30 == 0){
+      if(this.check){
+        this.effects.push(new maggieZHelp(160, this.y, "right"))
+      } else {
+        this.effects.push(new maggieZHelp(160, this.y, "left"))
       }
+      this.check = !this.check
+    }
+
+    this.y < -30 ? this.lifetime = 0 : null;
+  }
+}
+
+function maggieZHelp(x, y, direction){
+  this.x = x;
+  this.y = y;
+  this.direction = direction;
+  this.lifetime = 10;
+  this.draw = function(){
+    DrawCircle(this.x, this.y, 20, "cyan");
+    this.direction == "left" ? this.x -= 10 : this.x += 10;
+    if(this.x > 350 || this.x < -30){
+      this.lifetime = 0;
     }
   }
-
-  function winStroke(x, y, color){
-    this.x = x; 
-    this.y = y;
-    this.color = color;
-    this.radius = 1;
-    this.alpha = 1;
-    this.draw = function(){
-      ctx.globalAlpha = this.alpha;
-      DrawStroke(this.x, this.y, this.radius, this.color, 30)
-      ctx.globalAlpha = 1;
-      this.radius += 5;
-      this.radius > 100 ? this.alpha -= .05 : null;
-      this.alpha <= 0 ? this.lifetime = 0 : null;
-    }
-  }
+}
 
   function DrawPath(x, y, path, color) {
     ctx.fillStyle = color;
