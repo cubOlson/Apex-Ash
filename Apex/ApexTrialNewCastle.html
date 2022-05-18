@@ -1,0 +1,3281 @@
+<head>
+  <title>Apex Legends</title>
+  <meta description="Meters and ambiance for Apex Legends." />
+  <meta publisher="SignalRGB" />
+  <meta property="character" label="Legends" type="combobox"
+    values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mirage,NewCastle,Octane,Pathfinder,Rampart,Revenant,Seer,Valkyrie,Wattson,Wraith"
+    default="Ash" />
+  <meta property="keyScrenBrightness" label="Brightness" type="number" min="0" max="100" default="100" />
+  <meta property="effectHex" label="Legends Select Color" type="color" min="0" max="360" default="#efff00" />
+  <meta property="enableShield" label="Shield effects" type="boolean" default="1" />
+  <meta property="enableSyringe" label="Syringe effects" type="boolean" default="1" />
+  <meta property="enableShieldR" label="Shield Recharge effects" type="boolean" default="1" />
+  <meta property="enablePhoenix" label="Phoenix Kit effects" type="boolean" default="1" />
+  <meta property="enableHealth" label="Health effects" type="boolean" default="1" />
+  <meta property="enableRevive" label="Revive effects" type="boolean" default="1" />
+  <meta meter="blueShieldBar" tags="apex,VLC" x=".0932" y=".925" width=".09" height=".0001" h="200-220" s="70-100"
+    l="0-100" type="linear">
+  <resolution size="3440x1440" x="0.0689" y="0.9264" width=".0878" height=".0001" />
+  <resolution size="1680x1050" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
+  </meta>
+  <meta meter="check" tags="apex,VLC" type="linear" x="0.2646" y="0.9602" width="0.005" height=".0001" h="0-360"
+    s="0-15" l="70-100">
+  <resolution size="3440x1440" x="0.1971" y="0.9597" width="0.005" height=".0001" />
+  <resolution size="1680x1050" x="0.2643" y="0.9648" width="0.005" height=".0001" />
+  <resolution size="1440x900" x="0.2646" y="0.9644" width="0.005" height=".0001" />
+  <resolution size="1280x800" x="0.2636" y="0.9663" width="0.005" height=".0001" />
+  <resolution size="1280x768" x="0.2641" y="0.9635" width="0.005" height=".0001" />
+  </meta>
+  <meta meter="checkBlue" tags="apex,VLC" type="linear" x="0.4818" y="0.9415" width="0.0359" height=".0001" h="200-225"
+    s="20-40" l="75-100">
+  <resolution size="3440x1440" x="0.4959" y="0.848" width="0.0015" height=".0001" />
+  <resolution size="1680x1050" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1440x900" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1280x800" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1280x768" x="0.4948" y="0.8583" width="0.0099" height=".0001" />
+  </meta>
+  <meta meter="checkGreen" tags="apex,VLC" type="linear" x="0.4818" y="0.9415" width="0.0359" height=".0001" h="35-80"
+    s="20-60" l="80-100">
+  <resolution size="3440x1440" x="0.4959" y="0.848" width="0.0015" height=".0001" />
+  <resolution size="1680x1050" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1440x900" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1280x800" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1280x768" x="0.4948" y="0.8583" width="0.0099" height=".0001" />
+  </meta>
+  <meta meter="checkYellow" tags="apex,VLC" type="linear" x="0.4818" y="0.9415" width="0.0359" height=".0001" h="45-80"
+    s="60-80" l="75-100">
+  <resolution size="3440x1440" x="0.4959" y="0.848" width="0.0015" height=".0001" />
+  <resolution size="1680x1050" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1440x900" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1280x800" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
+  <resolution size="1280x768" x="0.4948" y="0.8583" width="0.0099" height=".0001" />
+  </meta>
+  <meta meter="confirm" tags="apex,VLC" x=".875" y=".6759" width=".0001" height=".0001" h="0-100" s="0-10" l="90-100"
+    type="linear">
+  <resolution size="3440x1440" x="0.5881" y="0.6583" width="0.0001" height=".0001" />
+  <resolution size="1680x1050" x=".6185" y=".6429" width=".0001" height=".0001" />
+  <resolution size="1440x900" x=".6188" y=".6422" width=".0001" height=".0001" />
+  <resolution size="1280x800" x=".6195" y=".6425" width=".0001" height=".0001" />
+  <resolution size="1280x768" x=".6188" y=".6484" width=".0001" height=".0001" />
+  </meta>
+  <meta meter="cyrp" tags="apex,VLC" type="area" x="0.4932" y="0.9065" height="0.0028" width="0.0036" h="135-140"
+    s="40-50" l="89-95">
+  <resolution size="3440x1440" x="0.5" y="0.9035" width="0.0036" height="0.0028" />
+  <resolution size="1680x1050" x="0.4953" y="0.9065" height="0.0025" width="0.0115" />
+  <resolution size="1440x900" x="0.4953" y="0.9065" height="0.0025" width="0.0115" />
+  <resolution size="1280x800" x="0.4953" y="0.9065" height="0.0025" width="0.0115" />
+  <resolution size="1280x768" x="0.4953" y="0.9065" height="0.0025" width="0.0115" />
+  </meta>
+  <meta meter="cyrp2" tags="apex,VLC" type="area" x="0.4948" y="0.8648" height="0.00037" width="0.00016" h="130-140"
+    s="45-50" l="77-80">
+  <resolution size="3440x1440" x="0.4948" y="0.8648" width="0.00016" height="0.00037" />
+  <resolution size="1680x1050" x="0.4948" y="0.8657" height="0.0003" width="0.00016" />
+  <resolution size="1440x900" x="0.4948" y="0.8657" height="0.0003" width="0.00016" />
+  <resolution size="1280x800" x="0.4948" y="0.8657" height="0.0003" width="0.00016" />
+  <resolution size="1280x768" x="0.4948" y="0.8657" height="0.0003" width="0.00016" />
+  </meta>
+  <meta meter="dprotection" tags="apex,VLC" type="area" x="0.626" y="0.875" height="0.0009" width="0.0005" h="0-20"
+    s="80-100" l="70-100">
+  <resolution size="3440x1440" x="0.5945" y="0.875" width="0.0025" height="0.0001" />
+  <resolution size="1680x1050" x="0.626" y="0.887" height="0.0009" width="0.0005" />
+  <resolution size="1440x900" x="0.626" y="0.887" height="0.0009" width="0.0005" />
+  <resolution size="1280x800" x="0.626" y="0.887" height="0.0009" width="0.0005" />
+  <resolution size="1280x768" x="0.626" y="0.8826" height="0.0009" width="0.0005" />
+  </meta>
+  <meta meter="getZLetter" tags="apex,VLC" type="area" x="0.4953" y="0.9583" width="0.0016" height="0.0148" h="0-180"
+    s="0-1" l="70-100">
+  <resolution size="3440x1440" x="0.4968" y="0.9576" width="0.0016" height="0.0148" />
+  <resolution size="1680x1050" x="0.4953" y="0.962" width="0.0016" height="0.0148" />
+  <resolution size="1440x900" x="0.4953" y="0.962" width="0.0016" height="0.0148" />
+  <resolution size="1366x768" x="0.4953" y="0.96" width="0.0016" height="0.0145" />
+  <resolution size="1360x768" x="0.4953" y="0.96" width="0.0016" height="0.0145" />
+  <resolution size="1280x800" x="0.4953" y="0.962" width="0.0016" height="0.0148" />
+  <resolution size="1280x768" x="0.4953" y="0.9611" width="0.0016" height="0.0139" />
+  </meta>
+  <meta meter="goldShieldBar" tags="apex,VLC" x=".0933" y=".925" width=".09" height=".0001" h="40-50" s="70-100"
+    l="50-100" type="linear">
+  <resolution size="3440x1440" x="0.0689" y="0.9264" width=".0878" height=".0001" />
+  <resolution size="1680x1050" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
+  </meta>
+  <meta meter="greyZ" tags="apex,VLC" type="area" x="0.4938" y="0.8444" height="0.00009" width="0.0119" h="0-360"
+    s="0-20" l="70-100">
+  <resolution size="3440x1440" x="0.4962" y="0.8444" width="0.009" height="0.00009" />
+  <resolution size="1680x1050" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
+  <resolution size="1440x900" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
+  <resolution size="1280x800" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
+  <resolution size="1280x768" x="0.4938" y="0.8528" height="0.0019" width="0.0109" />
+  </meta>
+  <meta meter="health" tags="apex,VLC" x=".0932" y=".937" width=".119" height=".0001" h="0-360" s="0-40" l="90-100"
+    type="linear">
+  <resolution size="3440x1440" x="0.0692" y="0.9417" width=".0913" height=".0001" />
+  <resolution size="1680x1050" x=".0927" y=".9426" width=".1208" height=".0001" />
+  <resolution size="1440x900" x=".0927" y=".9426" width=".1208" height=".0001" />
+  <resolution size="1280x800" x=".0927" y=".9426" width=".1208" height=".0001" />
+  <resolution size="1280x768" x=".0927" y=".9426" width=".1208" height=".0001" />
+  </meta>
+  <meta meter="hitEscape" tags="apex,VLC" x=".04270" y=".92314" width=".012" height=".0001" h="0-360" s="0-10"
+    l="80-100" type="linear">
+  <resolution size="3440x1440" x="0.0267" y="0.9229" width=".012" height=".0001" />
+  <resolution size="1680x1050" x=".0351" y=".9314" width=".0001" height=".0001" />
+  <resolution size="1440x900" x=".0354" y=".9311" width=".0001" height=".0001" />
+  <resolution size="1280x800" x=".0352" y=".9313" width=".0001" height=".0001" />
+  <resolution size="1280x768" x=".0359" y=".9284" width=".0001" height=".0001" />
+  </meta>
+  <meta meter="loba2" tags="apex,VLC" type="area" x="0.6068" y="0.6556" height="0.0019" width="0.0005" h="25-30"
+    s="85-95" l="95-100">
+  <resolution size="3440x1440" x="0.58" y="0.6514" width="0.0025" height="0.0001" />
+  <resolution size="1680x1050" x="0.6078" y="0.6888" height="0.0019" width="0.0005" />
+  <resolution size="1440x900" x="0.6078" y="0.6888" height="0.0019" width="0.0005" />
+  <resolution size="1280x800" x="0.6078" y="0.6888" height="0.0019" width="0.0005" />
+  <resolution size="1280x768" x="0.607" y="0.6745" height="0.0019" width="0.0005" />
+  </meta>
+  <meta meter="mainZ" tags="apex,VLC" type="area" x="0.4938" y="0.8444" height="0.00009" width="0.0119" h="0-360"
+    s="55-100" l="50-100">
+  <resolution size="3440x1440" x="0.4962" y="0.8444" width="0.009" height="0.00009" />
+  <resolution size="1680x1050" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
+  <resolution size="1440x900" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
+  <resolution size="1280x800" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
+  <resolution size="1280x768" x="0.4938" y="0.8528" height="0.0019" width="0.0109" />
+  </meta>
+  <meta meter="mini" tags="apex,VLC" type="area" x="0.8755" y="0.9667" height="0.00037" width="0.00031" h="295-300"
+    s="57-100" l="60-65">
+  <resolution size="3440x1440" x="0.9116" y="0.9639" width="0.0025" height="0.0001" />
+  <resolution size="1680x1050" x="0.8727" y="0.9622" height="0.00037" width="0.00031" />
+  <resolution size="1440x900" x="0.8727" y="0.9622" height="0.00037" width="0.00031" />
+  <resolution size="1280x800" x="0.8727" y="0.9622" height="0.00037" width="0.00031" />
+  <resolution size="1280x768" x="0.8727" y="0.965" height="0.00037" width="0.00031" />
+  </meta>
+  <meta meter="osdEsc" tags="apex,VLC" x=".0354" y=".960" width=".02" height=".0001" h="0-360" s="0-10" l="80-100"
+    type="linear">
+  <resolution size="3440x1440" x="0.0279" y="0.9597" width=".015" height=".0001" />
+  <resolution size="1680x1050" x=".0387" y=".9638" width=".0175" height=".0001" />
+  <resolution size="1440x900" x=".0389" y=".9633" width=".0175" height=".0001" />
+  <resolution size="1280x800" x=".0383" y=".964" width=".0175" height=".0001" />
+  <resolution size="1280x768" x=".0383" y=".9635" width=".0175" height=".0001" />
+  </meta>
+  <meta meter="phoenixKit" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="270-280" s="40-90"
+    l="0-100" type="linear">
+  <resolution size="3440x1440" x="0.6474" y="0.6924" width=".10" height=".0001" />
+  <resolution size="1680x1050" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1440x900" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x800" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x768" x=".6984" y=".6815" width=".1484" height=".0001" />
+  </meta>
+  <meta meter="purpleShieldBar" tags="apex,VLC" x=".0932" y=".925" width=".09" height=".0001" h="270-290" s="70-100"
+    l="0-100" type="linear">
+  <resolution size="3440x1440" x="0.0689" y="0.9264" width=".0878" height=".0001" />
+  <resolution size="1680x1050" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
+  </meta>
+  <meta meter="q" tags="apex,VLC" type="area" x="0.3208" y="0.9593" height="0.00009" width="0.00026" h="0-180" s="0-1"
+    l="70-100">
+  <resolution size="3440x1440" x="0.24" y="0.958" width="0.0025" height="0.00009" />
+  <resolution size="1680x1050" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
+  <resolution size="1440x900" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
+  <resolution size="1280x800" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
+  <resolution size="1280x768" x="0.3203" y="0.9611" height="0.00009" width="0.00026" />
+  </meta>
+  <meta meter="q1" tags="apex,VLC" type="area" x="0.3276" y="0.8991" height="0.00056" width="0.00021" h="20-60"
+    s="50-100" l="70-100">
+  <resolution size="3440x1440" x="0.2436" y="0.8972" width="0.0015" height="0.00009" />
+  <resolution size="1680x1050" x="0.3276" y="0.9093" height="0.00056" width="0.00021" />
+  <resolution size="1440x900" x="0.3276" y="0.9093" height="0.00056" width="0.00021" />
+  <resolution size="1280x800" x="0.3276" y="0.9093" height="0.00056" width="0.00021" />
+  <resolution size="1280x768" x="0.3271" y="0.9056" height="0.00056" width="0.00021" />
+  </meta>
+  <meta meter="q2" tags="apex,VLC" type="area" x="0.3349" y="0.9204" height="0.0019" width="0.001" h="30-60" s="70-100"
+    l="70-100">
+  <resolution size="3440x1440" x="0.247" y="0.9118" width="0.0015" height="0.00009" />
+  <resolution size="1680x1050" x="0.3351" y="0.9314" height="0.0019" width="0.001" />
+  <resolution size="1440x900" x="0.3307" y="0.9195" height="0.0019" width="0.001" />
+  <resolution size="1280x800" x="0.3307" y="0.9195" height="0.0019" width="0.001" />
+  <resolution size="1280x768" x="0.3352" y="0.9284" height="0.0019" width="0.001" />
+  </meta>
+  <meta meter="q3" tags="apex,VLC" type="area" x="0.3312" y="0.9111" height="0.00037" width="0.00021" h="30-60"
+    s="70-100" l="70-100">
+  <resolution size="3440x1440" x="0.2483" y="0.9188" width="0.0015" height="0.00009" />
+  <resolution size="1680x1050" x="0.331" y="0.919" height="0.00027" width="0.00021" />
+  <resolution size="1440x900" x="0.3339" y="0.9287" height="0.00027" width="0.00021" />
+  <resolution size="1280x800" x="0.3339" y="0.9287" height="0.00027" width="0.00021" />
+  <resolution size="1280x768" x="0.3305" y="0.9141" height="0.00027" width="0.00021" />
+  </meta>
+  <meta meter="redShieldBar" tags="apex,VLC" x=".0933" y=".925" width=".09" height=".0001" h="0-15" s="65-100"
+    l="50-100" type="linear">
+  <resolution size="3440x1440" x="0.0689" y="0.9264" width=".0878" height=".0001" />
+  <resolution size="1680x1050" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
+  <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
+  </meta>
+  <meta meter="revive" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="60-95" s="50-100" l="0-100"
+    type="linear">
+  <resolution size="3440x1440" x="0.6474" y="0.6924" width=".10" height=".0001" />
+  <resolution size="1680x1050" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1440x900" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x800" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x768" x=".6984" y=".6815" width=".1484" height=".0001" />
+  </meta>
+  <meta meter="shieldCharge" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="200-220" s="70-100"
+    l="0-100" type="linear">
+  <resolution size="3440x1440" x="0.6474" y="0.6924" width=".10" height=".0001" />
+  <resolution size="1680x1050" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1440x900" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x800" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x768" x=".6984" y=".6815" width=".1484" height=".0001" />
+  </meta>
+  <meta meter="syringeCharge" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="0-10" s="70-100"
+    l="0-100" type="linear">
+  <resolution size="3440x1440" x="0.6474" y="0.6924" width=".10" height=".0001" />
+  <resolution size="1680x1050" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1440x900" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x800" x=".6974" y=".675" width=".1484" height=".0001" />
+  <resolution size="1280x768" x=".6984" y=".6815" width=".1484" height=".0001" />
+  </meta>
+  <meta meter="tabOut" tags="apex,VLC" x=".5" y=".5" width=".2" height=".0001" h="0-360" s="0-10" l="0-10"
+    type="linear" />
+  <meta meter="valkz" tags="apex,VLC" type="area" x="0.6885" y="0.3944" height="0.012" width="0.0026" h="145-155"
+    s="70-100" l="87-100">
+  <resolution size="3440x1440" x="0.6389" y="0.3868" width="0.006" height="0.012" />
+  <resolution size="1680x1050" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  <resolution size="1440x900" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  <resolution size="1280x800" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  <resolution size="1280x768" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  </meta>
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //tags="apex, apex legends"
+  //Meter note - last 2 are difficult to identify, probably going to dump
+  // SECTION 2 - VARIABLE DECLARATIONS, HERO METER SETUP -----------------------------------------------------------------------------------
+
+  var canvas, ctx;
+  let health, blueShield, purpleShield, goldShield;
+  let characterChanged = false;
+  let ultCharged = false;
+  let ultAnimPlayed = false;
+  let zGoing = false;
+  let healthHistory = [];
+  var shieldPushed = false;
+
+  let blueShieldHistory = [];
+  let purpleShieldHistory = [];
+  let goldShieldHistory = [];
+  let redShieldHistory = [];
+
+  let healAnimLength = 1000;
+  var effects = [];
+
+  var orbs = [];
+  var drops = [];
+  var bursts = [];
+  var shieldAnims = [];
+  var stateMgr = new StateHandler();
+  //MAIN/GREY STUFF ------------------------------------------------------------------------
+  var get_Z = new Meter(15, ash_z_bar);
+  var grey_Z = new Meter(3, fuse_z_bar);
+  var checkMeter = new Meter(15, () => "");
+
+  var ash_q = new Meter(3, ash_q_bar);
+  var ash_z = new Meter(3, ash_z_bar);
+
+  var bangalore_q = new Meter(3, bangalore_q_bar);
+  var bangalore_z = new Meter(3, bangalore_z_bar);
+  var bangalore_q1 = new Meter(3, bangalore_q_bar1);
+
+  var bloodhound_q = new Meter(3, bloodhound_q_bar);
+  var bloodhound_z = new Meter(3, bloodhound_z_bar);
+  var checkmeterYellow = new Meter(3, bloodhound_z_bar);
+  var checkmeterBlue = new Meter(3, horizon_z_bar);
+  var checkmeterGreen = new Meter(2, octane_z_bar);
+
+  var caustic_q = new Meter(3, caustic_q_bar);
+  var caustic_q1 = new Meter(3, caustic_q_bar1);
+  var caustic_q2 = new Meter(3, caustic_q_bar2);
+  var caustic_z = new Meter(3, caustic_z_bar);
+
+  var crypto_z = new Meter(3, crypto_z_bar);
+  var crypto_z2 = new Meter(3, crypto_z_bar2);
+
+  var fuse_q1 = new Meter(3, fuse_q_bar);
+  var fuse_q2 = new Meter(3, fuse_q_bar);
+  var fuse_z = new Meter(3, fuse_z_bar);
+
+  var gibraltar_q = new Meter(3, gibraltar_q_bar);
+  var gibraltar_z = new Meter(3, gibraltar_z_bar);
+
+  var horizon_q = new Meter(3, horizon_q_bar);
+  var horizon_z = new Meter(3, horizon_z_bar);
+
+  var lifeline_q = new Meter(3, lifeline_q_bar);
+  var lifeline_z = new Meter(3, lifeline_z_bar);
+
+  var loba_q = new Meter(3, loba_q_bar);
+  var loba_z = new Meter(3, loba_z_bar);
+  var loba_t = new Meter(3, loba_q1_bar);
+
+  var mirage_q = new Meter(3, mirage_q_bar);
+  var mirage_z = new Meter(3, mirage_z_bar);
+
+  var octane_q = new Meter(3, octane_q_bar);
+  var octane_z = new Meter(3, octane_z_bar);
+
+  var pathfinder_q = new Meter(3, pathfinder_q_bar);
+  var pathfinder_z = new Meter(3, pathfinder_z_bar);
+
+  var rampart_q = new Meter(3, rampart_q_bar);
+  var rampart_q1 = new Meter(3, rampart_q_bar1);
+  var rampart_q2 = new Meter(3, rampart_q_bar2);
+  var rampart_z = new Meter(3, rampart_z_bar);
+
+  var revenant_q = new Meter(3, revenant_q_bar);
+  var revenant_z = new Meter(3, revenant_z_bar);
+  var revenant_q1 = new Meter(3, revenant_q_bar1);
+  var revenant_z2 = new Meter(3, revenant_z_bar2);
+
+  var seer_q = new Meter(3, seer_q_bar);
+  var seer_z = new Meter(3, seer_z_bar);
+
+  var wattson_q = new Meter(3, wattson_q_bar);
+  var wattson_q1 = new Meter(3, wattson_q_bar1);
+  var wattson_q2 = new Meter(3, wattson_q_bar2);
+  var wattson_q3 = new Meter(3, wattson_q_bar3);
+  var wattson_z = new Meter(3, wattson_z_bar);
+
+  var wraith_q = new Meter(3, wraith_q_bar);
+  var wraith_z = new Meter(3, wraith_z_bar);
+
+  var valk_q = new Meter(3, valk_q_bar);
+  var valk_z = new Meter(3, valk_z_bar);
+
+  var newCastle_q = new Meter(5, newCastle_q_bar)
+  var newCastle_z = new Meter(5, newCastle_z_bar)
+
+  var MainZ = new Meter(5, newCastle_z_bar)
+
+  // SECTION 3 - METER CALLBACK FUNCTIONS DEFINED --------------------------------------------------------------------------
+
+  function ash_q_bar() {
+    if (legend == "Ash") {
+      if (ash_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new Ash_Q(89, 203, 232, 6000));
+      }
+    }
+  }
+  function ash_z_bar() {
+    if (legend == "Ash") {
+      if (ultCharged && ash_z.increased && checkmeterGreen.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        let index = 0;
+        while (index < 6) {
+          effects.push(new ellipseFade(100 / (index + 1), 200));
+          index++;
+        }
+      }
+    }
+  }
+
+  function bangalore_q_bar() {
+    if (legend == "Bangalore") {
+      if (bangalore_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new bangaloreQ());
+      }
+    }
+  }
+  function bangalore_q_bar1() {
+    if (legend == "Bangalore") {
+      if (bangalore_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new bangaloreQ());
+      }
+    }
+  }
+  function bangalore_z_bar() {
+    if (legend == "Bangalore") {
+      if (ultCharged && checkmeterYellow.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new bangaloreZ());
+      }
+    }
+  }
+
+  function bloodhound_z_bar() {
+    if (legend == "Bloodhound") {
+      if (ultCharged && engine.vision.check == 1 && bloodhound_z.increased && engine.vision.getZLetter != 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new hueControl(1, true));
+      }
+    }
+  }
+  function bloodhound_q_bar() {
+    if (legend == "Bloodhound") {
+      if (bloodhound_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new PulseRippleState("#ff7300", true, 700));
+      }
+    }
+  }
+
+  function caustic_q_bar() {
+    if (legend == "Caustic") {
+      if ((caustic_q.decreased && engine.vision.check == 1) && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_q_bar1() {
+    if (legend == "Caustic") {
+      if ((caustic_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1)) {
+        stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_q_bar2() {
+    if (legend == "Caustic") {
+      if ((caustic_q2.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1)) {
+        stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+      }
+    }
+  }
+  function caustic_z_bar() {
+    if (legend == "Caustic") {
+      if (ultCharged && caustic_z.increased && engine.vision.check == 1 && engine.vision.getZLetter != 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new causticZ());
+      }
+    }
+  }
+
+  function crypto_z_bar() {
+    if (legend == "Crypto") {
+      if (crypto_z.decreased && engine.vision.check != 1 && crypto_z2.decreased && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new BurstRippleState("#fcfcfc", "#000000", "#fcfcfc"));
+      }
+    }
+  }
+  function crypto_z_bar2() {
+    if (legend == "Crypto") {
+      if (crypto_z2.decreased && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#4c9c48", "#fcfcfc", "#4c9c48"));
+      }
+    }
+  }
+
+  let qCharged = false;
+  function fuse_q_bar() {
+    if (legend == "Fuse") {
+      if (fuse_q1.decreased && engine.vision.check == 1 && qCharged && engine.vision.osdEsc != 1) {
+        qCharged = false;
+        stateMgr.Push(new fuseQ());
+      }
+      if (fuse_q2.decreased && engine.vision.check == 1 && !qCharged && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new fuseQ());
+      }
+      if (fuse_q2.value == 1) {
+        qCharged = true;
+      }
+    }
+  }
+  function fuse_z_bar() {
+    if (legend == "Fuse") {
+      if (fuse_z.decreased && grey_Z.value == 1 && ultCharged && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new fuseZ());
+      }
+    }
+  }
+
+  function gibraltar_q_bar() {
+    if (legend == "Gibraltar") {
+      if (gibraltar_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new PulseRippleState("#004cff", false, 850));
+      }
+    }
+  }
+  function gibraltar_z_bar() {
+    if (legend == "Gibraltar") {
+      if (gibraltar_z.value == 1 && engine.vision.check == 1 && ultCharged && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new gibraltarZ());
+
+      }
+    }
+  }
+
+  function horizon_q_bar() {
+    if (legend == "Horizon") {
+      if (horizon_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new horizonQ());
+      }
+    }
+  }
+  function horizon_z_bar() {
+    if (legend == "Horizon") {
+      if (ultCharged && engine.vision.check == 1 && checkmeterBlue.increased && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new reversePulseRippleState("#0328fc", true, 7000));
+      }
+    }
+  }
+
+  function lifeline_q_bar() {
+    if (legend == "Lifeline") {
+      if (lifeline_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#09ff00", "#63ffef", "#63ffef"));
+      }
+    }
+  }
+  function lifeline_z_bar() {
+    if (legend == "Lifeline") {
+      console.log("Next log =" + ultCharged)
+      if (lifeline_z.value == 0 && !ultCharged) {
+        zGoing = false;
+      }
+      if (ultCharged && lifeline_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        console.log("After setting =" + ultCharged)
+        zGoing = true;
+        stateMgr.Push(new lifelineZ());
+      }
+    }
+  }
+
+  function loba_q_bar() {
+    if (legend == "Loba") {
+      if (loba_q.decreased && engine.vision.check == 1 && !loba_t.decreased && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new reverseBurstRippleState("#ffffff", "#8400ff", "#ffffff"));
+      }
+    }
+  }
+  function loba_q1_bar() {
+    if (legend == "Loba") {
+      if (loba_t.decreased && engine.vision.check == 1 && loba_t.diff >= 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#ffffff", "#8400ff", "#ffffff"));
+      }
+    }
+  }
+  function loba_z_bar() {
+    if (legend == "Loba") {
+      if (ultCharged &&
+        engine.vision.mainZ == 1 &&
+        loba_z.value == 1 &&
+        engine.vision.check == 1 &&
+        engine.vision.osdEsc != 1 &&
+        !zGoing) {
+
+        zGoing = true;
+        ultCharged = false;
+        stateMgr.Push(new lobaZ());
+      }
+    }
+  }
+
+  function mirage_q_bar() {
+    if (legend == "Mirage") {
+      if (mirage_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#0004ff", "#63ffef", "#0004ff"));
+      }
+    }
+  }
+  function mirage_z_bar() {
+    if (legend == "Mirage") {
+      if (ultCharged && mirage_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new ExplodingOrbState("#00ff2a", "#5100ff", "#00ff2a"));
+      }
+    }
+  }
+
+  function octane_q_bar() {
+    if (legend == "Octane") {
+      if (octane_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(-50, random(0, 200), 100, 20, 15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
+            );
+          }, random(0, 800));
+          setTimeout(function () {
+            effects.push(
+              new moveableBar(360, random(0, 200), 100, 20, -15, 0, 121 + random(-20, 20), 100 + random(-20, 20), 50, 0.7)
+            );
+          }, random(0, 800));
+        }
+      }
+    }
+  }
+  function octane_z_bar() {
+    if (legend == "Octane") {
+      if (ultCharged && octane_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new octaneZ());
+      }
+    }
+  }
+
+  function pathfinder_q_bar() {
+    if (legend == "Pathfinder") {
+      if (pathfinder_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new pathfinderQ());
+      }
+    }
+  }
+  function pathfinder_z_bar() {
+    if (legend == "Pathfinder") {
+      if (ultCharged && pathfinder_z.value == 1 && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new pathfinderZ());
+      }
+    }
+  }
+
+  function rampart_q_bar() {
+    if (legend == "Rampart") {
+      if (rampart_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_q_bar1() {
+    if (legend == "Rampart") {
+      if (rampart_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_q_bar2() {
+    if (legend == "Rampart") {
+      if (rampart_q2.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+      }
+    }
+  }
+  function rampart_z_bar() {
+    if (legend == "Rampart") {
+      if (rampart_z.increased && ultCharged && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new rampartZ());
+      }
+    }
+  }
+
+  function revenant_q_bar() {
+    if (legend == "Revenant") {
+      if (revenant_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
+      }
+    }
+  }
+  function revenant_q_bar1() {
+    if (legend == "Revenant") {
+      if (revenant_q1.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
+      }
+    }
+  }
+  function revenant_z_bar2() {
+    if (legend == "Revenant") {
+      if (revenant_z2.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        effects.push(new BoostWave(0));
+      }
+    }
+  }
+  function revenant_z_bar() {
+    if (legend == "Revenant") {
+      if (ultCharged && revenant_z.value == 1 && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new revenantZ());
+      }
+    }
+  }
+
+  function seer_q_bar() {
+    if (legend == "Seer") {
+      if (seer_q.decreased && engine.vision.check == 1 && seer_q.value != 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new seerQ());
+      }
+    }
+  }
+  function seer_z_bar() {
+    if (legend == "Seer") {
+      if (ultCharged && seer_z.value == 1 && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new seerZ());
+      }
+    }
+  }
+
+  function valk_q_bar() {
+    if (legend == "Valkyrie") {
+      if (valk_q.decreased && engine.vision.check == 1 && !valk_z.increased && valk_q.value != 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new valkQ());
+      }
+    }
+  }
+
+  function valk_z_bar() {
+    if (legend == "Valkyrie") {
+      if (ultCharged && valk_z.value == 1 && valk_z.increased && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new valkZ(100));
+      }
+    }
+  }
+
+  function wattson_q_bar() {
+    if (legend == "Wattson") {
+      if (wattson_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+  function wattson_q_bar1() {
+    if (legend == "Wattson") {
+      if (wattson_q1.decreased && engine.vision.check == 1 && wattson_q.value == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+  function wattson_q_bar2() {
+    if (legend == "Wattson") {
+      if (wattson_q2.decreased && engine.vision.check == 1 && wattson_q.value == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+  function wattson_q_bar3() {
+    if (legend == "Wattson") {
+      if (wattson_q3.decreased && engine.vision.check == 1 && wattson_q.value == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new wattsonQ());
+      }
+    }
+  }
+
+  function wattson_z_bar() {
+    if (legend == "Wattson") {
+      if (ultCharged && wattson_z.decreased && grey_Z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new wattsonZ());
+      }
+    }
+  }
+
+  function wraith_q_bar() {
+    if (legend == "Wraith") {
+      if (wraith_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new wraithQ());
+      }
+    }
+  }
+  function wraith_z_bar() {
+    if (legend == "Wraith") {
+      if (ultCharged && wraith_z.increased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && !zGoing) {
+        ultCharged = false;
+        zGoing = true;
+        stateMgr.Push(new reversePulseRippleState("#8c00ff", true, 750));
+
+      }
+      if (checkmeterYellow.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1) {
+        stateMgr.Push(new PulseRippleState("#8c00ff", true, 700));
+      }
+    }
+  }
+
+
+  function newCastle_q_bar() {
+    if (legend == "NewCastle") {
+      if (newCastle_q.decreased && engine.vision.check == 1, engine.vision.osdEsc != 1 && newCastle_q.value < .5 && newCastle_q.diff > 0.5 && health != 0) {
+        stateMgr.Push(new newCastleQ())
+      }
+    }
+  }
+
+  function newCastle_z_bar() {
+    if (legend == "NewCastle") {
+      console.log("check " + engine.vision.check)
+      console.log("osdsecp " + engine.vision.osdEsc)
+      console.log("GreyZ " + grey_Z.value)
+      console.log("check " + engine.vision.check)
+      console.log("val " + newCastle_z.value)
+      console.log(ultCharged)
+
+      if (engine.vision.check == 1 && engine.vision.osdEsc != 1 && grey_Z.value == 1 && newCastle_z.value == 0 && ultCharged) {
+        stateMgr.Push(new newCastleUlt())
+      }
+    }
+  }
+
+  // ENGINE READY FUNCTION ---------------------------------------------------------------------------------------------
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    /** @type {HTMLCanvasElement} */
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d")
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update)
+  }
+
+
+  // used to record the last time that a revive or tower was performed.  Right now it is used to
+  // avoid false triggers of the shield effects, but it could have more uses in the
+  function recentRev() {
+    this.status = true;
+    this.lifetime = 500;
+
+    this.run = function () {
+      if (this.lifetime > 0) {
+        this.lifetime--;
+      }
+      if (this.lifetime <= 0) {
+        this.lifetime = 0;
+        this.status = false;
+      }
+    };
+    this.getStatus = function () {
+      return status;
+    };
+    this.getLifetime = function () {
+      return this.lifetime;
+    };
+    this.setLifetime = function (life) {
+      this.lifetime = life;
+    };
+  }
+
+
+  var legend;
+  var recentRevive = new recentRev();
+  recentRevive.setLifetime(0);
+
+  // SECTION 4 - UPDATE FUNCTION --------------------------------------------------------------------------------------------------
+  function update() {
+    drawScreenOnKeyboard();
+    checkMeter.setValue(engine.vision.check);
+    checkmeterYellow.setValue(engine.vision.checkYellow);
+    checkmeterBlue.setValue(engine.vision.checkBlue);
+    checkmeterGreen.setValue(engine.vision.checkGreen);
+    grey_Z.setValue(engine.vision.greyZ);
+    get_Z.setValue(engine.vision.getZLetter);
+    MainZ.setValue(engine.vision.mainZ)
+
+    var colors = hexToHSL(effectHex);
+
+
+    //MANUAL SELECT BUTTON -----------------------------------------------------------------------------
+    if (legend !== character) {
+      characterChanged = true;
+    }
+
+    legend = character;
+
+
+
+    // CHAMPION SELECT - MIGHT REFACTOR WITH SWITCH ---------------------------------------------------------------------
+    if (get_Z.value === 1 && get_Z.increased && !zGoing) {
+      ultCharged = true;
+    }
+    if (ultCharged && !ultAnimPlayed) {
+      stateMgr.Push(new BurstRippleState(effectHex, '#ffffff', effectHex))
+      ultAnimPlayed = true;
+    }
+    if (!ultCharged) {
+      ultAnimPlayed = false;
+    }
+
+    if (checkMeter.value == 1) {
+      switch (legend) {
+        case "Ash":
+          ash_q.setValue(engine.vision.q);
+          ash_z.setValue(engine.vision.greyZ);
+          break;
+        case "Bangalore":
+          bangalore_q.setValue(engine.vision.q);
+          bangalore_q1.setValue(engine.vision.q1);
+          bangalore_z.setValue(engine.vision.checkYellow);
+          break;
+        case "Bloodhound":
+          bloodhound_q.setValue(engine.vision.q);
+          bloodhound_z.setValue(engine.vision.checkYellow);
+          break;
+        case "Caustic":
+          caustic_q.setValue(engine.vision.q);
+          caustic_q1.setValue(engine.vision.q1);
+          caustic_q2.setValue(engine.vision.q2);
+          caustic_z.setValue(engine.vision.checkYellow);
+          break;
+        case "Crypto":
+          crypto_z.setValue(engine.vision.cyrp);
+          crypto_z2.setValue(engine.vision.cyrp2);
+          break;
+        case "Fuse":
+          fuse_q1.setValue(engine.vision.q1);
+          fuse_q2.setValue(engine.vision.q2);
+          fuse_z.setValue(engine.vision.mainZ);
+          break;
+        case "Gibraltar":
+          gibraltar_q.setValue(engine.vision.q);
+          gibraltar_z.setValue(engine.vision.checkYellow);
+          break;
+        case "Horizon":
+          horizon_q.setValue(engine.vision.q);
+          horizon_z.setValue(engine.vision.checkBlue);
+          break;
+        case "Lifeline":
+          lifeline_q.setValue(engine.vision.q);
+          lifeline_z.setValue(engine.vision.checkYellow);
+          break;
+        case "Loba":
+          loba_q.setValue(engine.vision.q);
+          loba_z.setValue(engine.vision.checkGreen);
+          loba_t.setValue(engine.vision.loba2);
+          break;
+        case "Mirage":
+          mirage_q.setValue(engine.vision.q);
+          mirage_z.setValue(engine.vision.greyZ);
+          break;
+        case "Octane":
+          octane_q.setValue(engine.vision.q);
+          octane_z.setValue(engine.vision.checkGreen);
+          break;
+        case "Pathfinder":
+          pathfinder_q.setValue(engine.vision.q);
+          pathfinder_z.setValue(engine.vision.checkYellow);
+          break;
+        case "Rampart":
+          rampart_q.setValue(engine.vision.q);
+          rampart_q1.setValue(engine.vision.q1);
+          rampart_q2.setValue(engine.vision.q2);
+          rampart_z.setValue(engine.vision.greyZ);
+          break;
+        case "Revenant":
+          revenant_q.setValue(engine.vision.q);
+          revenant_q1.setValue(engine.vision.q1);
+          revenant_z.setValue(engine.vision.checkGreen);
+          revenant_z2.setValue(engine.vision.dprotection);
+          break;
+        case "NewCastle":
+          newCastle_q.setValue(engine.vision.q);
+          newCastle_z.setValue(engine.vision.mainZ)
+          break;
+        case "Seer":
+          seer_q.setValue(engine.vision.q);
+          seer_z.setValue(engine.vision.checkBlue);
+          break;
+        case "Valkyrie":
+          valk_q.setValue(engine.vision.q);
+          valk_z.setValue(engine.vision.valkz);
+          break;
+        case "Wattson":
+          wattson_q.setValue(engine.vision.q);
+          wattson_q1.setValue(engine.vision.q1);
+          wattson_q2.setValue(engine.vision.q2);
+          wattson_q3.setValue(engine.vision.q3);
+          wattson_z.setValue(engine.vision.mainZ);
+          break;
+        case "Wraith":
+          wraith_q.setValue(engine.vision.q);
+          wraith_z.setValue(engine.vision.checkYellow);
+          break;
+      }
+    }
+
+    if (characterChanged) {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(function () {
+          effects.push(
+            new moveableBar(-50, random(0, 200), 100, 20, 15, 0, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.7)
+          );
+        }, random(0, 800));
+        setTimeout(function () {
+          effects.push(
+            new moveableBar(360, random(0, 200), 100, 20, -15, 0, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.7)
+          );
+        }, random(0, 800));
+      }
+      characterChanged = false;
+    }
+
+    // HEALTH AND SHIELDS ?? ------------------------------------------------------
+    if (enableHealth) {
+      health = engine.vision.health;
+    }
+
+    goldShield = engine.vision.goldShieldBar;
+    blueShield = engine.vision.blueShieldBar;
+    purpleShield = engine.vision.purpleShieldBar;
+    redShield = engine.vision.redShieldBar;
+
+
+    healthHistory.push(health);
+    if (healthHistory.length > 20) {
+      healthHistory.splice(0, 1);
+      var iPrevFrameDiff = healthHistory[19] - healthHistory[18];
+      var iPrevFrameAbsDiff = Math.abs(iPrevFrameDiff);
+      var bScreenTransition = iPrevFrameAbsDiff == 1;
+
+      if (healthHistory[18] != 0 && healthHistory[19] != 0) {
+        if (!bScreenTransition && iPrevFrameDiff > 0.3) {
+          drawHealing(iPrevFrameDiff);
+        }
+      }
+      if (engine.vision.osdEsc < 0.9) {
+        if (
+          healthHistory[19] - healthHistory[18] < 0 &&
+          healthHistory[18] != 0 &&
+          healthHistory[19] != 0
+        ) {
+          var damage = iPrevFrameDiff;
+          var numDrops = Math.floor(50);
+          for (i = 0; i < 50; i++) {
+            drops.push(
+              new DamageDrop(Math.random() * 320, Math.random() * 200)
+            );
+          }
+        }
+      }
+    }
+
+    if (engine.vision.revive > 0.1) {
+      recentRevive.setLifetime(500);
+    }
+    recentRevive.run();
+
+    if (
+      engine.vision.check < 0.2 ||
+      engine.vision.osdEsc > 0.9 ||
+      engine.vision.hitEscape > 0.7 ||
+      recentRevive.getLifetime() > 300 ||
+      engine.vision.tabOut > 0.95
+    ) {
+      blueShieldHistory.push(0.3);
+      purpleShieldHistory.push(0.3);
+      goldShieldHistory.push(0.3);
+      redShieldHistory.push(0.3);
+    } else {
+      blueShieldHistory.push(engine.vision.blueShieldBar);
+      purpleShieldHistory.push(engine.vision.purpleShieldBar);
+      goldShieldHistory.push(engine.vision.goldShieldBar);
+      redShieldHistory.push(engine.vision.redShieldBar);
+    }
+    if (blueShieldHistory.length > 20) {
+      blueShieldHistory.splice(0, 1);
+    }
+    if (purpleShieldHistory.length > 20) {
+      purpleShieldHistory.splice(0, 1);
+    }
+    if (goldShieldHistory.length > 20) {
+      goldShieldHistory.splice(0, 1);
+    }
+    if (redShieldHistory.length > 20) {
+      redShieldHistory.splice(0, 1);
+    }
+    if (
+      engine.vision.osdEsc < 0.9 &&
+      engine.vision.hitEscape < 0.7 &&
+      engine.vision.check > .5
+    ) {
+      if (blueShieldHistory[18] < blueShieldHistory[19] && engine.vision.check == 1) {
+        if (engine.vision.blueShieldBar > 0.1 && !shieldPushed) {
+          shieldAnims.push(new ShieldAnimation("rgba(19, 101, 183, 0.6"));
+          shieldPushed = true;
+        }
+      }
+      if (purpleShieldHistory[18] < purpleShieldHistory[19] && engine.vision.check == 1) {
+        if (engine.vision.purpleShieldBar > 0.1) {
+          shieldAnims.push(new ShieldAnimation("rgba(139, 35, 224, 0.6"));
+        }
+      }
+      if (goldShieldHistory[18] < goldShieldHistory[19] && engine.vision.check == 1) {
+        if (engine.vision.goldShieldBar > 0.1) {
+          shieldAnims.push(new ShieldAnimation("rgba(204, 157, 4, 0.8"));
+        }
+      }
+      if (redShieldHistory[18] < redShieldHistory[19] && engine.vision.check == 1) {
+        if (engine.vision.redShieldBar > 0.2) {
+          shieldAnims.push(new ShieldAnimation("rgba(255, 0, 0, 0.8"));
+        }
+      }
+    }
+
+    let aIndex = 0;
+    while (aIndex < orbs.length || aIndex < drops.length || aIndex < bursts.length || aIndex < shieldAnims.length) {
+
+      if (orbs[aIndex]) {
+        orbs[aIndex].draw();
+        orbs[aIndex].update();
+        if (orbs[aIndex].lifetime <= 0) {
+          orbs.splice(aIndex, 1);
+        }
+      }
+
+      if (drops[aIndex]) {
+        drops[aIndex].draw();
+        drops[aIndex].update();
+        if (drops[aIndex].lifetime <= 0) {
+          drops.splice(aIndex, 1);
+        }
+      }
+
+      if (bursts[aIndex]) {
+        bursts[aIndex].draw();
+        bursts[aIndex].update();
+        if (bursts[aIndex].lifetime <= 0) {
+          bursts.splice(aIndex, 1);
+        }
+      }
+
+      if (shieldAnims[aIndex]) {
+        shieldAnims[aIndex].draw();
+        shieldAnims[aIndex].update();
+        if (shieldAnims[aIndex].lifetime <= 0) {
+          shieldAnims.splice(aIndex, 1);
+
+        }
+      }
+
+      aIndex++;
+    }
+
+    var confirmCharge = engine.vision.confirm;
+    if (enablePhoenix) {
+      if (engine.vision.phoenixKit > 0.1 && confirmCharge > 0.8) {
+        drawSweep(engine.vision.phoenixKit, "rgba(139, 35, 224, 0.9)");
+      }
+
+      if (engine.vision.phoenixKit > 0.95 && confirmCharge > 0.8) {
+        bursts.push(new ColorBurst(160, 100, "rgb(139, 35, 224"));
+      }
+    }
+    if (enableShieldR) {
+      if (engine.vision.shieldCharge > 0.1 && confirmCharge > 0.8 && engine.vision.check == 1) {
+        drawSweep(engine.vision.shieldCharge, "rgba(19, 101, 183, 0.9");
+      }
+
+      if (engine.vision.shieldCharge > 0.95 && confirmCharge > 0.8 && engine.vision.check == 1) {
+        bursts.push(new ColorBurst(160, 100, "rgb(19, 101, 183"));
+      }
+    }
+    if (enableSyringe) {
+      if (engine.vision.syringeCharge > 0.1 && confirmCharge > 0.8) {
+        drawSweep(engine.vision.syringeCharge, "rgba(255, 0, 0, 0.9");
+      }
+
+      if (engine.vision.syringeCharge > 0.95 && confirmCharge > 0.8) {
+        bursts.push(new ColorBurst(160, 100, "rgb(255, 0, 0"));
+      }
+    }
+    if (enableRevive) {
+      if (engine.vision.revive > 0.1) {
+        drawSweepUp(engine.vision.revive, "rgba(123, 174, 0, 0.9");
+      }
+
+      if (engine.vision.revive > 0.95) {
+        bursts.push(new ColorBurst(160, 100, "rgb(123, 174, 0"));
+      }
+    }
+    //STATE MANAGER PROCESS AND EFFECTS DRAW CALLS ----------------------------------------------
+
+
+    if (enableShield) {
+      ctx.globalAlpha = .2;
+      if (goldShield > 0.15) {
+        ctx.fillStyle = `hsl(44, 100%, 50%)`;
+        ctx.fillRect(0, 0, 320, 200);
+      } else if (blueShield > 0.15) {
+        ctx.fillStyle = `hsl(200, 100%, 50%)`;
+        ctx.fillRect(0, 0, 320, 200);
+        shieldPushed = true
+      } else if (purpleShield > 0.15) {
+        ctx.fillStyle = `hsl(280, 100%, 50%)`;
+        ctx.fillRect(0, 0, 320, 200);
+      } else if (redShield > 0.15) {
+        ctx.fillStyle = `hsl(1, 100%, 50%)`;
+        ctx.fillRect(0, 0, 320, 200);
+      } else {
+        shieldPushed = false;
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+
+    if (effects.length === 0) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+    }
+
+    stateMgr.Process();
+    window.requestAnimationFrame(update);
+  }
+  //END UPDATE FUNCTION -----------------------------------------------------------------------
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    };
+  }
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+  function seerZ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 5000;
+    this.count = 2000;
+    this.color = "#ff8c00";
+    this.color2 = "#ff8c00";
+    this.isHollow = false;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      if (this.elapsed < 2000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        effects.push(
+          new moveableBar(
+            random(0, 360),
+            random(0, 200),
+            20,
+            20,
+            random(-5, 5),
+            random(-5, 5),
+            186 + random(-20, 20),
+            100 + random(-20, 20),
+            50,
+            0.9
+          )
+        );
+        var pctUp = this.count / 2000;
+        if (this.isHollow) {
+          ctx.strokeStyle = this.color;
+          ctx.lineWidth = 20;
+          ctx.beginPath();
+          ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+
+        this.count -= 50;
+      }
+    };
+  }
+
+  function seerQ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 5000;
+    this.count = 2000;
+    this.color = "#00f2ff";
+    this.color2 = "#00f2ff";
+    this.isHollow = true;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      if (this.elapsed < 2000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        effects.push(
+          new moveableBar(
+            random(0, 360),
+            random(0, 200),
+            20,
+            20,
+            random(-5, 5),
+            random(-5, 5),
+            0 + random(-20, 20),
+            100 + random(-20, 20),
+            100,
+            0.9
+          )
+        );
+        var pctUp = this.count / 2000;
+        if (this.isHollow) {
+          ctx.strokeStyle = this.color;
+          ctx.lineWidth = 20;
+          ctx.beginPath();
+          ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+
+        if (this.count < 100) {
+          this.count = 2000;
+        } else {
+          this.count -= 75;
+        }
+      }
+    };
+  }
+
+  function BurstRippleState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.size = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, (this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.size += 5;
+    };
+  }
+
+  function reverseBurstRippleState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+    this.size = 320;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration || this.size == 0) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color2;
+      ctx.beginPath();
+      ctx.arc(160, 100, (this.size / 2), 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = this.color1;
+      ctx.beginPath();
+      ctx.arc(160, 100, (this.size / 3) + 10, 0, 2 * Math.PI);
+      ctx.fill();
+
+      this.size -= 5;
+    };
+  }
+  function hexToHSL(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    var r = parseInt(result[1], 16);
+    var g = parseInt(result[2], 16);
+    var b = parseInt(result[3], 16);
+
+    (r /= 255), (g /= 255), (b /= 255);
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h,
+      s,
+      l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+      }
+      h /= 6;
+    }
+
+    s = s * 100;
+    s = Math.round(s);
+    l = l * 100;
+    l = Math.round(l);
+    h = Math.round(360 * h);
+
+    var colors = [];
+    colors['h'] = h;
+    colors['s'] = s;
+    colors['l'] = l;
+
+    return colors;
+  }
+  function SparkleEffect(hue, saturation, lightness, size) {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.lifetime = 40;
+    this.size = size;
+    this.draw = function () {
+      ctx.fillStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + this.lightness + '%)';
+      ctx.fillRect(this.x, this.y, this.size, this.size);
+      this.lifetime--;
+    };
+  }
+  function pathfinderQ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    var split = -300;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "#0320fc";
+      ctx.fillRect(split, 80, 350, 60);
+      ctx.fillStyle = "#0320fc";
+      ctx.fillRect(250 + split, 60, 100, 60);
+      ctx.fillStyle = "#0320fc";
+      ctx.fillRect(250 + split, 100, 100, 60);
+      split += 11;
+    };
+  }
+  function rampartZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    var width = 320;
+    var height = 200;
+    var deg = 1;
+    var radians = 1;
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "#fa8cd3";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.strokeStyle = "#ff6200";
+      ctx.fillStyle = "#ff6200";
+
+      ctx.lineWidth = 30;
+      ctx.beginPath();
+      ctx.arc(160, 100, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(160, 100);
+      radians = degrees_to_radians(deg);
+      ctx.lineTo(
+        getPointX(160, 100, 200, radians),
+        getPointY(160, 100, 200, radians)
+      );
+
+      ctx.stroke();
+
+      if (deg < 360) {
+        deg += 7;
+      } else {
+        deg = 0;
+      }
+    };
+  }
+  function getPointX(c1, c2, radius, angle) {
+    return c1 + Math.cos(angle) * radius;
+  }
+
+  function getPointY(c1, c2, radius, angle) {
+    return c2 + Math.sin(angle) * radius;
+  }
+
+  function degrees_to_radians(degrees) {
+    var pi = Math.PI;
+    return degrees * (pi / 180);
+  }
+
+  function radians_to_degrees(radians) {
+    var pi = Math.PI;
+    return radians * (180 / pi);
+  }
+
+  function horizonQ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 200;
+    var move = 0;
+    var move2 = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          262 +
+          "," +
+          50 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+      ctx.fillStyle = "blue";
+      ctx.fillRect(0, split, 320, 60);
+      split -= 4;
+
+    };
+  }
+
+  function octaneZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed <= 1000 && !(this.elapsed > 1000)) {
+        ctx.fillStyle = "#57ff4f";
+        ctx.beginPath();
+        ctx.arc(- 100 + split, 90 + move, 30, 0, 2 * Math.PI);
+        ctx.fill();
+        split += 7;
+        move += 3;
+      }
+      if (this.elapsed >= 1000) {
+        ctx.fillStyle = "#57ff4f";
+        ctx.beginPath();
+        ctx.arc(160, 200 - move2, 60, 0, 2 * Math.PI);
+        ctx.fill();
+        move2 += 6;
+      }
+    };
+  }
+
+  function causticZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed <= 1500) {
+        ctx.fillStyle = "yellow";
+        ctx.beginPath();
+        ctx.arc(- 100 + split, 100, 45, 0, 2 * Math.PI);
+        ctx.fill();
+        split += 8;
+      }
+      if (this.elapsed > 1500) {
+        ctx.fillStyle = "#ebae34";
+        ctx.beginPath();
+        ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "yellow";
+        ctx.beginPath();
+        ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "#ebae34";
+        ctx.beginPath();
+        ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+        ctx.fill();
+        this.size += 3;
+      }
+    };
+  }
+
+  function fuseZ() {
+    this.x = 100;
+    this.y = 0;
+    this.start = getNow();
+    this.duration = 8000;
+    var split = 0;
+    this.squares = [];
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+        stateMgr.Push(new fuseZ2());
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      //Helper function refactor? ----------------------------------------------------------------------------------------------------
+      if (this.elapsed < 3000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+        if (this.squares.length < 5) {
+          this.squares.push(new fallingSquare(Math.random() * 320, this.y, 0));
+        }
+        this.squares.forEach((e, i) => {
+          e.Draw();
+          if (e.done) {
+            this.squares.splice(i, 1);
+          }
+        })
+      }
+
+      if (this.elapsed >= 3000) {
+        ctx.fillStyle = "#fc5a03";
+        ctx.fillRect(0, 15, split, 60);
+        ctx.fillRect(0, 0, 40, split);
+        ctx.fillRect(0, 90, split, 40);
+        ctx.fillRect(0, 180, split, 40);
+        ctx.fillRect(290, 0, 60, split);
+        split += 5;
+      }
+    };
+  }
+
+  function fuseZ2() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 15, 320, 40);
+      ctx.fillRect(0, 0, 40, 200);
+      ctx.fillRect(0, 90, 320, 40);
+      ctx.fillRect(0, 180, 320, 40);
+      ctx.fillRect(290, 0, 40, 200);
+    };
+  }
+
+  function revenantZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "#ff8400";
+      ctx.beginPath();
+      ctx.moveTo(160, 200 - split);
+      ctx.lineTo(35, 300 - split);
+      ctx.lineTo(285, 300 - split);
+      ctx.fillRect(35, 300 - split, 250, 200);
+      ctx.moveTo(160, 600 - split);
+      ctx.lineTo(35, 500 - split);
+      ctx.lineTo(285, 500 - split);
+      ctx.fill();
+      split += 7;
+    };
+  }
+
+  function wattsonQ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    var speed = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed <= 1000) {
+        ctx.fillStyle = "#03fce3";
+        ctx.fillRect(0, 0 + speed, 320, 17);
+        ctx.fillStyle = "#03fce3";
+        ctx.fillRect(0, 30 + speed, 320, 17);
+        ctx.fillStyle = "#03fce3";
+        ctx.fillRect(0, 60 + speed, 320, 17);
+      }
+      if (this.elapsed > 1000) {
+        ctx.fillStyle = "#03fce3";
+        ctx.fillRect(0, 290 - speed, 320, 17);
+        ctx.fillStyle = "#03fce3";
+        ctx.fillRect(0, 320 - speed, 320, 17);
+        ctx.fillStyle = "#03fce3";
+        ctx.fillRect(0, 350 - speed, 320, 17);
+      }
+      speed += 5;
+    };
+  }
+  function valkQ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    var speed = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "red";
+      ctx.fillRect(0, 200 - speed, 40, 40);
+      ctx.fillRect(60, 200 - speed, 40, 40);
+      ctx.fillRect(120, 200 - speed, 40, 40);
+      ctx.fillRect(180, 200 - speed, 40, 40);
+      ctx.fillRect(240, 200 - speed, 40, 40);
+      ctx.fillRect(300, 200 - speed, 40, 40);
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 240 - speed, 40, 200);
+      ctx.fillRect(60, 240 - speed, 40, 200);
+      ctx.fillRect(120, 240 - speed, 40, 200);
+      ctx.fillRect(180, 240 - speed, 40, 200);
+      ctx.fillRect(240, 240 - speed, 40, 200);
+      ctx.fillRect(300, 240 - speed, 40, 200);
+      speed += 7;
+    };
+  }
+
+  function valkZ(hue) {
+    this.h = 100;
+    this.lifetime = 50;
+    this.size = 20;
+    this.y = 200;
+    this.start = new Date().getTime();
+    var split = 0;
+    this.duration = 8000;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      var lightness = new Int8Array(engine.zone.lightness);
+      var sat = new Int8Array(engine.zone.saturation);
+      var hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var satBoost = sat[iZone] + 20;
+        ctx.fillStyle =
+          "hsla(" +
+          100 +
+          "," +
+          satBoost +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+
+      ctx.fillStyle = "hsl(" + 100 + ",100%,50%)";
+
+      ctx.fillRect(0, this.y - split, 320, 60);
+      split += 7;
+      if (split > 250) {
+        split = 0;
+        ctx.fillRect(0, this.y - split, 320, 60);
+      }
+    };
+  }
+  function BoostWave(hue) {
+    this.h = 35;
+    this.lifetime = 50;
+    this.size = 20;
+    var split = 0;
+    this.draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        var satBoost = sat[iZone] + 20;
+        ctx.fillStyle =
+          "hsla(" +
+          35 +
+          "," +
+          satBoost +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+
+      ctx.fillStyle = "hsl(" + 0 + ",100%,50%)";
+      ctx.fillRect(320 - split, 0, 60, 200);
+      split += 7;
+      this.lifetime--;
+    };
+  }
+  function wattsonZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.xRect = 0;
+    this.yRect = 0;
+    this.width = 320;
+    this.height = 200;
+    this.complete = false;
+    this.colors = ["#00b0ff", "black", "white"];
+    this.color = this.colors[Math.floor(Math.random() * 3)];
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed <= 2000) {
+        ctx.fillStyle = "white";
+        ctx.fillRect(-320 + split, 90, 320, 60);
+        split += 5;
+      }
+      if (this.elapsed > 2000) {
+        if (this.elapsed % 2 == 0) {
+          ctx.fillStyle = "#0703fc";
+          ctx.fillRect(Math.random() * 320, 0, 20, 200);
+        }
+        this.xRect += 8;
+        this.yRect += 4;
+        this.width -= 16;
+        this.height -= 8;
+        ctx.fillStyle = "#03e3fc";
+        ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+        if (this.xRect > 400) this.complete = true;
+      }
+    };
+  }
+
+  function lobaZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.xRect = 160;
+    this.yRect = 100;
+    this.width = 0;
+    this.height = 0;
+    this.complete = false;
+    this.colors = ["#00b0ff", "black", "white"];
+    this.color = this.colors[Math.floor(Math.random() * 3)];
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed <= 2000) {
+        ctx.fillStyle = "white";
+        ctx.fillRect(-320 + split, 90, 320, 60);
+        split += 5;
+      }
+      if (this.elapsed > 2000) {
+        this.xRect -= 8;
+        this.yRect -= 4;
+        this.width += 16;
+        this.height += 8;
+        ctx.fillStyle = "#00b0ff";
+        ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+        if (this.xRect > 400) this.complete = true;
+      }
+    };
+  }
+
+
+  function GrowRectangle() {
+    this.xRect = 160;
+    this.yRect = 100;
+    this.width = 0;
+    this.height = 0;
+    this.complete = false;
+
+    this.colors = ["#00b0ff", "black", "white"];
+    this.color = this.colors[Math.floor(Math.random() * 3)];
+
+    this.Draw = function () {
+      this.xRect -= 8;
+      this.yRect -= 4;
+      this.width += 16;
+      this.height += 8;
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.xRect, this.yRect, this.width, this.height);
+
+      if (this.xRect > 400) this.complete = true;
+    };
+  }
+  function lifelineZ() {
+    this.x = 0;
+    this.y = -10;
+    this.count = 2000;
+    this.size = 0;
+    this.start = new Date().getTime();
+    this.duration = 3000;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed <= 1500) {
+        ctx.fillStyle = "#0320fc";
+        ctx.fillRect(120, 200 - split, 120, 2000);
+        split += 7;
+      }
+      if (this.elapsed > 1500) {
+        ctx.fillStyle = "blue";
+        ctx.beginPath();
+        ctx.arc(160, 100, this.size + (this.size / 2), 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "#c2fffc";
+        ctx.beginPath();
+        ctx.arc(160, 100, this.size + (this.size / 3), 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "blue";
+        ctx.beginPath();
+        ctx.arc(160, 100, this.size, 0, 2 * Math.PI);
+        ctx.fill();
+        this.size += 5;
+      }
+    };
+  }
+  function pathfinderZ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 4500;
+    var split = 0;
+    var move = 0;
+    var move2 = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      if (this.elapsed < 1000) {
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 0, 320, split);
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 200 - split, 320, split);
+        split += 7;
+
+      }
+      if (this.elapsed > 1000 && move <= 100) {
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 0 + move, 320, 100 - move);
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 100, 320, 100 - move);
+        move += 7;
+      }
+      if (this.elapsed > 1000 && move > 100) {
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(move2, 80, 320, 60);
+        move2 += 9;
+      }
+    };
+  }
+  function wraithQ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 1225;
+    var split = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "#78f6ff";
+      ctx.fillRect(split, 0, 30, 200);
+      ctx.fillStyle = "#78f6ff";
+      ctx.fillRect(30 + split, 0, 30, 200);
+      ctx.fillStyle = "#78f6ff";
+      ctx.fillRect(320 - split, 0, 30, 200);
+      ctx.fillStyle = "#78f6ff";
+      ctx.fillRect(290 - split, 0, 30, 200);
+      split += 15;
+    };
+  }
+
+  function fuseQ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 5000;
+    var split = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      if (this.elapsed < 2000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#fc5a03";
+        ctx.fillRect(0 + split, 90, 60, 60);
+        split += 5;
+      }
+
+      if (this.elapsed >= 2000) {
+        effects.push(
+          new moveableBar(
+            random(0, 360),
+            random(0, 200),
+            20,
+            20,
+            random(-5, 5),
+            random(-5, 5),
+            20 + random(-20, 20),
+            100 + random(-20, 20),
+            50,
+            0.9
+          )
+        );
+
+      }
+    };
+  }
+
+  function newCastleQ() {
+    this.start = new Date().getTime();
+    this.ShieldArray = [];
+    this.notPushed = true;
+    this.elapsed;
+    this.circle;
+
+    this.Process = function () {
+      this.draw();
+      if (this.elapsed > 4700) {
+        stateMgr.Pop()
+      }
+    }
+    this.draw = function () {
+      this.elapsed = new Date().getTime() - this.start
+      if (this.elapsed < 800) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200)
+        DrawDrone(160, 0 + this.elapsed / 7, (this.elapsed / 800) * 180 * Math.PI / 180, 60)
+      } else {
+        if (this.circle == undefined) {
+          this.circle = new Circle()
+        }
+        if (this.elapsed < 2000) {
+          ctx.fillStyle = "black";
+          ctx.fillRect(0, 0, 320, 200);
+        }
+        this.circle.draw();
+        DrawDrone(160, 114, 180 * Math.PI / 180, 60)
+      }
+    }
+  }
+  function DrawDrone(x, y, rotation, size) {
+    ctx.beginPath();
+    ctx.save();
+    ctx.fillStyle = "grey";
+    ctx.translate(x, y);
+    ctx.rotate(rotation)
+    ctx.ellipse(0, 0, size, size / 2, 0, 0, Math.PI * 2)
+    ctx.fillRect(0 - size, 0, size / 2, size / 1.5)
+    ctx.fillRect(0 + size / 2, 0, size / 2, size / 1.5)
+    ctx.fill();
+    ctx.restore();
+  }
+
+
+  function Circle() {
+    this.start = new Date().getTime()
+    this.draw = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      var gradient = ctx.createRadialGradient(160, 110, 0, 160, 110, 200);
+      this.animSpeed = 0.7;
+      if (this.elapsed < 3000) {
+        this.mathVal = -1400 * Math.floor(this.elapsed / 1000) + this.elapsed / this.animSpeed;
+        gradient.addColorStop(SetRange((-800 + this.mathVal), 0, 1000) / 1000, 'hsla(178, 100%, 58%, 1)');
+        gradient.addColorStop(SetRange((-400 + this.mathVal), 0, 1000) / 1000, 'hsla(217, 100%, 30%, 1)');
+        gradient.addColorStop(SetRange((0 + this.mathVal), 0, 1000) / 1000, 'hsla(178, 100%, 58%, 1)');
+      } else {
+        gradient.addColorStop(SetRange((0 + -1400 * 3 + this.elapsed / this.animSpeed), 0, 1000) / 1000, 'hsla(178, 100%, 58%, 1)');
+        gradient.addColorStop(SetRange((-400 + -1400 * 3 + this.elapsed / this.animSpeed), 0, 1000) / 1000, 'hsla(0,0%,0%,0)')
+      }
+      if (this.elapsed < 1000) {
+        gradient.addColorStop(SetRange((100 + this.elapsed / this.animSpeed), 0, 1000) / 1000, 'hsl(0,0%,0%)')
+      }
+      ctx.beginPath()
+      ctx.fillStyle = gradient;
+      ctx.arc(160, 120, 200, 0, Math.PI * 2)
+      ctx.fill()
+    }
+  }
+  function SetRange(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+  }
+
+  function newCastleUlt() {
+    this.start = new Date().getTime();
+    this.dot = new dot(160, -50);
+    this.particles = [];
+    this.buildable = [];
+    this.randomElectric = 1;
+
+    this.Process = function () {
+      this.draw();
+      if (this.elapsed > 7000) {
+        stateMgr.Pop()
+      }
+    }
+    this.draw = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed < 3500) {
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200)
+      } else {
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(0,0%,0%,${(1 - ((this.elapsed - 3500)) / 1000)})`;
+        ctx.fillRect(0, 0, 320, 200)
+      }
+
+      if (this.elapsed < 1000 && this.dot.y < 190) {
+        ctx.beginPath();
+        ctx.arc(this.dot.x, this.dot.y, 50, 0, Math.PI * 2)
+        ctx.fillStyle = "hsla(190, 100%, 58%, 1)"
+        ctx.fill();
+        this.dot.y += 8;
+      } else if (this.pushed == undefined) {
+        for (let index = 0; index < 100; index++) {
+          this.particles.push(new ImpactParticle(160, 200, Math.random() * 20 + 10, "hsla(190, 100%, 58%, 1)"))
+          this.pushed = true
+        }
+        for (let i = 0; i < 6; i++) {
+          setTimeout(() => {
+            this.buildable.push(new BuildRect(i, 30, i >= 3 ? 200 : 100, "grey"))
+            this.buildable.push(new BuildRect(-i, 30, i >= 3 ? 200 : 100, "grey"))
+          }, 300 * i);
+
+        }
+      }
+      this.particles.forEach(particle => {
+        particle.draw();
+      });
+      this.buildable.forEach(build => {
+        build.draw();
+      })
+      if (this.elapsed > 2500) {
+        for (let index = 0; index < 3; index++) {
+          this.buildable[this.randomElectric].color = "grey";
+          this.randomElectric = Math.floor(Math.random() * this.buildable.length);
+          this.buildable[this.randomElectric].color = "blue"
+        }
+      }
+    }
+  }
+
+
+  function BuildRect(index, width, height, color) {
+    this.start = new Date().getTime();
+    this.index = index;
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.draw = function () {
+      this.elapsed = (new Date().getTime() - this.start);
+      ctx.beginPath();
+      ctx.fillStyle = this.color
+      ctx.fillRect((160 - this.width / 2) + width * this.index, 200, this.width, -(SetRange(this.elapsed < 4000 ? this.elapsed / 5 : this.height - (this.elapsed - 4000) / 1000 * this.height, 0, this.height)));
+
+    }
+  }
+
+
+  function ImpactParticle(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = x;
+    this.vx = 7 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -20;
+    this.ay = 0.5;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  class dot {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  }
+
+
+  function moveableBar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
+    this.x = x;
+    this.y = y;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 50;
+    this.size = 0;
+    this.ydirection = yDirection;
+    this.xdirection = xDirection;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + this.alpha + ' )';
+      ctx.fillRect(this.x, this.y, this.height, this.width);
+      this.lifetime--;
+      this.y -= this.ydirection;
+      this.x += this.xdirection;
+    };
+  }
+  //Ellipse ---------------------------------------------------------------------------------------------------------------
+  function ellipseFade(radiusX, radiusY) {
+    this.x = 0;
+    this.y = 0;
+    this.radiusX = radiusX;
+    this.radiusY = radiusY;
+    this.lifetime = 10;
+
+    this.draw = function () {
+      ctx.setTransform(.5, 1, -1, .5, 160, 100);
+      ctx.beginPath();
+      ctx.ellipse(this.x, this.y, this.radiusX, this.radiusY, Math.PI, 0, 2 * Math.PI, false);
+      ctx.fillStyle = `hsl(215, 100%, ${1500 / this.radiusX}%)`;
+      ctx.fill();
+      this.radiusX -= 0.25;
+      if (this.radiusX <= 5) {
+        this.lifetime = 0;
+        zGoing = false;
+      }
+    }
+
+
+  }
+  //Square --------------------------------------------------------------------------------------------------------------------------
+  function fallingSquare(x, y, h) {
+    this.x = x;
+    this.y = y;
+    this.h = h;
+    this.done = false;
+
+    this.Draw = function () {
+      ctx.fillStyle = 'hsl(' + this.h + ',100%,50%)';
+      ctx.fillRect(this.x, this.y, 20, 30)
+
+      ctx.fillStyle = 'hsl(' + this.h + ',100%,65%)';
+      ctx.fillRect(this.x, this.y - 10, 20, 20)
+
+      this.y += 8;
+      if (this.y > 250) this.done = true;
+
+      Math.random() > .5 ? this.x += 1 : this.x -= 1;
+    }
+  }
+
+  //CIRCLES CLASS -------------------------------------------------------------------
+  function fadingCircles() {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.radius = Math.random() * 50;
+    this.transparency = 1;
+    this.done = false;
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.globalAlpha = this.transparency;
+      ctx.fillStyle = `rgb(255,255,255)`;
+      ctx.fill();
+      this.transparency -= .1;
+
+      if (this.transparency <= 0) {
+        this.done = true;
+      }
+    }
+  }
+
+  function bangaloreQ() {
+    this.start = getNow();
+    this.duration = 10000;
+    this.circles = [];
+    this.doneSmoke = false;
+
+    this.Process = function () {
+      this.elapsed = getNow() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      let index = 0;
+      while (index <= 20 && this.doneSmoke === false) {
+        this.circles.push(new fadingCircles());
+        index++;
+      };
+      this.doneSmoke = true;
+      this.circles.forEach((e, i) => {
+        e.Draw();
+        if (e.done) {
+          this.circles.splice(i, 1);
+        }
+      })
+    };
+  }
+
+  function bangaloreZ() {
+    this.x = 100;
+    this.y = 0;
+    this.start = getNow();
+    this.duration = 14000;
+    this.squares = [];
+    var split = 0;
+
+    this.Process = function () {
+      this.elapsed = getNow() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      if (this.elapsed < 3000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "#ff3beb";
+        ctx.fillRect(0 + split, 90, 60, 60);
+
+        split += 5;
+      }
+      if (this.elapsed >= 3000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+        if (this.squares.length < 5) {
+          this.squares.push(new fallingSquare(Math.random() * 320, this.y, 0));
+        }
+        this.squares.forEach((e, i) => {
+          e.Draw();
+          if (e.done) {
+            this.squares.splice(i, 1);
+          }
+        })
+      }
+      if (this.elapsed >= 9000) {
+        effects.push(new SparkleEffect(42 + random(-10, 10), 60, 50, 30));
+        effects.push(new SparkleEffect(42 + random(-10, 10), 60, 50, 30));
+
+      }
+    };
+  }
+
+  function gibraltarZ() {
+    this.x = 0;
+    this.y = -10;
+    this.start = new Date().getTime();
+    this.duration = 11000;
+    this.squares = [];
+    var split = 0;
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function () {
+      if (this.elapsed < 4000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+        ctx.fillStyle = "red";
+        ctx.fillRect(160 + split, 0, 40, 200);
+        ctx.fillStyle = "red";
+        ctx.fillRect(160 - split, 0, 40, 200);
+        split += 2;
+      }
+      if (this.elapsed >= 4000) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+        if (this.squares.length < 5) {
+          this.squares.push(new fallingSquare(Math.random() * 320, this.y, 15));
+        }
+        this.squares.forEach((e, i) => {
+          e.Draw();
+          if (e.done) {
+            this.squares.splice(i, 1);
+          }
+        })
+      }
+    };
+  }
+
+  function random(min, max) {
+    // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+  function WallUpState(hue, sat, lit, alpha = 1) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 80;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.draw();
+    };
+
+    this.draw = function () {
+      var pctUp = 1 - this.count / 2000;
+      ctx.fillStyle =
+        'hsla(' +
+        (this.hue + random(-15, 15)) +
+        ',' +
+        (this.sat + random(-15, 15)) +
+        '%,' +
+        (this.lit + random(-15, 15)) +
+        '%,' +
+        this.alpha +
+        ')';
+      ctx.fillRect(0, 200 - 200 * pctUp, 320, 300);
+      this.count -= 28;
+      ctx.fillStyle =
+        'hsla(' +
+        (this.hue + random(-15, 15)) +
+        ',' +
+        (this.sat + random(-15, 15)) +
+        '%,' +
+        (this.lit + random(-15, 15)) +
+        '%,' +
+        this.alpha +
+        ')';
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillStyle =
+        'hsla(' +
+        (this.hue + random(-15, 15)) +
+        ',' +
+        (this.sat + random(-15, 15)) +
+        '%,' +
+        (this.lit + random(-15, 15)) +
+        '%,' +
+        this.alpha +
+        ')';
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+      ctx.fillRect(Math.random() * 320, 200 - 200 * pctUp, 20, 300);
+
+      this.lifetime--;
+    };
+  }
+  function ExpandingCircle(outward, x, y, hue, saturation, lightness) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.lifetime = 50;
+    this.size = 0;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.x = x;
+    this.y = y;
+    this.outward = outward;
+    if (!this.outward) {
+      this.size = 200;
+    }
+
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + this.lightness + '%)';
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      if (this.outward) {
+        this.size += 3;
+      } else {
+        this.size -= 3;
+      }
+
+      this.lifetime--;
+    };
+  }
+  function hueControl(color, hollow) {
+    this.start = new Date().getTime();
+    this.duration = 25000;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle =
+          "hsla(" +
+          this.color +
+          "," +
+          75 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+
+        var iRow = Math.floor(iZone / 28);
+        var iCol = iZone % 28;
+        var iWidth = 320 / 28;
+        var iHeight = 200 / 20;
+        var iZx = iCol * iWidth;
+        var iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+      var pctUp = this.count / 2000;
+
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function ExplodingOrbState(color1, color2, color3) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.count = 2000;
+    this.color1 = color1;
+    this.color2 = color2;
+    this.color3 = color3;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      if (this.count > 1000) {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          50,
+          -this.count
+        );
+      } else {
+        draw3ColorSpiral(
+          160,
+          100,
+          this.color1,
+          this.color2,
+          this.color3,
+          1000 - this.count,
+          this.count
+        );
+      }
+
+      this.count -= 20;
+    };
+  }
+  function draw3ColorSpiral(spX, spY, cl1, cl2, cl3, radius, phase) {
+    var currentColor;
+    for (var i = 0; i < 360; i += 1) {
+      var radphase = i / 360;
+
+      var start = 2 * Math.PI * (i / 360);
+      var end = 2 * Math.PI * ((i + 1) / 360);
+      var offset = 2 * Math.PI * (phase / 360);
+
+      if (i < 60 || (i > 180 && i < 240)) {
+        currentColor = cl1;
+      }
+
+      if ((i > 60 && i < 120) || (i > 240 && i < 300)) {
+        currentColor = cl2;
+      }
+
+      if ((i > 120 && i < 180) || (i > 300 && i < 360)) {
+        currentColor = cl3;
+      }
+
+      ctx.fillStyle = currentColor;
+      ctx.beginPath();
+      try {
+        ctx.arc(spX, spY, radius, start + offset, end + offset);
+      } catch (err) {
+        ctx.arc(160, 100, 50, Math.PI, 2 * Math.PI);
+      }
+      ctx.lineTo(spX, spY);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  function reversePulseRippleState(color, hollow, duration) {
+    this.start = new Date().getTime();
+    this.duration = duration;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+        zGoing = false;
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+  function PulseRippleState(color, hollow, duration) {
+    this.start = new Date().getTime();
+    this.duration = duration;
+    this.count = 2000;
+    this.color = color;
+    this.isHollow = hollow;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200);
+      var pctUp = this.count / 2000;
+      if (this.isHollow) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(160, 100, 200 - 200 * pctUp, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      if (this.count < 100) {
+        this.count = 2000;
+      } else {
+        this.count -= 75;
+      }
+    };
+  }
+
+  function Ash_Q(red, green, blue, duration) {
+    this.start = new Date().getTime();
+    this.duration = duration;
+    this.count = 0;
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
+    this.elapsed = 0;
+
+    this.Process = function () {
+      this.elapsed = new Date().getTime() - this.start;
+      if (this.elapsed > this.duration) {
+        stateMgr.Pop();
+      }
+      this.Draw();
+    };
+
+    this.Draw = function () {
+      let colorAdj = Math.sin(this.elapsed) * (this.elapsed / 100);
+
+      if (this.elapsed < 50) {
+        ctx.fillStyle = 'white';
+      } else if (this.elapsed > 5000 && this.elapsed % 2 === 0) {
+        ctx.fillStyle = 'black';
+      } else {
+        ctx.fillStyle = `rgb(0, 0, ${0 + this.elapsed / 50 + colorAdj})`;
+      }
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.strokeStyle = `rgb(${red + colorAdj}, ${green + colorAdj}, ${blue + colorAdj}`;
+
+      if (this.elapsed > 5000 && this.elapsed % 2 === 0) {
+        ctx.strokeStyle = `black`;
+      }
+      ctx.lineWidth = this.count;
+      ctx.beginPath();
+      ctx.lineWidth = this.elapsed / 10;
+      ctx.arc(160, 100, this.count, 0, 2 * Math.PI);
+      ctx.stroke();
+
+
+      this.count += 2;
+
+    };
+  }
+  function drawScreenOnKeyboard() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      if (health < 0.35 && health > 0) {
+        ctx.fillStyle =
+          "hsla(" +
+          0 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else if (engine.vision.mini > 0.7 || engine.vision.dprotection > .7) {
+        ctx.fillStyle =
+          "hsla(" +
+          30 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      }
+      else if (engine.vision.cyrp >= .8) {
+        ctx.fillStyle =
+          "hsla(" +
+          115 +
+          "," +
+          100 +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      } else {
+        ctx.fillStyle =
+          "hsla(" +
+          hue[iZone] +
+          "," +
+          sat[iZone] +
+          "%," +
+          lightness[iZone] +
+          "%, " +
+          keyScrenBrightness * 0.01 +
+          ")";
+      }
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+  function drawSweep(nWidth, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, nWidth * 320, 200);
+  }
+
+  function drawSweepUp(nWidth, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 200 - nWidth * 200, 320, 200);
+  }
+
+  function drawHealing(width) {
+    var orb = new HealWave(160, 100, width * 320);
+    orbs.push(orb);
+  }
+
+  function HealWave(x, y, width) {
+    this.x = x;
+    this.y = y;
+    this.size = 3;
+    this.width = width;
+    this.vel = 4;
+    this.lifetime = 45; // Frames.
+  }
+
+  HealWave.prototype.draw = function () {
+    ctx.beginPath();
+
+    ctx.lineWidth = this.width;
+    var brightness = this.lifetime + 10;
+    var opacity = this.lifetime / 45;
+    //var hue = (iHue + 30) % 360;
+    ctx.strokeStyle = "white";
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.stroke();
+  };
+
+  HealWave.prototype.update = function () {
+    this.size += 5;
+    this.lifetime--;
+  };
+
+  function ColorBurst(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.size = 0;
+    this.width = 30;
+    this.vel = 4;
+    this.lifetime = 45; // Frames.
+  }
+
+  ColorBurst.prototype.draw = function () {
+    ctx.beginPath();
+
+    var brightness = this.lifetime + 10;
+    var opacity = this.lifetime / 45;
+    //main wave
+    ctx.beginPath();
+    ctx.lineWidth = this.width;
+    ctx.strokeStyle = this.color;
+    ctx.arc(this.x, this.y, this.size + 5, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    //front wave
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "white";
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, this.size + 35, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+  };
+
+  ColorBurst.prototype.update = function () {
+    this.size += 5;
+    this.lifetime--;
+  };
+
+  function DamageDrop(x, y) {
+    this.x = x;
+    this.y = y;
+    this.lifetime = Math.random() * 100 + 45; // Frames.
+  }
+
+  DamageDrop.prototype.draw = function () {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, 20, 20);
+  };
+
+  DamageDrop.prototype.update = function () {
+    this.lifetime--;
+  };
+
+  function ShieldAnimation(color) {
+    this.x = 0;
+    this.y = 0;
+    this.color = color;
+    this.lifetime = 45; // Frames.
+  }
+
+  ShieldAnimation.prototype.draw = function () {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, 320, 200);
+    ctx.fillStyle = "white";
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+  };
+
+  ShieldAnimation.prototype.update = function () {
+    this.lifetime--;
+  };
+
+  function getNow() {
+    let d = new Date();
+    return d.getTime();
+  }
+</script>
