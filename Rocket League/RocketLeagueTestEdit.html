@@ -10,9 +10,9 @@
   <meta property="searchOn" label="Search Effects" type="boolean" default="1" />
   <meta property="adjustHUD" label="Adjust Boost HUD" type="boolean" default="0" />
   <meta property="boostColor" label="Boost Color" type="color" min="0" max="360" default="#FFFF00" />
-  <meta property="xPos" label="boost X-Position" type="number" min="0" max="320" default="160" />
-  <meta property="yPos" label="boost Y-position" type="number" min="0" max="200" default="100" />
-  <meta property="HUDStyle" label="HUD style" type="boolean" default="1" />
+  <meta property="xPos" label="boost X-Position" type="number" min="0" max="320" default="0" />
+  <meta property="yPos" label="boost Y-position" type="number" min="0" max="200" default="50" />
+  <meta property="HUDStyle" label="HUD style" type="boolean" default="0" />
   <meta property="HUDRadius" label="HUD radius (circle)" type="number" min="1" max="200" default="50" />
   <meta property="HUDHeight" label="HUD height (rectangle)" type="number" min="1" max="200" default="50" />
   <meta property="HUDWidth" label="HUD width (rectangle)" type="number" min="1" max="320" default="320" />
@@ -85,8 +85,7 @@
     s="30-100" l="30-70">
   <resolution size="3440x1440" x="0.4625" y="0.9667" width="0.01" height =".0001" />
   </meta>
-
-  <meta meter="replayBlock" tags="rocket league" type="linear" x=" 0.0324" y="0.9694" width="0.001" height =".0001" height="0.001"
+  <meta meter="replayBlock" tags="rocket league" type="linear" x=" 0.0324" y="0.9694" width="0.001" height="0.001"
     h="5-25" s="48-80" l="80-100">
   </meta>
 
@@ -124,7 +123,7 @@
   var Boost5Meter = new Meter(5, boostHandler);
   var Boost6Meter = new Meter(5, boostHandler);
   var Boost7Meter = new Meter(5, boostHandler);
-  var WinMeter = new Meter(10, winHandler);
+  var WinMeter = new Meter(20, winHandler);
   var ScoreLeftMeter = new Meter(5, scoreHandler);
   var ScoreRightMeter = new Meter(5, scoreHandler);
   var ScoreBallMeter = new Meter(5, scoreHandler);
@@ -133,7 +132,6 @@
   var ReplayBlockMeter = new Meter(20, replayHandler)
 
   function update() {
-    console.log(recentScore)
     InGameBlackMeter.setValue(engine.vision.inGameBlack)
     InGameWhiteMeter.setValue(engine.vision.inGameWhite)
     InGameBlueMeter.setValue(engine.vision.inGameBlue)
@@ -225,7 +223,8 @@
   }
 
   function winHandler() {
-    if (WinMeter.value == 1 && ScoreBallMeter.value > .5 && !winPushed && endGameOn) {
+    console.log(ScoreBallMeter.value)
+    if (WinMeter.value == 1 && ScoreBallMeter.value > .3 && !winPushed && endGameOn) {
       effects.push(new gameEnd())
       winPushed = true;
     }
@@ -400,8 +399,6 @@
     this.radius = radius;
     this.lifetime = 10;
     this.draw = function () {
-
-      console.log(boostState)
       this.x = xPos;
       this.y = yPos;
       this.radius = HUDRadius
