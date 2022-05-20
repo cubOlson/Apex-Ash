@@ -1,10 +1,12 @@
 <head>
-  <title>Apex Legends New</title>
+  <title>Apex Legends FILM</title>
   <meta description="Meters and ambiance for Apex Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Legends" type="combobox"
     values="Ash,Bangalore,Bloodhound,Caustic,Crypto,Fuse,Gibraltar,Horizon,Lifeline,Loba,Mad Maggie,Mirage,NewCastle,Octane,Pathfinder,Rampart,Revenant,Seer,Valkyrie,Wattson,Wraith"
     default="Ash" />
+  <meta property="enableQ" label="Hero Q effects" type="boolean" default="1" />
+  <meta property="enableUlt" label="Hero Ult Effects" type="boolean" default="1" />
   <meta property="keyScrenBrightness" label="Brightness" type="number" min="0" max="100" default="100" />
   <meta property="effectHex" label="Legends Select Color" type="color" min="0" max="360" default="#efff00" />
   <meta property="enableShield" label="Shield effects" type="boolean" default="1" />
@@ -13,14 +15,14 @@
   <meta property="enablePhoenix" label="Phoenix Kit effects" type="boolean" default="1" />
   <meta property="enableHealth" label="Health effects" type="boolean" default="1" />
   <meta property="enableRevive" label="Revive effects" type="boolean" default="1" />
-  <meta meter="blueShieldBar" tags="apex,VLC" x=".0932" y=".925" width=".09" height=".0001" h="200-220" s="70-100"
+  <!-- <meta meter="blueShieldBar" tags="apex,VLC" x=".0932" y=".925" width=".09" height=".0001" h="200-220" s="70-100"
     l="0-100" type="linear">
   <resolution size="3440x1440" x="0.0689" y="0.9264" width=".0878" height=".0001" />
   <resolution size="1680x1050" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
-  </meta>
+  </meta> -->
   <meta meter="check" tags="apex,VLC" type="linear" x="0.2646" y="0.9602" width="0.005" height=".0001" h="0-360"
     s="0-15" l="70-100">
   <resolution size="3440x1440" x="0.1971" y="0.9597" width="0.005" height=".0001" />
@@ -53,7 +55,7 @@
   <resolution size="1280x800" x="0.4953" y="0.8638" width="0.0099" height=".0001" />
   <resolution size="1280x768" x="0.4948" y="0.8583" width="0.0099" height=".0001" />
   </meta>
-  <meta meter="confirm" tags="apex,VLC" x=".875" y=".6759" width=".0001" height=".0001" h="0-100" s="0-10" l="90-100"
+  <!-- <meta meter="confirm" tags="apex,VLC" x=".875" y=".6759" width=".0001" height=".0001" h="0-100" s="0-10" l="90-100"
     type="linear">
   <resolution size="3440x1440" x="0.5881" y="0.6583" width="0.0001" height=".0001" />
   <resolution size="1680x1050" x=".6185" y=".6429" width=".0001" height=".0001" />
@@ -102,7 +104,7 @@
   <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
-  </meta>
+  </meta> -->
   <meta meter="greyZ" tags="apex,VLC" type="area" x="0.4938" y="0.8444" height="0.00009" width="0.0119" h="0-360"
     s="0-20" l="70-100">
   <resolution size="3440x1440" x="0.4962" y="0.8444" width="0.009" height="0.00009" />
@@ -110,7 +112,7 @@
   <resolution size="1440x900" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
   <resolution size="1280x800" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
   <resolution size="1280x768" x="0.4938" y="0.8528" height="0.0019" width="0.0109" />
-  </meta>
+  </meta> -->
   <meta meter="health" tags="apex,VLC" x=".0932" y=".937" width=".119" height=".0001" h="0-360" s="0-40" l="90-100"
     type="linear">
   <resolution size="3440x1440" x="0.0692" y="0.9417" width=".0913" height=".0001" />
@@ -119,7 +121,7 @@
   <resolution size="1280x800" x=".0927" y=".9426" width=".1208" height=".0001" />
   <resolution size="1280x768" x=".0927" y=".9426" width=".1208" height=".0001" />
   </meta>
-  <meta meter="hitEscape" tags="apex,VLC" x=".04270" y=".92314" width=".012" height=".0001" h="0-360" s="0-10"
+  <!-- <meta meter="hitEscape" tags="apex,VLC" x=".04270" y=".92314" width=".012" height=".0001" h="0-360" s="0-10"
     l="80-100" type="linear">
   <resolution size="3440x1440" x="0.0267" y="0.9229" width=".012" height=".0001" />
   <resolution size="1680x1050" x=".0351" y=".9314" width=".0001" height=".0001" />
@@ -134,7 +136,7 @@
   <resolution size="1440x900" x="0.6078" y="0.6888" height="0.0019" width="0.0005" />
   <resolution size="1280x800" x="0.6078" y="0.6888" height="0.0019" width="0.0005" />
   <resolution size="1280x768" x="0.607" y="0.6745" height="0.0019" width="0.0005" />
-  </meta>
+  </meta> -->
   <meta meter="mainZ" tags="apex,VLC" type="area" x="0.4938" y="0.8444" height="0.00009" width="0.0119" h="0-360"
     s="55-100" l="50-100">
   <resolution size="3440x1440" x="0.4962" y="0.8444" width="0.009" height="0.00009" />
@@ -143,14 +145,14 @@
   <resolution size="1280x800" x="0.4948" y="0.8592" height="0.0019" width="0.0109" />
   <resolution size="1280x768" x="0.4938" y="0.8528" height="0.0019" width="0.0109" />
   </meta>
-  <meta meter="mini" tags="apex,VLC" type="area" x="0.8755" y="0.9667" height="0.00037" width="0.00031" h="295-300"
+  <!-- <meta meter="mini" tags="apex,VLC" type="area" x="0.8755" y="0.9667" height="0.00037" width="0.00031" h="295-300"
     s="57-100" l="60-65">
   <resolution size="3440x1440" x="0.9116" y="0.9639" width="0.0025" height="0.0001" />
   <resolution size="1680x1050" x="0.8727" y="0.9622" height="0.00037" width="0.00031" />
   <resolution size="1440x900" x="0.8727" y="0.9622" height="0.00037" width="0.00031" />
   <resolution size="1280x800" x="0.8727" y="0.9622" height="0.00037" width="0.00031" />
   <resolution size="1280x768" x="0.8727" y="0.965" height="0.00037" width="0.00031" />
-  </meta>
+  </meta> -->
   <meta meter="osdEsc" tags="apex,VLC" x=".0354" y=".960" width=".02" height=".0001" h="0-360" s="0-10" l="80-100"
     type="linear">
   <resolution size="3440x1440" x="0.0279" y="0.9597" width=".015" height=".0001" />
@@ -159,7 +161,7 @@
   <resolution size="1280x800" x=".0383" y=".964" width=".0175" height=".0001" />
   <resolution size="1280x768" x=".0383" y=".9635" width=".0175" height=".0001" />
   </meta>
-  <meta meter="phoenixKit" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="270-280" s="40-90"
+  <!-- <meta meter="phoenixKit" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="270-280" s="40-90"
     l="0-100" type="linear">
   <resolution size="3440x1440" x="0.6474" y="0.6924" width=".10" height=".0001" />
   <resolution size="1680x1050" x=".6974" y=".675" width=".1484" height=".0001" />
@@ -174,8 +176,8 @@
   <resolution size="1440x900" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1280x800" x=".0932" y=".9306" width=".1146" height=".0001" />
   <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
-  </meta>
-  <meta meter="q" tags="apex,VLC" type="area" x="0.3208" y="0.9593" height="0.00009" width="0.00026" h="0-180" s="0-1"
+  </meta> -->
+  <meta meter="q" tags="apex,VLC" type="area" x="0.3208" y="0.9593" height="0.00009" width="0.00026" h="0-360" s="0-20"
     l="70-100">
   <resolution size="3440x1440" x="0.24" y="0.958" width="0.0025" height="0.00009" />
   <resolution size="1680x1050" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
@@ -183,7 +185,7 @@
   <resolution size="1280x800" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
   <resolution size="1280x768" x="0.3203" y="0.9611" height="0.00009" width="0.00026" />
   </meta>
-  <meta meter="q1" tags="apex,VLC" type="area" x="0.3276" y="0.8991" height="0.00056" width="0.00021" h="20-60"
+  <!-- <meta meter="q1" tags="apex,VLC" type="area" x="0.3276" y="0.8991" height="0.00056" width="0.00021" h="20-60"
     s="50-100" l="70-100">
   <resolution size="3440x1440" x="0.2436" y="0.8972" width="0.0015" height="0.00009" />
   <resolution size="1680x1050" x="0.3276" y="0.9093" height="0.00056" width="0.00021" />
@@ -248,7 +250,7 @@
   <resolution size="1440x900" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
   <resolution size="1280x800" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
   <resolution size="1280x768" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
-  </meta>
+  </meta> -->
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -813,7 +815,7 @@
 
   function newCastle_q_bar() {
     if (legend == "NewCastle") {
-      if (newCastle_q.decreased && engine.vision.check == 1, engine.vision.osdEsc != 1 && newCastle_q.value < .5 && newCastle_q.diff > 0.5 && health != 0) {
+      if (newCastle_q.decreased && engine.vision.check == 1 && engine.vision.osdEsc != 1 && newCastle_q.value < .5 && newCastle_q.diff > 0.5 && health != 0) {
         stateMgr.Push(new newCastleQ())
       }
     }
@@ -821,12 +823,6 @@
 
   function newCastle_z_bar() {
     if (legend == "NewCastle") {
-      console.log("check " + engine.vision.check)
-      console.log("osdsecp " + engine.vision.osdEsc)
-      console.log("GreyZ " + grey_Z.value)
-      console.log("check " + engine.vision.check)
-      console.log("val " + newCastle_z.value)
-      console.log(ultCharged)
 
       if (engine.vision.check == 1 && engine.vision.osdEsc != 1 && grey_Z.value == 1 && newCastle_z.value == 0 && ultCharged) {
         stateMgr.Push(new newCastleUlt())
@@ -976,15 +972,23 @@
           loba_t.setValue(engine.vision.loba2);
           break;
         case "Mad Maggie":
-          madMaggie_q.setValue(engine.vision.q);
-          madMaggie_z.setValue(engine.vision.mainZ)
+          if(enableQ){
+            madMaggie_q.setValue(engine.vision.q);
+          }
+          if(enableUlt){
+            madMaggie_z.setValue(engine.vision.mainZ)
+          }
         case "Mirage":
           mirage_q.setValue(engine.vision.q);
           mirage_z.setValue(engine.vision.greyZ);
           break;
         case "NewCastle":
-          newCastle_q.setValue(engine.vision.q);
-          newCastle_z.setValue(engine.vision.mainZ)
+          if(enableQ){
+            newCastle_q.setValue(engine.vision.q);
+          }
+          if(enableUlt){
+            newCastle_z.setValue(engine.vision.mainZ)
+          }
           break;
         case "Octane":
           octane_q.setValue(engine.vision.q);
