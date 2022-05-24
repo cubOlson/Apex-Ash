@@ -51,9 +51,9 @@
     </meta> 
     <meta meter="portalBlack" tags="VLC,process" type="area" x="0.1305" y="0.0215" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
     </meta>
-    <meta meter="deadOrange" tags="VLC,process" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="50-75" l="50-75" >
+    <meta meter="deadOrange" tags="VLC,process" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="0-100" l="0-100" >
     </meta> 
-    <meta meter="deadBlack" tags="VLC,process" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="20-60" l="0-20" >
+    <meta meter="deadBlack" tags="VLC,process" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="10-70" l="0-20" >
     </meta>
     <!-- #endregion -->
 </head>
@@ -73,6 +73,7 @@
     var inGameBool = false;
     var healthPushed = false;
     var manaPushed = false;
+    var deathPushed = false;
   //#region Meter Declarations
     var inGameMeter = new Meter(1, inGameHelp);
     var hp1Meter = new Meter(3, healthEffects);
@@ -144,6 +145,7 @@
       if(inGameMeter.value == 1){
         inGameBool = true;
       } else {
+        effects = []
         inGameBool = false;
         healthPushed = false;
         manaPushed = false;
@@ -201,8 +203,12 @@
     }
 
     function deathEffects(){
-      if(deadBlackMeter.value == 1 && deadOrangeMeter.value == 1){
-        console.log("DEAD")
+      if(deathPushed && deadBlackMeter.value < .3 && deadOrangeMeter.value < .3){
+        deathPushed = false;
+      }
+      if(deadBlackMeter.value > .9 && deadOrangeMeter.value > .9 && !deathPushed){
+        effects.push(new death())
+        deathPushed = true;
       }
     }
     //#endregion
@@ -242,10 +248,73 @@
       }
     }
 
+    function death(){
+      this.start = Date.now()
+      this.lifetime = 10;
+      this.radius = 1;
+      this.checked = false;
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        var grd = ctx.createRadialGradient(160, 200, 1, 160, 200, this.radius);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(1, "rgba(255, 0, 0, .1)");
+        DrawCircle(160, 200, 300, grd)
+        if(elapsed > 310 - this.radius){
+          effects.push(new ghost())
+          this.start = Date.now()
+        }
+        if(!this.checked){
+          this.radius < 300 ? this.radius+=5 : this.checked = true;
+        } else {
+          this.radius > 2 ? this.radius--: null;
+        }
+        if(this.checked && this.radius == 2){
+          this.lifetime = 0;
+        }
+      }
+    }
+
+  function ghost(){
+    this.tail = []
+    this.x = 160
+    this.y = 250;
+    this.speed = 5 + Math.random() * 2;
+    this.switch = false;
+    this.rotate = (Math.PI / 6 + Math.random() * Math.PI * 2 / 3) * -1;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.save();
+      ctx.translate(160, 250);
+      ctx.rotate(this.rotate)
+      ctx.translate(-160, -250)
+      this.tail.forEach((ele, i) => {
+        ctx.globalAlpha = .85 - .15 * i;
+        DrawCircle(ele[0], ele[1], 18 - 2 * i, "black");
+        ctx.globalAlpha = 1;
+      })
+      DrawCircle(this.x, this.y, 20, "black");
+      ctx.restore();
+      this.switch ? this.tail.unshift([this.x, this.y]) : this.switch = !this.switch;
+      if(this.tail.length > 9){
+        this.tail.pop()
+      }
+      this.x += this.speed;
+      this.y += Math.sin(Date.now() / 100) * 5;
+      this.x > 550 ? this.lifetime = 0 : null;
+    }
+  }
+
     function DrawRect(x, y, width, height, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.fillRect(x, y, width, height);
+    };
+
+    function DrawCircle(x, y, radius, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      ctx.fill();
     };
 
     function IdleState() {
