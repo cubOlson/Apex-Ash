@@ -3,13 +3,25 @@
     <meta description="Path of Exile RGB." />
     <meta publisher="SignalRGB" />
     <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
+    <meta property="xPos" label="HP X-Position" type="number" min="0" max="320" default="0" />
+    <meta property="yPos" label="HP Y-position" type="number" min="0" max="200" default="50" />
+    <meta property="HUDStyle" label="HP Shape" type="boolean" default="0" />
+    <meta property="HUDRadius" label="HP radius (circle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDHeight" label="HP height (rectangle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDWidth" label="HP width (rectangle)" type="number" min="1" max="320" default="320" />
+    <meta property="xPosM" label="Mana X-Position" type="number" min="0" max="320" default="0" />
+    <meta property="yPosM" label="Mana Y-position" type="number" min="0" max="200" default="50" />
+    <meta property="HUDStyleM" label="Mana Shape" type="boolean" default="0" />
+    <meta property="HUDRadiusM" label="Mana radius (circle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDHeightM" label="Mana height (rectangle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDWidthM" label="Mana width (rectangle)" type="number" min="1" max="320" default="320" />
   
     <!-- #region Screen Meter Declarations -->
     <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.0820" y="0.9736" width="0.0029" height="0.0007" h="0-45" s="25-50" l="25-50" >
     </meta> 
-    <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="340-360" s="50-100" l="20-75" >
+    <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="340-360" s="60-100" l="20-75" >
     </meta> 
-    <meta meter="hp2" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="0-20" s="50-100" l="20-75" >
+    <meta meter="hp2" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="0-20" s="60-100" l="20-75" >
     </meta> 
     <meta meter="mana" tags="VLC,path of exile" type="area" x="0.9468" y="0.8146" width="0.0029" height="0.1701" h="180-230" s="50-100" l="20-75" >
     </meta> 
@@ -29,8 +41,20 @@
     </meta>
     <meta meter="skill8" tags="VLC,path of exile" type="colormean" x="0.8907" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
     </meta>  
-    <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.2436" y="0.9917" width="0.0253" height="0.0014" h="20-45" s="25-75" l="60-100" >
+    <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.2436" y="0.9917" width="0.0253" height="0.0014" h="20-60" s="25-75" l="60-100" >
     </meta> 
+    <meta meter="loadYellow" tags="VLC,process" type="linear" x="0.47" y="0.7840" width="0.01" height="0.0007" h="30-250" s="0-70" l="70-100" >
+    </meta> 
+    <meta meter="loadBrown" tags="VLC,process" type="area" x="0.4712" y="0.796" width="0.0134" height="0.004" h="0-360" s="0-100" l="0-15" >
+    </meta> 
+    <meta meter="portalYellow" tags="VLC,process" type="area" x="0.1276" y="0.0236" width="0.0009" height="0.0083" h="30-60" s="15-60" l="70-100" >
+    </meta> 
+    <meta meter="portalBlack" tags="VLC,process" type="area" x="0.1305" y="0.0215" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
+    </meta>
+    <meta meter="deadOrange" tags="VLC,process" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="50-75" l="50-75" >
+    </meta> 
+    <meta meter="deadBlack" tags="VLC,process" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="20-60" l="0-20" >
+    </meta>
     <!-- #endregion -->
 </head>
   
@@ -46,7 +70,10 @@
     var currentHealth = 100;
     var currentMana = 100;
     var skillCount = 0;
-
+    var inGameBool = false;
+    var healthPushed = false;
+    var manaPushed = false;
+  //#region Meter Declarations
     var inGameMeter = new Meter(1, inGameHelp);
     var hp1Meter = new Meter(3, healthEffects);
     var hp2Meter = new Meter(3, healthEffects);
@@ -60,7 +87,13 @@
     var skill7LitMeter = new Meter(2, skillEffects);
     var skill8LitMeter = new Meter(2, skillEffects);
     var lvlConfirmMeter = new Meter(3, lvlEffects);
-  
+    var loadYellowMeter = new Meter(5, loadEffects);
+    var loadBrownMeter = new Meter(5, loadEffects);
+    var portalYellowMeter = new Meter(5, portalEffects);
+    var portalBlackMeter = new Meter(5, portalEffects);
+    var deadOrangeMeter = new Meter(5, deathEffects);
+    var deadBlackMeter = new Meter(5, deathEffects);
+    //#endregion
   //#region Update Function
     function update() {
       if (Brightness != 0) {
@@ -71,7 +104,8 @@
       }
 
       inGameMeter.setValue(engine.vision.inGame)
-      if(inGameMeter.value == 1){
+
+      if(inGameBool){
         hp1Meter.setValue(engine.vision.hp1)
         hp2Meter.setValue(engine.vision.hp2)
         manaMeter.setValue(engine.vision.mana)
@@ -84,7 +118,13 @@
         skill7LitMeter.setValue(engine.vision.skill7[2])
         skill8LitMeter.setValue(engine.vision.skill8[2])
         lvlConfirmMeter.setValue(engine.vision.lvlUpBar)
+        portalYellowMeter.setValue(engine.vision.portalYellow)
+        portalBlackMeter.setValue(engine.vision.portalBlack)
+        deadOrangeMeter.setValue(engine.vision.deadOrange)
+        deadBlackMeter.setValue(engine.vision.deadBlack)
       }
+        loadBrownMeter.setValue(engine.vision.loadBrown)
+        loadYellowMeter.setValue(engine.vision.loadYellow)
   
       //Effect handler 
       for (let i = 0; i < effects.length; i++) {
@@ -93,19 +133,20 @@
           effects.splice(i, 1);
         }
       }
-
       skillCount > 0 ? skillCount-=.5 : null;
   
       stateHdlr.Process();
       window.requestAnimationFrame(update);
     }
     //#endregion
-
+  //#region Effect Handlers
     function inGameHelp(){
       if(inGameMeter.value == 1){
-        console.log("IN-GAME")
+        inGameBool = true;
       } else {
-        console.log("OUT-GAME")
+        inGameBool = false;
+        healthPushed = false;
+        manaPushed = false;
       }
     }
 
@@ -114,12 +155,20 @@
       if (Math.abs(current - currentHealth) > 1){
         currentHealth = current;
       }
-      console.log("HEALTH " + currentHealth)
+      if(inGameBool && !healthPushed){
+        effects.push(new basicHUD(xPos, yPos, HUDRadius, "health"))
+        healthPushed = true;
+      }
+      // console.log("HEALTH " + currentHealth)
     }
 
     function manaEffects(){
       currentMana = manaMeter.value * 100;
-      console.log("MANA " + currentMana)
+      if(inGameBool && !manaPushed){
+        effects.push(new basicHUD(xPosM, yPosM, HUDRadiusM, "mana"))
+        manaPushed = true;
+      }
+      // console.log("MANA " + currentMana)
     }
 
     function skillEffects(){
@@ -131,7 +180,6 @@
       (skill6LitMeter.decreased && skill6LitMeter.diff > 15) ? skillCount += 10 : null;
       (skill7LitMeter.decreased && skill7LitMeter.diff > 15) ? skillCount += 10 : null;
       (skill8LitMeter.decreased && skill8LitMeter.diff > 15) ? skillCount += 10 : null;
-      
     }
 
     function lvlEffects(){
@@ -139,7 +187,67 @@
         console.log("LEVEL UP")
       }
     }
+
+    function loadEffects(){
+      if(loadBrownMeter.value == 1 && loadYellowMeter.value == 1){
+        console.log("LOADING " + Date.now())
+      }
+    }
+
+    function portalEffects(){
+      if(portalBlackMeter.value == 1 && portalYellowMeter.value == 1){
+        console.log("ON PORTAL")
+      }
+    }
+
+    function deathEffects(){
+      if(deadBlackMeter.value == 1 && deadOrangeMeter.value == 1){
+        console.log("DEAD")
+      }
+    }
+    //#endregion
   
+    function basicHUD(x, y, radius, type) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.type = type;
+      this.value = type == "health" ? currentHealth : currentMana;
+      this.lifetime = 10;
+      this.draw = function () {
+        this.x = this.type == "health" ? xPos : xPosM;
+        this.y = this.type == "health" ? yPos : yPosM
+        this.radius = this.type == "health" ? HUDRadius : HUDRadiusM
+        this.value = this.type == "health" ? currentHealth + currentHealth / 20 : currentMana;
+        if ((this.type == "health" && HUDStyle) || (this.type == "mana" && HUDStyleM)) {
+          var endAngle = -Math.PI / 2 + (Math.PI * 2 / 100) * this.value
+          ctx.fillStyle = this.type == "health" ? "red" : "blue";
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.arc(this.x, this.y, this.radius, -Math.PI / 2, endAngle);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          DrawRect(this.x, this.y, 320 / 100 * this.value, this.type == "health" ? HUDHeight : HUDHeightM, this.type == "health" ? "red" : "blue")
+        }
+        if(!inGameBool){
+          if(this.type == "health"){
+            healthPushed = false;
+          } 
+          if (this.type == "mana") {
+            manaPushed = false;
+          }
+          this.lifetime = 0;
+        }
+      }
+    }
+
+    function DrawRect(x, y, width, height, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+    };
+
     function IdleState() {
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
@@ -186,40 +294,6 @@
       this.Process = function () {
         if (state != null) {
           state.Process();
-        }
-      };
-    }
-  
-    function Meter(count, callback) {
-      this.size = count;
-      this.value = 0;
-      this.diff = 0;
-      this.increased = false;
-      this.decreased = false;
-      var values = [];
-  
-      this.setValue = function (updatedValue) {
-        // Add and shift.
-        values.push(updatedValue);
-        if (values.length > this.size) {
-          values.shift();
-        }
-  
-        // Exit early if we've got a long-term match.
-        for (var i = 0; i < values.length - 1; i++) {
-          if (values[i] !== values[i + 1]) return;
-        }
-  
-        // We got here, so we've got a matching value collection.
-        if (this.value !== values[0]) {
-          //var fromZero = this.value === 0;
-          //var toZero = values[0] === 0;
-          this.diff = Math.abs(this.value - values[0]);
-          this.increased = this.value < values[0];
-          this.decreased = this.value > values[0];
-          this.value = values[0];
-  
-          callback();
         }
       };
     }
