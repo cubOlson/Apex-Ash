@@ -1,0 +1,413 @@
+<head>
+    <title>POE Production</title>
+    <meta description="Path of Exile RGB." />
+    <meta publisher="SignalRGB" />
+    <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
+    <meta property="xPos" label="HP X-Position" type="number" min="0" max="320" default="0" />
+    <meta property="yPos" label="HP Y-position" type="number" min="0" max="200" default="50" />
+    <meta property="HUDStyle" label="HP Shape" type="boolean" default="0" />
+    <meta property="HUDRadius" label="HP radius (circle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDHeight" label="HP height (rectangle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDWidth" label="HP width (rectangle)" type="number" min="1" max="320" default="320" />
+    <meta property="xPosM" label="Mana X-Position" type="number" min="0" max="320" default="0" />
+    <meta property="yPosM" label="Mana Y-position" type="number" min="0" max="200" default="50" />
+    <meta property="HUDStyleM" label="Mana Shape" type="boolean" default="0" />
+    <meta property="HUDRadiusM" label="Mana radius (circle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDHeightM" label="Mana height (rectangle)" type="number" min="1" max="200" default="50" />
+    <meta property="HUDWidthM" label="Mana width (rectangle)" type="number" min="1" max="320" default="320" />
+  
+    <!-- #region Screen Meter Declarations -->
+    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.0820" y="0.9736" width="0.0029" height="0.0007" h="0-45" s="25-50" l="25-50" >
+    </meta> 
+    <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="340-360" s="60-100" l="20-75" >
+    </meta> 
+    <meta meter="hp2" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="0-20" s="60-100" l="20-75" >
+    </meta> 
+    <meta meter="mana" tags="VLC,path of exile" type="area" x="0.9468" y="0.8146" width="0.0029" height="0.1701" h="180-230" s="50-100" l="20-75" >
+    </meta> 
+    <meta meter="skill1" tags="VLC,path of exile" type="colormean"  x="0.8465" y="0.8819" width="0.0084" height="0.0194" h="189-209" s="80-100" l="66-100" >
+    </meta>
+    <meta meter="skill2" tags="VLC,path of exile" type="colormean" x="0.8683" y="0.8819" width="0.0084" height="0.0194" h="189-209" s="80-100" l="66-100" >
+    </meta> 
+    <meta meter="skill3" tags="VLC,path of exile" type="colormean" x="0.8892" y="0.8819" width="0.0084" height="0.0194" h="189-209" s="80-100" l="66-100" >
+    </meta> 
+    <meta meter="skill4" tags="VLC,path of exile" type="colormean" x="0.8029" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    </meta> 
+    <meta meter="skill5" tags="VLC,path of exile" type="colormean" x="0.8247" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    </meta> 
+    <meta meter="skill6" tags="VLC,path of exile" type="colormean" x="0.8471" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    </meta> 
+    <meta meter="skill7" tags="VLC,path of exile" type="colormean" x="0.8686" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    </meta>
+    <meta meter="skill8" tags="VLC,path of exile" type="colormean" x="0.8907" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    </meta>  
+    <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.2436" y="0.9917" width="0.0253" height="0.0014" h="20-60" s="25-75" l="60-100" >
+    </meta> 
+    <meta meter="loadYellow" tags="VLC,process" type="linear" x="0.47" y="0.7840" width="0.01" height="0.0007" h="30-250" s="0-70" l="70-100" >
+    </meta> 
+    <meta meter="loadBrown" tags="VLC,process" type="area" x="0.4712" y="0.796" width="0.0134" height="0.004" h="0-360" s="0-100" l="0-15" >
+    </meta> 
+    <meta meter="portalYellow" tags="VLC,process" type="area" x="0.1276" y="0.0236" width="0.0009" height="0.0083" h="30-60" s="15-60" l="70-100" >
+    </meta> 
+    <meta meter="portalBlack" tags="VLC,process" type="area" x="0.1305" y="0.0215" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
+    </meta>
+    <meta meter="deadOrange" tags="VLC,process" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="0-100" l="0-100" >
+    </meta> 
+    <meta meter="deadBlack" tags="VLC,process" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="10-70" l="0-20" >
+    </meta>
+    <!-- #endregion -->
+</head>
+  
+  <body style="margin: 0; padding: 0; background: #000">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+  </body>
+  
+  <script>
+  
+    var canvas, ctx;
+    var stateHdlr = new StateHandler();
+    var effects = [];
+    var currentHealth = 100;
+    var currentMana = 100;
+    var skillCount = 0;
+    var inGameBool = false;
+    var healthPushed = false;
+    var manaPushed = false;
+    var deathPushed = false;
+  //#region Meter Declarations
+    var inGameMeter = new Meter(1, inGameHelp);
+    var hp1Meter = new Meter(3, healthEffects);
+    var hp2Meter = new Meter(3, healthEffects);
+    var manaMeter = new Meter(3, manaEffects);
+    var skill1LitMeter = new Meter(2, skillEffects);
+    var skill2LitMeter = new Meter(2, skillEffects);
+    var skill3LitMeter = new Meter(2, skillEffects);
+    var skill4LitMeter = new Meter(2, skillEffects);
+    var skill5LitMeter = new Meter(2, skillEffects);
+    var skill6LitMeter = new Meter(2, skillEffects);
+    var skill7LitMeter = new Meter(2, skillEffects);
+    var skill8LitMeter = new Meter(2, skillEffects);
+    var lvlConfirmMeter = new Meter(3, lvlEffects);
+    var loadYellowMeter = new Meter(5, loadEffects);
+    var loadBrownMeter = new Meter(5, loadEffects);
+    var portalYellowMeter = new Meter(5, portalEffects);
+    var portalBlackMeter = new Meter(5, portalEffects);
+    var deadOrangeMeter = new Meter(5, deathEffects);
+    var deadBlackMeter = new Meter(5, deathEffects);
+    //#endregion
+  //#region Update Function
+    function update() {
+      if (Brightness != 0) {
+        IdleState();
+      } else {
+        ctx.fillStyle = "black"
+        ctx.fillRect(0, 0, 320, 200)
+      }
+
+      inGameMeter.setValue(engine.vision.inGame)
+
+      if(inGameBool){
+        hp1Meter.setValue(engine.vision.hp1)
+        hp2Meter.setValue(engine.vision.hp2)
+        manaMeter.setValue(engine.vision.mana)
+        skill1LitMeter.setValue(engine.vision.skill1[2])
+        skill2LitMeter.setValue(engine.vision.skill2[2])
+        skill3LitMeter.setValue(engine.vision.skill3[2])
+        skill4LitMeter.setValue(engine.vision.skill4[2])
+        skill5LitMeter.setValue(engine.vision.skill5[2])
+        skill6LitMeter.setValue(engine.vision.skill6[2])
+        skill7LitMeter.setValue(engine.vision.skill7[2])
+        skill8LitMeter.setValue(engine.vision.skill8[2])
+        lvlConfirmMeter.setValue(engine.vision.lvlUpBar)
+        portalYellowMeter.setValue(engine.vision.portalYellow)
+        portalBlackMeter.setValue(engine.vision.portalBlack)
+        deadOrangeMeter.setValue(engine.vision.deadOrange)
+        deadBlackMeter.setValue(engine.vision.deadBlack)
+      }
+        loadBrownMeter.setValue(engine.vision.loadBrown)
+        loadYellowMeter.setValue(engine.vision.loadYellow)
+  
+      //Effect handler 
+      for (let i = 0; i < effects.length; i++) {
+        effects[i].draw();
+        if (effects[i].lifetime <= 0) { 
+          effects.splice(i, 1);
+        }
+      }
+      skillCount > 0 ? skillCount-=.5 : null;
+  
+      stateHdlr.Process();
+      window.requestAnimationFrame(update);
+    }
+    //#endregion
+  //#region Effect Handlers
+    function inGameHelp(){
+      if(inGameMeter.value == 1){
+        inGameBool = true;
+      } else {
+        effects = []
+        inGameBool = false;
+        healthPushed = false;
+        manaPushed = false;
+      }
+    }
+
+    function healthEffects(){
+      var current = Math.ceil((hp1Meter.value + hp2Meter.value) * 100);
+      if (Math.abs(current - currentHealth) > 1){
+        currentHealth = current;
+      }
+      if(inGameBool && !healthPushed){
+        effects.push(new basicHUD(xPos, yPos, HUDRadius, "health"))
+        healthPushed = true;
+      }
+      // console.log("HEALTH " + currentHealth)
+    }
+
+    function manaEffects(){
+      currentMana = manaMeter.value * 100;
+      if(inGameBool && !manaPushed){
+        effects.push(new basicHUD(xPosM, yPosM, HUDRadiusM, "mana"))
+        manaPushed = true;
+      }
+      // console.log("MANA " + currentMana)
+    }
+
+    function skillEffects(){
+      (skill1LitMeter.decreased && skill1LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill2LitMeter.decreased && skill2LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill3LitMeter.decreased && skill3LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill4LitMeter.decreased && skill4LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill5LitMeter.decreased && skill5LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill6LitMeter.decreased && skill6LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill7LitMeter.decreased && skill7LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill8LitMeter.decreased && skill8LitMeter.diff > 15) ? skillCount += 10 : null;
+    }
+
+    function lvlEffects(){
+      if(lvlConfirmMeter.value < .1 && lvlConfirmMeter.decreased){
+        console.log("LEVEL UP")
+      }
+    }
+
+    function loadEffects(){
+      if(loadBrownMeter.value == 1 && loadYellowMeter.value == 1){
+        console.log("LOADING " + Date.now())
+      }
+    }
+
+    function portalEffects(){
+      if(portalBlackMeter.value == 1 && portalYellowMeter.value == 1){
+        console.log("ON PORTAL")
+      }
+    }
+
+    function deathEffects(){
+      if(deathPushed && deadBlackMeter.value < .3 && deadOrangeMeter.value < .3){
+        deathPushed = false;
+      }
+      if(deadBlackMeter.value > .9 && deadOrangeMeter.value > .9 && !deathPushed){
+        effects.push(new death())
+        deathPushed = true;
+      }
+    }
+    //#endregion
+  
+    function basicHUD(x, y, radius, type) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.type = type;
+      this.value = type == "health" ? currentHealth : currentMana;
+      this.lifetime = 10;
+      this.draw = function () {
+        this.x = this.type == "health" ? xPos : xPosM;
+        this.y = this.type == "health" ? yPos : yPosM
+        this.radius = this.type == "health" ? HUDRadius : HUDRadiusM
+        this.value = this.type == "health" ? currentHealth + currentHealth / 20 : currentMana;
+        if ((this.type == "health" && HUDStyle) || (this.type == "mana" && HUDStyleM)) {
+          var endAngle = -Math.PI / 2 + (Math.PI * 2 / 100) * this.value
+          ctx.fillStyle = this.type == "health" ? "red" : "blue";
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.arc(this.x, this.y, this.radius, -Math.PI / 2, endAngle);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          DrawRect(this.x, this.y, 320 / 100 * this.value, this.type == "health" ? HUDHeight : HUDHeightM, this.type == "health" ? "red" : "blue")
+        }
+        if(!inGameBool){
+          if(this.type == "health"){
+            healthPushed = false;
+          } 
+          if (this.type == "mana") {
+            manaPushed = false;
+          }
+          this.lifetime = 0;
+        }
+      }
+    }
+
+    function death(){
+      this.start = Date.now()
+      this.lifetime = 10;
+      this.radius = 1;
+      this.checked = false;
+      this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        var grd = ctx.createRadialGradient(160, 200, 1, 160, 200, this.radius);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(1, "rgba(255, 0, 0, .1)");
+        DrawCircle(160, 200, 300, grd)
+        if(elapsed > 310 - this.radius){
+          effects.push(new ghost())
+          this.start = Date.now()
+        }
+        if(!this.checked){
+          this.radius < 300 ? this.radius+=5 : this.checked = true;
+        } else {
+          this.radius > 2 ? this.radius--: null;
+        }
+        if(this.checked && this.radius == 2){
+          this.lifetime = 0;
+        }
+      }
+    }
+
+  function ghost(){
+    this.tail = []
+    this.x = 160
+    this.y = 250;
+    this.speed = 5 + Math.random() * 2;
+    this.switch = false;
+    this.rotate = (Math.PI / 6 + Math.random() * Math.PI * 2 / 3) * -1;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.save();
+      ctx.translate(160, 250);
+      ctx.rotate(this.rotate)
+      ctx.translate(-160, -250)
+      this.tail.forEach((ele, i) => {
+        ctx.globalAlpha = .85 - .15 * i;
+        DrawCircle(ele[0], ele[1], 18 - 2 * i, "black");
+        ctx.globalAlpha = 1;
+      })
+      DrawCircle(this.x, this.y, 20, "black");
+      ctx.restore();
+      this.switch ? this.tail.unshift([this.x, this.y]) : this.switch = !this.switch;
+      if(this.tail.length > 9){
+        this.tail.pop()
+      }
+      this.x += this.speed;
+      this.y += Math.sin(Date.now() / 100) * 5;
+      this.x > 550 ? this.lifetime = 0 : null;
+    }
+  }
+
+    function DrawRect(x, y, width, height, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+    };
+
+    function DrawCircle(x, y, radius, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      ctx.fill();
+    };
+
+    function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * Brightness / 100 + '%)'
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+    }
+  }
+  
+    function StateHandler() {
+      var stack = [];
+      var state = null;
+  
+      // Set current state to the top item in the stack
+      var updateState = function () {
+        if (stack.length > 0) {
+          state = stack[stack.length - 1];
+        } else {
+          state = null;
+        }
+      };
+  
+      // Allows dev to add effect to state handler
+      this.Push = function (newState) {
+        stack.push(newState);
+        updateState();
+      };
+      // Allows dev to remove effect from handler
+      this.Pop = function () {
+        stack.pop();
+        updateState();
+      };
+      // Call the Process function of the current state (effect)
+      this.Process = function () {
+        if (state != null) {
+          state.Process();
+        }
+      };
+    }
+
+    function Meter(count, callback) {
+      this.size = count;
+      this.value = 0;
+      this.diff = 0;
+      this.increased = false;
+      this.decreased = false;
+      var values = [];
+  
+      this.setValue = function (updatedValue) {
+        // Add and shift.
+        values.push(updatedValue);
+        if (values.length > this.size) {
+          values.shift();
+        }
+  
+        // Exit early if we've got a long-term match.
+        for (var i = 0; i < values.length - 1; i++) {
+          if (values[i] !== values[i + 1]) return;
+        }
+  
+        // We got here, so we've got a matching value collection.
+        if (this.value !== values[0]) {
+          //var fromZero = this.value === 0;
+          //var toZero = values[0] === 0;
+          this.diff = Math.abs(this.value - values[0]);
+          this.increased = this.value < values[0];
+          this.decreased = this.value > values[0];
+          this.value = values[0];
+  
+          callback();
+        }
+      };
+    }
+  
+  
+  
+    function onEngineReady() {
+      // Grab canvas and rendering context.
+      canvas = document.getElementById("exCanvas");
+      ctx = canvas.getContext("2d");
+      // Start updates *after* our engine is accessible and ready.
+      window.requestAnimationFrame(update);
+    }
+  </script>
