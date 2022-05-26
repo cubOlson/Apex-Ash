@@ -21,10 +21,10 @@
 
   function update() {
 
-    DrawRect(0, 0, 320, 200, "black")
+    DrawRect(0, 0, 320, 200, "grey")
 
     if(effects.length < 1){
-      effects.push(new loading())
+      effects.push(new levelUp())
     }
 
     for (let i = 0; i < effects.length; i++) {
@@ -37,25 +37,39 @@
     window.requestAnimationFrame(update);
   };
 
-  function loading(){
-    this.lifetime = 10;
-    this.rotate = 0;
-    this.draw = function(){
-      ctx.save()
-      ctx.translate(100, 100)
-      ctx.rotate(this.rotate)
-      ctx.translate(-100, -100)
-      DrawGear(115, 100, 30, 20, 8, "gold")
-      ctx.restore()
-      ctx.save()
-      ctx.translate(220, 100)
-      ctx.rotate(-this.rotate)
-      ctx.translate(-220, -100)
-      DrawGear(205, 100, 30, 20, 8, "gold")
-      ctx.restore()
-      this.rotate+=.03
+function levelUp(){
+  this.start = Date.now();
+  this.lifetime = 10;
+  this.radius = 1;
+  this.switch = false;
+  this.count = 0;
+  var grad = ctx.createRadialGradient(160, 100, 1, 160, 100, 250)
+  grad.addColorStop(0, "rgba(255, 255, 255, .7)")
+  grad.addColorStop(1, "rgba(255, 255, 255, .1)")
+  this.draw = function(){
+    DrawCircle(160, 100, this.radius, grad)
+    this.switch ? this.radius-=2 : this.radius+=2;
+    this.radius > 100 ? this.switch = true : null;
+    this.radius < 1 ? this.radius = 1 : null;
+    var elapsed = Date.now() - this.start;
+    if(elapsed > 200){
+      effects.push(new levelHelp(1))
+      this.start = Date.now()
+      this.count < 10 ? this.count++ : this.lifetime = 0;
     }
   }
+}
+
+function levelHelp(radius){
+  this.radius = radius;
+  this.lifetime = 10;
+  this.start = Date.now()
+  this.draw = function(){
+    var elapsed = Date.now() - this.start
+    DrawStroke(160, 100, this.radius, `hsla(60, 100%, 50%, ${Math.abs(Math.sin(elapsed/100))})`, 20)
+    this.radius < 250 ? this.radius+=3 : this.lifetime = 0;
+  }
+}
 
   function DrawGear(x, y, radius, stroke, teeth, color){
     DrawStroke(x, y, radius, color, stroke)

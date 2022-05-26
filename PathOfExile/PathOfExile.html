@@ -3,57 +3,87 @@
     <meta description="Path of Exile RGB." />
     <meta publisher="SignalRGB" />
     <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
+    <meta property="HPOn" label="HP HUD Effect" type="boolean" default="1" />
+    <meta property="ManaOn" label="Mana HUD Effect" type="boolean" default="1" />
+    <meta property="SkillOn" label="Skill HUD Effect" type="boolean" default="1" />
+    <meta property="DeathOn" label="Death Effect" type="boolean" default="1" />
+    <meta property="LevelOn" label="Level Effect" type="boolean" default="1" />
+    <meta property="PortalOn" label="Portal Effect" type="boolean" default="1" />
+    <meta property="LoadingOn" label="Loading Effect" type="boolean" default="1" />
+    <meta property="adjustHUD" label="HUD adjust (turn off when done)" type="boolean" default="0" />
     <meta property="xPos" label="HP X-Position" type="number" min="0" max="320" default="0" />
     <meta property="yPos" label="HP Y-position" type="number" min="0" max="200" default="50" />
     <meta property="HUDStyle" label="HP Shape" type="boolean" default="0" />
-    <meta property="HUDRadius" label="HP radius (circle)" type="number" min="1" max="200" default="50" />
     <meta property="HUDHeight" label="HP height (rectangle)" type="number" min="1" max="200" default="50" />
-    <meta property="HUDWidth" label="HP width (rectangle)" type="number" min="1" max="320" default="320" />
+    <meta property="HUDWidth" label="HP width (rectangle / circle)" type="number" min="1" max="320" default="320" />
     <meta property="xPosM" label="Mana X-Position" type="number" min="0" max="320" default="0" />
     <meta property="yPosM" label="Mana Y-position" type="number" min="0" max="200" default="50" />
     <meta property="HUDStyleM" label="Mana Shape" type="boolean" default="0" />
-    <meta property="HUDRadiusM" label="Mana radius (circle)" type="number" min="1" max="200" default="50" />
     <meta property="HUDHeightM" label="Mana height (rectangle)" type="number" min="1" max="200" default="50" />
-    <meta property="HUDWidthM" label="Mana width (rectangle)" type="number" min="1" max="320" default="320" />
+    <meta property="HUDWidthM" label="Mana width (rectangle / circle)" type="number" min="1" max="320" default="320" />
+    <meta property="xPosS" label="Skillbar X-Position" type="number" min="0" max="320" default="0" />
+    <meta property="yPosS" label="Skillbar Y-position" type="number" min="0" max="200" default="50" />
+    <meta property="skillStyle" label="Skillbar Direction" type="boolean" default="0" />
+    <meta property="skillHeight" label="Skillbar height" type="number" min="1" max="200" default="50" />
+    <meta property="skillWidth" label="Skillbar Width" type="number" min="1" max="320" default="320" />
   
     <!-- #region Screen Meter Declarations -->
-    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.0820" y="0.9736" width="0.0029" height="0.0007" h="0-45" s="25-50" l="25-50" >
+    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.1115" y="0.9722" width="0.001" height="0.0007" h="0-45" s="25-50" l="25-50" >
+      <resolution size="3440x1440" x="0.0820" y="0.9736" width="0.0029" height="0.0007" />
     </meta> 
-    <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="340-360" s="60-100" l="20-75" >
+    <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0468" y="0.8121" width="0.001" height="0.161" h="340-360" s="60-100" l="20-75" >
+      <resolution size="3440x1440" x="0.0390" y="0.8105" width="0.002" height="0.1632" />
     </meta> 
-    <meta meter="hp2" tags="VLC,path of exile" type="area" x="0.0390" y="0.8105" width="0.002" height="0.1632" h="0-20" s="60-100" l="20-75" >
+    <meta meter="hp2" tags="VLC,path of exile" type="area" x="0.0468" y="0.8121" width="0.001" height="0.161" h="0-20" s="60-100" l="20-75" >
+      <resolution size="3440x1440" x="0.0390" y="0.8105" width="0.002" height="0.1632" />
     </meta> 
-    <meta meter="mana" tags="VLC,path of exile" type="area" x="0.9468" y="0.8146" width="0.0029" height="0.1701" h="180-230" s="50-100" l="20-75" >
+    <meta meter="mana" tags="VLC,path of exile" type="area" x="0.9219" y="0.8148" width="0.0029" height="0.1701" h="180-230" s="50-100" l="20-75" >
+      <resolution size="3440x1440" x="0.9468" y="0.8146" width="0.0029" height="0.1701" />
     </meta> 
-    <meta meter="skill1" tags="VLC,path of exile" type="colormean"  x="0.8465" y="0.8819" width="0.0084" height="0.0194" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill1" tags="VLC,path of exile" type="colormean" x="0.7968" y="0.888" width="0.006" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8493" y="0.8889" width="0.0084" height="0.005" />
     </meta>
-    <meta meter="skill2" tags="VLC,path of exile" type="colormean" x="0.8683" y="0.8819" width="0.0084" height="0.0194" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill2" tags="VLC,path of exile" type="colormean" x="0.826" y="0.888" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8706" y="0.8889" width="0.0084" height="0.005" />
     </meta> 
-    <meta meter="skill3" tags="VLC,path of exile" type="colormean" x="0.8892" y="0.8819" width="0.0084" height="0.0194" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill3" tags="VLC,path of exile" type="colormean" x="0.8552" y="0.888" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8919" y="0.8889" width="0.0084" height="0.005" />
     </meta> 
-    <meta meter="skill4" tags="VLC,path of exile" type="colormean" x="0.8029" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill4" tags="VLC,path of exile" type="colormean" x="0.7391" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8058" y="0.9528" width="0.0084" height="0.005" />
     </meta> 
-    <meta meter="skill5" tags="VLC,path of exile" type="colormean" x="0.8247" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill5" tags="VLC,path of exile" type="colormean" x="0.7677" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8276" y="0.9528" width="0.0084" height="0.005" />
     </meta> 
-    <meta meter="skill6" tags="VLC,path of exile" type="colormean" x="0.8471" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill6" tags="VLC,path of exile" type="colormean" x="0.7974" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8494" y="0.9528" width="0.0084" height="0.005" />
     </meta> 
-    <meta meter="skill7" tags="VLC,path of exile" type="colormean" x="0.8686" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill7" tags="VLC,path of exile" type="colormean" x="0.8266" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.8709" y="0.9528" width="0.0084" height="0.005" />
     </meta>
-    <meta meter="skill8" tags="VLC,path of exile" type="colormean" x="0.8907" y="0.9458" width="0.0192" height="0.005" h="189-209" s="80-100" l="66-100" >
+    <meta meter="skill8" tags="VLC,path of exile" type="colormean" x="0.8563" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
+      <resolution size="3440x1440" x="0.893" y="0.9528" width="0.0084" height="0.005" />
     </meta>  
-    <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.2436" y="0.9917" width="0.0253" height="0.0014" h="20-60" s="25-75" l="60-100" >
+    <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.31" y="0.9915" width="0.015" height="0.0014" h="20-60" s="25-75" l="60-100" >
+      <resolution size="3440x1440" x="0.2436" y="0.9917" width="0.0253" height="0.0014" />
     </meta> 
-    <meta meter="loadYellow" tags="VLC,path of exile" type="linear" x="0.47" y="0.7840" width="0.01" height="0.0007" h="30-250" s="0-70" l="70-100" >
+    <meta meter="loadYellow" tags="VLC,path of exile" type="linear" x="0.4714" y="0.7833" width="0.0025" height="0.0007" h="30-250" s="0-70" l="70-100" >
+      <resolution size="3440x1440" x="0.47" y="0.7840" width="0.01" height="0.0007" />
     </meta> 
-    <meta meter="loadBrown" tags="VLC,path of exile" type="area" x="0.4712" y="0.796" width="0.0134" height="0.004" h="0-360" s="0-100" l="0-15" >
+    <meta meter="loadBrown" tags="VLC,path of exile" type="area" x="0.4712" y="0.796" width="0.01" height="0.004" h="0-360" s="0-100" l="0-15" >
+      <resolution size="3440x1440" x="0.47" y="0.7840" width="0.01" height="0.0007" />
     </meta> 
-    <meta meter="portalYellow" tags="VLC,path of exile" type="area" x="0.1276" y="0.0236" width="0.0009" height="0.0083" h="30-60" s="15-60" l="70-100" >
+    <meta meter="portalYellow" tags="VLC,path of exile" type="area" x="0.1714" y="0.0241" width="0.0009" height="0.0083" h="30-60" s="15-60" l="70-100" >
+      <resolution size="3440x1440" x="0.1276" y="0.0236" width="0.0009" height="0.0083" />
     </meta> 
-    <meta meter="portalBlack" tags="VLC,path of exile" type="area" x="0.1305" y="0.0215" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
+    <meta meter="portalBlack" tags="VLC,path of exile" type="area" x="0.175" y="0.0213" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
+      <resolution size="3440x1440" x="0.1305" y="0.0215" width="0.0006" height="0.0042" />
     </meta>
-    <meta meter="deadOrange" tags="VLC,path of exile" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="0-100" l="0-100" >
+    <meta meter="deadOrange" tags="VLC,path of exile" type="linear" x="0.5052" y="0.2287" width="0.02" height="0.0001" h="0-40" s="0-100" l="0-100" >
+      <resolution size="3440x1440" x="0.5163" y="0.2021" width="0.0224" height="0.0001" />
     </meta> 
-    <meta meter="deadBlack" tags="VLC,path of exile" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="10-70" l="0-20" >
+    <meta meter="deadBlack" tags="VLC,path of exile" type="area" x="0.5047" y="0.2325" width="0.0081" height="0.005" h="0-360" s="10-70" l="0-20" >
+      <resolution size="3440x1440" x="0.5212" y="0.233" width="0.0081" height="0.006" />
     </meta>
     <!-- #endregion -->
 </head>
@@ -67,17 +97,18 @@
     var canvas, ctx;
     var stateHdlr = new StateHandler();
     var effects = [];
+    var skillArray = [1, 1, 1, 1, 1, 1, 1, 1]
     var currentHealth = 100;
     var currentMana = 100;
-    var skillCount = 0;
     var inGameBool = false;
     var healthPushed = false;
     var manaPushed = false;
     var deathPushed = false;
     var portalPushed = false;
     var loadPushed = false;
+    var skillPushed = false;
   //#region Meter Declarations
-    var inGameMeter = new Meter(1, inGameHelp);
+    var inGameMeter = new Meter(3, inGameHelp);
     var hp1Meter = new Meter(3, healthEffects);
     var hp2Meter = new Meter(3, healthEffects);
     var manaMeter = new Meter(3, manaEffects);
@@ -94,8 +125,8 @@
     var loadBrownMeter = new Meter(5, loadEffects);
     var portalYellowMeter = new Meter(5, portalEffects);
     var portalBlackMeter = new Meter(5, portalEffects);
-    var deadOrangeMeter = new Meter(10, deathEffects);
-    var deadBlackMeter = new Meter(10, deathEffects);
+    var deadOrangeMeter = new Meter(15, deathEffects);
+    var deadBlackMeter = new Meter(15, deathEffects);
     //#endregion
   //#region Update Function
     function update() {
@@ -136,9 +167,26 @@
           effects.splice(i, 1);
         }
       }
-      skillCount > 0 ? skillCount-=.5 : null;
   
       stateHdlr.Process();
+
+      if (adjustHUD && !inGameBool) {
+        if (HPOn) {
+          if(HUDStyle){
+            DrawCircle(xPos, yPos, HUDWidth, "grey")
+          } else {
+            DrawRect(xPos, yPos, HUDWidth, HUDHeight, "grey")
+          }
+        } else if (ManaOn){
+          if(HUDStyleM){
+            DrawCircle(xPosM, yPosM, HUDWidthM, "grey")
+          } else {
+            DrawRect(xPosM, yPosM, HUDWidthM, HUDHeightM, "grey")
+          }
+        } else if (SkillOn){
+            DrawRect(xPosS, yPosS, SkillWidth, SkillHeight, "grey")
+        }
+      }
       window.requestAnimationFrame(update);
     }
     //#endregion
@@ -146,61 +194,77 @@
     function inGameHelp(){
       if(inGameMeter.value == 1){
         inGameBool = true;
+        if(!healthPushed && HPOn){
+          effects.push(new basicHUD(xPos, yPos, HUDWidth, "health"))
+          healthPushed = true;
+        }
+        if(!manaPushed && ManaOn){
+          effects.push(new basicHUD(xPosM, yPosM, HUDWidthM, "mana"))
+          manaPushed = true;
+        }
+        if(!skillPushed && SkillOn){
+          effects.push(new skillHUD(xPosS, yPosS))
+          skillPushed = true;
+        }
       } else {
         effects = []
         inGameBool = false;
+        portalPushed = false;
+        deathPushed = false;
         healthPushed = false;
         manaPushed = false;
+        skillPushed = false;
       }
     }
 
     function healthEffects(){
       var current = Math.ceil((hp1Meter.value + hp2Meter.value) * 100);
       if (Math.abs(current - currentHealth) > 1){
-        currentHealth = current;
-      }
-      if(inGameBool && !healthPushed){
-        effects.push(new basicHUD(xPos, yPos, HUDRadius, "health"))
-        healthPushed = true;
+        currentHealth = current + current * .05;
       }
       // console.log("HEALTH " + currentHealth)
     }
 
     function manaEffects(){
       currentMana = manaMeter.value * 100;
-      if(inGameBool && !manaPushed){
-        effects.push(new basicHUD(xPosM, yPosM, HUDRadiusM, "mana"))
-        manaPushed = true;
-      }
       // console.log("MANA " + currentMana)
     }
 
     function skillEffects(){
-      (skill1LitMeter.decreased && skill1LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill2LitMeter.decreased && skill2LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill3LitMeter.decreased && skill3LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill4LitMeter.decreased && skill4LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill5LitMeter.decreased && skill5LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill6LitMeter.decreased && skill6LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill7LitMeter.decreased && skill7LitMeter.diff > 15) ? skillCount += 10 : null;
-      (skill8LitMeter.decreased && skill8LitMeter.diff > 15) ? skillCount += 10 : null;
+      (skill1LitMeter.decreased && skill1LitMeter.diff > 10) ? skillArray[0] = 0 : null;
+      skill1O = skill1LitMeter.value;
+      (skill1LitMeter.increased && skill1LitMeter.diff > 4) ? skillArray[0] = 1 : null;
+      (skill1LitMeter.increased && skill2LitMeter.diff > 4) ? skillArray[1] = 1 : null;
+      (skill2LitMeter.decreased && skill2LitMeter.diff > 10) ? skillArray[1] = 0 : null;
+      (skill1LitMeter.increased && skill3LitMeter.diff > 4) ? skillArray[2] = 1 : null;
+      (skill3LitMeter.decreased && skill3LitMeter.diff > 10) ? skillArray[2] = 0 : null;
+      (skill1LitMeter.increased && skill4LitMeter.diff > 4) ? skillArray[3] = 1 : null;
+      (skill4LitMeter.decreased && skill4LitMeter.diff > 10) ? skillArray[3] = 0 : null;
+      (skill1LitMeter.increased && skill5LitMeter.diff > 4) ? skillArray[4] = 1 : null;
+      (skill5LitMeter.decreased && skill5LitMeter.diff > 10) ? skillArray[4] = 0 : null;
+      (skill1LitMeter.increased && skill6LitMeter.diff > 4) ? skillArray[5] = 1 : null;
+      (skill6LitMeter.decreased && skill6LitMeter.diff > 10) ? skillArray[5] = 0 : null;
+      (skill1LitMeter.increased && skill7LitMeter.diff > 4) ? skillArray[6] = 1 : null;
+      (skill7LitMeter.decreased && skill7LitMeter.diff > 10) ? skillArray[6] = 0 : null;
+      (skill1LitMeter.increased && skill8LitMeter.diff > 4) ? skillArray[7] = 1 : null;
+      (skill8LitMeter.decreased && skill8LitMeter.diff > 10) ? skillArray[7] = 0 : null;
     }
 
     function lvlEffects(){
-      if(lvlConfirmMeter.value < .1 && lvlConfirmMeter.decreased){
-        console.log("LEVEL UP")
+      if(lvlConfirmMeter.value < .4 && lvlConfirmMeter.decreased && LevelOn){
+        effects.push(new levelUp())
       }
     }
 
     function loadEffects(){
-      if(loadBrownMeter.value == 1 && loadYellowMeter.value == 1 && !loadPushed){
+      if(loadBrownMeter.value == 1 && loadYellowMeter.value == 1 && !loadPushed && LoadingOn){
         effects.push(new loading())
         loadPushed = true;
       }
     }
 
     function portalEffects(){
-      if(portalBlackMeter.value == 1 && portalYellowMeter.value == 1 && !portalPushed){
+      if(portalBlackMeter.value == 1 && portalYellowMeter.value == 1 && !portalPushed && PortalOn){
         effects.push(new portal())
         portalPushed = true;
       }
@@ -210,7 +274,7 @@
       if(deathPushed && deadBlackMeter.value < .3 && deadOrangeMeter.value < .3){
         deathPushed = false;
       }
-      if(deadBlackMeter.value > .9 && deadOrangeMeter.value > .9 && !deathPushed){
+      if(deadBlackMeter.value == 1 && deadOrangeMeter.value == 1 && engine.vision.hp1 < .1 && !deathPushed && DeathOn){
         effects.push(new death())
         deathPushed = true;
       }
@@ -227,7 +291,7 @@
       this.draw = function () {
         this.x = this.type == "health" ? xPos : xPosM;
         this.y = this.type == "health" ? yPos : yPosM
-        this.radius = this.type == "health" ? HUDRadius : HUDRadiusM
+        this.radius = this.type == "health" ? HUDWidth : HUDWidthM
         this.value = this.type == "health" ? currentHealth + currentHealth / 20 : currentMana;
         if ((this.type == "health" && HUDStyle) || (this.type == "mana" && HUDStyleM)) {
           var endAngle = -Math.PI / 2 + (Math.PI * 2 / 100) * this.value
@@ -240,17 +304,78 @@
         } else {
           DrawRect(this.x, this.y, 320 / 100 * this.value, this.type == "health" ? HUDHeight : HUDHeightM, this.type == "health" ? "red" : "blue")
         }
-        if(!inGameBool){
+        if(!inGameBool || !HPOn || !ManaOn){
           if(this.type == "health"){
             healthPushed = false;
+            this.lifetime = 0;
           } 
           if (this.type == "mana") {
             manaPushed = false;
+            this.lifetime = 0;
           }
-          this.lifetime = 0;
         }
       }
     }
+
+    function skillHUD(x, y){
+      this.x = xPosS
+      this.y = yPosS;
+      this.lifetime = 10;
+      this.draw = function(){
+        this.x = xPosS
+        this.y = yPosS;
+        skillArray.forEach((ele, i)=>{
+          var x = skillStyle ? this.x : this.x + skillWidth / 8 * i
+          var y = skillStyle ? this.y + skillHeight / 8 * i : this.y
+          var w = skillStyle ? skillWidth : skillWidth / 8;
+          var h = skillStyle ? skillHeight / 8 : skillHeight;
+          var c = ele ? "green" : "red"
+          DrawRect(x, y, w, h, c)
+          ctx.strokeStyle = "black"
+          ctx.lineWidth = skillStyle ? skillHeight * .03 : skillWidth * .03;
+          ctx.rect(x, y, w, h)
+          ctx.stroke();
+        })
+        if(!inGameBool || !SkillOn){
+          this.lifetime = 0;
+          skillPushed = false;
+        }
+      }
+    }
+
+    function levelUp(){
+      this.start = Date.now();
+      this.lifetime = 10;
+      this.radius = 1;
+      this.switch = false;
+      this.count = 0;
+      var grad = ctx.createRadialGradient(160, 100, 1, 160, 100, 250)
+      grad.addColorStop(0, "rgba(255, 255, 255, .7)")
+      grad.addColorStop(1, "rgba(255, 255, 255, .1)")
+      this.draw = function(){
+        DrawCircle(160, 100, this.radius, grad)
+        this.switch ? this.radius-=2 : this.radius+=2;
+        this.radius > 100 ? this.switch = true : null;
+        this.radius < 1 ? this.radius = 1 : null;
+        var elapsed = Date.now() - this.start;
+        if(elapsed > 200){
+          effects.push(new levelHelp(1))
+          this.start = Date.now()
+          this.count < 10 ? this.count++ : this.lifetime = 0;
+        }
+      }
+    }
+
+function levelHelp(radius){
+  this.radius = radius;
+  this.lifetime = 10;
+  this.start = Date.now()
+  this.draw = function(){
+    var elapsed = Date.now() - this.start
+    DrawStroke(160, 100, this.radius, `hsla(60, 100%, 50%, ${Math.abs(Math.sin(elapsed/100))})`, 20)
+    this.radius < 250 ? this.radius+=3 : this.lifetime = 0;
+  }
+}
 
     function loading(){
       this.lifetime = 10;
@@ -365,6 +490,7 @@
         }
         if(this.checked && this.radius == 2){
           this.lifetime = 0;
+          deathPushed = false;
         }
       }
     }
