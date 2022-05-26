@@ -43,17 +43,17 @@
     </meta>  
     <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.2436" y="0.9917" width="0.0253" height="0.0014" h="20-60" s="25-75" l="60-100" >
     </meta> 
-    <meta meter="loadYellow" tags="VLC,process" type="linear" x="0.47" y="0.7840" width="0.01" height="0.0007" h="30-250" s="0-70" l="70-100" >
+    <meta meter="loadYellow" tags="VLC,path of exile" type="linear" x="0.47" y="0.7840" width="0.01" height="0.0007" h="30-250" s="0-70" l="70-100" >
     </meta> 
-    <meta meter="loadBrown" tags="VLC,process" type="area" x="0.4712" y="0.796" width="0.0134" height="0.004" h="0-360" s="0-100" l="0-15" >
+    <meta meter="loadBrown" tags="VLC,path of exile" type="area" x="0.4712" y="0.796" width="0.0134" height="0.004" h="0-360" s="0-100" l="0-15" >
     </meta> 
-    <meta meter="portalYellow" tags="VLC,process" type="area" x="0.1276" y="0.0236" width="0.0009" height="0.0083" h="30-60" s="15-60" l="70-100" >
+    <meta meter="portalYellow" tags="VLC,path of exile" type="area" x="0.1276" y="0.0236" width="0.0009" height="0.0083" h="30-60" s="15-60" l="70-100" >
     </meta> 
-    <meta meter="portalBlack" tags="VLC,process" type="area" x="0.1305" y="0.0215" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
+    <meta meter="portalBlack" tags="VLC,path of exile" type="area" x="0.1305" y="0.0215" width="0.0006" height="0.0042" h="0-45" s="30-70" l="0-25" >
     </meta>
-    <meta meter="deadOrange" tags="VLC,process" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="0-100" l="0-100" >
+    <meta meter="deadOrange" tags="VLC,path of exile" type="linear" x="0.5163" y="0.2021" width="0.0224" height="0.0000" h="0-40" s="0-100" l="0-100" >
     </meta> 
-    <meta meter="deadBlack" tags="VLC,process" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="10-70" l="0-20" >
+    <meta meter="deadBlack" tags="VLC,path of exile" type="area" x="0.5212" y="0.233" width="0.0081" height="0.006" h="0-360" s="10-70" l="0-20" >
     </meta>
     <!-- #endregion -->
 </head>
@@ -74,6 +74,8 @@
     var healthPushed = false;
     var manaPushed = false;
     var deathPushed = false;
+    var portalPushed = false;
+    var loadPushed = false;
   //#region Meter Declarations
     var inGameMeter = new Meter(1, inGameHelp);
     var hp1Meter = new Meter(3, healthEffects);
@@ -92,8 +94,8 @@
     var loadBrownMeter = new Meter(5, loadEffects);
     var portalYellowMeter = new Meter(5, portalEffects);
     var portalBlackMeter = new Meter(5, portalEffects);
-    var deadOrangeMeter = new Meter(5, deathEffects);
-    var deadBlackMeter = new Meter(5, deathEffects);
+    var deadOrangeMeter = new Meter(10, deathEffects);
+    var deadBlackMeter = new Meter(10, deathEffects);
     //#endregion
   //#region Update Function
     function update() {
@@ -191,14 +193,16 @@
     }
 
     function loadEffects(){
-      if(loadBrownMeter.value == 1 && loadYellowMeter.value == 1){
-        console.log("LOADING " + Date.now())
+      if(loadBrownMeter.value == 1 && loadYellowMeter.value == 1 && !loadPushed){
+        effects.push(new loading())
+        loadPushed = true;
       }
     }
 
     function portalEffects(){
-      if(portalBlackMeter.value == 1 && portalYellowMeter.value == 1){
-        console.log("ON PORTAL")
+      if(portalBlackMeter.value == 1 && portalYellowMeter.value == 1 && !portalPushed){
+        effects.push(new portal())
+        portalPushed = true;
       }
     }
 
@@ -247,6 +251,97 @@
         }
       }
     }
+
+    function loading(){
+      this.lifetime = 10;
+      this.rotate = 0;
+      this.draw = function(){
+        ctx.save()
+        ctx.translate(100, 100)
+        ctx.rotate(this.rotate)
+        ctx.translate(-100, -100)
+        DrawGear(115, 100, 30, 20, 8, "gold")
+        ctx.restore()
+        ctx.save()
+        ctx.translate(220, 100)
+        ctx.rotate(-this.rotate)
+        ctx.translate(-220, -100)
+        DrawGear(205, 100, 30, 20, 8, "gold")
+        ctx.restore()
+        this.rotate+=.03
+        if(loadBrownMeter.value < .3 || loadYellowMeter.value < .3){
+          loadPushed = false;
+          this.lifetime = 0;
+        }
+      }
+    }
+
+  function DrawGear(x, y, radius, stroke, teeth, color){
+    DrawStroke(x, y, radius, color, stroke)
+    for(let i = 0; i < teeth; i++){
+      var ix = Math.cos(Math.PI * 2 / teeth * i) * radius + x;
+      var iy = Math.sin(Math.PI * 2 / teeth * i) * radius + y;
+      var rotate = Math.atan2(y - iy, x - ix) + Math.PI / 2;
+      ctx.save()
+      ctx.translate(ix, iy)
+      ctx.rotate(rotate)
+      ctx.translate(-ix, -iy)
+      DrawRect(ix, iy, Math.PI * radius * 2 / teeth * .75, radius / 3 + stroke / 2, "orange")
+      ctx.restore()
+    }
+  }
+
+    function portal(){
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.rotate = 0;
+    var gradient = ctx.createRadialGradient(160, 100, 1, 160, 100, 200);
+    gradient.addColorStop(0, 'rgba(25, 110, 255, 1)');
+    gradient.addColorStop(.5, 'rgba(50, 110, 255, .7)');
+    gradient.addColorStop(1, 'rgba(150, 150, 255, .05)');
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      DrawCircle(160, 100, 200, gradient)
+      ctx.save()
+      ctx.translate(160, 100)
+      ctx.rotate(this.rotate)
+      ctx.translate(-160, -100)
+      DrawRect(130, 70, 60, 60, 'rgba(100, 200, 255, 1)')
+      ctx.translate(160, 100)
+      ctx.rotate(Math.PI / 4)
+      ctx.translate(-160, -100)
+      DrawRect(130, 70, 60, 60, 'rgba(100, 200, 255, 1)')
+      DrawRect(140, 80, 40, 40, "blue")
+      ctx.restore()
+      var radius = Math.sin(Date.now() / 1000) * 10 + 80;
+      DrawStroke(160, 100, radius, 'rgba(100, 200, 255, 1)', 20)
+      if(elapsed > 300){
+        effects.push(new portalFlash(160 + radius, 100, radius))
+      }
+      this.rotate+=.01
+      if(portalBlackMeter.value < .5 && portalYellowMeter.value < .5){
+        this.lifetime = 0; 
+        portalPushed = false;
+      }
+    }
+  }
+
+  function portalFlash(x, y, radius){
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.lifetime = 10;
+    this.speed = 700 + 10 * Math.random()
+    this.draw = function(){
+      DrawCircle(this.x, this.y, 10, "rgb(100, 255, 255)")
+      this.x=Math.cos(Date.now()/this.speed) * this.radius + 160;
+      this.y=Math.sin(Date.now()/this.speed) * this.radius + 100;
+      this.radius++;
+      if(this.x > 350 || this.x < -30 || this.y > 230 || this.y < -30){
+        this.lifetime = 0;
+      }
+    }
+  }
 
     function death(){
       this.start = Date.now()
@@ -315,6 +410,14 @@
       ctx.fillStyle = color;
       ctx.arc(x, y, radius, 0, 2 * Math.PI)
       ctx.fill();
+    };
+
+    function DrawStroke(x, y, radius, color, stroke) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = stroke;
+      ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      ctx.stroke();
     };
 
     function IdleState() {
