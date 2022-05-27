@@ -1,5 +1,5 @@
 <head>
-    <title>POE Production</title>
+    <title>POE FILM</title>
     <meta description="Path of Exile RGB." />
     <meta publisher="SignalRGB" />
     <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
@@ -33,7 +33,7 @@
     <meta property="skillWidth" label="Skillbar Width" type="number" min="1" max="320" default="320" />
   
     <!-- #region Screen Meter Declarations -->
-    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.1115" y="0.9722" width="0.001" height="0.0007" h="0-45" s="25-50" l="25-50" >
+    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.1115" y="0.9722" width="0.001" height="0.0007" h="0-45" s="20-50" l="25-50" >
       <resolution size="3440x1440" x="0.0820" y="0.9736" width="0.0029" height="0.0007" />
     </meta> 
     <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0468" y="0.8121" width="0.001" height="0.161" h="340-360" s="60-100" l="20-75" >
@@ -113,7 +113,7 @@
     var loadPushed = false;
     var skillPushed = false;
   //#region Meter Declarations
-    var inGameMeter = new Meter(3, inGameHelp);
+    var inGameMeter = new Meter(5, inGameHelp);
     var hp1Meter = new Meter(3, healthEffects);
     var hp2Meter = new Meter(3, healthEffects);
     var manaMeter = new Meter(3, manaEffects);
@@ -426,7 +426,7 @@ function levelHelp(radius){
     }
   }
 
-  function portal(){
+    function portal(){
     this.start = Date.now();
     this.lifetime = 10;
     this.rotate = 0;
