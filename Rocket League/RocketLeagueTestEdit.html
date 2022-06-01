@@ -20,7 +20,10 @@
   <meta meter="inGameBlack" tags="rocket league" type="area" x="0.4974" y="0.0139" width="0.005" height=".0001"
     h="0-360" s="0-85" l="0-25">
   <resolution size="3440x1440" x="0.4985" y="0.0118" width="0.005" height=".0001" />
+  <resolution size="1920x1200" x="0.4927" y="0.0037" width="0.005" height=".0001" />
   <resolution size="1680x1050" x="0.4927" y="0.0037" width="0.005" height=".0001" />
+  <resolution size="1440x900" x="0.4927" y="0.0037" width="0.005" height=".0001" />
+  <resolution size="1280x800" x="0.4927" y="0.0037" width="0.005" height=".0001" />
   </meta>
   <meta meter="inGameWhite" tags="rocket league" type="area" x="0.4474" y="0.0065" width="0.0001" height=".0001"
     h="0-360" s="0-30" l="90-100">
@@ -130,8 +133,10 @@
   var Boost6Meter = new Meter(5, boostHandler);
   var Boost7Meter = new Meter(5, boostHandler);
   var WinMeter = new Meter(20, winHandler);
-  var ScoreLeftHueMeter = new Meter(5, ()=>"");
-  var ScoreRightHueMeter = new Meter(5, ()=>"");
+  var ScoreLeftHueMeter = new Meter(15, ()=>"");
+  var ScoreRightHueMeter = new Meter(15, ()=>"");
+  var ScoreLeftSatMeter = new Meter(5, scoreHandler);
+  var ScoreRightSatMeter = new Meter(5, scoreHandler);
   var ScoreLeftLitMeter = new Meter(5, scoreHandler);
   var ScoreRightLitMeter = new Meter(5, scoreHandler);
   var ScoreBallMeter = new Meter(5, scoreHandler);
@@ -158,6 +163,8 @@
       Boost7Meter.setValue(engine.vision.boost7)
       ScoreLeftHueMeter.setValue(engine.vision.scoreLeft[0])
       ScoreRightHueMeter.setValue(engine.vision.scoreRight[0])
+      ScoreLeftSatMeter.setValue(engine.vision.scoreLeft[1])
+      ScoreRightSatMeter.setValue(engine.vision.scoreRight[1])
       ScoreLeftLitMeter.setValue(engine.vision.scoreLeft[2])
       ScoreRightLitMeter.setValue(engine.vision.scoreRight[2])
     }
@@ -182,6 +189,8 @@
         DrawRect(xPos, yPos, HUDWidth, HUDHeight, boostColor)
       }
     }
+
+    // console.log(ScoreRightSatMeter.value)
 
     stateHdlr.Process();
     window.requestAnimationFrame(update);
@@ -238,7 +247,7 @@
   }
 
   function scoreHandler() {
-    if (ScoreBallMeter.value > .1 && ScoreLeftLitMeter.increased && ScoreLeftLitMeter.value > 95 && goalOn) {
+    if (ScoreBallMeter.value > .1 && ScoreLeftLitMeter.increased && ScoreLeftSatMeter.decreased && ScoreLeftSatMeter.diff > 5 && goalOn) {
       effects.push(new score(true, `hsl(${ScoreLeftHueMeter.value}, 100%, 50%)`))
       setTimeout(() => {
         recentScore = true;
@@ -246,7 +255,7 @@
       setTimeout(() => {
         recentScore = false;
       }, 15000);
-    } else if (ScoreBallMeter.value > .1 && ScoreRightLitMeter.increased && ScoreRightLitMeter.diff > 3 && goalOn) {
+    } else if (ScoreBallMeter.value > .1 && ScoreRightLitMeter.increased && ScoreRightSatMeter.decreased && ScoreRightSatMeter.diff > 5 && goalOn) {
       effects.push(new score(false, `hsl(${ScoreRightHueMeter.value}, 100%, 50%)`))
       setTimeout(() => {
         recentScore = true;
@@ -313,7 +322,8 @@
   }
 
   function score(you, color) {
-    you ? this.x = 0 : this.x = 320;
+    this.you = you;
+    this.you ? this.x = 0 : this.x = 320;
     this.y = 100;
     this.lifetime = 10;
     this.color = color;
@@ -325,6 +335,7 @@
           effects.push(new explosionParticle(160, 100, 10, this.color))
         }
       }
+      this.you ? this.x+=10 : this.x-=10;
       if (this.x > 350 || this.x < -20 || !inGame) {
         this.lifetime = 0;
       }
