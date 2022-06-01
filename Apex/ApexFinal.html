@@ -821,12 +821,7 @@
 
   function newCastle_z_bar() {
     if (legend == "NewCastle") {
-      console.log("check " + engine.vision.check)
-      console.log("osdsecp " + engine.vision.osdEsc)
-      console.log("GreyZ " + grey_Z.value)
-      console.log("check " + engine.vision.check)
-      console.log("val " + newCastle_z.value)
-      console.log(ultCharged)
+  
 
       if (engine.vision.check == 1 && engine.vision.osdEsc != 1 && grey_Z.value == 1 && newCastle_z.value == 0 && ultCharged) {
         stateMgr.Push(new newCastleUlt())
@@ -2197,6 +2192,7 @@ function maggieZHelp(x, y, direction){
       }
     };
   }
+  
   function BoostWave(hue) {
     this.h = 35;
     this.lifetime = 50;
