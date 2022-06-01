@@ -1,0 +1,739 @@
+<head>
+    <title>Chivalry 2</title>
+    <meta description="Metering and ambiance for Chivalry 2" />
+    <meta publisher="WhirlwindFX" />
+    <meta default="100" label="Ambiance brightness" max="100" min="0" property="keyScreenBrightness" type="number" />
+    <meta default="20" label="Particle Effect Count" max="40" min="0" property="SparkleCount" type="number" />
+    <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+    <meta property="RotateBar" label="rotate Bars 90 degrees" type="boolean" default="0" />
+    <meta property="healthColor" label="Health Bar Color" type="color" default="#12ff00" min="0" max="360" />
+    <meta property="HealthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+    <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
+    <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+    <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
+
+
+    <meta meter="health" type="area" x="0.0844" y="0.9104" height="0.0035" width="0.141" h="82-106" s="52-100" l="3-65"
+        tags="Chivalry 2" />
+    <meta meter="victory" type="ocr_textmatch" x="0.4008" y="0.7896" width="0.2086" height="0.0785" string="VICTORY"
+        confidence="70" tags="Chivalry 2" />
+    <meta meter="defeat" type="ocr_textmatch" x="0.4035" y="0.7833" width="0.1984" height="0.0826" string="DEFEAT"
+        confidence="70" tags="Chivalry 2" />
+    <meta meter="blue" type="area" x="0.4535" y="0.8757" height="0.0326" width="0.0844" h="186-226" s="24-85" l="9-70"
+        tags="Chivalry 2" />
+    <meta meter="red" type="area" x="0.4559" y="0.8722" height="0.0375" width="0.0863" h="4-12" s="63-100" l="22-82"
+        tags="Chivalry 2" />
+    <!-- <meta	meter="block"	type="ocr_textmatch"	x="0.4598"	y="0.5549"	width="0.0785"	height="0.0326"	string="BLOCK"	confidence="10" tags="Chivalry 2"	/> -->
+    <meta meter="downed" type="ocr_textmatch" x="0.4715" y="0.5451" width="0.0582" height="0.0354" string="DOWN"
+        confidence="70" tags="Chivalry 2" />
+    <meta meter="killed" type="ocr_textmatch" x="0.3984" y="0.7937" width="0.0457" height="0.0333" string="KILLED"
+        confidence="10" tags="Chivalry 2" />
+
+    <meta label="Damage effect" property="damageTracking" type="boolean" default="1" />
+    <meta label="Damage color" property="damageColor" type="color" min="0" max="360" default="#ff0000" />
+    <!-- <meta label="Block effect" property="blockTracking" type="boolean" default="1"/>
+  <meta label="Block color" property="blockColor" type="color" min="0" max="360" default="#ffff00"/> -->
+    <meta label="Heal effect" property="healTracking" type="boolean" default="1" />
+    <meta label="Heal color" property="healColor" type="color" min="0" max="360" default="#00ff00" />
+    <meta label="Low health effect" property="lowTracking" type="boolean" default="1" />
+    <meta label="Low health color" property="lowColor" type="color" min="0" max="360" default="#ff0000" />
+    <meta label="Downed effect" property="downedTracking" type="boolean" default="1" />
+    <meta label="Downed color" property="downedColor" type="color" min="0" max="360" default="#ff0000" />
+    <meta label="Killed effect" property="killedTracking" type="boolean" default="1" />
+    <meta label="Killed color" property="killedColor" type="color" min="0" max="360" default="#ff0000" />
+
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+    <canvas height="200" id="exCanvas" width="320"></canvas>
+</body>
+
+<script>
+    var canvas, ctx;
+    //Used for particle Effects
+    var effects = [];
+    var menuOpen = false;
+    //Declare new state manager
+    var stateMgr = new StateHandler();
+    var victoryStateMgr = new StateHandler();
+    var downedStateMgr = new StateHandler();
+    var killedStateMgr = new StateHandler();
+    var healthStateMgr = new StateHandler();
+    //init Meters
+    var healthMeter = new Meter(5, onHealthChanged);
+    // var blockMeter = new Meter(5, onBlockChanged);
+
+    function onHealthChanged() {
+        if (healthMeter.decreased && damageTracking) {
+            effects.push(new Slash());
+        }
+        if (healthMeter.increased && healTracking) {
+            effects.push(new Heal())
+        }
+    }
+
+    function Slash() {
+        this.lifetime = 20;
+        this.speed = 18;
+        var x1 = random(0, 10);
+        var y1 = random(80, 140);
+
+        var x2 = random(310, 320);
+        var y2 = random(80, 140);
+
+        var slope = (y2 - y1) / (x2 - x1);
+        var right = true;
+        var x = x1 + 1;
+        var y = y1 + 1;
+        // randomize left or rightward slash
+        if (Math.random() > 0.5) {
+            right = false;
+            x = x2 - 1;
+            y = y2 - 1;
+        }
+
+        this.draw = function () {
+            if (right) {
+                var x3 = x * 9 / 10;
+                var y3temp = slope * (x3 - x1) + y1;
+                var y3 = y3temp + 20;
+                var y4 = y3temp - 20;
+                ctx.fillStyle = damageColor;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x3, y3);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x3, y4);
+                ctx.lineTo(x1, y1);
+                ctx.fill();
+                if (x < x2 || y < y2) {
+                    x += (x2 - x1) / this.speed
+                    y += (y2 - y1) / this.speed
+                }
+                else {
+                    this.lifetime--;
+                }
+            }
+            else {
+                var x3 = x * 11 / 10;
+                var y3temp = slope * (x3 - x1) + y1;
+                var y3 = y3temp + 20;
+                var y4 = y3temp - 20;
+                ctx.fillStyle = damageColor;
+                ctx.beginPath();
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x3, y3);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x3, y4);
+                ctx.lineTo(x2, y2);
+                ctx.fill();
+                if (x > x1 || y > y1) {
+                    x -= (x2 - x1) / this.speed
+                    y -= (y2 - y1) / this.speed
+                }
+                else {
+                    this.lifetime--;
+                }
+            }
+            if (Math.random() > 0.9) {
+                effects.push(new SlashDrop(x, y))
+            }
+        }
+
+    }
+
+    function SlashDrop(x, y) {
+        this.lifetime = 1;
+
+        this.xoff = Math.random(-10, 10);
+        this.draw = function () {
+            ctx.fillStyle = downedColor;
+            ctx.fillRect(x, y, 20, 20);
+            y += 1;
+            x += this.xoff
+            if (y > 200) {
+                this.lifetime = 0;
+            }
+        }
+
+    }
+
+    function Heal() {
+        this.lifetime = 50;
+        this.draw = function () {
+            if (Math.random() > 0.7) {
+                effects.push(new HealCross());
+            }
+            this.lifetime--;
+        }
+    }
+
+    function HealCross() {
+        this.lifetime = 1;
+        this.x = random(0, 320);
+        this.y = random(0, 200);
+        var offset1 = 100;
+        var offset2 = 20;
+        //console.log("healing")
+        this.draw = function () {
+            ctx.fillStyle = "green";
+            ctx.fillRect(this.x - (offset1 / 2), this.y - (offset2 / 2), offset1, offset2);
+            ctx.fillRect(this.x - (offset2 / 2), this.y - (offset1 / 2), offset2, offset1);
+            this.y -= 2;
+            if (this.y < 0) {
+                this.lifetime = 0;
+            }
+        }
+    }
+
+    // function onBlockChanged(){
+    //     if(blockTracking){
+    //         if(blockMeter.increased){
+    //             //console.log("block")
+    //             effects.push(new Block());
+    //         }
+    //     }
+    // }
+
+    // function Block() {
+    //     this.lifetime = 25;
+    //     this.x1 = random(0, 100);
+    //     this.y1 = random(100, 200);
+
+    //     this.x2 = random(250, 320);
+    //     this.y2 = random(100, 200);
+
+    //     var slope = (this.y2 - this.y1) / (this.x2 - this.x1);
+    //     this.x3 = this.x2 * 9 / 10;
+    //     this.y3temp = slope * (this.x3 - this.x1) + this.y1;
+
+    //     this.y3 = this.y3temp + 20;
+    //     this.y4 = this.y3temp - 20;
+
+    //     this.color = hexToHSL(blockColor);
+    //     this.a = 1;
+    //     this.draw = function(){
+    //         ctx.fillStyle = `hsla(${this.color["h"]}, ${this.color["s"]}%, ${this.color["l"]}%, ${this.a})`;
+    //         ctx.beginPath();
+    //         ctx.moveTo(this.x1, this.y1);
+    //         ctx.lineTo(this.x3, this.y3);
+    //         ctx.lineTo(this.x2, this.y2);
+    //         ctx.lineTo(this.x3, this.y4);
+    //         ctx.fill();
+    //         this.lifetime--;
+    //     }    }
+
+    function VictoryState() {
+        this.Process = function () {
+            if (engine.vision.victory == 1) {
+                // //console.log("victory")
+                if (engine.vision.blue > engine.vision.red) {
+                    effects.push(new FireParticle("blue"))
+                    //console.log("blue victory")
+                }
+                else {
+                    effects.push(new FireParticle("red"))
+                    //console.log("red victory")
+                }
+            }
+            else if (engine.vision.defeat == 1) {
+                if (engine.vision.blue > engine.vision.red) {
+                    effects.push(new FireParticle("red"))
+                    //console.log("red victory")
+                }
+                else {
+                    effects.push(new FireParticle("blue"))
+                    //console.log("blue victory")
+                }
+            }
+        }
+    }
+
+    function FireParticle(color) {
+        this.x = random(0, 320);
+        this.y = 200;
+        this.maxY = random(0, 150);
+        this.lifetime = 1;
+        this.draw = function () {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, 10, 200 - this.y);
+            this.y -= 10;
+            if (this.y < this.maxY) {
+                this.lifetime = 0;
+            }
+        }
+    }
+
+    function DownedState() {
+        this.timer = 0;
+        this.Process = function () {
+            if (downedTracking) {
+                // //console.log(engine.vision.downed)
+                if (engine.vision.downed == 1 || this.timer != 0) {
+                    effects.push(new RainDrop())
+                    effects.push(new RainDrop())
+                    this.timer++;
+                }
+                if (this.timer > 50) {
+                    this.timer = 0;
+                }
+            }
+        }
+    }
+
+    function RainDrop() {
+        this.drops = [];
+        this.lifetime = random(10, 30);
+        this.x = random(0, 320);
+        this.y = random(0, 200);
+        this.drops.push({ x: this.x, y: this.y })
+        this.xoff = Math.random(-10, 10);
+        var lastX = this.x;
+        var lastY = this.y;
+        this.draw = function () {
+            ctx.fillStyle = downedColor;
+            for (var drop in this.drops) {
+                ctx.fillRect(this.drops[drop].x, this.drops[drop].y, 20, 20);
+                lastX = this.drops[drop].x;
+                lastY = this.drops[drop].y;
+            }
+            // ctx.fillRect(this.x, this.y, 20, 20);
+            // this.y += 3;
+            // this.x += this.xoff
+            this.drops.push({ x: lastX += this.xoff, y: lastY += 2 })
+            // if(this.y > 200){
+            //     this.lifetime = 0;
+            // }
+            this.lifetime--;
+        }
+    }
+
+    function KilledState() {
+        this.timer = 0;
+        this.Process = function () {
+            // //console.log(engine.vision.killed)
+            if (killedTracking) {
+                if (engine.vision.killed == 1 && this.timer == 0) {
+                    //console.log("killed")
+                    effects.push(new Killed());
+                    ctx.fillStyle = "black"
+                    ctx.fillRect(0, 0, 320, 200)
+
+                    this.timer++;
+                }
+                else if (this.timer != 0) {
+                    ctx.fillStyle = "black"
+                    ctx.fillRect(0, 0, 320, 200)
+                    this.timer++;
+                    if (this.timer == 170) {
+                        this.timer = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    function Killed() {
+        this.lifetime = 1;
+        this.x1 = random(0, 10);
+        this.y1 = random(80, 120);
+
+        this.x2 = random(310, 320);
+        this.y2 = random(80, 120);;
+        this.draw = function () {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200);
+            effects.push(new KilledSlash(this.x1, this.x2, this.y1, this.y2))
+            setTimeout(() => {
+                effects.push(new KilledSlash(this.x1, this.x2, this.y2, this.y1))
+            }, 500);
+            this.lifetime = 0;
+        }
+    }
+
+    function KilledSlash(x1, x2, y1, y2) {
+        this.lifetime = 1;
+        this.speed = 18;
+
+        var slope = (y2 - y1) / (x2 - x1);
+
+        this.a = 1;
+
+        var right = true;
+        var x = x1 + 1;
+        var y = y1 + 1;
+        // randomize left or rightward slash
+        if (Math.random() > 0.5) {
+            right = false;
+            x = x2 - 1;
+            y = y2 - 1;
+        }
+        var color = hexToHSL(killedColor)
+
+        this.draw = function () {
+            if (right) {
+                var x3 = x * 9 / 10;
+                var y3temp = slope * (x3 - x1) + y1;
+                var y3 = y3temp + 20;
+                var y4 = y3temp - 20;
+                ctx.fillStyle = `hsla(${color["h"]}, ${color["s"]}%, ${color["l"]}%, ${this.a})`;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x3, y3);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x3, y4);
+                ctx.lineTo(x1, y1);
+                ctx.fill();
+                if (x < x2 || y < y2) {
+                    x += (x2 - x1) / this.speed
+                    y += (y2 - y1) / this.speed
+                }
+                else {
+                    this.lifetime = 0;
+                    effects.push(new SlashPulse(x1, x2, y1, y2, true))
+                }
+            }
+            else {
+                var x3 = x * 11 / 10;
+                var y3temp = slope * (x3 - x1) + y1;
+                var y3 = y3temp + 20;
+                var y4 = y3temp - 20;
+                ctx.fillStyle = `hsla(${color["h"]}, ${color["s"]}%, ${color["l"]}%, ${this.a})`;
+                ctx.beginPath();
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x3, y3);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x3, y4);
+                ctx.lineTo(x2, y2);
+                ctx.fill();
+                if (x > x1 || y > y1) {
+                    x -= (x2 - x1) / this.speed
+                    y -= (y2 - y1) / this.speed
+                }
+                else {
+                    this.lifetime = 0;
+                    effects.push(new SlashPulse(x1, x2, y1, y2, false))
+                }
+            }
+            if (Math.random() > 0.7) {
+                effects.push(new SlashDrop(x, y))
+            }
+        }
+    }
+
+    function SlashPulse(x1, x2, y1, y2, right) {
+        this.lifetime = 100;
+
+        var slope = (y2 - y1) / (x2 - x1);
+        //randomize left or rightward slash
+        if (right) {
+            var x3 = x2 * 9 / 10;
+        }
+        else {
+            var x3 = x2 / 10;
+        }
+        var y3temp = slope * (x3 - x1) + y1;
+        var y3 = y3temp + 20;
+        var y4 = y3temp - 20;
+
+        this.color = hexToHSL(killedColor);
+        this.a = 1;
+        this.aIncreasing = false;
+        this.pulseSpeed = 0.1;
+
+        this.draw = function () {
+            ctx.fillStyle = `hsla(${this.color["h"]}, ${this.color["s"]}%, ${this.color["l"]}%, ${this.a})`;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x3, y3);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x3, y4);
+            ctx.fill();
+            this.lifetime--;
+            if (this.aIncreasing) {
+                this.a += this.pulseSpeed;
+                if (this.a > 1) {
+                    this.aIncreasing = false;
+                }
+            }
+            else {
+                this.a -= this.pulseSpeed;
+                if (this.a < 0) {
+                    this.aIncreasing = true;
+                }
+            }
+        }
+    }
+
+    function HealthState() {
+        this.Process = function () {
+            if (lowTracking) {
+                if (engine.vision.health > 0) {
+                    //console.log("Health: " + engine.vision.health)
+                    if (engine.vision.health < 0.1) {
+                        effects.push(new FadingSquare())
+                        effects.push(new FadingSquare())
+                        effects.push(new FadingSquare())
+                        effects.push(new FadingSquare())
+                    }
+                    else if (engine.vision.health < 0.4) {
+                        effects.push(new FadingSquare())
+                    }
+                }
+            }
+        }
+    }
+
+    function FadingSquare() {
+        this.lifetime = 20;
+        this.a = 1;
+        this.x = random(0, 320);
+        this.y = random(0, 200);
+        this.color = hexToHSL(lowColor);
+        this.hue = (this.color["h"] + random(-5, 5)) % 360
+        this.draw = function () {
+            ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.a}`;
+            ctx.fillRect(this.x, this.y, 20, 20);
+            if (this.lifetime < 10) {
+                this.a -= 0.1;
+            }
+            this.lifetime--;
+        }
+    }
+
+    function empty() { }
+
+    //Ambiance state
+    function IdleState() {
+        this.Process = function () {
+            let lightness = new Int8Array(engine.zone.lightness);
+            let sat = new Int8Array(engine.zone.saturation);
+            let hue = new Int16Array(engine.zone.hue);
+
+            for (var iZone = 0; iZone < 560; iZone++) {
+                ctx.fillStyle =
+                    "hsla(" + hue[iZone] + "," + sat[iZone] + "%," + lightness[iZone] + "%, " + keyScreenBrightness * 0.01 + ")";
+
+                let iRow = Math.floor(iZone / 28);
+                let iCol = iZone % 28;
+                let iWidth = 320 / 28;
+                let iHeight = 200 / 20;
+                let iZx = iCol * iWidth;
+                let iZy = iRow * iHeight;
+
+                ctx.fillRect(iZx, iZy, iWidth, iHeight);
+            }
+        };
+    }
+
+    function update() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 200);
+
+        if (engine.vision.health > 0) {
+            healthMeter.setValue(engine.vision.health);
+        }
+        else if (engine.vision.health == 0) {
+            healthMeter.setValue(1)
+        }
+        // if(engine.vision.block >= 0){
+        //     blockMeter.setValue(engine.vision.block);
+        //     //console.log(engine.vision.block)
+        // }
+
+        //Run state manager logic
+        stateMgr.Process();
+        victoryStateMgr.Process();
+        downedStateMgr.Process();
+        killedStateMgr.Process();
+        healthStateMgr.Process();
+
+        //Run Effects
+        for (let i = 0; i < effects.length; i++) {
+            effects[i].draw();
+        }
+
+        for (let i = 0; i < effects.length; i++) {
+            if (effects[i].lifetime <= 0) {
+                effects.splice(i, 1);
+            }
+        }
+
+        DrawHUD();
+        window.requestAnimationFrame(update);
+    }
+
+    function DrawHUD() {
+
+        if (!adjToggle) {
+            ctx.beginPath()
+            ctx.save()
+            ctx.translate(HealthBarX, RotateBar ? 200 : HealthBarY)
+
+            if (RotateBar) {
+                ctx.rotate(-90 / 180 * Math.PI)
+            }
+
+            ctx.fillStyle = healthColor;
+            ctx.fillRect(0, 0, healthMeter.value * SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
+            ctx.restore();
+        } else {
+
+            ctx.beginPath()
+            ctx.save()
+            ctx.translate(HealthBarX, RotateBar ? 200 : HealthBarY)
+
+            if (RotateBar) {
+                ctx.rotate(-90 / 180 * Math.PI)
+            }
+            ctx.fillStyle = healthColor;
+            ctx.fillRect(0, 0, SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
+            ctx.restore();
+        }
+        //health
+
+    }
+
+    function SetRange(num, min, max) {
+
+        return Math.min(Math.max(num, min), max)
+    }
+
+    function random(min, max) {
+        // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function hexToHSL(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+        var r = parseInt(result[1], 16);
+        var g = parseInt(result[2], 16);
+        var b = parseInt(result[3], 16);
+
+        (r /= 255), (g /= 255), (b /= 255);
+        var max = Math.max(r, g, b),
+            min = Math.min(r, g, b);
+        var h,
+            s,
+            l = (max + min) / 2;
+
+        if (max === min) {
+            h = s = 0; // achromatic
+        } else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r:
+                    h = (g - b) / d + (g < b ? 6 : 0);
+                    break;
+                case g:
+                    h = (b - r) / d + 2;
+                    break;
+                case b:
+                    h = (r - g) / d + 4;
+                    break;
+            }
+            h /= 6;
+        }
+
+        s = s * 100;
+        s = Math.round(s);
+        l = l * 100;
+        l = Math.round(l);
+        h = Math.round(360 * h);
+
+        var colors = [];
+        colors["h"] = h;
+        colors["s"] = s;
+        colors["l"] = l;
+
+        return colors;
+    }
+
+    //State manager class
+    function StateHandler() {
+        let stack = [];
+        let state = null;
+
+        var updateState = function () {
+            if (stack.length > 0) {
+                state = stack[stack.length - 1];
+            } else {
+                state = null;
+            }
+        };
+
+        this.Push = function (newState) {
+            stack.push(newState);
+            updateState();
+        };
+
+        this.Pop = function () {
+            stack.pop();
+            updateState();
+        };
+
+        this.Process = function () {
+            if (state != null) {
+                state.Process();
+            }
+        };
+    }
+
+    function Meter(count, callback) {
+        this.size = count;
+        this.value = 0;
+        this.diff = 0;
+        this.prev = 0;
+        this.increased = false;
+        this.decreased = false;
+        this.values = [];
+
+        this.setPrev = function () {
+            this.prev = this.value;
+        };
+
+        this.setValue = function (updatedValue) {
+            // Add and shift.
+            this.values.push(updatedValue);
+            if (this.values.length > this.size) {
+                this.values.shift();
+            }
+
+            // Exit early if we've got a long-term match.
+            for (let i = 0; i < this.values.length - 1; i++) {
+                if (this.values[i] !== this.values[i + 1]) {
+                    return;
+                }
+            }
+
+            // We got here, so we've got a matching value collection.
+            if (this.value !== this.values[0]) {
+                //var fromZero = this.value === 0;
+                //var toZero = values[0] === 0;
+                this.diff = Math.abs(this.value - this.values[0]);
+                this.increased = this.value < this.values[0];
+                this.decreased = this.value > this.values[0];
+                this.value = this.values[0];
+                callback();
+            }
+        };
+    }
+
+    //Start logic after engine is ready
+    // noinspection JSUnusedGlobalSymbols
+    function onEngineReady() {
+        // Grab canvas and rendering context.
+        canvas = document.getElementById("exCanvas");
+        ctx = canvas.getContext("2d");
+
+        stateMgr.Push(new IdleState());
+        victoryStateMgr.Push(new VictoryState());
+        downedStateMgr.Push(new DownedState());
+        killedStateMgr.Push(new KilledState());
+        healthStateMgr.Push(new HealthState());
+        // Start updates *after* our engine is accessible and ready.
+        window.requestAnimationFrame(update);
+    }
+</script>
