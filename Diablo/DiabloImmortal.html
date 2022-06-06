@@ -1,0 +1,615 @@
+<head>
+  <title>Diablo immortal</title>
+  <meta description="Crush everything with this integration" />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="RotateBar" label="RotateBars" type="boolean" default="0" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#12ff00" min="0" max="360" />
+  <meta property="HealthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+  <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
+  <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+  <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
+  <meta property="hudToggle" label="enable HUD effects" type="boolean" default="1" />
+
+  <meta meter="health" tags="VLC, Diablo" type="area" x="0.0090" y="0.1167" width="0.0864" height="0.0174" h="0-360"
+    s="50-100" l="25-75">
+  </meta>
+
+  <meta meter="inGame" tags="VLC,Diablo" type="area" x="0.9754" y="0.0419" width="0.00152" height="0.0021" h="20-50"
+    s="25-66" l="45-70">
+  </meta>
+
+  <meta meter="inMenu" tags="VLC,Diablo" type="area" x="0.9754" y="0.0419" width="0.00152" height="0.0021" h="0-40"
+    s="50-90" l="30-50">
+  </meta>
+
+  <meta meter="bossConfirm" tags="VLC,Diablo" type="area" x="0.4008" y="0.0549" width="0.0020" height="0.00001"
+    h="20-50" s="30-60" l="80-100">
+  </meta>
+
+  <meta meter="fightingBossRed" tags="VLC,Diablo" type="area" x="0.4281" y="0.0681" width="0.00001" height="0.00001"
+    h="0-30" s="70-100" l="50-80">
+  </meta>
+
+  <meta meter="levelUpConfirmation" tags="VLC,Diablo" type="area" x="0.5855" y="0.1250" width="0.0027" height="0.00001"
+    h="30-60" s="50-70" l="80-100">
+  </meta>
+
+  <meta meter="levelUpR" tags="VLC,Diablo" type="area" x="0.5137" y="0.1250" width="0.0016" height="0.0000" h="30-60"
+    s="50-70" l="80-100">
+  </meta>
+
+  <meta meter="speakingBlack" tags="VLC,Diablo" type="area" x="0.4086" y="0.6792" width="0.0969" height="0.00001"
+    h="0-360" s="50-100" l="0-20">
+  </meta>
+
+  <meta meter="speakingYellow" tags="VLC,Diablo" type="area" x="0.4355" y="0.7021" width="0.0063" height="0.0007"
+    h="30-60" s="10-30" l="60-80">
+  </meta>
+
+  <meta meter="ultReady" tags="VLC,Diablo" type="area" x="0.9398" y="0.7979" width="0.0012" height="0.0014" h="0-360"
+    s="30-100" l="30-100">
+  </meta>
+
+  <meta meter="diedYellowD" tags="VLC,Diablo" type="area" x="0.5121" y="0.2833" width="0.0051" height="0.0007" h="30-60"
+    s="20-60" l="70-100">
+  </meta>
+
+  <meta meter="diedYellowE" tags="VLC,Diablo" type="area" x="0.5449" y="0.2833" width="0.0059" height="0.0014" h="30-60"
+    s="20-60" l="70-100">
+  </meta>
+
+  <meta meter="diedRed" tags="VLC,Diablo" type="area" x="0.4141" y="0.2868" width="0.0051" height="0.0014" h="0-40"
+    s="50-90" l="50-70">
+  </meta>
+
+  <meta meter="SafeZoneGreenF" tags="VLC,Diablo" type="area" x="0.4770" y="0.1854" width="0.0031" height="0.0007"
+    h="118-138" s="30-80" l="70-100">
+  </meta>
+
+  <meta meter="SafeZoneGreenZ" tags="VLC,Diablo" type="area" x="0.5039" y="0.1854" width="0.0039" height="0.0000"
+    h="118-138" s="30-80" l="70-100">
+  </meta>
+
+  <meta meter="KillStreakWhite" tags="VLC,Diablo" type="area" x="0.4898" y="0.6528" width="0.0355" height="0.0188"
+    h="0-360" s="0-30" l="88-100">
+  </meta>
+
+  <meta meter="KillStreakRed" tags="VLC,Diablo" type="area" x="0.4828" y="0.6618" width="0.0043" height="0.0028"
+    h="0-17" s="75-100" l="26-96">
+  </meta>
+
+  <meta meter="KillStreakSpark" tags="VLC,Diablo" type="area" x="0.4609" y="0.6042" width="0.0863" height="0.0021"
+    h="25-45" s="5-54" l="15-45">
+  </meta>
+
+
+<body style=" margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //Declaring variables
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var effects = [];
+
+  var isInGame = false;
+  var isInMenu = false;
+  var speaking = false;
+  var isFighting = false;
+  var lowHpPlaying = false;
+  var killStreakGoing = false;
+  var safeZonePlaying = false;
+
+  var healthMeter = new Meter(5, lowHp)
+  var ingameMeter = new Meter(3, inGame)
+  var inMenuMeter = new Meter(5, inMenu)
+  var bossConfirmMeter = new Meter(5, bossChanged)
+  var fightingBossRedMeter = new Meter(5, bossChanged)
+  var levelUpConfirmationMeter = new Meter(5, levelUpChanged)
+  var levelUpRMeter = new Meter(5, levelUpChanged)
+  var speakingblackMeter = new Meter(5, speakingChanged)
+  var speakingyellowMeter = new Meter(5, speakingChanged)
+  var ultReadyMeter = new Meter(5, ultReadyChanged)
+  var diedyellowDMeter = new Meter(5, deathChanged)
+  var diedYellowEMeter = new Meter(5, deathChanged)
+  var diedRedMeter = new Meter(5, deathChanged)
+  var SafeZoneGreenFMeter = new Meter(5, safeZoneChanged)
+  var SafeZoneGreenZMeter = new Meter(5, safeZoneChanged)
+  var KillStreakWhiteMeter = new Meter(5, killStreakChanged)
+  var KillStreakRedMeter = new Meter(10, killStreakChanged)
+  var KillStreakSparkMeter = new Meter(5, killStreakChanged)
+  //Declaring meters
+
+  function update() {
+    //Updating meters
+    IdleState();
+
+    healthMeter.setValue(engine.vision.health)
+    ingameMeter.setValue(engine.vision.inGame)
+    inMenuMeter.setValue(engine.vision.inMenu)
+    bossConfirmMeter.setValue(engine.vision.bossConfirm)
+    fightingBossRedMeter.setValue(engine.vision.fightingBossRed)
+    levelUpConfirmationMeter.setValue(engine.vision.levelUpConfirmation)
+    levelUpRMeter.setValue(engine.vision.levelUpR)
+    speakingblackMeter.setValue(engine.vision.speakingBlack)
+    speakingyellowMeter.setValue(engine.vision.speakingYellow)
+    ultReadyMeter.setValue(engine.vision.ultReady)
+    diedyellowDMeter.setValue(engine.vision.diedYellowD)
+    diedYellowEMeter.setValue(engine.vision.diedYellowE)
+    diedRedMeter.setValue(engine.vision.diedRed)
+    SafeZoneGreenFMeter.setValue(engine.vision.SafeZoneGreenF)
+    SafeZoneGreenZMeter.setValue(engine.vision.SafeZoneGreenZ)
+    KillStreakWhiteMeter.setValue(engine.vision.KillStreakWhite)
+    KillStreakRedMeter.setValue(engine.vision.KillStreakRed)
+    KillStreakSparkMeter.setValue(engine.vision.KillStreakSpark)
+
+
+
+    DrawHUD();
+
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    stateMgr.Process();
+
+    window.requestAnimationFrame(update);
+  }
+
+
+  function DrawHUD() {
+
+
+    if (isInGame && !safeZonePlaying) {
+      ctx.beginPath()
+      ctx.save()
+      ctx.translate(HealthBarX, RotateBar ? 200 : HealthBarY)
+
+      if (RotateBar) {
+        ctx.rotate(-90 / 180 * Math.PI)
+      }
+
+      ctx.fillStyle = healthColor;
+      ctx.fillRect(0, 0, healthMeter.value * SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
+      ctx.restore();
+
+    } else if (adjToggle) {
+
+      ctx.beginPath()
+      ctx.save()
+      ctx.translate(HealthBarX, RotateBar ? 200 : HealthBarY)
+
+      if (RotateBar) {
+        ctx.rotate(-90 / 180 * Math.PI)
+      }
+      ctx.fillStyle = healthColor;
+      ctx.fillRect(0, 0, SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
+      ctx.restore()
+    }
+  }
+
+  function SetRange(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+  }
+
+
+  function lowHp() {
+    inGame();
+    if (healthMeter.value == 1 && !isInGame && !isInMenu && !lowHpPlaying) {
+      console.log("is low hp")
+      lowHpPlaying = true;
+      effects.push(new lowHpEffect())
+
+    }
+  }
+
+  function SetRange(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+  }
+
+  function inGame() {
+    if (ingameMeter.value == 1 && healthMeter.value > 0) {
+      isInGame = true;
+      console.log("inGame")
+    } else {
+      isInGame = false;
+      console.log("outGame")
+    }
+  }
+
+  function inMenu() {
+    if (inMenuMeter.value == 1) {
+      isInMenu = true;
+      console.log("inMenu")
+    } else if (isInMenu) {
+      isInMenu = false;
+      console.log("outMenu")
+    }
+  }
+
+  function bossChanged() {
+    if (bossConfirmMeter.value == 1 && fightingBossRedMeter.value > 0 && isInGame) {
+      console.log(" fighting Boss")
+      isFighting = true;
+    } else if (bossConfirmMeter.value == 0 && isFighting) {
+      console.log("stop fighting Boss")
+      isfinite = false;
+    }
+  }
+
+  function levelUpChanged() {
+    if (levelUpConfirmationMeter.value == 1 && levelUpRMeter.value == 1 && isInGame) {
+      effects.push(new levelUpEffect())
+    }
+  }
+
+  function speakingChanged() {
+    if (speakingblackMeter.value >= 0.9 && speakingyellowMeter.value == 1) {
+      if (!speaking) {
+        console.log("speaking")
+        effects.push(new speakingEffect())
+        speaking = true;
+      }
+    } else if (speakingblackMeter.value == 0 && speakingyellowMeter.value == 0 && speaking) {
+      console.log("stop speaking")
+      speaking = false;
+    }
+  }
+
+  function ultReadyChanged() {
+    if (ultReadyMeter.value == 1 && isInGame && engine.vision.health > 0 && engine.vision.inGame == 1) {
+      console.log("ultReady")
+    }
+  }
+
+
+  function deathChanged() {
+    if (diedYellowEMeter.value == 1 && diedyellowDMeter.value == 1 && diedRedMeter.value == 1 && isInGame) {
+      console.log("death")
+    }
+  }
+
+  function safeZoneChanged() {
+    if (SafeZoneGreenFMeter.value == 1 && SafeZoneGreenZMeter.value == 1 && isInGame && !safeZonePlaying) {
+      safeZonePlaying = true;
+      effects.push(new safeZoneEffect())
+    }
+  }
+
+  function killStreakChanged() {
+    if (KillStreakRedMeter.value > 0.6 && KillStreakWhiteMeter.value > 0 && KillStreakSparkMeter.value > 0 && isInGame) {
+      if (!killStreakGoing) {
+        console.log("having a killstreak")
+        killStreakGoing = true;
+        effects.push(new killStreakEffect())
+
+      }
+
+    } else {
+      console.log("stop killstreak")
+      killStreakGoing = false;
+    }
+  }
+
+  function lowHpEffect() {
+    this.start = Date.now();
+    this.elapsed = 0;
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(0,100%,50%,0.3)`
+      ctx.fillRect(0, 0, 320, 200)
+      ctx.beginPath();
+      let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100) / 1.1) + ((this.elapsed / 2100) * (2100 / 1.1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 320, 200)
+      if (isInGame) {
+        this.lifetime = 0;
+        lowHpPlaying = false;
+      }
+    }
+  }
+
+
+  function killStreakEffect() {
+    this.start = Date.now();
+    this.streaks = [];
+    this.pushed = false;
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      var image = new Image();
+      image.src = "https://miro.medium.com/max/1134/1*ahDyxCgUCjCchskJMkOivg.png";
+      ctx.beginPath();
+      ctx.globalAlpha = this.elapsed / 8000;
+      ctx.drawImage(image, -10 + (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10)), -10 + (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10)), 340, 220);
+      ctx.globalAlpha = 1;
+      if (this.elapsed > 5000 && !this.pushed) {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            this.streaks.push(new streak());
+          }, 200 * i);
+        }
+        this.pushed = true;
+      }
+      this.streaks.forEach((streakL, i) => {
+        streakL.draw();
+        if (streakL.y < -50) {
+          this.streaks.splice(i, 1)
+          this.streaks.push(new streak());
+        }
+      });
+      if (killStreakGoing == false) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function levelUpEffect() {
+    this.start = Date.now();
+    this.pushed = false;
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      if (this.elapsed < 800) {
+        ctx.beginPath();
+        ctx.fillStyle = "yellow"
+        ctx.fillRect(120, -250 + this.elapsed / 3, 80, 170)
+        ctx.beginPath()
+        ctx.moveTo(120, -80 + this.elapsed / 3)
+        ctx.lineTo(200, -80 + this.elapsed / 3)
+        ctx.lineTo(160, this.elapsed / 3)
+        ctx.lineTo(120, -80 + this.elapsed / 3)
+        ctx.fill();
+      } else {
+        for (let i = 0; i < 40; i++) {
+          effects.push(new ImpactParticle(160, 200, Math.random() * 20 + 10, "yellow"))
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+
+  function ImpactParticle(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = x;
+    this.vx = 2 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -10;
+    this.ay = 0.2;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  class streak {
+    constructor() {
+      this.x = Math.random() * 300;
+      this.y = 220;
+      this.speed = 5;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.globalAlpha = 0.3;
+      ctx.fillStyle = "orange";
+      ctx.fillRect(this.x, this.y, 20, 50)
+      this.y -= this.speed;
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function speakingEffect() {
+    this.start = Date.now();
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
+      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100) / 1) + ((this.elapsed / 2100) * (2100 / 1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(52, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(56, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(52, 100%, 50%,1)");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 320, 200)
+      drawWave(110, "black", (this.elapsed / 300), "up", 20)
+      drawWave(90, "black", this.elapsed / 300, "down", 20)
+
+      if (!speaking) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function safeZoneEffect() {
+    this.start = Date.now();
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.lineWidth = 30;
+      if (this.elapsed < 1500) {
+        ctx.beginPath();
+        ctx.fillStyle = "hsla(128,100%,50%,0.1)"
+        ctx.arc(160, 100, this.elapsed / 8, 0, Math.PI * 2)
+        ctx.fill();
+      } else if (this.elapsed < 4400) {
+        ctx.beginPath();
+        ctx.fillStyle = "hsla(128,100%,50%,0.1)"
+        ctx.fillRect(0, 0, 320, 200)
+      }
+      if (this.elapsed > 1500 && this.elapsed < 2300) {
+        this.calcVal = this.elapsed - 1500;
+        ctx.beginPath();
+        ctx.strokeStyle = "hsla(128,100%,50%,1)"
+        ctx.moveTo(40, 80)
+        ctx.lineTo(SetRange(40 + this.calcVal / 10, 40, 100), SetRange(80 + this.calcVal / 10, 80, 140))
+        ctx.stroke();
+      } else if (this.elapsed > 2300) {
+        if (this.elapsed < 4400) {
+          this.calcVal = this.elapsed - 2300;
+          ctx.beginPath();
+          ctx.strokeStyle = "hsla(128,100%,50%,1)"
+          ctx.moveTo(40, 80)
+          ctx.lineTo(100, 140)
+          ctx.lineTo(SetRange(100 + this.calcVal / 6.2, 100, 260), SetRange(140 - this.calcVal / 10, 40, 140));
+          ctx.stroke()
+        }
+        if (this.elapsed > 4000) {
+          let gradient = ctx.createLinearGradient(-500, 0, 620, 0)
+          this.calculateVal = -3200 * Math.floor((this.elapsed / 3200) / 1) + ((this.elapsed / 3200) * (3200 / 1));
+          gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+          gradient.addColorStop(SetRange((-500 + (this.calculateVal)), 0, 1000) / 1000, "hsla(130, 100%, 50%,1)");
+          gradient.addColorStop(SetRange((-1000 + (this.calculateVal)), 0, 1000) / 1000, "hsla(113, 100%, 50%,1)");
+          gradient.addColorStop(SetRange((-1500 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+          ctx.beginPath();
+          ctx.arc(160, 100, 400, 0, Math.PI * 2)
+          ctx.fillStyle = gradient;
+          ctx.fill();
+          if (this.elapsed > 5000) {
+            safeZonePlaying = false;
+            this.lifetime = 0;
+          }
+        }
+      }
+      ctx.lineWidth = 1;
+    }
+
+  }
+
+
+
+  function drawWave(y, color, frequency, direction, waveSize) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(0, y);
+    for (let i = 0; i < 320; i++) {
+      ctx.lineTo(i, y + Math.sin(i * 0.01 + frequency) * waveSize);
+    }
+    ctx.lineTo(320, direction == "up" ? 200 : 0)
+    ctx.lineTo(0, direction == "up" ? 200 : 0)
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * keyScreenBrightness / 100 + '%)'
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+  }
+
+
+
+  //helper functions
+  function GetTime() {
+    return new Date().getTime();
+  }
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    }
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    }
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    }
+  }
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.  
+      values.push(updatedValue);
+      if (values.length > this.size) { values.shift(); }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < (values.length - 1); i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;      
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    // Start updates *after* our engine is accessible and ready.
+
+    window.requestAnimationFrame(update);
+  }
+  onEngineReady()
+
+</script>
