@@ -104,6 +104,7 @@
   var killStreakGoing = false;
   var safeZonePlaying = false;
 
+
   var healthMeter = new Meter(5, lowHp)
   var ingameMeter = new Meter(3, inGame)
   var inMenuMeter = new Meter(5, inMenu)
@@ -271,8 +272,9 @@
 
 
   function deathChanged() {
-    if (diedYellowEMeter.value == 1 && diedyellowDMeter.value == 1 && diedRedMeter.value == 1 && isInGame) {
+    if (diedYellowEMeter.value == 1 && diedyellowDMeter.value == 1 && diedRedMeter.value == 1) {
       console.log("death")
+      effects.push(new DeathEffect())
     }
   }
 
@@ -289,9 +291,7 @@
         console.log("having a killstreak")
         killStreakGoing = true;
         effects.push(new killStreakEffect())
-
       }
-
     } else {
       console.log("stop killstreak")
       killStreakGoing = false;
@@ -330,11 +330,19 @@
     this.pushed = false;
     this.draw = function () {
       this.elapsed = Date.now() - this.start;
-      var image = new Image();
-      image.src = "https://miro.medium.com/max/1134/1*ahDyxCgUCjCchskJMkOivg.png";
+      this.xMultiplier = (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10));
+      this.yMultiplier = (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10))
       ctx.beginPath();
       ctx.globalAlpha = this.elapsed / 8000;
-      ctx.drawImage(image, -10 + (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10)), -10 + (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10)), 340, 220);
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, 320, 200)
+
+      for (let i = 0; i < 6; i++) {
+        let counter = i % 3
+        console.log(counter)
+        drawEye(i < 3 ? 100 : 220 + this.xMultiplier, 90 + this.yMultiplier, counter == 0 ? 1 : (i % 3 == 1 ? 0.45 : 0.15), i < 3 ? 20 : -20, counter == 0 ? "red" : (counter == 1 ? "black" : "white"))
+      }
+      ctx.restore();
       ctx.globalAlpha = 1;
       if (this.elapsed > 5000 && !this.pushed) {
         for (let i = 0; i < 5; i++) {
@@ -351,12 +359,23 @@
           this.streaks.push(new streak());
         }
       });
-      if (killStreakGoing == false) {
+      if (killStreakGoing == true) {
         this.lifetime = 0;
       }
     }
   }
 
+  function drawEye(x, y, size, rot, col) {
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(x, y)
+    ctx.rotate(rot * (Math.PI / 180))
+    ctx.ellipse(0, 0, 50 * size, 40 * size, 0, 0, Math.PI * 1)
+    ctx.fillStyle = col;
+    ctx.fill();
+    ctx.restore();
+
+  }
   function levelUpEffect() {
     this.start = Date.now();
     this.pushed = false;
@@ -495,7 +514,95 @@
       }
       ctx.lineWidth = 1;
     }
+  }
 
+  function DeathEffect() {
+    this.start = Date.now();
+    this.orbs = [];
+    this.secondStage = false;
+    for (let index = 0; index < 3; index++) {
+      setTimeout(() => {
+        this.orbs.push(new BloodOrb())
+      }, 200 * index);
+    }
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+
+
+      if (!this.secondStage) {
+        ctx.fillStyle = `hsla(0,0%,0%,${this.elapsed / 1000})`
+        ctx.fillRect(0, 0, 320, 200)
+      }
+
+      this.orbs.forEach((orb, i) => {
+        orb.draw();
+        if (orb.lifetime == 0) {
+          this.orbs.splice(i, 1)
+          if (!this.secondStage) {
+            this.orbs.push(new BloodOrb())
+            console.log("anim has stopped")
+          }
+        }
+      });
+      if (!this.secondStage) {
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(160, 100, (Math.sin(this.elapsed / (500 - this.elapsed / 150)) + 1) * (this.elapsed / 200), 0, Math.PI * 2)
+        ctx.fill();
+      } else {
+        let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+        this.calculateVal = -1385 * Math.floor(((this.elapsed - this.endTime) / 1385) / 1) + (((this.elapsed - this.endTime) / 1385) * (1385 / 1));
+        gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 98%, 50%,1)");
+        gradient.addColorStop(SetRange((-50 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 320, 200)
+        if (this.elapsed - this.endTime > 900) {
+          this.lifetime = 0;
+        }
+      }
+
+      if ((Math.sin(this.elapsed / (500 - this.elapsed / 100)) + 1) * (this.elapsed / 200) > 150 && !this.secondStage) {
+        this.orbs.length = 0;
+        this.secondStage = true;
+        this.endTime = this.elapsed;
+      }
+    }
+  }
+
+  class BloodOrb {
+    constructor() {
+      this.lifetime = 1;
+      this.radius = (Math.random() * 15) + 5;
+      if (Math.random() < 0.5) {
+        this.x = Math.random() < 0.5 ? 0 - this.radius : 320 + this.radius
+        this.y = Math.random() * 200;
+      } else {
+        this.x = Math.random() * 320;
+        this.y = Math.random() < 0.5 ? 0 - this.radius : 200 + this.radius
+      }
+      this.angle = Math.atan2(100 - this.y, 160 - this.x)
+      this.speed = {
+        x: Math.cos(this.angle),
+        y: Math.sin(this.angle)
+      }
+      console.log(this.x)
+      console.log(this.y)
+    }
+
+    draw() {
+      this.x += this.speed.x
+      this.y += this.speed.y
+      ctx.globalAlpha = 1
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(0,100%,50%,1)"
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.fill();
+      if (Math.floor(this.x) > 155 && Math.floor(this.x) < 165 && Math.floor(this.y) >= 98 && Math.floor(this.y) < 102) {
+        console.log("stop anim")
+        this.lifetime = 0;
+      }
+    }
   }
 
 
@@ -529,7 +636,11 @@
       var iHeight = 200 / 20;
       var iZx = iCol * iWidth;
       var iZy = iRow * iHeight;
+
       ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+
+
     }
   }
 
@@ -607,7 +718,6 @@
     canvas = document.getElementById('exCanvas');
     ctx = canvas.getContext('2d');
     // Start updates *after* our engine is accessible and ready.
-
     window.requestAnimationFrame(update);
   }
   onEngineReady()
