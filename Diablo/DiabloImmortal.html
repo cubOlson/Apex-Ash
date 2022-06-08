@@ -548,7 +548,7 @@
       if (!this.secondStage) {
         ctx.beginPath();
         ctx.fillStyle = "red";
-        ctx.arc(160, 100, (Math.sin(this.elapsed / (500 - this.elapsed / 150)) + 1) * (this.elapsed / 200), 0, Math.PI * 2)
+        ctx.arc(160, 100, (Math.sin(this.elapsed / (500 - this.elapsed / 40)) + 1) * (this.elapsed / 100), 0, Math.PI * 2)
         ctx.fill();
       } else {
         let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
@@ -562,7 +562,7 @@
         }
       }
 
-      if ((Math.sin(this.elapsed / (500 - this.elapsed / 100)) + 1) * (this.elapsed / 200) > 150 && !this.secondStage) {
+      if ((Math.sin(this.elapsed / (500 - this.elapsed / 40)) + 1) * (this.elapsed / 100) > 150 && !this.secondStage) {
         this.orbs.length = 0;
         this.secondStage = true;
         this.endTime = this.elapsed;
@@ -586,8 +586,6 @@
         x: Math.cos(this.angle),
         y: Math.sin(this.angle)
       }
-      console.log(this.x)
-      console.log(this.y)
     }
 
     draw() {

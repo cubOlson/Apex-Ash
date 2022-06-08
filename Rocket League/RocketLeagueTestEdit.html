@@ -70,13 +70,13 @@
   <resolution size="3440x1440" x="0.9826" y="0.0382" width="0.002" height=".001" />
   <resolution size="1680x1050" x="0.975" y="0.038" width="0.002" height=".001" />
   </meta>
-  <meta meter="scoreLeft" tags="rocket league" type="colormean" x="0.4125" y="0.0361" width="0.002" height=".01" h="0-360"
-    s="0-50" l="90-100">
+  <meta meter="scoreLeft" tags="rocket league" type="colormean" x="0.4125" y="0.0361" width="0.002" height=".01"
+    h="0-360" s="0-50" l="90-100">
   <resolution size="3440x1440" x="0.4352" y="0.0403" width="0.002" height=".01" />
   <resolution size="1680x1050" x="0.4021" y="0.0324" width="0.002" height=".01" />
   </meta>
-  <meta meter="scoreRight" tags="rocket league" type="colormean" x="0.5865" y="0.0426" width="0.002" height=".01" h="0-360"
-    s="0-50" l="90-100">
+  <meta meter="scoreRight" tags="rocket league" type="colormean" x="0.5865" y="0.0426" width="0.002" height=".01"
+    h="0-360" s="0-50" l="90-100">
   <resolution size="3440x1440" x="0.5642" y="0.0383" width="0.002" height=".01" />
   <resolution size="1680x1050" x="0.5948" y="0.0333" width="0.002" height=".01" />
   </meta>
@@ -85,15 +85,15 @@
   <resolution size="3440x1440" x="0.9785" y="0.0403" width="0.0001" height=".1" />
   <resolution size="1680x1050" x="0.9682" y="0.0315" width="0.0001" height=".1" />
   </meta>
-  <meta meter="searchingMid" tags="rocket league" type="linear" x="0.4797" y="0.6306" width="0.01" height =".0001" h="180-225" s="40-75"
-    l="75-100">
-  <resolution size="3440x1440" x="0.4892" y="0.6306" width="0.01" height =".0001" />
-  <resolution size="1680x1050" x="0.4667" y="0.6306" width="0.01" height =".0001" />
+  <meta meter="searchingMid" tags="rocket league" type="linear" x="0.4797" y="0.6306" width="0.01" height=".0001"
+    h="180-225" s="40-75" l="75-100">
+  <resolution size="3440x1440" x="0.4892" y="0.6306" width="0.01" height=".0001" />
+  <resolution size="1680x1050" x="0.4667" y="0.6306" width="0.01" height=".0001" />
   </meta>
-  <meta meter="searchingBot" tags="rocket league" type="linear" x="0.4448" y="0.9672" width="0.01" height =".0001" h="170-235"
-    s="30-100" l="30-70">
-  <resolution size="3440x1440" x="0.4625" y="0.9667" width="0.01" height =".0001" />
-  <resolution size="1680x1050" x="0.4193" y="0.9667" width="0.01" height =".0001" />
+  <meta meter="searchingBot" tags="rocket league" type="linear" x="0.4448" y="0.9672" width="0.01" height=".0001"
+    h="170-235" s="30-100" l="30-70">
+  <resolution size="3440x1440" x="0.4625" y="0.9667" width="0.01" height=".0001" />
+  <resolution size="1680x1050" x="0.4193" y="0.9667" width="0.01" height=".0001" />
   </meta>
   <meta meter="replayBlock" tags="rocket league" type="linear" x=" 0.0324" y="0.9694" width="0.001" height="0.001"
     h="5-25" s="48-80" l="80-100">
@@ -133,8 +133,8 @@
   var Boost6Meter = new Meter(5, boostHandler);
   var Boost7Meter = new Meter(5, boostHandler);
   var WinMeter = new Meter(20, winHandler);
-  var ScoreLeftHueMeter = new Meter(15, ()=>"");
-  var ScoreRightHueMeter = new Meter(15, ()=>"");
+  var ScoreLeftHueMeter = new Meter(15, () => "");
+  var ScoreRightHueMeter = new Meter(15, () => "");
   var ScoreLeftSatMeter = new Meter(5, scoreHandler);
   var ScoreRightSatMeter = new Meter(5, scoreHandler);
   var ScoreLeftLitMeter = new Meter(5, scoreHandler);
@@ -335,7 +335,7 @@
           effects.push(new explosionParticle(160, 100, 10, this.color))
         }
       }
-      this.you ? this.x+=10 : this.x-=10;
+      this.you ? this.x += 10 : this.x -= 10;
       if (this.x > 350 || this.x < -20 || !inGame) {
         this.lifetime = 0;
       }
