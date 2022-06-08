@@ -1,12 +1,11 @@
 <head>
-    <title>POE Production</title>
-    <meta description="Path of Exile RGB." />
+    <title>Path of Exile</title>
+    <meta description="Stay alive with screen ambience and RGB effects." />
     <meta publisher="SignalRGB" />
-    <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
+    <meta property="Brightness" label="Screen ambience brightness" type="number" min="0" max="100" default="100" />
     <meta property="eBrightness" label="Effects brightness" type="number" min="0" max="100" default="100" />
     <meta property="HPOn" label="HP HUD Effect" type="boolean" default="1" />
     <meta property="ManaOn" label="Mana HUD Effect" type="boolean" default="1" />
-    <meta property="SkillOn" label="Skill HUD Effect" type="boolean" default="1" />
     <meta property="DeathOn" label="Death Effect" type="boolean" default="1" />
     <meta property="LevelOn" label="Level Effect" type="boolean" default="1" />
     <meta property="PortalOn" label="Portal Effect" type="boolean" default="1" />
@@ -24,16 +23,9 @@
     <meta property="HUDStyleM" label="Mana Shape" type="boolean" default="0" />
     <meta property="HUDHeightM" label="Mana height (rectangle)" type="number" min="1" max="200" default="50" />
     <meta property="HUDWidthM" label="Mana width (rectangle / circle)" type="number" min="1" max="320" default="320" />
-    <meta property="SkillUpColor" label="Skill Up HUD Color" type="color" min="0" max="360" default="#00ff00" />
-    <meta property="SkillDownColor" label="Skill Down HUD Color" type="color" min="0" max="360" default="#ff0000" />
-    <meta property="xPosS" label="Skillbar X-Position" type="number" min="0" max="320" default="0" />
-    <meta property="yPosS" label="Skillbar Y-position" type="number" min="0" max="200" default="50" />
-    <meta property="skillStyle" label="Skillbar Direction" type="boolean" default="0" />
-    <meta property="skillHeight" label="Skillbar height" type="number" min="1" max="200" default="50" />
-    <meta property="skillWidth" label="Skillbar Width" type="number" min="1" max="320" default="320" />
   
     <!-- #region Screen Meter Declarations -->
-    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.1115" y="0.9722" width="0.001" height="0.0007" h="0-45" s="25-50" l="25-50" >
+    <meta meter="inGame" tags="VLC,path of exile" type="linear" x="0.1115" y="0.9722" width="0.001" height="0.0007" h="0-45" s="0-50" l="50-75" >
       <resolution size="3440x1440" x="0.0820" y="0.9736" width="0.0029" height="0.0007" />
     </meta> 
     <meta meter="hp1" tags="VLC,path of exile" type="area" x="0.0468" y="0.8121" width="0.001" height="0.161" h="340-360" s="60-100" l="20-75" >
@@ -45,30 +37,6 @@
     <meta meter="mana" tags="VLC,path of exile" type="area" x="0.9219" y="0.8148" width="0.0029" height="0.1701" h="180-230" s="50-100" l="20-75" >
       <resolution size="3440x1440" x="0.9468" y="0.8146" width="0.0029" height="0.1701" />
     </meta> 
-    <meta meter="skill1" tags="VLC,path of exile" type="colormean" x="0.7968" y="0.888" width="0.006" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8493" y="0.8889" width="0.0084" height="0.005" />
-    </meta>
-    <meta meter="skill2" tags="VLC,path of exile" type="colormean" x="0.826" y="0.888" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8706" y="0.8889" width="0.0084" height="0.005" />
-    </meta> 
-    <meta meter="skill3" tags="VLC,path of exile" type="colormean" x="0.8552" y="0.888" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8919" y="0.8889" width="0.0084" height="0.005" />
-    </meta> 
-    <meta meter="skill4" tags="VLC,path of exile" type="colormean" x="0.7391" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8058" y="0.9528" width="0.0084" height="0.005" />
-    </meta> 
-    <meta meter="skill5" tags="VLC,path of exile" type="colormean" x="0.7677" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8276" y="0.9528" width="0.0084" height="0.005" />
-    </meta> 
-    <meta meter="skill6" tags="VLC,path of exile" type="colormean" x="0.7974" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8494" y="0.9528" width="0.0084" height="0.005" />
-    </meta> 
-    <meta meter="skill7" tags="VLC,path of exile" type="colormean" x="0.8266" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.8709" y="0.9528" width="0.0084" height="0.005" />
-    </meta>
-    <meta meter="skill8" tags="VLC,path of exile" type="colormean" x="0.8563" y="0.9515" width="0.0084" height="0.005" h="189-209" s="80-100" l="66-100" >
-      <resolution size="3440x1440" x="0.893" y="0.9528" width="0.0084" height="0.005" />
-    </meta>  
     <meta meter="lvlUpBar" tags="VLC,path of exile" type="area" x="0.31" y="0.9915" width="0.015" height="0.0014" h="20-60" s="25-75" l="60-100" >
       <resolution size="3440x1440" x="0.2436" y="0.9917" width="0.0253" height="0.0014" />
     </meta> 
@@ -102,7 +70,6 @@
     var canvas, ctx;
     var stateHdlr = new StateHandler();
     var effects = [];
-    var skillArray = [1, 1, 1, 1, 1, 1, 1, 1]
     var currentHealth = 100;
     var currentMana = 100;
     var inGameBool = false;
@@ -111,20 +78,11 @@
     var deathPushed = false;
     var portalPushed = false;
     var loadPushed = false;
-    var skillPushed = false;
   //#region Meter Declarations
     var inGameMeter = new Meter(3, inGameHelp);
     var hp1Meter = new Meter(3, healthEffects);
     var hp2Meter = new Meter(3, healthEffects);
     var manaMeter = new Meter(3, manaEffects);
-    var skill1LitMeter = new Meter(2, skillEffects);
-    var skill2LitMeter = new Meter(2, skillEffects);
-    var skill3LitMeter = new Meter(2, skillEffects);
-    var skill4LitMeter = new Meter(2, skillEffects);
-    var skill5LitMeter = new Meter(2, skillEffects);
-    var skill6LitMeter = new Meter(2, skillEffects);
-    var skill7LitMeter = new Meter(2, skillEffects);
-    var skill8LitMeter = new Meter(2, skillEffects);
     var lvlConfirmMeter = new Meter(3, lvlEffects);
     var loadYellowMeter = new Meter(5, loadEffects);
     var loadBrownMeter = new Meter(5, loadEffects);
@@ -148,14 +106,6 @@
         hp1Meter.setValue(engine.vision.hp1)
         hp2Meter.setValue(engine.vision.hp2)
         manaMeter.setValue(engine.vision.mana)
-        skill1LitMeter.setValue(engine.vision.skill1[2])
-        skill2LitMeter.setValue(engine.vision.skill2[2])
-        skill3LitMeter.setValue(engine.vision.skill3[2])
-        skill4LitMeter.setValue(engine.vision.skill4[2])
-        skill5LitMeter.setValue(engine.vision.skill5[2])
-        skill6LitMeter.setValue(engine.vision.skill6[2])
-        skill7LitMeter.setValue(engine.vision.skill7[2])
-        skill8LitMeter.setValue(engine.vision.skill8[2])
         lvlConfirmMeter.setValue(engine.vision.lvlUpBar)
         portalYellowMeter.setValue(engine.vision.portalYellow)
         portalBlackMeter.setValue(engine.vision.portalBlack)
@@ -192,9 +142,6 @@
             DrawRect(xPosM, yPosM, HUDWidthM, HUDHeightM, ManaColor)
           }
         } 
-        if (SkillOn){
-            DrawRect(xPosS, yPosS, skillWidth, skillHeight, "grey")
-        }
       }
       window.requestAnimationFrame(update);
     }
@@ -211,10 +158,6 @@
           effects.push(new basicHUD(xPosM, yPosM, HUDWidthM, "mana"))
           manaPushed = true;
         }
-        if(!skillPushed && SkillOn){
-          effects.push(new skillHUD(xPosS, yPosS))
-          skillPushed = true;
-        }
       } else {
         effects = []
         inGameBool = false;
@@ -222,7 +165,6 @@
         deathPushed = false;
         healthPushed = false;
         manaPushed = false;
-        skillPushed = false;
         loadPushed = false;
       }
     }
@@ -238,26 +180,6 @@
     function manaEffects(){
       currentMana = manaMeter.value * 100;
       // console.log("MANA " + currentMana)
-    }
-
-    function skillEffects(){
-      (skill1LitMeter.decreased && skill1LitMeter.diff > 10) ? skillArray[0] = 0 : null;
-      skill1O = skill1LitMeter.value;
-      (skill1LitMeter.increased && skill1LitMeter.diff > 4) ? skillArray[0] = 1 : null;
-      (skill1LitMeter.increased && skill2LitMeter.diff > 4) ? skillArray[1] = 1 : null;
-      (skill2LitMeter.decreased && skill2LitMeter.diff > 10) ? skillArray[1] = 0 : null;
-      (skill1LitMeter.increased && skill3LitMeter.diff > 4) ? skillArray[2] = 1 : null;
-      (skill3LitMeter.decreased && skill3LitMeter.diff > 10) ? skillArray[2] = 0 : null;
-      (skill1LitMeter.increased && skill4LitMeter.diff > 4) ? skillArray[3] = 1 : null;
-      (skill4LitMeter.decreased && skill4LitMeter.diff > 10) ? skillArray[3] = 0 : null;
-      (skill1LitMeter.increased && skill5LitMeter.diff > 4) ? skillArray[4] = 1 : null;
-      (skill5LitMeter.decreased && skill5LitMeter.diff > 10) ? skillArray[4] = 0 : null;
-      (skill1LitMeter.increased && skill6LitMeter.diff > 4) ? skillArray[5] = 1 : null;
-      (skill6LitMeter.decreased && skill6LitMeter.diff > 10) ? skillArray[5] = 0 : null;
-      (skill1LitMeter.increased && skill7LitMeter.diff > 4) ? skillArray[6] = 1 : null;
-      (skill7LitMeter.decreased && skill7LitMeter.diff > 10) ? skillArray[6] = 0 : null;
-      (skill1LitMeter.increased && skill8LitMeter.diff > 4) ? skillArray[7] = 1 : null;
-      (skill8LitMeter.decreased && skill8LitMeter.diff > 10) ? skillArray[7] = 0 : null;
     }
 
     function lvlEffects(){
@@ -323,32 +245,6 @@
             manaPushed = false;
             this.lifetime = 0;
           }
-        }
-      }
-    }
-
-    function skillHUD(x, y){
-      this.x = xPosS
-      this.y = yPosS;
-      this.lifetime = 10;
-      this.draw = function(){
-        this.x = xPosS
-        this.y = yPosS;
-        skillArray.forEach((ele, i)=>{
-          var x = skillStyle ? this.x : this.x + skillWidth / 8 * i
-          var y = skillStyle ? this.y + skillHeight / 8 * i : this.y
-          var w = skillStyle ? skillWidth : skillWidth / 8;
-          var h = skillStyle ? skillHeight / 8 : skillHeight;
-          var c = ele ? SkillUpColor : SkillDownColor
-          DrawRect(x, y, w, h, c)
-          ctx.strokeStyle = "black"
-          ctx.lineWidth = skillStyle ? skillHeight * .03 : skillWidth * .03;
-          ctx.rect(x, y, w, h)
-          ctx.stroke();
-        })
-        if(!inGameBool || !SkillOn){
-          this.lifetime = 0;
-          skillPushed = false;
         }
       }
     }

@@ -1,41 +1,36 @@
 <head>
-  <title>Lost ark</title>
+  <title>Lost Ark FILM</title>
   <meta description="Effects for Lost Ark" />
   <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="playerClass" label="Main Class" type="combobox"
+    values="Warrior,Martial Artist,Gunner,Mage,Assassin"
+    default="Warrior" />
+  <meta property="healthToggle" label="enable Health effects" type="boolean" default="1" />
+  <meta property="manaToggle" label="enable Mana effects" type="boolean" default="1" />
+  <meta property="skillToggle" label="enable skill effects" type="boolean" default="1" />
+  <meta property="dialogueToggle" label="enable dialogue effects" type="boolean" default="1" />
+  <meta property="mountToggle" label="enable mounted effects" type="boolean" default="1" />
+  <meta property="questToggle" label="enable quest effects" type="boolean" default="1" />
   <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
   <meta property="healthColor" label="Health Bar Color" type="color" default="#ff0000" min="0" max="360" />
   <meta property="healthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
   <meta property="healthBarY" label="HealthBarY" type="number" min="0" max="200" default="55" />
   <meta property="healthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
   <meta property="healthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="20" />
-  <meta property="healthToggle" label="enable Health effects" type="boolean" default="1" />
   <meta property="manaColor" label="Health Bar Color" type="color" default="#00a8ff" min="0" max="360" />
   <meta property="manaBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
   <meta property="manaBarY" label="HealthBarY" type="number" min="0" max="200" default="75" />
   <meta property="manaBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
   <meta property="manaBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="20" />
-  <meta property="manaToggle" label="enable Mana effects" type="boolean" default="1" />
 
-
-
-
-
-  <meta meter="healthBar" tags="VLC,Lost" type="area" x="0.328" y="0.8999" width=".123" height="0.0001" h="0-17"
-    s="58-100" l="10-89">
+  <meta meter="healthBar" tags="VLC,Lost" type="area" x="0.328" y="0.8999" width=".123" height="0.0001" h="0-360"
+    s="30-100" l="20-100">
   </meta>
 
   <meta meter="manaBar" tags="VLC,Lost" type="area" x="0.5492" y="0.8996" width=".1235" height="0.0001" h="190-242"
     s="36-100" l="25-95">
-  </meta>
-
-  <meta meter="levelBarCombat" tags="VLC,Lost" type="area" x="0.0012" y="0.9944" width=".9968" height="0.0001"
-    h="170-242" s="0-100" l="25-100">
-  </meta>
-
-  <meta meter="levelBarRoster" tags="VLC,Lost" type="area" x="0.0012" y="0.9944" width=".9968" height="0.0001"
-    h="251-271" s="68-98" l="43-100">
   </meta>
 
   <meta meter="inGame" tags="VLC,Lost" type="linear" x="0.8430" y="0.9549" width="" height="" h="0-360" s="0-34"
@@ -47,7 +42,7 @@
   </meta>
 
   <meta meter="mountBlack" tags="VLC,Lost" type="area" x="0.4906" y="0.8889" width="0.001" height="0.001" h="0-360"
-    s="0-30" l="0-25">
+    s="0-100" l="0-25">
   </meta>
 
   <meta meter="speakCharacter" tags="VLC,Lost" type="area" x="0.5035" y="0.9049" width="0.001" height="0.001" h="51-71"
@@ -55,16 +50,8 @@
   </meta>
 
   <meta meter="speakCharacterLeave" tags="VLC,Lost" type="area" x="0.9381" y="0.9556" width="0.001" height="0.0001"
-    h="0-360" s="0-30" l="87-100">
+    h="0-360" s="0-30" l="75-100">
   <resolution size="2560x1440" x="0.9371" y="0.9549" width="0.001" height="0.0001" />
-  </meta>
-
-  <meta meter="topAbilityWhite" tags="VLC,Lost" type="area" x="0.3563" y="0.9063" width=".094" height="0.001" h="0-360"
-    s="0-45" l="50-100">
-  </meta>
-
-  <meta meter="botAbilityWhite" tags="VLC,Lost" type="area" x="0.3676" y="0.9500" width=".094" height=".001" h="0-360"
-    s="0-45" l="50-100">
   </meta>
 
   <meta meter="swordQuestComplete" tags="VLC,Lost" type="area" x="0.5000" y="0.0583" width=".001" height=".001"
@@ -78,6 +65,23 @@
   <meta meter="questCompleteConfirmationYellow" tags="VLC,Lost" type="area" x="0.5508" y="0.1132" width=".001"
     height=".001" h="31-51" s="39-59" l="53-100">
   </meta>
+
+  <meta meter="skill1" tags="VLC,Lost" type="colormean" x="0.3557" y="0.9065" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill2" tags="VLC,Lost" type="colormean" x="0.3813" y="0.9065" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill3" tags="VLC,Lost" type="colormean" x="0.4052" y="0.9065" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill4" tags="VLC,Lost" type="colormean" x="0.4302" y="0.9065" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill5" tags="VLC,Lost" type="colormean" x="0.3682" y="0.9509" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill6" tags="VLC,Lost" type="colormean" x="0.3927" y="0.9509" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill7" tags="VLC,Lost" type="colormean" x="0.4172" y="0.9509" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
+  <meta meter="skill8" tags="VLC,Lost" type="colormean" x="0.4417" y="0.9509" width="0.0073" height="0.0111" h="0-10" s="0-20" l="88-100" >
+  </meta> 
 
 
 </head>
@@ -95,10 +99,11 @@
   var mountActive = false;
   var stateHdlr = new StateHandler();
   var effects = [];
+  var skillUse = [];
   var playingGame = false;
-  var abilityValue = 0;
   var speakingActive = false;
   var questPlaying = false;
+  var skillCount = 0;
   var healthMeter = new Meter(5, inGameChanged)
   var manaMeter = new Meter(5, () => "")
   var inGameMeter = new Meter(5, inGameChanged)
@@ -109,9 +114,31 @@
   var swordQuestCompleteMeter = new Meter(5, questComplete)
   var questCompleteConfirmationBrownMeter = new Meter(5, questComplete)
   var questCompleteConfirmationYellowMeter = new Meter(5, questComplete)
+  var skill1Meter = new Meter(3, skillHandler)
+  var skill2Meter = new Meter(3, skillHandler)
+  var skill3Meter = new Meter(3, skillHandler)
+  var skill4Meter = new Meter(3, skillHandler)
+  var skill5Meter = new Meter(3, skillHandler)
+  var skill6Meter = new Meter(3, skillHandler)
+  var skill7Meter = new Meter(3, skillHandler)
+  var skill8Meter = new Meter(3, skillHandler)
+  var skill1HueMeter = new Meter(8, ()=>"")
+  var skill2HueMeter = new Meter(8, ()=>"")
+  var skill3HueMeter = new Meter(8, ()=>"")
+  var skill4HueMeter = new Meter(8, ()=>"")
+  var skill5HueMeter = new Meter(8, ()=>"")
+  var skill6HueMeter = new Meter(8, ()=>"")
+  var skill7HueMeter = new Meter(8, ()=>"")
+  var skill8HueMeter = new Meter(8, ()=>"")
+  var skill1SatMeter = new Meter(3, skillHandler)
+  var skill2SatMeter = new Meter(3, skillHandler)
+  var skill3SatMeter = new Meter(3, skillHandler)
+  var skill4SatMeter = new Meter(3, skillHandler)
+  var skill5SatMeter = new Meter(3, skillHandler)
+  var skill6SatMeter = new Meter(3, skillHandler)
+  var skill7SatMeter = new Meter(3, skillHandler)
+  var skill8SatMeter = new Meter(3, skillHandler)
   var wing = "M12.35,121.46c-8.01-9.72-11.92-19.29-12.31-28.71C-0.78,73.01,10.92,58.28,28.3,47.67 c18.28-11.16,37.08-13.93,55.36-22.25C92.79,21.27,103.68,14.47,121.8,0c5.92,15.69-12.92,40.9-43.52,54.23 c9.48,0.37,19.69-2.54,30.85-9.74c-0.76,19.94-16.46,32.21-51.3,36.95c7.33,2.45,16.09,2.58,27.27-0.58 C74.33,116.81,29.9,91.06,12.35,121.46L12.35,121.46z";
-
-
   function update() {
     if (!mountActive) {
       copyScreen(1);
@@ -120,7 +147,6 @@
     inGameMeter.setValue(engine.vision.inGame)
     healthMeter.setValue(engine.vision.healthBar)
     manaMeter.setValue(engine.vision.manaBar)
-    abilityHandler();
     dismountGreenArrowMeter.setValue(engine.vision.dismountGreenArrow)
     mountBlackMeter.setValue(engine.vision.mountBlack)
     speakCharacterMeter.setValue(engine.vision.speakCharacter)
@@ -128,6 +154,38 @@
     swordQuestCompleteMeter.setValue(engine.vision.swordQuestComplete)
     questCompleteConfirmationBrownMeter.setValue(engine.vision.questCompleteConfirmationBrown)
     questCompleteConfirmationYellowMeter.setValue(engine.vision.questCompleteConfirmationYellow)
+    if(playingGame){
+      skill1Meter.setValue(engine.vision.skill1[2])
+      skill2Meter.setValue(engine.vision.skill2[2])
+      skill3Meter.setValue(engine.vision.skill3[2])
+      skill4Meter.setValue(engine.vision.skill4[2])
+      skill5Meter.setValue(engine.vision.skill5[2])
+      skill6Meter.setValue(engine.vision.skill6[2])
+      skill7Meter.setValue(engine.vision.skill7[2])
+      skill8Meter.setValue(engine.vision.skill8[2])
+      skill1SatMeter.setValue(engine.vision.skill1[1])
+      skill2SatMeter.setValue(engine.vision.skill2[1])
+      skill3SatMeter.setValue(engine.vision.skill3[1])
+      skill4SatMeter.setValue(engine.vision.skill4[1])
+      skill5SatMeter.setValue(engine.vision.skill5[1])
+      skill6SatMeter.setValue(engine.vision.skill6[1])
+      skill7SatMeter.setValue(engine.vision.skill7[1])
+      skill8SatMeter.setValue(engine.vision.skill8[1])
+      skill1HueMeter.setValue(engine.vision.skill1[0])
+      skill2HueMeter.setValue(engine.vision.skill2[0])
+      skill3HueMeter.setValue(engine.vision.skill3[0])
+      skill4HueMeter.setValue(engine.vision.skill4[0])
+      skill5HueMeter.setValue(engine.vision.skill5[0])
+      skill6HueMeter.setValue(engine.vision.skill6[0])
+      skill7HueMeter.setValue(engine.vision.skill7[0])
+      skill8HueMeter.setValue(engine.vision.skill8[0])
+    }
+
+    skillCount > 1000 ? skillCount = 1000 : null;
+    skillCount > 0 ? skillCount-=2 : null;
+    if(playingGame && skillToggle){
+      drawSkill()
+    }
 
     if (!mountActive) {
       DrawHud();
@@ -140,11 +198,7 @@
       }
     };
 
-
-
-
     //use TimebarMeter for HUD effect?
-
 
     stateHdlr.Process();
     window.requestAnimationFrame(update);
@@ -174,16 +228,33 @@
     }
   }
 
-  function abilityHandler() {
-    let topValue = engine.vision.topAbilityWhite;
-    let botValue = engine.vision.botAbilityWhite;
-    let combinedValue = topValue + botValue;
-
-    if (combinedValue > abilityValue && playingGame && !speakingActive) {
-      console.log("Ability Used" + Math.random())
-      abilityValue = combinedValue;
-    } else {
-      abilityValue = combinedValue;
+  function skillHandler(){
+    if(playingGame && !speakingActive && !questPlaying && engine.vision.inGame == 1 && skillToggle){
+      if(skill1Meter.decreased && !skill1Meter.increased && skill1SatMeter.decreased && skill1Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill1HueMeter.value))
+      } else if(skill2Meter.decreased && !skill2Meter.increased && skill2SatMeter.decreased && skill2Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill2HueMeter.value))
+      } else if(skill3Meter.decreased && !skill3Meter.increased && skill3SatMeter.decreased && skill3Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill3HueMeter.value))
+      } else if(skill4Meter.decreased && !skill4Meter.increased && skill4SatMeter.decreased && skill4Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill4HueMeter.value))
+      } else if(skill5Meter.decreased && !skill5Meter.increased && skill5SatMeter.decreased && skill5Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill5HueMeter.value))
+      } else if(skill6Meter.decreased && !skill6Meter.increased && skill6SatMeter.decreased && skill6Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill6HueMeter.value))
+      } else if(skill7Meter.decreased && !skill7Meter.increased && skill7SatMeter.decreased && skill7Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill7HueMeter.value))
+      } else if(skill8Meter.decreased && !skill8Meter.increased && skill8SatMeter.decreased && skill8Meter.diff > 10){
+        skillCount += 50;
+        effects.push(new skillEffect(skill8HueMeter.value))
+      }
     }
   }
 
@@ -200,7 +271,7 @@
   }
 
   function speakChanged() {
-    if (speakCharacterLeaveMeter.value == 1 && speakCharacterMeter.value == 1 && !speakingActive) {
+    if (speakCharacterLeaveMeter.value == 1 && speakCharacterMeter.value == 1 && !speakingActive && dialogueToggle) {
       console.log("Speak effect")
       effects.push(new speakEffect())
       speakingActive = true;
@@ -211,7 +282,7 @@
   }
 
   function mountChanged() {
-    if (dismountGreenArrowMeter.value == 1 && mountBlackMeter.value == 1) {
+    if (dismountGreenArrowMeter.value == 1 && mountBlackMeter.value == 1 && mountToggle) {
       mountActive = true;
       effects.push(new mountEffect())
     } else {
@@ -220,7 +291,7 @@
   }
 
   function questComplete() {
-    if (swordQuestCompleteMeter.value == 1 && questCompleteConfirmationBrownMeter.value > 0.7 && questCompleteConfirmationYellowMeter.value == 1 && !questPlaying) {
+    if (swordQuestCompleteMeter.value == 1 && questCompleteConfirmationBrownMeter.value > 0.7 && questCompleteConfirmationYellowMeter.value == 1 && !questPlaying && questToggle) {
 
       effects.push(new questCompleteEffect())
       questPlaying = true;
@@ -230,6 +301,99 @@
     }
   }
 
+  function drawSkill(){
+    ctx.globalAlpha = skillCount / 1000;
+    var skillColor;
+    var mod = Math.sin(Date.now() / 1000) * 10
+    switch(playerClass){
+      case "Warrior":
+        skillColor = `hsl(${220 + mod / 2}, ${95 + mod/2}%, ${50 + mod}%)`
+        break;
+      case "Martial Artist":
+      skillColor = `hsl(${160 + mod / 2}, ${95 + mod/2}%, ${50 + mod}%)`
+        break;
+      case "Gunner":
+      skillColor = `hsl(${40 + mod / 2}, ${95 + mod/2}%, ${50 + mod}%)`
+        break;
+      case "Mage":
+      skillColor = `hsl(${10 + mod / 2}, ${95 + mod/2}%, ${50 + mod}%)`
+        break;
+      case "Assassin":
+      skillColor = `hsl(${290 + mod / 2}, ${95 + mod/2}%, ${50 + mod}%)`
+        break;
+      default:
+        break;
+      }
+    drawRect(0, 0, 320, 200, skillColor)
+    ctx.globalAlpha = 1;
+  }
+
+  function DrawPath(x, y, path, color) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  };
+
+  function hexToHSL(H) {
+  // Convert hex to RGB first
+  let r = 0, g = 0, b = 0;
+  if (H.length == 4) {
+    r = "0x" + H[1] + H[1];
+    g = "0x" + H[2] + H[2];
+    b = "0x" + H[3] + H[3];
+  } else if (H.length == 7) {
+    r = "0x" + H[1] + H[2];
+    g = "0x" + H[3] + H[4];
+    b = "0x" + H[5] + H[6];
+  }
+  // Then to HSL
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  let cmin = Math.min(r,g,b),
+      cmax = Math.max(r,g,b),
+      delta = cmax - cmin,
+      h = 0,
+      s = 0,
+      l = 0;
+
+  if (delta == 0)
+    h = 0;
+  else if (cmax == r)
+    h = ((g - b) / delta) % 6;
+  else if (cmax == g)
+    h = (b - r) / delta + 2;
+  else
+    h = (r - g) / delta + 4;
+
+  h = Math.round(h * 60);
+
+  if (h < 0)
+    h += 360;
+
+  l = (cmax + cmin) / 2;
+  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+  s = +(s * 100).toFixed(1);
+  l = +(l * 100).toFixed(1);
+
+  return [h, s, l];
+}
+
+function skillEffect(color){
+  this.radius = 1;
+  this.color = color;
+  this.lifetime = 10;
+  this.draw = function(){
+    DrawStrokeCircle(160, 100, this.radius, `hsl(${this.color}, 100%, 50%)`, 20);
+    this.radius < 250 ? this.radius+=5 : this.lifetime = 0;
+    if(speakingActive || questPlaying){
+      this.lifetime = 0;
+    }
+  }
+}
 
   function questCompleteEffect() {
     this.elapsed;
@@ -289,13 +453,13 @@
       if (this.elapsed < 800) {
         ctx.beginPath()
         let circleGradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200 - (this.elapsed) / 5)
-        circleGradient.addColorStop(0, "hsla(0,0%,0%, 0)")
-        circleGradient.addColorStop(1, "hsla(0,0%,0%, 1)")
+        circleGradient.addColorStop(0, "hsla(20,30%,30%, 0)")
+        circleGradient.addColorStop(1, "hsla(20,50%,20%, 1)")
         DrawCircle(160, 100, 200, circleGradient)
         this.exitTime = this.elapsed;
       } else if (speakCharacterLeaveMeter.value == 1 && speakCharacterMeter.value == 1) {
         ctx.beginPath()
-        ctx.fillStyle = "hsla(0,0%,0%, 1)"
+        ctx.fillStyle = "hsla(20,50%,10%, 1)"
         ctx.fillRect(0, 0, 320, 200)
         this.exitTime = this.elapsed;
         if (this.textArray.length < 5) {
@@ -332,8 +496,8 @@
       this.elapsed = GetTime() - this.start
       if (this.elapsed < 2000) {
         let gradient = ctx.createLinearGradient(0 + (this.elapsed / 10), 0 + (this.elapsed / 10), 0 + (this.elapsed), 0 + ((this.elapsed) / 2));
-        gradient.addColorStop(0, "hsla(0,0%,0%,0.1)")
-        gradient.addColorStop(1, "hsla(0,0%,0%,0.1)")
+        gradient.addColorStop(0, "hsla(45,0%,0%,0.1)")
+        gradient.addColorStop(1, "hsla(45,0%,0%,0.1)")
         ctx.fillStyle = gradient;
       } else if (this.holder == 1) {
         ctx.fillStyle = "black";
@@ -346,30 +510,64 @@
       this.footSteps.draw(this.followPoint);
 
       if (!mountActive) {
-        let circleGradient = ctx.createRadialGradient(160, 100, 0, 160, 100, (this.elapsed - this.exitTime) / 5)
-        circleGradient.addColorStop(0, "hsla(0,0%,0%, 0)")
-        circleGradient.addColorStop(1, "hsla(0,0%,0%, 1)")
-        DrawCircle(160, 100, 200, circleGradient)
-        if ((this.elapsed - this.exitTime) / 7 > 200) {
-          this.lifetime = 0;
-        }
+        this.lifetime = 0;
       } else {
         this.exitTime = this.elapsed;
       }
     }
   }
 
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
+    this.x = x;
+    this.y = y;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
 
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
+      } else {
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
+      }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      } else {
+        this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+      }
 
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
 
 
   class randomText {
     constructor() {
       this.characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       this.randomVal = Math.random();
-      this.speed = this.randomVal > 0.5 ? 4 : -4
-      this.y = Math.random() * 200;
-      this.lettercount = Math.ceil(Math.random() * 8);
+      this.speed = this.randomVal > 0.5 ? 2 : -2
+      this.y = Math.random() * 100 + 50;
+      this.lettercount = Math.ceil(Math.random() * 16);
       this.x = this.randomVal > 0.5 ? 0 - this.lettercount * 40 : 200 + this.lettercount * 40
       this.start = GetTime();
     }
@@ -377,9 +575,11 @@
     draw() {
       this.elapsed = GetTime() - this.start;
       for (let i = 0; i < this.lettercount; i++) {
-        ctx.font = '48px serif';
+        ctx.font = '100px serif';
         ctx.fillStyle = this.randomVal < 0.2 || this.randomVal > 0.9 ? "white" : "yellow"
+        ctx.globalAlpha = .4
         ctx.fillText(this.characters.charAt(Math.floor(this.randomVal * this.characters.length)), this.x + (this.speed * 9) * i, this.y + Math.sin(this.elapsed / 100 + i) * 30)
+        ctx.globalAlpha = 1
       }
       this.x += this.speed;
     }
@@ -398,12 +598,34 @@
     draw() {
       this.x += this.speed.x;
       this.y += this.speed.y;
-      if (this.x > 320 || this.x < 0) {
+      if (this.x > 300 || this.x < 20) {
         this.speed.x = -this.speed.x;
       }
-      if (this.y > 200 || this.y < 0) {
+      if (this.y > 180 || this.y < 20) {
         this.speed.y = -this.speed.y;
       }
+    }
+  }
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
     }
   }
 
@@ -434,19 +656,18 @@
       ctx.translate(this.x, this.y)
       ctx.rotate(this.angle)
       if (GetTime() - this.timer > 1000) {
-        ctx.fillRect(0, -20, 50, 30)
+        ctx.fillRect(0, -40, 100, 60)
         setTimeout(() => {
           ctx.save();
           ctx.translate(this.x, this.y)
           ctx.rotate(this.angle)
-          ctx.fillRect(0, 20, 50, 30)
+          ctx.fillRect(0, 40, 100, 60)
           ctx.restore();
         }, 500);
         this.timer = GetTime();
       }
       ctx.restore();
     }
-
   }
 
 
@@ -588,6 +809,5 @@
       }
     }
   }
-
   window.requestAnimationFrame(update)
 </script>
