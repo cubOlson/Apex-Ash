@@ -114,6 +114,15 @@
   <resolution size="1280x768" x=".6188" y=".6484" width=".0001" height=".0001" />
   </meta>
 
+  <meta meter="reviveConfirm" tags="apex,VLC" x=".875" y=".6759" width=".0001" height=".0001" h="60-95" s="60-100"
+    l="50-100" type="linear">
+  <resolution size="3440x1440" x="0.5881" y="0.6583" width="0.0001" height=".0001" />
+  <resolution size="1680x1050" x=".6185" y=".6429" width=".0001" height=".0001" />
+  <resolution size="1440x900" x=".6188" y=".6422" width=".0001" height=".0001" />
+  <resolution size="1280x800" x=".6195" y=".6425" width=".0001" height=".0001" />
+  <resolution size="1280x768" x=".6188" y=".6484" width=".0001" height=".0001" />
+  </meta>
+
   <meta meter="health" tags="apex,VLC" x=".0932" y=".937" width=".119" height=".0001" h="0-360" s="0-40" l="90-100"
     type="linear">
   <resolution size="3440x1440" x="0.0692" y="0.9417" width=".0913" height=".0001" />
@@ -203,7 +212,7 @@
   <resolution size="1280x768" x=".0932" y=".9306" width=".1146" height=".0001" />
   </meta>
 
-  <meta meter="revive" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="60-95" s="50-100" l="0-100"
+  <meta meter="revive" tags="apex,VLC" x=".6989" y=".6925" width=".13" height=".0001" h="60-95" s="60-100" l="50-100"
     type="linear">
   <resolution size="3440x1440" x="0.6474" y="0.6924" width=".10" height=".0001" />
   <resolution size="1680x1050" x=".6974" y=".675" width=".1484" height=".0001" />
@@ -228,6 +237,14 @@
   <resolution size="1280x768" x=".6984" y=".6815" width=".1484" height=".0001" />
   </meta>
 
+  <meta meter="valkz" tags="apex,VLC" type="area" x="0.6885" y="0.3944" height="0.012" width="0.0026" h="145-155"
+    s="70-100" l="87-100">
+  <resolution size="3440x1440" x="0.6389" y="0.3868" width="0.006" height="0.012" />
+  <resolution size="1680x1050" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  <resolution size="1440x900" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  <resolution size="1280x800" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  <resolution size="1280x768" x="0.6865" y="0.4028" height="0.012" width="0.0026" />
+  </meta>
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -288,6 +305,7 @@
   var valkUltMeter = new Meter(5, valkUlt)
   var whiteInGameMeter = new Meter(5, InGame)
   var crypMeter = new Meter(20, CheckCryptoUlt)
+  var reviveConfirmationMeter = new Meter(15, () => "")
   //#endregion
   //#region  updateLoop
   function update() {
@@ -316,6 +334,7 @@
     whiteInGameMeter.setValue(engine.vision.WhiteInGame)
     valkUltMeter.setValue(engine.vision.valkz)
     crypMeter.setValue(engine.vision.cyrp)
+    reviveConfirmationMeter.setValue(engine.vision.reviveConfirm)
 
 
     if (legend !== character) {
@@ -361,7 +380,7 @@
         effects.push(new ColorBurst(160, 100, "rgb(255, 0, 0"));
       }
     }
-    if (enableRevive) {
+    if (enableRevive && reviveConfirmationMeter.value == 1) {
       if (engine.vision.revive > 0.1) {
         drawSweepUp(engine.vision.revive, "rgba(123, 174, 0, 0.9");
       }
