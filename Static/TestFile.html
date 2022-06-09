@@ -1,5 +1,5 @@
 <head>
-  <title>Test Effects</title>
+  <title>Test Effects Real</title>
   <meta description="" />
   <meta publisher="SignalRGB" />
 
@@ -21,10 +21,10 @@
 
   function update() {
 
-    DrawRect(0, 0, 320, 200, "grey")
+    DrawRect(0, 0, 320, 200, "black")
 
     if(effects.length < 1){
-      effects.push(new levelUp())
+      effects.push(new levelUpEffect())
     }
 
     for (let i = 0; i < effects.length; i++) {
@@ -37,39 +37,53 @@
     window.requestAnimationFrame(update);
   };
 
-function levelUp(){
-  this.start = Date.now();
-  this.lifetime = 10;
-  this.radius = 1;
-  this.switch = false;
-  this.count = 0;
-  var grad = ctx.createRadialGradient(160, 100, 1, 160, 100, 250)
-  grad.addColorStop(0, "rgba(255, 255, 255, .7)")
-  grad.addColorStop(1, "rgba(255, 255, 255, .1)")
-  this.draw = function(){
-    DrawCircle(160, 100, this.radius, grad)
-    this.switch ? this.radius-=2 : this.radius+=2;
-    this.radius > 100 ? this.switch = true : null;
-    this.radius < 1 ? this.radius = 1 : null;
-    var elapsed = Date.now() - this.start;
-    if(elapsed > 200){
-      effects.push(new levelHelp(1))
-      this.start = Date.now()
-      this.count < 10 ? this.count++ : this.lifetime = 0;
+  function levelUpEffect() {
+    this.start = Date.now();
+    this.pushed = false;
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      if (this.elapsed < 800) {
+        ctx.beginPath();
+        ctx.fillStyle = "yellow"
+        ctx.fillRect(120, -250 + this.elapsed / 3, 80, 170)
+        ctx.beginPath()
+        ctx.moveTo(120, -80 + this.elapsed / 3)
+        ctx.lineTo(200, -80 + this.elapsed / 3)
+        ctx.lineTo(160, this.elapsed / 3)
+        ctx.lineTo(120, -80 + this.elapsed / 3)
+        ctx.fill();
+      } else {
+        for (let i = 0; i < 40; i++) {
+          effects.push(new ImpactParticle(160, 200, Math.random() * 20 + 10, "yellow"))
+          this.lifetime = 0;
+        }
+      }
     }
   }
-}
 
-function levelHelp(radius){
-  this.radius = radius;
-  this.lifetime = 10;
-  this.start = Date.now()
-  this.draw = function(){
-    var elapsed = Date.now() - this.start
-    DrawStroke(160, 100, this.radius, `hsla(60, 100%, 50%, ${Math.abs(Math.sin(elapsed/100))})`, 20)
-    this.radius < 250 ? this.radius+=3 : this.lifetime = 0;
-  }
-}
+
+  function ImpactParticle(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = x;
+    this.vx = 2 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -10;
+    this.ay = 0.2;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
 
   function DrawGear(x, y, radius, stroke, teeth, color){
     DrawStroke(x, y, radius, color, stroke)

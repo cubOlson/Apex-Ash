@@ -25,20 +25,14 @@
     s="50-90" l="30-50">
   </meta>
 
-  <meta meter="bossConfirm" tags="VLC,Diablo" type="area" x="0.4008" y="0.0549" width="0.0020" height="0.00001"
-    h="20-50" s="30-60" l="80-100">
-  </meta>
-
-  <meta meter="fightingBossRed" tags="VLC,Diablo" type="area" x="0.4281" y="0.0681" width="0.00001" height="0.00001"
-    h="0-30" s="70-100" l="50-80">
-  </meta>
-
   <meta meter="levelUpConfirmation" tags="VLC,Diablo" type="area" x="0.5855" y="0.1250" width="0.0027" height="0.00001"
     h="30-60" s="50-70" l="80-100">
+    <resolution size="1920x1080" x="0.5813" y="0.1417" width="0.0027" height="0.00001" />
   </meta>
 
   <meta meter="levelUpR" tags="VLC,Diablo" type="area" x="0.5137" y="0.1250" width="0.0016" height="0.0000" h="30-60"
     s="50-70" l="80-100">
+    <resolution size="1920x1080" x="0.5130" y="0.1296" width="0.001" height="0.0001" />
   </meta>
 
   <meta meter="speakingBlack" tags="VLC,Diablo" type="area" x="0.4086" y="0.6792" width="0.0969" height="0.00001"
@@ -49,15 +43,23 @@
     h="30-60" s="10-30" l="60-80">
   </meta>
 
-  <meta meter="ultReady" tags="VLC,Diablo" type="area" x="0.9398" y="0.7979" width="0.0012" height="0.0014" h="0-360"
+  <meta meter="ultReady" tags="VLC,Diablo" type="area" x="0.9402" y="0.7979" width="0.0001" height="0.0001" h="0-360"
+    s="70-100" l="80-100">
+  </meta>
+
+  <meta meter="ultHSL" tags="VLC,Diablo" type="colormean" x="0.9402" y="0.7979" width="0.0001" height="0.0001" h="0-360"
     s="30-100" l="30-100">
   </meta>
 
-  <meta meter="diedYellowD" tags="VLC,Diablo" type="area" x="0.5121" y="0.2833" width="0.0051" height="0.0007" h="30-60"
+  <meta meter="ultConfirm" tags="VLC,Diablo" type="colormean" x="0.8285" y="0.8181" width="0.0098" height="0.0097" h="0-360"
+    s="30-100" l="30-100">
+  </meta>
+
+  <meta meter="diedYellowD" tags="VLC,Diablo" type="area" x="0.5121" y="0.2833" width="0.0051" height="0.0007" h="20-60"
     s="20-60" l="70-100">
   </meta>
 
-  <meta meter="diedYellowE" tags="VLC,Diablo" type="area" x="0.5449" y="0.2833" width="0.0059" height="0.0014" h="30-60"
+  <meta meter="diedYellowE" tags="VLC,Diablo" type="area" x="0.5449" y="0.2833" width="0.0059" height="0.0014" h="20-60"
     s="20-60" l="70-100">
   </meta>
 
@@ -73,16 +75,10 @@
     h="118-138" s="30-80" l="70-100">
   </meta>
 
-  <meta meter="KillStreakWhite" tags="VLC,Diablo" type="area" x="0.4898" y="0.6528" width="0.0355" height="0.0188"
-    h="0-360" s="0-30" l="88-100">
+  <meta meter="KillStreakRed" tags="VLC,Diablo" type="area" x="0.4895" y="0.6521" width="0.0008" height="0.0083" h="0-10" s="75-100" l="75-100">
   </meta>
 
-  <meta meter="KillStreakRed" tags="VLC,Diablo" type="area" x="0.4828" y="0.6618" width="0.0043" height="0.0028"
-    h="0-17" s="75-100" l="26-96">
-  </meta>
-
-  <meta meter="KillStreakSpark" tags="VLC,Diablo" type="area" x="0.4609" y="0.6042" width="0.0863" height="0.0021"
-    h="25-45" s="5-54" l="15-45">
+  <meta meter="KillStreakGreen" tags="VLC,Diablo" type="area" x="0.5879" y="0.7243" width="0.0258" height="0.0069" h="110-150" s="60-100" l="50-100">
   </meta>
 
 
@@ -103,52 +99,52 @@
   var lowHpPlaying = false;
   var killStreakGoing = false;
   var safeZonePlaying = false;
+  var ultPlayed = false;
 
 
   var healthMeter = new Meter(5, lowHp)
-  var ingameMeter = new Meter(3, inGame)
+  var ingameMeter = new Meter(10, inGame)
   var inMenuMeter = new Meter(5, inMenu)
-  var bossConfirmMeter = new Meter(5, bossChanged)
-  var fightingBossRedMeter = new Meter(5, bossChanged)
   var levelUpConfirmationMeter = new Meter(5, levelUpChanged)
   var levelUpRMeter = new Meter(5, levelUpChanged)
   var speakingblackMeter = new Meter(5, speakingChanged)
   var speakingyellowMeter = new Meter(5, speakingChanged)
-  var ultReadyMeter = new Meter(5, ultReadyChanged)
+  var ultReadyMeter = new Meter(10, ()=>"")
+  var ultHueMeter = new Meter(2, ()=>"")
+  var ultConfirmMeter = new Meter(15, ultReadyChanged)
   var diedyellowDMeter = new Meter(5, deathChanged)
   var diedYellowEMeter = new Meter(5, deathChanged)
   var diedRedMeter = new Meter(5, deathChanged)
   var SafeZoneGreenFMeter = new Meter(5, safeZoneChanged)
   var SafeZoneGreenZMeter = new Meter(5, safeZoneChanged)
-  var KillStreakWhiteMeter = new Meter(5, killStreakChanged)
-  var KillStreakRedMeter = new Meter(10, killStreakChanged)
-  var KillStreakSparkMeter = new Meter(5, killStreakChanged)
+  var KillStreakRedMeter = new Meter(5, killStreakChanged)
+  var KillStreakGreenMeter = new Meter(5, killStreakChanged)
   //Declaring meters
 
   function update() {
     //Updating meters
     IdleState();
 
-    healthMeter.setValue(engine.vision.health)
     ingameMeter.setValue(engine.vision.inGame)
     inMenuMeter.setValue(engine.vision.inMenu)
-    bossConfirmMeter.setValue(engine.vision.bossConfirm)
-    fightingBossRedMeter.setValue(engine.vision.fightingBossRed)
-    levelUpConfirmationMeter.setValue(engine.vision.levelUpConfirmation)
-    levelUpRMeter.setValue(engine.vision.levelUpR)
+    healthMeter.setValue(engine.vision.health)
     speakingblackMeter.setValue(engine.vision.speakingBlack)
     speakingyellowMeter.setValue(engine.vision.speakingYellow)
-    ultReadyMeter.setValue(engine.vision.ultReady)
     diedyellowDMeter.setValue(engine.vision.diedYellowD)
     diedYellowEMeter.setValue(engine.vision.diedYellowE)
     diedRedMeter.setValue(engine.vision.diedRed)
-    SafeZoneGreenFMeter.setValue(engine.vision.SafeZoneGreenF)
-    SafeZoneGreenZMeter.setValue(engine.vision.SafeZoneGreenZ)
-    KillStreakWhiteMeter.setValue(engine.vision.KillStreakWhite)
-    KillStreakRedMeter.setValue(engine.vision.KillStreakRed)
-    KillStreakSparkMeter.setValue(engine.vision.KillStreakSpark)
 
-
+    if(isInGame && !isInMenu){
+      levelUpConfirmationMeter.setValue(engine.vision.levelUpConfirmation)
+      levelUpRMeter.setValue(engine.vision.levelUpR)
+      ultReadyMeter.setValue(engine.vision.ultReady)
+      ultHueMeter.setValue(engine.vision.ultHSL[0])
+      ultConfirmMeter.setValue(engine.vision.ultConfirm[0])
+      SafeZoneGreenFMeter.setValue(engine.vision.SafeZoneGreenF)
+      SafeZoneGreenZMeter.setValue(engine.vision.SafeZoneGreenZ)
+      KillStreakRedMeter.setValue(engine.vision.KillStreakRed)
+      KillStreakGreenMeter.setValue(engine.vision.KillStreakGreen)
+    }
 
     DrawHUD();
 
@@ -166,7 +162,6 @@
 
 
   function DrawHUD() {
-
 
     if (isInGame && !safeZonePlaying) {
       ctx.beginPath()
@@ -204,10 +199,8 @@
   function lowHp() {
     inGame();
     if (healthMeter.value == 1 && !isInGame && !isInMenu && !lowHpPlaying) {
-      console.log("is low hp")
       lowHpPlaying = true;
       effects.push(new lowHpEffect())
-
     }
   }
 
@@ -218,30 +211,16 @@
   function inGame() {
     if (ingameMeter.value == 1 && healthMeter.value > 0) {
       isInGame = true;
-      console.log("inGame")
     } else {
       isInGame = false;
-      console.log("outGame")
     }
   }
 
   function inMenu() {
     if (inMenuMeter.value == 1) {
       isInMenu = true;
-      console.log("inMenu")
-    } else if (isInMenu) {
+    } else {
       isInMenu = false;
-      console.log("outMenu")
-    }
-  }
-
-  function bossChanged() {
-    if (bossConfirmMeter.value == 1 && fightingBossRedMeter.value > 0 && isInGame) {
-      console.log(" fighting Boss")
-      isFighting = true;
-    } else if (bossConfirmMeter.value == 0 && isFighting) {
-      console.log("stop fighting Boss")
-      isfinite = false;
     }
   }
 
@@ -254,26 +233,27 @@
   function speakingChanged() {
     if (speakingblackMeter.value >= 0.9 && speakingyellowMeter.value == 1) {
       if (!speaking) {
-        console.log("speaking")
         effects.push(new speakingEffect())
         speaking = true;
       }
     } else if (speakingblackMeter.value == 0 && speakingyellowMeter.value == 0 && speaking) {
-      console.log("stop speaking")
       speaking = false;
     }
   }
 
   function ultReadyChanged() {
-    if (ultReadyMeter.value == 1 && isInGame && engine.vision.health > 0 && engine.vision.inGame == 1) {
-      console.log("ultReady")
+    if(ultReadyMeter.value < .25){
+      ultPlayed = false;
+    }
+    if (ultReadyMeter.value == 1 && isInGame && engine.vision.health > 0 && engine.vision.inGame == 1 && ultReadyMeter.increased && !ultPlayed) {
+      effects.push(new ultUpEffect())
+      ultPlayed = true;
     }
   }
 
 
   function deathChanged() {
     if (diedYellowEMeter.value == 1 && diedyellowDMeter.value == 1 && diedRedMeter.value == 1) {
-      console.log("death")
       effects.push(new DeathEffect())
     }
   }
@@ -286,15 +266,61 @@
   }
 
   function killStreakChanged() {
-    if (KillStreakRedMeter.value > 0.6 && KillStreakWhiteMeter.value > 0 && KillStreakSparkMeter.value > 0 && isInGame) {
+    if (KillStreakRedMeter.value == 1 && KillStreakGreenMeter.value > .25 && isInGame) {
       if (!killStreakGoing) {
-        console.log("having a killstreak")
         killStreakGoing = true;
         effects.push(new killStreakEffect())
       }
     } else {
-      console.log("stop killstreak")
       killStreakGoing = false;
+    }
+  }
+
+  function ultUpEffect(){
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.effects = []
+    this.radius = 1;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      this.effects.forEach((ele, i)=>{
+        ele.draw()
+        if(ele.lifetime <= 0){
+          this.effects.splice(i, 1)
+        }
+      })
+      if(elapsed > 500 && this.radius < 50){
+        this.effects.push(new ultOrb(`hsl(${ultHueMeter.value}, 100%, 50%)`))
+        DrawCircle(160, 100, this.radius, `hsl(0, 0%, ${50 + this.radius}%)`)
+        DrawStroke(160, 100, this.radius, `hsl(${ultHueMeter.value}, 100%, 50%)`, this.radius / 2)
+        this.radius < 50 ? this.radius++ : null;
+      } else if(elapsed > 500 && this.radius >= 50){
+        DrawStroke(160, 100, this.radius, `hsl(${ultHueMeter.value}, 100%, 50%)`, this.radius / 2)
+        DrawStroke(160, 100, this.radius - 50, "grey", this.radius / 3)
+        this.radius+=2
+      } else {
+        this.effects.push(new ultOrb(`hsl(${ultHueMeter.value}, 100%, 50%)`))
+      }
+      this.radius > 300 ? this.lifetime = 0 : null;
+    }
+  }
+
+  function ultOrb(color){
+    this.flip = Math.random()
+    this.flip > .5 ? this.x = Math.random() > .5 ? 0 : 320 : this.x = Math.random() * 320;
+    this.flip <= .5 ? this.y = Math.random() > .5 ? 0 : 200 : this.y = Math.random() * 200;
+    this.vx = (160 - this.x) / 20;
+    this.vy = (100 - this.y) / 20;
+    this.radius = Math.random() * 10 + 5;
+    this.color = color;
+    this.lifetime = 10;
+    this.draw = function(){
+      DrawCircle(this.x, this.y, this.radius, this.color);
+      this.x+=this.vx
+      this.y+=this.vy
+      if(Math.abs(160 - this.x) < 5 || Math.abs(100 - this.y) < 5){
+        this.lifetime = 0;
+      }
     }
   }
 
@@ -333,13 +359,12 @@
       this.xMultiplier = (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10));
       this.yMultiplier = (Math.random() - 0.5) * (SetRange(10 * this.elapsed / 30000, 0, 10))
       ctx.beginPath();
-      ctx.globalAlpha = this.elapsed / 8000;
+      ctx.globalAlpha = this.elapsed / 800;
       ctx.fillStyle = "black"
       ctx.fillRect(0, 0, 320, 200)
 
       for (let i = 0; i < 6; i++) {
         let counter = i % 3
-        console.log(counter)
         drawEye(i < 3 ? 100 : 220 + this.xMultiplier, 90 + this.yMultiplier, counter == 0 ? 1 : (i % 3 == 1 ? 0.45 : 0.15), i < 3 ? 20 : -20, counter == 0 ? "red" : (counter == 1 ? "black" : "white"))
       }
       ctx.restore();
@@ -359,11 +384,28 @@
           this.streaks.push(new streak());
         }
       });
-      if (killStreakGoing == true) {
-        this.lifetime = 0;
+      if (killStreakGoing == false) {
+        setTimeout(()=>{
+          this.lifetime = 0;
+        }, 1000)
       }
     }
   }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
 
   function drawEye(x, y, size, rot, col) {
     ctx.beginPath();
@@ -376,6 +418,7 @@
     ctx.restore();
 
   }
+  
   function levelUpEffect() {
     this.start = Date.now();
     this.pushed = false;
@@ -520,7 +563,7 @@
     this.start = Date.now();
     this.orbs = [];
     this.secondStage = false;
-    for (let index = 0; index < 3; index++) {
+    for (let index = 0; index < 5; index++) {
       setTimeout(() => {
         this.orbs.push(new BloodOrb())
       }, 200 * index);
@@ -541,7 +584,6 @@
           this.orbs.splice(i, 1)
           if (!this.secondStage) {
             this.orbs.push(new BloodOrb())
-            console.log("anim has stopped")
           }
         }
       });
@@ -557,7 +599,7 @@
         gradient.addColorStop(SetRange((-50 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 320, 200)
-        if (this.elapsed - this.endTime > 900) {
+        if (this.elapsed - this.endTime > 900 || isInGame) {
           this.lifetime = 0;
         }
       }
@@ -586,8 +628,6 @@
         x: Math.cos(this.angle),
         y: Math.sin(this.angle)
       }
-      console.log(this.x)
-      console.log(this.y)
     }
 
     draw() {
@@ -599,7 +639,6 @@
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
       ctx.fill();
       if (Math.floor(this.x) > 155 && Math.floor(this.x) < 165 && Math.floor(this.y) >= 98 && Math.floor(this.y) < 102) {
-        console.log("stop anim")
         this.lifetime = 0;
       }
     }
