@@ -97,16 +97,16 @@
   <resolution size="1440x900" x="0.975" y="0.038" width="0.002" height=".001" />
   <resolution size="1280x800" x="0.975" y="0.038" width="0.002" height=".001" />
   </meta>
-  <meta meter="scoreLeft" tags="rocket league" type="colormean" x="0.4125" y="0.0361" width="0.002" height=".01" h="0-360"
-    s="0-50" l="90-100">
+  <meta meter="scoreLeft" tags="rocket league" type="colormean" x="0.4125" y="0.0361" width="0.002" height=".01"
+    h="0-360" s="0-50" l="90-100">
   <resolution size="3440x1440" x="0.4352" y="0.0403" width="0.002" height=".01" />
   <resolution size="1920x1200" x="0.4021" y="0.0324" width="0.002" height=".01" />
   <resolution size="1680x1050" x="0.4021" y="0.0324" width="0.002" height=".01" />
   <resolution size="1440x900" x="0.4021" y="0.0324" width="0.002" height=".01" />
   <resolution size="1280x800" x="0.4021" y="0.0324" width="0.002" height=".01" />
   </meta>
-  <meta meter="scoreRight" tags="rocket league" type="colormean" x="0.5865" y="0.0426" width="0.002" height=".01" h="0-360"
-    s="0-50" l="90-100">
+  <meta meter="scoreRight" tags="rocket league" type="colormean" x="0.5865" y="0.0426" width="0.002" height=".01"
+    h="0-360" s="0-50" l="90-100">
   <resolution size="3440x1440" x="0.5642" y="0.0383" width="0.002" height=".01" />
   <resolution size="1920x1200" x="0.5948" y="0.0333" width="0.002" height=".01" />
   <resolution size="1680x1050" x="0.5948" y="0.0333" width="0.002" height=".01" />
@@ -178,8 +178,8 @@
   var Boost6Meter = new Meter(5, boostHandler);
   var Boost7Meter = new Meter(5, boostHandler);
   var WinMeter = new Meter(20, winHandler);
-  var ScoreLeftHueMeter = new Meter(15, ()=>"");
-  var ScoreRightHueMeter = new Meter(15, ()=>"");
+  var ScoreLeftHueMeter = new Meter(15, () => "");
+  var ScoreRightHueMeter = new Meter(15, () => "");
   var ScoreLeftSatMeter = new Meter(5, scoreHandler);
   var ScoreRightSatMeter = new Meter(5, scoreHandler);
   var ScoreLeftLitMeter = new Meter(5, scoreHandler);
@@ -380,7 +380,7 @@
           effects.push(new explosionParticle(160, 100, 10, this.color))
         }
       }
-      this.you ? this.x+=10 : this.x-=10;
+      this.you ? this.x += 10 : this.x -= 10;
       if (this.x > 350 || this.x < -20 || !inGame) {
         this.lifetime = 0;
       }
