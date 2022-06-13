@@ -1,0 +1,814 @@
+<head>
+  <title>Rainbow six:siege</title>
+  <meta description="Metering and ambience for Tom Clancy's Rainbow Six:siege.
+  Make sure your team colors are on blue and red" />
+  <meta publisher="SignalRGB" />
+
+  <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
+  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="RotateBar" label="RotateBars" type="boolean" default="0" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#12ff00" min="0" max="360" />
+  <meta property="HealthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
+  <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
+  <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
+  <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
+  <meta property="hudToggle" label="enable HUD effects" type="boolean" default="1" />
+
+  <meta meter="searchBlue" tags="VLC,Rainbow Six" type="area" x="0.0074" y="0.0910" width="0.0129" height="0.0021"
+    h="195-215" s="68-98" l="67-100">
+  </meta>
+
+  <meta meter="lobbyBlack" tags="VLC,Rainbow Six" type="area" x="0.0035" y="0.0000" width="0.0098" height="0.0167"
+    h="0-360" s="0-100" l="0-15">
+  </meta>
+
+  <meta meter="banStageWhite" tags="VLC,Rainbow Six" type="area" x="0.6254" y="0.0222" width="0.0043" height="0.0014"
+    h="0-360" s="0-10" l="90-100">
+  </meta>
+
+  <meta meter="redBan" tags="VLC,Rainbow Six" type="area" x="0.4852" y="0.0569" width="0.0094" height="0.0049" h="0-20"
+    s="90-100" l="70-100">
+  </meta>
+
+  <meta meter="selectingStageBlue" tags="VLC,Rainbow Six" type="area" x="0.0695" y="0.1806" width="0.2730"
+    height="0.0021" h="162-182" s="50-100" l="80-100">
+  </meta>
+
+  <meta meter="droneBlack" tags="VLC,Rainbow Six" type="area" x="0.1441" y="0.7563" width="0.0055" height="0.0042"
+    h="0-360" s="0-100" l="0-15">
+  </meta>
+
+  <meta meter="droneWhite" tags="VLC,Rainbow Six" type="area" x="0.1461" y="0.7660" width="0.0055" height="0.00001"
+    h="0-360" s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="droneJump" tags="VLC,Rainbow Six" type="area" x="0.8754" y="0.9382" width="0.0027" height="0.0028"
+    h="0-360" s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="health" tags="VLC,Rainbow Six" type="area" x="0.0273" y="0.9444" width="0.0852" height="0.0063" h="0-360"
+    s="0-20" l="90-100">
+  </meta>
+
+
+  <meta meter="killBlueConfirm" tags="VLC,Rainbow Six" type="area" x="0.8344" y="0.2847" width="0.0367" height="0.00001"
+    h="200-235" s="40-100" l="40-100">
+  </meta>
+
+
+  <meta meter="killRedConfirm" tags="VLC,Rainbow Six" type="area" x="0.8344" y="0.2847" width="0.0367" height="0.00001"
+    h="0-35" s="40-100" l="40-100">
+  </meta>
+
+
+  <meta meter="killRedTop" tags="VLC,Rainbow Six" type="area" x="0.9445" y="0.2688" width="0.0031" height="0.0001"
+    h="0-15" s="76-100" l="74-100">
+  </meta>
+
+  <meta meter="killRedBot" tags="VLC,Rainbow Six" type="area" x="0.9449" y="0.2833" width="0.0027" height="0.0014"
+    h="0-15" s="76-100" l="74-100">
+  </meta>
+
+  <meta meter="killBlueTop" tags="VLC,Rainbow Six" type="area" x="0.9445" y="0.2688" width="0.0031" height="0.0001"
+    h="200-235" s="40-100" l="40-100">
+  </meta>
+
+  <meta meter="killBlueBot" tags="VLC,Rainbow Six" type="area" x="0.9449" y="0.2833" width="0.0027" height="0.0014"
+    h="200-235" s="40-100" l="40-100">
+  </meta>
+
+  <meta meter="killWhite" tags="VLC,Rainbow Six" type="area" x="0.9438" y="0.2715" width="0.0043" height="0.0097"
+    h="0-360" s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="primaryWeaponSelected" tags="VLC,Rainbow Six" type="area" x="0.8539" y="0.9021" width="0.0016"
+    height="0.0056" h="162-182" s="50-100" l="80-100">
+  </meta>
+
+  <meta meter="primaryWeaponReload" tags="VLC,Rainbow Six" type="area" x="0.9527" y="0.9078" width="0.0086"
+    height="0.00153" h="180-200" s="50-80" l="80-100">
+  </meta>
+
+  <meta meter="defendingBlue" tags="VLC,Rainbow Six" type="area" x="0.4316" y="0.0201" width="0.0027" height="0.0035"
+    h="201-221" s="58-100" l="37-100">
+  </meta>
+
+  <meta meter="useGrenadeWhite" tags="VLC,Rainbow Six" type="area" x="0.8074" y="0.9292" width="0.0082" height="0.0139"
+    h="0-360" s="0-29" l="77-100">
+  </meta>
+
+  <meta meter="useGrenadeWhite2" tags="VLC,Rainbow Six" type="area" x="0.8105" y="0.8951" width="0.0074" height="0.0167"
+    h="0-360" s="0-29" l="77-100">
+  </meta>
+
+  <meta meter="InMatch" tags="VLC,Rainbow Six" type="area" x="0.3945" y="0.0667" width="0.0156" height="0.0042"
+    h="160-185" s="45-100" l="70-100">
+  </meta>
+
+
+  <meta meter="usingCameraDefenceBlue" tags="VLC,Rainbow Six" type="area" x="0.0977" y="0.7625" width="0.0137"
+    height="0.0021" h="202-222" s="58-100" l="18-88">
+  </meta>
+
+  <meta meter="usingCameraDefenceBlack" tags="VLC,Rainbow Six" type="area" x="0.0977" y="0.7925" width="0.0137"
+    height="0.0021" h="0-360" s="0-100" l="0-15">
+  </meta>
+
+
+<body style=" margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  //Declaring variables
+  var canvas, ctx;
+  var stateMgr = new StateHandler();
+  var effects = [];
+  var isInGame = false;
+  var calculatedHealthValue = 0;
+  var isInBanStage = false;
+  var usingDrone = false;
+  const a = 2 * Math.PI / 6;
+
+
+  //Declaring Meters
+  var healthMeter = new Meter(5, HealthChanged)
+  var lobbyMeter = new Meter(5, () => "")
+  var searchMeter = new Meter(5, SearchChanged)
+  var banStageWhiteMeter = new Meter(25, BanStageChanged)
+  var redBanMeter = new Meter(5, BanStageChanged)
+  var selectingStageBlueMeter = new Meter(15, SelectingStageChanged)
+  var droneWhiteMeter = new Meter(8, DroneChanged)
+  var droneBlackMeter = new Meter(8, DroneChanged)
+  var droneJumpMeter = new Meter(10, DroneJumpChanged)
+  var killTopRedMeter = new Meter(15, KillChanged)
+  var killBotRedMeter = new Meter(15, KillChanged)
+  var killTopBlueMeter = new Meter(15, KillChanged)
+  var killBotBlueMeter = new Meter(15, KillChanged)
+  var killWhiteMeter = new Meter(5, () => "")
+  var killBlueConfirmMeter = new Meter(10, () => "")
+  var killRedConfirmMeter = new Meter(5, () => "")
+  var primaryWeaponHoldMeter = new Meter(5, () => "")
+  var primaryWeaponReloadMeter = new Meter(2, ReloadChanged)
+  var defendBlueMeter = new Meter(5, () => "")
+  var GrenadeMeter = new Meter(5, GrenadeChanged)
+  var usingCameraDefenceBlackMeter = new Meter(5, CameraChanged)
+  var usingCameraDefenceBlueMeter = new Meter(5, CameraChanged)
+  var inGameMeter = new Meter(5, inGameChanged)
+
+
+
+
+  function update() {
+    //Updating meters
+    inGameMeter.setValue(engine.vision.InMatch)
+    healthMeter.setValue(engine.vision.health)
+    lobbyMeter.setValue(engine.vision.lobbyBlack)
+    searchMeter.setValue(engine.vision.searchBlue)
+    banStageWhiteMeter.setValue(engine.vision.banStageWhite)
+    redBanMeter.setValue(engine.vision.redBan)
+    selectingStageBlueMeter.setValue(engine.vision.selectingStageBlue)
+    droneBlackMeter.setValue(engine.vision.droneBlack)
+    droneWhiteMeter.setValue(engine.vision.droneWhite)
+    droneJumpMeter.setValue(engine.vision.droneJump)
+    killWhiteMeter.setValue(engine.vision.killWhite)
+    killRedConfirmMeter.setValue(engine.vision.killRedConfirm)
+    killBlueConfirmMeter.setValue(engine.vision.killBlueConfirm)
+    killTopRedMeter.setValue(engine.vision.killRedTop)
+    killBotRedMeter.setValue(engine.vision.killRedBot)
+    killTopBlueMeter.setValue(engine.vision.killBlueTop)
+    killBotBlueMeter.setValue(engine.vision.killBlueBot)
+    primaryWeaponHoldMeter.setValue(engine.vision.primaryWeaponSelected)
+    primaryWeaponReloadMeter.setValue(engine.vision.primaryWeaponReload)
+    defendBlueMeter.setValue(engine.vision.defendingBlue)
+    if (defendBlueMeter.value == 1) {
+      GrenadeMeter.setValue(engine.vision.useGrenadeWhite)
+      usingCameraDefenceBlackMeter.setValue(engine.vision.usingCameraDefenceBlack)
+      usingCameraDefenceBlueMeter.setValue(engine.vision.usingCameraDefenceBlue)
+    } else {
+      GrenadeMeter.setValue(engine.vision.useGrenadeWhite2)
+    }
+
+    copyScreen(1);
+    DrawHUD();
+
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    stateMgr.Process();
+
+    window.requestAnimationFrame(update);
+  }
+
+  //Callbacks
+
+  function inGameChanged() {
+    if (inGameMeter.value == 1) {
+      isInGame = true;
+    } else {
+      isInGame = false;
+    }
+  }
+
+  function HealthChanged() {
+    if (healthMeter.increased && healthMeter.diff > 0.8) {
+      calculatedHealthValue = (1 - healthMeter.value) + 1;
+    }
+  }
+
+  function SearchChanged() {
+    if (searchMeter.value == 1 && lobbyMeter.value == 1 && !isInGame) {
+      console.log("Play search Effect")
+      effects.push(new SearchingEffect())
+    }
+  }
+
+  function BanStageChanged() {
+    if (!isInBanStage) {
+      if (banStageWhiteMeter.value == 1 && !isInGame) {
+        console.log("Ban stage playing")
+        isInBanStage = true;
+        effects.push(new BanPhase())
+      }
+    } else {
+      if (banStageWhiteMeter.value != 1 || isInGame) {
+        isInBanStage = false;
+      }
+      if (redBanMeter.increased && redBanMeter.value == 1 && isInBanStage) {
+        setTimeout(() => {
+          effects.push(new DrawCross(1.5))
+        }, 1500);
+
+      }
+    }
+  }
+
+  function SelectingStageChanged() {
+    if (lobbyMeter.value == 1 && selectingStageBlueMeter.value > 0.1) {
+      console.log("Selecting equipement effect")
+      effects.push(new SelectingEffect())
+    }
+  }
+
+  function DroneChanged() {
+    if (droneBlackMeter.value == 1 && droneWhiteMeter.value == 1 && defendBlueMeter.value != 1) {
+      console.log("is in drone")
+      effects.push(new DroneEffect())
+      usingDrone = true;
+    } else {
+      usingDrone = false;
+    }
+  }
+
+  function DroneJumpChanged() {
+    if (usingDrone && droneJumpMeter.decreased) {
+      console.log("Drone jump effect")
+      effects.push(new Wave("yellow", "up"))
+      setTimeout(() => {
+        effects.push(new Wave("yellow", "up"))
+      }, 200);
+    }
+  }
+
+  function KillChanged() {
+    if (killTopRedMeter.value == 1 && killBotRedMeter.value == 1 && killWhiteMeter.value > 0 && killBlueConfirmMeter.value > 0) {
+      console.log("Play Blue Kill Effect")
+    } else if (killTopBlueMeter.value == 1 && killBotBlueMeter.value == 1 && killWhiteMeter.value > 0 && killRedConfirmMeter.value > 0) {
+      console.log("Play Red Kill Effect")
+    }
+  }
+
+  function ReloadChanged() {
+    if (isInGame && primaryWeaponReloadMeter.value == 1) {
+      if (primaryWeaponHoldMeter.value == 1) {
+        effects.push(new AmmoType("yellow"))
+      } else if (primaryWeaponHoldMeter.value > 0.7 && primaryWeaponHoldMeter.value < 1) {
+        effects.push(new AmmoType("blue"))
+      }
+    }
+  }
+
+  function GrenadeChanged() {
+    if (GrenadeMeter.value == 1 && GrenadeMeter.increased && isInGame && healthMeter.value > 0) {
+      effects.push(new GrenadeEffect())
+    }
+  }
+
+  function CameraChanged() {
+    if (usingCameraDefenceBlackMeter.value >= 0.95 && usingCameraDefenceBlueMeter.value == 1 && defendBlueMeter.value == 1) {
+      console.log("Using camera as defender")
+    }
+  }
+
+
+
+
+  function DrawHUD() {
+    if (isInGame) {
+      ctx.beginPath()
+      ctx.save()
+      ctx.translate(HealthBarX, RotateBar ? 200 : HealthBarY)
+      if (RotateBar) {
+        ctx.rotate(-90 / 180 * Math.PI)
+      }
+      ctx.fillStyle = healthColor;
+      ctx.fillRect(0, 0, (healthMeter.value * calculatedHealthValue) * SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
+      ctx.restore();
+    } else if (adjToggle) {
+
+      ctx.beginPath()
+      ctx.save()
+      ctx.translate(HealthBarX, RotateBar ? 200 : HealthBarY)
+
+      if (RotateBar) {
+        ctx.rotate(-90 / 180 * Math.PI)
+      }
+      ctx.fillStyle = healthColor;
+      ctx.fillRect(0, 0, SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
+      ctx.restore()
+    }
+  }
+
+  function SetRange(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+  }
+
+  //effects
+  function SelectingEffect() {
+    this.grid = MakeGrid(8, 5, 30)
+    this.glowingHexagons = [];
+    this.elapsed = 1;
+    this.alpha = 0;
+    this.start = Date.now();
+    for (let index = 0; index < 20; index++) {
+      let TimedGlow = {
+        time: Math.random() * 4000 + this.elapsed,
+        x: Math.floor(Math.random() * 9),
+        y: Math.floor(Math.random() * 6),
+        glowTime: 0
+      }
+      this.glowingHexagons.push(TimedGlow)
+    }
+    this.draw = function () {
+      console.log(this.glowingHexagons.length)
+      this.elapsed = Date.now() - this.start;
+      this.grid.forEach((hexagon, index) => {
+        this.glowingHexagons.forEach((glow, glowloc) => {
+          if (hexagon.xpos == glow.x && hexagon.ypos == glow.y) {
+            console.log(glow.glowTime)
+            if (glow.time < this.elapsed) {
+              glow.glowTime = this.elapsed - glow.time;
+              hexagon.color = `hsla(${255 - Math.sin((glow.glowTime / 300)) * 100}, 100%, 50%,0.6)`
+
+              if (glow.glowTime > 800) {
+                this.glowingHexagons.splice(glowloc, 1);
+                let TimedGlow = {
+                  time: Math.random() * 1000 + this.elapsed,
+                  x: Math.floor(Math.random() * 8),
+                  y: Math.floor(Math.random() * 5),
+                  glowTime: 0
+                }
+                this.glowingHexagons.push(TimedGlow)
+              }
+            }
+          }
+        });
+
+        hexagon.draw();
+      });
+      if (selectingStageBlueMeter.value == 0) {
+        this.alpha += 0.02;
+        copyScreen(this.alpha)
+        if (this.alpha > 1) {
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function hexagon(x, y, color, size, xpos, ypos) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.size = size;
+    this.xpos = xpos;
+    this.ypos = ypos;
+
+
+    this.draw = function () {
+      ctx.beginPath();
+      for (var i = 0; i < 7; i++) {
+        ctx.lineTo(this.x + this.size * Math.cos(a * i), this.y + this.size * 0.9 * Math.sin(a * i));
+      }
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      ctx.strokeStyle = "black"
+      ctx.stroke()
+    }
+  }
+
+
+  function MakeGrid(width, height, size) {
+    this.hexagons = []
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        if (x % 2 != 1) {
+          this.offset = size * 0.8;
+        } else {
+          this.offset = 0;
+        }
+        this.hexagons.push(new hexagon(x * (size * 1.5), y * (size * 1.5) + this.offset, "hsla(245,50%,50%,0.4)", size, x, y))
+      }
+    }
+    return this.hexagons;
+  }
+
+
+
+
+  function DroneEffect() {
+    this.start = Date.now();
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      let gradient = ctx.createLinearGradient(-200, -100, 620, 100)
+      this.calculateVal = -2980 * Math.floor((this.elapsed / 2980) / 1) + ((this.elapsed / 2980) * (2980 / 1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(209, 100%, 50%,0.5)");
+      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(287, 100%, 50%,0.5)");
+      gradient.addColorStop(SetRange((-1200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(209, 100%, 50%,0.5)");
+      ctx.fillStyle = gradient;
+      drawRect(0, 0, 320, 200, gradient)
+      if (!usingDrone) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function Wave(color, direction) {
+    this.color = color;
+    this.direction = direction;
+    this.lifetime = 300;
+
+    this.draw = function () {
+      if (this.direction == "up") {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.moveTo(160, this.lifetime - 100);
+        ctx.lineTo(320, this.lifetime);
+        ctx.lineTo(320, this.lifetime + 50);
+        ctx.lineTo(160, this.lifetime - 50);
+        ctx.lineTo(0, this.lifetime + 50);
+        ctx.lineTo(0, this.lifetime);
+        ctx.lineTo(160, this.lifetime - 100);
+        ctx.fill();
+      } else if (this.direction = "down") {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.moveTo(160, 300 - this.lifetime);
+        ctx.lineTo(320, 200 - this.lifetime);
+        ctx.lineTo(320, 100 - this.lifetime);
+        ctx.lineTo(160, 200 - this.lifetime);
+        ctx.lineTo(0, 100 - this.lifetime);
+        ctx.lineTo(0, 200 - this.lifetime);
+        ctx.lineTo(160, 300 - this.lifetime);
+        ctx.fill();
+      }
+      this.lifetime -= 5;
+    };
+  };
+
+
+  function BanPhase() {
+    this.start = Date.now();
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      ctx.globalAlpha = 0.4;
+      let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
+      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100) / 1) + ((this.elapsed / 2100) * (2100 / 1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 70%, 50%,1)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 35%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 70%, 50%,1)");
+      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 27%,1)");
+      gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 70%, 50%,1)");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 320, 200)
+      ctx.globalAlpha = 1;
+      if (!isInBanStage) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function DrawCross(speed, width) {
+    this.speedMultiplier = {
+      x: 1.6,
+      y: 1
+    }
+    this.moveX = 0;
+    this.MoveY = 0;
+    this.speed = {
+      x: speed,
+      y: speed
+    };
+    this.stage = 0;
+    this.startPoint = 0;
+    this.start = Date.now();
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      if (this.stage == 0) {
+        if (this.moveX >= 320) {
+          this.stage = 1;
+          this.speed.x = -this.speed.x;
+          this.moveX = 320;
+          this.MoveY = 0;
+          this.startPoint = 320;
+        }
+      } else {
+        ctx.moveTo(0, 0)
+        ctx.lineTo(320, 200)
+        if (this.moveX <= 0) {
+          setTimeout(() => {
+            this.lifetime = 0;
+          }, 1000);
+        }
+      }
+      ctx.moveTo(this.startPoint, 0)
+      ctx.lineTo(this.moveX, this.MoveY)
+      ctx.lineWidth = 40;
+      ctx.strokeStyle = "red"
+      ctx.stroke()
+      this.moveX += this.speed.x * this.speedMultiplier.x
+      this.MoveY += this.speed.y
+    }
+  }
+
+
+  function AmmoType(color) {
+    this.start = 0;
+    this.clear = true;
+    this.elapsed = 0;
+    this.color = color;
+    this.lifetime = 10;
+    this.y = 300;
+    this.draw = function () {
+      var xVar = Math.cos(Date.now() / 100) * 20
+      drawRect(0, this.y, 320, 300, "black");
+      for (let i = 0; i < 4; i++) {
+        drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
+      }
+      if (this.y > 0) {
+        this.y -= 15;
+      } else if (this.y == 0 && this.elapsed < 450) {
+        if (!this.start) {
+          this.start = Date.now();
+        }
+        this.elapsed = Date.now() - this.start;
+      } else {
+        this.y -= 15;
+      }
+      if (this.y < -300) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function GrenadeEffect() {
+    this.start = Date.now()
+    this.speed = {
+      x: 1.8,
+      y: -5
+    }
+    this.pos = {
+      x: -10,
+      y: 150
+    }
+    this.bounceCount = 0;
+    this.size = 40;
+    this.ExplosionParticles = [];
+    this.hasBeenPushed = false;
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      if (this.bounceCount < 2) {
+        DrawCircle(this.pos.x, this.pos.y, this.size, "yellow")
+        this.pos.x += this.speed.x;
+        this.pos.y += this.speed.y;
+        this.speed.y += 0.2
+        if (this.pos.y + this.size >= 200) {
+          this.speed.y = -this.speed.y
+          this.bounceCount++;
+        }
+      } else {
+        if (!this.hasBeenPushed) {
+          this.hasBeenPushed = true;
+          for (let index = 0; index < 60; index++) {
+            this.ExplosionParticles.push(new ExplosionParticle(this.pos.x, this.pos.y, { x: (Math.random() - 0.5) * 6, y: -(Math.random() * 2) }, Math.random() * 20 + 3, `hsla(${(Math.random() - 0.5) * 30 + 40},100%,50%,1)`, Math.random() * 5000 + 500, 5));
+          }
+        }
+        this.ExplosionParticles.forEach((element, i) => {
+          element.draw();
+          if (element.lifetime <= 0) {
+            this.ExplosionParticles.splice(i, 1)
+          }
+        });
+        if (this.ExplosionParticles.length == 0) {
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  class ExplosionParticle {
+    constructor(x, y, speed, size, col, duration, sinSpeed) {
+      this.x = x;
+      this.y = y;
+      this.speed = speed;
+      this.size = size;
+      this.color = col;
+      this.sinSpeed = sinSpeed;
+      this.duration = duration;
+      this.start = Date.now();
+      this.alpha = 1;
+      this.lifetime = 1;
+    }
+
+    draw() {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(this.x, this.y, this.size, this.color)
+      this.x += this.speed.x;
+      this.y += this.speed.y;
+      if (this.elapsed > ((this.duration / 3) * 2)) {
+        this.alpha = SetRange(1 - ((this.elapsed) - (this.duration / 3 * 2)) / 1000, 0, 1)
+        this.lifetime = this.alpha;
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function drawRect(x, y, height, width, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, height, width);
+  }
+
+  function copyScreen(alpha) {
+    var shine = engine.vision.ShineMeter
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+    for (var iZone = 0; iZone < 560; iZone++) {
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+      ctx.fillStyle =
+        "hsla(" +
+        hue[iZone] +
+        "," +
+        sat[iZone] +
+        "%," +
+        lightness[iZone] * keyScreenBrightness / 100 +
+        "%, " +
+        `${alpha}` +
+        ")";
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+    }
+
+  }
+  function SearchingEffect() {
+    this.start = Date.now();
+    this.endTime = 0;
+
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      ctx.globalAlpha = this.elapsed / 3000;
+      if (this.endTime != 0) {
+        this.alphaVal = 1 - SetRange(((this.elapsed - this.endTime) / 3000), 0, 1);
+        ctx.globalAlpha = this.alphaVal;
+        if (this.alphaVal <= 0) {
+          this.lifetime = 0;
+        }
+      }
+      drawWave(100, "hsla(175, 100%, 58%, 1)", (this.elapsed / 300), "up", 20)
+      drawWave(100, "hsla(228, 100%, 53%, 1)", this.elapsed / 300, "down", 20)
+      ctx.globalAlpha = 1
+      if (searchMeter.value != 1 && this.endTime == 0) {
+        this.endTime = this.elapsed;
+      }
+    }
+
+  }
+
+
+  function drawWave(y, color, frequency, direction, waveSize) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(0, y);
+    for (let i = 0; i < 320; i++) {
+      ctx.lineTo(i, y + Math.sin(i * 0.01 + frequency) * waveSize);
+    }
+    ctx.lineTo(320, direction == "up" ? 200 : 0)
+    ctx.lineTo(0, direction == "up" ? 200 : 0)
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+
+
+  //helper functions
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    }
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    }
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    }
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    }
+  }
+
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.  
+      values.push(updatedValue);
+      if (values.length > this.size) { values.shift(); }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < (values.length - 1); i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;      
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+        callback();
+      }
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+  onEngineReady()
+
+</script>
