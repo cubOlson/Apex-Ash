@@ -114,6 +114,21 @@
     height="0.0021" h="0-360" s="0-100" l="0-15">
   </meta>
 
+  <meta meter="opponentsWinRedP" tags="VLC,process" type="area" x="0.4188" y="0.3868" width="0.0047" height="0.0021"
+    h="0-15" s="73-100" l="70-100">
+  </meta>
+
+  <meta meter="opponentsWinRedE" tags="VLC,process" type="area" x="0.4844" y="0.4278" width="0.0070" height="0.0014"
+    h="0-15" s="76-100" l="70-100">
+  </meta>
+
+  <meta meter="yourTeamWinBlueE" tags="VLC,process" type="area" x="0.4844" y="0.4278" width="0.0070" height="0.0014"
+    h="200-220" s="58-88" l="50-100">
+  </meta>
+
+  <meta meter="yourTeamWinBlueR" tags="VLC,process" type="area" x="0.4496" y="0.3882" width="0.0047" height="0.0007"
+    h="201-221" s="58-88" l="50-100">
+  </meta>
 
 <body style=" margin: 0; padding: 0; background: #000;">
   <canvas id="exCanvas" width="320" height="200"></canvas>
@@ -155,6 +170,10 @@
   var usingCameraDefenceBlackMeter = new Meter(5, CameraChanged)
   var usingCameraDefenceBlueMeter = new Meter(5, CameraChanged)
   var inGameMeter = new Meter(5, inGameChanged)
+  var opponentsWinRedPMeter = new Meter(5, OpponentsWinChange)
+  var opponentsWinRedEMeter = new Meter(5, OpponentsWinChange)
+  var yourTeamWinBlueEMeter = new Meter(5, YourTeamWinChange)
+  var yourTeamWinBlueRMeter = new Meter(5, YourTeamWinChange)
 
 
 
@@ -188,6 +207,10 @@
     } else {
       GrenadeMeter.setValue(engine.vision.useGrenadeWhite2)
     }
+    opponentsWinRedPMeter.setValue(engine.vision.opponentsWinRedP)
+    opponentsWinRedEMeter.setValue(engine.vision.opponentsWinRedE)
+    yourTeamWinBlueEMeter.setValue(engine.vision.yourTeamWinBlueE);
+    yourTeamWinBlueRMeter.setValue(engine.vision.yourTeamWinBlueR)
 
     copyScreen(1);
     DrawHUD();
@@ -205,6 +228,18 @@
   }
 
   //Callbacks
+
+  function OpponentsWinChange() {
+    if (!isInGame && opponentsWinRedEMeter.value == 1 && opponentsWinRedPMeter.value == 1) {
+      console.log("Opponents win effect")
+    }
+  }
+
+  function YourTeamWinChange() {
+    if (!isInGame && yourTeamWinBlueEMeter.value == 1 && yourTeamWinBlueRMeter.value == 1) {
+      console.log("Your team win effect")
+    }
+  }
 
   function inGameChanged() {
     if (inGameMeter.value == 1) {
