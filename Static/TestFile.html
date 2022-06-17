@@ -4,6 +4,7 @@
   <meta publisher="SignalRGB" />
 
   <meta property="effectPush" label="Push effect" type="boolean" default="1" />
+  <meta property="num" label="Ambience brightness" type="number" min="0" max="5" default="0" />
   
 </head>
 
@@ -20,13 +21,11 @@
   var effects = [];
 
   function update() {
-
-    DrawRect(0, 0, 320, 200, "black")
+    DrawRect(0, 0, 320, 200, "grey")
 
     if(effects.length < 1){
-      effects.push(new levelUpEffect())
+      effects.push(new defuserEffect())
     }
-
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
       if (effects[i].lifetime <= 0) {
@@ -37,53 +36,28 @@
     window.requestAnimationFrame(update);
   };
 
-  function levelUpEffect() {
-    this.start = Date.now();
-    this.pushed = false;
-    this.draw = function () {
-      this.elapsed = Date.now() - this.start;
-      if (this.elapsed < 800) {
-        ctx.beginPath();
-        ctx.fillStyle = "yellow"
-        ctx.fillRect(120, -250 + this.elapsed / 3, 80, 170)
-        ctx.beginPath()
-        ctx.moveTo(120, -80 + this.elapsed / 3)
-        ctx.lineTo(200, -80 + this.elapsed / 3)
-        ctx.lineTo(160, this.elapsed / 3)
-        ctx.lineTo(120, -80 + this.elapsed / 3)
-        ctx.fill();
-      } else {
-        for (let i = 0; i < 40; i++) {
-          effects.push(new ImpactParticle(160, 200, Math.random() * 20 + 10, "yellow"))
-          this.lifetime = 0;
-        }
-      }
+  function defuserEffect(){
+    this.lifetime = 10;
+    this.y1 = 1;
+    this.y2 = 30;
+    this.draw = function(){
+      DrawStroke(160, 100, this.y1, "red", 20)
+      DrawStroke(160, 100, this.y2, "red", 20)
+      ctx.beginPath()
+      ctx.moveTo(160, 50)
+      ctx.lineTo(210, 100)
+      ctx.lineTo(160, 155)
+      ctx.lineTo(110, 100)
+      ctx.lineTo(160, 50)
+      ctx.lineTo(210, 100)
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = "yellow"
+      ctx.stroke()
+      DrawCircle(160, 100, 10, "yellow")
+      this.y1 < 250 ? this.y1 += 5 : this.y1 = 1;
+      this.y2 < 250 ? this.y2 += 5 : this.y2 = 1;
     }
   }
-
-
-  function ImpactParticle(x, y, radius, color) {
-    this.radius = radius;
-    this.color = color;
-    this.x = x;
-    this.vx = 2 * Math.sin(radius);
-    this.y = y;
-    this.vy = Math.random() * -10;
-    this.ay = 0.2;
-    this.lifetime = 10;
-    this.draw = function () {
-      ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fill();
-      this.x += this.vx;
-      this.y += this.vy;
-      this.vy += this.ay;
-      if (this.y > 200) {
-        this.lifetime = 0;
-      }
-    }
-  };
 
   function DrawGear(x, y, radius, stroke, teeth, color){
     DrawStroke(x, y, radius, color, stroke)
@@ -291,6 +265,10 @@
         callback();
       }
     }
+  }
+
+  function onCanvasTapped(x, y) {
+    effects.push(new lowAmmoEffect())
   }
 
   window.requestAnimationFrame(update);

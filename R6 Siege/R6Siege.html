@@ -1,18 +1,23 @@
 <head>
-  <title>Rainbow six:siege</title>
-  <meta description="Metering and ambience for Tom Clancy's Rainbow Six:siege.
-  Make sure your team colors are on blue and red" />
+  <title>Rainbow six:siege work</title>
+  <meta description="Metering and ambience for Tom Clancy's Rainbow Six:siege." />
   <meta publisher="SignalRGB" />
 
   <meta property="keyScreenBrightness" label="Ambience brightness" type="number" min="0" max="100" default="100" />
-  <meta property="adjToggle" label="Adjustment Toggle (turn off in-game)" type="boolean" default="0" />
+  <meta property="adjOn" label="HUD Adjustment (turn off in-game)" type="boolean" default="0" />
   <meta property="RotateBar" label="RotateBars" type="boolean" default="0" />
   <meta property="healthColor" label="Health Bar Color" type="color" default="#12ff00" min="0" max="360" />
   <meta property="HealthBarX" label="HealthBarX" type="number" min="0" max="320" default="0" />
   <meta property="HealthBarY" label="HealthBarY" type="number" min="0" max="200" default="50" />
   <meta property="HealthBarWidth" label="HealthBarWidth" type="number" min="0" max="320" default="320" />
   <meta property="HealthBarHeight" label="HealthBarHeight" type="number" min="0" max="200" default="30" />
-  <meta property="hudToggle" label="enable HUD effects" type="boolean" default="1" />
+  <meta property="hudOn" label="enable HUD effect" type="boolean" default="1" />
+  <meta property="killOn" label="enable Kill effect" type="boolean" default="1" />
+  <meta property="ammoOn" label="enable Ammo effect" type="boolean" default="1" />
+  <meta property="droneOn" label="enable Drone effects" type="boolean" default="1" />
+  <meta property="grenadeOn" label="enable grenade effect" type="boolean" default="1" />
+  <meta property="searchOn" label="enable search effect" type="boolean" default="1" />
+  <meta property="setupOn" label="enable setup effect" type="boolean" default="1" />
 
   <meta meter="searchBlue" tags="VLC,Rainbow Six" type="area" x="0.0074" y="0.0910" width="0.0129" height="0.0021"
     h="195-215" s="68-98" l="67-100">
@@ -20,14 +25,6 @@
 
   <meta meter="lobbyBlack" tags="VLC,Rainbow Six" type="area" x="0.0035" y="0.0000" width="0.0098" height="0.0167"
     h="0-360" s="0-100" l="0-15">
-  </meta>
-
-  <meta meter="banStageWhite" tags="VLC,Rainbow Six" type="area" x="0.6254" y="0.0222" width="0.0043" height="0.0014"
-    h="0-360" s="0-10" l="90-100">
-  </meta>
-
-  <meta meter="redBan" tags="VLC,Rainbow Six" type="area" x="0.4852" y="0.0569" width="0.0094" height="0.0049" h="0-20"
-    s="90-100" l="70-100">
   </meta>
 
   <meta meter="selectingStageBlue" tags="VLC,Rainbow Six" type="area" x="0.0695" y="0.1806" width="0.2730"
@@ -39,7 +36,7 @@
   </meta>
 
   <meta meter="droneWhite" tags="VLC,Rainbow Six" type="area" x="0.1461" y="0.7660" width="0.0055" height="0.00001"
-    h="0-360" s="0-20" l="90-100">
+    h="0-360" s="0-20" l="80-100">
   </meta>
 
   <meta meter="droneJump" tags="VLC,Rainbow Six" type="area" x="0.8754" y="0.9382" width="0.0027" height="0.0028"
@@ -50,44 +47,13 @@
     s="0-20" l="90-100">
   </meta>
 
+  <meta meter="redAmmo" tags="VLC,process" type="area" x="0.8930" y="0.8958" width="0.0125" height="0.0319" 
+    h="0-10" s="50-100" l="50-100" >
+  </meta> 
 
-  <meta meter="killBlueConfirm" tags="VLC,Rainbow Six" type="area" x="0.8344" y="0.2847" width="0.0367" height="0.00001"
-    h="200-235" s="40-100" l="40-100">
-  </meta>
-
-
-  <meta meter="killRedConfirm" tags="VLC,Rainbow Six" type="area" x="0.8344" y="0.2847" width="0.0367" height="0.00001"
-    h="0-35" s="40-100" l="40-100">
-  </meta>
-
-
-  <meta meter="killRedTop" tags="VLC,Rainbow Six" type="area" x="0.9445" y="0.2688" width="0.0031" height="0.0001"
-    h="0-15" s="76-100" l="74-100">
-  </meta>
-
-  <meta meter="killRedBot" tags="VLC,Rainbow Six" type="area" x="0.9449" y="0.2833" width="0.0027" height="0.0014"
-    h="0-15" s="76-100" l="74-100">
-  </meta>
-
-  <meta meter="killBlueTop" tags="VLC,Rainbow Six" type="area" x="0.9445" y="0.2688" width="0.0031" height="0.0001"
-    h="200-235" s="40-100" l="40-100">
-  </meta>
-
-  <meta meter="killBlueBot" tags="VLC,Rainbow Six" type="area" x="0.9449" y="0.2833" width="0.0027" height="0.0014"
-    h="200-235" s="40-100" l="40-100">
-  </meta>
-
-  <meta meter="killWhite" tags="VLC,Rainbow Six" type="area" x="0.9438" y="0.2715" width="0.0043" height="0.0097"
-    h="0-360" s="0-20" l="90-100">
-  </meta>
-
-  <meta meter="primaryWeaponSelected" tags="VLC,Rainbow Six" type="area" x="0.8539" y="0.9021" width="0.0016"
-    height="0.0056" h="162-182" s="50-100" l="80-100">
-  </meta>
-
-  <meta meter="primaryWeaponReload" tags="VLC,Rainbow Six" type="area" x="0.9527" y="0.9078" width="0.0086"
-    height="0.00153" h="180-200" s="50-80" l="80-100">
-  </meta>
+  <meta meter="gunSelected" tags="VLC,process" type="area" x="0.9426" y="0.9083" width="0.0090" height="0.0056" 
+    h="0-360" s="0-20" l="80-100" >
+  </meta> 
 
   <meta meter="defendingBlue" tags="VLC,Rainbow Six" type="area" x="0.4316" y="0.0201" width="0.0027" height="0.0035"
     h="201-221" s="58-100" l="37-100">
@@ -105,15 +71,41 @@
     h="160-185" s="45-100" l="70-100">
   </meta>
 
+  <meta meter="blueKill1" tags="VLC,Rainbow Six" type="area" x="0.3043" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
 
-  <meta meter="usingCameraDefenceBlue" tags="VLC,Rainbow Six" type="area" x="0.0977" y="0.7625" width="0.0137"
-    height="0.0021" h="202-222" s="58-100" l="18-88">
-  </meta>
+  <meta meter="blueKill2" tags="VLC,Rainbow Six" type="area" x="0.329" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
 
-  <meta meter="usingCameraDefenceBlack" tags="VLC,Rainbow Six" type="area" x="0.0977" y="0.7925" width="0.0137"
-    height="0.0021" h="0-360" s="0-100" l="0-15">
-  </meta>
+  <meta meter="blueKill3" tags="VLC,Rainbow Six" type="area" x="0.3549" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
 
+  <meta meter="blueKill4" tags="VLC,Rainbow Six" type="area" x="0.379" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="blueKill5" tags="VLC,Rainbow Six" type="area" x="0.4039" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="redKill1" tags="VLC,Rainbow Six" type="area" x="0.5934" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="redKill2" tags="VLC,Rainbow Six" type="area" x="0.6184" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="redKill3" tags="VLC,Rainbow Six" type="area" x="0.6434" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="redKill4" tags="VLC,Rainbow Six" type="area" x="0.6684" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="redKill5" tags="VLC,Rainbow Six" type="area" x="0.6934" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
+  </meta> 
+
+  <meta meter="defuserRed" tags="VLC,Rainbow Six" type="area" x="0.4973" y="0.0063" width="0.0001" height="0.0001" h="0-10" s="75-100" l="75-100" >
+  </meta> 
+
+  <meta meter="defuserYellow" tags="VLC,Rainbow Six" type="area" x="0.4996" y="0.0201" width="0.0001" height="0.0001" h="25-50" s="75-100" l="75-100" >
+  </meta> 
 
 <body style=" margin: 0; padding: 0; background: #000;">
   <canvas id="exCanvas" width="320" height="200"></canvas>
@@ -126,38 +118,39 @@
   var effects = [];
   var isInGame = false;
   var calculatedHealthValue = 0;
-  var isInBanStage = false;
   var usingDrone = false;
   const a = 2 * Math.PI / 6;
+  var blueKills = 0;
+  var oldBlueKills = 0;
+  var redKills = 0;
+  var oldRedKills = 0;
 
 
   //Declaring Meters
   var healthMeter = new Meter(5, HealthChanged)
   var lobbyMeter = new Meter(5, () => "")
   var searchMeter = new Meter(5, SearchChanged)
-  var banStageWhiteMeter = new Meter(25, BanStageChanged)
-  var redBanMeter = new Meter(5, BanStageChanged)
   var selectingStageBlueMeter = new Meter(15, SelectingStageChanged)
   var droneWhiteMeter = new Meter(8, DroneChanged)
   var droneBlackMeter = new Meter(8, DroneChanged)
   var droneJumpMeter = new Meter(10, DroneJumpChanged)
-  var killTopRedMeter = new Meter(15, KillChanged)
-  var killBotRedMeter = new Meter(15, KillChanged)
-  var killTopBlueMeter = new Meter(15, KillChanged)
-  var killBotBlueMeter = new Meter(15, KillChanged)
-  var killWhiteMeter = new Meter(5, () => "")
-  var killBlueConfirmMeter = new Meter(10, () => "")
-  var killRedConfirmMeter = new Meter(5, () => "")
-  var primaryWeaponHoldMeter = new Meter(5, () => "")
-  var primaryWeaponReloadMeter = new Meter(2, ReloadChanged)
+  var weaponOnMeter = new Meter(10, () => "")
+  var ammoRedMeter = new Meter(1, ReloadChanged)
   var defendBlueMeter = new Meter(5, () => "")
   var GrenadeMeter = new Meter(5, GrenadeChanged)
-  var usingCameraDefenceBlackMeter = new Meter(5, CameraChanged)
-  var usingCameraDefenceBlueMeter = new Meter(5, CameraChanged)
   var inGameMeter = new Meter(5, inGameChanged)
-
-
-
+  var blue1Meter = new Meter(5, blueKillChanged)
+  var blue2Meter = new Meter(5, blueKillChanged)
+  var blue3Meter = new Meter(5, blueKillChanged)
+  var blue4Meter = new Meter(5, blueKillChanged)
+  var blue5Meter = new Meter(5, blueKillChanged)
+  var red1Meter = new Meter(5, redKillChanged)
+  var red2Meter = new Meter(5, redKillChanged)
+  var red3Meter = new Meter(5, redKillChanged)
+  var red4Meter = new Meter(5, redKillChanged)
+  var red5Meter = new Meter(5, redKillChanged)
+  var dRedMeter = new Meter(5, defuserHandler)
+  var dYellowMeter = new Meter(5, defuserHandler)
 
   function update() {
     //Updating meters
@@ -165,32 +158,36 @@
     healthMeter.setValue(engine.vision.health)
     lobbyMeter.setValue(engine.vision.lobbyBlack)
     searchMeter.setValue(engine.vision.searchBlue)
-    banStageWhiteMeter.setValue(engine.vision.banStageWhite)
-    redBanMeter.setValue(engine.vision.redBan)
     selectingStageBlueMeter.setValue(engine.vision.selectingStageBlue)
     droneBlackMeter.setValue(engine.vision.droneBlack)
     droneWhiteMeter.setValue(engine.vision.droneWhite)
     droneJumpMeter.setValue(engine.vision.droneJump)
-    killWhiteMeter.setValue(engine.vision.killWhite)
-    killRedConfirmMeter.setValue(engine.vision.killRedConfirm)
-    killBlueConfirmMeter.setValue(engine.vision.killBlueConfirm)
-    killTopRedMeter.setValue(engine.vision.killRedTop)
-    killBotRedMeter.setValue(engine.vision.killRedBot)
-    killTopBlueMeter.setValue(engine.vision.killBlueTop)
-    killBotBlueMeter.setValue(engine.vision.killBlueBot)
-    primaryWeaponHoldMeter.setValue(engine.vision.primaryWeaponSelected)
-    primaryWeaponReloadMeter.setValue(engine.vision.primaryWeaponReload)
+    weaponOnMeter.setValue(engine.vision.gunSelected)
+    ammoRedMeter.setValue(engine.vision.redAmmo)
     defendBlueMeter.setValue(engine.vision.defendingBlue)
+    blue1Meter.setValue(engine.vision.blueKill1)
+    blue2Meter.setValue(engine.vision.blueKill2)
+    blue3Meter.setValue(engine.vision.blueKill3)
+    blue4Meter.setValue(engine.vision.blueKill4)
+    blue5Meter.setValue(engine.vision.blueKill5)
+    red1Meter.setValue(engine.vision.redKill1)
+    red2Meter.setValue(engine.vision.redKill2)
+    red3Meter.setValue(engine.vision.redKill3)
+    red4Meter.setValue(engine.vision.redKill4)
+    red5Meter.setValue(engine.vision.redKill5)
+    dRedMeter.setValue(engine.vision.defuserRed)
+    dYellowMeter.setValue(engine.vision.defuserYellow)
     if (defendBlueMeter.value == 1) {
       GrenadeMeter.setValue(engine.vision.useGrenadeWhite)
-      usingCameraDefenceBlackMeter.setValue(engine.vision.usingCameraDefenceBlack)
-      usingCameraDefenceBlueMeter.setValue(engine.vision.usingCameraDefenceBlue)
     } else {
       GrenadeMeter.setValue(engine.vision.useGrenadeWhite2)
     }
 
     copyScreen(1);
-    DrawHUD();
+
+    if(hudOn){
+      DrawHUD();
+    }
 
     //Effect handler 
     for (let i = 0; i < effects.length; i++) {
@@ -221,42 +218,19 @@
   }
 
   function SearchChanged() {
-    if (searchMeter.value == 1 && lobbyMeter.value == 1 && !isInGame) {
-      console.log("Play search Effect")
+    if (searchMeter.value == 1 && lobbyMeter.value == 1 && !isInGame && searchOn) {
       effects.push(new SearchingEffect())
     }
   }
 
-  function BanStageChanged() {
-    if (!isInBanStage) {
-      if (banStageWhiteMeter.value == 1 && !isInGame) {
-        console.log("Ban stage playing")
-        isInBanStage = true;
-        effects.push(new BanPhase())
-      }
-    } else {
-      if (banStageWhiteMeter.value != 1 || isInGame) {
-        isInBanStage = false;
-      }
-      if (redBanMeter.increased && redBanMeter.value == 1 && isInBanStage) {
-        setTimeout(() => {
-          effects.push(new DrawCross(1.5))
-        }, 1500);
-
-      }
-    }
-  }
-
   function SelectingStageChanged() {
-    if (lobbyMeter.value == 1 && selectingStageBlueMeter.value > 0.1) {
-      console.log("Selecting equipement effect")
+    if (lobbyMeter.value == 1 && selectingStageBlueMeter.value > 0.1 && setupOn) {
       effects.push(new SelectingEffect())
     }
   }
 
   function DroneChanged() {
-    if (droneBlackMeter.value == 1 && droneWhiteMeter.value == 1 && defendBlueMeter.value != 1) {
-      console.log("is in drone")
+    if (droneBlackMeter.value == 1 && droneWhiteMeter.value == 1 && defendBlueMeter.value != 1 && droneOn) {
       effects.push(new DroneEffect())
       usingDrone = true;
     } else {
@@ -265,8 +239,7 @@
   }
 
   function DroneJumpChanged() {
-    if (usingDrone && droneJumpMeter.decreased) {
-      console.log("Drone jump effect")
+    if (usingDrone && droneJumpMeter.increased && droneJumpMeter.diff > .5 && droneOn) {
       effects.push(new Wave("yellow", "up"))
       setTimeout(() => {
         effects.push(new Wave("yellow", "up"))
@@ -274,37 +247,136 @@
     }
   }
 
-  function KillChanged() {
-    if (killTopRedMeter.value == 1 && killBotRedMeter.value == 1 && killWhiteMeter.value > 0 && killBlueConfirmMeter.value > 0) {
-      console.log("Play Blue Kill Effect")
-    } else if (killTopBlueMeter.value == 1 && killBotBlueMeter.value == 1 && killWhiteMeter.value > 0 && killRedConfirmMeter.value > 0) {
-      console.log("Play Red Kill Effect")
+  function blueKillChanged() {
+    blueKills = 0;
+    if(blue1Meter.value == 1) blueKills++;
+    if(blue2Meter.value == 1) blueKills++;
+    if(blue3Meter.value == 1) blueKills++;
+    if(blue4Meter.value == 1) blueKills++;
+    if(blue5Meter.value == 1) blueKills++;
+    if(blueKills != oldBlueKills && isInGame && killOn){
+      effects.push(new killEffect(true, blueKills))
+      oldBlueKills = blueKills;
+    }
+  }
+
+  function redKillChanged() {
+    redKills = 0;
+    if(red1Meter.value == 1) redKills++;
+    if(red2Meter.value == 1) redKills++;
+    if(red3Meter.value == 1) redKills++;
+    if(red4Meter.value == 1) redKills++;
+    if(red5Meter.value == 1) redKills++;
+    if(redKills != oldRedKills && isInGame && killOn){
+      effects.push(new killEffect(false, redKills))
+      oldRedKills = redKills;
     }
   }
 
   function ReloadChanged() {
-    if (isInGame && primaryWeaponReloadMeter.value == 1) {
-      if (primaryWeaponHoldMeter.value == 1) {
-        effects.push(new AmmoType("yellow"))
-      } else if (primaryWeaponHoldMeter.value > 0.7 && primaryWeaponHoldMeter.value < 1) {
-        effects.push(new AmmoType("blue"))
+    if (isInGame && ammoRedMeter.value > .15 && weaponOnMeter.value == 1 && ammoOn) {
+      for (let i = 0; i < 4; i++){
+        setTimeout(()=>{
+          effects.push(new lowAmmoEffect())
+        }, 75 * i)
       }
     }
   }
 
   function GrenadeChanged() {
-    if (GrenadeMeter.value == 1 && GrenadeMeter.increased && isInGame && healthMeter.value > 0) {
+    if (GrenadeMeter.value == 1 && GrenadeMeter.increased && isInGame && healthMeter.value > 0 && grenadeOn) {
       effects.push(new GrenadeEffect())
     }
   }
 
-  function CameraChanged() {
-    if (usingCameraDefenceBlackMeter.value >= 0.95 && usingCameraDefenceBlueMeter.value == 1 && defendBlueMeter.value == 1) {
-      console.log("Using camera as defender")
+  function defuserHandler(){
+    if(isInGame && dRedMeter.value == 1 && dYellowMeter.value == 1){
+      effects.push(new defuserEffect())
     }
   }
 
+  function defuserEffect(){
+    this.lifetime = 10;
+    this.y1 = 1;
+    this.y2 = 30;
+    this.draw = function(){
+      DrawStroke(160, 100, this.y1, "red", 20)
+      DrawStroke(160, 100, this.y2, "red", 20)
+      ctx.beginPath()
+      ctx.moveTo(160, 50)
+      ctx.lineTo(210, 100)
+      ctx.lineTo(160, 155)
+      ctx.lineTo(110, 100)
+      ctx.lineTo(160, 50)
+      ctx.lineTo(210, 100)
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = "yellow"
+      ctx.stroke()
+      DrawCircle(160, 100, 10, "yellow")
+      this.y1 < 250 ? this.y1 += 5 : this.y1 = 1;
+      this.y2 < 250 ? this.y2 += 5 : this.y2 = 1;
+      if(!isInGame || (dRedMeter.value < .5 && dYellowMeter < .5)){
+        this.lifetime = 0;
+      }
+    }
+  }
 
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function lowAmmoEffect(){
+    this.alpha = .5;
+    this.grad = ctx.createRadialGradient(160, 100, 10, 160, 100, 300);
+    this.grad.addColorStop(0, 'hsla(0, 100%, 50%, 0)');
+    this.grad.addColorStop(.5, 'hsla(0, 100%, 50%, .3)');
+    this.grad.addColorStop(1, 'hsla(0, 100%, 50%, 1)');
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(160, 100, 300, this.grad)
+      ctx.globalAlpha = 1;
+      this.alpha >= .0025 ? this.alpha-=.0025 : this.lifetime = 0;
+    }
+  }
+
+  function killEffect(team, num){
+    this.team = team;
+    this.num = 5 - num;
+    this.y = 220;
+    this.up = false;
+    this.flash = false;
+    this.alpha = 0;
+    this.lifetime = 10;
+    this.i = 0;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, this.y - 1, 320, 200, "black")
+      for(let i = 0; i < this.num; i++){
+        var color = team ? "blue" : `hsl(16, 100%, 50%)`;
+        if(this.up && !this.flash && Math.floor(this.i / 10) == i){
+          color = "white"
+        }
+          DrawRect((160 - this.num * 33) + i * 70, this.y * .75 + 50, 50, 100, color)
+
+      }
+      ctx.globalAlpha = 1;
+      if(!this.up){
+        this.y > 0 ? this.y-=(this.y / 6) : null;
+        this.alpha < 1 ? this.alpha += .05 : this.alpha = 1;
+        this.y < 1 ? this.up = true : null;
+      } else if (!this.flash){
+        this.i < this.num * 10 ? this.i++ : this.flash = true;
+      } else {
+        this.y-=(Math.abs(this.y - 1) * .1)
+        this.alpha-=.005
+      }
+      this.y < -200 ? this.lifetime = 0 : null;
+    }
+  }
 
 
   function DrawHUD() {
@@ -318,7 +390,7 @@
       ctx.fillStyle = healthColor;
       ctx.fillRect(0, 0, (healthMeter.value * calculatedHealthValue) * SetRange(HealthBarWidth, 0, RotateBar ? 200 : 320), HealthBarHeight)
       ctx.restore();
-    } else if (adjToggle) {
+    } else if (adjOn) {
 
       ctx.beginPath()
       ctx.save()
@@ -337,99 +409,45 @@
     return Math.min(Math.max(num, min), max)
   }
 
-  //effects
-  function SelectingEffect() {
-    this.grid = MakeGrid(8, 5, 30)
-    this.glowingHexagons = [];
-    this.elapsed = 1;
-    this.alpha = 0;
-    this.start = Date.now();
-    for (let index = 0; index < 20; index++) {
-      let TimedGlow = {
-        time: Math.random() * 4000 + this.elapsed,
-        x: Math.floor(Math.random() * 9),
-        y: Math.floor(Math.random() * 6),
-        glowTime: 0
-      }
-      this.glowingHexagons.push(TimedGlow)
-    }
-    this.draw = function () {
-      console.log(this.glowingHexagons.length)
-      this.elapsed = Date.now() - this.start;
-      this.grid.forEach((hexagon, index) => {
-        this.glowingHexagons.forEach((glow, glowloc) => {
-          if (hexagon.xpos == glow.x && hexagon.ypos == glow.y) {
-            console.log(glow.glowTime)
-            if (glow.time < this.elapsed) {
-              glow.glowTime = this.elapsed - glow.time;
-              hexagon.color = `hsla(${255 - Math.sin((glow.glowTime / 300)) * 100}, 100%, 50%,0.6)`
-
-              if (glow.glowTime > 800) {
-                this.glowingHexagons.splice(glowloc, 1);
-                let TimedGlow = {
-                  time: Math.random() * 1000 + this.elapsed,
-                  x: Math.floor(Math.random() * 8),
-                  y: Math.floor(Math.random() * 5),
-                  glowTime: 0
-                }
-                this.glowingHexagons.push(TimedGlow)
-              }
-            }
-          }
-        });
-
-        hexagon.draw();
-      });
+  function SelectingEffect(){
+    this.lifetime = 10;
+    this.effects = []
+    this.draw = function(){
+      if(this.effects.length < 30) this.effects.push(new selectRect())
+      DrawRect(0, 0, 320, 200, "hsl(235, 50%, 25%)")
+      ctx.save()
+      ctx.rotate(.52)
+      for (let i = 0; i < this.effects.length; i++) {
+        this.effects[i].draw();
+        if (this.effects[i].lifetime <= 0) {
+          this.effects.splice(i, 1);
+        }
+      };
+      ctx.restore()
       if (selectingStageBlueMeter.value == 0) {
-        this.alpha += 0.02;
-        copyScreen(this.alpha)
-        if (this.alpha > 1) {
-          this.lifetime = 0;
-        }
+        this.lifetime = 0;
       }
     }
   }
 
-  function hexagon(x, y, color, size, xpos, ypos) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.size = size;
-    this.xpos = xpos;
-    this.ypos = ypos;
-
-
-    this.draw = function () {
-      ctx.beginPath();
-      for (var i = 0; i < 7; i++) {
-        ctx.lineTo(this.x + this.size * Math.cos(a * i), this.y + this.size * 0.9 * Math.sin(a * i));
-      }
-      ctx.fillStyle = this.color;
-      ctx.fill();
-      ctx.strokeStyle = "black"
-      ctx.stroke()
+  function selectRect(){
+    this.lifetime = Math.random() * 900 + 100;
+    this.x = Math.random() * 420 - 50;
+    this.y = Math.random() * 300 - 50;
+    this.height = Math.random() * 150 + 30;
+    this.width = Math.random() * 10 + 5;
+    this.color = `hsl(${Math.random() * 180 + 180}, 40%, 65%)`
+    this.direction = Date.now() % 2 == 0;
+    this.alpha = 0;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(this.x, this.y, this.width, this.height, this.color)
+      ctx.globalAlpha = 1;
+      this.direction ? this.y+=Math.random() : this.y-=Math.random();
+      this.alpha < this.lifetime / 1000 ? this.alpha+=.01 : this.alpha = this.lifetime / 1000;
+      this.lifetime--;
     }
   }
-
-
-  function MakeGrid(width, height, size) {
-    this.hexagons = []
-
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        if (x % 2 != 1) {
-          this.offset = size * 0.8;
-        } else {
-          this.offset = 0;
-        }
-        this.hexagons.push(new hexagon(x * (size * 1.5), y * (size * 1.5) + this.offset, "hsla(245,50%,50%,0.4)", size, x, y))
-      }
-    }
-    return this.hexagons;
-  }
-
-
-
 
   function DroneEffect() {
     this.start = Date.now();
@@ -481,103 +499,6 @@
       this.lifetime -= 5;
     };
   };
-
-
-  function BanPhase() {
-    this.start = Date.now();
-    this.draw = function () {
-      this.elapsed = Date.now() - this.start;
-      ctx.beginPath();
-      ctx.globalAlpha = 0.4;
-      let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
-      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100) / 1) + ((this.elapsed / 2100) * (2100 / 1));
-      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 70%, 50%,1)");
-      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 35%,1)");
-      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 70%, 50%,1)");
-      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 27%,1)");
-      gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 70%, 50%,1)");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, 320, 200)
-      ctx.globalAlpha = 1;
-      if (!isInBanStage) {
-        this.lifetime = 0;
-      }
-    }
-  }
-
-  function DrawCross(speed, width) {
-    this.speedMultiplier = {
-      x: 1.6,
-      y: 1
-    }
-    this.moveX = 0;
-    this.MoveY = 0;
-    this.speed = {
-      x: speed,
-      y: speed
-    };
-    this.stage = 0;
-    this.startPoint = 0;
-    this.start = Date.now();
-    this.draw = function () {
-      this.elapsed = Date.now() - this.start;
-      ctx.beginPath();
-      if (this.stage == 0) {
-        if (this.moveX >= 320) {
-          this.stage = 1;
-          this.speed.x = -this.speed.x;
-          this.moveX = 320;
-          this.MoveY = 0;
-          this.startPoint = 320;
-        }
-      } else {
-        ctx.moveTo(0, 0)
-        ctx.lineTo(320, 200)
-        if (this.moveX <= 0) {
-          setTimeout(() => {
-            this.lifetime = 0;
-          }, 1000);
-        }
-      }
-      ctx.moveTo(this.startPoint, 0)
-      ctx.lineTo(this.moveX, this.MoveY)
-      ctx.lineWidth = 40;
-      ctx.strokeStyle = "red"
-      ctx.stroke()
-      this.moveX += this.speed.x * this.speedMultiplier.x
-      this.MoveY += this.speed.y
-    }
-  }
-
-
-  function AmmoType(color) {
-    this.start = 0;
-    this.clear = true;
-    this.elapsed = 0;
-    this.color = color;
-    this.lifetime = 10;
-    this.y = 300;
-    this.draw = function () {
-      var xVar = Math.cos(Date.now() / 100) * 20
-      drawRect(0, this.y, 320, 300, "black");
-      for (let i = 0; i < 4; i++) {
-        drawRect(60 + xVar + i * 50, this.y * 3 / 2 + 75, 30, 50, this.color);
-      }
-      if (this.y > 0) {
-        this.y -= 15;
-      } else if (this.y == 0 && this.elapsed < 450) {
-        if (!this.start) {
-          this.start = Date.now();
-        }
-        this.elapsed = Date.now() - this.start;
-      } else {
-        this.y -= 15;
-      }
-      if (this.y < -300) {
-        this.lifetime = 0;
-      }
-    }
-  }
 
   function GrenadeEffect() {
     this.start = Date.now()
@@ -696,29 +617,61 @@
   }
   function SearchingEffect() {
     this.start = Date.now();
-    this.endTime = 0;
+    this.alpha = .01;
+    this.color = "rgb(50, 200, 255)"
 
     this.draw = function () {
-      this.elapsed = Date.now() - this.start;
-      ctx.beginPath();
-      ctx.globalAlpha = this.elapsed / 3000;
-      if (this.endTime != 0) {
-        this.alphaVal = 1 - SetRange(((this.elapsed - this.endTime) / 3000), 0, 1);
-        ctx.globalAlpha = this.alphaVal;
-        if (this.alphaVal <= 0) {
-          this.lifetime = 0;
-        }
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, this.color)
+      ctx.globalAlpha = 1;
+      if(elapsed > 300){
+        effects.push(new searchSquare(Math.random() * 350 - 30))
+        this.start = Date.now()
       }
-      drawWave(100, "hsla(175, 100%, 58%, 1)", (this.elapsed / 300), "up", 20)
-      drawWave(100, "hsla(228, 100%, 53%, 1)", this.elapsed / 300, "down", 20)
-      ctx.globalAlpha = 1
-      if (searchMeter.value != 1 && this.endTime == 0) {
-        this.endTime = this.elapsed;
+      if (searchMeter.value != 1) {
+        this.alpha-=.025
+        this.color = "cyan"
+      } else {
+        this.alpha < 1 ? this.alpha += .05 : this.alpha = 1;
+      }
+      if(this.alpha <= 0){
+        this.lifetime = 0;
       }
     }
-
   }
 
+  function searchSquare(x){
+    this.x = x;
+    this.movement = Date.now() % 2 == 0 ? true : false;
+    this.speed = this.movement ? Math.random() * 3 + 1 : (Math.random() * 3 + 1) * -1;
+    this.scale = Math.random() * 100 + 50;
+    this.alpha = Math.random() * .8;
+    this.a = 0;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.beginPath();
+      ctx.moveTo(this.x, 0)
+      ctx.lineTo(this.x + this.scale, 0);
+      ctx.lineTo(this.x + this.scale - this.scale / 4, 200)
+      ctx.lineTo(this.x - this.scale / 4, 200)
+      ctx.globalAlpha = this.a;
+      ctx.fillStyle = "white"
+      ctx.fill()
+      ctx.globalAlpha = 1;
+      this.x+=this.speed;
+      this.a < this.alpha ? this.a+=.01 : this.a = this.alpha;
+      if(this.x < -30 || this.x > 350){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
 
   function drawWave(y, color, frequency, direction, waveSize) {
 
