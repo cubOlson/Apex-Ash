@@ -3,7 +3,7 @@
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Champions" type="combobox"
-    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Malphite,Miss Fortune,Soraka,Teemo,Thresh,Veigar,Xerath,Yone,Zeri"
+    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,FiddlesSticks,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Malphite,Miss Fortune,Soraka,Teemo,Thresh,Veigar,Xerath,Yone,Zeri"
     default="Ahri" />
   <meta property="enableChampions" label="Champion effects" type="boolean" default="1" />
   <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
@@ -328,7 +328,7 @@
   var shark = "M256.683,160.779c-4.758-14.251-27.335-40.694-34.065-40.694c-6.729,0-8.82,43.295-23.759,47.036 c-14.345,3.585-84.357,20.197-84.357,20.197s-11.525-9.384-15.046-8.717c-2.96,0.563-4.395,13.707-13.446,14.395 c-9.04,0.685-20.964,0.146-20.964,0.146C44.049,151.152,0,148.893,0,148.893c22.624,33.66,44.4,55.834,13.513,102.573 c21.385,0,48.714-32.472,50.694-39.601c7.574-2.002,16.29-1.928,20.991,3.563c3.563,4.162,3.66,6.077,6.437,6.869 c2.771,0.791,5.838-6.073,10.593-6.073c4.752,0,27.786,7.29,33.663,9.105c5.872,1.812,11.88,22.567,19.404,23.362 c7.522,0.796,24.553-13.86,28.513-13.86c3.961,0,33.266,4.354,65.743,3.161c5.544,5.944,12.682,17.945-1.805,40.407 c-2.767,4.357-1.979,11.487,7.134,4.357c9.106-7.134,25.918-17.127,42.948-48.015c17.424-1.587,108.042-23.669,108.042-39.904 C405.871,178.601,306.186,159.194,256.683,160.779z"
 
   // Current all heroes
-  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Fizz,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Malphite,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Veigar,Viktor,Xerath,Yasuo,Yone,Zeri"
+  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,FiddlesSticks,Fizz,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Malphite,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Veigar,Viktor,Xerath,Yasuo,Yone,Zeri"
 
   // All meter definitions
   var recallMeter = new Meter(1, RecallBlock)
@@ -499,9 +499,13 @@
         case "Ezreal":
           effects.push(new EzrealQ())
           break;
+        case "FiddlesSticks":
+          effects.push(new FiddleQ())
+          break;
         case "Fizz":
           effects.push(new FizzQ())
           break;
+
         case "Garen":
           break;
         case "Irelia":
@@ -629,6 +633,9 @@
         case "Ezreal":
           effects.push(new EzrealW())
           break;
+        case "FiddlesSticks":
+          effects.push(new FiddleW())
+          break;
         case "Garen":
           effects.push(new GarenW())
           break;
@@ -751,9 +758,13 @@
         case "Ezreal":
           effects.push(new EzrealE())
           break;
+        case "FiddlesSticks":
+          effects.push(new FiddleE())
+          break;
         case "Fizz":
           effects.push(new FizzE())
           break;
+
         case "Garen":
           ActiveExtendedE = false;
           break;
@@ -886,6 +897,8 @@
           break;
         case "Ezreal":
           effects.push(new EzrealR())
+          break;
+        case "FiddlesSticks":
           break;
         case "Fizz":
           effects.push(new FizzR())
@@ -1803,21 +1816,54 @@
       ctx.globalAlpha = SetRange(this.elapsed > 4000 ? 1 - (this.elapsed - 4000) / 1000 : this.elapsed < 500 ? this.elapsed / 200 : 1, 0, 1)
       DrawBackground("hsla(0,100%,50%,0.6)")
       this.lineArray.forEach(line => {
-
         line.draw();
       });
       ctx.globalAlpha = 1;
     }
   }
 
-  function FiddleW(){
-    
+  function FiddleW() {
+    this.start = GetTime();
+    this.orbHolder = [];
+    for (let index = 0; index < 100; index++) {
+      setTimeout(() => {
+        this.orbHolder.push(new MovingOrb())
+      }, 50 * index);
+    }
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      let gradient = ctx.createRadialGradient(160, 200, 0, 160, 200, 300);
+      this.gradientElapsed = SetRange(this.elapsed, 0, 4000)
+      console.log(this.gradientElapsed)
+
+
+      if (this.elapsed > 6000) {
+        let gradient = ctx.createRadialGradient(160, 200, 000, 160, 200, 300)
+        this.calculateVal = -1660 * Math.floor(((this.elapsed - 6000) / 1660) / 1) + (((this.elapsed - 6000) / 1660) * (1660 / 1));
+        gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,0.7)");
+        gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
+        gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        DrawBackground(gradient)
+        if (this.elapsed > 7200) {
+          this.lifetime = 0;
+        }
+      } else {
+        this.calculateVal = -1440 * Math.floor((this.gradientElapsed / 1440) / 4) + ((this.gradientElapsed / 1440) * (1440 / 4));
+        gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,0.7)");
+        DrawBackground(gradient)
+        this.orbHolder.forEach(orb => {
+          orb.draw();
+        });
+      }
+    }
   }
 
   function FiddleE() {
     this.start = GetTime();
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
+
       let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
       this.calculateVal = -2100 * Math.floor((this.elapsed / 2100) / 1) + ((this.elapsed / 2100) * (2100 / 1));
       gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
@@ -1826,12 +1872,44 @@
       gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
       gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
       DrawBackground(gradient)
-      if(this.elapsed > 1500){
+      if (this.elapsed > 1500) {
         this.lifetime = 0;
       }
-      }
+    }
   }
 
+
+  class MovingOrb {
+    constructor() {
+      this.lifetime = 1;
+      this.radius = (Math.random() * 15) + 5;
+      if (Math.random() < 0.5) {
+        this.x = Math.random() < 0.5 ? 0 - this.radius : 320 + this.radius
+        this.y = Math.random() * 200;
+      } else {
+        this.x = Math.random() * 320;
+        this.y = Math.random() < 0.5 ? 0 - this.radius : 200 + this.radius
+      }
+      this.angle = Math.atan2(220 - this.y, 160 - this.x)
+      this.speed = {
+        x: Math.cos(this.angle) * 4,
+        y: Math.sin(this.angle) * 4
+      }
+    }
+
+    draw() {
+      this.x += this.speed.x
+      this.y += this.speed.y
+      ctx.globalAlpha = 1
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(0,0%,0%,1)"
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.fill();
+      if (Math.floor(this.x) > 155 && Math.floor(this.x) < 165 && Math.floor(this.y) >= 98 && Math.floor(this.y) < 102) {
+        this.lifetime = 0;
+      }
+    }
+  }
 
 
   //END FIDDLESTICKS
@@ -4646,7 +4724,6 @@
     c = document.getElementById("exCanvas");
     ctx = c.getContext("2d");
     // Start updates *after* our engine is accessible and ready.
-    effects.push(new FiddleE())
     window.requestAnimationFrame(update);
   }
 </script>
