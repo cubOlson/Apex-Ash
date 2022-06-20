@@ -456,14 +456,14 @@
 
     //Damage Effect
     var damage = engine.vision.tookDamage;
-    if (damage > .001 && play1 && play2 && enableHealth) {
+    if (damage > .001 && play1 && play2 && enableHealth && recallMeter.value != 0) {
       for (let i = 0; i < 2; i++) {
         effects.push(new ballPhysics(160, 200, Math.random() * 10 + 15, "red"))
       }
     }
 
     //Low Health Effect
-    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2 && enableHealth) {
+    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && recallMeter.value != 0 && play1 && play2 && enableHealth) {
       for (let i = 0; i < 3; i++) {
         effects.push(new ballPhysics(160, 200, Math.random() * 10 + 15, "red"))
       }
