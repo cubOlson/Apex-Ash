@@ -15,7 +15,8 @@
   <meta property="killOn" label="enable Kill effect" type="boolean" default="1" />
   <meta property="ammoOn" label="enable Ammo effect" type="boolean" default="1" />
   <meta property="droneOn" label="enable Drone effects" type="boolean" default="1" />
-  <meta property="grenadeOn" label="enable grenade effect" type="boolean" default="1" />
+  <meta property="defuserOn" label="enable defuser effect" type="boolean" default="1" />
+  <meta property="grenadeOn" label="enable utility effect" type="boolean" default="1" />
   <meta property="searchOn" label="enable search effect" type="boolean" default="1" />
   <meta property="setupOn" label="enable setup effect" type="boolean" default="1" />
 
@@ -68,7 +69,7 @@
   </meta>
 
   <meta meter="InMatch" tags="VLC,Rainbow Six" type="area" x="0.3945" y="0.0667" width="0.0156" height="0.0042"
-    h="160-185" s="45-100" l="70-100">
+    h="160-190" s="45-100" l="70-100">
   </meta>
 
   <meta meter="blueKill1" tags="VLC,Rainbow Six" type="area" x="0.3043" y="0.056" width="0.0001" height="0.0001" h="0-360" s="0-10" l="90-100" >
@@ -137,7 +138,7 @@
   var weaponOnMeter = new Meter(10, () => "")
   var ammoRedMeter = new Meter(1, ReloadChanged)
   var defendBlueMeter = new Meter(5, () => "")
-  var GrenadeMeter = new Meter(5, GrenadeChanged)
+  var GrenadeMeter = new Meter(3, GrenadeChanged)
   var inGameMeter = new Meter(5, inGameChanged)
   var blue1Meter = new Meter(5, blueKillChanged)
   var blue2Meter = new Meter(5, blueKillChanged)
@@ -182,11 +183,6 @@
     } else {
       GrenadeMeter.setValue(engine.vision.useGrenadeWhite2)
     }
-    opponentsWinRedPMeter.setValue(engine.vision.opponentsWinRedP)
-    opponentsWinRedEMeter.setValue(engine.vision.opponentsWinRedE)
-    yourTeamWinBlueEMeter.setValue(engine.vision.yourTeamWinBlueE);
-    yourTeamWinBlueRMeter.setValue(engine.vision.yourTeamWinBlueR)
-
     copyScreen(1);
 
     if(hudOn){
@@ -206,19 +202,6 @@
   }
 
   //Callbacks
-
-  function OpponentsWinChange() {
-    if (!isInGame && opponentsWinRedEMeter.value == 1 && opponentsWinRedPMeter.value == 1) {
-      console.log("Opponents win effect")
-    }
-  }
-
-  function YourTeamWinChange() {
-    if (!isInGame && yourTeamWinBlueEMeter.value == 1 && yourTeamWinBlueRMeter.value == 1) {
-      console.log("Your team win effect")
-    }
-  }
-
   function inGameChanged() {
     if (inGameMeter.value == 1) {
       isInGame = true;
@@ -300,13 +283,13 @@
   }
 
   function GrenadeChanged() {
-    if (GrenadeMeter.value == 1 && GrenadeMeter.increased && isInGame && healthMeter.value > 0 && grenadeOn) {
+    if (GrenadeMeter.value == 1 && GrenadeMeter.increased && isInGame && weaponOnMeter.value == 1 && grenadeOn) {
       effects.push(new GrenadeEffect())
     }
   }
 
   function defuserHandler(){
-    if(isInGame && dRedMeter.value == 1 && dYellowMeter.value == 1){
+    if(isInGame && dRedMeter.value == 1 && dYellowMeter.value == 1 && defuserOn){
       effects.push(new defuserEffect())
     }
   }
@@ -331,7 +314,7 @@
       DrawCircle(160, 100, 10, "yellow")
       this.y1 < 250 ? this.y1 += 5 : this.y1 = 1;
       this.y2 < 250 ? this.y2 += 5 : this.y2 = 1;
-      if(!isInGame || (dRedMeter.value < .5 && dYellowMeter < .5)){
+      if(dRedMeter.value < .5 || dYellowMeter < .5){
         this.lifetime = 0;
       }
     }
