@@ -50,9 +50,9 @@
   <resolution size="3440x1440" x="0.0256" y="0.9118" width="0.0025" height="0.012" />
   </meta>
 
-  <meta meter="WhiteInGame" tags="VLC,process" type="area" x="0.7465" y="0.9660" width="0.0025" height="0.0007"
+  <meta meter="WhiteInGame" tags="VLC,process" type="area" x="0.7465" y="0.9660" width="0.00025" height="0.0007"
     h="0-360" s="0-20" l="88-100">
-  <resolution size="3440x1440" x="0.8108" y="0.9653" width="0.0009" height="0.0021" />
+  <resolution size="3440x1440" x="0.8108" y="0.9653" width="0.00009" height="0.0021" />
   </meta>
 
   <meta meter="checkBlue" tags="apex,VLC" type="linear" x="0.4818" y="0.9415" width="0.0359" height=".0001" h="200-225"
@@ -167,7 +167,7 @@
   <resolution size="1280x800" x=".6974" y=".675" width=".1484" height=".0001" />
   <resolution size="1280x768" x=".6984" y=".6815" width=".1484" height=".0001" />
   </meta>
-  <meta meter="q" tags="apex,VLC" type="area" x="0.3203" y="0.9667" height="0.00009" width="0.00026" h="0-180" s="0-5"
+  <meta meter="q" tags="apex,VLC" type="area" x="0.3158" y="0.9632" width="0.0016" height="0.0007" h="0-180" s="0-5"
     l="70-100">
   <resolution size="3440x1440" x="0.2387" y="0.9674" width="0.0015" height="0.00009" />
   <resolution size="1680x1050" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
@@ -175,7 +175,7 @@
   <resolution size="1280x800" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
   <resolution size="1280x768" x="0.3203" y="0.9611" height="0.00009" width="0.00026" />
   </meta>
-  <meta meter="q1" tags="apex,VLC" type="area" x="0.3276" y="0.8991" height="0.00056" width="0.00021" h="20-60"
+  <meta meter="q1" tags="apex,VLC" type="area" x=" 0.3352" y="0.9278" width="0.0020" height="0.0014" h="20-60"
     s="50-100" l="70-100">
   <resolution size="3440x1440" x="0.2436" y="0.8972" width="0.0015" height="0.00009" />
   <resolution size="1680x1050" x="0.3276" y="0.9093" height="0.00056" width="0.00021" />
@@ -183,7 +183,7 @@
   <resolution size="1280x800" x="0.3276" y="0.9093" height="0.00056" width="0.00021" />
   <resolution size="1280x768" x="0.3271" y="0.9056" height="0.00056" width="0.00021" />
   </meta>
-  <meta meter="q2" tags="apex,VLC" type="area" x="0.3349" y="0.9204" height="0.0019" width="0.001" h="30-60" s="70-100"
+  <meta meter="q2" tags="apex,VLC" type="area" x="0.3316" y="0.9160" width="0.0016" height="0.0021" h="30-60" s="70-100"
     l="70-100">
   <resolution size="3440x1440" x="0.247" y="0.9118" width="0.0015" height="0.00009" />
   <resolution size="1680x1050" x="0.3351" y="0.9314" height="0.0019" width="0.001" />
@@ -281,9 +281,9 @@
   //#region Meter declaration
 
   var q_Meter = new Meter(10, Q_Effects);
-  var q1_Meter = new Meter(10, Q1_Effects);
-  var q2_Meter = new Meter(10, Q2_Effects);
-  var q3_Meter = new Meter(10, Q3_Effects);
+  var q1_Meter = new Meter(15, Q1_Effects);
+  var q2_Meter = new Meter(15, Q2_Effects);
+  var q3_Meter = new Meter(15, Q3_Effects);
   var z_Total = new Meter(4, () => "");
   var z_TotalHue = new Meter(4, () => "")
   var z_WhiteVal = new Meter(10, Z_Effects)
@@ -528,21 +528,15 @@
       if (q1_Meter.decreased && engine.vision.check == 1, engine.vision.osdEsc != 1 && q1_Meter.value < .5 && q1_Meter.diff > 0.5) {
         switch (legend) {
 
-          case "Bangalore":
-            stateMgr.Push(new bangaloreQ())
-            break;
+
           case "Caustic":
             stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
             break;
-          case "Fuse":
-            stateMgr.Push(new fuseQ())
-            break;
+
           case "Rampart":
             stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
             break;
-          case "Revenant":
-            stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
-            break;
+
           case "Wattson":
             stateMgr.Push(new wattsonQ())
             break;
@@ -556,11 +550,14 @@
 
       if (q2_Meter.decreased && engine.vision.check == 1, engine.vision.osdEsc != 1 && q2_Meter.value < .5 && q2_Meter.diff > 0.5) {
         switch (legend) {
-          case "Caustic":
-            stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+          case "Bangalore":
+            stateMgr.Push(new bangaloreQ())
             break;
-          case "Rampart":
-            stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+          case "Fuse":
+            stateMgr.Push(new fuseQ())
+            break;
+          case "Revenant":
+            stateMgr.Push(new BurstRippleState("#ff8400", "#000000", "#ff8400"));
             break;
           case "Wattson":
             stateMgr.Push(new wattsonQ())
@@ -575,6 +572,13 @@
 
       if (q3_Meter.decreased && engine.vision.check == 1, engine.vision.osdEsc != 1 && q3_Meter.value < .5 && q3_Meter.diff > 0.5) {
         switch (legend) {
+
+          case "Caustic":
+            stateMgr.Push(new BurstRippleState("#fcf003", "#1e7517", "#fcf003"));
+            break;
+          case "Rampart":
+            stateMgr.Push(new WallUpState(314, 73, 50, 0.85));
+            break;
           case "Wattson":
             stateMgr.Push(new wattsonQ())
             break;
