@@ -1,5 +1,5 @@
 <head>
-  <title>Minecraft Java Edition Production</title>
+  <title>Minecraft Java Edition Work</title>
   <meta description="Game intergration for Minecraft Java edition. Set your GUI scale to Auto" />
   <meta publisher="SignalRGB" />
   <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
@@ -141,6 +141,14 @@
   <resolution size="2560x1600" x=".29" y=".92430" width=".41" height=".001" />
   <resolution size="3440x1440" x=".3439" y=".9139" width=".3113" height=".0021" />
   </meta>
+
+  <meta meter="goodStatusGrey" tags="VLC,process" type="area" x="0.9477" y="0.0097" width="0.0043" height="0.0014" 
+    h="0-360" s="0-25" l="25-50" >
+  </meta>
+  
+  <meta meter="goodStatusBlack" tags="VLC,process" type="area" x="0.9474" y="0.005" width="0.0026" height="0.0021" 
+    h="0-360" s="0-100" l="0-10" >
+  </meta> 
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -540,7 +548,7 @@
 
   class Snowflake {
     constructor(x, speed, color) {
-      this.speed = speed / 5;
+      this.speed = speed / 4;
       this.x = x;
       this.y = 0 - Math.random() * 400;
       this.start = getTime();
@@ -559,12 +567,12 @@
       ctx.save();
       ctx.translate(this.x, this.y);
       ctx.rotate(-this.lifetime / 500)
-      for (let index = 0; index < 8; index++) {
+      for (let index = 0; index < 6; index++) {
         ctx.strokeStyle = this.color;
         ctx.moveTo(0, 0)
         ctx.lineTo((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30));
         ctx.stroke();
-        this.Spacing += 0.8;
+        this.Spacing += 1.05;
       }
       ctx.restore();
       this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)

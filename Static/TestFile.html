@@ -24,7 +24,7 @@
     DrawRect(0, 0, 320, 200, "grey")
 
     if(effects.length < 1){
-      effects.push(new defuserEffect())
+      effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
     }
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
@@ -36,26 +36,56 @@
     window.requestAnimationFrame(update);
   };
 
-  function defuserEffect(){
-    this.lifetime = 10;
-    this.y1 = 1;
-    this.y2 = 30;
-    this.draw = function(){
-      DrawStroke(160, 100, this.y1, "red", 20)
-      DrawStroke(160, 100, this.y2, "red", 20)
-      ctx.beginPath()
-      ctx.moveTo(160, 50)
-      ctx.lineTo(210, 100)
-      ctx.lineTo(160, 155)
-      ctx.lineTo(110, 100)
-      ctx.lineTo(160, 50)
-      ctx.lineTo(210, 100)
-      ctx.lineWidth = 20;
-      ctx.strokeStyle = "yellow"
-      ctx.stroke()
-      DrawCircle(160, 100, 10, "yellow")
-      this.y1 < 250 ? this.y1 += 5 : this.y1 = 1;
-      this.y2 < 250 ? this.y2 += 5 : this.y2 = 1;
+  function bubbleEffect(bgColor, BubblecColor, strokecolor) {
+    this.bgColor = bgColor;
+    this.bubbleColor = BubblecColor;
+    this.strokeColor = strokecolor;
+    this.bubbles = [];
+    for (let index = 0; index < 15; index++) {
+      this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
+    }
+
+    this.draw = function () {
+      ctx.fillStyle = this.bgColor;
+      ctx.fillRect(0, 0, 320, 200)
+      this.bubbles.forEach((bubble, i) => {
+        bubble.draw();
+        if (bubble.y < -50) {
+          this.bubbles.splice(i, 1)
+          this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
+        }
+      });
+      // if (bubbleMeter.value < 1 && bubblegoing == true || poisongoing && poisonMeter.value == 0) {
+      //   this.lifetime = 0;
+      //   bubblegoing = false;
+      //   poisongoing = false;
+      // }
+    }
+  }
+
+  class Bubble {
+    constructor(bubbleColor, strokeColor, bubbleSize) {
+      this.bubbleColor = bubbleColor
+      this.strokeColor = strokeColor;
+      this.size = bubbleSize;
+      this.x = Math.random() * 320;
+      this.lifetime = 100;
+      this.startval = Math.random() * 100;
+      this.y = 200 + Math.random() * 400;
+      this.start = Date.now();
+      this.speed = 5;
+    }
+    draw() {
+      ctx.lineWidth = 5;
+      this.lifetime = (Date.now() - this.start);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
+      ctx.strokeStyle = this.strokeColor;
+      ctx.fillStyle = this.bubbleColor;
+      ctx.fill();
+      ctx.stroke();
+      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
+      this.y -= this.speed
     }
   }
 
