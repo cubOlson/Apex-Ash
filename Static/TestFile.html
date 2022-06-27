@@ -24,7 +24,7 @@
     DrawRect(0, 0, 320, 200, "grey")
 
     if(effects.length < 1){
-      effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
+      effects.push(new statusEffect(true, "blue", "green"))
     }
     for (let i = 0; i < effects.length; i++) {
       effects[i].draw();
@@ -36,56 +36,57 @@
     window.requestAnimationFrame(update);
   };
 
-  function bubbleEffect(bgColor, BubblecColor, strokecolor) {
-    this.bgColor = bgColor;
-    this.bubbleColor = BubblecColor;
-    this.strokeColor = strokecolor;
-    this.bubbles = [];
-    for (let index = 0; index < 15; index++) {
-      this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
-    }
-
-    this.draw = function () {
-      ctx.fillStyle = this.bgColor;
-      ctx.fillRect(0, 0, 320, 200)
-      this.bubbles.forEach((bubble, i) => {
-        bubble.draw();
-        if (bubble.y < -50) {
-          this.bubbles.splice(i, 1)
-          this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
-        }
-      });
-      // if (bubbleMeter.value < 1 && bubblegoing == true || poisongoing && poisonMeter.value == 0) {
-      //   this.lifetime = 0;
-      //   bubblegoing = false;
-      //   poisongoing = false;
-      // }
+  function statusEffect(direction, color1, color2){
+    this.lifetime = 150;
+    this.dir = direction;
+    this.c1 = color1;
+    this.c2 = color2;
+    this.start = Date.now()
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(elapsed > 250){
+        effects.push(new effectSpiral(Date.now() % 2 == 0 ? this.c1 : this.c2, Math.random() * 2 + 2, this.dir))
+        this.start = Date.now()
+      }
+      this.lifetime--;
     }
   }
 
-  class Bubble {
-    constructor(bubbleColor, strokeColor, bubbleSize) {
-      this.bubbleColor = bubbleColor
-      this.strokeColor = strokeColor;
-      this.size = bubbleSize;
-      this.x = Math.random() * 320;
-      this.lifetime = 100;
-      this.startval = Math.random() * 100;
-      this.y = 200 + Math.random() * 400;
-      this.start = Date.now();
-      this.speed = 5;
-    }
-    draw() {
-      ctx.lineWidth = 5;
-      this.lifetime = (Date.now() - this.start);
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
-      ctx.strokeStyle = this.strokeColor;
-      ctx.fillStyle = this.bubbleColor;
-      ctx.fill();
-      ctx.stroke();
-      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
-      this.y -= this.speed
+  function effectSpiral(color, scale, dir){
+    this.x = Math.random() * 200 + 60;
+    this.dir = dir;
+    this.y = this.dir ? 220 : -20;
+    this.lifetime = 10;
+    this.scale = scale;
+    this.color = color;
+    this.rotate = 0;
+    this.start = Date.now()
+    this.mod = Math.random() * 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(elapsed > 200){
+        this.rotate+=(Math.PI / 2)
+        this.start = Date.now()
+      }
+      ctx.save()
+      ctx.translate(this.x, this.y)
+      ctx.rotate(-this.rotate)
+      ctx.translate(-this.x, -this.y)
+      ctx.save()
+      for(let i = 0; i < 18; i++){
+        ctx.translate(this.x, this.y)
+        ctx.rotate(.6)
+        ctx.translate(-this.x, -this.y)
+        DrawCircle(this.x, this.y + i * this.scale, this.scale * 2, this.color)
+      }
+      ctx.restore()
+      ctx.restore()
+      if(this.dir){
+        this.y > -20 ? this.y-=this.scale + 1 : this.lifetime = 0;
+      } else {
+        this.y < 220 ? this.y+=this.scale + 1 : this.lifetime = 0;
+      }
+      this.x+=Math.sin(Date.now()/(50*this.mod))*3
     }
   }
 

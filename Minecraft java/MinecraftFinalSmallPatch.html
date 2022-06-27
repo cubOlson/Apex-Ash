@@ -142,12 +142,36 @@
   <resolution size="3440x1440" x=".3439" y=".9139" width=".3113" height=".0021" />
   </meta>
 
-  <meta meter="goodStatusGrey" tags="VLC,process" type="area" x="0.9477" y="0.0097" width="0.0043" height="0.0014" 
+  <meta meter="goodStatusGrey" tags="VLC,process" type="area" x="0.8142" y="0.0090" width="0.1785" height="0.0021" 
     h="0-360" s="0-25" l="25-50" >
   </meta>
   
-  <meta meter="goodStatusBlack" tags="VLC,process" type="area" x="0.9474" y="0.005" width="0.0026" height="0.0021" 
+  <meta meter="goodStatusBlack" tags="VLC,process" type="area" x="0.8142" y="0.005" width="0.1785" height="0.0021" 
     h="0-360" s="0-100" l="0-10" >
+  </meta> 
+
+  <meta meter="goodMain" tags="VLC,process" type="colormean" x="0.97" y="0.051" width="0.0025" height="0.0045" 
+    h="0-10" s="90-100" l="1-71" >
+  </meta> 
+
+  <meta meter="goodAccent" tags="VLC,process" type="colormean" x="0.9730" y="0.0396" width="0.0015" height="0.0042" 
+    h="0-10" s="0-20" l="88-100" >
+  </meta> 
+
+  <meta meter="badStatusGrey" tags="VLC,process" type="area" x="0.8142" y="0.1181" width="0.1785" height="0.0021" 
+    h="0-360" s="0-25" l="25-50" >
+  </meta> 
+
+  <meta meter="badStatusBlack" tags="VLC,process" type="area" x="0.8142" y="0.1132" width="0.1785" height="0.0021" 
+    h="0-360" s="0-100" l="0-10" >
+  </meta> 
+
+  <meta meter="badMain" tags="VLC,process" type="colormean" x="0.9683" y="0.1465" width="0.0009" height="0.0042" 
+    h="230-250" s="90-100" l="1-71" >
+  </meta> 
+
+  <meta meter="badAccent" tags="VLC,process" type="colormean" x="0.9762" y="0.1653" width="0.0023" height="0.0028" 
+    h="0-10" s="0-20" l="88-100" >
   </meta> 
 </head>
 
@@ -170,6 +194,14 @@
   var poisonMeter = new Meter(5, onPoisonChanged)
   var lowHpMeter = new Meter(5, onLowHpChanged)
   var lowFoodMeter = new Meter(20, onFoodMeterChanged)
+  var gStatGreyMeter = new Meter(5, goodStatusChanged)
+  var gStatBlackMeter = new Meter(5, goodStatusChanged)
+  var gStatMainMeter = new Meter(3, () => "")
+  var gStatAccentMeter = new Meter(3, () => "")
+  var bStatGreyMeter = new Meter(5, badStatusChanged)
+  var bStatBlackMeter = new Meter(5, badStatusChanged)
+  var bStatMainMeter = new Meter(3, () => "")
+  var bStatAccentMeter = new Meter(3, () => "")
   var effects = [];
   var inGame = false;
   var freezeGoing = false;
@@ -177,6 +209,8 @@
   var poisongoing = false;
   var lowHpGoing = false;
   var bossGoing = false;
+  var goodStatusGoing = false;
+  var badStatusGoing = false;
 
 
   function update() {
@@ -195,6 +229,14 @@
     freezeMeter.setValue(engine.vision.healthB)
     poisonMeter.setValue(engine.vision.healthG)
     healthMeter.setValue(engine.vision.health);
+    gStatGreyMeter.setValue(engine.vision.goodStatusGrey)
+    gStatBlackMeter.setValue(engine.vision.goodStatusBlack)
+    gStatMainMeter.setValue(engine.vision.goodMain)
+    gStatAccentMeter.setValue(engine.vision.goodAccent)
+    bStatGreyMeter.setValue(engine.vision.badStatusGrey)
+    bStatBlackMeter.setValue(engine.vision.badStatusBlack)
+    bStatMainMeter.setValue(engine.vision.badMain)
+    bStatAccentMeter.setValue(engine.vision.badAccent)
 
     if (inGame) {
       xpMeter.setValue(engine.vision.xp);
@@ -241,7 +283,6 @@
           setTimeout(() => {
             clearEffects()
             CheckAfterInGame();
-            console.log("clear");
           }, 2);
         }
         inGame = true;
@@ -249,13 +290,11 @@
         clearEffects()
         inGame = false
         onBossMeterChanged(true)
-        console.log("out");
       }
     } else {
       clearEffects()
       inGame = false
       onBossMeterChanged(true)
-      console.log("out");
     }
   }
 
@@ -276,6 +315,20 @@
     onFoodMeterChanged()
     onBossMeterChanged(true)
 
+  }
+
+  function goodStatusChanged(){
+    if(gStatGreyMeter.value > .2 && gStatGreyMeter.increased && gStatGreyMeter.diff > .1 && 
+        gStatBlackMeter.value > .2 && gStatBlackMeter.increased && gStatBlackMeter.diff > .1){
+      effects.push(new statusEffect(true, `hsl(${gStatMainMeter.value[0]}, ${gStatMainMeter.value[1]}%, 50%)`, `hsl(${gStatAccentMeter.value[0]}, ${gStatAccentMeter.value[1]}%, 50%)`))
+    }
+  }
+
+  function badStatusChanged(){
+    if(bStatGreyMeter.value > .2 && bStatGreyMeter.increased && bStatGreyMeter.diff > .1 && 
+      bStatBlackMeter.value > .2 && bStatBlackMeter.increased && bStatBlackMeter.diff > .1){
+      effects.push(new statusEffect(false, `hsl(${bStatMainMeter.value[0]}, ${bStatMainMeter.value[1]}%, 50%)`, `hsl(${bStatAccentMeter.value[0]}, ${bStatAccentMeter.value[1]}%, 50%)`))
+    }
   }
 
   function onLowHpChanged() {
@@ -308,7 +361,6 @@
   }
 
   function onHealthMeterChanged() {
-    //console.log(healthMeter.value);
     if (enableHealth && inGame && freezeMeter.value == 0 && poisonMeter.value == 0 && lastHealthMeter.value == 0 && !lowHpGoing) {
       if (healthMeter.decreased) {
         for (let index = 0; index < 20; index++) {
@@ -335,7 +387,6 @@
   }
 
   function onFoodMeterChanged() {
-    //console.log(foodMeter.value);
     if (enableHunger == true) {
       if (lowFoodMeter.value < 0.3) {
         effects.push(new FoodState());
@@ -348,11 +399,83 @@
         effects.push(new BossState());
       }
       if (bossMeter.increased != bossGoing) {
-        //console.log(bossMeter.value);
         effects.push(new BossState());
       }
     }
   }
+
+  function statusEffect(direction, color1, color2){
+    this.lifetime = 150;
+    this.dir = direction;
+    this.c1 = color1;
+    this.c2 = color2;
+    this.start = Date.now()
+    this.draw = function(){
+      ctx.globalAlpha = this.lifetime > 100 ? (150 - this.lifetime) * .02 : this.lifetime / 100;
+      DrawRect(0, 0, 320, 200, "black")
+      ctx.globalAlpha = 1;
+      var elapsed = Date.now() - this.start;
+      if(elapsed > 250){
+        effects.push(new effectSpiral(Date.now() % 2 == 0 ? this.c1 : this.c2, Math.random() * 2 + 2, this.dir))
+        this.start = Date.now()
+      }
+      this.lifetime-=.6;
+      if(this.lifetime <= 0){
+        this.dir ? goodStatusGoing = false : badStatusGoing = false;
+      }
+    }
+  }
+
+  function effectSpiral(color, scale, dir){
+    this.x = Math.random() * 200 + 60;
+    this.dir = dir;
+    this.y = this.dir ? 220 : -20;
+    this.lifetime = 10;
+    this.scale = scale;
+    this.color = color;
+    this.rotate = 0;
+    this.start = Date.now()
+    this.mod = Math.random() * 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(elapsed > 200){
+        this.rotate+=(Math.PI / 2)
+        this.start = Date.now()
+      }
+      ctx.save()
+      ctx.translate(this.x, this.y)
+      ctx.rotate(-this.rotate)
+      ctx.translate(-this.x, -this.y)
+      ctx.save()
+      for(let i = 0; i < 18; i++){
+        ctx.translate(this.x, this.y)
+        ctx.rotate(.6)
+        ctx.translate(-this.x, -this.y)
+        DrawCircle(this.x, this.y + i * this.scale, this.scale * 2, this.color)
+      }
+      ctx.restore()
+      ctx.restore()
+      if(this.dir){
+        this.y > -20 ? this.y-=3 : this.lifetime = 0;
+      } else {
+        this.y < 220 ? this.y+=3 : this.lifetime = 0;
+      }
+      this.x+=Math.sin(Date.now()/(50*this.mod))*3
+    }
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
 
   function XpUpState() {
     this.start = new Date().getTime();
