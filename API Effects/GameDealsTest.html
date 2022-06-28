@@ -1,0 +1,150 @@
+<head>
+    <title>GameDealsTest</title>
+    <meta description="Template" />
+    <meta publisher="SignalRGB" />
+    <meta property="Game1" label="Game 1" type="textfield" default="">
+    <meta property="Game2" label="Game 2" type="textfield" default="">
+    <meta property="Game3" label="Game 3" type="textfield" default="">
+</head>
+
+<body style="margin: 0; padding: 0;">
+    <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+    var bestDeals;
+    var refreshTime = [];
+    var prevTimes = [];
+    var prevGamesFields = [];
+    var currentGamesFields = [];
+    var salePrices = [];
+    var effects = [];
+    var c, ctx;
+    var dealHolder = [];
+    var prevDealHolder = [];
+    var stores;
+
+
+
+
+    function update() {
+        currentGamesFields = [Game1, Game2, Game3]
+        for (let index = 0; index < currentGamesFields.length; index++) {
+            CheckValues(index);
+        }
+        CheckTimes();
+
+        triggerEffects();
+
+        //Effects animation play
+        if (effects.length) {
+            effects.forEach((element, index) => {
+                element.draw();
+                if (element.lifetime <= 0) {
+                    effects.splice(index, 1);
+                }
+            })
+        }
+
+        window.requestAnimationFrame(update);
+    }
+
+
+    function triggerEffects() {
+        for (let index = 0; index < dealHolder.length; index++) {
+            if (prevDealHolder[index] != dealHolder[index]) {
+                prevDealHolder[index] = dealHolder[index];
+                console.log(`GameName =${dealHolder[index][0].title}`)
+                console.log(`GameNormalPrice =${dealHolder[index][0].normalPrice}`);
+                console.log(`SalePrice =${dealHolder[index][0].salePrice}`);
+                GetStore(dealHolder[0][1])
+            }
+        }
+    }
+
+
+    function GetStore(deal) {
+        for (let index = 0; index < stores.length; index++) {
+            if (stores[index].storeID == deal.storeID) {
+                console.log(stores[index].storeName);
+            }
+        }
+    }
+
+
+    function CheckValues(index) {
+        if (currentGamesFields[index] != prevGamesFields[index]) {
+            refreshTime[index] = 10000;
+            prevGamesFields[index] = currentGamesFields[index];
+            prevTimes[index] = Date.now();
+            if (refreshTime[index] == 10000) {
+                effects.push(new Sweep(index))
+            }
+
+        }
+    }
+
+    async function CheckTimes() {
+        for (let index = 0; index < currentGamesFields.length; index++) {
+            if ((refreshTime[index] - (Date.now() - prevTimes[index])) < 0) {
+                prevTimes[index] = Date.now();
+                refreshTime[index] = 60000;
+                await GetData(index)
+            }
+        }
+    }
+
+    function GetData(index) {
+        fetch(`https://www.cheapshark.com/api/1.0/deals?title=${currentGamesFields[index]}`).then(response => response.json())
+            .then((dealsVal) => {
+                dealHolder[index] = dealsVal;
+            })
+            .catch(error => {
+                console.log("something went wrong");
+            });
+    }
+
+
+    function GetStores() {
+        fetch(`https://www.cheapshark.com/api/1.0/stores`).then(response => response.json())
+            .then((storeVal) => {
+                stores = storeVal;
+                console.log(stores)
+            })
+            .catch(error => {
+                console.log("something went wrong");
+            });
+    }
+
+
+
+    function Sweep(index) {
+        this.start = Date.now();
+        this.index = index;
+        this.draw = function () {
+            this.elapsed = Date.now() - this.start;
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 320, 200);
+            ctx.beginPath();
+            ctx.fillStyle = "blue";
+            ctx.fillRect(0, 0, 320 * ((10000 - (refreshTime[this.index] - this.elapsed)) / 10000), 200)
+            if (refreshTime[this.index] > 10000) {
+                this.lifetime = 0;
+            }
+        }
+
+
+    }
+
+
+
+    function OnEngineReady() {
+        c = document.getElementById("exCanvas");
+        ctx = c.getContext("2d");
+        GetStores();
+        window.requestAnimationFrame(update);
+    }
+
+    OnEngineReady();
+</script>
