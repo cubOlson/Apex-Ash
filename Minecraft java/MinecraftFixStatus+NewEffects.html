@@ -228,13 +228,14 @@
   var bStatBlackMeter = new Meter(3, () => "")
   var bStatMainMeter = new Meter(3, () => "")
   var bStatAccentMeter = new Meter(3, () => "")
-  var inMenuBlackMeter = new Meter(3, () => "")
-  var inMenuWhiteMeter = new Meter(3, () => "")
-  var anvilWhiteHammerMeter = new Meter(3, inAnvilChanged)
-  var enchantmentTableBrownMeter = new Meter(3, inEnchantmentTableChanged)
+  var inMenuBlackMeter = new Meter(10, menuChanged)
+  var inMenuWhiteMeter = new Meter(10, menuChanged)
+  var anvilWhiteHammerMeter = new Meter(3, ()=>"")
+  var enchantmentTableBrownMeter = new Meter(3, ()=>"")
   var sleepWhiteMeter = new Meter(15, inSleepChanged)
   var sleepBlackMeter = new Meter(15, inSleepChanged)
   var effects = [];
+  var sleep = [];
   var inGame = false;
   var freezeGoing = false;
   var bubblegoing = false;
@@ -243,6 +244,10 @@
   var bossGoing = false;
   var goodStatusGoing = false;
   var badStatusGoing = false;
+  var menuGoing = false;
+  var anvilGoing = false;
+  var enchantGoing = false;
+  var sleepGoing = false;
 
 
   function update() {
@@ -289,6 +294,10 @@
         effects.splice(i, 1);
       }
     }
+    sleep.forEach((ele, i)=>{
+      ele.draw();
+      ele.lifetime <= 0 ? sleep.splice(i, 1) : null;
+    })
     if (enableHud) {
       UpdateUi(adjMeter);
     }
@@ -328,11 +337,13 @@
         clearEffects()
         inGame = false
         onBossMeterChanged(true)
+        menuChanged()
       }
     } else {
       clearEffects()
       inGame = false
       onBossMeterChanged(true)
+      menuChanged()
     }
   }
 
@@ -342,6 +353,8 @@
     poisongoing = false;
     bubblegoing = false;
     lowHpGoing = false;
+    menuGoing = false;
+    sleepGoing = false;
   }
 
 
@@ -356,24 +369,28 @@
   }
 
   function inSleepChanged() {
-    if (sleepBlackMeter.value == 1 && sleepWhiteMeter.value == 1 && healthMeter.value == 0) {
-      console.log("Sleeping")
+    if (sleepBlackMeter.value == 1 && sleepWhiteMeter.value == 1 && healthMeter.value == 0 && !sleepGoing) {
+      sleep.push(new sleeping())
+      sleepGoing = true;
     }
   }
 
-  function inAnvilChanged() {
-    if (anvilWhiteHammerMeter.value == 1 && inMenuBlackMeter.value == 1 && inMenuWhiteMeter.value == 1) {
-      console.log("inAnvil")
-    } else {
-      console.log("outAnvil")
-    }
-  }
-
-  function inEnchantmentTableChanged() {
-    if (enchantmentTableBrownMeter.value == 1 && inMenuBlackMeter.value == 1 && inMenuWhiteMeter.value == 1) {
-      console.log("inEnchantmentTable")
-    } else {
-      console.log("outEnchantmentTable")
+  function menuChanged(){
+    if(inMenuBlackMeter.value == 1 && inMenuWhiteMeter.value == 1 && !menuGoing){
+      effects.push(new genericMenu())
+      if(anvilWhiteHammerMeter.value == 1 && !anvilGoing){
+        setTimeout(()=>{
+          effects.push(new inAnvil())
+        }, 1600)
+        anvilGoing = true;
+      }
+      if(enchantmentTableBrownMeter.value == 1 && !enchantGoing){
+        setTimeout(()=>{
+          effects.push(new inEnchanter())
+        }, 1600)
+        enchantGoing = true;
+      }
+      menuGoing = true;
     }
   }
 
@@ -460,6 +477,230 @@
       }
       if (bossMeter.increased != bossGoing) {
         effects.push(new BossState());
+      }
+    }
+  }
+
+  function sleeping(){
+    this.start = Date.now();
+    this.rot1 = -2;
+    this.rot2 = -2;
+    this.y1 = 200;
+    this.hue = 240;
+    this.sat = 0;
+    this.lit = 0;
+    this.night = false;
+    this.morning = false;
+    this.done = false;
+    this.alpha2 = 1;
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(this.morning){
+        ctx.globalAlpha = this.alpha2;
+      } else {
+        ctx.globalAlpha = (200 - this.y1) / 200;
+      }
+      DrawRect(0, this.y1, 320, 200, `hsl(${this.hue}, ${this.sat}%, ${this.lit}%)`)
+      if(!this.morning){
+        ctx.globalAlpha = 1;
+      }
+      this.y1 > 0 ? this.y1 -= 3 : this.night = true;
+      if(this.morning){
+        ctx.save()
+        ctx.translate(160, 200)
+        ctx.rotate(this.rot2)
+        ctx.translate(-160, -200)
+        DrawRect(135, 75, 50, 50, "yellow")
+        ctx.restore()
+        this.rot2 < 0 ? this.rot2 += .04 : this.done = true;
+        this.hue = 40;
+        this.lit = 50 + this.rot2 * 25
+        this.sat = 50 - (this.rot2 * 25)
+      } else if(this.night){
+        ctx.save()
+        ctx.translate(160, 200)
+        ctx.rotate(this.rot1)
+        ctx.translate(-160, -200)
+        DrawRect(135, 75, 50, 50, "white")
+        ctx.restore()
+        this.rot1 < 2 ? this.rot1 += .04 : this.morning = true;
+        this.lit = 24 - (Math.abs(this.rot1) * 12)
+        this.sat = 50 - (Math.abs(this.rot1) * 25)
+      }
+      ctx.globalAlpha = 1;
+      this.done ? this.alpha2 > .01 ? this.alpha2-=.01 : this.lifetime = 0 : null;
+      this.lifetime == 0 ? sleepGoing = false : null;
+    }
+  }
+
+  function inEnchanter(){
+    this.lifetime = 10;
+    this.start = Date.now();
+    this.alpha = .15
+    this.cover1 = new pageOpen(160, 40, 160, 90, "hsl(28, 57%, 33%)", 100, true);
+    this.cover2 = new pageOpen(160, 40, 160, 90, "hsl(28, 57%, 33%)", 100, false);
+    this.page1 = new pageOpen(160, 40, 160, 90, "hsl(48, 43%, 72%)", 85, true);
+    this.page2 = new pageOpen(160, 40, 160, 90, "hsl(48, 43%, 72%)", 85, false);
+    this.page3 = new pageOpen(160, 40, 160, 90, "hsl(56, 43%, 76%)", 80, true);
+    this.page4 = new pageOpen(160, 40, 160, 90, "hsl(56, 43%, 76%)", 80, false);
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, "blue")
+      ctx.globalAlpha = 1;
+      this.alpha = Math.abs(Math.sin(Date.now() / 500)) * .15 + .15;
+      ctx.save()
+      ctx.translate(0, Math.sin(Date.now() / 800) * 10)
+      var elapsed = Date.now() - this.start;
+      this.cover1.draw()
+      this.cover2.draw()
+      if(elapsed > 500){
+        this.page1.draw()
+        this.page2.draw()
+      }
+      if(elapsed > 1000){
+        this.page3.draw()
+        this.page4.draw()
+      }
+      ctx.restore()
+      if(enchantmentTableBrownMeter.value < .25){
+        this.lifetime = 0;
+        enchantGoing = false;
+      }
+    };
+  }
+
+  function pageOpen(x, y, x2, y2, color, scale, direction){
+    this.dir = direction;
+    this.x = x;
+    this.y = y;
+    this.x2 = x;
+    this.y2 = y2;
+    this.height = scale;
+    this.color = color;
+    this.rot = Math.PI / 2
+    this.draw = function(){
+      ctx.beginPath()
+      ctx.moveTo(this.x, this.y)
+      ctx.lineTo(this.x2, this.y2)
+      ctx.lineTo(this.x2, this.y2 + this.height)
+      ctx.lineTo(this.x, this.y + this.height)
+      ctx.lineTo(this.x, this.y)
+      ctx.fillStyle = this.color;
+      ctx.fill()
+      if(this.dir){
+        this.x > (this.x2 - this.height * .8) ? this.x-=3 : null;
+      } else {
+        this.x < (this.x2 + this.height * .8) ? this.x+=3 : null;
+      }
+    }
+  }
+
+  function inAnvil(){
+    this.start = Date.now()
+    this.x = 155;
+    this.rotate = 0;
+    this.dir = false;
+    this.oldDir = false;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.save()
+      ctx.translate(this.x, 150)
+      ctx.rotate(this.rotate)
+      ctx.translate(-this.x, -150)
+      anvilHammer(this.x, 150)
+      ctx.restore()
+      if(this.dir){
+        this.rotate < Math.PI / 2 ? this.rotate+=.05 + (Math.PI / 2 - Math.abs(this.rotate)) / 5 : this.dir = false;
+        this.x-=5
+      } else {
+        this.rotate > -Math.PI / 2 ? this.rotate-=.05 + (Math.PI / 2 - Math.abs(this.rotate)) / 5 : this.dir = true;
+        this.x+=5
+      }
+      if(this.dir != this.oldDir){
+        for(let i = 0; i < 8; i++){
+          effects.push(new spark(155, 150))
+        }
+        this.oldDir = this.dir
+      }
+      if(anvilWhiteHammerMeter.value < .25){
+        this.lifetime = 0;
+        anvilGoing = false;
+      }
+    }
+  }
+
+  function anvilHammer(x, y){
+    DrawRect(x, y, 10, -100, "hsl(28, 57%, 25%)")
+    DrawRect(x - 33, y - 100, 75, 40, "white")
+  }
+
+  function spark(x, y){
+    this.x = x;
+    this.y = y;
+    this.radius = Math.random() * 5 + 5;
+    this.lifetime = 30;
+    this.dir = Math.random() < .5;
+    this.hue = Math.random() * 60
+    this.draw = function(){
+      DrawCircle(this.x, this.y, this.radius, `hsl(${this.hue}, 100%, 50%)`)
+      this.x+=this.dir?Math.random()*5:-Math.random()*6;
+      this.y-=this.dir?Math.random()*5:Math.random()*6;
+      this.lifetime--;
+    }
+  }
+
+  function genericMenu(){
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.go = false;
+    this.size = 1;
+    this.effects = [];
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      this.effects.forEach((ele, i)=>{
+        ele.draw();
+        ele.lifetime <= 0 ? this.effects.splice(i, 1) : null;
+      })
+      DrawRect(110 + (50 - this.size / 2), 50 + (50 - this.size / 2), this.size, this.size, "grey")
+      this.size < 100 ? this.size+=1.6 : this.go = true;
+      if(elapsed > 1500 && this.go){
+        this.effects.push(new menuHelper(true))
+        this.effects.push(new menuHelper(false))
+        this.start = Date.now()
+      }
+      if(inMenuBlackMeter.value < .5 || inMenuWhiteMeter.value < .5){
+        console.log("HERE " + Date.now())
+        this.effects = [];
+        menuGoing = false;
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function menuHelper(type){
+    this.type = type;
+    this.x = 210;
+    this.y = 50;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y)
+      if(this.type){
+        ctx.lineTo(this.x - 100, this.y)
+        ctx.lineTo(this.x - 100, this.y + 100)
+        ctx.strokeStyle = "black"
+      } else {
+        ctx.lineTo(this.x, this.y + 100)
+        ctx.lineTo(this.x - 100, this.y + 100)
+        ctx.strokeStyle = "white"
+      }
+      ctx.lineWidth = 15;
+      ctx.stroke()
+      this.type ? this.x-=.5 : this.x+=.5;
+      this.type ? this.y-=.5 : this.y+=.5;
+      if((this.x > 320 && this.y > 200) || (this.x < 0 && this.y < 0)){
+        this.lifetime = 0;
       }
     }
   }

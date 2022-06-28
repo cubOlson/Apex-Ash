@@ -21,72 +21,68 @@
   var effects = [];
 
   function update() {
-    DrawRect(0, 0, 320, 200, "grey")
+    DrawRect(0, 0, 320, 200, "salmon")
 
     if(effects.length < 1){
-      effects.push(new statusEffect(true, "blue", "green"))
+      effects.push(new sleeping())
     }
-    for (let i = 0; i < effects.length; i++) {
-      effects[i].draw();
-      if (effects[i].lifetime <= 0) {
-        effects.splice(i, 1);
-      }
-    };
+    effects.forEach((ele, i)=>{
+        ele.draw();
+        ele.lifetime <= 0 ? effects.splice(i, 1) : null;
+    })
 
     window.requestAnimationFrame(update);
   };
 
-  function statusEffect(direction, color1, color2){
-    this.lifetime = 150;
-    this.dir = direction;
-    this.c1 = color1;
-    this.c2 = color2;
-    this.start = Date.now()
-    this.draw = function(){
-      var elapsed = Date.now() - this.start;
-      if(elapsed > 250){
-        effects.push(new effectSpiral(Date.now() % 2 == 0 ? this.c1 : this.c2, Math.random() * 2 + 2, this.dir))
-        this.start = Date.now()
-      }
-      this.lifetime--;
-    }
-  }
-
-  function effectSpiral(color, scale, dir){
-    this.x = Math.random() * 200 + 60;
-    this.dir = dir;
-    this.y = this.dir ? 220 : -20;
+  function sleeping(){
+    this.start = Date.now();
+    this.rot1 = -2;
+    this.rot2 = -2;
+    this.y1 = 200;
+    this.hue = 240;
+    this.sat = 0;
+    this.lit = 0;
+    this.night = false;
+    this.morning = false;
+    this.done = false;
+    this.alpha2 = 1;
     this.lifetime = 10;
-    this.scale = scale;
-    this.color = color;
-    this.rotate = 0;
-    this.start = Date.now()
-    this.mod = Math.random() * 10;
     this.draw = function(){
       var elapsed = Date.now() - this.start;
-      if(elapsed > 200){
-        this.rotate+=(Math.PI / 2)
-        this.start = Date.now()
-      }
-      ctx.save()
-      ctx.translate(this.x, this.y)
-      ctx.rotate(-this.rotate)
-      ctx.translate(-this.x, -this.y)
-      ctx.save()
-      for(let i = 0; i < 18; i++){
-        ctx.translate(this.x, this.y)
-        ctx.rotate(.6)
-        ctx.translate(-this.x, -this.y)
-        DrawCircle(this.x, this.y + i * this.scale, this.scale * 2, this.color)
-      }
-      ctx.restore()
-      ctx.restore()
-      if(this.dir){
-        this.y > -20 ? this.y-=this.scale + 1 : this.lifetime = 0;
+      if(this.morning){
+        ctx.globalAlpha = this.alpha2;
       } else {
-        this.y < 220 ? this.y+=this.scale + 1 : this.lifetime = 0;
+        ctx.globalAlpha = (200 - this.y1) / 200;
       }
-      this.x+=Math.sin(Date.now()/(50*this.mod))*3
+      DrawRect(0, this.y1, 320, 200, `hsl(${this.hue}, ${this.sat}%, ${this.lit}%)`)
+      if(!this.morning){
+        ctx.globalAlpha = 1;
+      }
+      this.y1 > 0 ? this.y1 -= 3 : this.night = true;
+      if(this.morning){
+        ctx.save()
+        ctx.translate(160, 200)
+        ctx.rotate(this.rot2)
+        ctx.translate(-160, -200)
+        DrawRect(135, 75, 50, 50, "yellow")
+        ctx.restore()
+        this.rot2 < 0 ? this.rot2 += .03 : this.done = true;
+        this.hue = 40;
+        this.lit = 50 + this.rot2 * 25
+        this.sat = 50 - (this.rot2 * 25)
+      } else if(this.night){
+        ctx.save()
+        ctx.translate(160, 200)
+        ctx.rotate(this.rot1)
+        ctx.translate(-160, -200)
+        DrawRect(135, 75, 50, 50, "white")
+        ctx.restore()
+        this.rot1 < 2 ? this.rot1 += .03 : this.morning = true;
+        this.lit = 24 - (Math.abs(this.rot1) * 12)
+        this.sat = 50 - (Math.abs(this.rot1) * 25)
+      }
+      ctx.globalAlpha = 1;
+      this.done ? this.alpha2 > .01 ? this.alpha2-=.01 : this.lifetime = 0 : null;
     }
   }
 
