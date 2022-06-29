@@ -11,9 +11,9 @@
   <meta property="ColorMode" label="Color Mode" type="combobox" values="Normal,Rainbow,Gradient,Random"
     default="Rainbow" />
   <meta default="10" label="RainbowCycleSpeed" max="30" min="0" property="timerSpeed" type="number" />
-  <meta property="effectMode" label="Effect Mode" type="combobox" values="Circle,Wave,Square,Random" default="Circle" />
+  <meta property="effectMode" label="Effect Mode" type="combobox" values="Circle,Wave,Square,Random" default="Random" />
   <meta property="directionMode" label="Direction Mode" type="combobox" values="Outward,Inward,Random"
-    default="Outward" />
+    default="Random" />
   <meta property="beatDrive" label="Brightness Mode" type="combobox" values="OFF,Average Beat,Volume" default="OFF" />
   <meta default="2" label="beat threshold" max="5" min="0" property="threshold" type="number" />
   <meta default="120" label="Brightness sensitivity" max="200" min="0" property="sensitivity" type="number" />
@@ -25,6 +25,7 @@
   <meta property="circleHex" label="Primary Circle Color" type="color" min="0" max="360" default="#FF8000" />
   <meta property="circleColorMode" label="Circle Color mode" type="combobox" values="Normal,Rainbow,RotationHue,Random"
     default="Rainbow" />
+
 
   <!-- <meta property="leveldisplay" label="Level Display Bars" default="0" type="boolean" />
   <meta default="5" label="Level Needed" max="100" min="0" property="LevelThreshold" type="number" /> -->
@@ -426,7 +427,7 @@
     if (!MinimalMode) {
       x = LeftBarSize;
       ctx.beginPath();
-      ctx.globalAlpha = decay / 10;
+      ctx.globalAlpha = 1;
       if (BackgroundColorMode == "Normal") {
         ctx.fillStyle = `${BackgroundColor}`
       } else if (BackgroundColorMode == "ColorCycle") {
@@ -537,7 +538,7 @@
 
       ctx.beginPath();
 
-      ctx.lineWidth = 2;
+      ctx.lineWidth = LeftBarSize / 60;
       ctx.moveTo(Math.sin(iZone / 9) * LeftBarSize / 5 + LeftBarSize / 2, Math.cos(iZone / 9) * LeftBarSize / 5 + 60);
       ctx.lineTo(Math.sin(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / 5 : LeftBarSize / 5) + LeftBarSize / 2, Math.cos(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / 5 : LeftBarSize / 5) + 60);
       if (circleColorMode == "Normal") {
