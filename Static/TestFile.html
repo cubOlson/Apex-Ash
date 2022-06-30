@@ -3,7 +3,7 @@
   <meta description="" />
   <meta publisher="SignalRGB" />
 
-  <meta property="effectPush" label="Push effect" type="boolean" default="1" />
+  <meta property="effectPush" label="Push effect" type="boolean" default="0" />
   <meta property="num" label="Ambience brightness" type="number" min="0" max="5" default="0" />
   
 </head>
@@ -24,7 +24,7 @@
     DrawRect(0, 0, 320, 200, "salmon")
 
     if(effects.length < 1){
-      effects.push(new sleeping())
+      effects.push(new genericMenu())
     }
     effects.forEach((ele, i)=>{
         ele.draw();
@@ -34,56 +34,92 @@
     window.requestAnimationFrame(update);
   };
 
-  function sleeping(){
-    this.start = Date.now();
-    this.rot1 = -2;
-    this.rot2 = -2;
-    this.y1 = 200;
-    this.hue = 240;
-    this.sat = 0;
-    this.lit = 0;
-    this.night = false;
-    this.morning = false;
-    this.done = false;
-    this.alpha2 = 1;
+  function genericMenu(){
     this.lifetime = 10;
+    this.done = false;
+    this.redo = false;
+    this.effects = [];
     this.draw = function(){
-      var elapsed = Date.now() - this.start;
-      if(this.morning){
-        ctx.globalAlpha = this.alpha2;
-      } else {
-        ctx.globalAlpha = (200 - this.y1) / 200;
+      if(this.redo){
+        this.effects = [];
+        this.redo = false;
+        this.done = false;
       }
-      DrawRect(0, this.y1, 320, 200, `hsl(${this.hue}, ${this.sat}%, ${this.lit}%)`)
-      if(!this.morning){
-        ctx.globalAlpha = 1;
+      var count = 0;
+      if(this.effects.length < 8){
+        this.effects.push(new menuRow(this.effects.length * 40))
       }
-      this.y1 > 0 ? this.y1 -= 3 : this.night = true;
-      if(this.morning){
-        ctx.save()
-        ctx.translate(160, 200)
-        ctx.rotate(this.rot2)
-        ctx.translate(-160, -200)
-        DrawRect(135, 75, 50, 50, "yellow")
-        ctx.restore()
-        this.rot2 < 0 ? this.rot2 += .03 : this.done = true;
-        this.hue = 40;
-        this.lit = 50 + this.rot2 * 25
-        this.sat = 50 - (this.rot2 * 25)
-      } else if(this.night){
-        ctx.save()
-        ctx.translate(160, 200)
-        ctx.rotate(this.rot1)
-        ctx.translate(-160, -200)
-        DrawRect(135, 75, 50, 50, "white")
-        ctx.restore()
-        this.rot1 < 2 ? this.rot1 += .03 : this.morning = true;
-        this.lit = 24 - (Math.abs(this.rot1) * 12)
-        this.sat = 50 - (Math.abs(this.rot1) * 25)
+      this.effects.forEach((ele, i)=>{
+        ele.draw(this.done);
+        ele.done ? count++ : null;
+      })
+      if(count == 8 && !this.done){
+        this.done = true
+        setTimeout(()=>{
+          this.redo = true;
+        }, 500)
       }
-      ctx.globalAlpha = 1;
-      this.done ? this.alpha2 > .01 ? this.alpha2-=.01 : this.lifetime = 0 : null;
     }
+  }
+
+  function menuRow(x){
+    this.x = x;
+    this.start = Date.now();
+    this.speed = Math.random() * 800 + 800;
+    this.effects = [];
+    this.done = false;
+    this.draw = function(donezo){
+      var elapsed = Date.now() - this.start;
+      var count = 0;
+      if(elapsed > this.speed && this.effects.length < 5){
+        this.effects.push(new menuSquare(this.x, 200 - (this.effects.length * 40 + 40), 5, 40, 40))
+        this.start = Date.now()
+      }
+      this.effects.forEach((ele, i)=>{
+        ele.draw(donezo);
+        if(ele.done){
+          count++;
+          if(this.effects[i - 1]){
+            this.effects[i - 1].grass = false;
+          }
+        }
+      })
+      count == 5 ? this.done = true : null;
+    }
+  }
+
+  function menuSquare(x, y2, speed, width, height){
+    this.x = x;
+    this.y = 0;
+    this.alpha = 1;
+    this.width = width;
+    this.height = height;
+    this.y2 = y2;
+    this.speed = speed;
+    this.grass = true;
+    this.done = false;
+    this.draw = function(donezo){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(this.x, this.y, this.width, this.height, "rgb(130, 60, 35)")
+      this.grass ? DrawRect(this.x, this.y, this.width, this.height * .75, "green") : null;
+      ctx.globalAlpha = 1;
+      this.y <= this.y2 - this.speed ? this.y+=this.speed : this.done = true;
+      donezo ? this.alpha >= .05 ? this.alpha-=.05 : this.alpha = 0 : null;
+    }
+  }
+
+  function drawLightning(array, color, width){
+      ctx.beginPath()
+      ctx.moveTo(...array[0])
+      array.forEach((ele, i)=>{
+        if(i){
+          ctx.lineTo(...array[i])
+        }
+      });
+      ctx.strokeStyle = color;
+      ctx.lineJoin = "round";
+      ctx.lineWidth = width + Math.random() * width;
+      ctx.stroke()
   }
 
   function DrawGear(x, y, radius, stroke, teeth, color){
