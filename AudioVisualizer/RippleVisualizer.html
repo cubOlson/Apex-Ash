@@ -1,0 +1,615 @@
+<head>
+  <title>Ripple Visualizer</title>
+  <meta
+    description="An Audio Visualizer driven by the average beat tempo of a song. The beat Cooldown may need to by tailored to your music tastes and typical BPM" />
+  <meta publisher="Austin Powers" />
+  <meta property="MinimalMode" label="MinimalMode" default="0" type="boolean" />
+  <meta property="BackgroundColor" label="Background color" type="color" min="0" max="360" default="#000000" />
+  <meta property="BackgroundColorMode" label="Background colorMode" type="combobox" values="Normal,ColorCycle"
+    default="Normal" />
+  <meta property="waveHex" label="Primary Wave Color" type="color" min="0" max="360" default="#FF8000" />
+  <meta property="ColorMode" label="Color Mode" type="combobox" values="Normal,Rainbow,Gradient,Random"
+    default="Rainbow" />
+  <meta default="10" label="RainbowCycleSpeed" max="30" min="0" property="timerSpeed" type="number" />
+  <meta property="effectMode" label="Effect Mode" type="combobox" values="Circle,Wave,Square,Random" default="Random" />
+  <meta property="directionMode" label="Direction Mode" type="combobox" values="Outward,Inward,Random"
+    default="Random" />
+  <meta property="beatDrive" label="Brightness Mode" type="combobox" values="OFF,Average Beat,Volume" default="OFF" />
+  <meta default="2" label="beat threshold" max="5" min="0" property="threshold" type="number" />
+  <meta default="120" label="Brightness sensitivity" max="200" min="0" property="sensitivity" type="number" />
+  <meta property="beatdisplay" label="Beat Display Bars" default="0" type="boolean" />
+  <meta default="2" label="Global Decay" max="10" min="0" property="decay" type="number" />
+  <meta default="7" label="Beat Cooldown" max="10" min="0" property="CooldownMod" type="number" />
+  <meta default="5" label="Wave Speed" max="10" min="0" property="WaveSpeed" type="number" />
+  <meta default="100" label="LeftBarSize" max="180" min="0" property="LeftBarSize" type="number" />
+  <meta property="circleHex" label="Primary Circle Color" type="color" min="0" max="360" default="#FF8000" />
+  <meta property="circleColorMode" label="Circle Color mode" type="combobox" values="Normal,Rainbow,RotationHue,Random"
+    default="Rainbow" />
+
+
+  <!-- <meta property="leveldisplay" label="Level Display Bars" default="0" type="boolean" />
+  <meta default="5" label="Level Needed" max="100" min="0" property="LevelThreshold" type="number" /> -->
+
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas height="200" id="exCanvas" width="320"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  //Used for particle Effects
+  var effects = [];
+  //Declare new state manager
+  var stateMgr = new StateHandler();
+  //game menu Blockers
+
+
+  var densityOld = 0;
+  var beatCooldown = 0;
+  var beats = [];
+  var beatavg = 0;
+  var levels = [];
+  var levelAvg = 0;
+  var Delays = [];
+  var prev = [];
+  var averageDelay = 0;
+  var timer = 0;
+  var effectModes = ["Circle", "Wave", "Square", "Random"];
+  var backgroundColors = { h: 0, s: 0, l: 0 };
+  var x = 0;
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+  function DropBeat() {
+    var colors = hexToHSL(waveHex);
+    backgroundColors = hexToHSL(BackgroundColor);
+
+    let chosenEffect;
+    let chosenDirection;
+    if (effectMode != "Random") {
+      chosenEffect = effectMode;
+    } else {
+      chosenEffect = effectModes[Math.floor(Math.random() * effectModes.length)];
+    }
+    if (directionMode != "Random") {
+      if (directionMode == "Inward") {
+        chosenDirection = 0;
+      } else {
+        chosenDirection = 1;
+      }
+
+    } else {
+      chosenDirection = Math.floor(Math.random() * 1.99);
+    }
+
+    if (chosenEffect == 'Circle' || chosenEffect == "Square") {
+      if (ColorMode == 'Normal') {
+        effects.push(new ExpandingCircle(chosenDirection, random(70, 250 - LeftBarSize) + x, random(50, 150), colors.h, colors.s, colors.l, false, chosenEffect == "Square"));
+      } else if (ColorMode == 'Rainbow') {
+        effects.push(new ExpandingCircle(chosenDirection, random(70, 250 - LeftBarSize) + x, random(50, 150), timer, 100, 50, false, chosenEffect == "Square"));
+      } else if (ColorMode == 'Gradient') {
+        effects.push(new ExpandingCircle(chosenDirection, random(70, 250 - LeftBarSize) + x, random(50, 150), timer, 100, 50, true, chosenEffect == "Square"));
+      } else if (ColorMode == `Random`) {
+        effects.push(new ExpandingCircle(chosenDirection, random(70, 250 - LeftBarSize) + x, random(50, 150), timer, 100, 50, true, chosenEffect == "Square"));
+      }
+    }
+    else if (chosenEffect == "Wave") {
+      effects.push(new tide(colors.h, colors.s, colors.l));
+    }
+  }
+  function runBeat() {
+
+    let beat;
+
+    beat = engine.audio.density * 300;
+
+    beats.push(Math.round(beat, 4));
+    beatavg = Math.round(beats.reduce(reducer) / beats.length, 0);
+    if (beats.length > 60) {
+      beats.splice(0, 1);
+    }
+
+    if (beatCooldown < 0 && beat > beatavg * (1 + threshold / 10) && beat > 40) {
+      DropBeat();
+      if (beatdisplay) {
+        effects.push(new moveableBar(320, 200 - beat, 10, 300, -5, 0, 360, 100, 50, 1));
+      }
+      Delays.push(Math.max(10, Math.abs(beat - beatavg * 1.2)));
+      averageDelay = Math.round(Delays.reduce(reducer) / Delays.length, 0);
+      if (Delays.length > 30) {
+        Delays.splice(0, 1);
+      }
+
+      beatCooldown += Math.max(Math.min(50, averageDelay / (10 - CooldownMod)), 5);
+
+      if (beat > 20) {
+        //DropBeat();
+      }
+    } else if (beatdisplay) {
+      effects.push(new moveableBar(320, 200 - beat, 10, 300, -5, 0, 220, 100, 50, 1));
+    }
+    if (beatCooldown >= 0) {
+      beatCooldown--;
+    }
+  }
+  function DropLevel() {
+    effects.push(
+      new moveableBar(random(120, 240), random(0, 200), 20, 20, Math.random() > 0.5 ? -7 : 7, 0, random(0, 360), 100, 50, 0.5)
+    );
+  }
+  function runLevels() {
+    var AudioOffset = 80;
+    let freqs = new Int8Array(engine.audio.freq);
+    let level = freqs.slice(4, 10).reduce(reducer) / 6;
+    //var level =  -1*engine.audio.level*2
+
+    levels.push(level);
+    levelavg = levels.reduce(reducer) / levels.length;
+    if (levels.length > 40) {
+      levels.splice(0, 1);
+    }
+
+    //LevelThreshold
+
+    // if (level > levelavg*1.2 && level > 10) {
+    //     //if (leveldisplay) {
+    //     //  effects.push(new moveableBar(320,  200-level, 10, 300, -5, 0, 30, 100, 50, 1));
+    //   //}
+    //     //DropLevel();
+    //   //}// else if (leveldisplay) {
+    //    // effects.push(new moveableBar(320,  200-level, 10, 300, -5, 0, 70, 100, 50, 1));
+    //   //}
+  }
+
+  function runMeters() {
+    runBeat();
+    //runLevels();
+    timer = (timer + (timerSpeed / 10)) % 360;
+  }
+
+  function SparkleEffect(hue, saturation, lightness, size) {
+    this.x = Math.random() * 320;
+    this.y = Math.random() * 200;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.lifetime = 40;
+    this.size = size;
+    this.draw = function () {
+      ctx.fillStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + this.lightness + '%)';
+      ctx.fillRect(this.x, this.y, this.size, this.size);
+      this.lifetime--;
+    };
+  }
+
+  function moveableBar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
+    this.x = x;
+    this.y = y;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 100;
+    this.size = 0;
+    this.ydirection = yDirection;
+    this.xdirection = xDirection;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + this.alpha + ' )';
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.lifetime--;
+      this.y -= this.ydirection;
+      this.x += this.xdirection;
+    };
+  }
+  function ExpandingCircle(outward, x, y, hue, saturation, lightness, gradient = false, isSquare) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.lifetime = 100;
+    this.size = 0;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.x = x;
+    this.y = y;
+    this.outward = outward;
+    this.isSquare = isSquare;
+    if (!this.outward) {
+      this.size = 200;
+      //engine.zone.saturation
+    }
+
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.lineWidth = 15;
+      let templightness = this.lightness;
+      if (beatDrive == 'Average Beat') {
+        templightness = Math.min(50, (this.lightness * beatavg) / sensitivity);
+        console.log('average Beat');
+      } else if (beatDrive == 'Volume') {
+        templightness = 70 + engine.audio.level;
+
+        console.log(`Volume ${70 + engine.audio.level}`);
+      } else {
+        templightness = this.lightness;
+        console.log('OFF');
+      }
+
+      if (ColorMode == 'Gradient') {
+        ctx.strokeStyle = 'hsl(' + (this.size % 360) + ',' + this.saturation + '%,' + templightness + '%)';
+      } else {
+        ctx.strokeStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + templightness + '%)';
+      }
+      this.size = SetRange(this.size, 0, 600)
+
+      if (!isSquare) {
+        ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+
+        ctx.save();
+        ctx.translate(this.x, this.y)
+        ctx.rect(-this.size / 2, -this.size / 2, this.size, this.size);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      if (this.outward) {
+        this.size += WaveSpeed;
+      } else {
+        this.size -= WaveSpeed;
+      }
+
+      this.lifetime--;
+    };
+  }
+
+
+
+  function tide(hue, sat, lit) {
+    this.xoffset = Math.random() * 50;
+    this.yoffset = 210;
+    this.complete = false;
+    this.amplitude = 5 * 10;
+    this.amplitudeDirection = -1;
+    this.waveXDirection = -1 + Math.random() * 2;
+    this.reverseWaveDirection = 1;
+    this.hue = hue;
+    this.saturation = sat;
+    this.lightness = lit;
+    this.lifetime = 150;
+    this.randomVal = Math.random() * 360;
+
+    if (ColorMode == 'Rainbow' || ColorMode == 'Gradient') {
+      this.hue = timer;
+    }
+
+    this.draw = function () {
+      let templightness = this.lightness;
+      if (beatDrive == 'Average Beat') {
+        templightness = Math.min(50, (this.lightness * beatavg) / sensitivity);
+        console.log('average Beat');
+      } else if (beatDrive == 'Volume') {
+        templightness = 70 + engine.audio.level;
+
+        console.log(`Volume ${70 + engine.audio.level}`);
+      } else {
+        templightness = this.lightness;
+        console.log('OFF');
+      }
+
+      if (ColorMode == 'Gradient') {
+        ctx.strokeStyle = 'hsl(' + ((this.hue + this.yoffset) % 360) + ',' + this.saturation + '%,' + templightness + '%)';
+      } else if (ColorMode == "Rainbow") {
+        ctx.strokeStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + templightness + '%)';
+      } else if (ColorMode == "Random") {
+        ctx.strokeStyle = 'hsl(' + this.randomVal + ',' + this.saturation + '%,' + templightness + '%)';
+      }
+
+      ctx.beginPath();
+      ctx.lineWidth = 5;
+
+      var x = 0;
+      var y = this.yoffset;
+
+      if (this.amplitude > 5 * 10) {
+        this.amplitudeDirection = -1;
+      } else if (this.amplitude < -5 * 10) {
+        this.amplitudeDirection = 1;
+      }
+
+      this.amplitude += (this.amplitudeDirection * Math.random()) / 4;
+
+      this.yoffset -= (2 * Math.random() + WaveSpeed) * this.reverseWaveDirection;
+
+      this.xoffset += (Math.random() / 10) * this.waveXDirection;
+
+      if (this.yoffset < -150) {
+        this.complete = true;
+      }
+
+      while (x < 330) {
+        y = 200 / 2 + this.amplitude * Math.sin(x / 150 + this.xoffset) + this.yoffset;
+
+        ctx.lineTo(x, y);
+        x++;
+      }
+
+      ctx.stroke();
+      while (x < 330) {
+        y = height / 2 + this.amplitude * Math.sin(x / 150 + this.xoffset) + this.yoffset + 15;
+
+        ctx.lineTo(x, y);
+        x++;
+      }
+
+      ctx.stroke();
+      this.lifetime--;
+    };
+  }
+
+
+  function SetRange(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+  }
+
+
+  function random(min, max) {
+    // if min = 10 max = 15 random var = 0.1544465; it will return approximately 10 because of math.floor
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function hexToHSL(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    var r = parseInt(result[1], 16);
+    var g = parseInt(result[2], 16);
+    var b = parseInt(result[3], 16);
+
+    (r /= 255), (g /= 255), (b /= 255);
+    var max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    var h,
+      s,
+      l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+      }
+      h /= 6;
+    }
+
+    s = s * 100;
+    s = Math.round(s);
+    l = l * 100;
+    l = Math.round(l);
+    h = Math.round(360 * h);
+
+    var colors = [];
+    colors['h'] = h;
+    colors['s'] = s;
+    colors['l'] = l;
+
+    return colors;
+  }
+
+  function update() {
+    DrawBackground();
+
+    //Update any meters here
+    runMeters();
+
+
+
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+    }
+
+    for (let i = 0; i < effects.length; i++) {
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    if (!MinimalMode) {
+      x = LeftBarSize;
+      ctx.beginPath();
+      ctx.globalAlpha = 1;
+      if (BackgroundColorMode == "Normal") {
+        ctx.fillStyle = `${BackgroundColor}`
+      } else if (BackgroundColorMode == "ColorCycle") {
+        ctx.fillStyle = `hsl(${timer + 180}, ${backgroundColors.s}%, ${backgroundColors.l}%)`
+      }
+
+
+      ctx.fillRect(0, 0, LeftBarSize, 200);
+      ctx.globalAlpha = 1;
+      DrawCircleDisplay()
+    } else {
+      x = 0;
+    }
+    if (beatdisplay) {
+      ctx.fillStyle = '#8B008B';
+      ctx.fillRect(0, 200 - beatavg, 320, 1);
+      //console.log(beatavg)
+    }
+    // if(leveldisplay) {
+    //   ctx.fillStyle = '#00FFFF';
+    //  ctx.fillRect(0, 200 - levelavg, 320, 1);
+    //         //console.log(beatavg)
+    // }
+    window.requestAnimationFrame(update);
+  }
+
+  //State manager class
+  function StateHandler() {
+    let stack = [];
+    let state = null;
+
+    this.size = function () {
+      return stack.length;
+    };
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function DrawBackground() {
+    ctx.beginPath();
+    ctx.globalAlpha = decay / 10;
+    if (BackgroundColorMode == "Normal") {
+      ctx.fillStyle = `${BackgroundColor}`
+    } else if (BackgroundColorMode == "ColorCycle") {
+      ctx.fillStyle = `hsl(${timer + 180}, ${backgroundColors.s}%, ${backgroundColors.l}%)`
+    }
+
+
+    ctx.fillRect(0, 0, 320, 200);
+    ctx.globalAlpha = 1;
+  }
+
+  // function DrawRect(x, y, col, XSize,YSize, Rotate = false, RotateAngle = 0, rotatepointx = x, rotatepoints = y) {
+  //   ctx.beginPath();
+  //   ctx.fillStyle = col;
+  //   ctx.save();
+  //   ctx.translate(rotatepointx, rotatepoints);
+  //   if(Rotate){
+  //     ctx.rotate(RotateAngle * Math.PI / 180);
+  //   }
+
+  //   ctx.fillRect(rotatepointx - x, rotatepoints - y, YSize, XSize);
+  //   ctx.restore();
+  // }
+
+  function DrawCircleDisplay() {
+    let freqs = new Int8Array(engine.audio.freq);
+
+    for (var iZone = 0; iZone < 60; iZone++) {
+
+      if (freqs[iZone] > prev[iZone]) {
+        prev[iZone] = freqs[iZone];
+      }
+      prev[iZone] -= 10;
+      if (prev[iZone] <= 0) {
+        prev[iZone] = 0;
+      }
+
+      var iWidth = 2;
+      var nVal = freqs[iZone] ? freqs[iZone] : 1;
+      var iHeight = nVal * 3;
+      // var locationValue =200;
+      // var xlocationValue = 50;
+      var iZx = iZone * iWidth;
+      var iZy = iHeight;
+
+      ctx.beginPath();
+
+      ctx.lineWidth = LeftBarSize / 60;
+      ctx.moveTo(Math.sin(iZone / 9) * LeftBarSize / 5 + LeftBarSize / 2, Math.cos(iZone / 9) * LeftBarSize / 5 + 60);
+      ctx.lineTo(Math.sin(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / 5 : LeftBarSize / 5) + LeftBarSize / 2, Math.cos(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / 5 : LeftBarSize / 5) + 60);
+      if (circleColorMode == "Normal") {
+        ctx.strokeStyle = `${circleHex}`
+      } else if (circleColorMode == "Rainbow") {
+        ctx.strokeStyle = `hsl(${timer}, 100%, 50%)`
+      } else if (circleColorMode == "RotationHue") {
+        ctx.strokeStyle = `hsl(${iZone + timer}, 100%, 50%)`
+      }
+
+      ctx.stroke();
+      // let syncedValX =  xlocationValue+ 20 * iWidth
+      // let syncedValY = locationValue- 20 * iWidth 
+      // DrawRect(iZx,locationValue, 'Blue',-iHeight , iWidth*2, true, -iZone*4.7, syncedValX , syncedValY );
+
+    }
+
+  }
+
+
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.prev = 0;
+    this.increased = false;
+    this.decreased = false;
+    this.values = [];
+
+    this.setPrev = function () {
+      this.prev = this.value;
+    };
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      this.values.push(updatedValue);
+      if (this.values.length > this.size) {
+        this.values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (let i = 0; i < this.values.length - 1; i++) {
+        if (this.values[i] !== this.values[i + 1]) {
+          return;
+        }
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== this.values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - this.values[0]);
+        this.increased = this.value < this.values[0];
+        this.decreased = this.value > this.values[0];
+        this.value = this.values[0];
+        callback();
+      }
+    };
+  }
+
+  //Start logic after engine is ready
+  // noinspection JSUnusedGlobalSymbols
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+
+
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+</script>
+</head>
