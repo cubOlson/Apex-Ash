@@ -524,10 +524,6 @@
       if (bossMeter.increased != bossGoing) {
         effects.push(new BossState());
       }
-      // if(bossMeter.value == 0 && bossWhiteMeter.value == 0 && bossWhiteMeter.decreased && !bossKillGoing){
-      //   effects.push(new bossKill())
-      //   bossKillGoing = true;
-      // }
     }
   }
 
@@ -1193,7 +1189,19 @@
       if (bossMeter.value == 0) {
         this.lifetime = 0;
         bossGoing = false;
-      }
+        bossKillHelper()
+    }
+  }
+}
+
+  function bossKillHelper(){
+    if(bossWhiteMeter.value == 0 && bossWhiteMeter.decreased){
+      effects.push(new bossKill())
+      bossKillGoing = true;
+    } else {
+      setTimeout(()=>{
+        bossKillHelper()
+      }, 500)
     }
   }
 
