@@ -1,0 +1,1463 @@
+<head>
+  <title>Minecraft Java Edition Work</title>
+  <meta description="Game intergration for Minecraft Java edition. Set your GUI scale to Auto" />
+  <meta publisher="SignalRGB" />
+  <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
+  <meta property="enableHud" label="enable Hud Effects" type="boolean" default="1" />
+  <meta property="adjMeter" label="Adjust Bar(Turn on only when not in Game)" type="boolean" default="0" />
+  <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
+  <meta property="healthColor" label="Health Bar Color" type="color" default="#ff0000" min="0" max="360" />
+  <meta property="healthY" label="Health bar Y position" type="number" min="0" max="200" default="70" />
+  <meta property="healthX" label="Health bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="healthWidth" label="Health bar width" type="number" min="0" max="320" default="320" />
+  <meta property="healthHeight" label="Health bar height" type="number" min="0" max="100" default="15" />
+  <meta property="enableHunger" label="Hunger effect" type="boolean" default="1" />
+  <meta property="foodColor" label="Food Bar Color" type="color" default="#ffaa00" min="0" max="360" />
+  <meta property="foodY" label="Food bar Y position" type="number" min="0" max="200" default="90" />
+  <meta property="foodX" label="Food bar X position" type="number" min="0" max="320" default="0" />
+  <meta property="foodWidth" label="Food bar width" type="number" min="0" max="320" default="320" />
+  <meta property="foodHeight" label="Food bar height" type="number" min="0" max="100" default="15" />
+  <meta property="enableXP" label="enable XP effect" type="boolean" default="1" />
+  <meta property="enablePortal" label="enable Portal effect" type="boolean" default="1" />
+  <meta property="enableSleep" label="enable Sleep effect" type="boolean" default="1" />
+  <meta property="enableMenu" label="enable Menu effect" type="boolean" default="1" />
+  <meta property="enableStatus" label="enable Status effect" type="boolean" default="1" />
+  <meta property="enableBoss" label="enable Boss bar effect" type="boolean" default="1" />
+  <meta property="enableFreeze" label="enable Freeze effect" type="boolean" default="1" />
+  <meta property="enablePoison" label="enable Poison effect" type="boolean" default="1" />
+  <meta property="enableUnderwater" label="enable Underwater effect" type="boolean" default="1" />
+
+  <meta meter="bubble1" tags="minecraft, vlc" x=".699" y=".7965" width=".003" height=".0001" h="0-360" s="0-100"
+    l="0-10" type="linear">
+  <resolution size="1920x1080" x=".678" y=".819" width=".003" height=".0001" />
+  <resolution size="1920x1200" x=".7230" y=".7965" width=".003" height=".0001" />
+  <resolution size="1440x900" x=".678" y=".8375" width=".003" height=".0001" />
+  <resolution size="2560x1600" x=".7" y=".818" width=".003" height=".0001" />
+  <resolution size="3440x1440" x=".6489" y=".7959" width=".0041" height=".0001" />
+  </meta>
+
+  <meta meter="bubble2" tags="minecraft, vlc" x=".699" y=".801" width=".003" height=".0001" h="175-240" s="60-100"
+    l="80-100" type="linear">
+  <resolution size="1920x1080" x=".6786" y=".824" width=".003" height=".0001" />
+  <resolution size="1920x1200" x=".722" y=".801" width=".003" height=".0001" />
+  <resolution size="1440x900" x=".678" y=".841" width=".003" height=".0001" />
+  <resolution size="2560x1600" x=".7" y=".8236" width=".003" height=".0001" />
+  <resolution size="3440x1440" x=".6489" y=".8007" width=".0041" height=".0001" />
+
+  </meta>
+
+  <meta meter="bubble3" tags="minecraft, vlc" x=".699" y=".809" width=".003" height=".0001" h="175-240" s="0-60"
+    l="80-100" type="linear">
+  <resolution size="1920x1080" x=".6786" y=".831" width=".003" height=".0001" />
+  <resolution size="1920x1200" x=".722" y=".809" width=".003" height=".0001" />
+  <resolution size="1440x900" x=".678" y=".848" width=".003" height=".0001" />
+  <resolution size="2560x1600" x=".7" y=".831" width=".003" height=".0001" />
+  <resolution size="3440x1440" x=".6489" y=".809" width=".0041" height=".0001" />
+  </meta>
+
+  <meta meter="health" tags="minecraft, vlc" x=".291" y=".8489" width=".1625" height=".001" h="0-20" s="60-100"
+    l="80-100" type="area">
+  <resolution size="1920x1080" x=".3150" y=".87" width=".1575" height=".001" />
+  <resolution size="1920x1200" x=".266" y=".8489" width=".1816" height=".001" />
+  <resolution size="1440x900" x=".315" y=".8788" width=".1433" height=".001" />
+  <resolution size="2560x1600" x=".2884" y=".8653" width=".166" height=".001" />
+  <resolution size="3440x1440" x=".3456" y=".8465" width=".1125" height=".0021" />
+  </meta>
+
+  <meta meter="Food" tags="minecraft, vlc" x=".65234" y=".8687" width=".0007" height=".001" h="0-360" s="0-100"
+    l="80-100" type="area">
+  <resolution size="1920x1080" x=".6359" y=".88233" width=".0007" height=".001" />
+  <resolution size="1920x1200" x=".6699" y=".8687" width=".0007" height=".001" />
+  <resolution size="1440x900" x=".6359" y=".895" width=".0007" height=".001" />
+  <resolution size="2560x1600" x=".6519" y=".882" width=".0007" height=".001" />
+  <resolution size="3440x1440" x=".6142" y=".8674" width=".0009" height=".0021" />
+  </meta>
+
+
+  <meta meter="FoodBar" tags="minecraft" x=".5281" y=".8472" width=".18" height=".004" h="0-50" s="40-80" l="65-100"
+    type="area">
+  <resolution size="1920x1080" x=".5280" y=".865" width=".164" height=".002" />
+  <resolution size="1920x1200" x=".5281" y=".8472" width=".199" height=".004" />
+  <resolution size="1440x900" x=".5238" y=".8784" width=".154" height=".004" />
+  <resolution size="2560x1600" x=".5257" y=".864" width=".176" height=".004" />
+  <resolution size="3440x1440" x=".5218" y=".8465" width=".1265" height=".0021" />
+  </meta>
+
+  <meta meter="lowHp" tags="minecraft, vlc" x=".291" y=".8529" width=".04" height=".001" h="0-20" s="60-100" l="80-100"
+    type="area">
+  <resolution size="1920x1080" x=".3150" y=".87" width=".04" height=".001" />
+  <resolution size="1920x1200" x=".266" y=".8529" width=".05" height=".001" />
+  <resolution size="1440x900" x=".313" y=".8818" width=".04" height=".001" />
+  <resolution size="2560x1600" x=".2884" y=".868" width=".05" height=".001" />
+  <resolution size="3440x1440" x=".3456" y=".8514" width=".0317" height=".0021" />
+  </meta>
+
+  <meta meter="LastHealth" tags="minecraft, vlc" x=".460" y=".8529" width=".01" height=".001" h="0-20" s="60-100"
+    l="80-100" type="area">
+  <resolution size="1920x1080" x=".465" y=".87" width=".01" height=".001" />
+  <resolution size="1920x1200" x=".460" y=".8529" width=".01" height=".001" />
+  <resolution size="1440x900" x=".463" y=".8818" width=".01" height=".001" />
+  <resolution size="2560x1600" x=".458" y=".8652" width=".013" height=".001" />
+  <resolution size="3440x1440" x=".4709" y=".8507" width=".015" height=".001" />
+  </meta>
+
+  <meta meter="healthB" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="170-220" s="0-50"
+    l="70-100" type="area">
+  <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" />
+  <resolution size="1920x1200" x=".268" y=".8529" width=".0130" height=".001" />
+  <resolution size="1440x900" x=".315" y=".8818" width=".0130" height=".001" />
+  <resolution size="2560x1600" x=".2884" y=".8662" width=".0130" height=".001" />
+  <resolution size="3440x1440" x=".3453" y=".85" width=".0029" height=".001" />
+  </meta>
+
+  <meta meter="healthG" tags="minecraft, vlc" x=".291" y=".8529" width=".0130" height=".001" h="40-80" s="0-100"
+    l="40-90" type="area">
+  <resolution size="1920x1080" x=".3150" y=".87" width=".0150" height=".001" />
+  <resolution size="1920x1200" x=".268" y=".8529" width=".0130" height=".001" />
+  <resolution size="1440x900" x=".315" y=".8818" width=".0130" height=".001" />
+  <resolution size="2560x1600" x=".2884" y=".8662" width=".0130" height=".001" />
+  <resolution size="3440x1440" x=".3453" y=".85" width=".0029" height=".001" />
+  </meta>
+
+  <meta meter="xp" tags="minecraft, vlc" x=".2898" y=".8861" width=".376" height=".002" h="80-100" s="30-100" l="0-100"
+    type="area">
+  <resolution size="1920x1080" x=".3188" y=".9009" width=".374" height=".002" />
+  <resolution size="1920x1200" x=".268" y=".8861" width=".4628" height=".002" />
+  <resolution size="1440x900" x=".314" y=".9111" width=".3722" height=".002" />
+  <resolution size="2560x1600" x=".289" y=".901" width=".4203" height=".002" />
+  <resolution size="3440x1440" x=".3439" y=".8882" width=".3134" height=".0021" />
+  </meta>
+
+  <meta meter="boss" tags="minecraft, vlc" x="0.2890" y="0.0576" width="0.4198" height="0.0001" h="260-330" s="80-100"
+    l="70-100" type="area">
+  <resolution size="1920x1080" x=".3151" y=".0490" width=".3125" height=".002" />
+  <resolution size="1920x1200" x=".27" y=".061" width=".46" height=".002" />
+  <resolution size="1440x900" x=".3148" y=".0486" width=".369" height=".002" />
+  <resolution size="2560x1600" x=".291" y=".0527" width=".415" height=".002" />
+  <resolution size="3440x1440" x=".3453" y=".0583" width=".3099" height=".0021" />
+  </meta>
+
+  <meta meter="bossWhite" tags="VLC,process" type="area" x="0.4480" y="0.0215" width="0.0709" height="0.0007" h="0-360"
+    s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="inGame1" tags="minecraft, vlc" x=".3058" y=".913" width=".3815" height=".001" h="0-360" s="0-10"
+    l="50-100" type="area">
+  <resolution size="1920x1080" x=".314" y=".924" width=".3815" height=".001" />
+  <resolution size="1920x1200" x=".3058" y=".913" width=".3815" height=".001" />
+  <resolution size="1440x900" x=".313" y=".933" width=".3715" height=".001" />
+  <resolution size="2560x1600" x=".29" y=".92430" width=".41" height=".001" />
+  <resolution size="3440x1440" x=".3439" y=".9139" width=".3113" height=".0021" />
+  </meta>
+
+  <meta meter="goodStatusGrey" tags="minecraft, vlc" type="area" x="0.8142" y="0.0090" width="0.1785" height="0.0021"
+    h="0-360" s="0-10" l="25-35">
+  </meta>
+
+  <meta meter="goodStatusBlack" tags="minecraft, vlc" type="area" x="0.8142" y="0.005" width="0.1785" height="0.0021"
+    h="0-360" s="0-100" l="0-15">
+  </meta>
+
+  <meta meter="goodMain" tags="minecraft, vlc" type="colormean" x="0.97" y="0.051" width="0.0025" height="0.0045"
+    h="0-10" s="90-100" l="1-71">
+  </meta>
+
+  <meta meter="goodAccent" tags="minecraft, vlc" type="colormean" x="0.9730" y="0.0396" width="0.0015" height="0.0042"
+    h="0-10" s="0-20" l="88-100">
+  </meta>
+
+  <meta meter="badStatusGrey" tags="minecraft, vlc" type="area" x="0.8142" y="0.1181" width="0.1785" height="0.0021"
+    h="0-360" s="0-10" l="25-35">
+  </meta>
+
+  <meta meter="badStatusBlack" tags="minecraft, vlc" type="area" x="0.8142" y="0.1132" width="0.1785" height="0.0021"
+    h="0-360" s="0-100" l="0-15">
+  </meta>
+
+  <meta meter="badMain" tags="minecraft, vlc" type="colormean" x="0.9683" y="0.1465" width="0.0009" height="0.0042"
+    h="230-250" s="90-100" l="1-71">
+  </meta>
+
+  <meta meter="badAccent" tags="minecraft, vlc" type="colormean" x="0.9762" y="0.1653" width="0.0023" height="0.0028"
+    h="0-10" s="0-20" l="88-100">
+  </meta>
+
+  <meta meter="inMenuBlack" tags="minecraft, vlc" type="area" x="0.6605" y="0.1542" width="0.0002" height="0.001"
+    h="0-360" s="0-100" l="0-10">
+  </meta>
+
+  <meta meter="inMenuWhite" tags="minecraft, vlc" type="area" x="0.6469" y="0.1604" width="0.0102" height="0.0042"
+    h="0-360" s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="anvilWhiteHammer" tags="minecraft, vlc" type="area" x="0.3816" y="0.2347" width="0.0000" height="0.0000"
+    h="0-360" s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="enchantmentTableBrown" tags="minecraft, vlc" type="area" x="0.4363" y="0.2090" width="0.0055"
+    height="0.0028" h="0-10" s="0-10" l="12-32">
+  </meta>
+
+  <meta meter="sleepWhite" tags="minecraft, vlc" type="area" x="0.4529" y="0.8750" width="0.0526" height="0.0021"
+    h="0-10" s="0-20" l="88-100">
+  </meta>
+
+  <meta meter="sleepBlack" tags="minecraft, vlc" type="area" x="0.4793" y="0.8347" width="0.0105" height="0.0007"
+    h="0-10" s="0-20" l="0-60">
+  </meta>
+
+  <meta meter="travelWhite" tags="minecraft, vlc" type="area" x="0.4619" y="0.3000" width="0.0552" height="0.0028"
+    h="0-360" s="0-20" l="90-100">
+  </meta>
+
+  <meta meter="travelBrown" tags="minecraft, vlc" type="area" x="0.4782" y="0.3326" width="0.0081" height="0.0035"
+    h="20-45" s="45-65" l="0-25">
+  </meta>
+
+  <meta meter="topLeftColor" tags="minecraft, vlc" type="colormean" x="0.0526" y="0.0028" width="0.0009" height="0.0049"
+    h="0-10" s="0-20" l="88-100">
+  </meta>
+
+</head>
+
+
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+
+  var canvas, ctx;
+  var stateHdlr = new StateHandler();
+  var healthMeter = new Meter(12, onHealthMeterChanged);
+  var foodBarMeter = new Meter(40, () => "")
+  var lastHealthMeter = new Meter(5, () => "")
+  var freezeMeter = new Meter(5, onFreezeChange)
+  var xpMeter = new Meter(10, onXpMeterChanged);
+  var bossMeter = new Meter(10, onBossMeterChanged);
+  var bossWhiteMeter = new Meter(10, onBossMeterChanged);
+  var inGameMeter = new Meter(5, onGameChanged)
+  var bubbleMeter = new Meter(5, onBubblechanged)
+  var poisonMeter = new Meter(5, onPoisonChanged)
+  var lowHpMeter = new Meter(5, onLowHpChanged)
+  var lowFoodMeter = new Meter(20, onFoodMeterChanged)
+  var gStatGreyMeter = new Meter(8, goodStatusChanged)
+  var gStatBlackMeter = new Meter(3, () => "")
+  var gStatMainMeter = new Meter(3, () => "")
+  var gStatAccentMeter = new Meter(3, () => "")
+  var bStatGreyMeter = new Meter(8, badStatusChanged)
+  var bStatBlackMeter = new Meter(3, () => "")
+  var bStatMainMeter = new Meter(3, () => "")
+  var bStatAccentMeter = new Meter(3, () => "")
+  var inMenuBlackMeter = new Meter(10, menuChanged)
+  var inMenuWhiteMeter = new Meter(10, menuChanged)
+  var anvilWhiteHammerMeter = new Meter(3, () => "")
+  var enchantmentTableBrownMeter = new Meter(3, () => "")
+  var sleepWhiteMeter = new Meter(15, inSleepChanged)
+  var sleepBlackMeter = new Meter(15, inSleepChanged)
+  var travelWhiteMeter = new Meter(3, travelChanged)
+  var travelBrownMeter = new Meter(3, travelChanged)
+  var topLeftColorMeter = new Meter(1, () => "")
+
+
+  var effects = [];
+  var sleep = [];
+  var inGame = false;
+  var freezeGoing = false;
+  var bubblegoing = false;
+  var poisongoing = false;
+  var lowHpGoing = false;
+  var bossGoing = false;
+  var goodStatusGoing = false;
+  var badStatusGoing = false;
+  var menuGoing = false;
+  var anvilGoing = false;
+  var enchantGoing = false;
+  var sleepGoing = false;
+  var travelGoing = false;
+  var bossKillGoing = false;
+
+
+  function update() {
+    if (Brightness != 0) {
+      IdleState();
+    } else {
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, 320, 200)
+    }
+
+    bossMeter.setValue(engine.vision.boss);
+    bossWhiteMeter.setValue(engine.vision.bossWhite);
+    foodBarMeter.setValue(engine.vision.FoodBar)
+    lastHealthMeter.setValue(engine.vision.LastHealth)
+    inGameMeter.setValue(engine.vision.inGame1)
+    lowHpMeter.setValue(engine.vision.lowHp)
+    freezeMeter.setValue(engine.vision.healthB)
+    poisonMeter.setValue(engine.vision.healthG)
+    healthMeter.setValue(engine.vision.health);
+    gStatGreyMeter.setValue(engine.vision.goodStatusGrey)
+    gStatBlackMeter.setValue(engine.vision.goodStatusBlack)
+    gStatMainMeter.setValue(engine.vision.goodMain)
+    gStatAccentMeter.setValue(engine.vision.goodAccent)
+    bStatGreyMeter.setValue(engine.vision.badStatusGrey)
+    bStatBlackMeter.setValue(engine.vision.badStatusBlack)
+    bStatMainMeter.setValue(engine.vision.badMain)
+    bStatAccentMeter.setValue(engine.vision.badAccent)
+    inMenuBlackMeter.setValue(engine.vision.inMenuBlack)
+    inMenuWhiteMeter.setValue(engine.vision.inMenuWhite)
+    anvilWhiteHammerMeter.setValue(engine.vision.anvilWhiteHammer)
+    enchantmentTableBrownMeter.setValue(engine.vision.enchantmentTableBrown)
+    sleepWhiteMeter.setValue(engine.vision.sleepWhite)
+    sleepBlackMeter.setValue(engine.vision.sleepBlack)
+    travelWhiteMeter.setValue(engine.vision.travelWhite)
+    travelBrownMeter.setValue(engine.vision.travelBrown)
+    topLeftColorMeter.setValue(engine.vision.topLeftColor[0])
+
+    if (inGame) {
+      xpMeter.setValue(engine.vision.xp);
+      bubbleMeter.setValue(engine.vision.bubble1)
+      lowFoodMeter.setValue(engine.vision.Food)
+    }
+
+    //Effect handler 
+    for (let i = 0; i < effects.length; i++) {
+      effects[i].draw();
+      if (effects[i].lifetime <= 0) {
+        effects.splice(i, 1);
+      }
+    }
+    sleep.forEach((ele, i) => {
+      ele.draw();
+      ele.lifetime <= 0 ? sleep.splice(i, 1) : null;
+    })
+    if (enableHud) {
+      UpdateUi(adjMeter);
+    }
+
+    stateHdlr.Process();
+    window.requestAnimationFrame(update);
+  }
+
+  function UpdateUi(adj) {
+    if (adj && !inGame) {
+      ctx.fillStyle = healthColor;
+      //HealthBar
+      ctx.fillRect(healthX, healthY, ((0.745 * 1.3) + (1 / 10)) * healthWidth, healthHeight)
+      ctx.fillStyle = foodColor;
+      ctx.fillRect(foodX, foodY, (0.36 * 2.95) * foodWidth, foodHeight)
+    }
+    ctx.fillStyle = healthColor;
+    //HealthBar
+    ctx.fillRect(healthX, healthY, ((healthMeter.value * 1.3) + (lastHealthMeter.value / 10)) * healthWidth, healthHeight)
+    ctx.fillStyle = foodColor;
+    ctx.fillRect(foodX, foodY, (foodBarMeter.value * 2.95) * foodWidth, foodHeight)
+  }
+
+
+  //Callbacks
+  function onGameChanged() {
+    if (inGameMeter.value > 0.6) {
+      if (healthMeter.value > 0 || freezeMeter.value > 0 || lowHpMeter.value > 0 || poisonMeter.value > 0) {
+        if (inGame == false) {
+          setTimeout(() => {
+            clearEffects()
+            CheckAfterInGame();
+          }, 2);
+        }
+        inGame = true;
+      } else {
+        clearEffects()
+        inGame = false
+        onBossMeterChanged(true)
+        menuChanged()
+      }
+    } else {
+      clearEffects()
+      inGame = false
+      onBossMeterChanged(true)
+      menuChanged()
+    }
+  }
+
+  function clearEffects() {
+    effects.length = 0
+    freezeGoing = false;
+    poisongoing = false;
+    bubblegoing = false;
+    lowHpGoing = false;
+    menuGoing = false;
+    sleepGoing = false;
+    bossKillGoing = false;
+    anvilGoing = false;
+    enchantGoing = false;
+  }
+
+
+  function CheckAfterInGame() {
+    onBubblechanged()
+    onPoisonChanged()
+    onFreezeChange()
+    onLowHpChanged()
+    onFoodMeterChanged()
+    onBossMeterChanged(true)
+
+  }
+
+  function travelChanged() {
+    if (travelWhiteMeter.value > .4 && travelBrownMeter.value == 1 && !travelGoing && enablePortal) {
+      travelGoing = true;
+      sleep.push(new travelEffect())
+    } else if (travelWhiteMeter.value < .2 && travelBrownMeter.value < .25 && travelGoing && enablePortal) {
+      if (topLeftColorMeter.value > 270 && topLeftColorMeter.value < 315) {
+        doneTravel(290)
+      } else {
+        doneTravel(45)
+      }
+      travelGoing = false;
+    }
+  }
+
+  function inSleepChanged() {
+    if (sleepBlackMeter.value == 1 && sleepWhiteMeter.value > .4 && healthMeter.value == 0 && !sleepGoing && enableSleep) {
+      sleep.push(new sleeping())
+      sleepGoing = true;
+    }
+  }
+
+  function menuChanged() {
+    if (inMenuBlackMeter.value == 1 && inMenuWhiteMeter.value == 1 && !menuGoing && enableMenu) {
+      if (anvilWhiteHammerMeter.value == 1 && !anvilGoing) {
+        effects.push(new inAnvil())
+        anvilGoing = true;
+      } else if (enchantmentTableBrownMeter.value == 1 && !enchantGoing) {
+        sleep.push(new inEnchanter())
+        enchantGoing = true;
+      } else {
+        effects.push(new genericMenu())
+      }
+      menuGoing = true;
+    }
+  }
+
+  function goodStatusChanged() {
+    if (gStatGreyMeter.value > .2 && gStatGreyMeter.increased && gStatGreyMeter.diff > .2 &&
+      gStatBlackMeter.value > .2 && Math.abs(gStatBlackMeter.value - gStatGreyMeter.value) < 0.05 && enableStatus) {
+      effects.push(new statusEffect(true, `hsl(${gStatMainMeter.value[0]}, ${gStatMainMeter.value[1]}%, 50%)`, `hsl(${gStatAccentMeter.value[0]}, ${gStatAccentMeter.value[1]}%, 50%)`))
+    }
+  }
+
+  function badStatusChanged() {
+    if (bStatGreyMeter.value > .2 && bStatGreyMeter.increased && bStatGreyMeter.diff > .1 &&
+      bStatBlackMeter.value > .2 && Math.abs(bStatBlackMeter.value - bStatGreyMeter.value) < 0.05 && enableStatus) {
+      effects.push(new statusEffect(false, `hsl(${bStatMainMeter.value[0]}, ${bStatMainMeter.value[1]}%, 50%)`, `hsl(${bStatAccentMeter.value[0]}, ${bStatAccentMeter.value[1]}%, 50%)`))
+    }
+  }
+
+  function onLowHpChanged() {
+    if (inGame && lowHpGoing == false && lowHpMeter.value < 0.7 && lastHealthMeter.value == 0 && enableHealth) {
+      effects.push(new lowHealthState())
+      lowHpGoing = true;
+    }
+  }
+
+
+  function onFreezeChange() {
+    if (freezeMeter.value > 0.2 && freezeGoing == false && enableFreeze) {
+      effects.push(new FreezeEffect())
+      freezeGoing = true;
+    }
+  }
+
+  function onBubblechanged() {
+    if (bubbleMeter.value == 1 && engine.vision.bubble2 == 1 && engine.vision.bubble3 == 1 && inGame && enableUnderwater) {
+      effects.push(new bubbleEffect("hsla(222, 100%, 46%, 0.7)", "hsla(189, 100%, 46%, 1)", "hsla(243, 100%, 46%, 1)"))
+      bubblegoing = true;
+    }
+  }
+
+  function onPoisonChanged() {
+    if (poisonMeter.value >= 0.2 && poisongoing == false && healthMeter.value == 0 && enablePoison) {
+      effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
+      poisongoing = true;
+    }
+  }
+
+  function onHealthMeterChanged() {
+    if (enableHealth && inGame && freezeMeter.value == 0 && poisonMeter.value == 0 && lastHealthMeter.value == 0 && !lowHpGoing) {
+      if (healthMeter.decreased) {
+        for (let index = 0; index < 20; index++) {
+          setTimeout(() => {
+            effects.push(new DamageState(160, 200, Math.random() * 10 + 15, "red"));
+          }, 20);
+
+        }
+
+      } else if (healthMeter.increased && healthMeter.diff < 0.2) {
+        effects.push(new HealState());
+      }
+    }
+    onGameChanged();
+    onPoisonChanged()
+  }
+
+  function onXpMeterChanged() {
+    if (enableXP == 1) {
+      if (xpMeter.increased && xpMeter.value > 0.01 || xpMeter.decreased && xpMeter.value) {
+        effects.push(new XpUpState());
+      }
+    }
+  }
+
+  function onFoodMeterChanged() {
+    if (enableHunger == true) {
+      if (lowFoodMeter.value < 0.3) {
+        effects.push(new FoodState());
+      }
+    }
+  }
+  function onBossMeterChanged(Gamecheck) {
+    if (enableBoss == 1) {
+      if (Gamecheck && bossGoing) {
+        effects.push(new BossState());
+      }
+      if (bossMeter.increased != bossGoing) {
+        effects.push(new BossState());
+      }
+    }
+  }
+
+  function bossKill() {
+    this.lifetime = 150;
+    this.alpha = 0;
+    this.effects = [];
+    this.delay = 500;
+    this.start = Date.now();
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, "black")
+      ctx.globalAlpha = 1;
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        ele.lifetime <= 0 ? this.effects.splice(i, 1) : null;
+      })
+      if (elapsed > this.delay) {
+        this.effects.push(new bossSmoke())
+        this.effects.push(new bossSmoke())
+        this.start = Date.now()
+        this.delay -= 45
+      }
+      this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      this.lifetime--;
+      if (this.lifetime <= 0) {
+        bossKillGoing = false;
+        for (let i = 0; i < 18; i++) {
+          effects.push(new xpParticle())
+        }
+        setTimeout(() => {
+          for (let i = 0; i < 18; i++) {
+            effects.push(new xpParticle())
+          }
+        }, 200)
+        setTimeout(() => {
+          for (let i = 0; i < 18; i++) {
+            effects.push(new xpParticle())
+          }
+        }, 400)
+        setTimeout(() => {
+          for (let i = 0; i < 18; i++) {
+            effects.push(new xpParticle())
+          }
+        }, 600)
+      }
+    }
+  }
+
+  function bossSmoke() {
+    this.x = 160;
+    this.y = 100;
+    this.vy = .1;
+    this.radius = 1;
+    this.rotate = Math.random() * Math.PI * 2;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.save()
+      ctx.translate(160, 100)
+      ctx.rotate(this.rotate)
+      ctx.translate(-160, -100)
+      DrawCircle(this.x, this.y, this.radius, "grey")
+      DrawCircle(this.x, this.y + 20, this.radius * .8, "black")
+      ctx.restore()
+      this.radius += 2;
+      this.y -= this.vy;
+      this.vy *= 1.1;
+      this.y < -10 ? this.lifetime = 0 : null;
+    }
+  }
+
+  function xpParticle() {
+    this.x = 160;
+    this.y = 100;
+    this.radius = Math.random() * 10 + 10;
+    this.vx = 10 - Math.random() * 20;
+    this.vy = 10 - Math.random() * 20;
+    this.lifetime = 10;
+    this.color = Math.floor(Math.random() * 10) % 2 == 0 ? "green" : "yellow";
+    this.draw = function () {
+      DrawCircle(this.x, this.y, this.radius, this.color)
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vx > 0 ? this.vx -= .005 : this.vx += .005;
+      this.vy += .5;
+      this.y > 250 ? this.lifetime = 0 : null;
+    }
+  }
+
+  function travelEffect() {
+    this.start = Date.now();
+    this.speed = 1000;
+    this.innerSpeed = .1;
+    sleep.push(new travelRing(10, this.innerSpeed, false, "black"))
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed > this.speed) {
+        sleep.unshift(new travelRing(10, this.innerSpeed, false, "black"))
+        this.start = Date.now()
+      }
+      this.speed > 250 ? this.speed -= 5 : null;
+      this.innerSpeed += .01;
+      if (!travelGoing) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function travelRing(stroke, speed, colored, color) {
+    this.radius = 1;
+    this.colored = colored;
+    this.color = color;
+    this.stroke = stroke;
+    this.speed = speed;
+    this.lifetime = 10;
+    this.draw = function () {
+      DrawStroke(160, 100, this.radius, this.colored ? this.color : `hsl(0, 0%, ${20 + this.radius / 2}%)`, this.stroke)
+      this.radius += this.speed;
+      this.stroke += 3;
+      this.speed = this.speed * 1.1;
+      this.radius > 250 ? this.lifetime = 0 : null;
+    }
+  }
+
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function doneTravel(color) {
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        sleep.push(new travelRing(10, .1, true, `hsl(${color}, ${100 - i * 10}%, ${50 - i * 5}%)`))
+      }, i * 150)
+    }
+  }
+
+  function sleeping() {
+    this.start = Date.now();
+    this.rot1 = -2;
+    this.rot2 = -2;
+    this.y1 = 200;
+    this.hue = 240;
+    this.sat = 0;
+    this.lit = 0;
+    this.night = false;
+    this.morning = false;
+    this.done = false;
+    this.alpha2 = 1;
+    this.lifetime = 10;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (this.morning) {
+        ctx.globalAlpha = this.alpha2;
+      } else {
+        ctx.globalAlpha = (200 - this.y1) / 200;
+      }
+      DrawRect(0, this.y1, 320, 200, `hsl(${this.hue}, ${this.sat}%, ${this.lit}%)`)
+      if (!this.morning) {
+        ctx.globalAlpha = 1;
+      }
+      this.y1 > 0 ? this.y1 -= 3 : this.night = true;
+      if (this.morning) {
+        ctx.save()
+        ctx.translate(160, 200)
+        ctx.rotate(this.rot2)
+        ctx.translate(-160, -200)
+        DrawRect(135, 75, 50, 50, "yellow")
+        ctx.restore()
+        this.rot2 < 0 ? this.rot2 += .04 : this.done = true;
+        this.hue = 40;
+        this.lit = 50 + this.rot2 * 25
+        this.sat = 50 - (this.rot2 * 25)
+      } else if (this.night) {
+        ctx.save()
+        ctx.translate(160, 200)
+        ctx.rotate(this.rot1)
+        ctx.translate(-160, -200)
+        DrawRect(135, 75, 50, 50, "white")
+        ctx.restore()
+        this.rot1 < 2 ? this.rot1 += .04 : this.morning = true;
+        this.lit = 24 - (Math.abs(this.rot1) * 12)
+        this.sat = 50 - (Math.abs(this.rot1) * 25)
+      }
+      ctx.globalAlpha = 1;
+      this.done ? this.alpha2 > .01 ? this.alpha2 -= .01 : this.lifetime = 0 : null;
+      this.lifetime == 0 ? sleepGoing = false : null;
+    }
+  }
+
+  function inEnchanter() {
+    this.lifetime = 10;
+    this.start = Date.now();
+    this.alpha = .15
+    this.alpha2 = 0
+    this.done = false;
+    this.cover1 = new pageOpen(160, 70, 160, 120, "hsl(28, 57%, 33%)", 100, true);
+    this.cover2 = new pageOpen(160, 70, 160, 120, "hsl(28, 57%, 33%)", 100, false);
+    this.page1 = new pageOpen(160, 70, 160, 120, "hsl(48, 43%, 72%)", 85, true);
+    this.page2 = new pageOpen(160, 70, 160, 120, "hsl(48, 43%, 72%)", 85, false);
+    this.page3 = new pageOpen(160, 70, 160, 120, "hsl(56, 43%, 76%)", 80, true);
+    this.page4 = new pageOpen(160, 70, 160, 120, "hsl(56, 43%, 76%)", 80, false);
+    this.draw = function () {
+      ctx.globalAlpha = this.alpha2;
+      DrawRect(0, 0, 320, 200, "black");
+      this.alpha2 <= .95 ? this.alpha2 += .05 : this.alpha2 = 1;
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, "blue")
+      ctx.globalAlpha = 1;
+      this.alpha = Math.abs(Math.sin(Date.now() / 500)) * .15 + .15;
+      ctx.save()
+      ctx.translate(0, Math.sin(Date.now() / 800) * 10)
+      var elapsed = Date.now() - this.start;
+      this.cover1.draw(this.done)
+      this.cover2.draw(this.done)
+      if (elapsed > 500) {
+        this.page1.draw(this.done)
+        this.page2.draw(this.done)
+      }
+      if (elapsed > 1000) {
+        this.page3.draw(this.done)
+        this.page4.draw(this.done)
+      }
+      ctx.restore()
+      if (enchantmentTableBrownMeter.value < .25 && !this.done) {
+        setTimeout(() => {
+          this.lifetime = 0;
+        }, 600)
+        this.done = true;
+        menuGoing = false;
+        enchantGoing = false;
+      }
+    };
+  }
+
+  function pageOpen(x, y, x2, y2, color, scale, direction) {
+    this.dir = direction;
+    this.x = x;
+    this.y = y;
+    this.ox = x;
+    this.x2 = x;
+    this.y2 = y2;
+    this.height = scale;
+    this.color = color;
+    this.rot = Math.PI / 2
+    this.done = false;
+    this.draw = function (done) {
+      this.done = done;
+      ctx.beginPath()
+      ctx.moveTo(this.x, this.y)
+      ctx.lineTo(this.x2, this.y2)
+      ctx.lineTo(this.x2, this.y2 + this.height)
+      ctx.lineTo(this.x, this.y + this.height)
+      ctx.lineTo(this.x, this.y)
+      ctx.fillStyle = this.color;
+      ctx.fill()
+      if (this.done) {
+        if (this.dir) {
+          this.x < this.ox ? this.x += 3 : null;
+        } else {
+          this.x > this.ox ? this.x -= 3 : null;
+        }
+      } else {
+        if (this.dir) {
+          this.x > (this.x2 - this.height * .8) ? this.x -= 3 : null;
+        } else {
+          this.x < (this.x2 + this.height * .8) ? this.x += 3 : null;
+        }
+      }
+    }
+  }
+
+  function inAnvil() {
+    this.start = Date.now()
+    this.x = 85;
+    this.rotate = 0;
+    this.alpha = 0;
+    this.alpha2 = .1;
+    this.dir = false;
+    this.oldDir = false;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, "black");
+      ctx.globalAlpha = 1;
+      ctx.globalAlpha = this.alpha2;
+      DrawRect(0, 0, 320, 200, "red")
+      ctx.globalAlpha = 1;
+      this.alpha2 = Math.abs(Math.sin(Date.now() / 500)) * .1 + .1;
+      this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      ctx.save()
+      ctx.translate(this.x, 130)
+      ctx.rotate(this.rotate)
+      ctx.translate(-this.x, -130)
+      anvilHammer(this.x, 130)
+      ctx.restore()
+      if (this.dir) {
+        this.rotate < Math.PI / 2 ? this.rotate += .025 + (Math.PI / 2 - Math.abs(this.rotate)) / 10 : this.dir = false;
+      } else {
+        this.rotate > 0 ? this.rotate -= .025 + (Math.PI / 2 - Math.abs(this.rotate)) / 10 : this.dir = true;
+      }
+      if (this.dir != this.oldDir) {
+        for (let i = 0; i < 10; i++) {
+          setTimeout(() => {
+            effects.push(new spark(155, 150))
+          }, i * 25)
+        }
+        this.oldDir = this.dir
+      }
+      if (anvilWhiteHammerMeter.value < .25) {
+        this.lifetime = 0;
+        menuGoing = false;
+        anvilGoing = false;
+      }
+    }
+  }
+
+  function anvilHammer(x, y) {
+    DrawRect(x, y, 10, -100, "hsl(28, 57%, 25%)")
+    DrawRect(x - 33, y - 100, 75, 40, "white")
+  }
+
+  function spark(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = Math.random() * 5 + 5;
+    this.lifetime = 30;
+    this.dir = Math.random() < .5;
+    this.hue = Math.random() * 60
+    this.draw = function () {
+      DrawCircle(this.x, this.y, this.radius, `hsl(${this.hue}, 100%, 50%)`)
+      this.x += this.dir ? Math.random() * 5 : -Math.random() * 6;
+      this.y -= this.dir ? Math.random() * 5 : Math.random() * 6;
+      this.lifetime--;
+    }
+  }
+
+  function genericMenu() {
+    this.lifetime = 10;
+    this.done = false;
+    this.alpha = 0;
+    this.alpha2 = .1;
+    this.redo = false;
+    this.effects = [];
+    this.draw = function () {
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, "black");
+      ctx.globalAlpha = 1;
+      ctx.globalAlpha = this.alpha2;
+      DrawRect(0, 0, 320, 200, "green")
+      ctx.globalAlpha = 1;
+      this.alpha2 = Math.abs(Math.sin(Date.now() / 500)) * .1 + .1;
+      this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      if (this.redo) {
+        this.effects = [];
+        this.redo = false;
+        this.done = false;
+      }
+      var count = 0;
+      if (this.effects.length < 8) {
+        this.effects.push(new menuRow(this.effects.length * 40))
+      }
+      this.effects.forEach((ele, i) => {
+        ele.draw(this.done);
+        ele.done ? count++ : null;
+      })
+      if (count == 8 && !this.done) {
+        this.done = true
+        setTimeout(() => {
+          this.redo = true;
+        }, 500)
+      }
+      if (inMenuBlackMeter.value < .5 || inMenuWhiteMeter.value < .5) {
+        this.effects = [];
+        menuGoing = false;
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function menuRow(x) {
+    this.x = x;
+    this.start = Date.now();
+    this.speed = Math.random() * 800 + 800;
+    this.effects = [];
+    this.done = false;
+    this.draw = function (donezo) {
+      var elapsed = Date.now() - this.start;
+      var count = 0;
+      if (elapsed > this.speed && this.effects.length < 5) {
+        this.effects.push(new menuSquare(this.x, 200 - (this.effects.length * 40 + 40), 5, 40, 40))
+        this.start = Date.now()
+      }
+      this.effects.forEach((ele, i) => {
+        ele.draw(donezo);
+        if (ele.done) {
+          count++;
+          if (this.effects[i - 1]) {
+            this.effects[i - 1].grass = false;
+          }
+        }
+      })
+      count == 5 ? this.done = true : null;
+    }
+  }
+
+  function menuSquare(x, y2, speed, width, height) {
+    this.x = x;
+    this.y = 0;
+    this.alpha = 1;
+    this.width = width;
+    this.height = height;
+    this.y2 = y2;
+    this.speed = speed;
+    this.grass = true;
+    this.done = false;
+    this.draw = function (donezo) {
+      ctx.globalAlpha = this.alpha;
+      DrawRect(this.x, this.y, this.width, this.height, "rgb(130, 60, 35)")
+      this.grass ? DrawRect(this.x, this.y, this.width, this.height * .75, "green") : null;
+      ctx.globalAlpha = 1;
+      this.y <= this.y2 - this.speed ? this.y += this.speed : this.done = true;
+      donezo ? this.alpha >= .05 ? this.alpha -= .05 : this.alpha = 0 : null;
+    }
+  }
+
+  function statusEffect(direction, color1, color2) {
+    this.lifetime = 150;
+    this.dir = direction;
+    this.c1 = color1;
+    this.c2 = color2;
+    this.start = Date.now()
+    this.draw = function () {
+      ctx.globalAlpha = this.lifetime > 100 ? (150 - this.lifetime) * .02 : this.lifetime / 100;
+      DrawRect(0, 0, 320, 200, "black")
+      ctx.globalAlpha = 1;
+      var elapsed = Date.now() - this.start;
+      if (elapsed > 250) {
+        effects.push(new effectSpiral(Date.now() % 2 == 0 ? this.c1 : this.c2, Math.random() * 2 + 2, this.dir))
+        this.start = Date.now()
+      }
+      this.lifetime -= .6;
+      if (this.lifetime <= 0) {
+        this.dir ? goodStatusGoing = false : badStatusGoing = false;
+      }
+    }
+  }
+
+  function effectSpiral(color, scale, dir) {
+    this.x = Math.random() * 200 + 60;
+    this.dir = dir;
+    this.y = this.dir ? 220 : -20;
+    this.lifetime = 10;
+    this.scale = scale;
+    this.color = color;
+    this.rotate = 0;
+    this.start = Date.now()
+    this.mod = Math.random() * 10;
+    this.draw = function () {
+      var elapsed = Date.now() - this.start;
+      if (elapsed > 200) {
+        this.rotate += (Math.PI / 2)
+        this.start = Date.now()
+      }
+      ctx.save()
+      ctx.translate(this.x, this.y)
+      ctx.rotate(-this.rotate)
+      ctx.translate(-this.x, -this.y)
+      ctx.save()
+      for (let i = 0; i < 18; i++) {
+        ctx.translate(this.x, this.y)
+        ctx.rotate(.6)
+        ctx.translate(-this.x, -this.y)
+        DrawCircle(this.x, this.y + i * this.scale, this.scale * 2, this.color)
+      }
+      ctx.restore()
+      ctx.restore()
+      if (this.dir) {
+        this.y > -20 ? this.y -= 3 : this.lifetime = 0;
+      } else {
+        this.y < 220 ? this.y += 3 : this.lifetime = 0;
+      }
+      this.x += Math.sin(Date.now() / (50 * this.mod)) * 3
+    }
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
+
+  function XpUpState() {
+    this.start = new Date().getTime();
+    this.lifetime = 45;
+
+    this.draw = function () {
+      this.lifetime -= 1;
+      ctx.fillStyle = "#42d113";
+      ctx.fillRect(0, 0, 320, 200);
+      ctx.fillStyle = "green";
+      ctx.beginPath();
+      ctx.fillStyle = "blue";
+      for (let index = 0; index < 5; index++) {
+        ctx.arc(Math.random() * 320, Math.random() * 200, 25, 0, 2 * Math.PI);
+      }
+      ctx.fill();
+    };
+  }
+
+  function FreezeEffect() {
+    this.start = getTime();
+    this.lifetime = 100;
+    this.snowflakes = [];
+    for (let index = 0; index < 15; index++) {
+      this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
+    }
+    this.draw = function () {
+      ctx.fillStyle = "hsla(206, 100%, 40%, 0.5)";
+      ctx.fillRect(0, 0, 320, 200)
+      this.snowflakes.forEach((snow, i) => {
+        snow.draw();
+        if (snow.y > 300) {
+          this.snowflakes.splice(i, 1)
+          this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
+        }
+      });
+      if (freezeMeter.value == 0) {
+        this.lifetime = 0;
+        freezeGoing = false;
+      }
+    }
+  }
+
+  function bubbleEffect(bgColor, BubblecColor, strokecolor) {
+    this.bgColor = bgColor;
+    this.bubbleColor = BubblecColor;
+    this.strokeColor = strokecolor;
+    this.bubbles = [];
+    for (let index = 0; index < 15; index++) {
+      this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
+    }
+
+    this.draw = function () {
+      ctx.fillStyle = this.bgColor;
+      ctx.fillRect(0, 0, 320, 200)
+      this.bubbles.forEach((bubble, i) => {
+        bubble.draw();
+        if (bubble.y < -50) {
+          this.bubbles.splice(i, 1)
+          this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
+        }
+      });
+      if (bubbleMeter.value < 1 && bubblegoing == true || poisongoing && poisonMeter.value == 0) {
+        this.lifetime = 0;
+        bubblegoing = false;
+        poisongoing = false;
+      }
+    }
+  }
+
+
+
+
+  function DamageState(x, y, radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = x;
+    this.vx = 7 * Math.sin(radius);
+    this.y = y;
+    this.vy = Math.random() * -20;
+    this.ay = 1;
+    this.lifetime = 10;
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += this.ay;
+      if (this.y > 200) {
+        this.lifetime = 0;
+      }
+    }
+  };
+
+  function HealState() {
+    this.start = new Date().getTime();
+    this.lifetime = 45;
+
+    this.draw = function () {
+      this.lifetime = 2000 - (new Date().getTime() - this.start)
+
+      ctx.fillStyle = "hsla(311,100%,50%, 0.5)";
+      ctx.fillRect(0, 0, 320, 200);
+
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.arc(160, 100, (200 - (this.lifetime) / 10), 0, 2 * Math.PI);
+      ctx.stroke();
+
+      ctx.fillStyle = "white";
+      ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+      ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+      ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
+    };
+  }
+
+
+
+  function lowHealthState() {
+    this.lifetime = 10;
+    this.start = getTime();
+    this.draw = function () {
+      this.duration = getTime() - this.start;
+      ctx.fillStyle = `hsla(0, 100%, 50%, ${((Math.sin(this.duration / 600) + 1) / 3) + 0.1})`
+      ctx.fillRect(0, 0, 320, 200);
+      if (lowHpMeter.value == 0 || lowHpMeter.value > 0.8) {
+        this.lifetime = 0;
+        lowHpGoing = false;
+      }
+    }
+  }
+
+  function IdleState() {
+    let lightness = new Int8Array(engine.zone.lightness);
+    let sat = new Int8Array(engine.zone.saturation);
+    let hue = new Int16Array(engine.zone.hue);
+
+    for (var iZone = 0; iZone < 560; iZone++) {
+      ctx.fillStyle = 'hsl(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] * Brightness / 100 + '%)'
+
+      var iRow = Math.floor(iZone / 28);
+      var iCol = iZone % 28;
+      var iWidth = 320 / 28;
+      var iHeight = 200 / 20;
+      var iZx = iCol * iWidth;
+      var iZy = iRow * iHeight;
+
+      ctx.fillRect(iZx, iZy, iWidth, iHeight);
+
+    }
+  }
+
+  function BossState() {
+    bossGoing = true;
+    this.draw = function () {
+      ctx.fillStyle = "hsla(282, 100%, 50%, 0.4)"
+      ctx.fillRect(0, 0, bossMeter.value * 330, 200)
+      if (bossMeter.value == 0) {
+        this.lifetime = 0;
+        bossGoing = false;
+        bossKillHelper()
+      }
+    }
+  }
+
+  function bossKillHelper() {
+    if (bossWhiteMeter.value == 0 && bossWhiteMeter.decreased) {
+      effects.push(new bossKill())
+      bossKillGoing = true;
+    } else {
+      setTimeout(() => {
+        bossKillHelper()
+      }, 500)
+    }
+  }
+
+  function FoodState() {
+    this.start = getTime();
+    this.lifetime = 100;
+    this.arrow = new ArrowEffect("down", "orange", 1, 0.5, 3000)
+    this.draw = function () {
+      this.dur = getTime() - this.start;
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(26, 100%, 50%, 0.4)"
+      ctx.fillRect(0, 0, 320, 200)
+      if (this.dur % 3000 < 100) {
+        this.arrow = new ArrowEffect("down", "orange", 1, 0.5, 3000)
+      }
+      this.arrow.draw();
+      if (lowFoodMeter.value == 1 && lowFoodMeter.increased) {
+        this.lifetime = 0;
+        effects.push(new RippleEffect(160, 100, 10, 3000, 30, "orange", "out", "stroke", 10))
+      }
+    };
+  }
+
+
+
+  function getTime() {
+    return new Date().getTime();
+  }
+
+  class Snowflake {
+    constructor(x, speed, color) {
+      this.speed = speed / 4;
+      this.x = x;
+      this.y = 0 - Math.random() * 400;
+      this.start = getTime();
+      this.color = color;
+      this.lifetime = 100;
+      this.startval = Math.random() * 100;
+    }
+    draw() {
+      this.lifetime = 3000 - (getTime() - this.start);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI)
+      ctx.fillStyle = this.color
+      ctx.fill();
+      this.Spacing = 0;
+      ctx.lineWidth = 8;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(-this.lifetime / 500)
+      for (let index = 0; index < 6; index++) {
+        ctx.strokeStyle = this.color;
+        ctx.moveTo(0, 0)
+        ctx.lineTo((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30));
+        ctx.stroke();
+        this.Spacing += 1.05;
+      }
+      ctx.restore();
+      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
+      this.y += this.speed
+    }
+  }
+
+  function ArrowEffect(direction, color, amount, speed, duration) {
+    this.start = getTime();
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = this.duration;
+    this.direction = direction;
+    this.color = color;
+    this.amount = amount;
+    this.draw = function () {
+      if (this.direction == 'up') {
+        this.speed = -this.speed;
+        ctx.fillStyle = this.color;
+        for (let i = 0; i < this.amount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, this.lifetime / 1.5 - 150 - (200 * i));
+          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i));
+          ctx.lineTo(320, this.lifetime / 1.5 - (200 * i) + 100);
+          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 100);
+          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i) + 100);
+          ctx.lineTo(0, this.lifetime / 1.5 - (200 * i));
+          ctx.lineTo(160, this.lifetime / 1.5 - (200 * i) - 150);
+          ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = this.color;
+        for (let i = 0; i < this.amount; i++) {
+          ctx.beginPath();
+          ctx.moveTo(160, 300 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(320, 240 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(320, 180 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(160, 240 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(0, 180 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(0, 240 - this.lifetime / 2.5 + (200 * i));
+          ctx.lineTo(160, 300 - this.lifetime / 2.5 + (200 * i));
+          ctx.fill();
+        }
+      }
+      this.Ymin += this.speed;
+      this.elapsed = new Date().getTime() - this.start;
+      this.lifetime = this.duration - this.elapsed;
+    }
+  }
+  function RippleEffect(x, y, speed, duration, rippleWidth, color, inOrOut, fillOrStroke, amountOfRipples, background) {
+    this.col = color;
+    this.speed = speed;
+    this.dur = duration;
+    this.width = rippleWidth;
+    this.start = getTime();
+    this.lifetime;
+    this.x = x;
+    this.y = y;
+    this.fill = fillOrStroke;
+    this.radius = 0;
+    this.amount = amountOfRipples;
+    this.background = background;
+    if (inOrOut == "in") {
+      this.radius = 200 + (this.width * (this.amount * 2));
+      this.speed = -this.speed
+    }
+    this.draw = function () {
+      if (this.background) {
+        DrawBackground("black");
+      }
+
+
+      ctx.lineWidth = this.width;
+      ctx.beginPath();
+      for (let i = 0; i < this.amount; i++) {
+        if (this.radius - i * (this.width * 2) > 0) {
+          ctx.arc(this.x, this.y, this.radius - i * (this.width * 2), 0, 2 * Math.PI);
+        }
+      }
+      if (this.fill == "fill") {
+        ctx.fillStyle = this.col;
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = this.col;
+        ctx.stroke();
+      }
+      this.radius += this.speed;
+      this.lifetime = this.dur - (getTime() - this.start);
+      if (this.lifetime <= 0) {
+        utilityPlayed = false;
+      }
+    }
+  }
+
+  class Bubble {
+    constructor(bubbleColor, strokeColor, bubbleSize) {
+      this.bubbleColor = bubbleColor
+      this.strokeColor = strokeColor;
+      this.size = bubbleSize;
+      this.x = Math.random() * 320;
+      this.lifetime = 100;
+      this.startval = Math.random() * 100;
+      this.y = 200 + Math.random() * 400;
+      this.start = getTime();
+      this.speed = 5;
+    }
+    draw() {
+      ctx.lineWidth = 5;
+      this.lifetime = (getTime() - this.start);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
+      ctx.strokeStyle = this.strokeColor;
+      ctx.fillStyle = this.bubbleColor;
+      ctx.fill();
+      ctx.stroke();
+      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
+      this.y -= this.speed
+    }
+  }
+
+  class dot {
+    constructor(x, y) {
+      this.x = x;
+    }
+  }
+
+
+
+  function StateHandler() {
+    var stack = [];
+    var state = null;
+
+    // Set current state to the top item in the stack
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    // Allows dev to add effect to state handler
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+    // Allows dev to remove effect from handler
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+    // Call the Process function of the current state (effect)
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.increased = false;
+    this.decreased = false;
+    var values = [];
+
+    this.setValue = function (updatedValue) {
+      // Add and shift.
+      values.push(updatedValue);
+      if (values.length > this.size) {
+        values.shift();
+      }
+
+      // Exit early if we've got a long-term match.
+      for (var i = 0; i < values.length - 1; i++) {
+        if (values[i] !== values[i + 1]) return;
+      }
+
+      // We got here, so we've got a matching value collection.
+      if (this.value !== values[0]) {
+        //var fromZero = this.value === 0;
+        //var toZero = values[0] === 0;
+        this.diff = Math.abs(this.value - values[0]);
+        this.increased = this.value < values[0];
+        this.decreased = this.value > values[0];
+        this.value = values[0];
+
+        callback();
+      }
+    };
+  }
+
+
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+</script>
