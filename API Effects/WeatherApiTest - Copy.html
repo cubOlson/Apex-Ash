@@ -87,9 +87,9 @@
     // }
 
     function GetData() {
-        
 
-         fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client`).then(response => response.json())
+
+        fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client`).then(response => response.json())
             .then((position) => {
                 lat = position.latitude;
                 long = position.longitude;
