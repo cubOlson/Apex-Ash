@@ -2,7 +2,7 @@
   <title>Ripple Visualizer Work</title>
   <meta
     description="An Audio Visualizer driven by the average beat tempo of a song. The beat Cooldown may need to by tailored to your music tastes and typical BPM" />
-  <meta publisher="Austin Powers" />
+  <meta publisher="SignalRgb" />
   <meta property="MinimalMode" label="MinimalMode" default="0" type="boolean" />
   <meta property="BackgroundColor" label="Background color" type="color" min="0" max="360" default="#000000" />
   <meta property="BackgroundColorMode" label="Background colorMode" type="combobox" values="Normal,ColorCycle"
@@ -16,15 +16,19 @@
     default="Random" />
   <meta property="beatDrive" label="Brightness Mode" type="combobox" values="OFF,Average Beat,Volume" default="OFF" />
   <meta default="2" label="beat threshold" max="5" min="0" property="threshold" type="number" />
-  <meta default="120" label="Brightness sensitivity" max="200" min="0" property="sensitivity" type="number" />
   <meta property="beatdisplay" label="Beat Display Bars" default="0" type="boolean" />
   <meta default="2" label="Global Decay" max="10" min="0" property="decay" type="number" />
   <meta default="7" label="Beat Cooldown" max="10" min="0" property="CooldownMod" type="number" />
   <meta default="5" label="Wave Speed" max="10" min="0" property="WaveSpeed" type="number" />
-  <meta default="100" label="LeftBarSize" max="180" min="0" property="LeftBarSize" type="number" />
+  <meta default="5" label="VolumeBoost" max="100" min="0" property="volumeBoost" type="number" />
   <meta property="circleHex" label="Primary Circle Color" type="color" min="0" max="360" default="#FF8000" />
   <meta property="circleColorMode" label="Circle Color mode" type="combobox" values="Normal,Rainbow,RotationHue,Random"
     default="Rainbow" />
+  <meta default="5" label="Inner circleSize" max="10" min="0" property="InnerCirleSize" type="number" />
+  <meta property="VRectHex" label="Primary Volume Rectange Color" type="color" min="0" max="360" default="#FF8000" />
+  <meta property="VRectCol" label="Volume Rectange Color mode" type="combobox" values="Normal,Rainbow,AudioLevel,Random"
+    default="Rainbow" />
+  <meta default="0" label="Volume rectangle height" max="10" min="0" property="VolumeRectHeight" type="number" />
 
 
   <!-- <meta property="leveldisplay" label="Level Display Bars" default="0" type="boolean" />
@@ -56,6 +60,7 @@
   var timer = 0;
   var effectModes = ["Circle", "Wave", "Square", "Random"];
   var backgroundColors = { h: 0, s: 0, l: 0 };
+  var LeftBarSize = 100;
   var x = 0;
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -109,7 +114,6 @@
     }
 
     if (beatCooldown < 0 && beat > beatavg * (1 + threshold / 10) && beat > 40) {
-      DropBeat();
       if (beatdisplay) {
         effects.push(new moveableBar(320, 200 - beat, 10, 300, -5, 0, 360, 100, 50, 1));
       }
@@ -122,7 +126,7 @@
       beatCooldown += Math.max(Math.min(50, averageDelay / (10 - CooldownMod)), 5);
 
       if (beat > 20) {
-        //DropBeat();
+        DropBeat()
       }
     } else if (beatdisplay) {
       effects.push(new moveableBar(320, 200 - beat, 10, 300, -5, 0, 220, 100, 50, 1));
@@ -225,12 +229,11 @@
       ctx.lineWidth = 15;
       let templightness = this.lightness;
       if (beatDrive == 'Average Beat') {
-        templightness = Math.min(50, (this.lightness * beatavg) / sensitivity);
-        console.log('average Beat');
+        templightness = Math.min(100, (this.lightness * beatavg) / sensitivity);
+        console.log(templightness);
       } else if (beatDrive == 'Volume') {
-        templightness = 70 + engine.audio.level;
+        templightness = 20 + (70 * (4 / 5 * 3 * Math.pow(10, engine.audio.level / 10) * (volumeBoost / 3)));
 
-        console.log(`Volume ${70 + engine.audio.level}`);
       } else {
         templightness = this.lightness;
         console.log('OFF');
@@ -291,9 +294,7 @@
         templightness = Math.min(50, (this.lightness * beatavg) / sensitivity);
         console.log('average Beat');
       } else if (beatDrive == 'Volume') {
-        templightness = 70 + engine.audio.level;
-
-        console.log(`Volume ${70 + engine.audio.level}`);
+        templightness = 20 + (70 * (4 / 5 * 3 * Math.pow(10, engine.audio.level / 10) * (volumeBoost / 3)));
       } else {
         templightness = this.lightness;
         console.log('OFF');
@@ -438,6 +439,7 @@
       ctx.fillRect(0, 0, LeftBarSize, 200);
       ctx.globalAlpha = 1;
       DrawCircleDisplay()
+      DrawVolumeRect()
     } else {
       x = 0;
     }
@@ -530,17 +532,15 @@
 
       var iWidth = 2;
       var nVal = freqs[iZone] ? freqs[iZone] : 1;
-      var iHeight = nVal * 3;
+      var iHeight = (nVal * 3) * (volumeBoost / 10);
       // var locationValue =200;
       // var xlocationValue = 50;
-      var iZx = iZone * iWidth;
-      var iZy = iHeight;
 
       ctx.beginPath();
 
       ctx.lineWidth = LeftBarSize / 60;
-      ctx.moveTo(Math.sin(iZone / 9) * LeftBarSize / 5 + LeftBarSize / 2, Math.cos(iZone / 9) * LeftBarSize / 5 + 60);
-      ctx.lineTo(Math.sin(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / 5 : LeftBarSize / 5) + LeftBarSize / 2, Math.cos(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / 5 : LeftBarSize / 5) + 60);
+      ctx.moveTo(Math.sin(iZone / 9) * LeftBarSize / (10.1 - InnerCirleSize) + LeftBarSize / 2, Math.cos(iZone / 9) * LeftBarSize / (10.1 - InnerCirleSize) + 60);
+      ctx.lineTo(Math.sin(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / (10.1 - InnerCirleSize) : LeftBarSize / (10.1 - InnerCirleSize)) + LeftBarSize / 2, Math.cos(iZone / 9) * (iHeight > 0 ? SetRange(iHeight / 3.5, 0, LeftBarSize / 5) + LeftBarSize / (10.1 - InnerCirleSize) : LeftBarSize / (10.1 - InnerCirleSize)) + 60);
       if (circleColorMode == "Normal") {
         ctx.strokeStyle = `${circleHex}`
       } else if (circleColorMode == "Rainbow") {
@@ -556,6 +556,19 @@
 
     }
 
+  }
+
+  function DrawVolumeRect() {
+    let currentAudioLevel = 4 / 5 * 3 * Math.pow(10, engine.audio.level / 10) * (volumeBoost / 3);
+    ctx.beginPath();
+    if (circleColorMode == "Normal") {
+      ctx.fillStyle = `${circleHex}`
+    } else if (circleColorMode == "Rainbow") {
+      ctx.fillStyle = `hsl(${timer}, 100%, 50%)`
+    } else if (circleColorMode == "AudioLevel") {
+      ctx.fillStyle = `hsl(${currentAudioLevel + timer}, 100%, 50%)`
+    }
+    ctx.fillRect(0, 180 - (VolumeRectHeight * 20), 100 * SetRange(currentAudioLevel, 0, 1), 20 + (VolumeRectHeight * 20));
   }
 
 
