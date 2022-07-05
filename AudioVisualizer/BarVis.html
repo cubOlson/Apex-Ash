@@ -1,0 +1,142 @@
+<head>
+  <title>Bars Visualizer Work</title>
+  <meta description="Vertical bars of color generated from the peak frequencies of your audio source." />
+  <meta publisher="WhirlwindFX" />
+
+  <meta property="MinimalMode" label="MinimalMode" default="0" type="boolean" />
+  <meta property="vertical" label="Vertical" type="boolean" default="0" />
+  <meta property="centered" label="Start from center" type="boolean" default="1" />
+  <meta property="barSens" label="Sound sensitivity" type="number" default="35" min="0" max="50" />
+  <meta default="5" label="VolumeBoost" max="100" min="0" property="volumeBoost" type="number" />
+  <meta property="colorMode" label="Color Mode" type="combobox" values="Static,Rainbow,Gradient,Random" default="Static"
+    tooltip="Controls the color of the bars" />
+  <meta property="fgColor" label="Effect color" type="color" min="0" max="360" default="#FF0000" />
+  <meta property="rainbowSpeed" label="Rainbow speed" type="number" min="0" max="100" default="50" />
+  <meta property="bgColorMode" label="Background Color Mode" type="combobox" values="Static,Rainbow" default="Static"
+    tooltip="Controls the color of the background" />
+  <meta property="bgColor" label="Background color" type="color" min="0" max="360" default="#000000" />
+  <meta property="decay" label="Decay rate" type="number" min="1" max="10" default="3" />
+  <meta property="width" label="Bar width" type="number" min="1" max="20" default="10" />
+</head>
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  function SetRange(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+  }
+  let start = Date.now();
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById("exCanvas");
+    ctx = canvas.getContext("2d");
+
+    // Start updates *after* our engine is accessible and ready.
+    window.requestAnimationFrame(update);
+  }
+
+  function update() {
+    this.elapsed = Date.now() - start;
+    var decayRate = decay / 10;
+    ctx.globalAlpha = decayRate;
+    switch (bgColorMode) {
+      case "Static":
+        ctx.fillStyle = bgColor;
+        break;
+      case "Rainbow":
+        ctx.fillStyle = "hsl(" + (this.elapsed / 100) + ",40%,25%)";
+        break;
+    }
+
+    ctx.fillRect(0, 0, 320, 200);
+    ctx.globalAlpha = 1;
+
+    let freqs = new Int8Array(engine.audio.freq);
+
+    var i;
+    switch (colorMode) {
+      case "Static":
+        ctx.fillStyle = fgColor;
+        break;
+      case "Rainbow":
+        var hue = this.elapsed / (100 - rainbowSpeed);
+        ctx.fillStyle = "hsl(" + hue + ",100%,50%)";
+        break;
+      case "Gradient":
+        if (!centered) {
+          var backGrad = ctx.createLinearGradient(MinimalMode ? 50 : 0, 0, 325, 0);
+          for (let index = 0; index < 7; index++) {
+            backGrad.addColorStop(index * 0.1666, `hsla(${60 * index}, 100%, 50%, 1)`);
+          }
+          ctx.fillStyle = backGrad;
+        } else {
+          var backGrad = ctx.createLinearGradient(MinimalMode ? 50 : 0, 0, 325, 0);
+          for (let index = 0; index < 7; index++) {
+            backGrad.addColorStop(0.5 - index * (0.1666 / 2), `hsla(${60 * index}, 100%, 50%, 1)`);
+            backGrad.addColorStop(0.5 + index * (0.1666 / 2), `hsla(${60 * index}, 100%, 50%, 1)`);
+          }
+          ctx.fillStyle = backGrad;
+        }
+        break;
+      case "Random":
+        var backGrad = ctx.createLinearGradient(MinimalMode ? 50 : 0, 0, 325, 0);
+        for (let index = 0; index < 20; index++) {
+          backGrad.addColorStop(index * 0.05, `hsla(${Math.random() * 360}, 100%, 50%, 1)`);
+        }
+        ctx.fillStyle = backGrad;
+        break;
+
+
+    }
+    if (vertical) {
+      for (i = 0; i < freqs.length; i++) {
+        if (freqs[i] > 50 - barSens) {
+          if (centered) {
+            ctx.fillRect(0, 100 - i * 2, 320, width);
+            ctx.fillRect(0, 100 + i * 2, 320, width);
+          } else {
+            ctx.fillRect(0, 200 - i * 2, 320, width);
+          }
+        }
+      }
+    } else {
+      for (i = 0; i < freqs.length; i++) {
+        if (freqs[i] > 50 - barSens) {
+          if (centered) {
+            ctx.fillRect((MinimalMode ? 210 : 160) - i * 2, 0, width, 200);
+            ctx.fillRect(160 + i * 2, 0, width, 200);
+          } else {
+            ctx.fillRect((MinimalMode ? 50 : 0) + i * 4, 0, width, 200);
+          }
+        }
+      }
+    }
+
+    if (MinimalMode) {
+      ctx.beginPath();
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 50, 200)
+      ctx.fillRect(0, 180, 320, 200)
+
+      ctx.beginPath();
+      ctx.fillStyle = "white";
+      let currentAudioLevel = 4 / 5 * 3 * Math.pow(10, engine.audio.level / 10) * (volumeBoost / 3)
+      ctx.fillRect(0, 100, 50, -100 * currentAudioLevel)
+
+      let freqs = new Int8Array(engine.audio.freq);
+      for (let index = 0; index < freqs.length; index++) {
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+        ctx.fillRect(0 + index * 0.5, 200, 2, -1 * SetRange((volumeBoost / 10) * freqs[index], 0, 20))
+      }
+
+
+    }
+
+
+    window.requestAnimationFrame(update);
+  }
+</script>
