@@ -277,6 +277,7 @@
   var sleepGoing = false;
   var travelGoing = false;
   var bossKillGoing = false;
+  var bossKillListen = false;
 
 
   function update() {
@@ -318,6 +319,16 @@
       xpMeter.setValue(engine.vision.xp);
       bubbleMeter.setValue(engine.vision.bubble1)
       lowFoodMeter.setValue(engine.vision.Food)
+    }
+
+    if(enableBoss && bossKillListen){
+      if(bossWhiteMeter.value == 0 && bossWhiteMeter.decreased && !bossKillGoing &&
+        engine.vision.inMenuWhite != 1 && engine.vision.inMenuWhite != 1
+      ){
+        effects.push(new bossKill())
+        bossKillGoing = true;
+        bossKillListen = false;
+      }
     }
 
     //Effect handler 
@@ -1189,21 +1200,10 @@
       if (bossMeter.value == 0) {
         this.lifetime = 0;
         bossGoing = false;
-        bossKillHelper()
+        bossKillListen = true;
     }
   }
 }
-
-  function bossKillHelper(){
-    if(bossWhiteMeter.value == 0 && bossWhiteMeter.decreased){
-      effects.push(new bossKill())
-      bossKillGoing = true;
-    } else {
-      setTimeout(()=>{
-        bossKillHelper()
-      }, 500)
-    }
-  }
 
   function FoodState() {
     this.start = getTime();
