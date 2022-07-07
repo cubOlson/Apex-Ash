@@ -1,5 +1,5 @@
 <head>
-  <title>Minecraft Java Edition Work</title>
+  <title>Minecraft Java Edition Latest</title>
   <meta description="Game intergration for Minecraft Java edition. Set your GUI scale to Auto" />
   <meta publisher="SignalRGB" />
   <meta property="Brightness" label="Screen ambiance brightness" type="number" min="0" max="100" default="100" />
@@ -24,7 +24,6 @@
   <meta property="enableStatus" label="enable Status effect" type="boolean" default="1" />
   <meta property="enableBoss" label="enable Boss bar effect" type="boolean" default="1" />
   <meta property="enableFreeze" label="enable Freeze effect" type="boolean" default="1" />
-  <meta property="enablePoison" label="enable Poison effect" type="boolean" default="1" />
   <meta property="enableUnderwater" label="enable Underwater effect" type="boolean" default="1" />
 
   <meta meter="bubble1" tags="minecraft, vlc" x=".699" y=".7965" width=".003" height=".0001" h="0-360" s="0-100"
@@ -213,10 +212,6 @@
   <meta meter="travelBrown" tags="minecraft, vlc" type="area" x="0.4782" y="0.3326" width="0.0081" height="0.0035" 
     h="20-45" s="45-65" l="0-25" >
   </meta>
-
-  <meta meter="topLeftColor" tags="minecraft, vlc" type="colormean" x="0.0526" y="0.0028" width="0.0009" height="0.0049" 
-    h="0-10" s="0-20" l="88-100" >
-  </meta>
   
 </head>
 
@@ -239,7 +234,7 @@
   var bossWhiteMeter = new Meter(10, onBossMeterChanged);
   var inGameMeter = new Meter(5, onGameChanged)
   var bubbleMeter = new Meter(5, onBubblechanged)
-  var poisonMeter = new Meter(5, onPoisonChanged)
+  var poisonMeter = new Meter(5, ()=>"")
   var lowHpMeter = new Meter(5, onLowHpChanged)
   var lowFoodMeter = new Meter(20, onFoodMeterChanged)
   var gStatGreyMeter = new Meter(8, goodStatusChanged)
@@ -258,15 +253,14 @@
   var sleepBlackMeter = new Meter(15, inSleepChanged)
   var travelWhiteMeter = new Meter(3, travelChanged)
   var travelBrownMeter = new Meter(3, travelChanged)
-  var topLeftColorMeter = new Meter(1, ()=>"")
 
 
   var effects = [];
   var sleep = [];
+  var bossEffects = [];
   var inGame = false;
   var freezeGoing = false;
   var bubblegoing = false;
-  var poisongoing = false;
   var lowHpGoing = false;
   var bossGoing = false;
   var goodStatusGoing = false;
@@ -313,7 +307,6 @@
     sleepBlackMeter.setValue(engine.vision.sleepBlack)
     travelWhiteMeter.setValue(engine.vision.travelWhite)
     travelBrownMeter.setValue(engine.vision.travelBrown)
-    topLeftColorMeter.setValue(engine.vision.topLeftColor[0])
 
     if (inGame) {
       xpMeter.setValue(engine.vision.xp);
@@ -325,7 +318,7 @@
       if(bossWhiteMeter.value == 0 && bossWhiteMeter.decreased && !bossKillGoing &&
         engine.vision.inMenuWhite != 1 && engine.vision.inMenuWhite != 1
       ){
-        effects.push(new bossKill())
+        bossEffects.push(new bossKill())
         bossKillGoing = true;
         bossKillListen = false;
       }
@@ -341,6 +334,10 @@
     sleep.forEach((ele, i)=>{
       ele.draw();
       ele.lifetime <= 0 ? sleep.splice(i, 1) : null;
+    })
+    bossEffects.forEach((ele, i)=>{
+      ele.draw();
+      ele.lifetime <= 0 ? bossEffects.splice(i, 1) : null;
     })
     if (enableHud) {
       UpdateUi(adjMeter);
@@ -394,7 +391,6 @@
   function clearEffects() {
     effects.length = 0
     freezeGoing = false;
-    poisongoing = false;
     bubblegoing = false;
     lowHpGoing = false;
     menuGoing = false;
@@ -407,7 +403,6 @@
 
   function CheckAfterInGame() {
     onBubblechanged()
-    onPoisonChanged()
     onFreezeChange()
     onLowHpChanged()
     onFoodMeterChanged()
@@ -420,11 +415,6 @@
       travelGoing = true;
       sleep.push(new travelEffect())
     } else if (travelWhiteMeter.value < .2 && travelBrownMeter.value < .25 && travelGoing && enablePortal){
-      if(topLeftColorMeter.value > 270 && topLeftColorMeter.value < 315){
-        doneTravel(290)
-      } else {
-        doneTravel(45)
-      }
       travelGoing = false;
     }
   }
@@ -476,6 +466,7 @@
   function onFreezeChange() {
     if (freezeMeter.value > 0.2 && freezeGoing == false && enableFreeze) {
       effects.push(new FreezeEffect())
+      console.log("IN")
       freezeGoing = true;
     }
   }
@@ -484,13 +475,6 @@
     if (bubbleMeter.value == 1 && engine.vision.bubble2 == 1 && engine.vision.bubble3 == 1 && inGame && enableUnderwater) {
       effects.push(new bubbleEffect("hsla(222, 100%, 46%, 0.7)", "hsla(189, 100%, 46%, 1)", "hsla(243, 100%, 46%, 1)"))
       bubblegoing = true;
-    }
-  }
-
-  function onPoisonChanged() {
-    if (poisonMeter.value >= 0.2 && poisongoing == false && healthMeter.value == 0 && enablePoison) {
-      effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
-      poisongoing = true;
     }
   }
 
@@ -509,7 +493,6 @@
       }
     }
     onGameChanged();
-    onPoisonChanged()
   }
 
   function onXpMeterChanged() {
@@ -530,10 +513,10 @@
   function onBossMeterChanged(Gamecheck) {
     if (enableBoss == 1) {
       if (Gamecheck && bossGoing) {
-        effects.push(new BossState());
+        bossEffects.push(new BossState());
       }
       if (bossMeter.increased != bossGoing) {
-        effects.push(new BossState());
+        bossEffects.push(new BossState());
       }
     }
   }
@@ -628,6 +611,7 @@
   function travelEffect(){
     this.start = Date.now();
     this.speed = 1000;
+    this.count = 0;
     this.innerSpeed = .1;
     sleep.push(new travelRing(10, this.innerSpeed, false, "black"))
     this.draw = function(){
@@ -635,10 +619,11 @@
       if(elapsed > this.speed){
         sleep.unshift(new travelRing(10, this.innerSpeed, false, "black"))
         this.start = Date.now()
+        this.count++;
       }
       this.speed > 250 ? this.speed-=5 : null;
       this.innerSpeed+=.01;
-      if(!travelGoing){
+      if(!travelGoing || this.count > 30){
         this.lifetime = 0;
       }
     }
@@ -667,14 +652,6 @@
     ctx.arc(x, y, radius, 0, 2 * Math.PI)
     ctx.stroke();
   };
-
-  function doneTravel(color){
-    for(let i = 0; i < 5; i++){
-      setTimeout(()=>{
-        sleep.push(new travelRing(10, .1, true, `hsl(${color}, ${100 - i * 10}%, ${50 - i * 5}%)`))
-      }, i * 150)
-    }
-  }
 
   function sleeping(){
     this.start = Date.now();
@@ -1057,25 +1034,61 @@
   }
 
   function FreezeEffect() {
-    this.start = getTime();
+    this.start = Date.now();
     this.lifetime = 100;
-    this.snowflakes = [];
-    for (let index = 0; index < 15; index++) {
-      this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
-    }
+    this.snowflakes = [new freezeCrack(50, 250, 25, 25, true, 1), new freezeCrack(270, 250, 25, 25, true, -1)];
+    this.split = false;
+    this.alpha = 0;
     this.draw = function () {
-      ctx.fillStyle = "hsla(206, 100%, 40%, 0.5)";
+      ctx.fillStyle = `hsla(206, 100%, 40%, ${this.alpha})`;
+      this.alpha <= .975 ? this.alpha+=.025 : this.alpha = 1;
       ctx.fillRect(0, 0, 320, 200)
-      this.snowflakes.forEach((snow, i) => {
-        snow.draw();
-        if (snow.y > 300) {
-          this.snowflakes.splice(i, 1)
-          this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
+      this.snowflakes.forEach((ele)=>{
+        ele.draw()
+        if(ele.done && !ele.cracked && ele.width > 5){
+          if(this.split){
+            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, true, 1))
+            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, true, -1))
+            this.split = false;
+          } else {
+            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, false, 0))
+            this.split = true;
+          }
+          ele.cracked = true;
         }
-      });
+      })
       if (freezeMeter.value == 0) {
         this.lifetime = 0;
         freezeGoing = false;
+      }
+    }
+  }
+
+  function freezeCrack(x, y, width, speed, set, dir){
+    this.x = x;
+    this.y = y;
+    this.x1 = x;
+    this.y1 = y;
+    this.x2 = !set ? (Math.random() * 80 - 40) + this.x : (Math.random() * 10 + 40) * dir + this.x;
+    this.y2 = this.y - (Math.random() * 10 + 30);
+    this.width = width;
+    this.speed = speed;
+    this.done = false;
+    this.cracked = false;
+    this.vx = (this.x2 - this.x) / this.speed;
+    this.vy = (this.y2 - this.y) / this.speed;
+    this.draw = function(){
+      ctx.beginPath()
+      ctx.moveTo(this.x, this.y)
+      ctx.lineTo(this.x1, this.y1)
+      ctx.lineWidth = this.width;
+      ctx.strokeStyle = "white";
+      ctx.stroke()
+      if(Math.abs(this.x1 - this.x2) > 1 || Math.abs(this.y1 - this.y2) > 1){
+        this.x1+=this.vx;
+        this.y1+=this.vy;
+      } else {
+        this.done = true;
       }
     }
   }
@@ -1099,10 +1112,9 @@
           this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
         }
       });
-      if (bubbleMeter.value < 1 && bubblegoing == true || poisongoing && poisonMeter.value == 0) {
+      if (bubbleMeter.value < 1 && bubblegoing == true) {
         this.lifetime = 0;
         bubblegoing = false;
-        poisongoing = false;
       }
     }
   }
@@ -1225,44 +1237,8 @@
     };
   }
 
-
-
   function getTime() {
     return new Date().getTime();
-  }
-
-  class Snowflake {
-    constructor(x, speed, color) {
-      this.speed = speed / 4;
-      this.x = x;
-      this.y = 0 - Math.random() * 400;
-      this.start = getTime();
-      this.color = color;
-      this.lifetime = 100;
-      this.startval = Math.random() * 100;
-    }
-    draw() {
-      this.lifetime = 3000 - (getTime() - this.start);
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI)
-      ctx.fillStyle = this.color
-      ctx.fill();
-      this.Spacing = 0;
-      ctx.lineWidth = 8;
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(-this.lifetime / 500)
-      for (let index = 0; index < 6; index++) {
-        ctx.strokeStyle = this.color;
-        ctx.moveTo(0, 0)
-        ctx.lineTo((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30));
-        ctx.stroke();
-        this.Spacing += 1.05;
-      }
-      ctx.restore();
-      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
-      this.y += this.speed
-    }
   }
 
   function ArrowEffect(direction, color, amount, speed, duration) {

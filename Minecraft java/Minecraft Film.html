@@ -214,10 +214,6 @@
     h="20-45" s="45-65" l="0-25">
   </meta>
 
-  <meta meter="topLeftColor" tags="minecraft, vlc" type="colormean" x="0.0526" y="0.0028" width="0.0009" height="0.0049"
-    h="0-10" s="0-20" l="88-100">
-  </meta>
-
 </head>
 
 
@@ -239,7 +235,7 @@
   var bossWhiteMeter = new Meter(10, onBossMeterChanged);
   var inGameMeter = new Meter(5, onGameChanged)
   var bubbleMeter = new Meter(5, onBubblechanged)
-  var poisonMeter = new Meter(5, onPoisonChanged)
+  var poisonMeter = new Meter(5, ()=>"")
   var lowHpMeter = new Meter(5, onLowHpChanged)
   var lowFoodMeter = new Meter(20, onFoodMeterChanged)
   var gStatGreyMeter = new Meter(8, goodStatusChanged)
@@ -252,21 +248,20 @@
   var bStatAccentMeter = new Meter(3, () => "")
   var inMenuBlackMeter = new Meter(10, menuChanged)
   var inMenuWhiteMeter = new Meter(10, menuChanged)
-  var anvilWhiteHammerMeter = new Meter(3, () => "")
-  var enchantmentTableBrownMeter = new Meter(3, () => "")
+  var anvilWhiteHammerMeter = new Meter(3, ()=>"")
+  var enchantmentTableBrownMeter = new Meter(3, ()=>"")
   var sleepWhiteMeter = new Meter(15, inSleepChanged)
   var sleepBlackMeter = new Meter(15, inSleepChanged)
   var travelWhiteMeter = new Meter(3, travelChanged)
   var travelBrownMeter = new Meter(3, travelChanged)
-  var topLeftColorMeter = new Meter(1, () => "")
 
 
   var effects = [];
   var sleep = [];
+  var bossEffects = [];
   var inGame = false;
   var freezeGoing = false;
   var bubblegoing = false;
-  var poisongoing = false;
   var lowHpGoing = false;
   var bossGoing = false;
   var goodStatusGoing = false;
@@ -277,6 +272,7 @@
   var sleepGoing = false;
   var travelGoing = false;
   var bossKillGoing = false;
+  var bossKillListen = false;
 
 
   function update() {
@@ -312,12 +308,21 @@
     sleepBlackMeter.setValue(engine.vision.sleepBlack)
     travelWhiteMeter.setValue(engine.vision.travelWhite)
     travelBrownMeter.setValue(engine.vision.travelBrown)
-    topLeftColorMeter.setValue(engine.vision.topLeftColor[0])
 
     if (inGame) {
       xpMeter.setValue(engine.vision.xp);
       bubbleMeter.setValue(engine.vision.bubble1)
       lowFoodMeter.setValue(engine.vision.Food)
+    }
+
+    if(enableBoss && bossKillListen){
+      if(bossWhiteMeter.value == 0 && bossWhiteMeter.decreased && !bossKillGoing &&
+        engine.vision.inMenuWhite != 1 && engine.vision.inMenuWhite != 1
+      ){
+        bossEffects.push(new bossKill())
+        bossKillGoing = true;
+        bossKillListen = false;
+      }
     }
 
     //Effect handler 
@@ -327,9 +332,13 @@
         effects.splice(i, 1);
       }
     }
-    sleep.forEach((ele, i) => {
+    sleep.forEach((ele, i)=>{
       ele.draw();
       ele.lifetime <= 0 ? sleep.splice(i, 1) : null;
+    })
+    bossEffects.forEach((ele, i)=>{
+      ele.draw();
+      ele.lifetime <= 0 ? bossEffects.splice(i, 1) : null;
     })
     if (enableHud) {
       UpdateUi(adjMeter);
@@ -383,7 +392,6 @@
   function clearEffects() {
     effects.length = 0
     freezeGoing = false;
-    poisongoing = false;
     bubblegoing = false;
     lowHpGoing = false;
     menuGoing = false;
@@ -396,7 +404,6 @@
 
   function CheckAfterInGame() {
     onBubblechanged()
-    onPoisonChanged()
     onFreezeChange()
     onLowHpChanged()
     onFoodMeterChanged()
@@ -404,16 +411,11 @@
 
   }
 
-  function travelChanged() {
-    if (travelWhiteMeter.value > .4 && travelBrownMeter.value == 1 && !travelGoing && enablePortal) {
+  function travelChanged(){
+    if(travelWhiteMeter.value > .4 && travelBrownMeter.value == 1 && !travelGoing && enablePortal){
       travelGoing = true;
       sleep.push(new travelEffect())
-    } else if (travelWhiteMeter.value < .2 && travelBrownMeter.value < .25 && travelGoing && enablePortal) {
-      if (topLeftColorMeter.value > 270 && topLeftColorMeter.value < 315) {
-        doneTravel(290)
-      } else {
-        doneTravel(45)
-      }
+    } else if (travelWhiteMeter.value < .2 && travelBrownMeter.value < .25 && travelGoing && enablePortal){
       travelGoing = false;
     }
   }
@@ -425,12 +427,12 @@
     }
   }
 
-  function menuChanged() {
-    if (inMenuBlackMeter.value == 1 && inMenuWhiteMeter.value == 1 && !menuGoing && enableMenu) {
-      if (anvilWhiteHammerMeter.value == 1 && !anvilGoing) {
+  function menuChanged(){
+    if(inMenuBlackMeter.value == 1 && inMenuWhiteMeter.value == 1 && !menuGoing && enableMenu){
+      if(anvilWhiteHammerMeter.value == 1 && !anvilGoing){
         effects.push(new inAnvil())
         anvilGoing = true;
-      } else if (enchantmentTableBrownMeter.value == 1 && !enchantGoing) {
+      } else if(enchantmentTableBrownMeter.value == 1 && !enchantGoing){
         sleep.push(new inEnchanter())
         enchantGoing = true;
       } else {
@@ -465,6 +467,7 @@
   function onFreezeChange() {
     if (freezeMeter.value > 0.2 && freezeGoing == false && enableFreeze) {
       effects.push(new FreezeEffect())
+      console.log("IN")
       freezeGoing = true;
     }
   }
@@ -473,13 +476,6 @@
     if (bubbleMeter.value == 1 && engine.vision.bubble2 == 1 && engine.vision.bubble3 == 1 && inGame && enableUnderwater) {
       effects.push(new bubbleEffect("hsla(222, 100%, 46%, 0.7)", "hsla(189, 100%, 46%, 1)", "hsla(243, 100%, 46%, 1)"))
       bubblegoing = true;
-    }
-  }
-
-  function onPoisonChanged() {
-    if (poisonMeter.value >= 0.2 && poisongoing == false && healthMeter.value == 0 && enablePoison) {
-      effects.push(new bubbleEffect("hsla(112, 100%, 23%, 0.7)", "hsla(112, 100%, 45%, 1)", "hsla(112, 100%, 16%, 1)"))
-      poisongoing = true;
     }
   }
 
@@ -498,7 +494,6 @@
       }
     }
     onGameChanged();
-    onPoisonChanged()
   }
 
   function onXpMeterChanged() {
@@ -519,54 +514,54 @@
   function onBossMeterChanged(Gamecheck) {
     if (enableBoss == 1) {
       if (Gamecheck && bossGoing) {
-        effects.push(new BossState());
+        bossEffects.push(new BossState());
       }
       if (bossMeter.increased != bossGoing) {
-        effects.push(new BossState());
+        bossEffects.push(new BossState());
       }
     }
   }
 
-  function bossKill() {
+  function bossKill(){
     this.lifetime = 150;
     this.alpha = 0;
     this.effects = [];
     this.delay = 500;
     this.start = Date.now();
-    this.draw = function () {
+    this.draw = function(){
       var elapsed = Date.now() - this.start;
       ctx.globalAlpha = this.alpha;
       DrawRect(0, 0, 320, 200, "black")
       ctx.globalAlpha = 1;
-      this.effects.forEach((ele, i) => {
+      this.effects.forEach((ele, i)=>{
         ele.draw();
         ele.lifetime <= 0 ? this.effects.splice(i, 1) : null;
       })
-      if (elapsed > this.delay) {
+      if(elapsed > this.delay){
         this.effects.push(new bossSmoke())
         this.effects.push(new bossSmoke())
         this.start = Date.now()
-        this.delay -= 45
+        this.delay-=45
       }
-      this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
       this.lifetime--;
-      if (this.lifetime <= 0) {
+      if(this.lifetime <= 0){
         bossKillGoing = false;
-        for (let i = 0; i < 18; i++) {
+        for(let i = 0; i < 18; i++){
           effects.push(new xpParticle())
         }
-        setTimeout(() => {
-          for (let i = 0; i < 18; i++) {
+        setTimeout(()=>{
+          for(let i = 0; i < 18; i++){
             effects.push(new xpParticle())
           }
         }, 200)
-        setTimeout(() => {
-          for (let i = 0; i < 18; i++) {
+        setTimeout(()=>{
+          for(let i = 0; i < 18; i++){
             effects.push(new xpParticle())
           }
         }, 400)
-        setTimeout(() => {
-          for (let i = 0; i < 18; i++) {
+        setTimeout(()=>{
+          for(let i = 0; i < 18; i++){
             effects.push(new xpParticle())
           }
         }, 600)
@@ -574,14 +569,14 @@
     }
   }
 
-  function bossSmoke() {
+  function bossSmoke(){
     this.x = 160;
     this.y = 100;
     this.vy = .1;
     this.radius = 1;
     this.rotate = Math.random() * Math.PI * 2;
     this.lifetime = 10;
-    this.draw = function () {
+    this.draw = function(){
       ctx.save()
       ctx.translate(160, 100)
       ctx.rotate(this.rotate)
@@ -589,14 +584,14 @@
       DrawCircle(this.x, this.y, this.radius, "grey")
       DrawCircle(this.x, this.y + 20, this.radius * .8, "black")
       ctx.restore()
-      this.radius += 2;
-      this.y -= this.vy;
-      this.vy *= 1.1;
+      this.radius+=2;
+      this.y-=this.vy;
+      this.vy*=1.1;
       this.y < -10 ? this.lifetime = 0 : null;
     }
   }
 
-  function xpParticle() {
+  function xpParticle(){
     this.x = 160;
     this.y = 100;
     this.radius = Math.random() * 10 + 10;
@@ -604,46 +599,48 @@
     this.vy = 10 - Math.random() * 20;
     this.lifetime = 10;
     this.color = Math.floor(Math.random() * 10) % 2 == 0 ? "green" : "yellow";
-    this.draw = function () {
+    this.draw = function(){
       DrawCircle(this.x, this.y, this.radius, this.color)
-      this.x += this.vx;
-      this.y += this.vy;
-      this.vx > 0 ? this.vx -= .005 : this.vx += .005;
-      this.vy += .5;
+      this.x+=this.vx;
+      this.y+=this.vy;
+      this.vx > 0 ? this.vx-=.005 : this.vx+=.005;
+      this.vy+=.5;
       this.y > 250 ? this.lifetime = 0 : null;
     }
   }
 
-  function travelEffect() {
+  function travelEffect(){
     this.start = Date.now();
     this.speed = 1000;
+    this.count = 0;
     this.innerSpeed = .1;
     sleep.push(new travelRing(10, this.innerSpeed, false, "black"))
-    this.draw = function () {
+    this.draw = function(){
       var elapsed = Date.now() - this.start;
-      if (elapsed > this.speed) {
+      if(elapsed > this.speed){
         sleep.unshift(new travelRing(10, this.innerSpeed, false, "black"))
         this.start = Date.now()
+        this.count++;
       }
-      this.speed > 250 ? this.speed -= 5 : null;
-      this.innerSpeed += .01;
-      if (!travelGoing) {
+      this.speed > 250 ? this.speed-=5 : null;
+      this.innerSpeed+=.01;
+      if(!travelGoing || this.count > 30){
         this.lifetime = 0;
       }
     }
   }
 
-  function travelRing(stroke, speed, colored, color) {
+  function travelRing(stroke, speed, colored, color){
     this.radius = 1;
     this.colored = colored;
     this.color = color;
     this.stroke = stroke;
     this.speed = speed;
     this.lifetime = 10;
-    this.draw = function () {
+    this.draw = function(){
       DrawStroke(160, 100, this.radius, this.colored ? this.color : `hsl(0, 0%, ${20 + this.radius / 2}%)`, this.stroke)
-      this.radius += this.speed;
-      this.stroke += 3;
+      this.radius+=this.speed;
+      this.stroke+=3;
       this.speed = this.speed * 1.1;
       this.radius > 250 ? this.lifetime = 0 : null;
     }
@@ -657,15 +654,7 @@
     ctx.stroke();
   };
 
-  function doneTravel(color) {
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => {
-        sleep.push(new travelRing(10, .1, true, `hsl(${color}, ${100 - i * 10}%, ${50 - i * 5}%)`))
-      }, i * 150)
-    }
-  }
-
-  function sleeping() {
+  function sleeping(){
     this.start = Date.now();
     this.rot1 = -2;
     this.rot2 = -2;
@@ -678,19 +667,19 @@
     this.done = false;
     this.alpha2 = 1;
     this.lifetime = 10;
-    this.draw = function () {
+    this.draw = function(){
       var elapsed = Date.now() - this.start;
-      if (this.morning) {
+      if(this.morning){
         ctx.globalAlpha = this.alpha2;
       } else {
         ctx.globalAlpha = (200 - this.y1) / 200;
       }
       DrawRect(0, this.y1, 320, 200, `hsl(${this.hue}, ${this.sat}%, ${this.lit}%)`)
-      if (!this.morning) {
+      if(!this.morning){
         ctx.globalAlpha = 1;
       }
       this.y1 > 0 ? this.y1 -= 3 : this.night = true;
-      if (this.morning) {
+      if(this.morning){
         ctx.save()
         ctx.translate(160, 200)
         ctx.rotate(this.rot2)
@@ -701,7 +690,7 @@
         this.hue = 40;
         this.lit = 50 + this.rot2 * 25
         this.sat = 50 - (this.rot2 * 25)
-      } else if (this.night) {
+      } else if(this.night){
         ctx.save()
         ctx.translate(160, 200)
         ctx.rotate(this.rot1)
@@ -713,12 +702,12 @@
         this.sat = 50 - (Math.abs(this.rot1) * 25)
       }
       ctx.globalAlpha = 1;
-      this.done ? this.alpha2 > .01 ? this.alpha2 -= .01 : this.lifetime = 0 : null;
+      this.done ? this.alpha2 > .01 ? this.alpha2-=.01 : this.lifetime = 0 : null;
       this.lifetime == 0 ? sleepGoing = false : null;
     }
   }
 
-  function inEnchanter() {
+  function inEnchanter(){
     this.lifetime = 10;
     this.start = Date.now();
     this.alpha = .15
@@ -730,10 +719,10 @@
     this.page2 = new pageOpen(160, 70, 160, 120, "hsl(48, 43%, 72%)", 85, false);
     this.page3 = new pageOpen(160, 70, 160, 120, "hsl(56, 43%, 76%)", 80, true);
     this.page4 = new pageOpen(160, 70, 160, 120, "hsl(56, 43%, 76%)", 80, false);
-    this.draw = function () {
+    this.draw = function(){
       ctx.globalAlpha = this.alpha2;
       DrawRect(0, 0, 320, 200, "black");
-      this.alpha2 <= .95 ? this.alpha2 += .05 : this.alpha2 = 1;
+      this.alpha2 <= .95 ? this.alpha2+=.05 : this.alpha2 = 1;
       ctx.globalAlpha = this.alpha;
       DrawRect(0, 0, 320, 200, "blue")
       ctx.globalAlpha = 1;
@@ -743,17 +732,17 @@
       var elapsed = Date.now() - this.start;
       this.cover1.draw(this.done)
       this.cover2.draw(this.done)
-      if (elapsed > 500) {
+      if(elapsed > 500){
         this.page1.draw(this.done)
         this.page2.draw(this.done)
       }
-      if (elapsed > 1000) {
+      if(elapsed > 1000){
         this.page3.draw(this.done)
         this.page4.draw(this.done)
       }
       ctx.restore()
-      if (enchantmentTableBrownMeter.value < .25 && !this.done) {
-        setTimeout(() => {
+      if(enchantmentTableBrownMeter.value < .25 && !this.done){
+        setTimeout(()=>{
           this.lifetime = 0;
         }, 600)
         this.done = true;
@@ -763,7 +752,7 @@
     };
   }
 
-  function pageOpen(x, y, x2, y2, color, scale, direction) {
+  function pageOpen(x, y, x2, y2, color, scale, direction){
     this.dir = direction;
     this.x = x;
     this.y = y;
@@ -774,7 +763,7 @@
     this.color = color;
     this.rot = Math.PI / 2
     this.done = false;
-    this.draw = function (done) {
+    this.draw = function(done){
       this.done = done;
       ctx.beginPath()
       ctx.moveTo(this.x, this.y)
@@ -784,23 +773,23 @@
       ctx.lineTo(this.x, this.y)
       ctx.fillStyle = this.color;
       ctx.fill()
-      if (this.done) {
-        if (this.dir) {
-          this.x < this.ox ? this.x += 3 : null;
+      if(this.done){
+        if(this.dir){
+          this.x < this.ox ? this.x+=3 : null;
         } else {
-          this.x > this.ox ? this.x -= 3 : null;
+          this.x > this.ox ? this.x-=3 : null;
         }
       } else {
-        if (this.dir) {
-          this.x > (this.x2 - this.height * .8) ? this.x -= 3 : null;
+        if(this.dir){
+          this.x > (this.x2 - this.height * .8) ? this.x-=3 : null;
         } else {
-          this.x < (this.x2 + this.height * .8) ? this.x += 3 : null;
+          this.x < (this.x2 + this.height * .8) ? this.x+=3 : null;
         }
       }
     }
   }
 
-  function inAnvil() {
+  function inAnvil(){
     this.start = Date.now()
     this.x = 85;
     this.rotate = 0;
@@ -809,7 +798,7 @@
     this.dir = false;
     this.oldDir = false;
     this.lifetime = 10;
-    this.draw = function () {
+    this.draw = function(){
       ctx.globalAlpha = this.alpha;
       DrawRect(0, 0, 320, 200, "black");
       ctx.globalAlpha = 1;
@@ -817,27 +806,27 @@
       DrawRect(0, 0, 320, 200, "red")
       ctx.globalAlpha = 1;
       this.alpha2 = Math.abs(Math.sin(Date.now() / 500)) * .1 + .1;
-      this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
       ctx.save()
       ctx.translate(this.x, 130)
       ctx.rotate(this.rotate)
       ctx.translate(-this.x, -130)
       anvilHammer(this.x, 130)
       ctx.restore()
-      if (this.dir) {
-        this.rotate < Math.PI / 2 ? this.rotate += .025 + (Math.PI / 2 - Math.abs(this.rotate)) / 10 : this.dir = false;
+      if(this.dir){
+        this.rotate < Math.PI / 2 ? this.rotate+=.025 + (Math.PI / 2 - Math.abs(this.rotate)) / 10 : this.dir = false;
       } else {
-        this.rotate > 0 ? this.rotate -= .025 + (Math.PI / 2 - Math.abs(this.rotate)) / 10 : this.dir = true;
+        this.rotate > 0 ? this.rotate-=.025 + (Math.PI / 2 - Math.abs(this.rotate)) / 10 : this.dir = true;
       }
-      if (this.dir != this.oldDir) {
-        for (let i = 0; i < 10; i++) {
-          setTimeout(() => {
+      if(this.dir != this.oldDir){
+        for(let i = 0; i < 10; i++){
+          setTimeout(()=>{
             effects.push(new spark(155, 150))
           }, i * 25)
         }
         this.oldDir = this.dir
       }
-      if (anvilWhiteHammerMeter.value < .25) {
+      if(anvilWhiteHammerMeter.value < .25){
         this.lifetime = 0;
         menuGoing = false;
         anvilGoing = false;
@@ -845,34 +834,34 @@
     }
   }
 
-  function anvilHammer(x, y) {
+  function anvilHammer(x, y){
     DrawRect(x, y, 10, -100, "hsl(28, 57%, 25%)")
     DrawRect(x - 33, y - 100, 75, 40, "white")
   }
 
-  function spark(x, y) {
+  function spark(x, y){
     this.x = x;
     this.y = y;
     this.radius = Math.random() * 5 + 5;
     this.lifetime = 30;
     this.dir = Math.random() < .5;
     this.hue = Math.random() * 60
-    this.draw = function () {
+    this.draw = function(){
       DrawCircle(this.x, this.y, this.radius, `hsl(${this.hue}, 100%, 50%)`)
-      this.x += this.dir ? Math.random() * 5 : -Math.random() * 6;
-      this.y -= this.dir ? Math.random() * 5 : Math.random() * 6;
+      this.x+=this.dir?Math.random()*5:-Math.random()*6;
+      this.y-=this.dir?Math.random()*5:Math.random()*6;
       this.lifetime--;
     }
   }
 
-  function genericMenu() {
+  function genericMenu(){
     this.lifetime = 10;
     this.done = false;
     this.alpha = 0;
     this.alpha2 = .1;
     this.redo = false;
     this.effects = [];
-    this.draw = function () {
+    this.draw = function(){
       ctx.globalAlpha = this.alpha;
       DrawRect(0, 0, 320, 200, "black");
       ctx.globalAlpha = 1;
@@ -880,27 +869,27 @@
       DrawRect(0, 0, 320, 200, "green")
       ctx.globalAlpha = 1;
       this.alpha2 = Math.abs(Math.sin(Date.now() / 500)) * .1 + .1;
-      this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
-      if (this.redo) {
+      this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+      if(this.redo){
         this.effects = [];
         this.redo = false;
         this.done = false;
       }
       var count = 0;
-      if (this.effects.length < 8) {
+      if(this.effects.length < 8){
         this.effects.push(new menuRow(this.effects.length * 40))
       }
-      this.effects.forEach((ele, i) => {
+      this.effects.forEach((ele, i)=>{
         ele.draw(this.done);
         ele.done ? count++ : null;
       })
-      if (count == 8 && !this.done) {
+      if(count == 8 && !this.done){
         this.done = true
-        setTimeout(() => {
+        setTimeout(()=>{
           this.redo = true;
         }, 500)
       }
-      if (inMenuBlackMeter.value < .5 || inMenuWhiteMeter.value < .5) {
+      if(inMenuBlackMeter.value < .5 || inMenuWhiteMeter.value < .5){
         this.effects = [];
         menuGoing = false;
         this.lifetime = 0;
@@ -908,24 +897,24 @@
     }
   }
 
-  function menuRow(x) {
+  function menuRow(x){
     this.x = x;
     this.start = Date.now();
     this.speed = Math.random() * 800 + 800;
     this.effects = [];
     this.done = false;
-    this.draw = function (donezo) {
+    this.draw = function(donezo){
       var elapsed = Date.now() - this.start;
       var count = 0;
-      if (elapsed > this.speed && this.effects.length < 5) {
+      if(elapsed > this.speed && this.effects.length < 5){
         this.effects.push(new menuSquare(this.x, 200 - (this.effects.length * 40 + 40), 5, 40, 40))
         this.start = Date.now()
       }
-      this.effects.forEach((ele, i) => {
+      this.effects.forEach((ele, i)=>{
         ele.draw(donezo);
-        if (ele.done) {
+        if(ele.done){
           count++;
-          if (this.effects[i - 1]) {
+          if(this.effects[i - 1]){
             this.effects[i - 1].grass = false;
           }
         }
@@ -934,7 +923,7 @@
     }
   }
 
-  function menuSquare(x, y2, speed, width, height) {
+  function menuSquare(x, y2, speed, width, height){
     this.x = x;
     this.y = 0;
     this.alpha = 1;
@@ -944,13 +933,13 @@
     this.speed = speed;
     this.grass = true;
     this.done = false;
-    this.draw = function (donezo) {
+    this.draw = function(donezo){
       ctx.globalAlpha = this.alpha;
       DrawRect(this.x, this.y, this.width, this.height, "rgb(130, 60, 35)")
       this.grass ? DrawRect(this.x, this.y, this.width, this.height * .75, "green") : null;
       ctx.globalAlpha = 1;
-      this.y <= this.y2 - this.speed ? this.y += this.speed : this.done = true;
-      donezo ? this.alpha >= .05 ? this.alpha -= .05 : this.alpha = 0 : null;
+      this.y <= this.y2 - this.speed ? this.y+=this.speed : this.done = true;
+      donezo ? this.alpha >= .05 ? this.alpha-=.05 : this.alpha = 0 : null;
     }
   }
 
@@ -1046,25 +1035,61 @@
   }
 
   function FreezeEffect() {
-    this.start = getTime();
+    this.start = Date.now();
     this.lifetime = 100;
-    this.snowflakes = [];
-    for (let index = 0; index < 15; index++) {
-      this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
-    }
+    this.snowflakes = [new freezeCrack(50, 250, 25, 25, true, 1), new freezeCrack(270, 250, 25, 25, true, -1)];
+    this.split = false;
+    this.alpha = 0;
     this.draw = function () {
-      ctx.fillStyle = "hsla(206, 100%, 40%, 0.5)";
+      ctx.fillStyle = `hsla(206, 100%, 40%, ${this.alpha})`;
+      this.alpha <= .975 ? this.alpha+=.025 : this.alpha = 1;
       ctx.fillRect(0, 0, 320, 200)
-      this.snowflakes.forEach((snow, i) => {
-        snow.draw();
-        if (snow.y > 300) {
-          this.snowflakes.splice(i, 1)
-          this.snowflakes.push(new Snowflake(Math.random() * 320, 5, "white"))
+      this.snowflakes.forEach((ele)=>{
+        ele.draw()
+        if(ele.done && !ele.cracked && ele.width > 5){
+          if(this.split){
+            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, true, 1))
+            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, true, -1))
+            this.split = false;
+          } else {
+            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, false, 0))
+            this.split = true;
+          }
+          ele.cracked = true;
         }
-      });
+      })
       if (freezeMeter.value == 0) {
         this.lifetime = 0;
         freezeGoing = false;
+      }
+    }
+  }
+
+  function freezeCrack(x, y, width, speed, set, dir){
+    this.x = x;
+    this.y = y;
+    this.x1 = x;
+    this.y1 = y;
+    this.x2 = !set ? (Math.random() * 80 - 40) + this.x : (Math.random() * 10 + 40) * dir + this.x;
+    this.y2 = this.y - (Math.random() * 10 + 30);
+    this.width = width;
+    this.speed = speed;
+    this.done = false;
+    this.cracked = false;
+    this.vx = (this.x2 - this.x) / this.speed;
+    this.vy = (this.y2 - this.y) / this.speed;
+    this.draw = function(){
+      ctx.beginPath()
+      ctx.moveTo(this.x, this.y)
+      ctx.lineTo(this.x1, this.y1)
+      ctx.lineWidth = this.width;
+      ctx.strokeStyle = "white";
+      ctx.stroke()
+      if(Math.abs(this.x1 - this.x2) > 1 || Math.abs(this.y1 - this.y2) > 1){
+        this.x1+=this.vx;
+        this.y1+=this.vy;
+      } else {
+        this.done = true;
       }
     }
   }
@@ -1088,10 +1113,9 @@
           this.bubbles.push(new Bubble(this.bubbleColor, this.strokeColor, 30))
         }
       });
-      if (bubbleMeter.value < 1 && bubblegoing == true || poisongoing && poisonMeter.value == 0) {
+      if (bubbleMeter.value < 1 && bubblegoing == true) {
         this.lifetime = 0;
         bubblegoing = false;
-        poisongoing = false;
       }
     }
   }
@@ -1189,21 +1213,10 @@
       if (bossMeter.value == 0) {
         this.lifetime = 0;
         bossGoing = false;
-        bossKillHelper()
-      }
+        bossKillListen = true;
     }
   }
-
-  function bossKillHelper() {
-    if (bossWhiteMeter.value == 0 && bossWhiteMeter.decreased) {
-      effects.push(new bossKill())
-      bossKillGoing = true;
-    } else {
-      setTimeout(() => {
-        bossKillHelper()
-      }, 500)
-    }
-  }
+}
 
   function FoodState() {
     this.start = getTime();
@@ -1225,44 +1238,8 @@
     };
   }
 
-
-
   function getTime() {
     return new Date().getTime();
-  }
-
-  class Snowflake {
-    constructor(x, speed, color) {
-      this.speed = speed / 4;
-      this.x = x;
-      this.y = 0 - Math.random() * 400;
-      this.start = getTime();
-      this.color = color;
-      this.lifetime = 100;
-      this.startval = Math.random() * 100;
-    }
-    draw() {
-      this.lifetime = 3000 - (getTime() - this.start);
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI)
-      ctx.fillStyle = this.color
-      ctx.fill();
-      this.Spacing = 0;
-      ctx.lineWidth = 8;
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(-this.lifetime / 500)
-      for (let index = 0; index < 6; index++) {
-        ctx.strokeStyle = this.color;
-        ctx.moveTo(0, 0)
-        ctx.lineTo((Math.cos(this.Spacing) * 30), (Math.sin(this.Spacing) * 30));
-        ctx.stroke();
-        this.Spacing += 1.05;
-      }
-      ctx.restore();
-      this.x += (Math.sin((this.lifetime / 400 + this.startval)) * 2)
-      this.y += this.speed
-    }
   }
 
   function ArrowEffect(direction, color, amount, speed, duration) {

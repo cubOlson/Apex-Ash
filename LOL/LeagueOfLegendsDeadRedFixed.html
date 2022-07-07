@@ -81,7 +81,7 @@
     type="area">
     <resolution size="3440x1440" x=".4396" y=".8792" width=".001" height = ".001"/> 
   <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.001" />
+  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.001" />SetRangeveigar
   <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.001" />
   <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.001" />
   <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.001" />
@@ -855,7 +855,7 @@
         case "Vayne":
           break;
         case "Veigar":
-          effects.push(new RippleEffect(160, 100, 5, 4000, 30, "purple", "in", "stroke", 8))
+          effects.push(new VeigarE())
           break;
         case "Viktor":
           effects.push(new ViktorE())
@@ -3264,7 +3264,7 @@
     this.radius = 80;
     this.ballCol = "hsla(282, 100%, 31%, 1)";
     this.arcCol = "hsla(189, 100%, 58%, 1)";
-    this.speed = 4;
+    this.speed = 12;
     this.draw = function () {
       DrawBackground(`hsla(0,0%,0%,${Math.sin((this.x + 10) / 2 * (Math.PI / 180))})`)
       this.gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 100)
@@ -3285,7 +3285,7 @@
   function VeigarW() {
     this.start = GetTime();
     this.draw = function () {
-      this.elapsed = GetTime() - this.start;
+      this.elapsed = (GetTime() - this.start) * 2.5;
       let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
       this.calculateVal = -2155 * Math.floor((SetRange(this.elapsed / 2155, 0, 1)) / 1.5) + ((SetRange(this.elapsed / 2155, 0, 1.1)) * (2155 / 1.5));
       gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
@@ -3305,6 +3305,21 @@
         effects.push(new ParticleExplosion(160, 100, "hsla(56,100%,50%,0.6)", 5, 2500, 40, 20, 1))
         this.lifetime = 0;
       }
+    }
+  }
+
+  function VeigarE(){
+    this.lifetime = 125;
+    this.stroke = 20;
+    this.alpha = 1
+    effects.push(new RippleEffect(160, 100, 5, 4000, 30, "purple", "in", "stroke", 8))
+    this.draw = function(){
+      this.alpha = this.lifetime / 125;
+      ctx.globalAlpha = this.alpha;
+      DrawStroke(160, 100, 150, "white", this.stroke);
+      ctx.globalAlpha = 1;
+      this.stroke+=2;
+      this.lifetime--;
     }
   }
 
@@ -4805,6 +4820,14 @@
   function GetTime() {
     return new Date().getTime()
   }
+
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
 
   function copyScreen(alpha) {
     let lightness = new Int8Array(engine.zone.lightness);
