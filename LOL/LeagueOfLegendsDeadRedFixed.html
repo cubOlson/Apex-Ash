@@ -3,7 +3,7 @@
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Champions" type="combobox"
-    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,FiddlesSticks,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Malphite,Miss Fortune,Soraka,Teemo,Thresh,Veigar,Xerath,Yone,Zeri"
+    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,FiddlesSticks,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Malphite,Miss Fortune,Nocturne,Soraka,Teemo,Thresh,Veigar,Xerath,Yone,Zeri"
     default="Ahri" />
   <meta property="enableChampions" label="Champion effects" type="boolean" default="1" />
   <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
@@ -13,7 +13,7 @@
   <meta property="enableLevel" label="Level-up effect" type="boolean" default="1" />
   <meta property="enableUtility" label="Utility skill effects" type="boolean" default="1" />
   <meta property="enableGold" label="Gold effect" type="boolean" default="1" />
-  <meta property="goldLimit" label="Gold Effect Threshold" type="number" min="0" max="10000" default="1000" />
+  <meta property="goldLimit" label="Gold Effect Threshold" type="number" min="0" max="3000" default="1000" />
   <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
 
   <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" height =".0001" h="100-140" s="30-100" l="20-70" type="linear">
@@ -24,41 +24,41 @@
   <resolution size="1440x900" x=".3396" y=".9602" width=".0526" height =".0001" />
   <resolution size="1280x800" x=".3396" y=".9602" width=".0526" height =".0001" />
   </meta>
-  <meta meter="allyDeath1" tags="league" x=".8697" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath1" tags="league" x=".8697" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-  <resolution size="3440x1440" x=".9037" y=".7222" width=".01" height = "0.001"/> 
-  <resolution size="2560x1600" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".8536" y=".7241" width=".01" height="0.001" />
+  <resolution size="3440x1440" x=".9037" y=".7222" width=".01" height = "0.0001"/> 
+  <resolution size="2560x1600" x=".8536" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1920x1200" x=".8536" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1680x1050" x=".8536" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1440x900" x=".8536" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1280x800" x=".8536" y=".7241" width=".01" height="0.0001" />
   </meta>
-  <meta meter="allyDeath2" tags="league" x=".9036" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath2" tags="league" x=".9036" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-    <resolution size="3440x1440" x=".9287" y=".7222" width=".01" height = "0.001"/> 
-  <resolution size="2560x1600" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".8906" y=".7241" width=".01" height="0.001" />
+    <resolution size="3440x1440" x=".9287" y=".7222" width=".01" height = "0.0001"/> 
+  <resolution size="2560x1600" x=".8906" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1920x1200" x=".8906" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1680x1050" x=".8906" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1440x900" x=".8906" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1280x800" x=".8906" y=".7241" width=".01" height="0.0001" />
   </meta>
-  <meta meter="allyDeath3" tags="league" x=".9379" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath3" tags="league" x=".9379" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-    <resolution size="3440x1440" x=".9536" y=".7222" width=".01" height = "0.001"/> 
-  <resolution size="2560x1600" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".9286" y=".7241" width=".01" height="0.001" />
+    <resolution size="3440x1440" x=".9536" y=".7222" width=".01" height = "0.0001"/> 
+  <resolution size="2560x1600" x=".9286" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1920x1200" x=".9286" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1680x1050" x=".9286" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1440x900" x=".9286" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1280x800" x=".9286" y=".7241" width=".01" height="0.0001" />
   </meta>
-  <meta meter="allyDeath4" tags="league" x=".9713" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath4" tags="league" x=".9713" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
     <resolution size="3440x1440" x=".9783" y=".7222" width=".01" height = "0.001"/> 
-  <resolution size="2560x1600" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".9667" y=".7241" width=".01" height="0.001" />
+  <resolution size="2560x1600" x=".9667" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1920x1200" x=".9667" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1680x1050" x=".9667" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1440x900" x=".9667" y=".7241" width=".01" height="0.0001" />
+  <resolution size="1280x800" x=".9667" y=".7241" width=".01" height="0.0001" />
   </meta>
   <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height="0.001" h="0-360" s="0-75" l="0-20"
     type="area">
@@ -68,77 +68,77 @@
   <resolution size="1440x900" x=".8391" y=".7694" width=".001" height="0.001" />
   <resolution size="1280x800" x=".8391" y=".7694" width=".001" height="0.001" />
   </meta>
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height="0.001" h="20-170" s="30-100" l="20-100"
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height="0.0001" h="20-170" s="30-100" l="20-100"
     type="area">
-    <resolution size="3440x1440" x=".4113" y=".8792" width=".001" height = ".001"/> 
-  <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".3677" y=".8796" width=".001" height="0.001" />
+    <resolution size="3440x1440" x=".4113" y=".8792" width=".001" height = ".0001"/> 
+  <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1440x900" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1280x800" x=".3677" y=".8796" width=".001" height="0.0001" />
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height="0.001" h="20-170" s="30-100" l="20-100"
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height="0.0001" h="20-170" s="30-100" l="20-100"
     type="area">
-    <resolution size="3440x1440" x=".4396" y=".8792" width=".001" height = ".001"/> 
-  <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.001" />SetRangeveigar
-  <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.001" />
+    <resolution size="3440x1440" x=".4396" y=".8792" width=".001" height = ".0001"/> 
+  <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.0001" />
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height="0.001" h="20-170" s="30-100" l="20-100"
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height="0.0001" h="20-170" s="30-100" l="20-100"
     type="area">
-    <resolution size="3440x1440" x=".4631" y=".8792" width=".001" height = ".001"/> 
-  <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1440x900" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1280x800" x=".4448" y=".8796" width=".002" height="0.001" />
+    <resolution size="3440x1440" x=".4631" y=".8792" width=".001" height = ".0001"/> 
+  <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1440x900" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1280x800" x=".4448" y=".8796" width=".002" height="0.0001" />
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height="0.001" h="20-170" s="30-100" l="20-100"
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height="0.0001" h="20-170" s="30-100" l="20-100"
     type="area">
+    <resolution size="3440x1440" x=".48895" y=".8792" width=".001" height = ".0001"/> 
+  <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1440x900" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1280x800" x=".4833" y=".8796" width=".001" height="0.0001" />
+  </meta>
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03" height="0.0001" h="20-170" s="0-100"
+    l="95-100" type="area">
+    <resolution size="3440x1440" x=".4113" y=".8792" width=".001" height = ".0001"/>
+  <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1440x900" x=".3677" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1280x800" x=".3677" y=".8796" width=".001" height="0.0001" />
+  </meta>
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031" height="0.0001" h="20-170" s="0-100"
+    l="95-100" type="area">
+    <resolution size="3440x1440" x=".4396" y=".8792" width=".001" height = ".0001"/> 
+  <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.0001" />
+  </meta>
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height="0.0001" h="20-170" s="0-60"
+    l="95-100" type="area">
+    <resolution size="3440x1440" x=".4631" y=".8792" width=".001" height = ".0001"/>
+  <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1440x900" x=".4448" y=".8796" width=".002" height="0.0001" />
+  <resolution size="1280x800" x=".4448" y=".8796" width=".002" height="0.0001" />
+  </meta>
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03" height="0.0001" h="20-170" s="0-100"
+    l="95-100" type="area">
     <resolution size="3440x1440" x=".48895" y=".8792" width=".001" height = ".001"/> 
-  <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4833" y=".8796" width=".001" height="0.001" />
-  </meta>
-  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03" height="0.001" h="20-170" s="0-100"
-    l="95-100" type="area">
-    <resolution size="3440x1440" x=".4113" y=".8792" width=".001" height = ".001"/>
-  <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".3677" y=".8796" width=".001" height="0.001" />
-  </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031" height="0.001" h="20-170" s="0-100"
-    l="95-100" type="area">
-    <resolution size="3440x1440" x=".4396" y=".8792" width=".001" height = ".001"/> 
-  <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.001" />
-  </meta>
-  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height="0.001" h="20-170" s="0-60"
-    l="95-100" type="area">
-    <resolution size="3440x1440" x=".4631" y=".8792" width=".001" height = ".001"/>
-  <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1440x900" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1280x800" x=".4448" y=".8796" width=".002" height="0.001" />
-  </meta>
-  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03" height="0.001" h="20-170" s="0-100"
-    l="95-100" type="area">
-    <resolution size="3440x1440" x=".48895" y=".8792" width=".001" height = ".001"/> 
-  <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4833" y=".8796" width=".001" height="0.001" />
+  <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1440x900" x=".4833" y=".8796" width=".001" height="0.0001" />
+  <resolution size="1280x800" x=".4833" y=".8796" width=".001" height="0.0001" />
   </meta>
   <meta meter="ManaR" tags="league" x=".4849" y=".88" width=".03" height="0.01" h="170-200" s="50-100" l="50-100"
     type="area">
@@ -229,12 +229,18 @@
   <resolution size="1280x800" x=".8933" y=".8167" width=".0045" height=".02" />
   </meta>
   <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".02" type="ocr_numeric" confidence="10">
-  <resolution size="3440x1440" x=".5954" y=".9696" width=".023" height=".021" />
+  <resolution size="3440x1440" x=".596" y=".97" width="0.0065" height="0.0146" />
   <resolution size="2560x1600" x=".6432" y=".9685" width=".0339" height=".02" />
   <resolution size="1920x1200" x=".6432" y=".9685" width=".0339" height=".02" />
   <resolution size="1680x1050" x=".6432" y=".9685" width=".0339" height=".02" />
   <resolution size="1440x900" x=".6432" y=".9685" width=".0339" height=".02" />
   <resolution size="1280x800" x=".6432" y=".9685" width=".0339" height=".02" />
+  </meta>
+  <meta meter="goldHundred" tags="league" x="0.6087" y="0.9715" width="0.0017" height="0.0139" type="area" h="45-90" s="25-50" l="25-100">
+    <resolution size="3440x1440" x="0.6087" y="0.9715" width="0.0017" height="0.0139" />
+  </meta>
+  <meta meter="goldThousand" tags="league" x="0.6145" y="0.9715" width="0.0017" height="0.0139" type="area" h="45-90" s="25-50" l="25-100">
+    <resolution size="3440x1440" x="0.6145" y="0.9715" width="0.0017" height="0.0139" />
   </meta>
   <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75"
     type="area">
@@ -324,6 +330,9 @@
     l="59-100" type="area">
     <resolution size="3440x1440" x="0.6267" y=".9354" width=".0045" height="0.005"/>
   </meta>
+  <meta meter="loadBar" tags="league" type="area" x="0.4227" y="0.7375" width="0.0001" height="0.0042" h="90-180" s="75-100" l="25-50" >
+    <resolution size="3440x1440" x="0.4227" y="0.7375" width="0.0001" height="0.0042"/>
+  </meta> 
 </head>
 
 <body style="margin: 0; padding: 0; background: #000">
@@ -395,6 +404,7 @@
   var yellowDragonMeter = new Meter(25, dragonEffects);
   var greyBaronMeter = new Meter(25, baronEffects);
   var yellowBaronMeter = new Meter(25, baronEffects);
+  var goldMeter = new Meter(10, goldLimitCalculator);
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
 
@@ -437,6 +447,7 @@
         yellowDragonMeter.setValue(engine.vision.yellowDragon);
         greyBaronMeter.setValue(engine.vision.greyBaron);
         yellowBaronMeter.setValue(engine.vision.yellowBaron);
+        goldMeter.setValue(engine.vision.gold)
 
         if (enableChampions) {
           Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
@@ -480,9 +491,12 @@
     }
 
     //Gold effect
-    if (engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2 && enableGold) {
-      goldAnimPushed = true;
-      effects.push(new goldEffect());
+    if(enableGold && play1 && play2){
+      console.log(currentNum)
+      if (currentNum >= goldLimit && !goldAnimPushed) {
+        goldAnimPushed = true;
+        effects.push(new goldEffect());
+      }
     }
 
     //Damage Effect
@@ -503,6 +517,15 @@
     //State Manager animation play
     stateMgr.Process();
     window.requestAnimationFrame(update);
+  }
+
+  var currentNum = 0;
+  function goldLimitCalculator(){
+    if(goldMeter.value > 0){
+      currentNum = goldMeter.value * 10;
+      if(engine.vision.goldHundred > .25) currentNum*=10;
+      if(engine.vision.goldThousand > .25) currentNum*=10;
+    }
   }
 
   // START CALLBACK FUNCTIONS ----------------------------------------------------------------
@@ -536,7 +559,6 @@
         case "Fizz":
           effects.push(new FizzQ())
           break;
-
         case "Garen":
           break;
         case "Irelia":
@@ -571,6 +593,9 @@
           break;
         case "Miss Fortune":
           effects.push(new FortuneQ());
+          break;
+        case "Nocturne":
+          effects.push(new NocturneQ());
           break;
         case "Rek'sai":
           break;
@@ -665,7 +690,7 @@
           effects.push(new EzrealW())
           break;
         case "FiddlesSticks":
-          effects.push(new FiddleW())
+          if(engine.vision.loadBar > .5) effects.push(new FiddleW());
           break;
         case "Garen":
           effects.push(new GarenW())
@@ -702,6 +727,9 @@
           break;
         case "Miss Fortune":
           effects.push(new FortuneW());
+          break;
+        case "Nocturne":
+          effects.push(new NocturneW());
           break;
         case "Rek'sai":
           break;
@@ -835,6 +863,9 @@
         case "Miss Fortune":
           effects.push(new FortuneE());
           break;
+        case "Nocturne":
+          stateMgr.Push(new NocturneE());
+          break;
         case "Rek'sai":
           break;
         case "Ryze":
@@ -930,6 +961,7 @@
           effects.push(new EzrealR())
           break;
         case "FiddlesSticks":
+          effects.push(new FiddleR())
           break;
         case "Fizz":
           effects.push(new FizzR())
@@ -966,7 +998,7 @@
           effects.push(new LuxR());
           break;
         case "Malphite":
-
+          effects.push(new MalphiteR())
           break;
         case "Miss Fortune":
           stateMgr.Push(new FortuneR())
@@ -1376,7 +1408,6 @@
     this.start = GetTime();
     this.elapsed = 0;
     this.switch = "yellow";
-    console.log("In W")
 
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
@@ -1840,16 +1871,17 @@
     for (let index = 0; index < 20; index++) {
       setTimeout(() => {
         this.lineArray.push(new drawRandomLine())
-      }, 200 * index);
+      }, 100 * index);
     }
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
-      ctx.globalAlpha = SetRange(this.elapsed > 4000 ? 1 - (this.elapsed - 4000) / 1000 : this.elapsed < 500 ? this.elapsed / 200 : 1, 0, 1)
+      ctx.globalAlpha = SetRange(this.elapsed > 2000 ? 1 - (this.elapsed - 2000) / 250 : this.elapsed < 250 ? this.elapsed / 50 : 1, 0, 1)
       DrawBackground("hsla(0,100%,50%,0.6)")
       this.lineArray.forEach(line => {
         line.draw();
       });
       ctx.globalAlpha = 1;
+      if(this.elapsed > 3000) this.lifetime = 0;
     }
   }
 
@@ -1865,17 +1897,16 @@
       this.elapsed = GetTime() - this.start;
       let gradient = ctx.createRadialGradient(160, 200, 0, 160, 200, 300);
       this.gradientElapsed = SetRange(this.elapsed, 0, 4000)
-      console.log(this.gradientElapsed)
 
 
-      if (this.elapsed > 6000) {
+      if (this.elapsed > 3000) {
         let gradient = ctx.createRadialGradient(160, 200, 000, 160, 200, 300)
-        this.calculateVal = -1660 * Math.floor(((this.elapsed - 6000) / 1660) / 1) + (((this.elapsed - 6000) / 1660) * (1660 / 1));
+        this.calculateVal = -1660 * Math.floor(((this.elapsed - 3000) / 1660) / 1) + (((this.elapsed - 3000) / 1660) * (1660 / 1));
         gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,0.7)");
         gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
         gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
         DrawBackground(gradient)
-        if (this.elapsed > 7200) {
+        if (this.elapsed > 3600) {
           this.lifetime = 0;
         }
       } else {
@@ -1896,12 +1927,12 @@
       this.elapsed = GetTime() - this.start;
 
       let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
-      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100) / 1) + ((this.elapsed / 2100) * (2100 / 1));
-      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
-      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
-      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
-      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
-      gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100)) + this.elapsed;
+      gradient.addColorStop(SetRange((400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
       DrawBackground(gradient)
       if (this.elapsed > 1500) {
         this.lifetime = 0;
@@ -1941,7 +1972,7 @@
           });
           for (let index = 0; index < 3; index++) {
             ctx.beginPath();
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "grey";
             ctx.fillRect(Math.random() * 140 + 90, Math.random() * 140 + 30, 10, 10)
           }
         }
@@ -2661,16 +2692,22 @@
   //MALPHITE
   function MalphiteQ() {
     this.start = GetTime();
+    this.alpha = 0;
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
+      ctx.globalAlpha = this.alpha;
       drawWave(this.elapsed < 1300 ? 130 : 200, "hsla(35, 100%, 5%, 1)", -SetRange(this.elapsed / 200, 0, 6), "up", this.elapsed < 1300 ? 70 : 0);
       drawWave(this.elapsed < 1300 ? 130 : 200, "hsla(40, 100%, 10%, 1)", -SetRange(this.elapsed / 200, 0, 6), "up", this.elapsed < 1300 ? 50 : 0);
       drawWave(this.elapsed < 1300 ? 130 : 200, "orange", -SetRange(this.elapsed / 200, 0, 6), "up", this.elapsed < 1300 ? 30 : 0);
+      ctx.globalAlpha = 1;
+      this.alpha < 1 ? this.alpha+=.05 : this.alpha = 1;
+      if(this.elapsed > 3000) this.lifetime = 0;
     }
   }
 
   function MalphiteW() {
     this.start = GetTime();
+    this.alpha = 0;
     this.leftPos = {
       x: 60,
       y: 155
@@ -2686,6 +2723,7 @@
     this.recentSwitch = false;;
     this.particleHolder = [];
     this.draw = function () {
+      ctx.globalAlpha = this.alpha;
       this.elapsed = GetTime() - this.start;
       DrawBackground("hsla(0,0%,0%,0.6)")
       if (this.defaultMotion.left) {
@@ -2741,16 +2779,19 @@
         this.lifetime = 0;
         ActiveExtendedW = false;
       }
+      ctx.globalAlpha = 1;
+      this.alpha < 1 ? this.alpha+=.05 : this.alpha = 1;
     }
   }
 
   function MalphiteE() {
     this.start = GetTime();
+    this.alpha = 0;
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
-
+      ctx.globalAlpha = this.alpha;
       let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
-      this.calculateVal = -2320 * Math.floor((this.elapsed / 2320) / 1) + ((this.elapsed / 2320) * (2320 / 1));
+      this.calculateVal = -2320 * Math.floor((this.elapsed / 1160) / 1) + ((this.elapsed / 1160) * (2320 / 1));
       gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
       gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(38, 100%, 50%,1)");
       gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(70, 100%, 50%,1)");
@@ -2760,14 +2801,34 @@
       ctx.beginPath();
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, 320, 200)
-      if (this.elapsed > 2000) {
+      if (this.elapsed > 1000) {
         this.lifetime = 0
       }
+      ctx.globalAlpha = 1;
+      this.alpha < 1 ? this.alpha += .025 : this.alpha = 1;
     }
   }
 
-  function MalphiteR() {
-    //Not sure what effect i should give this
+  function MalphiteR(){
+    this.radius = 1;
+    this.vr = .1;
+    this.pushed = false;
+    this.alpha = 1;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(160, 100, this.radius, `hsl(20, 65%, ${50 - (this.radius / 4)}%)`)
+      ctx.globalAlpha = 1;
+      this.radius <= 200 ? this.radius+=this.vr : this.radius = 200;
+      this.vr < 15 ? this.vr+=.75 : this.vr = 15;
+      if(this.radius == 200 && !this.pushed){
+        effects.push(new ParticleExplosion(160, 100, "yellow", 15, 3000, 40, 10, 1.5, false, false))
+        setTimeout(()=>{
+          effects.push(new ParticleExplosion(160, 100, "red", 15, 3000, 40, 10, 1.5, false, false))
+        }, 200)
+        this.pushed = true;
+      }
+      this.pushed ? this.alpha > .05 ? this.alpha -=.005 : this.lifetime = 0 : null;
+    }
   }
 
   //END MALPHITE
@@ -2840,7 +2901,6 @@
     clearEffects = true;
 
     this.Process = function () {
-      console.log(this.lifetime)
       if (this.lifetime <= 0) {
         stateMgr.Pop();
         StopEffects = false;
@@ -2872,11 +2932,11 @@
     this.start = GetTime();
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
-      DrawBackground(`hsla(0,0%,0%,${Math.sin(this.elapsed / 1000)})`)
-      DrawCircle(this.elapsed / 6, 100, 60, "hsla(187, 100%, 58%, 1)")
-      DrawSineWave(-320 + this.elapsed / 6, 150, "hsla(224, 100%, 36%, 1)", 30, 20, this.elapsed, 10);
-      DrawSineWave(-320 + this.elapsed / 6, 150, "hsla(224, 100%, 36%, 1)", 30, -20, this.elapsed, 10);
-      if (this.elapsed > 4000) {
+      DrawBackground(`hsla(0,0%,0%,${Math.sin(this.elapsed / 1500)})`)
+      DrawCircle(this.elapsed / 3, 100, 60, "hsla(187, 100%, 20%, 1)")
+      DrawSineWave(-320 + this.elapsed / 3, 150, "hsla(224, 100%, 36%, 1)", 30, 20, this.elapsed, 10);
+      DrawSineWave(-320 + this.elapsed / 3, 150, "hsla(224, 100%, 36%, 1)", 30, -20, this.elapsed, 10);
+      if (this.elapsed > 2000) {
         this.lifetime = 0
       }
     }
@@ -2887,11 +2947,11 @@
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
       let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
-      this.gradientElapsed = SetRange(1880 - this.elapsed, 10, 1800);
-      this.calculateVal = -1880 * Math.floor(((1880 - this.gradientElapsed) / 1880) / 1) + ((this.gradientElapsed / 1880) * (1880 / 1));
+      this.gradientElapsed = SetRange(900 - this.elapsed, 10, 900);
+      this.calculateVal = -1880 * Math.floor((1880 - this.gradientElapsed) / 1880) + this.gradientElapsed;
       gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
-      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(176, 100%, 50%,1)");
-      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(228, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(176, 100%, 15%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(228, 100%, 15%,1)");
       gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
       DrawBackground(gradient);
       if (this.elapsed > 1600) {
@@ -2903,7 +2963,6 @@
 
   function NocturneE() {
     freezeBackground = true;
-
     this.start = GetTime();
     this.elapsed;
     this.Process = function () {
@@ -2913,7 +2972,6 @@
 
 
     this.draw = function () {
-
       if (keyScreenBrightness > 1) {
         copyScreen(0.03)
       }
@@ -3298,11 +3356,11 @@
       let beamVal = this.elapsed > 800 ? (Math.sin((this.elapsed - 1000) / 12 * (Math.PI / 180)) * 1715) : 0;
       this.calculateVal = (-1715 * Math.floor((SetRange(beamVal / 1715, 0, 1)) / 2) + (((beamVal) / 1715) * (1715 / 2)));
       beam.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
-      beam.addColorStop(SetRange((-250 + (this.calculateVal)), 0, 1000) / 1000, "hsla(56, 100%, 50%,1)");
+      beam.addColorStop(SetRange((-250 + (this.calculateVal)), 0, 1000) / 1000, "hsla(345, 90%, 50%,1)");
       beam.addColorStop(SetRange((-450 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
       DrawBackground(beam)
       if (this.elapsed > 2900) {
-        effects.push(new ParticleExplosion(160, 100, "hsla(56,100%,50%,0.6)", 5, 2500, 40, 20, 1))
+        effects.push(new ParticleExplosion(160, 100, "hsla(345,90%,50%,0.6)", 5, 2500, 40, 20, 1))
         this.lifetime = 0;
       }
     }
@@ -3316,55 +3374,42 @@
     this.draw = function(){
       this.alpha = this.lifetime / 125;
       ctx.globalAlpha = this.alpha;
-      DrawStroke(160, 100, 150, "white", this.stroke);
+      DrawStroke(160, 100, 150, "hsl(345,90%,50%)", this.stroke);
       ctx.globalAlpha = 1;
       this.stroke+=2;
       this.lifetime--;
     }
   }
 
-  function VeigarR() {
-    this.start = GetTime();
-    this.lightningBolts = [];
-    this.lightningBolts.push(new Lightning(100));
-    this.lightningBolts.push(new Lightning(250))
-    this.beenpushed = [0, 0]
-    this.y = 260;
-    this.draw = function () {
-      this.elapsed = GetTime() - this.start;
-      if (this.elapsed < 5000) {
-        DrawBackground(`hsla(0,0%,0%,${this.elapsed / 600})`)
-        this.lightningBolts.forEach((lightning, i) => {
-          lightning.draw();
-          if (lightning.moveY > 200 && this.beenpushed[i] == 0) {
-            effects.push(new ParticleExplosion(lightning.moveX, lightning.moveY, "yellow", 5, 2300, 20, 30, 1, false, false))
-            this.beenpushed[i] = 1;
-          }
-        });
-        DrawBackground(`hsla(0,0%,0%,${(this.elapsed - 1300) / 600})`)
-        if (this.elapsed > 2500) {
-          DrawCircle(160, this.y, 50, "hsla(280, 100%, 56%, 1)")
-          this.y -= 3;
-          for (let index = 0; index < 5; index++) {
-            DrawRandomArc(160, this.y, 30, "yellow", 10);
-            ctx.beginPath();
-            ctx.fillStyle = "hsla(178, 100%, 56%, 1)";
-            ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10);
-          }
-        }
+  function VeigarR(){
+    this.start = Date.now();
+    this.radius = 1;
+    this.done1 = false;
+    this.done2 = false;
+    this.done3 = false;
+    this.lifetime = 10;
+    this.color = {
+      hue: 285,
+      sat: 100,
+      lit: 0
+    }
+    this.draw = function(){
+      DrawCircle(160, 100, this.radius, `hsl(${this.color.hue}, ${this.color.sat}%, ${this.color.lit}%)`)
+      if (!this.done1){
+        this.radius < 70 ? this.radius+=4 : this.done1 = true;
+        this.color.lit+=2.5;
+      } else if (!this.done2){
+        this.radius = 100;
+        this.done2 = true;
+      } else if (!this.done3){
+        this.radius > 10 ? this.radius-=12 : this.done3 = true;
       } else {
-        ctx.beginPath();
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, (this.elapsed - 4500) / 8, 320, 200)
+        effects.push(new ParticleExplosion(160, 100, "hsl(345,90%,50%)", 7, 2300, 20, 30, 1, false, false))
+        effects.push(new ParticleExplosion(160, 100, "hsl(50,90%,50%)", 5, 2300, 20, 30, 1, false, false))
+        this.lifetime = 0;
       }
-
-
-
     }
   }
-
-
-
 
   //END VEIGAR
   //VIKTOR
@@ -3900,7 +3945,6 @@
   function DrawRandomArc(x, y, size, col, strokeSize) {
     ctx.beginPath()
     let randomVal = Math.random() * 100;
-    console.log(Math.sin(randomVal))
     ctx.moveTo(x, y)
     ctx.lineTo(x + Math.cos(randomVal) * size * 2, y + Math.sin(randomVal) * size * 2)
     ctx.strokeStyle = col;
@@ -4618,8 +4662,8 @@
     this.x = 160;
     this.y = 100;
     this.radiusX = 30;
-    this.lifetime = 10;
-
+    this.lifetime = 20;
+    this.alpha = 1;
     this.draw = function () {
       this.x = Math.sin(Date.now() / 1000) * 160 + 160;
       ctx.beginPath();
@@ -4628,10 +4672,15 @@
         ctx.fillStyle = "white";
       }
       ctx.ellipse(this.x, this.y, this.radiusX, 30, 0, 0, 2 * Math.PI);
+      ctx.globalAlpha = this.alpha;
       ctx.fill();
+      ctx.globalAlpha = 1;
       this.radiusX = Math.sin(Date.now() / 100) * 10 + 20;
-      if ((engine.vision.gold < goldLimit && engine.vision.gold != -1) || (!play1 || !play2)) {
-        this.lifetime = 0;
+      if(this.lifetime == 10){
+        this.alpha > .01 ? this.alpha-=.01 : this.lifetime = 0;
+      }
+      if ((currentNum < goldLimit && goldMeter.value != -1 && goldMeter.value != 0) || (!play1 || !play2)) {
+        this.lifetime = 10;
         goldAnimPushed = false;
       }
     }
@@ -4690,9 +4739,8 @@
       this.random = Math.random();
       this.x = Math.random() * 140 + 90;
       this.y = Math.random() * 140 + 30;
-      this.rotate = (Math.PI / 6 + Math.random() * Math.PI * 2 / 3) * -1;
       this.start = GetTime();
-      this.rotateSpeed = Math.random();
+      this.rotateSpeed = Math.random() + 5;
     }
 
     draw() {

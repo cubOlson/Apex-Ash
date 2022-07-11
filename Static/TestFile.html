@@ -24,7 +24,7 @@
     DrawRect(0, 0, 320, 200, "salmon")
 
     if(effects.length < 1){
-      effects.push(new FreezeEffect())
+      effects.push(new malphiteR())
     }
     effects.forEach((ele, i)=>{
         ele.draw();
@@ -34,63 +34,91 @@
     window.requestAnimationFrame(update);
   };
 
-  function FreezeEffect() {
-    this.start = Date.now();
-    this.lifetime = 100;
-    this.snowflakes = [new freezeCrack(50, 250, 25, 25, true, 1), new freezeCrack(270, 250, 25, 25, true, -1)];
-    this.split = false;
-    this.alpha = 0;
-    this.draw = function () {
-      var elapsed = Date.now() - this.start;
-      ctx.fillStyle = `hsla(206, 100%, 40%, ${this.alpha})`;
-      this.alpha <= .975 ? this.alpha+=.025 : this.alpha = 1;
-      ctx.fillRect(0, 0, 320, 200)
-      this.snowflakes.forEach((ele)=>{
-        ele.draw()
-        if(ele.done && !ele.cracked && ele.width > 5){
-          if(this.split){
-            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, true, 1))
-            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, true, -1))
-            this.split = false;
-          } else {
-            this.snowflakes.push(new freezeCrack(ele.x2, ele.y2, ele.width * .9, ele.speed * 1.1, false, 0))
-            this.split = true;
-          }
-          ele.cracked = true;
-        }
-      })
-      if (elapsed > 10000) {
-        this.lifetime = 0;
+  function malphiteR(){
+    this.radius = 1;
+    this.vr = .1;
+    this.pushed = false;
+    this.alpha = 1;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(160, 100, this.radius, `hsl(20, 65%, ${50 - (this.radius / 4)}%)`)
+      ctx.globalAlpha = 1;
+      this.radius <= 200 ? this.radius+=this.vr : this.radius = 200;
+      this.vr < 15 ? this.vr+=.75 : this.vr = 15;
+      if(this.radius == 200 && !this.pushed){
+        effects.push(new ParticleExplosion(160, 100, "yellow", 15, 3000, 40, 10, 1.5, false, false))
+        setTimeout(()=>{
+          effects.push(new ParticleExplosion(160, 100, "red", 15, 3000, 40, 10, 1.5, false, false))
+        }, 200)
+        this.pushed = true;
       }
+      this.pushed ? this.alpha > .05 ? this.alpha -=.005 : this.lifetime = 0 : null;
     }
   }
 
-  function freezeCrack(x, y, width, speed, set, dir){
+  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts) {
+    this.start = GetTime();
+    this.col = color;
+    this.speed = speed;
+    this.duration = duration;
+    this.lifetime = 2000;
+    this.amount = particleAmount;
+    this.size = particleSize
     this.x = x;
     this.y = y;
-    this.x1 = x;
-    this.y1 = y;
-    this.x2 = !set ? (Math.random() * 80 - 40) + this.x : (Math.random() * 10 + 40) * dir + this.x;
-    this.y2 = this.y - (Math.random() * 10 + 30);
-    this.width = width;
-    this.speed = speed;
-    this.done = false;
-    this.cracked = false;
-    this.vx = (this.x2 - this.x) / this.speed;
-    this.vy = (this.y2 - this.y) / this.speed;
-    this.draw = function(){
-      ctx.beginPath()
-      ctx.moveTo(this.x, this.y)
-      ctx.lineTo(this.x1, this.y1)
-      ctx.lineWidth = this.width;
-      ctx.strokeStyle = "white";
-      ctx.stroke()
-      if(Math.abs(this.x1 - this.x2) > 1 || Math.abs(this.y1 - this.y2) > 1){
-        this.x1+=this.vx;
-        this.y1+=this.vy;
+    this.fadeSpeed = fadeSpeed;
+    this.particles = [];
+    this.useHearts = useHearts;
+
+    while (this.particles.length < this.amount) {
+      if (notrandomY) {
+        this.yspeed = -this.speed / 1.5;
       } else {
-        this.done = true;
+        this.yspeed = ((Math.random() - 0.5) * this.speed);
       }
+      if (this.useHearts == null || this.useHearts == false) {
+        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+          {
+            x: ((Math.random() - 0.5) * this.speed),
+            y: this.yspeed
+          }))
+        }
+      // } else {
+      //   this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
+      //     {
+      //       x: ((Math.random() - 0.5) * this.speed),
+      //       y: this.yspeed
+      //     }))
+      // }
+
+      this.draw = function () {
+        this.lifetime = this.duration - (GetTime() - this.start)
+        this.particles.forEach((Particle, index) => {
+          Particle.draw()
+        })
+      }
+    }
+  };
+
+  class ExplosionParticle {
+    constructor(x, y, radius, color, fadeSpeed, velocity) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.radius = radius;
+      this.velocity = velocity;
+      this.alpha = 1 * fadeSpeed;
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+      ctx.fillStyle = this.color
+      ctx.fill()
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+      this.alpha -= 0.01
+      ctx.globalAlpha = 1;
     }
   }
 
