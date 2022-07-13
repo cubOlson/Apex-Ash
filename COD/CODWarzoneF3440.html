@@ -344,7 +344,7 @@
   }
 
   function armorEffects() {
-    if (plate1Meter.decreased) {
+    if (plate1Meter.decreased && plate1Meter.diff > 0.15) {
       if (enableStandard && enableShield) {
         effects.push(new DamageEffect("blue"));
       }
@@ -352,35 +352,35 @@
       setTimeout(() => { shieldCol = "blue" }, 100)
 
     }
-    else if (plate1Meter.increased && enableShield) {
+    else if (plate1Meter.increased && enableShield && plate1Meter.diff > 0.15) {
       effects.push(new HealEffect("blue"))
     }
 
   }
   function armorEffects2() {
 
-    if (plate2Meter.decreased) {
+    if (plate2Meter.decreased && plate2Meter.diff > 0.15) {
       if (enableStandard && enableShield) {
         effects.push(new DamageEffect("blue"));
       }
       shieldCol = "red";
       setTimeout(() => { shieldCol = "blue" }, 100)
     }
-    else if (plate2Meter.increased && enableShield) {
+    else if (plate2Meter.increased && enableShield && plate2Meter.diff > 0.15) {
       effects.push(new HealEffect("blue"))
     }
 
   }
   function armorEffects3() {
 
-    if (plate3Meter.decreased) {
+    if (plate3Meter.decreased && plate3Meter.diff > 0.15) {
       if (enableStandard && enableShield) {
         effects.push(new DamageEffect("blue"));
       }
-      shieldCol = "red";
+      shieldCol = "red"; 
       setTimeout(() => { shieldCol = "blue" }, 100)
     }
-    else if (plate3Meter.increased && enableShield) {
+    else if (plate3Meter.increased && enableShield && plate3Meter.diff > 0.15) {
       effects.push(new HealEffect("blue"))
     }
 
@@ -388,7 +388,7 @@
 
   function healthEffects() {
 
-    if (healthMeter.decreased && healthMeter.diff < .9 && enableHealth) {
+    if (healthMeter.decreased && healthMeter.diff > 0.05 && healthMeter.diff < .9 && enableHealth) {
       if (enableStandard) {
         damagePlaying = true;
         effects.push(new DamageEffect("red"));
@@ -396,7 +396,7 @@
       hpCol = "red"
       setTimeout(() => { hpCol = "green" }, 100)
       setTimeout(() => { damagePlaying = false; }, 500)
-    } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.value > .3 && !knockdownGoing && healthRedMeter.value == 0 && damagePlaying == false && enableStandard && enableHealth) {
+    } else if (healthMeter.increased && healthMeter.diff < .9 && healthMeter.diff > 0.05 && healthMeter.value > .3 && !knockdownGoing && healthRedMeter.value == 0 && damagePlaying == false && enableStandard && enableHealth) {
       effects.push(new HealEffect())
     }
 
