@@ -19,12 +19,13 @@
   var width = 320;
   var height = 200;
   var effects = [];
+  var burrowed = false;
 
   function update() {
     DrawRect(0, 0, 320, 200, "salmon")
 
     if(effects.length < 1){
-      effects.push(new malphiteR())
+      effects.push(new PantheonW())
     }
     effects.forEach((ele, i)=>{
         ele.draw();
@@ -34,91 +35,19 @@
     window.requestAnimationFrame(update);
   };
 
-  function malphiteR(){
+  function PantheonW(){
+    this.start = Date.now();
+    this.alpha = 0;
     this.radius = 1;
-    this.vr = .1;
-    this.pushed = false;
-    this.alpha = 1;
+    this.lifetime = 10;
     this.draw = function(){
       ctx.globalAlpha = this.alpha;
-      DrawCircle(160, 100, this.radius, `hsl(20, 65%, ${50 - (this.radius / 4)}%)`)
+      DrawStroke(160, 100, this.radius, "red", 30)
+      DrawStroke(160, 100, this.radius + 30, "orange", 30)
+      DrawStroke(160, 100, this.radius + 60, "yellow", 30)
       ctx.globalAlpha = 1;
-      this.radius <= 200 ? this.radius+=this.vr : this.radius = 200;
-      this.vr < 15 ? this.vr+=.75 : this.vr = 15;
-      if(this.radius == 200 && !this.pushed){
-        effects.push(new ParticleExplosion(160, 100, "yellow", 15, 3000, 40, 10, 1.5, false, false))
-        setTimeout(()=>{
-          effects.push(new ParticleExplosion(160, 100, "red", 15, 3000, 40, 10, 1.5, false, false))
-        }, 200)
-        this.pushed = true;
-      }
-      this.pushed ? this.alpha > .05 ? this.alpha -=.005 : this.lifetime = 0 : null;
-    }
-  }
-
-  function ParticleExplosion(x, y, color, speed, duration, particleAmount, particleSize, fadeSpeed, notrandomY, useHearts) {
-    this.start = GetTime();
-    this.col = color;
-    this.speed = speed;
-    this.duration = duration;
-    this.lifetime = 2000;
-    this.amount = particleAmount;
-    this.size = particleSize
-    this.x = x;
-    this.y = y;
-    this.fadeSpeed = fadeSpeed;
-    this.particles = [];
-    this.useHearts = useHearts;
-
-    while (this.particles.length < this.amount) {
-      if (notrandomY) {
-        this.yspeed = -this.speed / 1.5;
-      } else {
-        this.yspeed = ((Math.random() - 0.5) * this.speed);
-      }
-      if (this.useHearts == null || this.useHearts == false) {
-        this.particles.push(new ExplosionParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
-          {
-            x: ((Math.random() - 0.5) * this.speed),
-            y: this.yspeed
-          }))
-        }
-      // } else {
-      //   this.particles.push(new HeartParticle(this.x, this.y, this.size, this.col, this.fadeSpeed,
-      //     {
-      //       x: ((Math.random() - 0.5) * this.speed),
-      //       y: this.yspeed
-      //     }))
-      // }
-
-      this.draw = function () {
-        this.lifetime = this.duration - (GetTime() - this.start)
-        this.particles.forEach((Particle, index) => {
-          Particle.draw()
-        })
-      }
-    }
-  };
-
-  class ExplosionParticle {
-    constructor(x, y, radius, color, fadeSpeed, velocity) {
-      this.x = x;
-      this.y = y;
-      this.color = color;
-      this.radius = radius;
-      this.velocity = velocity;
-      this.alpha = 1 * fadeSpeed;
-    }
-    draw() {
-      ctx.globalAlpha = this.alpha;
-      ctx.beginPath()
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-      ctx.fillStyle = this.color
-      ctx.fill()
-      this.x += this.velocity.x
-      this.y += this.velocity.y
-      this.alpha -= 0.01
-      ctx.globalAlpha = 1;
+      this.alpha <= .9 ? this.alpha+=.1 : this.alpha = 1;
+      this.radius < 200 ? this.radius += 7 : this.lifetime = 0;
     }
   }
 

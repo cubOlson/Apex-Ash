@@ -3,8 +3,10 @@
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Champions" type="combobox"
-    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,FiddlesSticks,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Malphite,Miss Fortune,Nocturne,Soraka,Teemo,Thresh,Veigar,Xerath,Yone,Zeri"
+    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,FiddlesSticks,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Malphite,Miss Fortune,Nocturne,Pantheon,Rek'Sai,Soraka,Teemo,Thresh,Veigar,Xerath,Yone,Zeri"
     default="Ahri" />
+  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
+  <meta property="effectBrightness" label="Effect brightness" type="number" min="0" max="100" default="100" />
   <meta property="enableChampions" label="Champion effects" type="boolean" default="1" />
   <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
   <meta property="enableTower" label="Tower effect" type="boolean" default="1" />
@@ -14,7 +16,6 @@
   <meta property="enableUtility" label="Utility skill effects" type="boolean" default="1" />
   <meta property="enableGold" label="Gold effect" type="boolean" default="1" />
   <meta property="goldLimit" label="Gold Effect Threshold" type="number" min="0" max="3000" default="1000" />
-  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
 
   <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" height=".0001" h="100-140" s="30-100" l="20-70"
     type="linear">
@@ -467,10 +468,15 @@
           Extendedr_Meter.setValue(engine.vision.ExtendedrButton);
         }
       }
+    } else if (Stunned){
+      if(champion == "Xerath"){
+        XerathSpecial()
+      }
     }
 
     if (clearEffects == true) {
       effects.length = 0;
+      rekBurrowed = false;
       ctx.clearRect(0, 0, c.width, c.height);
     };
 
@@ -488,6 +494,7 @@
     }
 
     //Effects animation play
+    ctx.globalAlpha = effectBrightness / 100;
     if (effects.length) {
       effects.forEach((element, index) => {
         element.draw();
@@ -496,10 +503,10 @@
         }
       })
     }
+    ctx.globalAlpha = 1;
 
     //Gold effect
     if (enableGold && play1 && play2) {
-      console.log(currentNum)
       if (currentNum >= goldLimit && !goldAnimPushed) {
         goldAnimPushed = true;
         effects.push(new goldEffect());
@@ -604,7 +611,11 @@
         case "Nocturne":
           effects.push(new NocturneQ());
           break;
-        case "Rek'sai":
+        case "Pantheon":
+          effects.push(new PantheonQ())
+          break;
+        case "Rek'Sai":
+          effects.push(new ReksaiQ(rekBurrowed))
           break;
         case "Ryze":
           break;
@@ -738,11 +749,15 @@
         case "Miss Fortune":
           effects.push(new FortuneW());
           break;
-
         case "Nocturne":
           effects.push(new NocturneW());
           break;
-        case "Rek'sai":
+        case "Pantheon":
+          effects.push(new PantheonW())
+          break;
+        case "Rek'Sai":
+          rekBurrowed = !rekBurrowed;
+          effects.push(new ReksaiW(rekBurrowed))
           break;
         case "Ryze":
           break;
@@ -832,7 +847,6 @@
         case "Fizz":
           effects.push(new FizzE())
           break;
-
         case "Garen":
           ActiveExtendedE = false;
           break;
@@ -875,7 +889,8 @@
         case "Nocturne":
           stateMgr.Push(new NocturneE());
           break;
-        case "Rek'sai":
+        case "Rek'Sai":
+          effects.push(new ReksaiE(rekBurrowed))
           break;
         case "Ryze":
           break;
@@ -1012,7 +1027,8 @@
         case "Miss Fortune":
           stateMgr.Push(new FortuneR())
           break;
-        case "Rek'sai":
+        case "Rek'Sai":
+          effects.push(new RekSaiRListen())
           break;
         case "Ryze":
           break;
@@ -1058,6 +1074,9 @@
         switch (champion) {
           case "Ahri":
             effects.push(new ahriR());
+            break;
+          case "Nocturne":
+            effects.push(new NocturneR());
             break;
           case "Viktor":
             effects.push(new ViktorR());
@@ -3000,10 +3019,223 @@
         effects.push(new ParticleExplosion(160, 100, "blue", 5, 2000, 60, 20, 0.9))
         stateMgr.Pop()
       }
-
     }
   }
+
+  function NocturneR(){
+    this.start = Date.now();
+    this.lifetime = 100;
+    this.alpha = 0;
+    this.radius1 = 1;
+    this.radius2 = 100;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, `hsl(0, 0%, 2%)`)
+      DrawStroke(160, 100, this.radius1, "black", 40)
+      DrawStroke(160, 100, this.radius2, "black", 40)
+      ctx.globalAlpha = 1;
+      if(!ActiveExtendedR) this.done = true;
+      if(this.done){
+        this.lifetime-=2;
+        this.alpha-=.02
+      } else {
+        this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+        this.radius1 < 200 ? this.radius1 += 10 : this.radius1 = 1;
+        this.radius2 < 200 ? this.radius2 += 10 : this.radius2 = 1;
+      }
+    }
+  }
+
   //END NOCTURNE 
+  //PANTHEON -----------------------------------------------------------------
+  function PantheonQ(){
+    this.start = Date.now();
+    this.y = 200;
+    this.x = 0;
+    this.alpha = 1;
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      console.log(engine.vision.ExtendedqButton)
+        if(engine.vision.ExtendedqButton){
+          DrawRect(0, 0, 320 / 3000 * elapsed, 200, `hsla(15, 100%, 50%, ${1 - (elapsed / 6000)})`)
+        } else {
+          ctx.globalAlpha = this.alpha;
+          ctx.beginPath()
+          ctx.moveTo(160, this.y)
+          ctx.lineTo(-50 + this.x, 200)
+          ctx.lineTo(370 - this.x, 200)
+          ctx.lineTo(160, this.y)
+          ctx.fillStyle = "hsl(10, 100%, 50%)"
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          this.x+=10
+          this.y-=20;
+          this.x > 100 ? this.alpha >= .05 ? this.alpha -= .05 : this.lifetime = 0 : null;
+      }
+    }
+  }
+
+  function PantheonW(){
+    this.start = Date.now();
+    this.alpha = 0;
+    this.radius = 1;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawStroke(160, 100, this.radius, "red", 30)
+      DrawStroke(160, 100, this.radius + 30, "orange", 30)
+      DrawStroke(160, 100, this.radius + 60, "yellow", 30)
+      ctx.globalAlpha = 1;
+      this.alpha <= .9 ? this.alpha+=.1 : this.alpha = 1;
+      this.radius < 200 ? this.radius += 7 : this.lifetime = 0;
+    }
+  }
+  //END PANTHEON-------------------------------------------------------------
+  //REK'SAI-------------------------------------------------------------------
+  var rekBurrowed = false;
+  function ReksaiQ(burrowed){
+    this.burrowed = burrowed;
+    this.lifetime = 10;
+    this.draw = function(){
+      if(this.burrowed){
+        for(let i = 0; i < 3; i++){
+          setTimeout(()=>{
+            effects.push(new RekQHelp(0))
+          }, i * 100)
+        }
+      } else {
+        for(let i = 0; i < 3; i++){
+          setTimeout(()=>{
+            effects.push(new RekQHelp(i % 2 == 0 ? 0 : 320))
+          }, i * 300)
+        }
+      }
+      this.lifetime = 0;
+    }
+  }
+
+  function RekQHelp(x){
+    this.lifetime = 10;
+    this.x = x;
+    this.dir = x == 0;
+    this.draw = function(){
+      ctx.beginPath()
+      ctx.arc(this.x, 150, 80, -Math.PI / 2, this.dir ? 0 : Math.PI, !this.dir)
+      ctx.strokeStyle = "hsl(280, 50%, 50%)"
+      ctx.lineWidth = 20;
+      ctx.stroke()
+      this.dir ? this.x < 330 ? this.x+=20 : this.lifetime = 0 : this.x > -15 ? this.x-=20 : this.lifetime = 0;
+    }
+  }
+
+  function ReksaiW(burrowed){
+    this.start = Date.now();
+    this.y = burrowed ? 80 : 160;
+    this.y2 = burrowed ? 200 : 0;
+    this.radius = burrowed ? 30 : 60;
+    this.burrowed = burrowed;
+    this.alpha = 0;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, this.y2, 320, 200, `hsl(280, 80%, ${this.burrowed ? this.y2 / 2 : this.y2 / 2 + 20}%)`)
+      DrawCircle(160, this.y, this.radius, `hsl(335, 80%, ${(this.y - 80) * 5 / 4}%`)
+      ctx.globalAlpha = 1;
+      if(this.burrowed){
+        this.y < 160 ? this.y+=3 : this.y = 160;
+        this.y2 >= 6 ? this.y2-=5 : this.done = true;
+        this.radius < 60 ? this.radius++ : this.radius = 60;
+      } else {
+        this.y > 80 ? this.y-=3 : this.y = 80;
+        this.y2 <= 194 ? this.y2+=5 : this.done = true;
+        this.radius < 30 ? this.radius-- : this.radius = 30;
+      }
+      if(this.done){
+        this.alpha >= .02 ? this.alpha -=.02 : this.lifetime = 0;
+      } else {
+        this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+      }
+    }
+  }
+
+  function ReksaiE(burrowed){
+    this.burrowed = burrowed;
+    this.lifetime = 10;
+    this.radius = 1;
+    this.alpha = 0;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      if(this.burrowed){
+        DrawCircle(160, 100, this.radius, `hsl(285, 100%, ${10 + this.radius / 6}%)`)
+      } else {
+        DrawRect(0, 0, 320, 200, "black")
+        DrawCircle(160, 100, 201 - this.radius, `hsl(285, 100%, ${10 + this.radius / 6}%)`)
+      }
+      this.radius < 200 ? this.radius += 10 : this.done = true;
+      ctx.globalAlpha = 1;
+      if(this.done){
+        this.alpha >= .05 ? this.alpha-=.05 : this.lifetime = 0;
+      } else {
+        this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+      }
+    }
+  }
+
+  function RekSaiRListen(){
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(engine.vision.RecallMeter < .5){
+        effects.push(new ReksaiR())
+        this.lifetime = 0;
+      }
+      if(elapsed > 1000){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function ReksaiR(){
+    this.lifetime = 10;
+    this.start = Date.now()
+    this.alpha = 0;
+    this.done = false;
+    this.claw = new RekRHelp()
+    this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        ctx.globalAlpha = this.alpha;
+        DrawRect(0, 0, 320, 200, "black")
+        if(elapsed > 950) this.claw.draw()
+        if(elapsed > 1300) this.done = true;
+        ctx.globalAlpha = 1;
+        if(this.done){
+          this.alpha >= .01 ? this.alpha-=.01 : this.lifetime = 0;
+        } else {
+          this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+        }
+      }
+    }
+
+  function RekRHelp(){
+    this.lifetime = 10;
+    this.scale = 100;
+    this.mod = 1.5;
+    this.draw = function(){
+      for(let i = 0; i < 3; i++){
+        ctx.beginPath()
+        ctx.arc(160 + i * 80, 100, this.scale, -Math.PI / 2, Math.PI + this.mod, true)
+        ctx.strokeStyle = "hsl(0, 75%, 50%)"
+        ctx.lineWidth = 40;
+        ctx.stroke()
+      }
+      this.mod > -1 ? this.mod-=.2 : null;
+    }
+  }
+  //END REK'SAI
   // SONA --------------------------------------------------------------------        
   function SonaEffect() {
     effects.push(new ParticleExplosion(160, 100, "green", 5, 3000, 5, 80, 1, false, true))
@@ -3569,14 +3801,44 @@
 
   //END VIKTOR
   //XERATH
+  var XQLoad = false;
+  function XerathSpecial(){
+    if(recallMeter.value < .1){
+      if(engine.vision.qButton == 1 && !XQLoad){
+        effects.push(new XerathQLoad())
+        XQLoad = true;
+      }
+    }
+  }
+
+  function XerathQLoad(){
+    this.x = 0;
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.alpha = 0;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320 / 3000 * elapsed, 200, "blue")
+      ctx.globalAlpha = 1;
+      if(elapsed >= 3000){
+        this.alpha > .05 ? this.alpha -= .05 : this.lifetime = 0;
+      } else {
+        this.alpha < 1 ? this.alpha += .015 : this.alpha = 1;
+      }
+      if(engine.vision.q == 0 || engine.vision.wButton == 1) this.lifetime = 0;
+      if(this.lifetime == 0) XQLoad = false;
+    }
+  }
+
   function XerathQ() {
     this.start = GetTime();
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
 
-      if (this.elapsed < 2000) {
+      if (this.elapsed < 800) {
         let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
-        this.calculateVal = (-2100 * Math.floor(((this.elapsed - 800) / 2100) / 0.8) + (((this.elapsed - 500) / 2300) * (2100 / 0.8)));
+        this.calculateVal = (-2100 * Math.floor(((this.elapsed - 800) / 2100) / 0.8) + (((this.elapsed - 500) / 800) * (2100 / 0.8)));
         gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
         gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(236, 100%, 50%,1)");
         gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(176, 100%, 50%,1)");
@@ -3594,20 +3856,22 @@
   function XerathW() {
     this.start = GetTime();
     this.pushed = false;
+    this.alpha1 = 0;
     this.draw = function () {
+      ctx.globalAlpha = this.alpha1;
       this.elapsed = GetTime() - this.start;
       let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
-      this.calculateVal = -1660 * Math.floor((SetRange(this.elapsed, 0, 1660) / 1660) / 1) + ((SetRange(this.elapsed, 0, 1660) / 2060) * (1660 / 1));
+      this.calculateVal = -1660 * Math.floor((SetRange(this.elapsed, 0, 1660) / 1660) / 1) + ((SetRange(this.elapsed, 0, 1660) / 600) * (1660 / 1));
       gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
       gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(236, 100%, 50%,1)");
       gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(187, 100%, 50%,1)");
-      if (this.elapsed < 2000) {
+      if (this.elapsed < 800) {
         ctx.beginPath();
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 320, 200)
         for (let index = 0; index < 10; index++) {
           ctx.beginPath();
-          ctx.fillStyle = "white";
+          ctx.fillStyle = "grey";
           ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10)
         }
       } else {
@@ -3618,27 +3882,28 @@
         ctx.fillRect(0, 0, 320, 200)
         ctx.globalAlpha = 1;
         if (!this.pushed) {
-          effects.push(new ParticleExplosion(160, 100, "white", 10, 2500, 100, 20, 1, false, false))
+          effects.push(new ParticleExplosion(160, 100, "grey", 10, 2500, 100, 20, 1, false, false))
           this.pushed = true;
         }
         if (this.alpha == 0) {
           this.lifetime = 0;
         }
       }
+      ctx.globalAlpha = 1;
+      this.alpha1 <= .95 ? this.alpha1+=.05 : this.alpha1 = 1;
     }
   }
 
   function XerathE() {
-
     this.x = 0;
     this.y = 100;
     this.radius = 40;
     this.ballCol = "hsla(235, 100%, 30%, 1)";
     this.arcCol = "hsla(189, 100%, 58%, 1)";
-    this.speed = 6;
+    this.speed = 10;
     this.movingBalls = [];
     this.draw = function () {
-      DrawBackground(`hsla(0,0%,0%,${Math.sin((this.x + 10) / 2 * (Math.PI / 180))})`)
+      DrawBackground(`hsla(0,0%,0%,${1 - (Math.abs(160 - this.x) / 160)})`)
       this.gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 60)
       this.gradient.addColorStop(0, this.ballCol)
       this.gradient.addColorStop(0.3, this.ballCol)
@@ -3695,7 +3960,7 @@
 
       if (this.elapsed > 1700) {
         if (Math.floor(this.elapsed / 1200) > this.prevVal) {
-          this.ripples.push(new RippleEffect(Math.random() * 320, Math.random() * 200, 4, 1000, 30, "white", "out", "stroke", 1, false))
+          this.ripples.push(new RippleEffect(Math.random() * 320, Math.random() * 200, 4, 1000, 30, "grey", "out", "stroke", 1, false))
           this.prevVal = Math.floor(this.elapsed / 1000);
         }
       }
@@ -3929,7 +4194,11 @@
   }
   //END ZERI -----------------------------------------------------------------------------
   // START EFFECT/HELPER FUNCTIONS --------------------------------------------------------------------
-
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
 
   function drawWave(y, color, frequency, direction, waveSize) {
 
