@@ -231,21 +231,31 @@
   <resolution size="1440x900" x=".8933" y=".8167" width=".0045" height=".02" />
   <resolution size="1280x800" x=".8933" y=".8167" width=".0045" height=".02" />
   </meta>
-  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".02" type="ocr_numeric" confidence="10">
+  <meta meter="gold" tags="league" x="0.6295" y="0.969" width="0.008" height="0.0195" type="ocr_numeric" confidence="10">
   <resolution size="3440x1440" x=".596" y=".97" width="0.0065" height="0.0146" />
-  <resolution size="2560x1600" x=".6432" y=".9685" width=".0339" height=".02" />
-  <resolution size="1920x1200" x=".6432" y=".9685" width=".0339" height=".02" />
-  <resolution size="1680x1050" x=".6432" y=".9685" width=".0339" height=".02" />
-  <resolution size="1440x900" x=".6432" y=".9685" width=".0339" height=".02" />
-  <resolution size="1280x800" x=".6432" y=".9685" width=".0339" height=".02" />
+  <resolution size="2560x1600" x="0.6438" y="0.9688" width="0.0082" height="0.0174" />
+  <resolution size="1920x1200" x="0.6438" y="0.9688" width="0.0082" height="0.0174" />
+  <resolution size="1680x1050" x="0.6438" y="0.9688" width="0.0082" height="0.0174" />
+  <resolution size="1440x900" x="0.6438" y="0.9688" width="0.0082" height="0.0174" />
+  <resolution size="1280x800" x="0.6438" y="0.9688" width="0.0082" height="0.0174" />
   </meta>
-  <meta meter="goldHundred" tags="league" x="0.6087" y="0.9715" width="0.0017" height="0.0139" type="area" h="45-90"
+  <meta meter="goldHundred" tags="league" x="0.6473" y="0.9701" width="0.0020" height="0.0160" type="area" h="45-90"
     s="25-50" l="25-100">
   <resolution size="3440x1440" x="0.6087" y="0.9715" width="0.0017" height="0.0139" />
+  <resolution size="2560x1600" x="0.6637" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1920x1200" x="0.6637" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1680x1050" x="0.6637" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1440x900" x="0.6637" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1280x800" x="0.6637" y="0.9701" width="0.0027" height="0.0167" />
   </meta>
-  <meta meter="goldThousand" tags="league" x="0.6145" y="0.9715" width="0.0017" height="0.0139" type="area" h="45-90"
+  <meta meter="goldThousand" tags="league" x="0.6547" y="0.9715" width="0.0023" height="0.0146" type="area" h="45-90"
     s="25-50" l="25-100">
   <resolution size="3440x1440" x="0.6145" y="0.9715" width="0.0017" height="0.0139" />
+  <resolution size="2560x1600" x="0.6727" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1920x1200" x="0.6727" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1680x1050" x="0.6727" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1440x900" x="0.6727" y="0.9701" width="0.0027" height="0.0167" />
+  <resolution size="1280x800" x="0.6727" y="0.9701" width="0.0027" height="0.0167" />
   </meta>
   <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75"
     type="area">
@@ -336,7 +346,7 @@
     l="59-100" type="area">
   <resolution size="3440x1440" x="0.6267" y=".9354" width=".0045" height="0.005" />
   </meta>
-  <meta meter="loadBar" tags="league" type="area" x="0.3953" y="0.7472" width="0.0003" height="0.0042" h="90-180"
+  <meta meter="loadBar" tags="league" type="area" x="0.3957" y="0.7373" width="0.0004" height="0.0063" h="90-180"
     s="75-100" l="25-50">
   <resolution size="3440x1440" x="0.4227" y="0.7375" width="0.0001" height="0.0042" />
   </meta>
@@ -4937,6 +4947,11 @@
     }
   }
 
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
 
   function dragonEffect(color1, color2) {
     this.lifetime = 30;
