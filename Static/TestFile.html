@@ -19,35 +19,52 @@
   var width = 320;
   var height = 200;
   var effects = [];
+  var stateMgr = new StateHandler()
+  stateMgr.Push(new VelKozR())
   var burrowed = false;
 
   function update() {
     DrawRect(0, 0, 320, 200, "salmon")
 
-    if(effects.length < 1){
-      effects.push(new PantheonW())
-    }
-    effects.forEach((ele, i)=>{
-        ele.draw();
-        ele.lifetime <= 0 ? effects.splice(i, 1) : null;
-    })
+    // if(effects.length < 1){
+    //   effects.push(new VelKozE())
+    // }
+    // effects.forEach((ele, i)=>{
+    //     ele.draw();
+    //     ele.lifetime <= 0 ? effects.splice(i, 1) : null;
+    // })
+
+    stateMgr.Process()
 
     window.requestAnimationFrame(update);
   };
 
-  function PantheonW(){
-    this.start = Date.now();
+  function VelKozR() {
+    this.start = GetTime();
     this.alpha = 0;
-    this.radius = 1;
-    this.lifetime = 10;
-    this.draw = function(){
+    this.radius1 = 1;
+    this.radius2 = 100;
+    this.Process = function () {
+      if (this.elapsed > 3000) {
+        this.alpha >= .02 ? this.alpha -= .02 : stateMgr.Pop()
+      } else {
+        this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      }
+      this.draw();
+    }
+
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
       ctx.globalAlpha = this.alpha;
-      DrawStroke(160, 100, this.radius, "red", 30)
-      DrawStroke(160, 100, this.radius + 30, "orange", 30)
-      DrawStroke(160, 100, this.radius + 60, "yellow", 30)
+      DrawRect(0, 0, 320, 200, "black")
+      DrawStroke(160, 100, this.radius1, "grey", 20)
+      DrawStroke(160, 100, this.radius2, "grey", 20)
+      DrawCircle(160, 100, 70, "purple")
+      DrawCircle(160 + Math.sin(Date.now() / 500) * 20, 100, 30 + Math.sin(Date.now() / 20) * 10, "fuchsia")
+      DrawCircle(160 + Math.sin(Date.now() / 500) * 20, 100, 20 + Math.sin(Date.now() / 20) * 5, "grey")
       ctx.globalAlpha = 1;
-      this.alpha <= .9 ? this.alpha+=.1 : this.alpha = 1;
-      this.radius < 200 ? this.radius += 7 : this.lifetime = 0;
+      this.radius1 < 200 ? this.radius1+=10 : this.radius1 = 1;
+      this.radius2 < 200 ? this.radius2+=10 : this.radius2 = 1;
     }
   }
 
