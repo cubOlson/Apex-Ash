@@ -11,7 +11,7 @@
   <meta property="healthX" label="Health bar X position" type="number" min="0" max="320" default="0" />
   <meta property="healthWidth" label="Health bar width" type="number" min="0" max="320" default="320" />
   <meta property="healthHeight" label="Health bar height" type="number" min="0" max="100" default="15" />
-  <meta property="enableHunger" label="Hunger effect" type="boolean" default="1" />
+  <meta property="enableHunger" label="enable Hunger effect" type="boolean" default="1" />
   <meta property="foodColor" label="Food Bar Color" type="color" default="#ffaa00" min="0" max="360" />
   <meta property="foodY" label="Food bar Y position" type="number" min="0" max="200" default="90" />
   <meta property="foodX" label="Food bar X position" type="number" min="0" max="320" default="0" />
@@ -20,10 +20,9 @@
   <meta property="enableXP" label="enable XP effect" type="boolean" default="1" />
   <meta property="enablePortal" label="enable Portal effect" type="boolean" default="1" />
   <meta property="enableSleep" label="enable Sleep effect" type="boolean" default="1" />
-  <meta property="enableMenu" label="enable Menu effect" type="boolean" default="1" />
+  <meta property="enableMenu" label="enable Crafting/Menu effect" type="boolean" default="1" />
   <meta property="enableStatus" label="enable Status effect" type="boolean" default="1" />
-  <meta property="enableBoss" label="enable Boss bar effect" type="boolean" default="1" />
-  <meta property="enableFreeze" label="enable Freeze effect" type="boolean" default="1" />
+  <meta property="enableBoss" label="enable Boss effects" type="boolean" default="1" />
   <meta property="enableUnderwater" label="enable Underwater effect" type="boolean" default="1" />
 
   <meta meter="bubble1" tags="minecraft, vlc" x=".699" y=".7965" width=".003" height=".0001" h="0-360" s="0-100"
@@ -464,7 +463,7 @@
 
 
   function onFreezeChange() {
-    if (freezeMeter.value > 0.2 && freezeGoing == false && enableFreeze) {
+    if (freezeMeter.value > 0.2 && freezeGoing == false && enableStatus) {
       effects.push(new FreezeEffect())
       console.log("IN")
       freezeGoing = true;
@@ -522,48 +521,23 @@
   }
 
   function bossKill(){
-    this.lifetime = 150;
+    this.lifetime = 15;
     this.alpha = 0;
-    this.effects = [];
-    this.delay = 500;
-    this.start = Date.now();
     this.draw = function(){
-      var elapsed = Date.now() - this.start;
       ctx.globalAlpha = this.alpha;
       DrawRect(0, 0, 320, 200, "black")
       ctx.globalAlpha = 1;
-      this.effects.forEach((ele, i)=>{
-        ele.draw();
-        ele.lifetime <= 0 ? this.effects.splice(i, 1) : null;
-      })
-      if(elapsed > this.delay){
-        this.effects.push(new bossSmoke())
-        this.effects.push(new bossSmoke())
-        this.start = Date.now()
-        this.delay-=45
-      }
       this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
       this.lifetime--;
       if(this.lifetime <= 0){
         bossKillGoing = false;
-        for(let i = 0; i < 18; i++){
-          effects.push(new xpParticle())
+        for(let i = 0; i < 5; i++){
+          setTimeout(()=>{
+            for(let j = 0; j < 20; j++){
+              effects.push(new xpParticle())
+            }
+          }, i * 300)
         }
-        setTimeout(()=>{
-          for(let i = 0; i < 18; i++){
-            effects.push(new xpParticle())
-          }
-        }, 200)
-        setTimeout(()=>{
-          for(let i = 0; i < 18; i++){
-            effects.push(new xpParticle())
-          }
-        }, 400)
-        setTimeout(()=>{
-          for(let i = 0; i < 18; i++){
-            effects.push(new xpParticle())
-          }
-        }, 600)
       }
     }
   }
@@ -1208,7 +1182,7 @@
     bossGoing = true;
     this.draw = function () {
       ctx.fillStyle = "hsla(282, 100%, 50%, 0.4)"
-      ctx.fillRect(0, 0, bossMeter.value * 330, 200)
+      ctx.fillRect(0, 0, bossMeter.value * 350, 200)
       if (bossMeter.value == 0) {
         this.lifetime = 0;
         bossGoing = false;
