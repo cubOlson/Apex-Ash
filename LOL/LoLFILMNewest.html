@@ -3,7 +3,10 @@
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Champions" type="combobox"
-    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Janna,Jax,Jhin,Leona,Lucian,Lux,Miss Fortune,Soraka,Teemo,Thresh,Yone,Zeri" default="Ahri" />
+    values="Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Fiddlesticks,Fizz,Garen,Janna,Jax,Jhin,Kha'Zix,Leona,Lucian,Lux,Malphite,Miss Fortune,Nocturne,Pantheon,Rek'Sai,Soraka,Teemo,Thresh,Veigar,Vel'Koz,Xerath,Yone,Zeri"
+    default="Ahri" />
+  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
+  <meta property="effectBrightness" label="Effect brightness" type="number" min="0" max="100" default="100" />
   <meta property="enableChampions" label="Champion effects" type="boolean" default="1" />
   <meta property="enableHealth" label="Health effect" type="boolean" default="1" />
   <meta property="enableTower" label="Tower effect" type="boolean" default="1" />
@@ -12,278 +15,123 @@
   <meta property="enableLevel" label="Level-up effect" type="boolean" default="1" />
   <meta property="enableUtility" label="Utility skill effects" type="boolean" default="1" />
   <meta property="enableGold" label="Gold effect" type="boolean" default="1" />
-  <meta property="goldLimit" label="Gold Effect Threshold" type="number" min="0" max="10000" default="1000" />
-  <meta property="keyScreenBrightness" label="Ambiance brightness" type="number" min="0" max="100" default="100" />
-  <!-- <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" h="100-140" s="30-100" l="20-70" type="linear">
-  <resolution size="2560x1600" x=".3396" y=".9602" width=".0526" />
-  <resolution size="1920x1200" x=".3396" y=".9602" width=".0526" />
-  <resolution size="1680x1050" x=".3396" y=".9602" width=".0526" />
-  <resolution size="1440x900" x=".3396" y=".9602" width=".0526" />
-  <resolution size="1280x800" x=".3396" y=".9602" width=".0526" />
+  <meta property="goldLimit" label="Gold Effect Threshold" type="number" min="0" max="3000" default="1000" />
+
+  <meta meter="lowHealth" tags="league" x=".356" y=".9593" width=".0526" height=".0001" h="100-140" s="30-100" l="20-70"
+    type="linear">
   </meta>
-  <meta meter="allyDeath1" tags="league" x=".8677" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath1" tags="league" x=".8697" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-  <resolution size="2560x1600" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".8536" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".8536" y=".7241" width=".01" height="0.001" />
   </meta>
-  <meta meter="allyDeath2" tags="league" x=".9021" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath2" tags="league" x=".9036" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-  <resolution size="2560x1600" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".8906" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".8906" y=".7241" width=".01" height="0.001" />
   </meta>
-  <meta meter="allyDeath3" tags="league" x=".9359" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath3" tags="league" x=".9379" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-  <resolution size="2560x1600" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".9286" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".9286" y=".7241" width=".01" height="0.001" />
   </meta>
-  <meta meter="allyDeath4" tags="league" x=".9693" y=".725" width=".01" height="0.001" h="120-150" s="70-100" l="20-90"
+  <meta meter="allyDeath4" tags="league" x=".9713" y=".725" width=".01" height="0.0001" h="120-150" s="70-100" l="20-90"
     type="area">
-  <resolution size="2560x1600" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1920x1200" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1680x1050" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1440x900" x=".9667" y=".7241" width=".01" height="0.001" />
-  <resolution size="1280x800" x=".9667" y=".7241" width=".01" height="0.001" />
   </meta>
-  <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height="0.001" h="0-360" s="0-100" l="0-30"
+  <meta meter="itemHover" tags="league" x=".8505" y=".7657" width=".001" height="0.001" h="0-360" s="0-75" l="0-20"
     type="area">
-  <resolution size="2560x1600" x=".8391" y=".7694" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".8391" y=".7694" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".8391" y=".7694" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".8391" y=".7694" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".8391" y=".7694" width=".001" height="0.001" />
-  </meta> -->
-  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height="0.001" h="20-170" s="10-100" l="20-100"
-    type="area">
-  <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".3677" y=".8796" width=".001" height="0.001" />
   </meta>
-  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height="0.001" h="20-170" s="10-100" l="20-100"
+  <meta meter="qButton" tags="league" x=".3807" y=".8787" width=".001" height="0.0001" h="20-170" s="45-100" l="20-100"
     type="area">
-  <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.001" />
   </meta>
-  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".002" height="0.001" h="20-170" s="10-100" l="20-100"
+  <meta meter="wButton" tags="league" x=".4156" y=".8787" width=".001" height="0.0001" h="20-170" s="10-100" l="20-100"
     type="area">
-  <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1440x900" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1280x800" x=".4448" y=".8796" width=".002" height="0.001" />
   </meta>
-  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height="0.001" h="20-170" s="10-100" l="20-100"
+  <meta meter="eButton" tags="league" x=".45" y=".8787" width=".001" height="0.0001" h="20-170" s="10-100" l="20-100"
     type="area">
-  <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4833" y=".8796" width=".001" height="0.001" />
   </meta>
-  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03" height="0.001" h="20-170" s="0-100"
+  <meta meter="rButton" tags="league" x=".4849" y=".8787" width=".001" height="0.0001" h="20-170" s="10-100" l="20-100"
+    type="area">
+  </meta>
+  <meta meter="ExtendedqButton" tags="league" x=".3807" y=".8787" width=".03" height="0.0001" h="20-170" s="0-100"
+  l="70-100" type="area">
+  </meta>
+  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031" height="0.0001" h="20-170" s="0-100"
     l="95-100" type="area">
-  <resolution size="2560x1600" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".3677" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".3677" y=".8796" width=".001" height="0.001" />
   </meta>
-  <meta meter="ExtendedwButton" tags="league" x=".4156" y=".8787" width=".031" height="0.001" h="20-170" s="0-100"
+  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height="0.0001" h="20-170" s="0-60"
     l="95-100" type="area">
-  <resolution size="2560x1600" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4063" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4063" y=".8796" width=".001" height="0.001" />
   </meta>
-  <meta meter="ExtendedeButton" tags="league" x=".45" y=".8787" width=".03" height="0.001" h="20-170" s="0-60"
+  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03" height="0.0001" h="20-170" s="0-100"
     l="95-100" type="area">
-  <resolution size="2560x1600" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1920x1200" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1680x1050" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1440x900" x=".4448" y=".8796" width=".002" height="0.001" />
-  <resolution size="1280x800" x=".4448" y=".8796" width=".002" height="0.001" />
   </meta>
-  <meta meter="ExtendedrButton" tags="league" x=".4849" y=".8787" width=".03" height="0.001" h="20-170" s="0-100"
-    l="95-100" type="area">
-  <resolution size="2560x1600" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1920x1200" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1680x1050" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1440x900" x=".4833" y=".8796" width=".001" height="0.001" />
-  <resolution size="1280x800" x=".4833" y=".8796" width=".001" height="0.001" />
-  </meta>
-  <!-- <meta meter="ManaR" tags="league" x=".4849" y=".88" width=".03" height="0.035" h="170-200" s="50-100" l="50-100"
+  <meta meter="ManaR" tags="league" x=".4849" y=".88" width=".03" height="0.01" h="170-200" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".4854" y=".8898" width=".03" height="0.035" />
-  <resolution size="1920x1200" x=".4854" y=".8898" width=".03" height="0.035" />
-  <resolution size="1680x1050" x=".4854" y=".8898" width=".03" height="0.035" />
-  <resolution size="1440x900" x=".4854" y=".8898" width=".03" height="0.035" />
-  <resolution size="1280x800" x=".4854" y=".8898" width=".03" height="0.035" />
   </meta>
-  <meta meter="ManaQ" tags="league" x=".3807" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100"
+  <meta meter="ManaQ" tags="league" x=".3807" y=".8787" width=".03" height=".01" h="170-200" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".37" y=".8898" width=".03" height="0.035" />
-  <resolution size="1920x1200" x=".37" y=".8898" width=".03" height="0.035" />
-  <resolution size="1680x1050" x=".37" y=".8898" width=".03" height="0.035" />
-  <resolution size="1440x900" x=".37" y=".8898" width=".03" height="0.035" />
-  <resolution size="1280x800" x=".37" y=".8898" width=".03" height="0.035" />
   </meta>
-  <meta meter="ManaW" tags="league" x=".4156" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100"
+  <meta meter="ManaW" tags="league" x=".4156" y=".8787" width=".03" height=".01" h="170-200" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".409" y=".8898" width=".03" height="0.035" />
-  <resolution size="1920x1200" x=".409" y=".8898" width=".03" height="0.035" />
-  <resolution size="1680x1050" x=".409" y=".8898" width=".03" height="0.035" />
-  <resolution size="1440x900" x=".409" y=".8898" width=".03" height="0.035" />
-  <resolution size="1280x800" x=".409" y=".8898" width=".03" height="0.035" />
   </meta>
-  <meta meter="ManaE" tags="league" x=".45" y=".8787" width=".03" height="0.035" h="170-200" s="50-100" l="50-100"
+  <meta meter="ManaE" tags="league" x=".45" y=".8787" width=".03" height=".01" h="170-200" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".446" y=".8898" width=".03" height="0.035" />
-  <resolution size="1920x1200" x=".446" y=".8898" width=".03" height="0.035" />
-  <resolution size="1680x1050" x=".446" y=".8898" width=".03" height="0.035" />
-  <resolution size="1440x900" x=".446" y=".8898" width=".03" height="0.035" />
-  <resolution size="1280x800" x=".446" y=".8898" width=".03" height="0.035" />
   </meta>
-  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
-  <resolution size="2560x1600" x=".526" y=".8796" width=".001" />
-  <resolution size="1920x1200" x=".526" y=".8796" width=".001" />
-  <resolution size="1680x1050" x=".526" y=".8796" width=".001" />
-  <resolution size="1440x900" x=".526" y=".8796" width=".001" />
-  <resolution size="1280x800" x=".526" y=".8796" width=".001" />
+  <meta meter="dButton" tags="league" x=".524" y=".8787" width=".001" height=".0001" h="20-170" s="30-100" l="20-100"
+    type="linear">
   </meta>
-  <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" h="20-170" s="30-100" l="20-100" type="linear">
-  <resolution size="2560x1600" x=".5557" y=".8796" width=".001" />
-  <resolution size="1920x1200" x=".5557" y=".8796" width=".001" />
-  <resolution size="1680x1050" x=".5557" y=".8796" width=".001" />
-  <resolution size="1440x900" x=".5557" y=".8796" width=".001" />
-  <resolution size="1280x800" x=".5557" y=".8796" width=".001" />
+  <meta meter="fButton" tags="league" x=".55" y=".8787" width=".001" height=".0001" h="20-170" s="30-100" l="20-100"
+    type="linear">
   </meta>
   <meta meter="greyDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="1-360" s="1-30" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1920x1200" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1680x1050" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1440x900" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1280x800" x=".943" y=".913" width=".0045" height=".02" />
   </meta>
   <meta meter="yellowDragon" tags="league" x=".9478" y=".9120" width=".005" height=".02" h="40-70" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1920x1200" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1680x1050" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1440x900" x=".943" y=".913" width=".0045" height=".02" />
-  <resolution size="1280x800" x=".943" y=".913" width=".0045" height=".02" />
   </meta>
   <meta meter="greyBaron" tags="league" x=".9036" y=".8157" width=".005" height=".02" h="1-360" s="1-30" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1920x1200" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1680x1050" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1440x900" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1280x800" x=".8933" y=".8167" width=".0045" height=".02" />
   </meta>
   <meta meter="yellowBaron" tags="league" x=".9036" y=".8157" width=".005" height=".02" h="40-70" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1920x1200" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1680x1050" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1440x900" x=".8933" y=".8167" width=".0045" height=".02" />
-  <resolution size="1280x800" x=".8933" y=".8167" width=".0045" height=".02" />
   </meta>
-  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".0194" type="ocr_numeric" confidence="100">
-  <resolution size="2560x1600" x=".6432" y=".9685" width=".0339" height=".0194" />
-  <resolution size="1920x1200" x=".6432" y=".9685" width=".0339" height=".0194" />
-  <resolution size="1680x1050" x=".6432" y=".9685" width=".0339" height=".0194" />
-  <resolution size="1440x900" x=".6432" y=".9685" width=".0339" height=".0194" />
-  <resolution size="1280x800" x=".6432" y=".9685" width=".0339" height=".0194" />
+  <meta meter="gold" tags="league" x=".6286" y=".9676" width=".0339" height=".02" type="ocr_numeric" confidence="10">
+  </meta>
+  <meta meter="goldHundred" tags="league" x="0.6087" y="0.9715" width="0.0017" height="0.0139" type="area" h="45-90"
+    s="25-50" l="25-100">
+  </meta>
+  <meta meter="goldThousand" tags="league" x="0.6145" y="0.9715" width="0.0017" height="0.0139" type="area" h="45-90"
+    s="25-50" l="25-100">
   </meta>
   <meta meter="levelUp" tags="league" x=".3406" y=".9454" width=".001" height=".001" h="270-290" s="50-100" l="25-75"
     type="area">
-  <resolution size="2560x1600" x=".3234" y=".9435" width=".001" height=".001" />
-  <resolution size="1920x1200" x=".3234" y=".9435" width=".001" height=".001" />
-  <resolution size="1680x1050" x=".3234" y=".9435" width=".001" height=".001" />
-  <resolution size="1440x900" x=".3234" y=".9435" width=".001" height=".001" />
-  <resolution size="1280x800" x=".3234" y=".9435" width=".001" height=".001" />
   </meta>
   <meta meter="tookDamage" tags="league" x=".3557" y=".9593" width=".2125" height=".0001" h="0-25" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".3557" y=".9611" width=".2125" height=".0001" />
-  <resolution size="1920x1200" x=".3557" y=".9611" width=".2125" height=".0001" />
-  <resolution size="1680x1050" x=".3557" y=".9611" width=".2125" height=".0001" />
-  <resolution size="1440x900" x=".3557" y=".9611" width=".2125" height=".0001" />
-  <resolution size="1280x800" x=".3557" y=".9611" width=".2125" height=".0001" />
   </meta>
   <meta meter="firstAlliedTurret" tags="league" x=".6575" y=".1324" width=".0093" height=".0213" h="190-210" s="65-100"
     l="75-100" type="area">
-  <resolution size="2560x1600" x=".67" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1920x1200" x=".67" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1680x1050" x=".67" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1440x900" x=".67" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1280x800" x=".67" y=".1333" width=".0093" height=".0213" />
   </meta>
   <meta meter="alliedTurret" tags="league" x=".598" y=".135" width=".0093" height=".0213" h="190-210" s="65-100"
     l="75-100" type="area">
-  <resolution size="2560x1600" x=".6055" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1920x1200" x=".6055" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1680x1050" x=".6055" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1440x900" x=".6055" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1280x800" x=".6055" y=".1343" width=".0093" height=".0213" />
+  </meta>
+  <meta meter="blueConfirmation" tags="league" x=".4869" y=".1701" width=".0093" height=".0001" h="335-360" s="50-75"
+    l="75-100" type="area">
   </meta>
   <meta meter="enemyTurret" tags="league" x=".6063" y=".135" width=".0093" height=".0213" h="0-10" s="50-100" l="50-100"
     type="area">
-  <resolution size="2560x1600" x=".6151" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1920x1200" x=".6151" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1680x1050" x=".6151" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1440x900" x=".6151" y=".1333" width=".0093" height=".0213" />
-  <resolution size="1280x800" x=".6151" y=".1333" width=".0093" height=".0213" />
   </meta>
   <meta meter="firstEnemyTurret" tags="league" x=".6516" y=".135" width=".0093" height=".0213" h="0-10" s="50-100"
     l="50-100" type="area">
-  <resolution size="2560x1600" x=".6615" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1920x1200" x=".6615" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1680x1050" x=".6615" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1440x900" x=".6615" y=".1343" width=".0093" height=".0213" />
-  <resolution size="1280x800" x=".6615" y=".1343" width=".0093" height=".0213" />
-  </meta> -->
+  </meta>
   <meta meter="inGame1" tags="league" x=".3073" y=".8713" width=".001" height=".002" h="20-50" s="50-70" l="30-70"
     type="area">
-  <resolution size="2560x1600" x=".2865" y=".8713" width=".001" height=".002" />
-  <resolution size="1920x1200" x=".2865" y=".8713" width=".001" height=".002" />
-  <resolution size="1680x1050" x=".2865" y=".8713" width=".001" height=".002" />
-  <resolution size="1440x900" x=".2865" y=".8713" width=".001" height=".002" />
-  <resolution size="1280x800" x=".2865" y=".8713" width=".001" height=".002" />
   </meta>
   <meta meter="inGame2" tags="league" x=".5214" y=".9352" width=".0542" height=".0056" h="160-200" s="30-100" l="0-25"
     type="area">
-  <resolution size="2560x1600" x=".523" y=".9296" width=".0542" height=".0056" />
-  <resolution size="1920x1200" x=".523" y=".9296" width=".0542" height=".0056" />
-  <resolution size="1680x1050" x=".523" y=".9296" width=".0542" height=".0056" />
-  <resolution size="1440x900" x=".523" y=".9296" width=".0542" height=".0056" />
-  <resolution size="1280x800" x=".523" y=".9296" width=".0542" height=".0056" />
   </meta>
-  <!-- <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" h="20-170" s="0-100" l="20-100" type="linear">
-  <resolution size="3440x1440" x="0.1439" y=".1882" width=".5335" />
-  <resolution size="2560x1600" x="0.1599" y=".1880" width=".5335" />
-  <resolution size="1920x1200" x="0.1599" y=".1880" width=".5335" />
-  <resolution size="1680x1050" x="0.1599" y=".1880" width=".5335" />
-  <resolution size="1440x900" x="0.1599" y=".1880" width=".5335" />
-  <resolution size="1280x800" x="0.1599" y=".1880" width=".5335" />
-  </meta> -->
+  <meta meter="ShopMenu" tags="league" x="0.1449" y=".1673" width=".5335" height=".0001" h="20-170" s="0-100" l="20-100"
+    type="linear">
+  </meta>
   <meta meter="RecallMeter" tags="league" x=".6715" y=".9340" width=".00898" height="0.0104" h="150-250" s="50-100"
     l="59-100" type="area">
+  </meta>
+  <meta meter="loadBar" tags="league" type="area" x="0.3957" y="0.7373" width="0.0004" height="0.0063" h="90-180"
+    s="75-100" l="25-50">
   </meta>
 </head>
 
@@ -318,9 +166,10 @@
   var levelUpAnim = false;
   var deathAnim = false;
   var Stunned = false;
+  var shark = "M256.683,160.779c-4.758-14.251-27.335-40.694-34.065-40.694c-6.729,0-8.82,43.295-23.759,47.036 c-14.345,3.585-84.357,20.197-84.357,20.197s-11.525-9.384-15.046-8.717c-2.96,0.563-4.395,13.707-13.446,14.395 c-9.04,0.685-20.964,0.146-20.964,0.146C44.049,151.152,0,148.893,0,148.893c22.624,33.66,44.4,55.834,13.513,102.573 c21.385,0,48.714-32.472,50.694-39.601c7.574-2.002,16.29-1.928,20.991,3.563c3.563,4.162,3.66,6.077,6.437,6.869 c2.771,0.791,5.838-6.073,10.593-6.073c4.752,0,27.786,7.29,33.663,9.105c5.872,1.812,11.88,22.567,19.404,23.362 c7.522,0.796,24.553-13.86,28.513-13.86c3.961,0,33.266,4.354,65.743,3.161c5.544,5.944,12.682,17.945-1.805,40.407 c-2.767,4.357-1.979,11.487,7.134,4.357c9.106-7.134,25.918-17.127,42.948-48.015c17.424-1.587,108.042-23.669,108.042-39.904 C405.871,178.601,306.186,159.194,256.683,160.779z"
 
   // Current all heroes
-  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Viktor,Yasuo,Yone,Zeri"
+  var all = "Ahri,Ashe,Aurelion Sol,Caitlyn,Cassiopeia,Diana,Ezreal,Fiddlesticks,Fizz,Garen,Irelia,Janna,Jax,Jhin,Jinx,Kai'sa,Leona,Lucian,Lulu,Lux,Lee Sin,Malphite,Miss Fortune,Rek'sai,Ryze,Senna,Sona,Soraka,Teemo,Thresh,Vayne,Veigar,Viktor,Xerath,Yasuo,Yone,Zeri"
 
   // All meter definitions
   var recallMeter = new Meter(1, RecallBlock)
@@ -332,13 +181,13 @@
   var w_Meter = new Meter(10, W_Effects);
   var e_Meter = new Meter(10, E_Effects);
   var r_Meter = new Meter(4, R_Effects);
-  var Extendedq_Meter = new Meter(8, ExtendedQ_Effects);
+  var Extendedq_Meter = new Meter(5, ExtendedQ_Effects);
   var Extendedw_Meter = new Meter(5, ExtendedW_Effects);
   var Extendede_Meter = new Meter(2, ExtendedE_Effects);
   var Extendedr_Meter = new Meter(5, ExtendedR_Effects);
   var d_Meter = new Meter(5, Utility_Effects);
   var f_Meter = new Meter(5, Utility_Effects);
-  var levelUpMeter = new Meter(5, levelUpEffect);
+  var levelUpMeter = new Meter(3, levelUpEffect);
   var alliedTurretMeter = new Meter(7, turretEffects);
   var enemyTurretMeter = new Meter(7, turretEffects);
   var firstAlliedTurretMeter = new Meter(7, turretEffects);
@@ -355,7 +204,7 @@
   var yellowDragonMeter = new Meter(25, dragonEffects);
   var greyBaronMeter = new Meter(25, baronEffects);
   var yellowBaronMeter = new Meter(25, baronEffects);
-
+  var goldMeter = new Meter(10, goldLimitCalculator);
   //UPDATE FUNCTION --------------------------------------------------------------------------------
   function update() {
 
@@ -398,6 +247,7 @@
         yellowDragonMeter.setValue(engine.vision.yellowDragon);
         greyBaronMeter.setValue(engine.vision.greyBaron);
         yellowBaronMeter.setValue(engine.vision.yellowBaron);
+        goldMeter.setValue(engine.vision.gold)
 
         if (enableChampions) {
           Extendedq_Meter.setValue(engine.vision.ExtendedqButton)
@@ -414,6 +264,8 @@
 
     if (clearEffects == true) {
       effects.length = 0;
+      panthE = false;
+      rekBurrowed = false;
       ctx.clearRect(0, 0, c.width, c.height);
     };
 
@@ -425,6 +277,9 @@
     //Screen ambience play
     if (!freezeBackground && keyScreenBrightness > 1) {
       copyScreen(1);
+    } else if (!freezeBackground) {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 320, 200)
     }
 
     //Effects animation play
@@ -438,21 +293,24 @@
     }
 
     //Gold effect
-    if (engine.vision.gold > goldLimit && !goldAnimPushed && play1 && play2 && enableGold) {
-      goldAnimPushed = true;
-      effects.push(new goldEffect());
+    if (enableGold && play1 && play2) {
+      console.log(currentNum)
+      if (currentNum >= goldLimit && !goldAnimPushed) {
+        goldAnimPushed = true;
+        effects.push(new goldEffect());
+      }
     }
 
     //Damage Effect
     var damage = engine.vision.tookDamage;
-    if (damage > .001 && play1 && play2 && enableHealth) {
+    if (damage > .001 && play1 && play2 && enableHealth && recallMeter.value != 0) {
       for (let i = 0; i < 2; i++) {
         effects.push(new ballPhysics(160, 200, Math.random() * 10 + 15, "red"))
       }
     }
 
     //Low Health Effect
-    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && play1 && play2 && enableHealth) {
+    if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && recallMeter.value != 0 && play1 && play2 && enableHealth) {
       for (let i = 0; i < 3; i++) {
         effects.push(new ballPhysics(160, 200, Math.random() * 10 + 15, "red"))
       }
@@ -461,6 +319,15 @@
     //State Manager animation play
     stateMgr.Process();
     window.requestAnimationFrame(update);
+  }
+
+  var currentNum = 0;
+  function goldLimitCalculator() {
+    if (goldMeter.value > 0) {
+      currentNum = goldMeter.value * 10;
+      if (engine.vision.goldHundred > .25) currentNum *= 10;
+      if (engine.vision.goldThousand > .25) currentNum *= 10;
+    }
   }
 
   // START CALLBACK FUNCTIONS ----------------------------------------------------------------
@@ -472,7 +339,7 @@
           effects.push(new ahriQ());
           break;
         case "Ashe":
-          // effects.push(new asheQ());
+          effects.push(new asheQ());
           break;
         case "Aurelion Sol":
           break;
@@ -487,6 +354,12 @@
           break;
         case "Ezreal":
           effects.push(new EzrealQ())
+          break;
+        case "Fiddlesticks":
+          effects.push(new FiddleQ())
+          break;
+        case "Fizz":
+          effects.push(new FizzE())
           break;
         case "Garen":
           break;
@@ -504,6 +377,9 @@
           break;
         case "Kai'sa":
           break;
+        case "Kha'Zix":
+          effects.push(new KhaZixQ())
+          break;
         case "Lee Sin":
           break;
         case "Leona":
@@ -517,10 +393,20 @@
         case "Lux":
           effects.push(new LuxQ());
           break;
+        case "Malphite":
+          effects.push(new MalphiteQ())
+          break;
         case "Miss Fortune":
           effects.push(new FortuneQ());
           break;
-        case "Rek'sai":
+        case "Nocturne":
+          effects.push(new NocturneQ());
+          break;
+        case "Pantheon":
+          if(!panthE) effects.push(new PantheonQ())
+          break;
+        case "Rek'Sai":
+          effects.push(new ReksaiQ(rekBurrowed))
           break;
         case "Ryze":
           break;
@@ -540,7 +426,17 @@
           break;
         case "Vayne":
           break;
+        case "Veigar":
+          effects.push(new VeigarQ())
+          break;
+        case "Vel'Koz":
+          if(!velR && !engine.vision.loadBar) effects.push(new VelKozQ())
+          break;
         case "Viktor":
+          effects.push(new ViktorQ())
+          break;
+        case "Xerath":
+          effects.push(new XerathQ())
           break;
         case "Yasuo":
           break;
@@ -558,10 +454,6 @@
     if (!ActiveExtendedQ) {
       if (Extendedq_Meter.value > 0) {
         switch (champion) {
-          case "Ashe":
-            effects.push(new asheQ());
-            ActiveExtendedQ = true;
-            break;
           case "Aurelion Sol":
             effects.push(new AurelionQ())
             ActiveExtendedQ = true;
@@ -609,6 +501,12 @@
         case "Ezreal":
           effects.push(new EzrealW())
           break;
+        case "Fiddlesticks":
+          if (engine.vision.loadBar > .5) effects.push(new FiddleW());
+          break;
+        case "Fizz":
+          effects.push(new FizzW())
+          break;
         case "Garen":
           effects.push(new GarenW())
           break;
@@ -619,8 +517,8 @@
           break;
         case "Jax":
           effects.push(new RippleEffect(160, 100, 10, 1500, 30, "red", "out", "stroke", 5));
-          setTimeout(()=>{effects.push(new RippleEffect(160, 100, 10, 1500, 30, "red", "out", "stroke", 5))}, 300);
-          setTimeout(()=>{effects.push(new RippleEffect(160, 100, 10, 1500, 30, "red", "out", "stroke", 5))}, 600);
+          setTimeout(() => { effects.push(new RippleEffect(160, 100, 10, 1500, 30, "red", "out", "stroke", 5)) }, 300);
+          setTimeout(() => { effects.push(new RippleEffect(160, 100, 10, 1500, 30, "red", "out", "stroke", 5)) }, 600);
           break;
         case "Jhin":
           stateMgr.Push(new JhinW())
@@ -628,6 +526,9 @@
         case "Jinx":
           break;
         case "Kai'sa":
+          break;
+        case "Kha'Zix":
+          effects.push(new KhaZixW())
           break;
         case "Lee Sin":
           break;
@@ -642,10 +543,21 @@
         case "Lux":
           effects.push(new LuxW());
           break;
+        case "Malphite":
+          effects.push(new MalphiteW())
+          break;
         case "Miss Fortune":
           effects.push(new FortuneW());
           break;
-        case "Rek'sai":
+        case "Nocturne":
+          effects.push(new NocturneW());
+          break;
+        case "Pantheon":
+          if(!panthE) effects.push(new PantheonW())
+          break;
+        case "Rek'Sai":
+          rekBurrowed = !rekBurrowed;
+          effects.push(new ReksaiW(rekBurrowed))
           break;
         case "Ryze":
           break;
@@ -662,7 +574,17 @@
           break;
         case "Vayne":
           break;
+        case "Veigar":
+          effects.push(new VeigarW())
+          break;
+        case "Vel'Koz":
+          if(!velR && !engine.vision.loadBar) effects.push(new VelKozW())
+          break;
         case "Viktor":
+          effects.push(new ViktorW())
+          break;
+        case "Xerath":
+          effects.push(new XerathW())
           break;
         case "Yasuo":
           break;
@@ -718,6 +640,13 @@
         case "Ezreal":
           effects.push(new EzrealE())
           break;
+        case "Fiddlesticks":
+          effects.push(new FiddleE())
+          break;
+        case "Fizz":
+          effects.push(new FizzE())
+          break;
+
         case "Garen":
           ActiveExtendedE = false;
           break;
@@ -736,6 +665,9 @@
           break;
         case "Kai'sa":
           break;
+        case "Kha'Zix":
+          effects.push(new KhaZixE)
+          break;
         case "Lee Sin":
           break;
         case "Leona":
@@ -751,8 +683,14 @@
         case "Lux":
           ActiveExtendedE = false;
           break;
+        case "Malphite":
+          effects.push(new MalphiteE())
+          break;
         case "Miss Fortune":
           effects.push(new FortuneE());
+          break;
+        case "Nocturne":
+          stateMgr.Push(new NocturneE());
           break;
         case "Rek'sai":
           break;
@@ -773,7 +711,17 @@
           break;
         case "Vayne":
           break;
+        case "Veigar":
+          effects.push(new VeigarE())
+          break;
+        case "Vel'Koz":
+          if(!velR && !engine.vision.loadBar) effects.push(new VelKozE())
+          break;
         case "Viktor":
+          effects.push(new ViktorE())
+          break;
+        case "Xerath":
+          effects.push(new XerathE())
           break;
         case "Yasuo":
           break;
@@ -787,11 +735,6 @@
   };
 
   function ExtendedE_Effects() {
-    if(champion == "Yone"){
-      if(engine.vision.ExtendedeButton > 0){
-        effects.push(new ExtendedEYoneEffect("grey"));
-      }
-    }
     if (Extendede_Meter.value > 0) {
       ActiveExtendedE = true;
       switch (champion) {
@@ -812,9 +755,12 @@
           effects.push(new LuxE());
           ActiveExtendedE = false;
           break;
-        // case "Yone":
-        //   effects.push(new ExtendedEYoneEffect("grey"));
-        //   break;
+        case "Pantheon":
+          PanthEPush()
+          break;
+        case "Yone":
+          effects.push(new ExtendedEYoneEffect("grey"));
+          break;
       }
     }
   };
@@ -845,6 +791,12 @@
           break;
         case "Ezreal":
           effects.push(new EzrealR())
+          break;
+        case "Fiddlesticks":
+          effects.push(new FiddleR())
+          break;
+        case "Fizz":
+          effects.push(new FizzR())
           break;
         case "Garen":
           stateMgr.Push(new GarenR())
@@ -877,10 +829,17 @@
         case "Lux":
           effects.push(new LuxR());
           break;
+        case "Malphite":
+          effects.push(new MalphiteR())
+          break;
         case "Miss Fortune":
           stateMgr.Push(new FortuneR())
           break;
-        case "Rek'sai":
+        case "Pantheon":
+          if(!panthE) effects.push(new PantheonR())
+          break;
+        case "Rek'Sai":
+          effects.push(new RekSaiRListen())
           break;
         case "Ryze":
           break;
@@ -900,7 +859,13 @@
           break;
         case "Vayne":
           break;
+        case "Veigar":
+          effects.push(new VeigarR())
+          break;
         case "Viktor":
+          break;
+        case "Xerath":
+          stateMgr.Push(new XerathR())
           break;
         case "Yasuo":
           break;
@@ -920,6 +885,18 @@
         switch (champion) {
           case "Ahri":
             effects.push(new ahriR());
+            break;
+          case "Kha'Zix":
+            effects.push(new KhaZixR())
+            break;
+          case "Nocturne":
+            effects.push(new NocturneR());
+            break;
+          case "Vel'Koz":
+            if(!velR) VelRPush()
+            break;
+          case "Viktor":
+            effects.push(new ViktorR());
             break;
           case "Zeri":
             ActiveExtendedR = true;
@@ -1173,9 +1150,6 @@
       this.cubes.forEach(cube => {
         cube.draw();
       });
-      if(this.lifetime <= 0){
-        setTimeout(()=>{ActiveExtendedQ = false}, 5000)
-      }
     }
   };
 
@@ -1282,7 +1256,6 @@
     this.start = GetTime();
     this.elapsed = 0;
     this.switch = "yellow";
-    console.log("In W")
 
     this.draw = function () {
       this.elapsed = GetTime() - this.start;
@@ -1739,6 +1712,211 @@
     }
   };
   // END EZREAL ---------------------------------------------------------
+  //FIDDLESTICKS
+  function FiddleQ() {
+    this.start = GetTime();
+    this.lineArray = [];
+    for (let index = 0; index < 20; index++) {
+      setTimeout(() => {
+        this.lineArray.push(new drawRandomLine())
+      }, 100 * index);
+    }
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.globalAlpha = SetRange(this.elapsed > 2000 ? 1 - (this.elapsed - 2000) / 250 : this.elapsed < 250 ? this.elapsed / 50 : 1, 0, 1)
+      DrawBackground("hsla(0,100%,50%,0.6)")
+      this.lineArray.forEach(line => {
+        line.draw();
+      });
+      ctx.globalAlpha = 1;
+      if (this.elapsed > 3000) this.lifetime = 0;
+    }
+  }
+
+  function FiddleW() {
+    this.start = GetTime();
+    this.orbHolder = [];
+    for (let index = 0; index < 100; index++) {
+      setTimeout(() => {
+        this.orbHolder.push(new MovingOrb())
+      }, 50 * index);
+    }
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      let gradient = ctx.createRadialGradient(160, 200, 0, 160, 200, 300);
+      this.gradientElapsed = SetRange(this.elapsed, 0, 4000)
+
+
+      if (this.elapsed > 3000) {
+        let gradient = ctx.createRadialGradient(160, 200, 000, 160, 200, 300)
+        this.calculateVal = -1660 * Math.floor(((this.elapsed - 3000) / 1660) / 1) + (((this.elapsed - 3000) / 1660) * (1660 / 1));
+        gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,0.7)");
+        gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
+        gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        DrawBackground(gradient)
+        if (this.elapsed > 3600) {
+          this.lifetime = 0;
+        }
+      } else {
+        this.calculateVal = -1440 * Math.floor((this.gradientElapsed / 1440) / 4) + ((this.gradientElapsed / 1440) * (1440 / 4));
+        gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,0.7)");
+        DrawBackground(gradient)
+        this.orbHolder.forEach(orb => {
+          orb.draw();
+        });
+      }
+    }
+  }
+
+  function FiddleE() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+
+      let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
+      this.calculateVal = -2100 * Math.floor((this.elapsed / 2100)) + this.elapsed;
+      gradient.addColorStop(SetRange((400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      DrawBackground(gradient)
+      if (this.elapsed > 1500) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function FiddleR() {
+    this.start = GetTime();
+    this.particles = [];
+    for (let index = 0; index < 20; index++) {
+      this.particles.push(new rotatingFiddleParticle())
+    }
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      this.gradientElapsed = SetRange(this.elapsed < 8000 ? this.elapsed - 1000 : 900 - (this.elapsed - 8000), 10, 900);
+      let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      this.calculateVal = -1660 * Math.floor((this.gradientElapsed / 1660) / 1) + ((this.gradientElapsed / 1660) * (1660 / 1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0.7)");
+      DrawBackground(gradient);
+      if (this.elapsed < 8500) {
+        if (this.elapsed < 2000) {
+          for (let index = 0; index < 2; index++) {
+            ctx.beginPath();
+            ctx.moveTo((Math.random() * 100) + 110, Math.random() * 60 + 70)
+            ctx.lineTo((Math.random() * 60) + 130, Math.random() * 60 + 70)
+            ctx.strokeStyle = index == 0 ? "black" : "red";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+          }
+          ctx.lineWidth = 1;
+        } else {
+          this.particles.forEach(particle => {
+            particle.draw();
+          });
+          for (let index = 0; index < 3; index++) {
+            ctx.beginPath();
+            ctx.fillStyle = "grey";
+            ctx.fillRect(Math.random() * 140 + 90, Math.random() * 140 + 30, 10, 10)
+          }
+        }
+      } else {
+        setTimeout(() => {
+          this.lifetime = 0;
+        }, 1000);
+      }
+    }
+  }
+
+  //END FIDDLESTICKS
+  // FIZZ
+  function FizzW() {
+    this.elapsed;
+    this.start = GetTime();
+    this.hit = false;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed < 300) {
+        this.y = this.elapsed;
+      } else if (!this.hit) {
+        this.hit = true;
+        effects.push(new RippleEffect(160, 100, 7, 1500, 30, "hsla(182, 100%, 48%, 1)", "out", "stroke", 3))
+        this.lifetime = 0;
+      }
+      DrawTrident(160, 220 - this.y / 3.3, 120, 0);
+    }
+  }
+
+  function FizzE() {
+    this.elapsed;
+    this.rippleCount = 0;
+    this.start = GetTime();
+    for(let i = 0; i < 15; i++){
+      setTimeout(()=>{
+        effects.push(new bubble(Math.random() * 320, 200, 40, `hsla(0,0%,0%,${.4})`, `hsla(${180 + Math.random() * 50}, 100%, ${50}%, ${.4})`, { x: 0, y: -5 }))
+      }, i * 50)
+    }
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      if (this.rippleCount == 0) {
+        effects.push(new RippleEffect(20, 160, 10, 1500, 20, "hsla(182, 100%, 48%, 1)", "out", "stroke", 1))
+        this.rippleCount++
+      } else if (this.rippleCount == 1 && this.elapsed > 500) {
+        effects.push(new RippleEffect(160, 100, 8, 1500, 20, "hsla(182, 100%, 48%, 1)", "out", "stroke", 1))
+        this.rippleCount++;
+      } else if (this.rippleCount == 2 && this.elapsed > 900) {
+        effects.push(new RippleEffect(300, 100, 8, 1500, 20, "hsla(182, 100%, 48%, 0.4)", "out", "fill", 1))
+        this.rippleCount++;
+      } else {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function FizzR() {
+    this.elapsed;
+    this.bubbles = [];
+    this.brightness;
+    this.a = 0.4
+    freezeBackground = true;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      if(engine.vision.rButton){
+        this.lifetime = 0;
+        freezeBackground = false;
+      }
+      if (this.elapsed < 1100) {
+        copyScreen((1 - this.elapsed / 1000))
+        this.brightness = 50 - this.elapsed / 30
+      } else if (this.elapsed > 4000) {
+        copyScreen((0 + (this.elapsed - 4000) / 1000))
+        this.brightness = 0 + (this.elapsed - 4000) / 30
+        this.a -= 0.01;
+        if (this.elapsed > 5500) {
+          this.lifetime = 0;
+          freezeBackground = false;
+        }
+      }
+
+      this.bubbles.push(new bubble(Math.random() * 320, 200, 40, `hsla(0,0%,0%,${this.a})`, `hsla(${180 + Math.random() * 50}, 100%, ${this.brightness}%, ${this.a})`, { x: 0, y: -5 }))
+      this.bubbles.forEach((element, i) => {
+        element.draw();
+        if (element.y < -10) {
+          this.bubbles.splice(i, 1);
+
+        }
+      });
+      if (this.elapsed > 1000) {
+        DrawShark((this.elapsed - 1500) / 4, 100)
+      }
+    }
+  }
+  //END FIZZ 
   // GAREN -------------------------------------------------------------
   function GarenQ() {
     this.start = GetTime();
@@ -1950,8 +2128,8 @@
       this.elapsed = GetTime() - this.start;
       if (this.elapsed > 500) {
         this.effects.push(new RandomCube(50, 200, "gold", "left", 20, false, 0, 320))
-        setTimeout(()=>{this.effects.push(new RandomCube(50, 200, "gold", "left", 20, false, 0, 320))}, 100)
-        setTimeout(()=>{this.effects.push(new RandomCube(50, 200, "gold", "left", 20, false, 0, 320))}, 200)
+        setTimeout(() => { this.effects.push(new RandomCube(50, 200, "gold", "left", 20, false, 0, 320)) }, 100)
+        setTimeout(() => { this.effects.push(new RandomCube(50, 200, "gold", "left", 20, false, 0, 320)) }, 200)
         this.start = GetTime();
         this.count++;
       }
@@ -2078,6 +2256,102 @@
   }
 
   // END JHIN -------------------------------------------------------------
+  //KHA'ZIX ------------------------------------------------------------
+  function KhaZixQ(){
+    this.lifetime = 10;
+    this.dir = Math.random() > .5
+    this.x = this.dir ? 170 : 50
+    this.height = 0;
+    this.there = false;
+    this.alpha = 1;
+    this.draw = function(){
+      ctx.save()
+      ctx.globalAlpha = this.alpha
+      ctx.translate(this.x, -10)
+      ctx.rotate(this.dir ? .5 : -.5)
+      ctx.translate(-this.x, 10)
+      DrawRect(this.x, -10, 100, this.height, "purple")
+      ctx.restore()
+      this.height < 250 ? this.height+=25 : this.there = true;
+      this.there ? this.alpha >= .01 ? this.alpha -= .01 : this.lifetime = 0 : null;
+    }
+  }
+
+  function KhaZixW(){
+    this.lifetime = 10;
+    this.draw = function(){
+      effects.push(new KhaWHelp(0))
+      effects.push(new KhaWHelp(-.75))
+      effects.push(new KhaWHelp(.75))
+      this.lifetime = 0;
+    }
+  }
+
+  function KhaWHelp(rotate){
+    this.lifetime = 10;
+    this.rotate = rotate;
+    this.there = false;
+    this.switch = false;
+    this.y = 200;
+    this.x = 130;
+    this.x2 = 130;
+    this.alpha = 1;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      ctx.save()
+      ctx.translate(160, 200)
+      ctx.rotate(this.rotate)
+      ctx.translate(-160, -200)
+      for(i = 0; i < 200 - this.y; i+=20){
+        DrawRect(this.switch ? this.x : this.x2, 200 - i, 60, -20, "purple")
+        this.switch = !this.switch;
+      }
+      DrawCircle(160, this.y, 30, "white")
+      ctx.globalAlpha = 1;
+      ctx.restore()
+      this.y > -40 ? this.y -= 15 : this.there = true;
+      if(this.there){
+        this.alpha >= .01 ? this.alpha -= .01 : this.lifetime = 0;
+        this.x+=.5;
+        this.x2-=.5;
+      }
+    }
+  }
+
+  function KhaZixE(){
+    this.radius = 1;
+    this.lifetime = 10;
+    this.alpha = 1;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha
+      DrawCircle(160, 100, this.radius, "yellow")
+      DrawCircle(160, 100, this.radius + 50, `hsla(285, 100%, 50%, ${1 - (this.radius / 200)})`)
+      ctx.globalAlpha = 1;
+      this.radius < 200 ? this.radius += 10 : null;
+      this.alpha >= .03 ? this.alpha-=.03 : this.lifetime = 0;
+    }
+  }
+
+  function KhaZixR(){
+    this.radius = 200;
+    this.radius2 = 300;
+    this.lifetime = 10;
+    this.alpha = 0;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha
+      DrawRect(0, 0, 320, 200, "hsl(285, 100%, 6%)")
+      DrawStroke(160, 100, this.radius, "hsl(350, 100%, 6%)", 20)
+      DrawStroke(160, 100, this.radius2, "hsl(350, 100%, 8%)", 20)
+      DrawCircle(100, 100 + Math.sin(Date.now()/ 200) * 10, 20, "lime")
+      DrawCircle(220, 100 + Math.sin(Date.now()/ 200) * 10, 20, "lime")
+      ctx.globalAlpha = 1;
+      this.radius >= 6 ? this.radius-=5 : this.radius = 200;
+      this.radius2 >= 6 ? this.radius-=5 : this.radius = 200;
+      this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+      if(ActiveExtendedR == false) this.lifetime = 0
+    }
+  }
+  //END KHA'ZIX ---------------------------------------------------------
   // LEONA ------------------------------------------------------------- 
   function LeonaQ() {
     StopEffects = true;
@@ -2344,7 +2618,150 @@
       }
     }
   };
-  // END LUX --------------------------------------------------------------------
+  // END LUX --------------------------------------------------------------------\
+  //MALPHITE
+  function MalphiteQ() {
+    this.start = GetTime();
+    this.alpha = 0;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.globalAlpha = this.alpha;
+      drawWave(this.elapsed < 1300 ? 130 : 200, "hsla(35, 100%, 5%, 1)", -SetRange(this.elapsed / 200, 0, 6), "up", this.elapsed < 1300 ? 70 : 0);
+      drawWave(this.elapsed < 1300 ? 130 : 200, "hsla(40, 100%, 10%, 1)", -SetRange(this.elapsed / 200, 0, 6), "up", this.elapsed < 1300 ? 50 : 0);
+      drawWave(this.elapsed < 1300 ? 130 : 200, "orange", -SetRange(this.elapsed / 200, 0, 6), "up", this.elapsed < 1300 ? 30 : 0);
+      ctx.globalAlpha = 1;
+      this.alpha < 1 ? this.alpha += .05 : this.alpha = 1;
+      if (this.elapsed > 3000) this.lifetime = 0;
+    }
+  }
+
+  function MalphiteW() {
+    this.start = GetTime();
+    this.alpha = 0;
+    this.leftPos = {
+      x: 60,
+      y: 155
+    }
+    this.rightPos = {
+      x: 260,
+      y: 155
+    }
+    this.defaultMotion = {
+      left: true,
+      right: false
+    }
+    this.recentSwitch = false;;
+    this.particleHolder = [];
+    this.draw = function () {
+      ctx.globalAlpha = this.alpha;
+      this.elapsed = GetTime() - this.start;
+      DrawBackground("hsla(0,0%,0%,0.6)")
+      if (this.defaultMotion.left) {
+        DrawCircle(this.leftPos.x, this.leftPos.y + (Math.sin(this.elapsed / 200)) * 20, 40, "orange")
+      } else {
+        let calcval = + (Math.sin(this.elapsed / 200)) * 30
+        if (Math.sin(this.elapsed / 200) < -0.9 && !this.recentSwitch) {
+          for (let index = 0; index < 100; index++) {
+            setTimeout(() => {
+              this.particleHolder.push(new movingBall(this.leftPos.x + - calcval, this.leftPos.y + calcval, 7, { x: 5, y: -Math.random() * 10 }, `hsl(${10 + Math.random() * 40},100%,50%)`))
+            }, 5 * index);
+
+          }
+          this.recentSwitch = true;
+          setTimeout(() => {
+            this.recentSwitch = false;
+            this.defaultMotion.left = true;
+            this.defaultMotion.right = false;
+          }, 330);
+
+        }
+        DrawCircle(this.leftPos.x + -calcval, this.leftPos.y + calcval, 40, "orange")
+      }
+      if (this.defaultMotion.right) {
+        DrawCircle(this.rightPos.x, this.rightPos.y + (Math.sin(this.elapsed / 200)) * 20, 40, "orange")
+      } else {
+        let calcval = + (Math.sin(this.elapsed / 200)) * 30
+        if (Math.sin(this.elapsed / 200) < -0.9 && !this.recentSwitch) {
+          for (let index = 0; index < 100; index++) {
+            setTimeout(() => {
+              this.particleHolder.push(new movingBall(this.rightPos.x + calcval, this.rightPos.y + calcval, 7, { x: -5, y: -Math.random() * 10 }, `hsl(${10 + Math.random() * 40},100%,50%)`))
+            }, 5 * index);
+
+          }
+          this.recentSwitch = true;
+          setTimeout(() => {
+            this.recentSwitch = false;
+            this.defaultMotion.right = true;
+            this.defaultMotion.left = false;
+          }, 330);
+
+
+        }
+        DrawCircle(this.rightPos.x + calcval, this.rightPos.y + calcval, 40, "orange")
+      }
+      this.particleHolder.forEach((element, i) => {
+        element.draw();
+        if (element.x < 0 || element.x > 320) {
+          this.particleHolder.splice(i, 1);
+        }
+      });
+      if (GetTime() - this.start > 5000) {
+        this.lifetime = 0;
+
+      }
+      ctx.globalAlpha = 1;
+      this.alpha < 1 ? this.alpha += .05 : this.alpha = 1;
+    }
+  }
+
+  function MalphiteE() {
+    this.start = GetTime();
+    this.alpha = 0;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.globalAlpha = this.alpha;
+      let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      this.calculateVal = -2320 * Math.floor((this.elapsed / 1160) / 1) + ((this.elapsed / 1160) * (2320 / 1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(38, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(70, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(44, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(18, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-1000 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 320, 200)
+      if (this.elapsed > 1000) {
+        this.lifetime = 0
+      }
+      ctx.globalAlpha = 1;
+      this.alpha < 1 ? this.alpha += .025 : this.alpha = 1;
+    }
+  }
+
+  function MalphiteR() {
+    this.radius = 1;
+    this.vr = .1;
+    this.pushed = false;
+    this.alpha = 1;
+    this.draw = function () {
+      ctx.globalAlpha = this.alpha;
+      DrawCircle(160, 100, this.radius, `hsl(20, 65%, ${50 - (this.radius / 4)}%)`)
+      ctx.globalAlpha = 1;
+      this.radius <= 200 ? this.radius += this.vr : this.radius = 200;
+      this.vr < 15 ? this.vr += .75 : this.vr = 15;
+      if (this.radius == 200 && !this.pushed) {
+        effects.push(new ParticleExplosion(160, 100, "yellow", 15, 3000, 40, 10, 1.5, false, false))
+        setTimeout(() => {
+          effects.push(new ParticleExplosion(160, 100, "red", 15, 3000, 40, 10, 1.5, false, false))
+        }, 200)
+        this.pushed = true;
+      }
+      this.pushed ? this.alpha > .05 ? this.alpha -= .005 : this.lifetime = 0 : null;
+    }
+  }
+
+  //END MALPHITE
   // MISS FORTUNE -------------------------------------------------------------
   function FortuneQ() {
     this.start = GetTime();
@@ -2414,7 +2831,6 @@
     clearEffects = true;
 
     this.Process = function () {
-      console.log(this.lifetime)
       if (this.lifetime <= 0) {
         stateMgr.Pop();
         StopEffects = false;
@@ -2423,24 +2839,369 @@
       this.draw();
     }
     this.draw = function () {
-      ctx.globalAlpha = .5 * this.lifetime/3000;
+      ctx.globalAlpha = .5 * this.lifetime / 3000;
       DrawBackground("black")
       ctx.globalAlpha = 1;
-        this.effects.forEach((ele, i)=>{
-          ele.draw();
-          if(ele.lifetime <= 0){
-            this.effects.splice(i, 1)
-          }
-        })
-        this.lifetime-=20;
-        if(this.lifetime % 80 == 0){
-          var hue = this.color? "orange" : "yellow";
-          this.color = !this.color;
-          this.effects.push(new ParticleExplosion(160, 200, hue, 10, 1000, 20, 7, 1.5, true))
+      this.effects.forEach((ele, i) => {
+        ele.draw();
+        if (ele.lifetime <= 0) {
+          this.effects.splice(i, 1)
         }
+      })
+      this.lifetime -= 20;
+      if (this.lifetime % 80 == 0) {
+        var hue = this.color ? "orange" : "yellow";
+        this.color = !this.color;
+        this.effects.push(new ParticleExplosion(160, 200, hue, 10, 1000, 20, 7, 1.5, true))
+      }
     }
   }
   // END MISS FORTUNE ---------------------------------------------------------
+  //NOCTURNE
+  function NocturneQ() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      DrawBackground(`hsla(0,0%,0%,${Math.sin(this.elapsed / 1500)})`)
+      DrawCircle(this.elapsed / 3, 100, 60, "hsla(187, 100%, 20%, 1)")
+      DrawSineWave(-320 + this.elapsed / 3, 150, "hsla(224, 100%, 36%, 1)", 30, 20, this.elapsed, 10);
+      DrawSineWave(-320 + this.elapsed / 3, 150, "hsla(224, 100%, 36%, 1)", 30, -20, this.elapsed, 10);
+      if (this.elapsed > 2000) {
+        this.lifetime = 0
+      }
+    }
+  }
+
+  function NocturneW() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      this.gradientElapsed = SetRange(900 - this.elapsed, 10, 900);
+      this.calculateVal = -1880 * Math.floor((1880 - this.gradientElapsed) / 1880) + this.gradientElapsed;
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(176, 100%, 15%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(228, 100%, 15%,1)");
+      gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      DrawBackground(gradient);
+      if (this.elapsed > 1600) {
+        this.lifetime = 0;
+        effects.push(new ParticleExplosion(160, 100, "hsla(187, 100%, 64%, 1)", 5, 2200, 50, 20, 1))
+      }
+    }
+  }
+
+  function NocturneE() {
+    freezeBackground = true;
+    this.start = GetTime();
+    this.elapsed;
+    this.Process = function () {
+      this.elapsed = GetTime() - this.start;
+      this.draw()
+    }
+
+
+    this.draw = function () {
+      if (keyScreenBrightness > 1) {
+        copyScreen(0.03)
+      }
+
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(160, 100)
+      ctx.rotate(this.elapsed / 500)
+      DrawCircle(-80 + SetRange((this.elapsed / 70), 0, 80), 0, 20, "hsla(234, 100%, 50%, 1)");
+      DrawCircle(80 - SetRange((this.elapsed / 70), 0, 80), 0, 20, "hsla(234, 100%, 50%, 1)");
+      ctx.restore();
+      if (this.elapsed > 4600) {
+        freezeBackground = false;
+        effects.push(new ParticleExplosion(160, 100, "blue", 5, 2000, 60, 20, 0.9))
+        stateMgr.Pop()
+      }
+
+    }
+  }
+  //END NOCTURNE 
+  //PANTHEON -----------------------------------------------------------------
+  function PantheonQ(){
+    this.start = Date.now();
+    this.y = 200;
+    this.x = 0;
+    this.alpha = 1;
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+        if(engine.vision.ExtendedqButton){
+          DrawRect(0, 0, 320 / 3000 * elapsed, 200, `hsla(15, 100%, 50%, ${1 - (elapsed / 6000)})`)
+        } else {
+          ctx.globalAlpha = this.alpha;
+          ctx.beginPath()
+          ctx.moveTo(160, this.y)
+          ctx.lineTo(-50 + this.x, 200)
+          ctx.lineTo(370 - this.x, 200)
+          ctx.lineTo(160, this.y)
+          ctx.fillStyle = "hsl(10, 100%, 50%)"
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          this.x+=10
+          this.y-=20;
+          this.x > 100 ? this.alpha >= .05 ? this.alpha -= .05 : this.lifetime = 0 : null;
+      }
+    }
+  }
+
+  function PantheonW(){
+    this.start = Date.now();
+    this.alpha = 0;
+    this.radius = 1;
+    this.lifetime = 10;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawStroke(160, 100, this.radius, "red", 30)
+      DrawStroke(160, 100, this.radius + 30, "orange", 30)
+      DrawStroke(160, 100, this.radius + 60, "yellow", 30)
+      ctx.globalAlpha = 1;
+      this.alpha <= .9 ? this.alpha+=.1 : this.alpha = 1;
+      this.radius < 200 ? this.radius += 7 : this.lifetime = 0;
+    }
+  }
+
+  var panthE = false;
+  function PanthEPush(){
+    effects.length = 0;
+    rekBurrowed = false;
+    ctx.clearRect(0, 0, c.width, c.height);
+    effects.push(new PantheonE())
+    panthE = true;
+  }
+
+  function PantheonE(){
+    this.start = Date.now();
+    this.effects = [];
+    this.alpha = 0;
+    this.count = 0;
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(elapsed > 50){
+        this.start = Date.now();
+        this.effects.push(new PanthEHelp())
+        this.count++;
+      }
+      ctx.globalAlpha = this.alpha;
+      this.effects.forEach((ele, i)=>{
+        ele.draw()
+        if(ele.lifetime <= 0) this.effects.splice(i, 1)
+      })
+      ctx.beginPath()
+      ctx.arc(160, 270, 150, Math.PI, 0)
+      ctx.strokeStyle = "hsl(45, 100%, 50%)"
+      ctx.lineWidth = 40;
+      ctx.stroke()
+      ctx.globalAlpha = 1;
+      if(this.count < 30){
+        this.alpha <= .9 ? this.alpha+=.1 : this.alpha = 1;
+      } else {
+        this.alpha >= .05 ? this.alpha-=.05 : this.lifetime = 0;
+        if(this.lifetime == 0){
+          ActiveExtendedE = false;
+          panthE = false;
+        }
+      }
+    }
+  }
+
+  function PanthEHelp(){
+    this.x = Math.random() * 300;
+    this.height = -10;
+    this.lifetime = 10;
+    this.done = false;
+    this.draw = function(){
+      DrawRect(this.x, 200, 30, this.height, "red")
+      if(this.done){
+        this.height < 0 ? this.height+=20 : this.lifetime = 0;
+      } else {
+        this.height > -200 ? this.height-=40 : this.done = true;
+      }
+    }
+  }
+
+  function PantheonR(){
+    this.start = Date.now()
+    this.y = 100;
+    this.radius = 10;
+    this.radius2 = 200;
+    this.radius3 = 1;
+    this.radius4 = 1;
+    this.done = 0;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(elapsed < 2000){
+        DrawStroke(160, 100, this.radius2, "orange", 20)
+        DrawCircle(160, this.y, this.radius, `hsl(${this.radius / 2 - 10}, 100%, 50%)`)
+        this.radius < 60 ? this.radius+=.5 : this.radius = 60;
+        this.radius2 > 1 ? this.radius2-=10 : this.radius2 = 200;
+      } else if (elapsed < 2500){
+        DrawStroke(160, 100, this.radius3, "red", 20)
+        DrawCircle(160, this.y, this.radius, `hsl(${this.radius / 2 - 10}, 100%, 50%)`)
+        this.y > -50 ? this.y -= 10 : this.y = -50
+        this.radius3 < 200 ? this.radius3+=10 : this.radius3 = 200;
+      } else if (elapsed < 3800 && elapsed > 3200){
+        DrawCircle(160, this.y, this.radius, `hsl(${this.radius / 2 - 10}, 100%, 50%)`)
+        this.y < 100 ? this.y += 12 : this.done = 1;
+      }
+      if(this.done == 1){
+        DrawStroke(160, 100, this.radius4, "red", 30)
+        DrawStroke(160, 100, this.radius4 + 30, "orange", 30)
+        DrawStroke(160, 100, this.radius4 + 60, "yellow", 30)
+        this.radius4 < 200 ? this.radius4 += 15 : this.lifetime = 0;
+      }
+    }
+  }
+  //END PANTHEON-------------------------------------------------------------
+  //REK'SAI-------------------------------------------------------------------
+  var rekBurrowed = false;
+  function ReksaiQ(burrowed){
+    this.burrowed = burrowed;
+    this.lifetime = 10;
+    this.draw = function(){
+      if(this.burrowed){
+        for(let i = 0; i < 3; i++){
+          setTimeout(()=>{
+            effects.push(new RekQHelp(0))
+          }, i * 100)
+        }
+      } else {
+        for(let i = 0; i < 3; i++){
+          setTimeout(()=>{
+            effects.push(new RekQHelp(i % 2 == 0 ? 0 : 320))
+          }, i * 300)
+        }
+      }
+      this.lifetime = 0;
+    }
+  }
+
+  function RekQHelp(x){
+    this.lifetime = 10;
+    this.x = x;
+    this.dir = x == 0;
+    this.draw = function(){
+      ctx.beginPath()
+      ctx.arc(this.x, 150, 80, -Math.PI / 2, this.dir ? 0 : Math.PI, !this.dir)
+      ctx.strokeStyle = "hsl(280, 50%, 50%)"
+      ctx.lineWidth = 20;
+      ctx.stroke()
+      this.dir ? this.x < 330 ? this.x+=20 : this.lifetime = 0 : this.x > -15 ? this.x-=20 : this.lifetime = 0;
+    }
+  }
+
+  function ReksaiW(burrowed){
+    this.start = Date.now();
+    this.y = burrowed ? 80 : 160;
+    this.y2 = burrowed ? 200 : 0;
+    this.radius = burrowed ? 30 : 60;
+    this.burrowed = burrowed;
+    this.alpha = 0;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, this.y2, 320, 200, `hsl(280, 80%, ${this.burrowed ? this.y2 / 2 : this.y2 / 2 + 20}%)`)
+      DrawCircle(160, this.y, this.radius, `hsl(335, 80%, ${(this.y - 80) * 5 / 4}%`)
+      ctx.globalAlpha = 1;
+      if(this.burrowed){
+        this.y < 160 ? this.y+=3 : this.y = 160;
+        this.y2 >= 6 ? this.y2-=5 : this.done = true;
+        this.radius < 60 ? this.radius++ : this.radius = 60;
+      } else {
+        this.y > 80 ? this.y-=3 : this.y = 80;
+        this.y2 <= 194 ? this.y2+=5 : this.done = true;
+        this.radius < 30 ? this.radius-- : this.radius = 30;
+      }
+      if(this.done){
+        this.alpha >= .02 ? this.alpha -=.02 : this.lifetime = 0;
+      } else {
+        this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+      }
+    }
+  }
+
+  function ReksaiE(burrowed){
+    this.burrowed = burrowed;
+    this.lifetime = 10;
+    this.radius = 1;
+    this.alpha = 0;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      if(this.burrowed){
+        DrawCircle(160, 100, this.radius, `hsl(285, 100%, ${10 + this.radius / 6}%)`)
+      } else {
+        DrawRect(0, 0, 320, 200, "black")
+        DrawCircle(160, 100, 201 - this.radius, `hsl(285, 100%, ${10 + this.radius / 6}%)`)
+      }
+      this.radius < 200 ? this.radius += 10 : this.done = true;
+      ctx.globalAlpha = 1;
+      if(this.done){
+        this.alpha >= .05 ? this.alpha-=.05 : this.lifetime = 0;
+      } else {
+        this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+      }
+    }
+  }
+
+  function RekSaiRListen(){
+    this.start = Date.now();
+    this.lifetime = 10;
+    this.draw = function(){
+      var elapsed = Date.now() - this.start;
+      if(engine.vision.RecallMeter < .5){
+        effects.push(new ReksaiR())
+        this.lifetime = 0;
+      }
+      if(elapsed > 1000){
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function ReksaiR(){
+    this.lifetime = 10;
+    this.start = Date.now()
+    this.alpha = 0;
+    this.done = false;
+    this.claw = new RekRHelp()
+    this.draw = function(){
+        var elapsed = Date.now() - this.start;
+        ctx.globalAlpha = this.alpha;
+        DrawRect(0, 0, 320, 200, "black")
+        if(elapsed > 950) this.claw.draw()
+        if(elapsed > 1300) this.done = true;
+        ctx.globalAlpha = 1;
+        if(this.done){
+          this.alpha >= .01 ? this.alpha-=.01 : this.lifetime = 0;
+        } else {
+          this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+        }
+      }
+    }
+
+  function RekRHelp(){
+    this.lifetime = 10;
+    this.scale = 100;
+    this.mod = 1.5;
+    this.draw = function(){
+      for(let i = 0; i < 3; i++){
+        ctx.beginPath()
+        ctx.arc(160 + i * 80, 100, this.scale, -Math.PI / 2, Math.PI + this.mod, true)
+        ctx.strokeStyle = "hsl(0, 75%, 50%)"
+        ctx.lineWidth = 40;
+        ctx.stroke()
+      }
+      this.mod > -1 ? this.mod-=.2 : null;
+    }
+  }
+  //END REK'SAI
   // SONA --------------------------------------------------------------------        
   function SonaEffect() {
     effects.push(new ParticleExplosion(160, 100, "green", 5, 3000, 5, 80, 1, false, true))
@@ -2554,16 +3315,17 @@
   // TEEMO --------------------------------------------------------------------
   function TeemoQ() {
     this.state = 1;
-    this.cube = new RandomCube(75, 40, "pink", "right", 20, false, 80)
+    this.cube = new RandomCube(40, 20, "purple", "right", 10, false, 100)
     this.ripple = new RippleEffect(320, 100, 9, 1500, 30, "purple", "out", "stroke", 3, true)
     this.start = GetTime();
 
+    freezeBackground = true;
     StopEffects = true;
     this.Process = function () {
       this.Draw();
     };
     this.Draw = function () {
-      if(this.state == 1){
+      if (this.state == 1) {
         DrawBackground("black");
         this.cube.draw()
         if (this.cube.x >= 280) {
@@ -2574,6 +3336,7 @@
         this.ripple.draw()
         if (this.ripple.radius >= 500) {
           StopEffects = false
+          freezeBackground = false;
           stateMgr.Pop();
         }
       }
@@ -2760,6 +3523,505 @@
     }
   };
   // END THRESH -------------------------------------------------------------
+  //VEIGAR
+
+
+  function VeigarQ() {
+    this.x = 0;
+    this.y = 100;
+    this.radius = 80;
+    this.ballCol = "hsla(282, 100%, 31%, 1)";
+    this.arcCol = "hsla(189, 100%, 58%, 1)";
+    this.speed = 12;
+    this.draw = function () {
+      DrawBackground(`hsla(0,0%,0%,${Math.sin((this.x + 10) / 2 * (Math.PI / 180))})`)
+      this.gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 100)
+      this.gradient.addColorStop(0, this.ballCol)
+      this.gradient.addColorStop(0.3, this.ballCol)
+      this.gradient.addColorStop(0.8, "hsla(0,0%,0%,0)");
+      DrawCircle(this.x, this.y, this.radius, this.gradient)
+      DrawCircle(this.x - (this.radius / 2), this.y, this.radius / 2, "hsla(282, 100%, 40%, 0.2)")
+      for (let index = 0; index < 5; index++) {
+        DrawRandomArc(this.x, this.y, 30, this.arcCol, 10)
+      }
+      this.x += this.speed;
+      if (this.x > 360) {
+        this.lifetime = 0
+      }
+    }
+  }
+  function VeigarW() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = (GetTime() - this.start) * 2.5;
+      let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      this.calculateVal = -2155 * Math.floor((SetRange(this.elapsed / 2155, 0, 1)) / 1.5) + ((SetRange(this.elapsed / 2155, 0, 1.1)) * (2155 / 1.5));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-250 + (this.calculateVal)), 0, 1000) / 1000, "hsla(281, 100%, 65%,1)");
+      gradient.addColorStop(SetRange((-450 + (this.calculateVal)), 0, 1000) / 1000, "hsla(281, 100%, 49%,1)");
+      gradient.addColorStop(SetRange((-650 + (this.calculateVal)), 0, 1000) / 1000, "hsla(281, 100%, 32%,1)");
+      gradient.addColorStop(SetRange((-850 + (this.calculateVal)), 0, 1000) / 1000, "hsla(281, 100%,2%,1)");
+      DrawBackground(gradient)
+      let beam = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      let beamVal = this.elapsed > 800 ? (Math.sin((this.elapsed - 1000) / 12 * (Math.PI / 180)) * 1715) : 0;
+      this.calculateVal = (-1715 * Math.floor((SetRange(beamVal / 1715, 0, 1)) / 2) + (((beamVal) / 1715) * (1715 / 2)));
+      beam.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      beam.addColorStop(SetRange((-250 + (this.calculateVal)), 0, 1000) / 1000, "hsla(345, 90%, 50%,1)");
+      beam.addColorStop(SetRange((-450 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      DrawBackground(beam)
+      if (this.elapsed > 2900) {
+        effects.push(new ParticleExplosion(160, 100, "hsla(345,90%,50%,0.6)", 5, 2500, 40, 20, 1))
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function VeigarE() {
+    this.lifetime = 125;
+    this.stroke = 20;
+    this.alpha = 1
+    effects.push(new RippleEffect(160, 100, 5, 4000, 30, "purple", "in", "stroke", 8))
+    this.draw = function () {
+      this.alpha = this.lifetime / 125;
+      ctx.globalAlpha = this.alpha;
+      DrawStroke(160, 100, 150, "hsl(345,90%,50%)", this.stroke);
+      ctx.globalAlpha = 1;
+      this.stroke += 2;
+      this.lifetime--;
+    }
+  }
+
+  function VeigarR() {
+    this.start = Date.now();
+    this.radius = 1;
+    this.done1 = false;
+    this.done2 = false;
+    this.done3 = false;
+    this.lifetime = 10;
+    this.color = {
+      hue: 285,
+      sat: 100,
+      lit: 0
+    }
+    this.draw = function () {
+      DrawCircle(160, 100, this.radius, `hsl(${this.color.hue}, ${this.color.sat}%, ${this.color.lit}%)`)
+      if (!this.done1) {
+        this.radius < 70 ? this.radius += 4 : this.done1 = true;
+        this.color.lit += 2.5;
+      } else if (!this.done2) {
+        this.radius = 100;
+        this.done2 = true;
+      } else if (!this.done3) {
+        this.radius > 10 ? this.radius -= 12 : this.done3 = true;
+      } else {
+        effects.push(new ParticleExplosion(160, 100, "hsl(345,90%,50%)", 7, 2300, 20, 30, 1, false, false))
+        effects.push(new ParticleExplosion(160, 100, "hsl(50,90%,50%)", 5, 2300, 20, 30, 1, false, false))
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  //END VEIGAR
+  //VEL'KOZ -----------------------------------------------------------------------
+  function VelKozQ(){
+    this.lifetime = 10;
+    this.height = 1;
+    this.radius = 20;
+    this.x = 160;
+    this.alpha = 1;
+    this.draw = function(){
+      if(!engine.vision.loadBar){
+        ctx.globalAlpha = this.alpha;
+        DrawRect(0, 0, 320, 200, `hsla(285, 100%, 30%, ${this.x / 350})`)
+        DrawRect(140, 100, 40, this.height, "grey")
+        DrawRect(140, 100, 40, -this.height, "grey")
+        DrawCircle(this.x, 100, this.radius, "grey")
+        DrawCircle(320 - this.x, 100, this.radius, "grey")
+        ctx.globalAlpha = 1;
+        this.height+=4
+        this.x+=6
+        this.radius < 40 ? this.radius++ : this.radius = 40;
+        if(this.x > 240) {
+          this.alpha >= .02 ? this.alpha -= .02 : this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function VelKozW(){
+    this.lifetime = 10;
+    this.x = 160;
+    this.y = 100;
+    this.width = 10;
+    this.height = 0;
+    this.alpha = 0;
+    this.there = false;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, this.width, 200, "grey")
+      DrawRect(15, 10, this.width - 30, 180, "purple")
+      DrawRect(0, this.y, 320, this.height, "grey")
+      ctx.globalAlpha = 1;
+      if(this.there){
+        this.y > 0 ? this.y-=2 : this.done = true;
+        this.height+=4;
+      }
+      this.width <= 310 ? this.width += 7 : this.there = true;
+      if(this.done){
+        this.alpha >= .05 ? this.alpha -= .05 : this.lifetime = 0;;
+      } else {
+        this.alpha <= .98 ? this.alpha += .02 : null;
+      }
+    }
+  }
+
+  function VelKozE(){
+    this.lifetime = 10;
+    this.x = 160;
+    this.y = 100;
+    this.alpha = 0;
+    this.alpha2 = 0;
+    this.there = false;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawStroke(160, 100, 130, `hsla(285, 100%, 50%, ${1 - this.alpha2})`, 50)
+      DrawCircle(160, 100, 105, `hsla(285, 80%, ${30 + 50*this.alpha}%, ${this.alpha2})`)
+      ctx.globalAlpha = 1;
+      this.there? this.alpha2 <= .95 ? this.alpha2 += .05 : this.done = true : null;
+      if(this.done){
+        this.alpha >= .05 ? this.alpha -= .05 : this.lifetime = 0;
+      } else {
+        this.alpha <= .97 ? this.alpha += .03 : this.there = true;
+      }
+    }
+  }
+
+  var velR = false;
+  function VelRPush(){
+    if(!velR){
+      effects.length = 0;
+      rekBurrowed = false;
+      ctx.clearRect(0, 0, c.width, c.height);
+      stateMgr.Push(new VelKozR())
+      velR = true;
+    }
+  }
+
+  function VelKozR() {
+    this.start = GetTime();
+    this.alpha = 0;
+    this.radius1 = 1;
+    this.radius2 = 100;
+    this.Process = function () {
+      if (this.elapsed > 3000) {
+        if(this.alpha <= .02){
+          velR = false;
+        }
+        this.alpha >= .02 ? this.alpha -= .02 : stateMgr.Pop();
+      } else {
+        this.alpha <= .95 ? this.alpha += .05 : this.alpha = 1;
+      }
+      this.draw();
+    }
+
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, "black")
+      DrawStroke(160, 100, this.radius1, "grey", 20)
+      DrawStroke(160, 100, this.radius2, "grey", 20)
+      DrawCircle(160, 100, 70, "purple")
+      DrawCircle(160 + Math.sin(Date.now() / 500) * 20, 100, 30 + Math.sin(Date.now() / 20) * 10, "fuchsia")
+      DrawCircle(160 + Math.sin(Date.now() / 500) * 20, 100, 20 + Math.sin(Date.now() / 20) * 5, "grey")
+      ctx.globalAlpha = 1;
+      this.radius1 < 200 ? this.radius1+=10 : this.radius1 = 1;
+      this.radius2 < 200 ? this.radius2+=10 : this.radius2 = 1;
+    }
+  }
+  //END VEL'KOZ -------------------------------------------------------------------
+  //VIKTOR
+  function ViktorQ() {
+    this.elapsed;
+    this.start = GetTime();
+    this.lifetime = 1;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(this.elapsed / 5 - 50, 100);
+      ctx.rotate(this.elapsed / 150);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, 100);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(70, -70);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(-70, -70);
+      ctx.restore();
+      ctx.lineWidth = 30;
+      ctx.strokeStyle = "yellow"
+      ctx.stroke();
+      if (this.elapsed / 5 - 50 > 400) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function ViktorW() {
+    this.elapsed;
+    this.start = GetTime();
+    this.size;
+    this.fill = false;
+    this.draw = function () {
+      if (this.size - this.elapsed / 40 > 0) {
+        this.innersize = this.size + 20 - this.elapsed / 40;
+      }
+      this.elapsed = GetTime() - this.start
+      if (this.elapsed < 1000) {
+        this.size = this.elapsed / 10
+      }
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(160, 100);
+      ctx.arc(0, 0, this.size, 0, Math.PI * 2)
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = "Purple"
+      ctx.stroke();
+      if (this.elapsed > 1000) {
+        ctx.beginPath();
+        if (this.innersize > 50) {
+          ctx.arc(0, 0, this.innersize, 0, Math.PI * 2)
+          ctx.lineWidth = ((this.elapsed - 1000) / 20);
+          ctx.strokeStyle = "hsla(298, 100%, 37%, 0.8)"
+          ctx.stroke()
+        } else {
+          ctx.arc(0, 0, 95, 0, Math.PI * 2)
+          ctx.lineWidth = 1;
+          ctx.fillStyle = "hsla(298, 100%, 37%, 0.8)"
+          ctx.fill()
+        }
+      }
+      ctx.restore()
+      if (this.elapsed > 3000) {
+        this.lifetime = 0;
+        effects.push(new RippleEffect(160, 100, 5, 1500, 20, "purple", "out", "stroke", 3))
+      }
+    }
+  }
+
+  function ViktorE() {
+    this.elapsed;
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(0, 0)
+      ctx.rotate(-this.elapsed / 1000);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, 400);
+      ctx.restore();
+      ctx.strokeStyle = "Orange";
+      ctx.lineWidth = 30;
+      ctx.stroke();
+      if (this.elapsed > 1500) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function ViktorR() {
+    this.elapsed;
+    this.point = new movingPoint(Math.random() * 320, Math.random() * 200, 20, "blue");
+    this.timer = 0;
+    this.ripple = true;
+    this.speed = {
+      x: (Math.random() * 2) + 1,
+      y: (Math.random() * 2) + 1
+    }
+    this.start = GetTime();
+    this.draw = function () {
+      if (!ActiveExtendedR) {
+        this.lifetime = 0;
+      }
+      this.elapsed = GetTime() - this.start
+      if (this.point.x + this.point.radius > 320 && this.speed.x > 0) {
+        this.speed.x = -this.speed.x
+      } else if (this.point.x - this.point.radius < 0 && this.speed.x < 0) {
+        this.speed.x = -this.speed.x
+      }
+      if (this.point.y + this.point.radius > 200 && this.speed.y > 0) {
+        this.speed.y = -this.speed.y
+      } else if (this.point.y - this.point.radius < 0 && this.speed.y < 0) {
+        this.speed.y = -this.speed.y
+      }
+      this.point.x += this.speed.x;
+      this.point.y += this.speed.y;
+      this.point.draw();
+      ctx.beginPath();
+      ctx.arc(this.point.x, this.point.y, this.point.radius * 4, 0, Math.PI * 2)
+      ctx.fillStyle = "hsla(193, 100%, 48%, 0.3)"
+      ctx.fill()
+      if (this.elapsed - this.timer > 2000) {
+        this.ripple = true;
+        this.timer = this.elapsed;
+      }
+      if (this.ripple) {
+        this.circleradius = this.point.radius * 4 - (this.elapsed - this.timer) / 10;
+        if (this.circleradius > 0) {
+          ctx.beginPath()
+          ctx.arc(this.point.x, this.point.y, this.circleradius, 0, Math.PI * 2);
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 10;
+          ctx.stroke()
+        } else {
+          this.ripple = false;
+          effects.push(new ParticleExplosion(this.point.x, this.point.y, "blue", 20, 1000, 10, 20, 1, false, false))
+        }
+      }
+    }
+  }
+
+
+  //END VIKTOR
+  //XERATH
+  function XerathQ() {
+    this.start = GetTime();
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+
+      if (this.elapsed < 2000) {
+        let gradient = ctx.createLinearGradient(-100, 0, 420, 0)
+        this.calculateVal = (-2100 * Math.floor(((this.elapsed - 800) / 2100) / 0.8) + (((this.elapsed - 500) / 2300) * (2100 / 0.8)));
+        gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(236, 100%, 50%,1)");
+        gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(176, 100%, 50%,1)");
+        gradient.addColorStop(SetRange((-600 + (this.calculateVal)), 0, 1000) / 1000, "hsla(184, 100%, 50%,1)");
+        gradient.addColorStop(SetRange((-800 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 70, 320, 60)
+      } else {
+        this.lifetime = 0;
+      }
+    }
+  }
+
+  function XerathW() {
+    this.start = GetTime();
+    this.pushed = false;
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      let gradient = ctx.createRadialGradient(160, 100, 0, 160, 100, 200)
+      this.calculateVal = -1660 * Math.floor((SetRange(this.elapsed, 0, 1660) / 1660) / 1) + ((SetRange(this.elapsed, 0, 1660) / 2060) * (1660 / 1));
+      gradient.addColorStop(SetRange((-0 + (this.calculateVal)), 0, 1000) / 1000, "hsla(0, 0%, 0%,0)");
+      gradient.addColorStop(SetRange((-200 + (this.calculateVal)), 0, 1000) / 1000, "hsla(236, 100%, 50%,1)");
+      gradient.addColorStop(SetRange((-400 + (this.calculateVal)), 0, 1000) / 1000, "hsla(187, 100%, 50%,1)");
+      if (this.elapsed < 2000) {
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 320, 200)
+        for (let index = 0; index < 10; index++) {
+          ctx.beginPath();
+          ctx.fillStyle = "white";
+          ctx.fillRect(Math.random() * 320, Math.random() * 200, 10, 10)
+        }
+      } else {
+        ctx.beginPath();
+        this.alpha = SetRange(1 - ((this.elapsed - 2000) / 1000), 0, 1)
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 320, 200)
+        ctx.globalAlpha = 1;
+        if (!this.pushed) {
+          effects.push(new ParticleExplosion(160, 100, "white", 10, 2500, 100, 20, 1, false, false))
+          this.pushed = true;
+        }
+        if (this.alpha == 0) {
+          this.lifetime = 0;
+        }
+      }
+    }
+  }
+
+  function XerathE() {
+
+    this.x = 0;
+    this.y = 100;
+    this.radius = 40;
+    this.ballCol = "hsla(235, 100%, 30%, 1)";
+    this.arcCol = "hsla(189, 100%, 58%, 1)";
+    this.speed = 6;
+    this.movingBalls = [];
+    this.draw = function () {
+      DrawBackground(`hsla(0,0%,0%,${Math.sin((this.x + 10) / 2 * (Math.PI / 180))})`)
+      this.gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 60)
+      this.gradient.addColorStop(0, this.ballCol)
+      this.gradient.addColorStop(0.3, this.ballCol)
+      this.gradient.addColorStop(0.8, "hsla(184, 100%, 62%, 1)");
+      DrawCircle(this.x, this.y, this.radius, this.gradient)
+      this.movingBalls.forEach(ball => {
+        if (this.x > 320) {
+          ctx.globalAlpha = SetRange(1 - ((this.x - 320) / 200), 0, 1)
+        }
+        ball.draw();
+        ctx.globalAlpha = 1;
+      });
+      this.movingBalls.push(new movingBall(this.x, this.y, 10, { x: -5, y: (Math.random() - 0.5) * 8 }, `hsla(${150 + Math.random() * 90},100%,50%)`))
+      this.x += this.speed;
+      if (this.x > 360) {
+        setTimeout(() => {
+          this.lifetime = 0;
+        }, 1300);
+      }
+    }
+  }
+
+
+
+  function XerathR() {
+    this.start = GetTime();
+    this.pieceArray = [];
+    this.prevVal = 0;
+    this.ripples = []
+    for (let index = 0; index < 20; index++) {
+      this.pieceArray.push(new XerathUltPiece())
+    }
+
+    this.Process = function () {
+
+      if (this.elapsed > 8500) {
+        this.elapsed = GetTime() - this.start;
+        stateMgr.Pop();
+      }
+      this.draw();
+    }
+
+    this.draw = function () {
+      this.elapsed = GetTime() - this.start;
+      ctx.globalAlpha = this.elapsed < 500 ? this.elapsed / 500 : this.elapsed < 8000 ? 1 : 1 - (this.elapsed - 8000) / 500;
+      DrawBackground("black")
+      this.pieceArray.forEach(piece => {
+        piece.draw();
+      });
+
+      this.ripples.forEach(ripple => {
+        ripple.draw();
+      });
+
+      if (this.elapsed > 1700) {
+        if (Math.floor(this.elapsed / 1200) > this.prevVal) {
+          this.ripples.push(new RippleEffect(Math.random() * 320, Math.random() * 200, 4, 1000, 30, "white", "out", "stroke", 1, false))
+          this.prevVal = Math.floor(this.elapsed / 1000);
+        }
+      }
+
+    }
+  }
+
+
+  //END XERATH
   // YONE --------------------------------------------------------------------
   function ExtendedEYoneEffect() {
     this.lifetime
@@ -2824,7 +4086,7 @@
       ctx.lineTo(320 + this.x, 0 + this.y)
       ctx.lineTo(180 + this.x, 120 + this.y)
       ctx.lineTo(40 + this.x, 220 + this.y)
-      if(this.lifetime > 1800){
+      if (this.lifetime > 1800) {
         ctx.fillStyle = "white"
       } else {
         ctx.fillStyle = this.col;
@@ -2927,16 +4189,16 @@
     }
   }
 
-  function ZeriW(){
+  function ZeriW() {
     this.lifetime = 500;
     this.height = 100;
-    this.draw = function(){
+    this.draw = function () {
       this.height = this.lifetime / 5;
       ctx.fillStyle = "green";
       ctx.fillRect(0, 100 - this.height / 1.5, 320, this.height * 1.333);
       ctx.fillStyle = "white";
       ctx.fillRect(0, 100 - this.height / 2, 320, this.height);
-      this.lifetime-=15;
+      this.lifetime -= 15;
       effects.push(new BarEffect("left", "yellow", 75, 1000, 20, 1, false))
     }
   }
@@ -2957,7 +4219,7 @@
 
     this.Process = function () {
       var elapsed = GetTime() - this.start;
-      if (elapsed > 6000){
+      if (elapsed > 6000) {
         stateMgr.Pop();
         freezeBackground = false;
         StopEffects = false;
@@ -2985,6 +4247,52 @@
   //END ZERI -----------------------------------------------------------------------------
   // START EFFECT/HELPER FUNCTIONS --------------------------------------------------------------------
 
+
+  function drawWave(y, color, frequency, direction, waveSize) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(0, y);
+    for (let i = 0; i < 320; i++) {
+      ctx.lineTo(i, y + Math.sin(i * 0.01 + frequency) * waveSize);
+    }
+    ctx.lineTo(320, direction == "up" ? 200 : 0)
+    ctx.lineTo(0, direction == "up" ? 200 : 0)
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+
+  function SetRange(num, min, max) {
+
+    return Math.min(Math.max(num, min), max)
+  }
+
+
+  function DrawSineWave(x, y, color, WaveLength, WaveHeight, elapsed, lineWidth) {
+    ctx.beginPath();
+    ctx.lineWidth = lineWidth;
+    ctx.moveTo(x, 100);
+    for (let i = 0; i < 320; i++) {
+      ctx.lineTo(x + i, y + (Math.sin(i * (WaveLength / 1000) + elapsed / 100) - 1) * WaveHeight - 50)
+    }
+    ctx.strokeStyle = color;
+    ctx.stroke()
+    ctx.lineWidth = 1;
+  }
+
+  function DrawRandomArc(x, y, size, col, strokeSize) {
+    ctx.beginPath()
+    let randomVal = Math.random() * 100;
+    ctx.moveTo(x, y)
+    ctx.lineTo(x + Math.cos(randomVal) * size * 2, y + Math.sin(randomVal) * size * 2)
+    ctx.strokeStyle = col;
+    ctx.lineWidth = strokeSize;
+    ctx.stroke();
+    ctx.lineWidth = 1;
+  }
+
   function DrawCube(x, y, width, height, color) {
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -3011,6 +4319,27 @@
     ctx.fill();
   };
 
+  function DrawTrident(x, y, size, rotation) {
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(x, y)
+    ctx.rotate(rotation * Math.PI / 180);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, size)
+    ctx.moveTo(0, 0)
+    ctx.lineTo(0, -size / 2);
+    ctx.moveTo(0, 0)
+    ctx.lineTo(-size / 2, 0)
+    ctx.lineTo(-size / 2, -size / 2)
+    ctx.moveTo(0, 0)
+    ctx.lineTo(size / 2, 0)
+    ctx.lineTo(size / 2, -size / 2)
+    ctx.restore();
+    ctx.lineWidth = size / 7;
+    ctx.strokeStyle = "Blue";
+    ctx.stroke();
+  }
+
   function DrawTriangle(cord1X, cord1Y, cord2X, cord2Y, cord3X, cord3Y, color) {
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -3034,6 +4363,112 @@
     ctx.fill();
   }
 
+  class movingPoint {
+    constructor(x, y, radius, color) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.color = color;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+
+  class movingBall {
+    constructor(x, y, radius, speed, color) {
+
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.speed = speed;
+      this.col = color;
+    }
+
+    draw() {
+      DrawCircle(this.x, this.y, this.radius, this.col)
+      this.x += this.speed.x;
+      this.y += this.speed.y;
+    }
+  }
+
+
+  class bubble {
+    constructor(x, y, radius, outcolor, incolor, speed) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.outcolor = outcolor;
+      this.incolor = incolor;
+      this.speed = {
+        x: speed.x,
+        y: speed.y
+      }
+    }
+    draw() {
+      this.x += this.speed.x;
+      this.y += this.speed.y;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.fillStyle = this.incolor;
+      ctx.fill();
+      ctx.strokeStyle = this.outcolor;
+      ctx.lineWidth = this.radius / 10;
+      ctx.stroke();
+    }
+  }
+
+  class XerathUltPiece {
+    constructor() {
+      this.x = 160;
+      this.y = 100;
+      this.size = Math.random() * 15 + 5
+      this.speed = {
+        x: (Math.random() - 0.5) * 5,
+        y: (Math.random() - 0.5) * 5
+      }
+      this.start = GetTime();
+      this.col = `hsl(${170 + Math.random() * 70},100%,50%)`;
+    }
+
+    draw() {
+      this.elapsed = GetTime() - this.start;
+
+      if (this.elapsed < 500) {
+        DrawCircle(this.x, this.y, this.size, this.col)
+      } else if (this.elapsed < 1500) {
+        this.x += this.speed.x;
+        this.y += this.speed.y;
+        DrawCircle(this.x, this.y, this.size, this.col)
+      } else {
+        ctx.beginPath();
+        ctx.save();
+        ctx.translate(160, 100);
+        ctx.rotate(((this.elapsed / 1000) - 1500))
+        DrawCircle(160 - this.x, 100 - this.y, this.size, this.col)
+        ctx.restore();
+      }
+    }
+  }
+
+  function DrawShark(x, y) {
+    ctx.beginPath();
+    renderPath(x - 300, y - 200, shark, "hsla(177, 100%, 52%, 1)", 7);
+  }
+  function renderPath(x, y, path, color, size) {
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.transform(size / 10, 0, 0, size / 10, 160 - 10 * 16.5, 79 - size * 7.5);
+    ctx.translate(x, y);
+    let ex = new Path2D(path);
+    ctx.fill(ex);
+    ctx.restore();
+  }
 
   function DrawHeart(x, y, xSize, Ysize, color) {
     ctx.save();
@@ -3077,6 +4512,39 @@
     ctx.fill()
     ctx.restore()
   };
+
+  class MovingOrb {
+    constructor() {
+      this.lifetime = 1;
+      this.radius = (Math.random() * 15) + 5;
+      if (Math.random() < 0.5) {
+        this.x = Math.random() < 0.5 ? 0 - this.radius : 320 + this.radius
+        this.y = Math.random() * 200;
+      } else {
+        this.x = Math.random() * 320;
+        this.y = Math.random() < 0.5 ? 0 - this.radius : 200 + this.radius
+      }
+      this.angle = Math.atan2(220 - this.y, 160 - this.x)
+      this.speed = {
+        x: Math.cos(this.angle) * 4,
+        y: Math.sin(this.angle) * 4
+      }
+    }
+
+    draw() {
+      this.x += this.speed.x
+      this.y += this.speed.y
+      ctx.globalAlpha = 1
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(0,0%,0%,1)"
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      ctx.fill();
+      if (Math.floor(this.x) > 155 && Math.floor(this.x) < 165 && Math.floor(this.y) >= 98 && Math.floor(this.y) < 102) {
+        this.lifetime = 0;
+      }
+    }
+  }
+
 
   function DrawSun(x, y, size, color) {
     DrawCircle(x, y, size, color);
@@ -3159,6 +4627,40 @@
     }
   };
 
+  function drawRandomLine() {
+    this.start = GetTime();
+    if (1 == 1) {
+      this.x = Math.random() > 0.5 ? 320 : 0
+      this.y = Math.random() * 200;
+      this.secondX = this.x == 320 ? 0 : 320;
+      this.secondY = Math.random() * 200;
+    } else {
+      this.x = Math.random() * 320;
+      this.y = Math.random() > 0.5 ? 200 : 0;
+      this.secondX = Math.random() * 320;
+      this.secondY = this.y == 200 ? 0 : 200;
+    }
+    this.currentPoint = {
+      x: this.x,
+      y: this.y
+    }
+    this.angle = Math.atan2(this.secondY - this.y, this.secondX - this.x);
+    this.speed = {
+      x: Math.cos(this.angle),
+      y: Math.sin(this.angle)
+    }
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y)
+      ctx.lineTo(this.currentPoint.x, this.currentPoint.y);
+      ctx.strokeStyle = "black"
+      ctx.lineWidth = 15;
+      ctx.stroke();
+      this.currentPoint.x += this.speed.x * 5;
+      this.currentPoint.y += this.speed.y * 5;
+    }
+  }
+
 
   function Lightning(startx) {
     this.start = GetTime();
@@ -3227,6 +4729,11 @@
     }
   }
 
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  };
 
   function dragonEffect(color1, color2) {
     this.lifetime = 30;
@@ -3500,8 +5007,8 @@
     this.x = 160;
     this.y = 100;
     this.radiusX = 30;
-    this.lifetime = 10;
-
+    this.lifetime = 20;
+    this.alpha = 1;
     this.draw = function () {
       this.x = Math.sin(Date.now() / 1000) * 160 + 160;
       ctx.beginPath();
@@ -3510,10 +5017,15 @@
         ctx.fillStyle = "white";
       }
       ctx.ellipse(this.x, this.y, this.radiusX, 30, 0, 0, 2 * Math.PI);
+      ctx.globalAlpha = this.alpha;
       ctx.fill();
+      ctx.globalAlpha = 1;
       this.radiusX = Math.sin(Date.now() / 100) * 10 + 20;
-      if ((engine.vision.gold < goldLimit && engine.vision.gold != -1) || (!play1 || !play2)) {
-        this.lifetime = 0;
+      if (this.lifetime == 10) {
+        this.alpha > .01 ? this.alpha -= .01 : this.lifetime = 0;
+      }
+      if ((currentNum < goldLimit && goldMeter.value != -1 && goldMeter.value != 0) || (!play1 || !play2)) {
+        this.lifetime = 10;
         goldAnimPushed = false;
       }
     }
@@ -3564,6 +5076,26 @@
         blood.Draw();
       }
       );
+    }
+  }
+
+  class rotatingFiddleParticle {
+    constructor() {
+      this.random = Math.random();
+      this.x = Math.random() * 140 + 90;
+      this.y = Math.random() * 140 + 30;
+      this.start = GetTime();
+      this.rotateSpeed = Math.random() + 5;
+    }
+
+    draw() {
+      this.elapsed = GetTime() - this.start;
+      ctx.save();
+      ctx.translate(160, 100);
+      ctx.rotate(this.elapsed / ((this.rotateSpeed * 400) + 150))
+      DrawCircle(160 - this.x, 100 - this.y, 10, this.random > 0.5 ? "red" : "black");
+      ctx.restore();
+      this.x > 550 ? this.lifetime = 0 : null;
     }
   }
 
@@ -3682,6 +5214,14 @@
     return new Date().getTime()
   }
 
+  function DrawStroke(x, y, radius, color, stroke) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = stroke;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
   function copyScreen(alpha) {
     let lightness = new Int8Array(engine.zone.lightness);
     let sat = new Int8Array(engine.zone.saturation);
@@ -3779,6 +5319,7 @@
     c = document.getElementById("exCanvas");
     ctx = c.getContext("2d");
     // Start updates *after* our engine is accessible and ready.
+
     window.requestAnimationFrame(update);
   }
 </script>
