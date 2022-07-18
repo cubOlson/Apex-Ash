@@ -646,7 +646,6 @@
         case "Fizz":
           effects.push(new FizzE())
           break;
-
         case "Garen":
           ActiveExtendedE = false;
           break;
@@ -692,7 +691,8 @@
         case "Nocturne":
           stateMgr.Push(new NocturneE());
           break;
-        case "Rek'sai":
+        case "Rek'Sai":
+          effects.push(new ReksaiE(rekBurrowed))
           break;
         case "Ryze":
           break;
@@ -2921,6 +2921,31 @@
 
     }
   }
+
+  function NocturneR(){
+    this.start = Date.now();
+    this.lifetime = 100;
+    this.alpha = 0;
+    this.radius1 = 1;
+    this.radius2 = 100;
+    this.done = false;
+    this.draw = function(){
+      ctx.globalAlpha = this.alpha;
+      DrawRect(0, 0, 320, 200, `hsl(0, 0%, 2%)`)
+      DrawStroke(160, 100, this.radius1, "black", 40)
+      DrawStroke(160, 100, this.radius2, "black", 40)
+      ctx.globalAlpha = 1;
+      if(!ActiveExtendedR) this.done = true;
+      if(this.done){
+        this.lifetime-=2;
+        this.alpha-=.02
+      } else {
+        this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
+        this.radius1 < 200 ? this.radius1 += 10 : this.radius1 = 1;
+        this.radius2 < 200 ? this.radius2 += 10 : this.radius2 = 1;
+      }
+    }
+  }
   //END NOCTURNE 
   //PANTHEON -----------------------------------------------------------------
   function PantheonQ(){
@@ -3065,6 +3090,7 @@
     this.burrowed = burrowed;
     this.lifetime = 10;
     this.draw = function(){
+      if(noRekQ) this.lifetime = 0;
       if(this.burrowed){
         for(let i = 0; i < 3; i++){
           setTimeout(()=>{
@@ -3156,7 +3182,7 @@
     this.draw = function(){
       var elapsed = Date.now() - this.start;
       if(engine.vision.RecallMeter < .5){
-        effects.push(new ReksaiR())
+        stateMgr.Push(new ReksaiR())
         this.lifetime = 0;
       }
       if(elapsed > 1000){
@@ -3165,13 +3191,22 @@
     }
   }
 
+  var noRekQ = false;
   function ReksaiR(){
+    noRekQ = true;
     this.lifetime = 10;
     this.start = Date.now()
     this.alpha = 0;
     this.done = false;
     this.claw = new RekRHelp()
-    this.draw = function(){
+    this.Process = function () {
+      if(this.lifetime == 0){
+        stateMgr.Pop()
+        noRekQ = false;
+      }
+      this.Draw();
+    };
+    this.Draw = function(){
         var elapsed = Date.now() - this.start;
         ctx.globalAlpha = this.alpha;
         DrawRect(0, 0, 320, 200, "black")
@@ -3179,7 +3214,7 @@
         if(elapsed > 1300) this.done = true;
         ctx.globalAlpha = 1;
         if(this.done){
-          this.alpha >= .01 ? this.alpha-=.01 : this.lifetime = 0;
+          this.alpha >= .01 ? this.alpha-=.005 : this.lifetime = 0;
         } else {
           this.alpha <= .95 ? this.alpha+=.05 : this.alpha = 1;
         }
