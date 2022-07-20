@@ -4,10 +4,12 @@
   <meta publisher="SignalRGB" />
 
   <meta property="totalOrbitSize" label="Total system size" type="number" default="65" min="0" max="100" />
-  <meta property="starSize" label="Start Size" type="number" default="13" min="0" max="100" />
+  <meta property="planetSize" label="Planet Size" type="number" default="20" min="0" max="100" />
+  <meta property="starSize" label="Star Size" type="number" default="13" min="0" max="100" />
   <meta property="backgroundColor" label="Background Color" type="color" min="0" max="360" default="#001024" />
   <meta property="showPlanetName" label="Show Planet Names" type="boolean" default="0">
   <meta property="showOrbit" label="Show Orbit Line" type="boolean" default="0">
+  <meta property="moreRealisticPlanetSpeeds" label="More Realistic Planet Speeds" type="boolean" default="0">
   <meta property="showStars" label="Show Stars" type="boolean" default="1">
   <meta property="generateRandom" label="Generate Random Star System" type="boolean" default="1">
 </head>
@@ -22,7 +24,9 @@
   let stars = [];
   let prevOrbitSize = 0;
   let prevStarSize = 0;
+  let prevPlanetSize = 0;
   let prevRandomStartSystem = false;
+  let prevSpeedState = false;
 
 
   function random(min, max) {
@@ -40,8 +44,10 @@
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, 320, 200)
 
-    if (totalOrbitSize != prevOrbitSize || starSize != prevStarSize || generateRandom != prevRandomStartSystem) {
+    if (totalOrbitSize != prevOrbitSize || starSize != prevStarSize || generateRandom != prevRandomStartSystem || prevPlanetSize != planetSize || prevSpeedState != moreRealisticPlanetSpeeds) {
+      prevPlanetSize = planetSize;
       prevRandomStartSystem = generateRandom;
+      prevSpeedState = moreRealisticPlanetSpeeds;
       if (generateRandom == true) {
         SetupRandomPlanets(totalOrbitSize);
       } else {
@@ -159,16 +165,17 @@
     planets.length = 0;
     stars.length = 0;
     let solarSystemSize = OrbitSize * 0.0125;
+    let calcSpeed = 48000;
     planets.push(new Planet(25 * solarSystemSize, "hsla(54, 100%, 83%, 1)", 0 * solarSystemSize, 10, "Sun", 25 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(54, 10%, 50%, 1)", 50 * solarSystemSize, 1000, "Mercury", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(40, 80%, 50%, 1)", 65 * solarSystemSize, 1200, "Venus", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 63%, 1)", 80 * solarSystemSize, 1400, "Earth", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 90%, 1)", 20 * solarSystemSize, 400, "Moon", 10 * solarSystemSize, "hsla(234, 100%, 90%, 1)", planets[3]));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(19, 100%, 52%, 1)", 95 * solarSystemSize, 1600, "Mars", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(12, 88%, 61%, 1)", 110 * solarSystemSize, 1800, "Jupiter", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(23, 88%, 70%, 1)", 125 * solarSystemSize, 2000, "Saturn", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 90%, 1)", 140 * solarSystemSize, 2200, "Uranus", 10 * solarSystemSize));
-    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 70%, 1)", 155 * solarSystemSize, 2400, "Neptune", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(54, 10%, 50%, 1)", 50 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 48 : 1000, "Mercury", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(40, 80%, 50%, 1)", 65 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 35 : 1200, "Venus", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(234, 100%, 63%, 1)", 80 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 29.9 : 1400, "Earth", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(234, 100%, 90%, 1)", 20 * solarSystemSize, 400, "Moon", 10 * solarSystemSize, "hsla(234, 100%, 90%, 1)", planets[3]));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(19, 100%, 52%, 1)", 95 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 24.1 : 1600, "Mars", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(12, 88%, 61%, 1)", 110 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 13.1 : 1800, "Jupiter", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(23, 88%, 70%, 1)", 125 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 9.7 : 2000, "Saturn", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(234, 100%, 90%, 1)", 140 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 6.8 : 2200, "Uranus", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize * (planetSize / 20), "hsla(234, 100%, 70%, 1)", 155 * solarSystemSize, moreRealisticPlanetSpeeds ? calcSpeed / 5.4 : 2400, "Neptune", 10 * solarSystemSize));
     for (let index = 0; index < 130; index++) {
       stars.push(new star(Math.random() * 320, Math.random() * 200, 0, (starSize / 10)));
     }
@@ -189,7 +196,7 @@
         randomName += characters.charAt(Math.floor(Math.random() *
           characters.length));
       }
-      planets.push(new Planet((Math.random() * 5 + 2) * solarSystemSize, `hsla(${Math.random() * 360} , ${Math.random() * 100}%, ${Math.random() * 50 + 30}%, 1)`, (50 + i * 15) * solarSystemSize, (i * 200) + 1000, `${randomName}`, 10 * solarSystemSize));
+      planets.push(new Planet((Math.random() * 5 + 2) * solarSystemSize * (planetSize / 20), `hsla(${Math.random() * 360} , ${Math.random() * 100}%, ${Math.random() * 50 + 30}%, 1)`, (50 + i * 15) * solarSystemSize, (i * 200) + 1000, `${randomName}`, 10 * solarSystemSize));
     }
     let moons = Math.floor(Math.random() * 5);
 

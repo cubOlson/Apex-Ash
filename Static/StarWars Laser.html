@@ -4,13 +4,15 @@
   <meta publisher="WhirlwindFX" />
   <meta property="background" label="Background color" type="combobox" values="Plain,Geonosis" default="Plain"
     tooltip="Controls the background of the effect" />
+  <meta property="AddExplosion" label="Add explosions" type="boolean" default="1">
   <meta property="laserSpawnSpeed" label="Laser Spawn Speed" type="number" default="70" min="0" max="100" />
   <meta property="laserMoveSpeed" label="Laser Speed" type="number" default="15" min="1" max="100" />
   <meta property="leftColor" label="Left Color" type="color" min="0" max="360" default="#ff0000" />
   <meta property="rightColor" label="Right Color" type="color" min="0" max="360" default="#0024ff" />
   <meta property="Bloom" label="Bloom" type="boolean" default="1">
   <meta property="bloomIntensity" label="Bloom intensity" type="number" default="15" min="1" max="50" />
-  <meta property="randomStrobe" label="Strobe" type="boolean" default="1">
+  <meta property="laserWidth" label="Laser width" type="number" default="30" min="1" max="100" />
+  <meta property="laserHeight" label="laser height intensity" type="number" default="8" min="1" max="50" />
   <meta property="lowCPU" label="Low Cpu Mode" type="boolean" default="0">
 </head>
 
@@ -48,8 +50,8 @@
     this.arch = arch;
     this.color = color;
     this.speed = speed;
-    this.width = 30;
-    this.height = 8;
+    this.width = laserWidth;
+    this.height = laserHeight;
     this.start = Date.now();
     this.x = direction == "left" ? 330 : -10;
     this.backgroundLevel = backgroundLevel;
@@ -101,6 +103,51 @@
     }
   }
 
+  function Explosion(x, y, size, speed, intensity, color) {
+    this.start = Date.now();
+    this.elapsed = 0;
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.speed = speed;
+    this.intensity = intensity;
+    this.color = color;
+    this.currentSize = 0;
+
+    this.draw = function () {
+      this.elapsed = Date.now() - this.start;
+      let grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.currentSize + this.intensity);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.currentSize + this.intensity, 0, 2 * Math.PI);
+      grad.addColorStop(0, this.color);
+      grad.addColorStop(1, "hsla(0,0%,0%,0)");
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.beginPath();
+      let grad2 = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.currentSize);
+      grad2.addColorStop(0, "hsla(16, 100%, 48%, 1)");
+      grad2.addColorStop(0.9, this.color)
+      ctx.fillStyle = this.grad2;
+      ctx.arc(this.x, this.y, this.currentSize, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(16, 100%, 48%, 1)";
+      ctx.arc(this.x, this.y, this.currentSize / 1.2, 0, 2 * Math.PI);
+      ctx.fill();
+      if (this.size > this.currentSize) {
+        this.currentSize += this.speed;
+      } else {
+        this.speed = -this.speed;
+        this.currentSize += this.speed;
+      }
+      if (this.currentSize < 0) {
+        this.lifetime = 0;
+      }
+
+    }
+
+  }
+
   function BackgroundManager() {
 
     this.update = function () {
@@ -134,11 +181,15 @@
   function ForeGroundManager() {
     this.lasersLeft = [];
     this.lasersRight = [];
+    this.explosions = [];
     this.spawnCounter = 0;
 
     this.update = function () {
 
-      console.log(this.lasersRight.length);
+      if (Math.random() < 0.01 && AddExplosion) {
+        this.explosions.push(new Explosion(Math.random() * 320, Math.random() * 200, Math.random() * 80 + 20, Math.random() * 6 + 2, 40, `hsla(40, 100%, ${Math.random() * 30 + 50}%, 1)`));
+      }
+
       this.spawnCounter++;
       if (this.spawnCounter % ((32) - Math.floor(((laserSpawnSpeed / 3.333)))) == 1) {
 
@@ -153,6 +204,13 @@
         }
       }
 
+      this.explosions.forEach(explosion => {
+        explosion.draw();
+        if (explosion.lifetime <= 0) {
+          this.explosions.splice(this.explosions.indexOf(explosion), 1);
+        }
+      })
+
       if (background != "Geonosis") {
         this.lasersLeft.forEach(laser => {
           laser.draw();
@@ -162,6 +220,8 @@
           }
         });
 
+
+
         this.lasersRight.forEach(laser => {
           laser.draw();
           if (laser.lifetime <= 0) {
@@ -169,6 +229,9 @@
 
           }
         });
+        console.log(this.explosions.length)
+
+
       } else {
         for (let index = 0; index < 5; index++) {
           DrawMistLevel("hsla(17, 100%, 20%, 0.15)")

@@ -7,8 +7,8 @@
   <meta property="movementMode" label="Movement Mode" type="combobox" values="Static,Edge to Edge,Drift"
     default="Static" />
   <meta property="movementLock" label="Relative Movement" type="boolean" default="1" />
-  <meta property="brightnessMode" label="Brightness Mode" type="combobox"
-    values="OFF,Beat,Average Beat,Volume,Stereo Width,Density" default="OFF" />
+  <meta property="brightnessMode" label="Brightness Mode" type="combobox" values="OFF,Beat,Average Beat,Volume,Density"
+    default="OFF" />
   <meta property="threshold" label="beat threshold" max="8" min="0" type="number" default="3"
     tooltip="This controls the level a beat has to be above the average beat to trigger. It goes in 10% increments." />
   <meta property="minBeatCooldown" label="Min Beat Spacing" type="number" min="0" max="30" default="10" />
@@ -130,6 +130,9 @@
         posX -= 1;
       } else if (posX == 0 && posY > 50 && posY <= 160) {
         posY -= 1;
+      } else {
+        posX = 0;
+        posY = 50;
       }
 
     } else if (movementMode == "Drift") {
@@ -265,8 +268,6 @@
         lit = this.brightness
       } else if (brightnessMode == "Volume") {
         lit = 60 + engine.audio.level / 60 * 150
-      } else if (brightnessMode == "Stereo Width") {
-        lit = 50 - engine.audio.width * 1000
       }
       ctx.strokeStyle = 'hsl(' + hue + ', ' + sat + '%, ' + lit + '%)';
 
