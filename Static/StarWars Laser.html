@@ -1,0 +1,222 @@
+<head>
+  <title>Star wars laser</title>
+  <meta description="Natural Screen Ambience effect with updated colorboost." />
+  <meta publisher="WhirlwindFX" />
+  <meta property="background" label="Background color" type="combobox" values="Plain,Geonosis" default="Plain"
+    tooltip="Controls the background of the effect" />
+  <meta property="laserSpawnSpeed" label="Laser Spawn Speed" type="number" default="70" min="0" max="100" />
+  <meta property="laserMoveSpeed" label="Laser Speed" type="number" default="15" min="1" max="100" />
+  <meta property="leftColor" label="Left Color" type="color" min="0" max="360" default="#ff0000" />
+  <meta property="rightColor" label="Right Color" type="color" min="0" max="360" default="#0024ff" />
+  <meta property="Bloom" label="Bloom" type="boolean" default="1">
+  <meta property="bloomIntensity" label="Bloom intensity" type="number" default="15" min="1" max="50" />
+  <meta property="randomStrobe" label="Strobe" type="boolean" default="1">
+  <meta property="lowCPU" label="Low Cpu Mode" type="boolean" default="0">
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+
+  let foregroundManager = new ForeGroundManager();
+  let backgroundManager = new BackgroundManager();
+
+  function random(min, max) {
+    var num = Math.floor(Math.random() * (max - min)) + min;
+    // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
+    return num;
+  }
+
+
+
+
+
+  function update() {
+    backgroundManager.update();
+    foregroundManager.update();
+    window.requestAnimationFrame(update);
+  }
+
+
+
+  function Laser(y, direction, arch, color, speed, backgroundLevel) {
+    this.y = y;
+    this.direction = direction;
+    this.arch = arch;
+    this.color = color;
+    this.speed = speed;
+    this.width = 30;
+    this.height = 8;
+    this.start = Date.now();
+    this.x = direction == "left" ? 330 : -10;
+    this.backgroundLevel = backgroundLevel;
+
+    this.draw = function () {
+
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+
+      if (!lowCPU) {
+        let yMultpVal = (Math.sin((80 + this.x / 70)) * (this.arch) / 10);
+        this.speed < 2.5 ? this.speed < 1 ? yMultpVal /= 8 : yMultpVal /= 4 : null;
+        this.y += this.direction == "right" ? yMultpVal : -yMultpVal;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((yMultpVal * (this.arch / 7)) / 10)
+      }
+
+      if (Bloom && !lowCPU) {
+
+        ctx.beginPath();
+        ctx.arc(this.x + this.width / 2, this.y, bloomIntensity * 2, 0, 2 * Math.PI);
+        let grad = ctx.createRadialGradient(this.x + this.width / 2, this.y + this.height / 2, 0, this.x + this.width / 2, this.y, bloomIntensity * 2);
+        grad.addColorStop(0, this.color);
+        grad.addColorStop(1, "hsla(0,0%,0%,0)");
+        ctx.globalAlpha = 0.3;
+        ctx.fillStyle = grad;
+
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+
+
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      if (!lowCPU) {
+        ctx.restore();
+      }
+
+
+
+      this.x += this.direction == "left" ? -this.speed : this.speed;
+      if (this.x > 350 || this.x < -30) {
+        this.lifetime = -10;
+      }
+
+    }
+  }
+
+  function BackgroundManager() {
+
+    this.update = function () {
+      switch (background) {
+        case "Plain":
+          ctx.beginPath();
+          ctx.fillStyle = "black";
+          ctx.fillRect(0, 0, 320, 200)
+          break;
+        case "Geonosis":
+          ctx.beginPath();
+          let backgroundGrad = ctx.createRadialGradient(50, 50, 0, 50, 50, 300);
+          backgroundGrad.addColorStop(0, "hsla(32, 100%, 69%, 1)")
+          backgroundGrad.addColorStop(0.1, "hsla(27, 100%, 35%, 1)")
+          backgroundGrad.addColorStop(0.7, "hsla(27, 100%, 12%, 1)")
+          ctx.fillStyle = backgroundGrad;
+          ctx.fillRect(0, 0, 320, 200)
+          DrawMistLevel("hsla(37, 100%, 22%, 0.1)");
+          break;
+      }
+    }
+  }
+
+  function DrawMistLevel(color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 320, 200)
+  }
+
+
+  function ForeGroundManager() {
+    this.lasersLeft = [];
+    this.lasersRight = [];
+    this.spawnCounter = 0;
+
+    this.update = function () {
+
+      console.log(this.lasersRight.length);
+      this.spawnCounter++;
+      if (this.spawnCounter % ((32) - Math.floor(((laserSpawnSpeed / 3.333)))) == 1) {
+
+        if (lowCPU && this.lasersLeft.length < 15 || !lowCPU && this.lasersLeft.length < 30) {
+          this.lasersLeft.push(new Laser(!lowCPU ? random(0, 100) : random(0, 220), "right", random(0, 10), leftColor, (laserMoveSpeed / 5) * (1 + Math.random()), Math.floor(Math.random() * 4.9)));
+
+        }
+
+
+        if (lowCPU && this.lasersRight.length < 15 || !lowCPU && this.lasersRight.length < 30) {
+          this.lasersRight.push(new Laser(!lowCPU ? random(0, 100) : random(0, 220), "left", random(0, 10), rightColor, (laserMoveSpeed / 5) * (1 + Math.random()), Math.floor(Math.random() * 4.9)));
+        }
+      }
+
+      if (background != "Geonosis") {
+        this.lasersLeft.forEach(laser => {
+          laser.draw();
+
+          if (laser.lifetime <= 0) {
+            this.lasersLeft.splice(this.lasersLeft.indexOf(laser), 1);
+          }
+        });
+
+        this.lasersRight.forEach(laser => {
+          laser.draw();
+          if (laser.lifetime <= 0) {
+            this.lasersRight.splice(this.lasersRight.indexOf(laser), 1);
+
+          }
+        });
+      } else {
+        for (let index = 0; index < 5; index++) {
+          DrawMistLevel("hsla(17, 100%, 20%, 0.15)")
+          this.lasersLeft.forEach(laser => {
+            if (laser.backgroundLevel == index) {
+              laser.draw();
+            }
+
+
+            if (laser.lifetime <= 0) {
+              this.lasersLeft.splice(this.lasersLeft.indexOf(laser), 1);
+            }
+          });
+
+          this.lasersRight.forEach(laser => {
+            if (laser.backgroundLevel == index) {
+              laser.draw();
+            }
+
+            if (laser.lifetime <= 0) {
+              this.lasersRight.splice(this.lasersRight.indexOf(laser), 1);
+
+            }
+
+          }
+          );
+
+        }
+
+
+      }
+    }
+  }
+
+
+
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+
+    console.log("Engine ready.");
+
+    window.requestAnimationFrame(update);
+  }
+
+
+  onEngineReady();
+
+</script>
