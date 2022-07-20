@@ -1,0 +1,220 @@
+<head>
+  <title>Planetary orbit</title>
+  <meta description="Solar system orbit" />
+  <meta publisher="SignalRGB" />
+
+  <meta property="totalOrbitSize" label="Total system size" type="number" default="65" min="0" max="100" />
+  <meta property="starSize" label="Start Size" type="number" default="13" min="0" max="100" />
+  <meta property="backgroundColor" label="Background Color" type="color" min="0" max="360" default="#001024" />
+  <meta property="showPlanetName" label="Show Planet Names" type="boolean" default="0">
+  <meta property="showOrbit" label="Show Orbit Line" type="boolean" default="0">
+  <meta property="showStars" label="Show Stars" type="boolean" default="1">
+  <meta property="generateRandom" label="Generate Random Star System" type="boolean" default="1">
+</head>
+
+<body style="margin: 0; padding: 0; background: #000;">
+  <canvas id="exCanvas" width="320" height="200"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  var planets = [];
+  let stars = [];
+  let prevOrbitSize = 0;
+  let prevStarSize = 0;
+  let prevRandomStartSystem = false;
+
+
+  function random(min, max) {
+    var num = Math.floor(Math.random() * (max - min)) + min;
+    // if min = 10 max = 15 random var = 0.1544465; it will return approzimately 10 because of math.floor
+    return num;
+  }
+
+
+
+
+
+  function update() {
+    ctx.beginPath();
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, 320, 200)
+
+    if (totalOrbitSize != prevOrbitSize || starSize != prevStarSize || generateRandom != prevRandomStartSystem) {
+      prevRandomStartSystem = generateRandom;
+      if (generateRandom == true) {
+        SetupRandomPlanets(totalOrbitSize);
+      } else {
+        SetupPlanets(totalOrbitSize);
+      }
+
+      prevOrbitSize = totalOrbitSize;
+      prevStarSize = starSize;
+
+    }
+
+
+
+    planets.forEach(planet => {
+      planet.draw();
+    });
+
+    if (showStars) {
+
+      stars.forEach(Star => {
+        Star.draw();
+      });
+    }
+
+
+    window.requestAnimationFrame(update);
+  }
+
+
+
+  function Planet(size, color, orbitSize, orbitSpeed, name = "nothing", planetBloom = 0, orbitColor = color, orbitPlanet = null) {
+    this.size = size;
+    this.color = color;
+    this.orbitSize = orbitSize;
+    this.orbitSpeed = 100;
+    this.orbitColor = orbitColor;
+    this.planetBloom = planetBloom;
+    this.orbitPlanet = orbitPlanet;
+    this.name = name;
+    this.followPlanet = orbitPlanet;
+    this.x = 160;
+    this.y = 100;
+    this.start = Date.now();
+    this.elapsed = Date.now();
+    this.draw = function () {
+      if (this.planetBloom != 0) {
+
+        ctx.beginPath();
+        let grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.planetBloom + this.size);
+        grad.addColorStop(0, this.color);
+        grad.addColorStop(1, "hsla(0,0%,10%,0)");
+        ctx.fillStyle = grad;
+        ctx.arc(this.x, this.y, this.size + this.planetBloom, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+      this.elapsed = Date.now() - this.start;
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+      ctx.fill();
+      if (showOrbit && !this.orbitPlanet) {
+        ctx.beginPath();
+        ctx.fillStyle = this.orbitColor;
+        ctx.arc(160, 100, this.orbitSize, 0, 2 * Math.PI);
+        ctx.strokeStyle = this.orbitColor;
+        ctx.stroke();
+      } else if (showOrbit) {
+        ctx.beginPath();
+        ctx.fillStyle = this.orbitColor;
+        ctx.arc(this.orbitPlanet.x, this.orbitPlanet.y, this.orbitSize, 0, 2 * Math.PI);
+        ctx.strokeStyle = this.orbitColor;
+        ctx.stroke();
+      }
+
+      if (this.orbitSize > 0 && this.orbitPlanet == null) {
+        this.x = 160 + ((Math.sin(this.elapsed / orbitSpeed)) * (orbitSize));
+        this.y = 100 + ((Math.cos(this.elapsed / orbitSpeed)) * (orbitSize));
+      } else if (this.orbitPlanet != null) {
+        this.x = this.followPlanet.x + ((Math.sin(this.elapsed / orbitSpeed)) * (orbitSize));
+        this.y = this.followPlanet.y + ((Math.cos(this.elapsed / orbitSpeed)) * (orbitSize));
+      }
+
+      if (showPlanetName) {
+        ctx.beginPath();
+        ctx.font = "10px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText(this.name, this.x, this.y - (this.size / 2));
+      }
+
+    }
+  }
+
+
+  class star {
+    constructor(x, y, color, size) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.offset = Math.random() * 2000;
+      this.size = size;
+    }
+
+    draw() {
+      ctx.beginPath();
+      let calcVal = Math.sin(Date.now() / 1000 + this.offset)
+      ctx.globalAlpha = calcVal < 0 ? 0 : calcVal;
+      ctx.fillStyle = `hsl(${this.color},0%,${calcVal * 100}%)`;
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI)
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function SetupPlanets(OrbitSize) {
+    planets.length = 0;
+    stars.length = 0;
+    let solarSystemSize = OrbitSize * 0.0125;
+    planets.push(new Planet(25 * solarSystemSize, "hsla(54, 100%, 83%, 1)", 0 * solarSystemSize, 10, "Sun", 25 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(54, 10%, 50%, 1)", 50 * solarSystemSize, 1000, "Mercury", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(40, 80%, 50%, 1)", 65 * solarSystemSize, 1200, "Venus", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 63%, 1)", 80 * solarSystemSize, 1400, "Earth", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 90%, 1)", 20 * solarSystemSize, 400, "Moon", 10 * solarSystemSize, "hsla(234, 100%, 90%, 1)", planets[3]));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(19, 100%, 52%, 1)", 95 * solarSystemSize, 1600, "Mars", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(12, 88%, 61%, 1)", 110 * solarSystemSize, 1800, "Jupiter", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(23, 88%, 70%, 1)", 125 * solarSystemSize, 2000, "Saturn", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 90%, 1)", 140 * solarSystemSize, 2200, "Uranus", 10 * solarSystemSize));
+    planets.push(new Planet(5 * solarSystemSize, "hsla(234, 100%, 70%, 1)", 155 * solarSystemSize, 2400, "Neptune", 10 * solarSystemSize));
+    for (let index = 0; index < 130; index++) {
+      stars.push(new star(Math.random() * 320, Math.random() * 200, 0, (starSize / 10)));
+    }
+  }
+
+  function SetupRandomPlanets(OrbitSize) {
+    planets.length = 0;
+    stars.length = 0;
+    let solarSystemSize = OrbitSize * 0.0125;
+    let planetCount = Math.floor(Math.random() * 10) + 4;
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    planets.push(new Planet(25 * solarSystemSize, `hsla(${Math.random() * 360} , 100%, 83%, 1)`, 0 * solarSystemSize, 10, "Sun", 25 * solarSystemSize));
+    for (let i = 0; i < planetCount; i++) {
+      let randomName = "";
+      let randomAmount = Math.random() * 8;
+      for (var index = 0; index < Math.floor(randomAmount) + 1; index++) {
+        randomName += characters.charAt(Math.floor(Math.random() *
+          characters.length));
+      }
+      planets.push(new Planet((Math.random() * 5 + 2) * solarSystemSize, `hsla(${Math.random() * 360} , ${Math.random() * 100}%, ${Math.random() * 50 + 30}%, 1)`, (50 + i * 15) * solarSystemSize, (i * 200) + 1000, `${randomName}`, 10 * solarSystemSize));
+    }
+    let moons = Math.floor(Math.random() * 5);
+
+    for (let i = 0; i < moons; i++) {
+      planets.push(new Planet((Math.random() * 5 + 2) * solarSystemSize, `hsla(${Math.random() * 360} , ${Math.random() * 100}%, ${Math.random() * 50 + 30}%, 1)`, (10 + Math.random() * 20) * solarSystemSize, (Math.random() * 300) + 100, `moon`, 10 * solarSystemSize, null, planets[Math.floor(Math.random() * planets.length)]));
+
+    }
+
+
+    for (let index = 0; index < 130; index++) {
+      stars.push(new star(Math.random() * 320, Math.random() * 200, 0, (starSize / 10)));
+    }
+  }
+
+  function onEngineReady() {
+    // Grab canvas and rendering context.
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+
+    console.log("Engine ready.");
+
+    window.requestAnimationFrame(update);
+  }
+
+
+  onEngineReady();
+
+</script>

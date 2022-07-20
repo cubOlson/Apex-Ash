@@ -1,5 +1,5 @@
 <head>
-    <title>WeatherEffect</title>
+    <title>WeatherEffect Sunset</title>
     <meta
         description="Weather effects based on location.
          If use IP is on it will get the weather at your public IP, otherwise it will get the weather of the city filled in. You can manually override the weather with the switch and select the effect you desire" />
@@ -126,7 +126,7 @@
         let second = parseInt(splitTime[2]);
 
         let sunPosition = hour + minute + second;
-        let calculatedSun = ((sunPosition / 270) - 120) % 320;
+        let calculatedSun = ((320 + (sunPosition / 270) - 120)) % 320;
         return calculatedSun;
     }
 
@@ -615,15 +615,15 @@
 
     function DrawSunnySky(sunH, sunBrightness, sunSize) {
         ctx.beginPath();
-        console.log(timeColorModifier)
+
         let grad;
         if (currentSunPos < 160) {
             grad = ctx.createRadialGradient(currentSunPos * 2, quadraticFormuleForSky(currentSunPos * 2 - 160), 20, currentSunPos * 2, quadraticFormuleForSky(currentSunPos * 2 - 160), 400)
 
             if (timeColorModifier < 0.5) {
                 grad.addColorStop(0, `hsl(${sunH - ((0.5 - timeColorModifier) * 70)},100%,${sunBrightness}%)`);
-                grad.addColorStop(sunSize - 0.1, `hsl(${sunH - ((0.5 - timeColorModifier) * 70)},100%,${sunBrightness}%)`);
-                grad.addColorStop(sunSize + 0.1 + ((0.5 - timeColorModifier) * 1.2), `hsl(40,80%,58%) `)
+                grad.addColorStop(SetRange(sunSize - 0.1, 0, 1), `hsl(${sunH - ((0.5 - timeColorModifier) * 70)},100%,${sunBrightness}%)`);
+                grad.addColorStop(SetRange(sunSize + 0.1 + ((0.5 - timeColorModifier) * 1.2), 0, 1), `hsl(40,80%,58%) `)
                 grad.addColorStop(SetRange(sunSize + 0.2 + ((0.5 - timeColorModifier) * 1.1), 0, 1), `hsl(210,80%,58%) `)
                 grad.addColorStop(1, "hsl(220,100%,17%)")
             } else {

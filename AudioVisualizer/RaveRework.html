@@ -1,0 +1,645 @@
+<head>
+  <title>Rave Visualizer Work</title>
+  <meta
+    description="Visualize the beat of your music and create your own personal rave through synchronized flashing lights and waves of color! Works best with EDM, Electro, House, and more" />
+  <meta publisher="Ngoc Doan" />
+  <meta property="background" label="Background Color" type="color" min="0" max="360" default="#000000" />
+  <meta property="Shape" label="Shape of ripples" type="combobox" values="Square,Circle,Random" default="Square" />
+  <meta property="Direction" label="Direction of ripples" type="combobox" values="Outward, Inward" default="Outward" />
+  <meta property="ColorMode" label="Color Mode" type="combobox" values="Solid Color,Rainbow,Gradient"
+    default="Gradient" />
+  <meta property="solidColor" label="Solid Color Choice" type="color" min="0" max="360" default="#9900ff" />
+  <meta property="wave" label="Wave" type="boolean" default="1">
+  <meta property="waveColor" label="Wave Color Choice" type="color" min="0" max="360" default="#abffeb" />
+  <meta property="flash" label="Flash" type="boolean" default="1">
+  <meta property="flashColor" label="Flash Color" type="color" min="0" max="360" default="#FFFFFF" />
+  <meta default="3" label="beat threshold" max="5" min="0" property="threshold" type="number" />
+  <meta default="120" label="Brightness sensitivity" max="200" min="0" property="sensitivity" type="number" />
+  <meta default="5" label="Global Decay" max="10" min="0" property="decay" type="number" />
+  <meta default="4" label="Beat Cooldown" max="10" min="0" property="CooldownMod" type="number" />
+
+  <meta property="volFanColorMode" label="Volume fan color mode" type="combobox" values="Solid,Gradient,Cycle,Volume"
+    default="Cycle" tooltip="Controls the color of the volume fans" />
+  <meta property="volFanColor" label="Volume Fan Color" type="color" default="#ff1616" min="0" max="360" />
+  <meta property="freqFanColorMode" label="Frequency fans color mode" type="combobox"
+    values="Solid,Gradient,Cycle,Frequency" default="Solid" tooltip="Controls the color of the frequency fans" />
+  <meta property="freqFanColor" label="Frequency Fan Color" type="color" default="#4100f3" min="0" max="360" />
+  <meta property="densityFanColorMode" label="Density Fans ColorMode" type="combobox"
+    values="Solid,Gradient,Cycle,Density" default="Solid" tooltip="Controls the color of the frequency fans" />
+  <meta property="densityFanColor" label="Density Fan Color" type="color" default="#08ffa5" min="0" max="360" />
+  <meta property="colorCycleSpeed" label="Fan Color Cycle Speed " type="number" default="20" min="0" max="100">
+  <meta property="bottomFreqBar" label="Bottom frequency bar color mode" type="combobox" values="Solid,Gradient,Cycle"
+    default="Solid" tooltip="Controls the color of the frequency bars" />
+  <meta property="bottomFreqBarColor" label="Bar color" type="color" default="#ff2525" min="0" max="360" />
+  <meta property="bottomVolBar" label="Bottom volume bar color mode" type="combobox" values="Solid,Gradient,Cycle"
+    default="Solid" tooltip="Controls the color of the volume bars" />
+  <meta property="bottomVolBarColor" label="Bar color" type="color" default="#2533ff" min="0" max="360" />
+  <meta property="rectDraw" label="Bar Draw Direction" type="boolean" default="0" />
+
+<body style="margin: 0; padding: 0; background: #000">
+  <canvas height="200" id="exCanvas" width="320"></canvas>
+</body>
+
+<script>
+  var canvas, ctx;
+  var squares = [];
+  var bars = [];
+  var stateMgr = new StateHandler();
+  var densityOld = 0;
+  var beatCooldown = 0;
+  var beats = [];
+  var beatavg = 0;
+  var Delays = [];
+  var averageDelay = 0;
+  var timer = 0;
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  var counter = 0;
+  let colorTime = Date.now();
+  let start = Date.now();
+
+  var bars = []
+  for (let i = 0; i < 12; i++) {
+    i == 0 ? bars.push(new soundBar("vol", i * 26.66, 160, 26.66, 45)) :
+      i == 11 ? bars.push(new soundBar("vol", i * 26.66, 160, 26.66, 45)) :
+        bars.push(new soundBar("freq", i * 26.66, 160, 26.66, 45));
+  }
+  var fans = [new fanCircle("vol", "out", 25, 25, 25, "white"),
+  new fanCircle("vol", "round", 79, 25, 25, "white"),
+  new fanCircle("freq", "out", 133, 25, 25, "yellow"),
+  new fanCircle("freq", "round", 187, 25, 25, "yellow"),
+  new fanCircle("dens", "out", 241, 25, 25, "orange"),
+  new fanCircle("dens", "round", 295, 25, 25, "orange")
+  ]
+  var freqMax = 0;
+  function SelectColor() {
+    var colors = hexToHSL(solidColor);
+
+    if (ColorMode == 'Solid Color') {
+      squares.push(new Square(Direction == "Outward" ? true : false, random(70, 250), random(50, 150), colors.h, colors.h, colors.l, false, Shape));
+    } else if (ColorMode == 'Rainbow') {
+      squares.push(new Square(Direction == "Outward" ? true : false, random(70, 250), random(50, 150), timer, 100, 50, false, Shape));
+    } else if (ColorMode == 'Gradient') {
+      squares.push(new Square(Direction == "Outward" ? true : false, random(70, 250), random(50, 150), timer, 100, 50, true, Shape));
+    }
+    counter++;
+  }
+
+  function runBeat() {
+    let freqs = new Int8Array(engine.audio.freq);
+
+    let beat = (freqs[0] + freqs[1] + freqs[2] + freqs[3]) / 4;
+    if (flash === 1) {
+      if (beat > 55) {
+        ctx.fillStyle = flashColor;
+        ctx.fillRect(0, 0, 320, 200);
+      }
+      if (wave === 1) {
+        if (beat > 75) {
+          makeBar();
+        }
+      }
+    }
+    beat = engine.audio.density * 300;
+
+    beats.push(Math.round(beat, 4));
+    beatavg = Math.round(beats.reduce(reducer) / beats.length, 0);
+    if (beats.length > 60) {
+      beats.splice(0, 1);
+    }
+
+    if (beatCooldown < 0 && beat > beatavg * (1 + threshold / 10) && beat > 40) {
+      SelectColor();
+
+      Delays.push(Math.max(10, Math.abs(beat - beatavg * 1.2)));
+      averageDelay = Math.round(Delays.reduce(reducer) / Delays.length, 0);
+      if (Delays.length > 30) {
+        Delays.splice(0, 1);
+      }
+
+      beatCooldown += Math.max(Math.min(50, averageDelay / (10 - CooldownMod)), 5);
+
+      if (beat > 20) {
+      }
+    } else if (beatCooldown >= 0) {
+      beatCooldown--;
+    }
+  }
+
+  function runMeters() {
+    runBeat();
+    timer = (timer + 1) % 360;
+  }
+  function SetRange(num, min, max) {
+
+    return Math.min(Math.max(num, min), max)
+  }
+
+  function Square(outward, x, y, hue, saturation, lightness, gradient = false, shape) {
+    this.start = new Date().getTime();
+    this.duration = 2000;
+    this.lifetime = 100;
+    this.size = 0;
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.x = x;
+    this.y = y;
+    this.outward = outward;
+    var i = 160;
+    var i2 = 100;
+    this.shape = shape;
+    this.speed = 4;
+    this.randomVal = Math.random();
+    if (!this.outward) {
+      this.size = 400;
+      this.speed = -this.speed;
+      i -= 200;
+      i2 -= 200;
+    }
+
+    this.draw = function () {
+      ctx.beginPath();
+      ctx.lineWidth = 15;
+      let templightness = this.lightness;
+
+
+      if (ColorMode == 'Gradient') {
+        ctx.strokeStyle = 'hsl(' + (this.size % 360) + ',' + this.saturation + '%,' + templightness + '%)';
+      } else {
+        ctx.strokeStyle = 'hsl(' + this.hue + ',' + this.saturation + '%,' + templightness + '%)';
+      }
+
+      if (this.shape == "Square") {
+        ctx.strokeRect(i, i2, this.size, this.size);
+      } else if (this.shape == "Circle") {
+        ctx.arc(160, 100, SetRange(this.size / 2, 0, 200), 0, 2 * Math.PI);
+        ctx.stroke();
+      } else {
+        if (this.randomVal < 0.5) {
+          ctx.strokeRect(i, i2, this.size, this.size);
+        } else {
+          ctx.arc(160, 100, SetRange(this.size / 2, 0, 200), 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+      }
+
+
+      i -= this.speed;
+      i2 -= this.speed;
+
+      if (this.outward) {
+        this.size += 8;
+      } else {
+        this.size -= 8;
+      }
+
+      if (this.size < 0) {
+        this.lifetime = 0;
+      }
+
+      this.lifetime--;
+    };
+  }
+
+  function Bar(x, y, width, height, xDirection, yDirection, hue, sat, lit, alpha) {
+    this.x = x;
+    this.y = y;
+    this.hue = hue;
+    this.sat = sat;
+    this.lit = lit;
+    this.alpha = alpha;
+    this.lifetime = 50;
+    this.size = 0;
+    this.ydirection = yDirection;
+    this.xdirection = xDirection;
+    this.width = width;
+    this.height = height;
+
+    this.draw = function () {
+      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + this.alpha + ' )';
+      ctx.fillRect(this.x, this.y, this.height, this.width);
+      this.lifetime--;
+      this.y -= this.ydirection;
+      this.x += this.xdirection;
+    };
+  }
+
+  function makeBar() {
+    var colors = hexToHSL(waveColor);
+    for (let i = 0; i < 20; i++) {
+      setTimeout(function () {
+        squares.push(new Bar(i * 20, 160, 100, 20, 0, -5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9));
+      }, i * 30);
+      setTimeout(function () {
+        squares.push(new Bar(i * 20, 160, 100, 20, 0, 5, colors.h + random(-20, 20), colors.s + random(-20, 20), colors.l, 0.9));
+      }, i * 30);
+    }
+  }
+
+  function IdleState() {
+    this.Process = function () {
+      this.draw();
+    };
+
+    this.draw = function () {
+      let lightness = new Int8Array(engine.zone.lightness);
+      let sat = new Int8Array(engine.zone.saturation);
+      let hue = new Int16Array(engine.zone.hue);
+
+      for (var iZone = 0; iZone < 560; iZone++) {
+        ctx.fillStyle = 'hsla(' + hue[iZone] + ',' + sat[iZone] + '%,' + lightness[iZone] + '%, ' + keyScreenBrightness * 0.01 + ')';
+
+        let iRow = Math.floor(iZone / 28);
+        let iCol = iZone % 28;
+        let iWidth = 320 / 28;
+        let iHeight = 200 / 20;
+        let iZx = iCol * iWidth;
+        let iZy = iRow * iHeight;
+
+        ctx.fillRect(iZx, iZy, iWidth, iHeight);
+      }
+    };
+  }
+
+  function random(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+
+  function update() {
+    colorTime = Date.now() - start;
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, 320, 200);
+
+    runMeters();
+
+
+    for (let i = 0; i < squares.length; i++) {
+      squares[i].draw();
+    }
+
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i].lifetime <= 0) {
+        squares.splice(i, 1);
+
+      }
+    }
+
+    DrawRect(0, 0, 320, 50, "black")
+    DrawRect(0, 160, 320, 50, "black")
+    var frequency = new Int8Array(engine.audio.freq)
+    reduced = frequency.filter((ele, i) => {
+      ele = Math.abs(ele)
+      return true;
+    })
+    freqMax = Math.max(...reduced)
+
+    var loopI = 4;
+    var iDone = false;
+    bars.forEach((ele) => {
+      if (ele.type == "freq") {
+        ele.draw(reduced.slice(loopI * 40, loopI * 40 + 40), "red")
+        iDone ? loopI < 4 ? loopI++ : null : null;
+        !iDone ? loopI > 0 ? loopI-- : iDone = true : null;
+      } else {
+        ele.draw(engine.audio.level, "blue")
+      }
+    })
+
+    fans.forEach((ele) => {
+      if (ele.input == "vol") {
+        ele.draw(engine.audio.level)
+      } else if (ele.input == "freq") {
+        ele.draw(freqMax)
+      } else {
+        ele.draw(engine.audio.density)
+      }
+    })
+
+    window.requestAnimationFrame(update);
+  }
+
+  function StateHandler() {
+    let stack = [];
+    let state = null;
+
+    this.size = function () {
+      return stack.length;
+    };
+
+    var updateState = function () {
+      if (stack.length > 0) {
+        state = stack[stack.length - 1];
+      } else {
+        state = null;
+      }
+    };
+
+    this.Push = function (newState) {
+      stack.push(newState);
+      updateState();
+    };
+
+    this.Pop = function () {
+      stack.pop();
+      updateState();
+    };
+
+    this.Process = function () {
+      if (state != null) {
+        state.Process();
+      }
+    };
+  }
+
+  function Meter(count, callback) {
+    this.size = count;
+    this.value = 0;
+    this.diff = 0;
+    this.prev = 0;
+    this.increased = false;
+    this.decreased = false;
+    this.values = [];
+
+    this.setPrev = function () {
+      this.prev = this.value;
+    };
+
+    this.setValue = function (updatedValue) {
+      this.values.push(updatedValue);
+      if (this.values.length > this.size) {
+        this.values.shift();
+      }
+
+      for (let i = 0; i < this.values.length - 1; i++) {
+        if (this.values[i] !== this.values[i + 1]) {
+          return;
+        }
+      }
+
+      if (this.value !== this.values[0]) {
+        this.diff = Math.abs(this.value - this.values[0]);
+        this.increased = this.value < this.values[0];
+        this.decreased = this.value > this.values[0];
+        this.value = this.values[0];
+        callback();
+      }
+    };
+  }
+
+
+  function fanCircle(input, type, x, y, radius, color) {
+    this.input = input;
+    this.type = type;
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.draw = function (val) {
+      if (this.input == "vol") {
+        if (this.type == "out") {
+          this.radius = Math.abs(((val * 10) + 100) / 100 * 35);
+          this.radius > 25 ? this.radius = 25 : null;
+          DrawCircle(this.x, this.y, this.radius, GetColor(this.input, this.x, this.y, this.radius))
+        } else {
+          var endAngle = Math.abs(((val * 10) + 100) / 100 * Math.PI * 2);
+          ctx.fillStyle = GetColor(this.input, this.x, this.y, this.radius);
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.arc(this.x, this.y, this.radius, 0, endAngle);
+          ctx.closePath();
+          ctx.fill();
+        }
+      } else if (this.input == "freq") {
+        if (this.type == "out") {
+          this.radius = Math.abs(val / 130 * 35);
+          this.radius > 25 ? this.radius = 25 : null;
+          DrawCircle(this.x, this.y, this.radius, GetColor(this.input, this.x, this.y, this.radius))
+        } else {
+          var endAngle = Math.abs(val / 130 * Math.PI * 2);
+          ctx.fillStyle = GetColor(this.input, this.x, this.y, this.radius);
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.arc(this.x, this.y, this.radius, 0, endAngle);
+          ctx.closePath();
+          ctx.fill();
+        }
+      } else {
+        if (this.type == "out") {
+          this.radius = val * 35;
+          this.radius > 25 ? this.radius = 25 : null;
+          DrawCircle(this.x, this.y, this.radius, GetColor(this.input, this.x, this.y, this.radius))
+        } else {
+          var endAngle = val * Math.PI * 2;
+          ctx.fillStyle = GetColor(this.input, this.x, this.y, this.radius);
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.arc(this.x, this.y, this.radius, 0, endAngle);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+    }
+  }
+
+  function soundBar(type, x, y, width, height) {
+    this.type = type;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.y2 = y + this.height;
+    this.draw = function (val, color) {
+      if (this.type == "freq") {
+        var iHeight = (Math.abs(val.reduce((a, b) => a + b) / val.length) - Math.min(...val)) * 40 / (Math.max(...val) - Math.min(...val));
+      } else {
+        var iHeight = Math.abs(((val * 10) + 100) / 100 * 40);
+        iHeight > 40 ? iHeight = 40 : null;
+      }
+      if (rectDraw) {
+        DrawRect(this.x, this.y2, this.width, 2, "yellow")
+        DrawRect(this.x, this.y, this.width, iHeight, GetColor(this.type, this.x, this.y, this.width, iHeight))
+        this.y2 > this.y + iHeight ? this.y2 -= .5 : this.y2 = this.y + iHeight;
+      } else {
+        DrawRect(this.x, this.y2 - 5, this.width, -2, "yellow")
+        DrawRect(this.x, this.y + this.height - 5, this.width, -iHeight, GetColor(this.type, this.x, this.y, this.width, iHeight))
+        this.y2 < this.y + this.height - iHeight ? this.y2 += .5 : this.y2 = this.y + this.height - iHeight;
+      }
+    }
+  }
+
+  function GetColor(Type, x, y, size, height = 0) {
+    if (height == 0) {
+      switch (Type) {
+        case "vol":
+          switch (volFanColorMode) {
+            case "Solid":
+              return volFanColor;
+            case "Gradient":
+              let gradient = ctx.createLinearGradient(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+              let color = hexToHSL(volFanColor);
+              gradient.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(1, `hsl(${color.h + 50}, ${color.s}%, ${color.l}%)`);
+              return gradient;
+              break;
+            case "Volume":
+              let colorVol = hexToHSL(volFanColor);
+
+              return `hsl(${colorVol.h}, ${colorVol.s}%, ${(colorVol.l - 20) + (Math.abs(engine.audio.level / 130 * 35) * 2)}%)`;
+              break;
+          }
+          break;
+        case "freq":
+          switch (freqFanColorMode) {
+            case "Solid":
+              return freqFanColor;
+            case "Gradient":
+              let gradient = ctx.createLinearGradient(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+              let color = hexToHSL(freqFanColor);
+              gradient.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(1, `hsl(${color.h + 50}, ${color.s}%, ${color.l}%)`);
+              return gradient;
+              break;
+            case "Frequency":
+              let colorVol = hexToHSL(freqFanColor);
+              console.log((Math.abs(((engine.audio.level * 10) + 100) / 100 * 35)))
+              return `hsl(${colorVol.h}, ${colorVol.s}%, ${(colorVol.l - 20) + ((Math.abs(((engine.audio.level * 10) + 100) / 100 * 35)) * 4)}%)`;
+              break;
+          }
+          break;
+        case "dens":
+          switch (densityFanColorMode) {
+            case "Solid":
+              return densityFanColor;
+            case "Gradient":
+              let gradient = ctx.createLinearGradient(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+              let color = hexToHSL(densityFanColor);
+              gradient.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(1, `hsl(${color.h + 50}, ${color.s}%, ${color.l}%)`);
+              return gradient;
+              break;
+            case "Density":
+              let colorVol = hexToHSL(densityFanColor);
+              console.log((Math.abs(((engine.audio.level * 10) + 100) / 100 * 35)))
+              return `hsl(${colorVol.h}, ${colorVol.s}%, ${(colorVol.l - 20) + (engine.audio.density * 35)}%)`;
+              break;
+
+          }
+          break;
+      }
+    } else {
+      switch (Type) {
+        case "freq":
+          switch (bottomFreqBar) {
+            case "Solid":
+              console.log(bottomFreqBarColor)
+              return bottomFreqBarColor;
+            case "Gradient":
+              let gradient = ctx.createLinearGradient(x, y, x, y + 40);
+              let color = hexToHSL(bottomFreqBarColor);
+              gradient.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(0.5, `hsl(${color.h + 100}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(1, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              return gradient;
+              break;
+            case "Cycle":
+              return `hsl(${timer * 2 / (101 - colorCycleSpeed)},100%,50%)`
+              break;
+          }
+        case "vol":
+          switch (bottomVolBar) {
+            case "Solid":
+              console.log(bottomVolBarColor)
+              return bottomVolBarColor;
+            case "Gradient":
+              let gradient = ctx.createLinearGradient(x, y, x, y + 40);
+              let color = hexToHSL(bottomVolBarColor);
+              gradient.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(0.5, `hsl(${color.h + 100}, ${color.s}%, ${color.l}%)`);
+              gradient.addColorStop(1, `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
+              return gradient;
+              break;
+          }
+          break;
+      }
+
+    }
+    return `hsl(${colorTime * 2 / (101 - colorCycleSpeed)},100%,50%)`
+  }
+
+  function DrawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.fill();
+  };
+
+  function DrawStroke(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    ctx.stroke();
+  };
+
+  function DrawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  }
+
+  function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+      r = "0x" + H[1] + H[1];
+      g = "0x" + H[2] + H[2];
+      b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+      r = "0x" + H[1] + H[2];
+      g = "0x" + H[3] + H[4];
+      b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r, g, b),
+      cmax = Math.max(r, g, b),
+      delta = cmax - cmin,
+      h = 0,
+      s = 0,
+      l = 0;
+
+    if (delta == 0)
+      h = 0;
+    else if (cmax == r)
+      h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+      h = (b - r) / delta + 2;
+    else
+      h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0)
+      h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return { h: h, s: s, l: l };
+  }
+
+
+  function onEngineReady() {
+    canvas = document.getElementById('exCanvas');
+    ctx = canvas.getContext('2d');
+
+    stateMgr.Push(new IdleState());
+    window.requestAnimationFrame(update);
+  }
+</script>
+</head>
