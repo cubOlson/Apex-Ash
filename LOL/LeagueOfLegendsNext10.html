@@ -1,5 +1,5 @@
 <head>
-  <title>League of Legends NEXT 10</title>
+  <title>League of Legends</title>
   <meta description="Metering and ambiance for League of Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Champions" type="combobox"
@@ -499,16 +499,7 @@
       ctx.fillRect(0, 0, 320, 200)
     }
 
-    //Effects animation play
-    if (effects.length) {
-      effects.forEach((element, index) => {
-        element.draw();
-        if (element.lifetime <= 0) {
-          effects.splice(index, 1);
-        }
-      })
-    }
-
+    
     //Gold effect
     if (enableGold && play1 && play2) {
       console.log(currentNum)
@@ -525,16 +516,27 @@
         effects.push(new ballPhysics(160, 200, Math.random() * 10 + 15, "red"))
       }
     }
-
+    
     //Low Health Effect
     if (lowHealthMeter.value < .9 && lowHealthMeter.value > .05 && recallMeter.value != 0 && play1 && play2 && enableHealth) {
       for (let i = 0; i < 3; i++) {
         effects.push(new ballPhysics(160, 200, Math.random() * 10 + 15, "red"))
       }
     }
-
+    
+    //Effects animation play
+    if (effects.length) {
+      effects.forEach((element, index) => {
+        element.draw();
+        if (element.lifetime <= 0) {
+          effects.splice(index, 1);
+        }
+      })
+    }
+    
     //State Manager animation play
     stateMgr.Process();
+
     window.requestAnimationFrame(update);
   }
 
