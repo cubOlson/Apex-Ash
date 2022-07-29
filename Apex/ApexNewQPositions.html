@@ -1,5 +1,5 @@
 <head>
-  <title>Apex Legends Meter Adjustment</title>
+  <title>Apex Legends NEWEST</title>
   <meta description="Meters and ambiance for Apex Legends." />
   <meta publisher="SignalRGB" />
   <meta property="character" label="Legends" type="combobox"
@@ -184,7 +184,7 @@
   </meta>
   <meta meter="q" tags="apex,VLC" type="area" x="0.3158" y="0.9632" width="0.0016" height="0.0007" h="0-180" s="0-5"
     l="70-100">
-  <resolution size="3440x1440" x="0.2387" y="0.9674" width="0.0015" height="0.00009" />
+  <resolution size="3440x1440" x="0.2390" y="0.9604" width="0.0015" height="0.0014" />
   <resolution size="1920x1200" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
   <resolution size="1680x1050" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
   <resolution size="1440x900" x="0.3203" y="0.9638" height="0.00009" width="0.00026" />
@@ -193,7 +193,7 @@
   </meta>
   <meta meter="q1" tags="apex,VLC" type="area" x=" 0.3352" y="0.9278" width="0.0020" height="0.0014" h="20-60"
     s="50-100" l="70-100">
-  <resolution size="3440x1440" x="0.2436" y="0.8972" width="0.0015" height="0.00009" />
+  <resolution size="3440x1440" x="0.2439" y="0.9035" width="0.0009" height="0.0028" />
   <resolution size="1920x1200" x="0.3348" y="0.9319" width="0.0023" height="0.0042" />
   <resolution size="1680x1050" x="0.3348" y="0.9319" width="0.0023" height="0.0042" />
   <resolution size="1440x900" x="0.3348" y="0.9319" width="0.0023" height="0.0042" />
@@ -202,7 +202,7 @@
   </meta>
   <meta meter="q2" tags="apex,VLC" type="area" x="0.3316" y="0.9160" width="0.0016" height="0.0021" h="30-60" s="70-100"
     l="70-100">
-  <resolution size="3440x1440" x="0.247" y="0.9118" width="0.0015" height="0.00009" />
+  <resolution size="3440x1440" x="0.2473" y="0.9167" width="0.0009" height="0.0007" />
   <resolution size="1920x1200" x="0.3309" y="0.9222" width="0.0023" height="0.0049" />
   <resolution size="1680x1050" x="0.3309" y="0.9222" width="0.0023" height="0.0049" />
   <resolution size="1440x900" x="0.3309" y="0.9222" width="0.0023" height="0.0049" />
@@ -211,7 +211,7 @@
   </meta>
   <meta meter="q3" tags="apex,VLC" type="area" x=" 0.3285" y="0.9056" width="0.0020" height="0.0028" h="30-60"
     s="70-100" l="70-100">
-  <resolution size="3440x1440" x="0.2483" y="0.9188" width="0.0015" height="0.00009" />
+  <resolution size="3440x1440" x="0.2488" y="0.9243" width="0.0009" height="0.0021" />
   <resolution size="1920x1200" x="0.3273" y="0.9132" width="0.0020" height="0.0028" />
   <resolution size="1680x1050" x="0.3273" y="0.9132" width="0.0020" height="0.0028" />
   <resolution size="1440x900" x="0.3273" y="0.9132" width="0.0020" height="0.0028" />
@@ -641,7 +641,7 @@
           ultCharged = false;
           break;
         case "Caustic":
-          if (checkmeterYellow.increased)
+          if (checkmeterYellow.value == 1)
             stateMgr.Push(new causticZ());
           break;
         case "Fuse":
@@ -701,7 +701,7 @@
             stateMgr.Push(new wattsonZ())
           break;
         case "Wraith":
-          if (checkmeterYellow.value != 0)
+          if (checkmeterGreen.value == 1)
             stateMgr.Push(new PulseRippleState("#8c00ff", true, 750, true));
 
           break;
